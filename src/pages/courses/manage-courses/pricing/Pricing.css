@@ -1,0 +1,29 @@
+.link-back{
+    color: #fff;
+}
+
+.link-back:hover{
+    color: darkgrey;
+}
+
+.course-title{
+    color: #fff;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.course-title-status{
+    color: #fff;
+    font-weight: bolder;
+    background-color: gray;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+.pricing-container{
+    padding: 10px;
+}
+
+.pricing-header{
+    width: 80%;
+}

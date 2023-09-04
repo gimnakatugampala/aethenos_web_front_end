@@ -1,0 +1,545 @@
+import React, { useState } from 'react';
+import {  Space , Typography  } from 'antd';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import SettingsIcon from '@mui/icons-material/Settings';
+import './ManageCourses.css'
+import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form, Input } from 'antd';
+const { SubMenu } = Menu;
+const { Header, Footer, Sider, Content } = Layout;
+const { Text, Link , Title } = Typography;
+
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 4,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 20,
+    },
+  },
+};
+const formItemLayoutWithOutLabel = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 20,
+      offset: 4,
+    },
+  },
+};
+
+
+
+const headerStyle = {
+  color: '#fff',
+  height: 64,
+  paddingInline: 50,
+  lineHeight: '64px',
+  backgroundColor: '#000',
+};
+
+
+const ManageCourses = () => {
+
+  const handleClick = e => {
+    console.log('click ', e);
+  };
+
+  const handleChange = (value) => {
+  console.log(`selected ${value}`);
+};
+
+const onFinish = (values) => {
+  console.log('Received values of form:', values);
+};
+
+  return (
+    <Layout>
+    <Header style={headerStyle}>
+     <div className='d-flex justify-content-between'>
+
+     <Space size={30}>
+          <a className='link-back' href='/courses'><ArrowBackIosIcon fontSize="small" /> Back to Courses</a>
+          <span className='course-title'>Learn Photoshop in 20min</span>
+          <span className='course-title-status'>DRAFT</span>
+      </Space>
+
+      <Space size={15}>
+        <Button>Preview</Button>
+        <Button size="small" >SAVE</Button>
+          <a className='text-white' href="#"><SettingsIcon fontSize="small" /></a>
+      </Space>
+     </div>
+
+  </Header>
+
+  <Row>
+    <Col style={{height:'100vh',padding:5}} span={5}>
+    <Card className="py-2 my-1"> 
+    <Menu
+      onClick={handleClick}
+      // style={{ width: 256 }}
+      // className="my-2"
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1','sub2','sub4']}
+      mode="inline"
+    >
+      
+      <SubMenu
+        key="sub1"
+        title={
+          <h6>
+            <b>Plan your course</b>
+          </h6>
+        }
+      >
+        <Menu.Item key="1"><a href='/courses/manage/2023/'>Intented Learners</a></Menu.Item>
+        <Menu.Item key="2"><a href='/courses/manage/2023/course-structure'>Course Structure</a></Menu.Item>
+      </SubMenu>
+
+      <SubMenu
+        key="sub2"
+        title={
+          <h6>
+            <b>Create your content</b>
+          </h6>
+        }
+      >
+       <Menu.Item key="5"><a href='/courses/manage/2023/film'>Film & Edit</a></Menu.Item>
+        <Menu.Item key="6"><a href='/courses/manage/2023/curriculum'>Curriculum</a></Menu.Item>
+        <Menu.Item key="7"><a href='/courses/manage/2023/captions'>Caption (optional)</a></Menu.Item>
+        <Menu.Item key="8"><a href='/courses/manage/2023/accessibility'>Accessibility (optional)</a></Menu.Item>
+      </SubMenu>
+
+      <SubMenu
+        key="sub4"
+        title={
+          <h6>
+            <b>Publish your course</b>
+          </h6>
+        }
+      >
+        <Menu.Item key="9"><a href='/courses/manage/2023/basics'>Course landing page</a></Menu.Item>
+        <Menu.Item key="10"><a href='/courses/manage/2023/pricing'>Pricing</a></Menu.Item>
+        <Menu.Item key="11"><a href='/courses/manage/2023/promotions'>Promotions</a></Menu.Item>
+        <Menu.Item key="12"><a href='/courses/manage/2023/messages'>Course messages</a></Menu.Item>
+      </SubMenu>
+
+    </Menu>
+
+      <Button className='mx-4 w-75 my-3' type="primary">Submit For Review</Button>
+    </Card>
+
+    </Col>
+
+    <Col span={19}>
+    <Card className="py-2 my-2"> 
+        <Typography.Title className='p-3' level={3}>
+        Intended learners
+       </Typography.Title>
+       <hr />
+
+       <div className='managec-container'>
+      <div className='section-1'>
+      <p>The following descriptions will be publicly visible on your <a href='/courses/manage/2023/basics'> Course Landing Page </a>and will have a direct impact on your course performance. These descriptions will help learners decide if your course is right for them.</p>
+
+      <div className='mt-4'>
+      <Title level={5}>What will students learn in your course?</Title>
+      <p>You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.</p>
+      </div>
+
+      </div>
+      </div>
+
+      {/* Form 1 */}
+
+    <Form
+    labelCol={{
+      flex: '100px',
+    }}
+    labelAlign="left"
+    labelWrap
+    wrapperCol={{
+      flex: 1,
+    }}
+    colon={false}
+    style={{
+      maxWidth: 400,
+      textAlign:'center',
+      marginLeft:'13%'
+    }}
+  >
+    {/* 1 */}
+    <Form.Item
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input placeholder='Example:Define User Roles' />
+    </Form.Item>
+
+      {/* 2 */}
+      <Form.Item
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input placeholder='Example:Estimate Project Timelines' />
+    </Form.Item>
+
+       {/* 3 */}
+       <Form.Item
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input placeholder='Example:Identity and Manage project risks' />
+    </Form.Item>
+  </Form>
+
+      <Form
+      name="dynamic_form_item"
+      {...formItemLayoutWithOutLabel}
+      onFinish={onFinish}
+      style={{
+        maxWidth: 800,
+      }}
+    >
+      <Form.List
+        name="names"
+        // rules={[
+        //   {
+        //     validator: async (_, names) => {
+        //       if (!names || names.length < 2) {
+        //         return Promise.reject(new Error('At least 2 passengers'));
+        //       }
+        //     },
+        //   },
+        // ]}
+      >
+       
+        {(fields, { add, remove }, { errors }) => (
+          <>
+            {fields.map((field, index) => (
+              <Form.Item
+                // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                // label={index === 0 ? 'ddd' : ''}
+                required={false}
+                key={field.key}
+              >
+                <Form.Item
+                  {...field}
+                  validateTrigger={['onChange', 'onBlur']}
+                  rules={[
+                    {
+                      required: true,
+                      whitespace: true,
+                      message: "Please input passenger's name or delete this field.",
+                    },
+                  ]}
+                  noStyle
+                >
+                  <Input
+                    placeholder="Example"
+                    style={{
+                      width: '60%',
+                    }}
+                  />
+                </Form.Item>
+                {fields.length > 0 ? (
+                  <MinusCircleOutlined
+                    className="dynamic-delete-button p-2"
+                    onClick={() => remove(field.name)}
+                  />
+                ) : null}
+              </Form.Item>
+            ))}
+            <Form.Item>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                style={{
+                  width: '60%',
+                }}
+                icon={<PlusOutlined />}
+              >
+                Add More Responses
+              </Button>
+            
+              <Form.ErrorList errors={errors} />
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
+
+    
+    </Form>
+
+    {/* Section 2 */}
+    <div className='section-2'>
+    <div className='mt-4'>
+      <Title level={5}>What are the requirements or prerequisites for taking your course?</Title>
+      <p>List the required skills, experience, tools or equipment learners should have prior to taking your course.
+    If there are no requirements, use this space as an opportunity to lower the barrier for beginners.</p>
+      </div>
+
+    </div>
+
+      {/* Form 2 */}
+
+      <Form
+    labelCol={{
+      flex: '100px',
+    }}
+    labelAlign="left"
+    labelWrap
+    wrapperCol={{
+      flex: 1,
+    }}
+    colon={false}
+    style={{
+      maxWidth: 400,
+      textAlign:'center',
+      marginLeft:'13%'
+    }}
+  >
+    {/* 1 */}
+    <Form.Item
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input placeholder='Examples:No Programming Experience Needed' />
+    </Form.Item>
+  </Form>
+
+      <Form
+      name="dynamic_form_item"
+      {...formItemLayoutWithOutLabel}
+      onFinish={onFinish}
+      style={{
+        maxWidth: 800,
+      }}
+    >
+      <Form.List
+        name="names"
+        // rules={[
+        //   {
+        //     validator: async (_, names) => {
+        //       if (!names || names.length < 2) {
+        //         return Promise.reject(new Error('At least 2 passengers'));
+        //       }
+        //     },
+        //   },
+        // ]}
+      >
+       
+        {(fields, { add, remove }, { errors }) => (
+          <>
+            {fields.map((field, index) => (
+              <Form.Item
+                // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                // label={index === 0 ? 'ddd' : ''}
+                required={false}
+                key={field.key}
+              >
+                <Form.Item
+                  {...field}
+                  validateTrigger={['onChange', 'onBlur']}
+                  rules={[
+                    {
+                      required: true,
+                      whitespace: true,
+                      message: "Please input passenger's name or delete this field.",
+                    },
+                  ]}
+                  noStyle
+                >
+                  <Input
+                    placeholder="Example"
+                    style={{
+                      width: '60%',
+                    }}
+                  />
+                </Form.Item>
+                {fields.length > 0 ? (
+                  <MinusCircleOutlined
+                    className="dynamic-delete-button p-2"
+                    onClick={() => remove(field.name)}
+                  />
+                ) : null}
+              </Form.Item>
+            ))}
+            <Form.Item>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                style={{
+                  width: '60%',
+                }}
+                icon={<PlusOutlined />}
+              >
+                Add More Responses
+              </Button>
+            
+              <Form.ErrorList errors={errors} />
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
+
+    
+    </Form>
+
+    {/* Section 3 */}
+  <div className='section-3'>
+  <div className='mt-4'>
+    <Title level={5}>Who is this course for?</Title>
+    <p>Write a clear description of the intended learners for your course who will find your course content valuable.
+This will help you attract the right learners to your course.</p>
+    </div>
+
+  </div>
+
+   {/* Form 3 */}
+
+   <Form
+    labelCol={{
+      flex: '100px',
+    }}
+    labelAlign="left"
+    labelWrap
+    wrapperCol={{
+      flex: 1,
+    }}
+    colon={false}
+    style={{
+      maxWidth: 400,
+      textAlign:'center',
+      marginLeft:'13%'
+    }}
+  >
+    {/* 1 */}
+    <Form.Item
+      rules={[
+        {
+          required: true,
+        },
+      ]}
+    >
+      <Input placeholder='Examples:Python Beginners' />
+    </Form.Item>
+  </Form>
+
+      <Form
+      name="dynamic_form_item"
+      {...formItemLayoutWithOutLabel}
+      onFinish={onFinish}
+      style={{
+        maxWidth: 800,
+      }}
+    >
+      <Form.List
+        name="names"
+        // rules={[
+        //   {
+        //     validator: async (_, names) => {
+        //       if (!names || names.length < 2) {
+        //         return Promise.reject(new Error('At least 2 passengers'));
+        //       }
+        //     },
+        //   },
+        // ]}
+      >
+       
+        {(fields, { add, remove }, { errors }) => (
+          <>
+            {fields.map((field, index) => (
+              <Form.Item
+                // {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                // label={index === 0 ? 'ddd' : ''}
+                required={false}
+                key={field.key}
+              >
+                <Form.Item
+                  {...field}
+                  validateTrigger={['onChange', 'onBlur']}
+                  rules={[
+                    {
+                      required: true,
+                      whitespace: true,
+                      message: "Please input passenger's name or delete this field.",
+                    },
+                  ]}
+                  noStyle
+                >
+                  <Input
+                    placeholder="Example"
+                    style={{
+                      width: '60%',
+                    }}
+                  />
+                </Form.Item>
+                {fields.length > 0 ? (
+                  <MinusCircleOutlined
+                    className="dynamic-delete-button p-2"
+                    onClick={() => remove(field.name)}
+                  />
+                ) : null}
+              </Form.Item>
+            ))}
+            <Form.Item>
+              <Button
+                type="dashed"
+                onClick={() => add()}
+                style={{
+                  width: '60%',
+                }}
+                icon={<PlusOutlined />}
+              >
+                Add More Responses
+              </Button>
+            
+              <Form.ErrorList errors={errors} />
+            </Form.Item>
+          </>
+        )}
+      </Form.List>
+
+    
+    </Form>
+
+
+
+    </Card>
+    
+    </Col>
+  </Row>
+
+
+  </Layout>
+  )
+}
+
+export default ManageCourses

@@ -1,0 +1,10 @@
+.stepone-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.stepone-container .category-select{
+    width: 100%;
+}
