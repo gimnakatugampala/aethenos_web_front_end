@@ -6,7 +6,7 @@ import './StepTwo.css'
 
 const StepTwo = () => {
 
-  const [selected, setSelected] = useState(["papaya"]);
+  const [selected, setSelected] = useState(["it","software"]);
   
   
 
@@ -27,6 +27,7 @@ const StepTwo = () => {
     <div className='pt-3'>
           <pre>{JSON.stringify(selected)}</pre>
           <TagsInput
+            className="select-keywords"
             value={selected}
             onChange={setSelected}
             name="keywords"

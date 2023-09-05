@@ -19,7 +19,6 @@ const StepOne = () => {
     <div className="stepone-container">
 
       <div>
-
       <div className='my-5'>
       <Typography.Title
         level={3}>
@@ -30,7 +29,7 @@ const StepOne = () => {
       </div>
       
       <div className='pt-3'>
-      <Input  placeholder='Enter Course Title' showCount maxLength={20} onChange={onChange} />
+      <Input className='course-title'  placeholder='Enter Course Title' showCount maxLength={20} onChange={onChange} />
 
         <Select
         className='my-2 category-select'
@@ -40,21 +39,52 @@ const StepOne = () => {
         onChange={handleChange}
         options={[
           {
-            value: 'jack',
-            label: 'Jack',
+            value: 'development',
+            label: 'Development',
           },
           {
-            value: 'lucy',
-            label: 'Lucy',
+            value: 'bisiness',
+            label: 'Business',
           },
           {
-            value: 'Yiminghe',
-            label: 'yiminghe',
+            value: 'finance',
+            label: 'Finance & Accounting',
           },
           {
-            value: 'disabled',
-            label: 'Disabled',
-            disabled: true,
+            value: 'it',
+            label: 'IT & Software',
+          },
+          {
+            value: 'officep',
+            label: 'Office Productivity',
+          },
+          {
+            value: 'design',
+            label: 'Design',
+          },
+          {
+            value: 'marketing',
+            label: 'Marketing',
+          },
+          {
+            value: 'lifestyle',
+            label: 'Lifestyle',
+          },
+          {
+            value: 'photography',
+            label: 'Photography & Video',
+          },
+          {
+            value: 'health',
+            label: 'Health & Fitness',
+          },
+          {
+            value: 'music',
+            label: 'Music',
+          },
+          {
+            value: 'teaching',
+            label: 'Teaching & Academics',
           },
         ]}
         />

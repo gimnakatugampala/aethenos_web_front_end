@@ -8,3 +8,7 @@
 .stepone-container .category-select{
     width: 100%;
 }
+
+.stepone-container .course-title{
+    font-size: 16px;
+}

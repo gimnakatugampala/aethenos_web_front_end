@@ -1,0 +1,9 @@
+.loading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub-container-loading{
+    transform: translateY(100%);
+}

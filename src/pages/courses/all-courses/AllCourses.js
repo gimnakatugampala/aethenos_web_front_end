@@ -7,6 +7,7 @@ import { Input, Space , Badge , Image ,Col, Divider, Row } from 'antd';
 import { Card } from 'antd';
 import { Button, Progress } from 'antd';
 import CourseItem from '../../../components/course-item/CourseItem';
+import Colors from '../../../commonFunctions/Colors';
 import './AllCourses.css'
 const { Search } = Input;
 
@@ -27,7 +28,7 @@ const AllCourses = () => {
 
     <Space size="middle">
     <Radio.Group  defaultValue="a" buttonStyle="solid">
-      <Radio.Button style={{backgroundColor:'red'}} value="a">All</Radio.Button>
+      <Radio.Button value="a">All</Radio.Button>
       <Radio.Button value="b">Draft</Radio.Button>
       <Radio.Button value="c">Requested</Radio.Button>
       <Radio.Button value="d">Approved</Radio.Button>

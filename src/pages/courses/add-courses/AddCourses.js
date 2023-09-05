@@ -10,7 +10,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Card } from 'antd';
+import { Card , Space } from 'antd';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image'];
 
@@ -68,19 +68,20 @@ const AddCourses = () => {
     setActiveStep(0);
   };
 
+  // Click
+
+  const handleClick = (e) =>{
+    e.preventDefault()
+    window.location.href = "/courses"
+  }
+
   return (
    <div>
 
-<Card
-    
-    bordered={false}
-
-  >
-
-   
-  
-      <Box sx={{ width: '100%',height:'70vh'}}>
-      <Stepper activeStep={activeStep}>
+<Card bordered={false}>  
+      <Box direction='vertical' sx={{ width: '100%',height:'70vh'}}>
+        
+      <Stepper className='my-2' activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -111,24 +112,11 @@ const AddCourses = () => {
         })}
 
       </Stepper>
-
-      {/* {activeStep === steps.length ? (
+      
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Go Back</Button>
-            <Button>Create</Button>
-          </Box>
 
-        </React.Fragment>
-      ) : ( */}
-        <React.Fragment>
-          
 
+        <div className='my-5'>
           {activeStep == 0 ? (
             <StepOne />
           ) : activeStep == 1 ? (
@@ -136,10 +124,13 @@ const AddCourses = () => {
           ) : activeStep == 2 && (
             <StepThree />
           ) }
+        </div>
 
       
-          <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2}}>
+        
             <Button
+            className='mt-5'
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
@@ -149,14 +140,18 @@ const AddCourses = () => {
             </Button>
             <Box sx={{ flex: '1 1 auto' }} />
 
-            <Button onClick={handleNext}>
-              {activeStep === steps.length -1 ? <a href="/courses">Finish</a> : 'Next'}
+            <Button className='mt-5' onClick={handleNext}>
+              {activeStep === steps.length -1 ? <Button onClick={handleClick} variant="contained" color='primary'>Create Course</Button> : 'Next'}
             </Button>
+
           </Box>
           
 
         </React.Fragment>
-      {/* )} */}
+    
+ 
+
+   
     </Box>
     </Card>
    </div>

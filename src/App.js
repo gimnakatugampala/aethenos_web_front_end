@@ -1,16 +1,7 @@
-/*!
-=========================================================
-* Muse Ant Design Dashboard - v1.0.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by Creative Tim
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-import { Switch, Route, Redirect } from "react-router-dom";
-import Home from "./pages/Home";
+
+import { Switch, Route , Redirect } from "react-router-dom";
+// import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import Tables from "./pages/Tables";
 import Billing from "./pages/Billing";
 import Rtl from "./pages/Rtl";
@@ -27,15 +18,23 @@ import courseMessages from "./pages/courses/manage-courses/messages/courseMessag
 import Curriculum from "./pages/courses/manage-courses/curriculum/Curriculum";
 import Basics from "./pages/courses/manage-courses/basics/Basics";
 
+import theme from "./commonFunctions/theme";
+
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
 import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 
+import { ThemeProvider } from "@mui/material";
+
+
 function App() {
+
   return (
     <div className="App">
+      <ThemeProvider theme={theme}>
       <Switch>
+        <Route path="/" exact component={Home} />
         <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} />
 
@@ -62,6 +61,7 @@ function App() {
           <Redirect from="*" to="/courses" />
         
       </Switch>
+      </ThemeProvider>
     </div>
   );
 }
