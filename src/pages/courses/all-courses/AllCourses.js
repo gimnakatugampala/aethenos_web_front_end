@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import AddIcon from '@mui/icons-material/Add';
+import { PlusOutlined } from '@ant-design/icons'
 
 import { Radio } from 'antd';
 import { Select } from 'antd';
@@ -22,10 +22,12 @@ const AllCourses = () => {
   
 
   return (
-    <div>
-    <Space style={{marginLeft:20,marginRight:20}} size="large">
-      <Radio.Group defaultValue="a" buttonStyle="solid">
-      <Radio.Button value="a">All</Radio.Button>
+    <div className='all-courses-container'>
+    <div className='all-coueses-control-items'>
+
+    <Space size="middle">
+    <Radio.Group  defaultValue="a" buttonStyle="solid">
+      <Radio.Button style={{backgroundColor:'red'}} value="a">All</Radio.Button>
       <Radio.Button value="b">Draft</Radio.Button>
       <Radio.Button value="c">Requested</Radio.Button>
       <Radio.Button value="d">Approved</Radio.Button>
@@ -33,10 +35,10 @@ const AllCourses = () => {
 
     <Space size={90}>
     <Select
+      className='select-items'
       size="large"
       defaultValue="newest"
       placeholder="Filter Courses"
-      style={{ width: 150 }}
       onChange={handleChange}
       
       options={[
@@ -47,17 +49,20 @@ const AllCourses = () => {
       ]}
     />
 
-    <Search  placeholder="Search Courses" onSearch={onSearch} enterButton />
+    <Search placeholder="Search Courses" onSearch={onSearch} enterButton />
 
     <Button type="primary" danger>
-    <a href="/add-courses">
+      <a className='icon-container' href="/add-courses">
+        <PlusOutlined className='icon' />
         Add Course
       </a>
-    </Button>
+  </Button>
+
+    </Space>
 
     </Space>
       
-</Space>
+</div>
 
 {/* List */}
 <div className='container my-3'>

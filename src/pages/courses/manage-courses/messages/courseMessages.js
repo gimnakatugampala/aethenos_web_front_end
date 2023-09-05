@@ -4,11 +4,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './courseMessages.css'
 import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
+import { Editor } from '@tinymce/tinymce-react';
 import { Input } from 'antd';
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
 const { Text, Link , Title } = Typography;
+
 
 const headerStyle = {
     color: '#fff',
@@ -19,7 +21,9 @@ const headerStyle = {
   };
   
 
-const courseMessages = () => {
+const CourseMessages = () => {
+
+  const [val, setval] = useState("")
 
     
     const handleClick = e => {
@@ -71,7 +75,7 @@ const courseMessages = () => {
         }
       >
         <Menu.Item key="1"><a href='/courses/manage/2023/'>Intented Learners</a></Menu.Item>
-        <Menu.Item key="2"><a href='/courses/manage/2023/course-structure'>Course Structure</a></Menu.Item>
+
       </SubMenu>
 
       <SubMenu
@@ -82,10 +86,7 @@ const courseMessages = () => {
           </h6>
         }
       >
-       <Menu.Item key="5"><a href='/courses/manage/2023/film'>Film & Edit</a></Menu.Item>
         <Menu.Item key="6"><a href='/courses/manage/2023/curriculum'>Curriculum</a></Menu.Item>
-        <Menu.Item key="7"><a href='/courses/manage/2023/captions'>Caption (optional)</a></Menu.Item>
-        <Menu.Item key="8"><a href='/courses/manage/2023/accessibility'>Accessibility (optional)</a></Menu.Item>
       </SubMenu>
 
       <SubMenu
@@ -98,13 +99,12 @@ const courseMessages = () => {
       >
         <Menu.Item key="9"><a href='/courses/manage/2023/basics'>Course landing page</a></Menu.Item>
         <Menu.Item key="10"><a href='/courses/manage/2023/pricing'>Pricing</a></Menu.Item>
-        <Menu.Item key="11"><a href='/courses/manage/2023/promotions'>Promotions</a></Menu.Item>
         <Menu.Item key="12"><a href='/courses/manage/2023/messages'>Course messages</a></Menu.Item>
       </SubMenu>
 
     </Menu>
 
-      <Button className='mx-4 w-75 my-3' type="primary">Submit For Review</Button>
+      <Button className='mx-4 w-75 my-3' type="danger">Submit For Review</Button>
     </Card>
 
     </Col>
@@ -130,14 +130,24 @@ const courseMessages = () => {
          Welcome Message
        </Typography.Title>
 
+      <Editor
+  apiKey="4kzusxd15inrsx59etjfcvbu21jqq9g169ftvk4n59ywoeak"
+      onEditorChange={(value,editor) => console.log(value)}
+      init={{ plugins: 'link table' }}
+    />
 
-      <TextArea style={{width:600}} rows={4} placeholder="maxLength is 6" maxLength={6} />
       
       <Typography.Title level={5}>
       Congratulations Message
        </Typography.Title>
 
-      <TextArea style={{width:600}} rows={4} placeholder="maxLength is 6" maxLength={6} />
+
+       <Editor
+       
+        apiKey="4kzusxd15inrsx59etjfcvbu21jqq9g169ftvk4n59ywoeak"
+        onEditorChange={(value,editor) => console.log(value)}
+        init={{ plugins: 'link table' }}
+      />
       </Space>
 
        </div>
@@ -154,4 +164,4 @@ const courseMessages = () => {
   )
 }
 
-export default courseMessages
+export default CourseMessages

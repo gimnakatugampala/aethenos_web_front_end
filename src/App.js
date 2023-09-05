@@ -24,13 +24,8 @@ import ManageCourses from "./pages/courses/manage-courses/ManageCourses";
 
 import Pricing from "./pages/courses/manage-courses/pricing/Pricing";
 import courseMessages from "./pages/courses/manage-courses/messages/courseMessages";
-import courseStructure from "./pages/courses/manage-courses/course-structure/courseStructure";
-import captions from "./pages/courses/manage-courses/captions/captions";
-import Film from "./pages/courses/manage-courses/film/Film";
 import Curriculum from "./pages/courses/manage-courses/curriculum/Curriculum";
-import Promotions from "./pages/courses/manage-courses/promotions/Promotions";
 import Basics from "./pages/courses/manage-courses/basics/Basics";
-import Accessibility from "./pages/courses/manage-courses/accessibility/AccessibilityPage";
 
 import Main from "./components/layout/Main";
 import "antd/dist/antd.css";
@@ -46,15 +41,10 @@ function App() {
 
 
         <Route path="/courses/manage/2023/" exact component={ManageCourses} />
-        <Route path="/courses/manage/2023/course-structure" exact component={courseStructure} />
 
-        <Route path="/courses/manage/2023/film" exact component={Film} />
         <Route path="/courses/manage/2023/curriculum" exact component={Curriculum} />
-        <Route path="/courses/manage/2023/captions" exact component={captions} />
-        <Route path="/courses/manage/2023/accessibility" exact component={Accessibility} />
         <Route path="/courses/manage/2023/basics" exact component={Basics} />
         <Route path="/courses/manage/2023/pricing" exact component={Pricing} />
-        <Route path="/courses/manage/2023/promotions" exact component={Promotions} />
         <Route path="/courses/manage/2023/messages" exact component={courseMessages} />
 
         <Main>

@@ -1,3 +1,8 @@
+.all-coueses-control-items{
+    display: flex;
+    justify-content: center;
+}
+
 .card-item{
     cursor: pointer;
     opacity: 1;
@@ -29,4 +34,23 @@
 
 .card-item  .pending-text{
     font-weight: bold;
+}
+
+
+
+.all-courses-container .icon-container{
+    display: flex;
+    align-items: center;
+}
+
+.all-courses-container .icon-container .icon{
+    font-size: 14px;
+}
+
+.all-coueses-control-items .select-items{
+    font-size: 14px;
+}
+
+.all-courses-container .all-coueses-control-items .select-items{
+    width: 150px;
 }

@@ -69,7 +69,6 @@ const Pricing = () => {
         }
       >
         <Menu.Item key="1"><a href='/courses/manage/2023/'>Intented Learners</a></Menu.Item>
-        <Menu.Item key="2"><a href='/courses/manage/2023/course-structure'>Course Structure</a></Menu.Item>
       </SubMenu>
 
       <SubMenu
@@ -80,10 +79,8 @@ const Pricing = () => {
           </h6>
         }
       >
-       <Menu.Item key="5"><a href='/courses/manage/2023/film'>Film & Edit</a></Menu.Item>
         <Menu.Item key="6"><a href='/courses/manage/2023/curriculum'>Curriculum</a></Menu.Item>
-        <Menu.Item key="7"><a href='/courses/manage/2023/captions'>Caption (optional)</a></Menu.Item>
-        <Menu.Item key="8"><a href='/courses/manage/2023/accessibility'>Accessibility (optional)</a></Menu.Item>
+    
       </SubMenu>
 
       <SubMenu
@@ -96,13 +93,12 @@ const Pricing = () => {
       >
         <Menu.Item key="9"><a href='/courses/manage/2023/basics'>Course landing page</a></Menu.Item>
         <Menu.Item key="10"><a href='/courses/manage/2023/pricing'>Pricing</a></Menu.Item>
-        <Menu.Item key="11"><a href='/courses/manage/2023/promotions'>Promotions</a></Menu.Item>
         <Menu.Item key="12"><a href='/courses/manage/2023/messages'>Course messages</a></Menu.Item>
       </SubMenu>
 
     </Menu>
 
-      <Button className='mx-4 w-75 my-3' type="primary">Submit For Review</Button>
+      <Button className='mx-4 w-75 my-3' type="danger">Submit For Review</Button>
     </Card>
 
     </Col>
