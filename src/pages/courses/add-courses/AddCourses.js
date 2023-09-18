@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import StepOne from './step-one/StepOne';
 import StepTwo from './step-two/StepTwo';
 import StepThree from './step-three/StepThree';
+import StepFour from './step-four/StepFour';
 
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -12,7 +13,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Card , Space } from 'antd';
 
-const steps = ['Basic Details', 'Keywords Tags', 'Course Image'];
+const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
 const AddCourses = () => {
 
@@ -36,7 +37,7 @@ const AddCourses = () => {
     }
 
 
-    if(activeStep < 2){
+    if(activeStep < 3){
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
     }
@@ -79,7 +80,7 @@ const AddCourses = () => {
    <div>
 
 <Card bordered={false}>  
-      <Box direction='vertical' sx={{ width: '100%',height:'70vh'}}>
+  <Box direction='vertical' sx={{ width: '100%'}}>
         
       <Stepper className='my-2' activeStep={activeStep}>
         {steps.map((label, index) => {
@@ -97,6 +98,10 @@ const AddCourses = () => {
           }else if(index == 2){
             labelProps.optional = (
               <Typography variant="caption">Step Three</Typography>
+            );
+          }else if(index == 3){
+            labelProps.optional = (
+              <Typography variant="caption">Step Four</Typography>
             );
           }
 
@@ -121,8 +126,10 @@ const AddCourses = () => {
             <StepOne />
           ) : activeStep == 1 ? (
             <StepTwo />
-          ) : activeStep == 2 && (
+          ) : activeStep == 2 ? (
             <StepThree />
+          ) : activeStep == 3 && (
+            <StepFour />
           ) }
         </div>
 
