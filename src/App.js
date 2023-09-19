@@ -41,11 +41,6 @@ function App() {
 
         <Route path="/courses/manage/2023/" exact component={ManageCourses} />
 
-        <Route path="/courses/manage/2023/curriculum" exact component={Curriculum} />
-        <Route path="/courses/manage/2023/basics" exact component={Basics} />
-        <Route path="/courses/manage/2023/pricing" exact component={Pricing} />
-        <Route path="/courses/manage/2023/messages" exact component={courseMessages} />
-
         <Main>
           <Route exact path="/dashboard" component={Home} />
           <Route exact path="/tables" component={Tables} />
