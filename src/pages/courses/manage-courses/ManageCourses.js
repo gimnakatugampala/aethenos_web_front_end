@@ -12,6 +12,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import LayersIcon from '@mui/icons-material/Layers';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ForumIcon from '@mui/icons-material/Forum';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -23,6 +24,7 @@ import Curriculum from './curriculum/Curriculum';
 import Basics from './basics/Basics';
 import Pricing from './pricing/Pricing';
 import CourseMessages from './messages/courseMessages';
+import Promotion from './promotions/Promotion';
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -61,9 +63,7 @@ const ManageCourses = () => {
       </Space>
 
       <Space size={15}>
-        <Button>Preview</Button>
         <Button size="small" >SAVE</Button>
-          <a className='text-white' href="#"><SettingsIcon fontSize="small" /></a>
       </Space>
      </div>
 
@@ -129,12 +129,20 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}
-        >
+          onClick={(event) => handleListItemClick(event, 4)}>
           <ListItemIcon>
             <ForumIcon />
           </ListItemIcon>
           <ListItemText primary="Courses Messages" />
+        </ListItemButton>
+
+        <ListItemButton
+          selected={selectedIndex === 5}
+          onClick={(event) => handleListItemClick(event, 5)}>
+          <ListItemIcon>
+            <TrendingUpIcon />
+          </ListItemIcon>
+          <ListItemText primary="Promotions" />
         </ListItemButton>
 
         <ListItemText>
@@ -149,13 +157,13 @@ const ManageCourses = () => {
 
     {/* HERE */}
     {/*  */}
-    {selectedIndex == 0 ? 
-    <IntendedLearners /> : 
-    selectedIndex == 1 ? 
-    <Curriculum /> : 
+    {selectedIndex == 0 ? <IntendedLearners /> : 
+    selectedIndex == 1 ?  <Curriculum /> : 
     selectedIndex == 2 ? <Basics /> : 
     selectedIndex == 3 ? <Pricing /> : 
-    selectedIndex == 4 ? <CourseMessages /> : ""}
+    selectedIndex == 4 ? <CourseMessages /> :
+    selectedIndex == 5 ? <Promotion /> 
+    : ""}
 
 
     

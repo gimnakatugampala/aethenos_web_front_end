@@ -1,15 +1,17 @@
 import React from 'react'
 import './basics.css'
-import {  Space , Typography  } from 'antd';
+import {  Space   } from 'antd';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddIcon from '@mui/icons-material/Add';
-import { Layout, Menu , Col, Row ,Button , Card ,Select , Image , Upload } from 'antd';
+import { Layout, Menu , Col, Row ,Button ,Select , Image , Upload } from 'antd';
 import { Input } from 'antd';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
-const { Text, Link , Title } = Typography;
+
 
 const headerStyle = {
     color: '#fff',
@@ -22,13 +24,22 @@ const headerStyle = {
 
 const Basics = () => {
 
+  const onChangeResOne = e => {
+    document.getElementById("res-1").innerText = 60 - e.target.value.length
+    // console.log('click ', e);
+  };
+
+  const onChangeResTwo = e =>{
+    document.getElementById("res-2").innerText = 120 - e.target.value.length
+  }
+
   const options = [];
-for (let i = 10; i < 36; i++) {
-  options.push({
-    value: i.toString(36) + i,
-    label: i.toString(36) + i,
-  });
-}
+  for (let i = 10; i < 36; i++) {
+    options.push({
+      value: i.toString(36) + i,
+      label: i.toString(36) + i,
+    });
+  }
  
     const handleClick = e => {
         console.log('click ', e);
@@ -39,33 +50,41 @@ for (let i = 10; i < 36; i++) {
     };
 
   return (
-   
-
     <div className='col-md-8'>
-    <Card className="py-2 my-2"> 
-        <Typography.Title className='p-3' level={3}>
+    <Card className="py-2 my-2 p-4"> 
+        <Typography className='p-3' variant="h4" >
           Course Landing Page
-       </Typography.Title>
+       </Typography>
        <hr />
 
        <p>Your course landing page is crucial to your success on Udemy. If it’s done right, it can also help you gain visibility in search engines like Google. As you complete this section, think about creating a compelling Course Landing Page that demonstrates why someone would want to enroll in your course. Learn more about creating your course landing page and course title standards.</p>
 
        <div className='basics-container'>
 
-        <div className='my-3'>
-          <h6>Course title</h6>
-          <Input showCount maxLength={20} onChange={handleChange} />
+       <div className='my-3'>
+        <h6>Course title</h6>
+        <div class="input-group mb-3">
+              <input maxLength={60} onChange={onChangeResOne} type="text" class="form-control" placeholder="Course title" />
+              <span class="input-group-text" id="res-1">60</span>
         </div>
+      </div>
 
+      
         <div className='my-3'>
-          <h6>Course subtitle</h6>
-          <Input showCount maxLength={20} onChange={handleChange} />
-        </div>
+            <h6>Course subtitle</h6>
+            <div class="input-group mb-3">
+              <input maxLength={60} onChange={onChangeResTwo} type="text" class="form-control" placeholder="Insert your course subtitle" />
+              <span class="input-group-text" id="res-2">120</span>
+            </div>
+          </div>
+       
+
 
         <div className='my-3'>
           <h6>Course description</h6>
-          <TextArea rows={4} />
+          <textarea class="form-control" rows="3"></textarea>
         </div>
+
 
         <div className='row my-3'>
         <h6>Basic Info</h6>
@@ -74,25 +93,32 @@ for (let i = 10; i < 36; i++) {
           <Select
           size='large'
           style={{width:'100%'}}
-            defaultValue="lucy"
+            defaultValue="Sri Lanka"
             onChange={handleChange}
             options={[
               {
-                value: 'jack',
-                label: 'Jack',
+                value: 'lk',
+                label: 'Sri Lanka',
               },
               {
-                value: 'lucy',
-                label: 'Lucy',
+                value: 'in',
+                label: 'India',
               },
               {
-                value: 'Yiminghe',
-                label: 'yiminghe',
+                value: 'pak',
+                label: 'Pakistan',
               },
               {
-                value: 'disabled',
-                label: 'Disabled',
-                disabled: true,
+                value: 'bang',
+                label: 'Bangladesh',
+              },
+              {
+                value: 'usa',
+                label: 'USA',
+              },
+              {
+                value: 'eng',
+                label: 'England',
               },
             ]}
           />
@@ -102,25 +128,24 @@ for (let i = 10; i < 36; i++) {
           <Select
           size='large'
           style={{width:'100%'}}
-            defaultValue="lucy"
+            defaultValue="--Select Level--"
             onChange={handleChange}
             options={[
               {
-                value: 'jack',
-                label: 'Jack',
+                value: 'beginner-level',
+                label: 'Beginner Level',
               },
               {
-                value: 'lucy',
-                label: 'Lucy',
+                value: 'intermediate-level',
+                label: 'Intermediate Level',
               },
               {
-                value: 'Yiminghe',
-                label: 'yiminghe',
+                value: 'expert-level',
+                label: 'Expert Level',
               },
               {
-                value: 'disabled',
-                label: 'Disabled',
-                disabled: true,
+                value: 'all-level',
+                label: 'All Level',
               },
             ]}
           />
@@ -130,27 +155,60 @@ for (let i = 10; i < 36; i++) {
           <Select
           size='large'
           style={{width:'100%'}}
-            defaultValue="lucy"
-            onChange={handleChange}
-            options={[
-              {
-                value: 'jack',
-                label: 'Jack',
-              },
-              {
-                value: 'lucy',
-                label: 'Lucy',
-              },
-              {
-                value: 'Yiminghe',
-                label: 'yiminghe',
-              },
-              {
-                value: 'disabled',
-                label: 'Disabled',
-                disabled: true,
-              },
-            ]}
+          defaultValue="Development"
+          placeholder="Select Course Category"
+          allowClear
+          onChange={handleChange}
+          options={[
+            {
+              value: 'development',
+              label: 'Development',
+            },
+            {
+              value: 'bisiness',
+              label: 'Business',
+            },
+            {
+              value: 'finance',
+              label: 'Finance & Accounting',
+            },
+            {
+              value: 'it',
+              label: 'IT & Software',
+            },
+            {
+              value: 'officep',
+              label: 'Office Productivity',
+            },
+            {
+              value: 'design',
+              label: 'Design',
+            },
+            {
+              value: 'marketing',
+              label: 'Marketing',
+            },
+            {
+              value: 'lifestyle',
+              label: 'Lifestyle',
+            },
+            {
+              value: 'photography',
+              label: 'Photography & Video',
+            },
+            {
+              value: 'health',
+              label: 'Health & Fitness',
+            },
+            {
+              value: 'music',
+              label: 'Music',
+            },
+            {
+              value: 'teaching',
+              label: 'Teaching & Academics',
+            },
+          ]}
           />
           </div>
 
@@ -158,27 +216,60 @@ for (let i = 10; i < 36; i++) {
           <Select
           size='large'
           style={{width:'100%'}}
-            defaultValue="lucy"
-            onChange={handleChange}
-            options={[
-              {
-                value: 'jack',
-                label: 'Jack',
-              },
-              {
-                value: 'lucy',
-                label: 'Lucy',
-              },
-              {
-                value: 'Yiminghe',
-                label: 'yiminghe',
-              },
-              {
-                value: 'disabled',
-                label: 'Disabled',
-                disabled: true,
-              },
-            ]}
+          defaultValue="--Select Subcategory--"
+          placeholder="Select Sub Course Category"
+          allowClear
+          onChange={handleChange}
+          options={[
+            {
+              value: 'development',
+              label: 'Development',
+            },
+            {
+              value: 'bisiness',
+              label: 'Business',
+            },
+            {
+              value: 'finance',
+              label: 'Finance & Accounting',
+            },
+            {
+              value: 'it',
+              label: 'IT & Software',
+            },
+            {
+              value: 'officep',
+              label: 'Office Productivity',
+            },
+            {
+              value: 'design',
+              label: 'Design',
+            },
+            {
+              value: 'marketing',
+              label: 'Marketing',
+            },
+            {
+              value: 'lifestyle',
+              label: 'Lifestyle',
+            },
+            {
+              value: 'photography',
+              label: 'Photography & Video',
+            },
+            {
+              value: 'health',
+              label: 'Health & Fitness',
+            },
+            {
+              value: 'music',
+              label: 'Music',
+            },
+            {
+              value: 'teaching',
+              label: 'Teaching & Academics',
+            },
+          ]}
           />
           </div>
 
@@ -188,7 +279,7 @@ for (let i = 10; i < 36; i++) {
           mode="multiple"
           size="large"
           placeholder="Please select"
-          defaultValue={['a10', 'c12']}
+          defaultValue={['Business Fundermental', 'Photograph']}
           onChange={handleChange}
           style={{
             width: '100%',

@@ -1,10 +1,9 @@
 import React from 'react'
 import './curriculum.css'
-import {  Space , Typography  } from 'antd';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import SettingsIcon from '@mui/icons-material/Settings';
 import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
 import { Input } from 'antd';
+import Typography from '@mui/material/Typography';
+
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -32,9 +31,9 @@ const headerStyle = {
   return (
     <div className='col-md-8'>
     <Card className="py-2 my-2"> 
-        <Typography.Title className='p-3' level={3}>
+        <Typography className='p-3' variant='h4'>
           Curriculum
-       </Typography.Title>
+       </Typography>
        <hr />
 
 

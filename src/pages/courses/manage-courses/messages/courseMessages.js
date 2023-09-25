@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import {  Space , Typography  } from 'antd';
+import {  Space  } from 'antd';
+import Typography from '@mui/material/Typography';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './courseMessages.css'
 import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
 import { Editor } from '@tinymce/tinymce-react';
 import { Input } from 'antd';
+
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
-const { Text, Link , Title } = Typography;
+// const { Text, Link , Title } = Typography;
 
 
 const headerStyle = {
@@ -38,9 +40,9 @@ const CourseMessages = () => {
    
     <div className='col-md-8'>
     <Card className="py-2 my-2"> 
-        <Typography.Title className='p-3' level={3}>
+        <Typography className='p-3' variant="h4">
           Course Messages
-       </Typography.Title>
+       </Typography>
        <hr />
 
        <div className='pricing-container'>
@@ -53,9 +55,9 @@ const CourseMessages = () => {
 
       <Space  direction="vertical"
     size="middle">
-         <Typography.Title level={5}>
+         <Typography variant="h6">
          Welcome Message
-       </Typography.Title>
+       </Typography>
 
       <Editor
   apiKey="4kzusxd15inrsx59etjfcvbu21jqq9g169ftvk4n59ywoeak"
@@ -64,9 +66,9 @@ const CourseMessages = () => {
     />
 
       
-      <Typography.Title level={5}>
+      <Typography variant="h6">
       Congratulations Message
-       </Typography.Title>
+       </Typography>
 
 
        <Editor
