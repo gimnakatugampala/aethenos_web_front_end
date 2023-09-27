@@ -22,6 +22,7 @@
     "draft-js": "^0.11.7",
     "formik-stepper": "^2.2.1",
     "install": "^0.13.0",
+    "jodit-react": "^1.3.39",
     "jquery": "^3.7.1",
     "react": "^17.0.2",
     "react-apexcharts": "^1.3.9",

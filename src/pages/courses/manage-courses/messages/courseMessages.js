@@ -7,6 +7,7 @@ import './courseMessages.css'
 import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
 import { Editor } from '@tinymce/tinymce-react';
 import { Input } from 'antd';
+import RichTextEditor from '../../../../components/RichTextEditor';
 
 
 const { TextArea } = Input;
@@ -59,25 +60,13 @@ const CourseMessages = () => {
          <Typography variant="h6">
          Welcome Message
        </Typography>
-
-      <Editor
-  apiKey="4kzusxd15inrsx59etjfcvbu21jqq9g169ftvk4n59ywoeak"
-      onEditorChange={(value,editor) => console.log(value)}
-      init={{ plugins: 'link table' }}
-    />
-
-      
+      <RichTextEditor/>
+      <br/>
       <Typography variant="h6">
       Congratulations Message
        </Typography>
+       <RichTextEditor/>
 
-
-       <Editor
-       
-        apiKey="4kzusxd15inrsx59etjfcvbu21jqq9g169ftvk4n59ywoeak"
-        onEditorChange={(value,editor) => console.log(value)}
-        init={{ plugins: 'link table' }}
-      />
       </Space>
 
        </div>
