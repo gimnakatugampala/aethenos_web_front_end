@@ -48,7 +48,7 @@ const { Text, Link , Title } = Typography;
 
             <div className='d-flex justify-content-end'>
                 <Button variant="contained" onClick={handleShow}>
-                <i class="fa-solid fa-plus"></i> Add Section
+                <i class="fa-solid fa-plus"></i> Add Curriculum
                 </Button>
             </div>
 
