@@ -33,7 +33,6 @@ const { Text, Link , Title } = Typography;
     const handleCurriculum = () => setshowCurriculum(true)
     const handleCurriculumClose = () => setshowCurriculum(false)
 
-
     const handleshowLecture = () => setshowLecture(!showLecture)
     const handleshowLectureClose = () => setshowLecture(false)
 
