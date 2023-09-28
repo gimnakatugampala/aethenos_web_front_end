@@ -1,6 +1,5 @@
 
 import { Switch, Route , Redirect } from "react-router-dom";
-// import Home from "./pages/Home";
 import Home from "./pages/home/Home";
 import Tables from "./pages/Tables";
 import Billing from "./pages/Billing";
@@ -13,10 +12,8 @@ import AllCourses from "./pages/courses/all-courses/AllCourses";
 import AddCourses from "./pages/courses/add-courses/AddCourses";
 import ManageCourses from "./pages/courses/manage-courses/ManageCourses";
 
-import Pricing from "./pages/courses/manage-courses/pricing/Pricing";
-import courseMessages from "./pages/courses/manage-courses/messages/courseMessages";
-import Curriculum from "./pages/courses/manage-courses/curriculum/Curriculum";
-import Basics from "./pages/courses/manage-courses/basics/Basics";
+
+import Reviews from "./pages/reviews/Reviews";
 
 import theme from "./commonFunctions/theme";
 
@@ -51,7 +48,9 @@ function App() {
           <Route exact path="/courses" component={AllCourses} />
           <Route exact path="/add-courses" component={AddCourses} />
 
-          
+
+           <Route exact path="/performance/reviews" component={Reviews} />
+
         </Main>
           <Redirect from="*" to="/courses" />
         

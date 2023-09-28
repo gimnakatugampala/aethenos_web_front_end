@@ -28,7 +28,7 @@ const StepFour = () => {
   return (
     <div className='d-flex justify-content-center align-items-center'>
 
-    <div className='my-5 text-center'>
+    <div className='text-center'>
         <Typography.Title
             level={3}>
             Upload a Test Video
