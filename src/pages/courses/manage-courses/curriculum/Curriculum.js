@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
+import { Draggable, Droppable } from 'react-drag-and-drop'
+
 
 import { useState } from 'react';
 
@@ -35,6 +37,12 @@ const { Text, Link , Title } = Typography;
 
     const handleshowLecture = () => setshowLecture(!showLecture)
     const handleshowLectureClose = () => setshowLecture(false)
+
+
+    const onDrop = (data) => {
+      console.log(data)
+      // => banana 
+  }
 
   return (
     <div className='col-md-8'>
@@ -136,6 +144,7 @@ const { Text, Link , Title } = Typography;
         </div>
       )}
 
+       
       <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header>Introduction</Accordion.Header>
