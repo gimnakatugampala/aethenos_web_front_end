@@ -23,35 +23,26 @@ const GridContainer = styled('div')({
 });
 
 interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
   onClick: () => void; // Add an onClick prop
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+  return <IconButton {...props} />;
+})();
 
 export default function RecipeReviewCard() {
-  const [expanded, setExpanded] = React.useState(Array(6).fill(false)); // Initialize an array of expanded states
+  const [commentBoxes, setCommentBoxes] = React.useState(Array(6).fill(false));
 
-  const handleExpandClick = (index) => {
-    // Update the expanded state for the clicked card
-    const newExpanded = [...expanded];
-    newExpanded[index] = !newExpanded[index];
-    setExpanded(newExpanded);
+  const toggleCommentBox = (index) => {
+    const newCommentBoxes = [...commentBoxes];
+    newCommentBoxes[index] = !newCommentBoxes[index];
+    setCommentBoxes(newCommentBoxes);
   };
 
   return (
     <GridContainer>
       {Array.from({ length: 6 }).map((_, index) => (
-        <Card key={index} sx={{ maxWidth: 300 }}> {/* Adjust the card width */}
+        <Card key={index} sx={{ maxWidth: 300 }}>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -73,16 +64,15 @@ export default function RecipeReviewCard() {
           </CardContent>
           <CardActions disableSpacing>
             <ExpandMore
-              expand={expanded[index]} // Use the expanded state for the current card
-              onClick={() => handleExpandClick(index)} // Pass the index to the click handler
-              aria-expanded={expanded[index]}
+              onClick={() => toggleCommentBox(index)}
               aria-label="show more"
             >
               <ModeCommentTwoToneIcon />
             </ExpandMore>
           </CardActions>
-          <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-            <CardContent>
+          <Collapse in={commentBoxes[index]} timeout="auto" unmountOnExit>
+            <CardContent sx={{ maxHeight: '200px', overflowY: 'auto' }}>
+              {/* Increase maxHeight and add overflowY */}
               <ReviewCommentBox />
             </CardContent>
           </Collapse>

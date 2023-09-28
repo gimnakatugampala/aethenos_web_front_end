@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
-import { Draggable, Droppable } from 'react-drag-and-drop'
+
 
 
 import { useState } from 'react';
