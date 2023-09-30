@@ -50,18 +50,6 @@ const ReviewCommentBox = () => {
 
   return (
     <div className="container mt-4">
-      <div className="mb-3">
-        <textarea
-          className="form-control"
-          rows="3"
-          placeholder="Add a comment..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        ></textarea>
-        <button className="btn btn-primary mt-2" onClick={() => handleAddComment(null)}>
-          Add Comment
-        </button>
-      </div>
       <div>
         {comments.map((comment) => (
           <div key={comment.id} className="mb-3">
@@ -93,6 +81,18 @@ const ReviewCommentBox = () => {
             ))}
           </div>
         ))}
+      </div>
+      <div className="mb-3">
+        <textarea
+          className="form-control"
+          rows="3"
+          placeholder="Add a comment..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        ></textarea>
+        <button className="btn btn-primary mt-2" onClick={() => handleAddComment(null)}>
+          Add Comment
+        </button>
       </div>
     </div>
   );
