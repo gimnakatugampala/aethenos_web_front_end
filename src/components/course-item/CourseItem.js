@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Input, Space , Badge , Image ,Col, Divider, Row } from 'antd';
-import { Card } from 'antd';
+import { Card  } from 'antd';
 import { Button, Progress } from 'antd';
 import { Avatar, List, Skeleton, Switch } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 
 const CourseItem = ({title, status, filledPercent, seenBy}) => {
 
@@ -26,9 +27,6 @@ const CourseItem = ({title, status, filledPercent, seenBy}) => {
     <Card className='card-item'>
 
     <div className='row'>
-
-  
-    
     <div className="col-md-2 pr-0">
         <Image
           width={100}
@@ -48,7 +46,7 @@ const CourseItem = ({title, status, filledPercent, seenBy}) => {
         <p className='availblity'>{seenBy}</p>
 
         <div>
-          <span className='pending-text'>Course Pending</span>
+          <span className='pending-text'><Badge color="#f50" text="#f50" /> <CheckOutlined /></span>
           <Progress percent={percent} />
         </div>
 
@@ -59,6 +57,10 @@ const CourseItem = ({title, status, filledPercent, seenBy}) => {
     <div className='d-flex justify-content-center'> 
       <a className='card-item-link' href="/courses/manage/2023/">Manage Course</a>
     </div> 
+
+    {/* <div className='d-flex justify-content-center'> 
+      <a className='card-item-link-draft' href='#'><h2>Waiting For Admin Approval</h2></a>
+    </div>  */}
 
 
 

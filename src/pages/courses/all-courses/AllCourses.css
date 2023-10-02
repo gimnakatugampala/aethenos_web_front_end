@@ -24,9 +24,8 @@
 .card-item:hover .card-item-link{
     /* top: 40%; */
     z-index: 1;
-
-
 }
+
 
 .card-item .availblity{
     font-size: 12px;

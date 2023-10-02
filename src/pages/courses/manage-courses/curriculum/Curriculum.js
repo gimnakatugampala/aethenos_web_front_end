@@ -78,34 +78,7 @@ const fileList = [
 
        <div className='row'>
 
-            <div className='d-flex justify-content-end'>
-                <Button variant="contained" onClick={handleShow}>
-                <i class="fa-solid fa-plus"></i> Add Section
-                </Button>
-            </div>
 
-          <div className='col-md-12'>
-          <table className="table caption-top">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Objective</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>1</th>
-                  <td>Introduction</td>
-                  <td>The Foundation of the Course</td>
-                  <td>
-                  <Button onClick={handleCurriculum} variant="contained"><i class="fa-solid fa-plus p-1"></i></Button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
        </div>
 
       
@@ -114,94 +87,7 @@ const fileList = [
     </Card>
 
 
-      {/* Add Section */}
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Section</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-        <div className='row'>
-          <div className='col-md-12'>
-
-          <div class="mb-3">
-              <label class="form-label">Title</label>
-              <input type="email" class="form-control"  placeholder="Enter Title" />
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Objective</label>
-              <input type="email" class="form-control"  placeholder="Enter Objective" />
-            </div>
-
-            <Button variant="contained">Save</Button>
-
-          </div>
-        </div>
-
-        </Modal.Body>
-      
-      </Modal>
-
-      {/* Add Curriculum */}
-      <Modal size="lg" show={showCurriculum} onHide={handleCurriculumClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Curriculum</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-        <div className='d-flex justify-content-end my-2'>
-            <Button onClick={handleshowLecture} variant="contained">Add Curriculum</Button>
-        </div>
-
-      {showLecture && (
-        <div className='row'>
-          <div className='col-md-12'>
-              <label  class="form-label">Lecture Name</label>
-              <input type="email" class="form-control" placeholder="Name" />
-
-              <div className="my-2">
-                <Button className='mx-1' variant="contained">Add</Button>
-                <Button onClick={handleshowLectureClose} className='mx-1' variant="outlined" >Cancel</Button>
-              </div>
-          </div>   
-        </div>
-      )}
-
-       
-      <Accordion>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Introduction</Accordion.Header>
-        <Accordion.Body>
-          
-          
-    
-    <Upload
-      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-      listType="picture"
-      defaultFileList={[...fileList]}
-      className="upload-list-inline"
-    >
-      <Button variant="contained" icon={<UploadOutlined />}>+ Upload</Button>
-    </Upload>
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="1">
-        <Accordion.Header>Deep Learning</Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
-
-        </Modal.Body>
-      </Modal>
+  
     
     </div>
   
