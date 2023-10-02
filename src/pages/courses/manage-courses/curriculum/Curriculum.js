@@ -16,12 +16,12 @@ const { Text, Link , Title } = Typography;
 
 
 const fileList = [
-  {
-    uid: '0',
-    name: 'xxx.png',
-    status: 'uploading',
-    percent: 33,
-  },
+  // {
+  //   uid: '0',
+  //   name: 'xxx.png',
+  //   status: 'uploading',
+  //   percent: 33,
+  // },
   {
     uid: '-1',
     name: 'yyy.png',
@@ -31,9 +31,16 @@ const fileList = [
   },
   {
     uid: '-2',
-    name: 'zzz.png',
-    status: 'error',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
   },
+  // {
+  //   uid: '-2',
+  //   name: 'zzz.png',
+  //   status: 'error',
+  // },
 ];
 
   
@@ -175,7 +182,7 @@ const fileList = [
       defaultFileList={[...fileList]}
       className="upload-list-inline"
     >
-      <Button icon={<UploadOutlined />}>Upload</Button>
+      <Button variant="contained" icon={<UploadOutlined />}>+ Upload</Button>
     </Upload>
         </Accordion.Body>
       </Accordion.Item>
