@@ -8,7 +8,6 @@ import './StepThree.css'
 
 
 
-
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -72,7 +71,7 @@ const StepThree = () => {
     <div className='my-5'>
         <Typography.Title
         level={3}>
-        Upload Profile Image
+        Upload Course Image
       </Typography.Title>
 
       <p>You Can Always Change It.</p>

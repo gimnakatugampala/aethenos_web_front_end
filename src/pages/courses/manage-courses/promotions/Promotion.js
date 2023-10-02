@@ -313,25 +313,7 @@ const Promotion = () => {
                 </div>
               </div>
 
-              <div className='col-md-12'>
-              <div class="mb-3">
-              <label class="form-label">Select Courses</label>
-              <Autocomplete
-        multiple
-        id="tags-standard"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        defaultValue={[top100Films[13]]}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            placeholder="Select Courses"
-          />
-        )}
-      />
-            </div>
-            </div>
+        
 
               <div className='col-md-12'>
               <div class="mb-3">

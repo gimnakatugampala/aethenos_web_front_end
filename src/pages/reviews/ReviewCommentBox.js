@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+
 
 const ReviewCommentBox = () => {
   const [comments, setComments] = useState([]);
@@ -52,30 +54,30 @@ const ReviewCommentBox = () => {
     <div className="container mt-4">
       <div>
         {comments.map((comment) => (
-          <div key={comment.id} className="mb-3">
+          <div key={comment.id} className="my-3">
             <p>{comment.text}</p>
-            <button className="btn btn-outline-primary" onClick={() => handleReply(comment.id)}>
+            <Button variant="contained" className="btn btn-outline-primary" onClick={() => handleReply(comment.id)}>
               Reply
-            </button>
+            </Button>
             {replyToCommentId === comment.id && (
-              <div className="ml-3">
+              <div className="my-3">
                 <textarea
-                  className="form-control"
+                  className="form-control my-3"
                   rows="2"
                   placeholder="Write a reply..."
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
                 ></textarea>
-                <button className="btn btn-primary mt-2" onClick={handleSubmitReply}>
+                <Button variant="contained" className="m-2" onClick={handleSubmitReply}>
                   Submit Reply
-                </button>
-                <button className="btn btn-secondary mt-2 ml-2" onClick={handleCancelReply}>
+                </Button>
+                <Button variant="outlined" className="m-2" onClick={handleCancelReply}>
                   Cancel
-                </button>
+                </Button>
               </div>
             )}
             {comment.replies.map((reply) => (
-              <div key={reply.id} className="ml-3 mb-2">
+              <div key={reply.id} className="my-2">
                 <p>{reply.text}</p>
               </div>
             ))}
@@ -90,9 +92,8 @@ const ReviewCommentBox = () => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         ></textarea>
-        <button className="btn btn-primary mt-2" onClick={() => handleAddComment(null)}>
-          Add Comment
-        </button>
+        <Button className="mt-2"  onClick={() => handleAddComment(null)} variant="contained">Add Comment</Button>
+
       </div>
     </div>
   );

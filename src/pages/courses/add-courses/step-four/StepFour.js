@@ -7,11 +7,6 @@ import { Button, message, Upload } from 'antd';
 import { Input } from 'antd';
 
 
-
-
-
-
-
 const StepFour = () => {
 
     const [URL, setURL] = useState("")
@@ -22,7 +17,10 @@ const StepFour = () => {
         // console.log(e)
 
         let blobURL = window.URL.createObjectURL(e.target.files[0]);
-        document.getElementById("add-course-test-video").src = blobURL;
+
+
+          document.getElementById("add-course-test-video").src = blobURL;
+        
     }
 
   return (
@@ -35,16 +33,12 @@ const StepFour = () => {
        </Typography.Title>
 
        <p>Please Upload a Test Video to See Your Quality of Filming.</p>
+       <Input onChange={onAddVideo} type='file' placeholder="Basic usage" />
 
-
-     <Input onChange={onAddVideo} type='file' placeholder="Basic usage" />
-
-           
-             <video id='add-course-test-video' width="320" height="240" autoPlay>
+             <video id='add-course-test-video' width={URL != "" ? "320" : "0"} height={URL != "" ? "240" : "0"} autoPlay>
                 Your browser does not support the video tag.
             </video>
-  
-
+       
     </div>
 
     </div>
