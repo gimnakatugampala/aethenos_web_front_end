@@ -6,18 +6,35 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Modal from 'react-bootstrap/Modal';
 import Accordion from 'react-bootstrap/Accordion';
-
-
-
+import { UploadOutlined } from '@ant-design/icons';
+import { Upload } from 'antd';
 import { useState } from 'react';
-
-
-
-
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
 const { Text, Link , Title } = Typography;
+
+
+const fileList = [
+  {
+    uid: '0',
+    name: 'xxx.png',
+    status: 'uploading',
+    percent: 33,
+  },
+  {
+    uid: '-1',
+    name: 'yyy.png',
+    status: 'done',
+    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  },
+  {
+    uid: '-2',
+    name: 'zzz.png',
+    status: 'error',
+  },
+];
 
   
 
@@ -149,13 +166,17 @@ const { Text, Link , Title } = Typography;
       <Accordion.Item eventKey="0">
         <Accordion.Header>Introduction</Accordion.Header>
         <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          
+          
+    
+    <Upload
+      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+      listType="picture"
+      defaultFileList={[...fileList]}
+      className="upload-list-inline"
+    >
+      <Button icon={<UploadOutlined />}>Upload</Button>
+    </Upload>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
