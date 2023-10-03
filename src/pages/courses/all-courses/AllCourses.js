@@ -69,10 +69,10 @@ const AllCourses = () => {
 <div className='container my-3'>
 
 {/* List One */}
-<CourseItem title="Learn Photoshop in 20 Min" status="Requested" filledPercent={49} seenBy="PUBLIC" />
-<CourseItem title="Learn Webdevelopment in 20 Min" status="Approved" filledPercent={49} seenBy="PRIVATE" />
-<CourseItem title="Learn AI in 20 Min" status="Draft" filledPercent={49} seenBy="PUBLIC" />
-<CourseItem title="Learn Mobile Development in 20 Min" status="Disapproved" filledPercent={49} seenBy="PUBLIC" />
+<CourseItem title="Learn Photoshop in 20 Min" adminreview="draft" status="Requested" filledPercent={49} seenBy="PUBLIC" />
+<CourseItem title="Learn Webdevelopment in 20 Min" adminreview="rejected"  status="Approved" filledPercent={49} seenBy="PRIVATE" />
+<CourseItem title="Learn AI in 20 Min" status="Draft" adminreview="pending" filledPercent={49} seenBy="PUBLIC" />
+<CourseItem title="Learn Mobile Development in 20 Min" adminreview="pending" status="Disapproved" filledPercent={49} seenBy="PUBLIC" />
     
   </div>
 
