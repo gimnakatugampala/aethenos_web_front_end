@@ -4,11 +4,29 @@ import { Card  } from 'antd';
 import { Button, Progress } from 'antd';
 import { Avatar, List, Skeleton, Switch } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
+import Chip from '@mui/material/Chip';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
 
-const CourseItem = ({title, status, filledPercent, seenBy}) => {
+const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
 
   const [percent, setPercent] = useState(filledPercent);
   const [loading, setLoading] = useState(true);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
 
   setTimeout(() => {
 
@@ -20,8 +38,6 @@ const CourseItem = ({title, status, filledPercent, seenBy}) => {
   return (
     <Skeleton loading={loading} active avatar>
     <div className='my-3'>
-
-
 
     <Badge.Ribbon text={status} color={status == "Draft" ? "cyan" : status == "Approved" ? "green" : status == "Requested" ? "yellow" : status == "Disapproved" ? "red" : "lime"}>
     <Card className='card-item'>
@@ -42,11 +58,27 @@ const CourseItem = ({title, status, filledPercent, seenBy}) => {
     </div>
       
     <div className="col-md-10 p-0">
-        <h5 className="card-title"><b>{title}</b></h5>
+        <h5 className="card-title"><b>{title}</b> {adminreview == 'rejected' && (<a className='mx-2' href="edit-course"><EditIcon /></a>)} </h5> 
         <p className='availblity'>{seenBy}</p>
 
         <div>
-          <span className='pending-text'><Badge color="#f50" text="#f50" /> <CheckOutlined /></span>
+          <span className='pending-text'>
+          {adminreview == 'draft' ? (
+            <Chip label="Draft" color="secondary" variant="outlined" />
+          ) : adminreview == 'rejected' ? (
+            <Chip 
+              aria-owns={open ? 'mouse-over-popover' : undefined}
+              icon={<MoreVertIcon />}
+              aria-haspopup="true"
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
+              label="Rejected" color="primary" variant="outlined" />
+          ) : adminreview == 'pending' && (
+            <Chip label="Pending" color="success" variant="outlined" />
+          ) }
+
+            
+          </span>
           <Progress percent={percent} />
         </div>
 
@@ -54,13 +86,37 @@ const CourseItem = ({title, status, filledPercent, seenBy}) => {
     </div>
     </div>
 
-    <div className='d-flex justify-content-center'> 
-      <a className='card-item-link' href="/courses/manage/2023/">Manage Course</a>
-    </div> 
+   {/* Rejected Admin Comment */}
+      <Popover
+        id="mouse-over-popover"
+        sx={{
+          pointerEvents: 'none',
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        onClose={handlePopoverClose}
+        disableRestoreFocus
+      >
+        <Typography sx={{ p: 2 }}>
+        <h6><b>Admin Comment : </b></h6>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged
+        </Typography>
+      </Popover>
+        {adminreview == 'pending' && (
+            <div className='d-flex justify-content-center'> 
+              <a className='card-item-link' href="/courses/manage/2023/">Manage Course</a>
+            </div> 
+        )}
 
-    {/* <div className='d-flex justify-content-center'> 
-      <a className='card-item-link-draft' href='#'><h2>Waiting For Admin Approval</h2></a>
-    </div>  */}
+
 
 
 

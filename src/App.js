@@ -10,6 +10,7 @@ import SignIn from "./pages/SignIn";
 
 import AllCourses from "./pages/courses/all-courses/AllCourses";
 import AddCourses from "./pages/courses/add-courses/AddCourses";
+import EditCourse from "./pages/courses/edit-courses/EditCourse";
 import ManageCourses from "./pages/courses/manage-courses/ManageCourses";
 
 
@@ -47,6 +48,7 @@ function App() {
 
           <Route exact path="/courses" component={AllCourses} />
           <Route exact path="/add-courses" component={AddCourses} />
+          <Route exact path="/edit-course" component={EditCourse} />
 
 
            <Route exact path="/performance/reviews" component={Reviews} />
