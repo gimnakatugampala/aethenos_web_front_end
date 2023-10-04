@@ -25,6 +25,7 @@ import Basics from './basics/Basics';
 import Pricing from './pricing/Pricing';
 import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
+import Settings from './settings/Settings'
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -145,6 +146,15 @@ const ManageCourses = () => {
           <ListItemText primary="Promotions" />
         </ListItemButton>
 
+        <ListItemButton
+          selected={selectedIndex === 6}
+          onClick={(event) => handleListItemClick(event, 6)}>
+          <ListItemIcon>
+            <TrendingUpIcon />
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </ListItemButton>
+
         <ListItemText>
            <Button className='mx-4 w-75 my-3' type="danger">Submit For Review</Button>
         </ListItemText>
@@ -162,7 +172,8 @@ const ManageCourses = () => {
     selectedIndex == 2 ? <Basics /> : 
     selectedIndex == 3 ? <Pricing /> : 
     selectedIndex == 4 ? <CourseMessages /> :
-    selectedIndex == 5 ? <Promotion /> 
+    selectedIndex == 5 ? <Promotion />  : 
+    selectedIndex == 6 ? <Settings /> 
     : ""}
 
 
