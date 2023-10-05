@@ -1,169 +1,149 @@
-import React, { useState } from 'react';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import SettingsIcon from '@mui/icons-material/Settings';
-import './Pricing.css'
-import { Layout, Menu , Col, Row ,Button } from 'antd';
-import Card from '@mui/material/Card';
-import Form from 'react-bootstrap/Form';
-import Typography from '@mui/material/Typography';
+import React, { useState } from "react";
+import Card from "@mui/material/Card";
+import Form from "react-bootstrap/Form";
+import Typography from "@mui/material/Typography";
+import MouseOverPopover from "./MouseOverPopover";
+import { Select, Checkbox, Radio } from "antd";
 
-
-const { SubMenu } = Menu;
-const { Header, Footer, Sider, Content } = Layout;
-
-
-const headerStyle = {
-    color: '#fff',
-    height: 64,
-    paddingInline: 50,
-    lineHeight: '64px',
-    backgroundColor: '#000',
-  };
-  
+const countries = [
+  { country: "America", currency: "USD" },
+  { country: "Australia", currency: "AUD" },
+  { country: "Brazil", currency: "BRL" },
+  { country: "Canada", currency: "CAD" },
+  { country: "Chile", currency: "CLP" },
+  { country: "Colombia", currency: "COP" },
+  { country: "Egypt", currency: "EGP" },
+  { country: "Great Britain", currency: "GBP" },
+  { country: "India", currency: "INR" },
+  { country: "Indonesia", currency: "IDR" },
+  { country: "Israel", currency: "ILS" },
+  { country: "Japan", currency: "JPY" },
+  { country: "Malaysia", currency: "MYR" },
+  { country: "Mexico", currency: "MXN" },
+  { country: "Nigeria", currency: "NGN" },
+  { country: "Norway", currency: "NOK" },
+  { country: "Peru", currency: "PEN" },
+  { country: "Philippines", currency: "PHP" },
+  { country: "Poland", currency: "PLN" },
+  { country: "Romania", currency: "RON" },
+  { country: "Russia", currency: "RUB" },
+  { country: "Singapore", currency: "SGD" },
+  { country: "South Africa", currency: "ZAR" },
+  { country: "South Korea", currency: "KRW" },
+  { country: "Taiwan", currency: "TWD" },
+  { country: "Thailand", currency: "THB" },
+  { country: "Turkey", currency: "TRY" },
+  { country: "Vietnam", currency: "VND" },
+  { country: "European Union", currency: "EUR" },
+  { country: "Other Countries", currency: "Unknown" },
+];
 
 const Pricing = () => {
+  const [customPrices, setCustomPrices] = useState(false);
+  const [selectedDiscountType, setSelectedDiscountType] = useState({});
 
-  const [age, setAge] = React.useState('');
+  const handleCustomPricesChange = (event) => {
+    setCustomPrices(event.target.checked);
+  };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const handleDiscountTypeChange = (value, currency) => {
+    setSelectedDiscountType({
+      ...selectedDiscountType,
+      [currency]: value,
+    });
   };
 
   return (
-   
-
-    <div className='col-md-8'>
-    <Card className="py-2 my-2 p-4"> 
-        <Typography className='p-3'  variant="h4" >
+    <div className="col-md-8">
+      <Card className="py-2 my-2 p-4">
+        <Typography className="p-3" variant="h4">
           Pricing
-       </Typography>
-       <hr />
+        </Typography>
+        <hr />
 
-       <div className='pricing-container'>
+        <div className="pricing-container">
+          {/* Add a div for custom prices and discount type */}
+          <div className="custom-prices-container">
+            <Checkbox
+              onChange={handleCustomPricesChange}
+              checked={customPrices}
+              style={{ marginRight: "10px" }}
+            >
+              Set Custom Prices
+            </Checkbox>
+            <Radio.Group
+              value={selectedDiscountType} // Use selectedDiscountType here
+              style={{ marginLeft: "220px" }}
+            >
+              <Radio value="No Discount">No Discount</Radio>
+              <Radio value="Percentage">Percentage</Radio>
+              <Radio value="Fixed Discount">Fixed Discount</Radio>
+            </Radio.Group>
+          </div>
 
-       <div className='pricing-header'>
-      <Typography  variant="h6" >Course Price Tier</Typography>
-      <p>Please select the price tier for your course below and click 'Save'. The list price that students will see in other currencies is determined using the price tier matrix.</p>
-
-      </div>
-
-  <table class="table table-striped text-center">
-  <thead>
-    <tr>
-      <th scope="col">Continents</th>
-      <th scope="col">Country</th>
-      <th scope="col">Price Tiers ($)</th>
-    </tr>
-  </thead>
-  <tbody>
-
-    <tr>
-      <td>Asia</td>
-      <td><i title="Afghanistan,Armenia,Azerbaijan,Bahrain,Bangladesh,Bhutan,Brunei,Cambodia,China,Cyprus,Georgia,India,Indonesia,Iran,Iraq,Israel,Japan,Jordan,Kazakhstan,Kuwait,Kyrgyzstan,Laos,Lebanon,Malaysia,Maldives,Mongolia,Myanmar (Burma),Nepal,North Korea,Oman,Pakistan,Palestine,Philippines,Qatar,Saudi Arabia,Singapore,South Korea,Sri Lanka,Syria,Taiwan,Tajikistan,Thailand,Timor-Leste (East Timor),Turkey,Turkmenistan,United Arab Emirates,Uzbekistan,Vietnam,Yemen" class="fa-solid fa-circle-question"></i></td>
-      <td>
-      <Form.Select aria-label="Default select example">
-      <option>Open this select menu</option>
-      <option value="1">Free</option>
-      <option value="2">$1.99</option>
-      <option value="3">$2.99</option>
-      <option value="4">$3.99</option>
-      <option value="5">$4.99</option>
-    </Form.Select>
-      </td>
-      
-    </tr>
-
-    <tr>
-      <td>Africa</td>
-      <td><i title="Algeria,Angola,Benin,Botswana,Burkina Faso,Burundi,Cameroon,Cape Verde,Central African Republic,Chad,Comoros,Democratic Republic of the Congo,Republic of the Congo,Djibouti,Egypt,Equatorial Guinea,Eritrea,Eswatini (formerly Swaziland),Ethiopia,Gabon,Gambia,Ghana,Guinea,Guinea-Bissau,Ivory Coast (Côte d'Ivoire),Kenya,Lesotho,Liberia,Libya,Madagascar,Malawi,Mali,Mauritania,Mauritius,Morocco,Mozambique,Namibia,Niger,Nigeria,Rwanda,Sao Tome and Principe,Senegal,Seychelles,Sierra Leone,Somalia,South Africa,South Sudan,Sudan,Tanzania,Togo,Tunisia,Uganda,Zambia,Zimbabwe" class="fa-solid fa-circle-question"></i></td>
-         <td>
-          <Form.Select aria-label="Default select example">
-          <option>Open this select menu</option>
-          <option value="1">Free</option>
-          <option value="2">$1.99</option>
-          <option value="3">$2.99</option>
-          <option value="4">$3.99</option>
-          <option value="5">$4.99</option>
-        </Form.Select>
-      </td>
-      
-    </tr>
-
-    <tr>
-      <td>North America</td>
-      <td><i title="Canada,United States,Mexico,Belize,Costa Rica,El Salvador,Guatemala,Honduras,Nicaragua,Panama,South America:,Argentina,Bolivia,Brazil,Chile,Colombia,Ecuador,Guyana,Paraguay,Peru,Suriname,Uruguay,Venezuela" class="fa-solid fa-circle-question"></i></td>
-         <td>
-          <Form.Select aria-label="Default select example">
-          <option>Open this select menu</option>
-          <option value="1">Free</option>
-          <option value="2">$1.99</option>
-          <option value="3">$2.99</option>
-          <option value="4">$3.99</option>
-          <option value="5">$4.99</option>
-        </Form.Select>
-      </td>
-      
-    </tr>
-
-    <tr>
-      <td>South America</td>
-      <td><i title="Argentina,Bolivia,Brazil,Chile,Colombia,Ecuador,Guyana,Paraguay,Peru,Suriname,Uruguay,Venezuela" class="fa-solid fa-circle-question"></i></td>
-         <td>
-      <Form.Select aria-label="Default select example">
-      <option>Open this select menu</option>
-      <option value="1">Free</option>
-      <option value="2">$1.99</option>
-      <option value="3">$2.99</option>
-      <option value="4">$3.99</option>
-      <option value="5">$4.99</option>
-    </Form.Select>
-      </td>
-      
-    </tr>
-
-    <tr>
-      <td>Europe</td>
-      <td><i title="Albania,Andorra,Austria,Belarus,Belgium,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Denmark,Estonia,Finland,France,Germany,Greece,Hungary,Iceland,Ireland,Italy,Kosovo,Latvia,Liechtenstein,Lithuania,Luxembourg,Malta,Moldova,Monaco,Montenegro,Netherlands,North Macedonia,Norway,Poland,Portugal,Romania,Russia,San Marino,Serbia,Slovakia,Slovenia,Spain,Sweden,Switzerland,Ukraine,United Kingdom,Vatican City (Holy See)" class="fa-solid fa-circle-question"></i></td>
-         <td>
-      <Form.Select aria-label="Default select example">
-      <option>Open this select menu</option>
-      <option value="1">Free</option>
-      <option value="2">$1.99</option>
-      <option value="3">$2.99</option>
-      <option value="4">$3.99</option>
-      <option value="5">$4.99</option>
-    </Form.Select>
-      </td>
-      
-    </tr>
-
-    <tr>
-      <td>Australia</td>
-      <td><i title="Australia" class="fa-solid fa-circle-question"></i></td>
-      <td>
-      <Form.Select aria-label="Default select example">
-          <option>Open this select menu</option>
-          <option value="1">Free</option>
-          <option value="2">$1.99</option>
-          <option value="3">$2.99</option>
-          <option value="4">$3.99</option>
-          <option value="5">$4.99</option>
-        </Form.Select>
-      </td>
-      
-    </tr>
-
-  </tbody>
-</table>
-
-       </div>
-
- 
-
-    </Card>
-    
+          <table className="table table-striped text-center">
+            <thead>
+              <tr>
+                <th scope="col">Country</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Price</th>
+                <th scope="col">View Price Range</th>
+                <th scope="col">Discount Type</th>
+                <th scope="col">Discount Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {countries.map((countryData, index) => (
+                <tr key={index}>
+                  <td>{countryData.country}</td>
+                  <td>{countryData.currency}</td>
+                  <td>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Price"
+                      disabled={!customPrices}
+                    />
+                  </td>
+                  <td>
+                    <MouseOverPopover value={countryData.currency} />
+                  </td>
+                  <td>
+                    <Select
+                      defaultValue="No Discount"
+                      value={
+                        selectedDiscountType[countryData.currency] ||
+                        "No Discount"
+                      }
+                      style={{ width: "100%" }}
+                      onChange={(value) =>
+                        handleDiscountTypeChange(value, countryData.currency)
+                      }
+                      disabled={!customPrices}
+                    >
+                      <Select.Option value="No Discount">
+                        --- NO DISCOUNT ---
+                      </Select.Option>
+                      <Select.Option value="By Percentage">
+                        By Percentage
+                      </Select.Option>
+                      <Select.Option value="By Value">By Value</Select.Option>
+                    </Select>
+                  </td>
+                  <td>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Discount Amount"
+                      disabled={!customPrices}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </div>
-  )
-}
+  );
+};
 
-export default Pricing
+export default Pricing;
