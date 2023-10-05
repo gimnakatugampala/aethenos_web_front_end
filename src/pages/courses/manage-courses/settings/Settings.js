@@ -1,9 +1,18 @@
 import React from 'react';
 import { Typography, Paper, Container, Box, Button, Grid } from '@mui/material';
+import { Card  } from 'antd';
 
 function App() {
   return (
-    <Container maxWidth="md">
+    <div className='col-md-8'>
+    <Card className="py-2 my-2"> 
+        <Typography className='p-3' variant='h4'>
+          Settings
+       </Typography>
+       <hr />
+
+
+       <Container maxWidth="md">
       <Box my={4}>
         <Paper elevation={0} sx={{ padding: 3, borderRadius: 2, backgroundColor: '#f0f0f0', borderColor: 'red' }}>
           <Typography variant="h6" color="error" gutterBottom>
@@ -53,6 +62,11 @@ function App() {
         </Paper>
       </Box>
     </Container>
+
+
+       </Card>
+       </div>
+
   );
 }
 
