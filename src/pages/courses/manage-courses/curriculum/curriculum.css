@@ -1,3 +1,13 @@
-.jodit-status-bar a.jodit-status-bar-link{
+.jodit-status-bar a.jodit-status-bar-link {
     display: none;
+}
+
+.bgc {
+    background-color: #f7f9fa;
+    border: solid;
+    border-width: 0.2ch;
+}
+
+.tex1 {
+    height: 30px;
 }
