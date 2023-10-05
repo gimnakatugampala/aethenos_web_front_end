@@ -93,120 +93,312 @@ const Basics = () => {
           <Select
           size='large'
           style={{width:'100%'}}
-            defaultValue="Sri Lanka"
+            defaultValue="English (UK)"
             onChange={handleChange}
             options={[
               {
-                value: 'lk',
-                label: 'Sri Lanka',
+                value: 'South Africa',
+                label: 'Afrikaans',
               },
               {
-                value: 'in',
-                label: 'India',
+                value: 'Haiti',
+                label: 'Ayisyen',
               },
               {
-                value: 'pak',
-                label: 'Pakistan',
+                value: 'Bolivia',
+                label: 'Aymar aru',
               },
               {
-                value: 'bang',
-                label: 'Bangladesh',
+                value: 'Azerbaijan',
+                label: 'Azərbaycan dili',
               },
               {
-                value: 'usa',
-                label: 'USA',
+                value: 'Indonesia',
+                label: 'Bahasa Indonesia',
               },
               {
-                value: 'eng',
-                label: 'England',
-              },
-            ]}
-          />
-          </div>
-
-          <div className='col-md-3'>
-          <Select
-          size='large'
-          style={{width:'100%'}}
-            defaultValue="--Select Level--"
-            onChange={handleChange}
-            options={[
-              {
-                value: 'beginner-level',
-                label: 'Beginner Level',
+                value: 'Bangladesh',
+                label: 'Bangla',
               },
               {
-                value: 'intermediate-level',
-                label: 'Intermediate Level',
+                value: 'Bosnia and Herzegovina',
+                label: 'Bosanski',
               },
               {
-                value: 'expert-level',
-                label: 'Expert Level',
+                value: 'Bulgaria',
+                label: 'Български',
               },
               {
-                value: 'all-level',
-                label: 'All Level',
+                value: 'Catalonia',
+                label: 'Català',
               },
-            ]}
-          />
-          </div>
-
-          <div className='col-md-3'>
-          <Select
-          size='large'
-          style={{width:'100%'}}
-          defaultValue="Development"
-          placeholder="Select Course Category"
-          allowClear
-          onChange={handleChange}
-          options={[
-            {
-              value: 'development',
-              label: 'Development',
-            },
-            {
-              value: 'bisiness',
-              label: 'Business',
-            },
-            {
-              value: 'finance',
-              label: 'Finance & Accounting',
-            },
-            {
-              value: 'it',
-              label: 'IT & Software',
-            },
-            {
-              value: 'officep',
-              label: 'Office Productivity',
-            },
-            {
-              value: 'design',
-              label: 'Design',
-            },
-            {
-              value: 'marketing',
-              label: 'Marketing',
-            },
-            {
-              value: 'lifestyle',
-              label: 'Lifestyle',
-            },
-            {
-              value: 'photography',
-              label: 'Photography & Video',
-            },
-            {
-              value: 'health',
-              label: 'Health & Fitness',
-            },
-            {
-              value: 'music',
-              label: 'Music',
-            },
-            {
-              value: 'teaching',
-              label: 'Teaching & Academics',
+              {
+                value: 'Cherokee',
+                label: 'Cherokee',
+              },
+              {
+                value: 'Croatia',
+                label: 'Hrvatski',
+              },
+              {
+                value: 'Czech Republic',
+                label: 'Čeština',
+              },
+              {
+                value: 'Denmark',
+                label: 'Dansk',
+              },
+              {
+                value: 'Netherlands',
+                label: 'Nederlands',
+              },
+              {
+                value: 'Belgium',
+                label: 'Nederlands (België)',
+              },
+              {
+                value: 'India',
+                label: 'English (India)',
+              },
+              {
+                value: 'United Kingdom',
+                label: 'English (UK)',
+              },
+              {
+                value: 'United States',
+                label: 'English (US)',
+              },
+              {
+                value: 'Estonia',
+                label: 'Eesti',
+              },
+              {
+                value: 'Faroe Islands',
+                label: 'Føroyskt',
+              },
+              {
+                value: 'Philippines',
+                label: 'Filipino',
+              },
+              {
+                value: 'Finland',
+                label: 'Suomi',
+              },
+              {
+                value: 'Canada',
+                label: 'Français (Canada)',
+              },
+              {
+                value: 'France',
+                label: 'Français (France)',
+              },
+              {
+                value: 'Netherlands',
+                label: 'Frysk',
+              },
+              {
+                value: 'Galicia',
+                label: 'Galego',
+              },
+              {
+                value: 'Ireland',
+                label: 'Gaeilge',
+              },
+              {
+                value: 'Scotland',
+                label: 'Gaellge',
+              },
+              {
+                value: 'Hungary',
+                label: 'Magyar',
+              },
+              {
+                value: 'Iceland',
+                label: 'Íslenska',
+              },
+              {
+                value: 'Indonesia',
+                label: 'Bahasa Indonesia',
+              },
+              {
+                value: 'Ireland',
+                label: 'Gaeilge',
+              },
+              {
+                value: 'Italy',
+                label: 'Italiano',
+              },
+              {
+                value: 'Japan',
+                label: '日本語',
+              },
+              {
+                value: 'Indonesia',
+                label: 'Basa Jawa',
+              },
+              {
+                value: 'India',
+                label: 'Kannada',
+              },
+              {
+                value: 'Kazakhstan',
+                label: 'Казакша',
+              },
+              {
+                value: 'Cambodia',
+                label: 'Khmer',
+              },
+              {
+                value: 'South Korea',
+                label: '한국어',
+              },
+              {
+                value: 'Kurdistan',
+                label: 'Kurdi',
+              },
+              {
+                value: 'Latvia',
+                label: 'Latviešu',
+              },
+              {
+                value: 'Luxembourg',
+                label: 'Lëtzebuergesch',
+              },
+              {
+                value: 'Lithuania',
+                label: 'Lietuvių',
+              },
+              {
+                value: 'Hungary',
+                label: 'Magyar',
+              },
+              {
+                value: 'Iceland',
+                label: 'Íslenska',
+              },
+              {
+                value: 'Indonesia',
+                label: 'Bahasa Indonesia',
+              },
+              {
+                value: 'Ireland',
+                label: 'Gaeilge',
+              },
+              {
+                value: 'Italy',
+                label: 'Italiano',
+              },
+              {
+                value: 'India',
+                label: 'English (India)',
+              },
+              {
+                value: 'United Kingdom',
+                label: 'English (UK)',
+              },
+              {
+                value: 'United States',
+                label: 'English (US)',
+              },
+              {
+                value: 'Estonia',
+                label: 'Eesti',
+              },
+              {
+                value: 'Faroe Islands',
+                label: 'Føroyskt',
+              },
+              {
+                value: 'Philippines',
+                label: 'Filipino',
+              },
+              {
+                value: 'Finland',
+                label: 'Suomi',
+              },
+              {
+                value: 'Canada',
+                label: 'Français (Canada)',
+              },
+              {
+                value: 'France',
+                label: 'Français (France)',
+              },
+              {
+                value: 'Netherlands',
+                label: 'Frysk',
+              },
+              {
+                value: 'Galicia',
+                label: 'Galego',
+              },
+              {
+                value: 'Germany',
+                label: 'Deutsch',
+              },
+              {
+                value: 'Paraguay',
+                label: 'Avañe\'ẽ',
+              },
+              {
+                value: 'Hungary',
+                label: 'Magyar',
+              },
+              {
+                value: 'Iceland',
+                label: 'Íslenska',
+              },
+              {
+                value: 'Haiti',
+                label: 'Ayisyen',
+              },
+              {
+                value: 'India',
+                label: 'Magyar',
+              },
+              {
+                value: 'Indonesia',
+                label: 'Bahasa Indonesia',
+              },
+              {
+                value: 'Ireland',
+                label: 'Gaeilge',
+              },
+              {
+                value: 'Italy',
+                label: 'Italiano',
+              },
+              {
+                value: 'Japan',
+                label: '日本語',
+              },
+              {
+                value: 'Indonesia',
+                label: 'Basa Jawa',
+              },
+              {
+                value: 'India',
+                label: 'Kannada',
+              },
+              {
+                value: 'Kazakhstan',
+                label: 'Казакша',
+              },
+              {
+                value: 'Cambodia',
+                label: 'Khmer',
+              },
+              {
+                value: 'South Korea',
+                label: '한국어',
+              },
+              {
+                value: 'Kurdistan',
+                label: 'Kurdi',
+              },
+              {
+                value: 'Latvia',
+                label: 'Latviešu',
             },
           ]}
           />
