@@ -14,6 +14,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ForumIcon from '@mui/icons-material/Forum';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
+
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -150,7 +151,7 @@ const ManageCourses = () => {
           selected={selectedIndex === 6}
           onClick={(event) => handleListItemClick(event, 6)}>
           <ListItemIcon>
-            <TrendingUpIcon />
+            <SettingsIcon />
           </ListItemIcon>
           <ListItemText primary="Settings" />
         </ListItemButton>
