@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
-import Form from "react-bootstrap/Form";
 import Typography from "@mui/material/Typography";
-import MouseOverPopover from "./MouseOverPopover";
-import { Select, Checkbox, Radio } from "antd";
+import { Select, Radio } from "antd";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "react-bootstrap/Form";
 
 const countries = [
   { country: "America", currency: "USD" },
@@ -39,18 +39,19 @@ const countries = [
 ];
 
 const Pricing = () => {
-  const [customPrices, setCustomPrices] = useState(false);
-  const [selectedDiscountType, setSelectedDiscountType] = useState({});
+  const initialDiscountTypes = new Array(countries.length).fill("No Discount");
+  const [selectedDiscountTypes, setSelectedDiscountTypes] =
+    useState(initialDiscountTypes);
 
-  const handleCustomPricesChange = (event) => {
-    setCustomPrices(event.target.checked);
+  const handleDiscountTypeChange = (value, index) => {
+    const updatedDiscountTypes = [...selectedDiscountTypes];
+    updatedDiscountTypes[index] = value;
+    setSelectedDiscountTypes(updatedDiscountTypes);
   };
 
-  const handleDiscountTypeChange = (value, currency) => {
-    setSelectedDiscountType({
-      ...selectedDiscountType,
-      [currency]: value,
-    });
+  const handleRadioChange = (value) => {
+    const updatedDiscountTypes = new Array(countries.length).fill(value);
+    setSelectedDiscountTypes(updatedDiscountTypes);
   };
 
   return (
@@ -62,23 +63,22 @@ const Pricing = () => {
         <hr />
 
         <div className="pricing-container">
-          {/* Add a div for custom prices and discount type */}
-          <div className="custom-prices-container">
-            <Checkbox
-              onChange={handleCustomPricesChange}
-              checked={customPrices}
-              style={{ marginRight: "10px" }}
-            >
-              Set Custom Prices
-            </Checkbox>
-            <Radio.Group
-              value={selectedDiscountType} // Use selectedDiscountType here
-              style={{ marginLeft: "220px" }}
-            >
-              <Radio value="No Discount">No Discount</Radio>
-              <Radio value="Percentage">Percentage</Radio>
-              <Radio value="Fixed Discount">Fixed Discount</Radio>
-            </Radio.Group>
+          <div className="price-range-container">
+            <div className="row">
+              <div className="price-range col-6">
+                <h5>Price Range</h5>
+                <h3>100-200</h3>
+              </div>
+              <div className="radio-group col-6 mt-5">
+                <Radio.Group
+                  onChange={(e) => handleRadioChange(e.target.value)}
+                >
+                  <Radio value="No Discount">No Discount</Radio>
+                  <Radio value="Percentage">Percentage</Radio>
+                  <Radio value="Fixed Discount">Fixed Discount</Radio>
+                </Radio.Group>
+              </div>
+            </div>
           </div>
 
           <table className="table table-striped text-center">
@@ -98,43 +98,30 @@ const Pricing = () => {
                   <td>{countryData.country}</td>
                   <td>{countryData.currency}</td>
                   <td>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Price"
-                      disabled={!customPrices}
-                    />
+                    <Form.Control type="text" />
                   </td>
-                  <td>
-                    <MouseOverPopover value={countryData.currency} />
-                  </td>
+                  <td>100-200</td>
                   <td>
                     <Select
-                      defaultValue="No Discount"
-                      value={
-                        selectedDiscountType[countryData.currency] ||
-                        "No Discount"
-                      }
+                      value={selectedDiscountTypes[index]}
                       style={{ width: "100%" }}
                       onChange={(value) =>
-                        handleDiscountTypeChange(value, countryData.currency)
+                        handleDiscountTypeChange(value, index)
                       }
-                      disabled={!customPrices}
                     >
                       <Select.Option value="No Discount">
                         --- NO DISCOUNT ---
                       </Select.Option>
-                      <Select.Option value="By Percentage">
+                      <Select.Option value="Percentage">
                         By Percentage
                       </Select.Option>
-                      <Select.Option value="By Value">By Value</Select.Option>
+                      <Select.Option value="Fixed Discount">
+                        By Value
+                      </Select.Option>
                     </Select>
                   </td>
                   <td>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter Discount Amount"
-                      disabled={!customPrices}
-                    />
+                    <Form.Control type="text" />
                   </td>
                 </tr>
               ))}
