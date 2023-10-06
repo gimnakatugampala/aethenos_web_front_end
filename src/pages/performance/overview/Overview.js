@@ -1,9 +1,12 @@
 import React from 'react'
+import MaterialTable from 'material-table'
 import './Overview.css'
 
 const Overview = () => {
   return (
-    <div>Overview</div>
+    <div>
+      
+    </div>
   )
 }
 
