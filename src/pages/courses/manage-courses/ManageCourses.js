@@ -5,9 +5,10 @@ import {  Space , Typography  } from 'antd';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './ManageCourses.css'
-import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
+import { Layout, Menu , Col, Row, Card ,Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
+import { Button } from '@mui/material';
 
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -204,7 +205,7 @@ const ManageCourses = () => {
         </ListItemButton>
 
         <ListItemText>
-           <Button className='mx-4 w-75 my-3' type="danger">Submit For Review</Button>
+           <Button className='mx-4 w-75 my-3' variant="contained">Submit For Review</Button>
         </ListItemText>
         
 
