@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useLocation } from "react-router-dom";
+
 import {  Space , Typography  } from 'antd';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -47,10 +49,50 @@ const headerStyle = {
 const ManageCourses = () => {
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectTab, setselectTab] = useState(window.history.state)
+  const location = useLocation();
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+
+
+    if(index == 0){
+      setselectTab("intended-learners")
+      window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
+    }else if (index == 1){
+      setselectTab("curriculum")
+      window.history.pushState("curriculum", "Manage Course", `#curriculum`);
+    }else if (index == 2){
+      setselectTab("course-landing-page")
+      window.history.pushState("course-landing-page", "Manage Course", `#course-landing-page`);
+    }else if (index == 3){
+      setselectTab("pricing")
+      window.history.pushState("pricing", "Manage Course", `#pricing`);
+    }else if (index == 4){
+      setselectTab("course-messages")
+      window.history.pushState("course-messages", "Manage Course", `#course-messages`);
+    }else if (index == 5){
+      setselectTab("promotions")
+      window.history.pushState("promotions", "Manage Course", `#promotions`);
+    }else if (index == 6){
+      setselectTab("settings")
+      window.history.pushState("settings", "Manage Course", `#settings`);
+    }else{
+      setselectTab("intended-learners")
+      window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
+    }
+
+    // console.log(window.history)
+
+
+
+    
+
   };
+
+  React.useEffect(() => {
+    setselectTab(window.history.state)
+  }, [window.history]);
 
 
   return (
@@ -168,13 +210,13 @@ const ManageCourses = () => {
 
     {/* HERE */}
     {/*  */}
-    {selectedIndex == 0 ? <IntendedLearners /> : 
-    selectedIndex == 1 ?  <Curriculum /> : 
-    selectedIndex == 2 ? <Basics /> : 
-    selectedIndex == 3 ? <Pricing /> : 
-    selectedIndex == 4 ? <CourseMessages /> :
-    selectedIndex == 5 ? <Promotion />  : 
-    selectedIndex == 6 ? <Settings /> 
+    { selectTab == "intended-learners"  ? <IntendedLearners /> : 
+     selectTab == "curriculum" ?  <Curriculum /> : 
+     selectTab == "course-landing-page" ? <Basics /> : 
+     selectTab == "pricing" ? <Pricing /> : 
+     selectTab == "course-messages" ? <CourseMessages /> :
+     selectTab == "promotions" ? <Promotion />  : 
+     selectTab == "settings" ? <Settings /> 
     : ""}
 
 

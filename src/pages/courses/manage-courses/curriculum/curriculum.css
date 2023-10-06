@@ -1,17 +1,8 @@
-.jodit-status-bar a.jodit-status-bar-link {
+.section-container:hover .section-actions{
+    display: block;
+}
+
+.section-actions{
     display: none;
 }
 
-.bgc {
-    background-color: #f7f9fa;
-    border: solid;
-    border-width: 0.2ch;
-}
-
-.tex1 {
-    height: 30px;
-}
-
-.me {
-    margin-right: -900px;
-}
