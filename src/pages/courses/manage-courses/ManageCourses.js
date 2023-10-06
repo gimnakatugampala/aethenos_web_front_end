@@ -52,47 +52,52 @@ const ManageCourses = () => {
   const [selectTab, setselectTab] = useState(window.history.state)
   const location = useLocation();
 
+
+
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
 
-
-    if(index == 0){
+    if(index == "intended-learners"){
       setselectTab("intended-learners")
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
-    }else if (index == 1){
+    }else if (index == "curriculum"){
       setselectTab("curriculum")
       window.history.pushState("curriculum", "Manage Course", `#curriculum`);
-    }else if (index == 2){
+    }else if (index == "course-landing-page"){
       setselectTab("course-landing-page")
       window.history.pushState("course-landing-page", "Manage Course", `#course-landing-page`);
-    }else if (index == 3){
+    }else if (index == "pricing"){
       setselectTab("pricing")
       window.history.pushState("pricing", "Manage Course", `#pricing`);
-    }else if (index == 4){
+    }else if (index == "course-messages"){
       setselectTab("course-messages")
       window.history.pushState("course-messages", "Manage Course", `#course-messages`);
-    }else if (index == 5){
+    }else if (index == "promotions"){
       setselectTab("promotions")
       window.history.pushState("promotions", "Manage Course", `#promotions`);
-    }else if (index == 6){
+    }else if (index == "settings"){
       setselectTab("settings")
       window.history.pushState("settings", "Manage Course", `#settings`);
     }else{
       setselectTab("intended-learners")
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
-    }
-
-    // console.log(window.history)
-
-
-
-    
+    }    
 
   };
 
   React.useEffect(() => {
     setselectTab(window.history.state)
-  }, [window.history]);
+
+    if(window.history.state == null){
+      setselectTab(window.location.href.replace(window.location.pathname,"").replace(/.*#/, ''))
+    }
+
+    if(!window.location.href.includes("#")){
+      setselectTab("intended-learners")
+      window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
+  }
+
+  },[window.history.state]);
 
 
   return (
@@ -125,7 +130,7 @@ const ManageCourses = () => {
    
         <ListItemButton
           selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
+          onClick={(event) => handleListItemClick(event, "intended-learners")}
         >
           <ListItemIcon>
             <LocalLibraryIcon />
@@ -137,7 +142,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
+          onClick={(event) => handleListItemClick(event, "curriculum")}
         >
           <ListItemIcon>
             <LibraryBooksIcon />
@@ -150,7 +155,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
+          onClick={(event) => handleListItemClick(event, "course-landing-page")}
         >
           <ListItemIcon>
             <LayersIcon />
@@ -161,7 +166,7 @@ const ManageCourses = () => {
       
         <ListItemButton
           selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
+          onClick={(event) => handleListItemClick(event, "pricing")}
         >
           <ListItemIcon>
             <MonetizationOnIcon />
@@ -173,7 +178,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}>
+          onClick={(event) => handleListItemClick(event, "course-messages")}>
           <ListItemIcon>
             <ForumIcon />
           </ListItemIcon>
@@ -182,7 +187,7 @@ const ManageCourses = () => {
 
         <ListItemButton
           selected={selectedIndex === 5}
-          onClick={(event) => handleListItemClick(event, 5)}>
+          onClick={(event) => handleListItemClick(event, "promotions")}>
           <ListItemIcon>
             <TrendingUpIcon />
           </ListItemIcon>
@@ -191,7 +196,7 @@ const ManageCourses = () => {
 
         <ListItemButton
           selected={selectedIndex === 6}
-          onClick={(event) => handleListItemClick(event, 6)}>
+          onClick={(event) => handleListItemClick(event, "settings")}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
@@ -210,7 +215,7 @@ const ManageCourses = () => {
 
     {/* HERE */}
     {/*  */}
-    { selectTab == "intended-learners"  ? <IntendedLearners /> : 
+    { selectTab == "intended-learners"   ? <IntendedLearners /> : 
      selectTab == "curriculum" ?  <Curriculum /> : 
      selectTab == "course-landing-page" ? <Basics /> : 
      selectTab == "pricing" ? <Pricing /> : 
