@@ -15,6 +15,7 @@ import ManageCourses from "./pages/courses/manage-courses/ManageCourses";
 
 
 import Reviews from "./pages/reviews/Reviews";
+import Overview from "./pages/performance/overview/Overview";
 
 import theme from "./commonFunctions/theme";
 
@@ -51,6 +52,7 @@ function App() {
           <Route exact path="/edit-course" component={EditCourse} />
 
 
+           <Route exact path="/performance/overview" component={Overview} />
            <Route exact path="/performance/reviews" component={Reviews} />
 
         </Main>
