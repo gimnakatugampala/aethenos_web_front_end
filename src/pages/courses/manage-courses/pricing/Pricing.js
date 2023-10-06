@@ -67,7 +67,7 @@ const Pricing = () => {
             <div className="row">
               <div className="price-range col-6">
                 <h5>Price Range</h5>
-                <h3>100-200</h3>
+                <h3>$100-$200</h3>
               </div>
               <div className="radio-group col-6 mt-5">
                 <Radio.Group
@@ -100,7 +100,7 @@ const Pricing = () => {
                   <td>
                     <Form.Control type="text" />
                   </td>
-                  <td>100-200</td>
+                  <td>$100-$200</td>
                   <td>
                     <Select
                       value={selectedDiscountTypes[index]}
