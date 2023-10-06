@@ -1,3 +1,7 @@
+.curriculum-container .card{
+    background-color: #F2F4F4;
+}
+
 .section-container:hover .section-actions{
     display: block;
 }
@@ -6,3 +10,21 @@
     display: none;
 }
 
+.accordian-header{
+    position: relative;
+}
+
+.accordian-header:hover .accordian-actions{
+    display: flex;
+}
+
+.accordian-actions{
+    display: none;
+    position: absolute;
+    left: 35%;
+}
+
+.css-o4b71y-MuiAccordionSummary-content{
+    justify-content: space-between;
+    align-items: center;
+}
