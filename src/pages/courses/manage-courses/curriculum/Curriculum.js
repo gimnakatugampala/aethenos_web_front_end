@@ -1,131 +1,92 @@
-import React, { useState } from "react";
-import { Card, Typography, Button } from "@mui/material";
-import "./curriculum.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Dropdown from "react-bootstrap/Dropdown";
+import React from 'react'
+import { Input } from "antd";
+import Card from "@mui/material/Card";
+import Button from '@mui/material/Button';
+import { CardContent } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+
+import Typography from "@mui/material/Typography";
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import './Curriculum.css'
+
 
 const Curriculum = () => {
-        const [showSection, setShowSection] = useState(false);
+  return (
+    <div className="col-md-8">
+    <Card className="py-2 my-2 p-4">
+      <Typography className="p-3" variant="h4">
+        Curriculum
+      </Typography>
+      <hr />
 
-        const toggleSection = () => {
-            setShowSection(!showSection);
-        };
 
-        return ( <
-                div className = "col-md-8" >
-                <
-                Card className = "py-2 my-2" >
-                <
-                Typography className = "p-4"
-                variant = "h4"
-                style = {
-                    { display: "flex", justifyContent: "space-between" }
-                } >
-                <
-                span > Curriculum < /span> <Button> Bulk Uploader </Button > { " " } <
-                /Typography>{" "} <
-                hr / >
-                <
-                div className = "row col-10 offset-1" >
-                <
-                h6 className = "mb-3 p-3" >
-                Start putting together your course by creating sections, lectures,
-                and practice(quizzes, coding exercises, and assignments).Start putting together your course by creating sections, lectures, and practice activities(quizzes, coding exercises, and assignments).Use your course outline to structure your content and label your sections and lectures clearly.If you 're intending to offer your
-                course
-                for free, the total length of video content must be less than 2 hours. { " " } <
-                /h6>{" "} <
-                Button className = "col-2 mb-3"
-                onClick = { toggleSection } > { " " } + { " " } <
-                /Button>{" "} {
-                showSection && ( <
-                    div className = "bgc mb-3 flex-column" >
-                    <
-                    div className = "d-flex" >
-                    <
-                    span className = "fw-bold mt-4"
-                    style = {
-                        { marginRight: "10px" }
-                    } > { " " }
-                    New Section: { " " } <
-                    /span>{" "} <
-                    textarea className = "col-10 tex1 mt-4"
-                    rows = "" / >
-                    <
-                    /div>{" "} <
-                    div >
-                    <
-                    span className = "fw-bold" > { " " }
-                    What will students be able to do at the end of this section ? { " " } <
-                        /span>{" "} <
-                    textarea className = "col-10 tex1"
-                    rows = "" / >
-                    <
-                    /div>{" "} <
-                    div className = "text-end" >
-                    <
-                    Button > Cancel < /Button> <Button> Add Section </Button > { " " } <
-                    /div>{" "} < /
-                    div >
-                )
-            } { " " } <
-            div className = "bgc mb-3" >
-            <
-            span className = "fw-bold" > { " " }
-        Section 1: < span > Introduction < /span>{" "} < /
-        span > { " " } <
-            div className = "d-flex justify-content-between align-items-center bgc mb-3 mt-3" >
-            <
-            span > { " " }
-        Lecture 1: < span > Introduction < /span>{" "} < /
-        span > { " " } <
-            Button className = "text-end" > +Content < /Button>{" "} <
-        Dropdown >
-            <
-            Dropdown.Toggle variant = "success"
-        id = "dropdown-basic" > { " " } <
-            /Dropdown.Toggle>{" "} <
-        Dropdown.Menu >
-            <
-            Dropdown.Item href = "#/action-1" > { " " } +
-            Discription { " " } <
-            /Dropdown.Item>{" "} <
-        Dropdown.Item href = "#/action-2" > { " " } +
-            Resources { " " } <
-            /Dropdown.Item>{" "} < /
-        Dropdown.Menu > { " " } <
-            /Dropdown>{" "} < /
-        div > { " " } <
-            Button > Curriculum Item < /Button>{" "} < /
-        div > { " " } <
-            Button className = "col-2 mt-3" > +Section < /Button>{" "} {
-            /* {showSection && (
-                                                                                                                            <div className="bgc mb-3 flex-column">
-                                                                                                                              <div className="d-flex">
-                                                                                                                                <span className="fw-bold" style={{ marginRight: "10px" }}>
-                                                                                                                                  {" "}
-                                                                                                                                  New Section:{" "}
-                                                                                                                                </span>{" "}
-                                                                                                                                <textarea className="col-11 tex1" rows="" />
-                                                                                                                              </div>{" "}
-                                                                                                                              <div>
-                                                                                                                                <span className="fw-bold">
-                                                                                                                                  {" "}
-                                                                                                                                  What will students be able to do at the end of this section ?{" "}
-                                                                                                                                </span>{" "}
-                                                                                                                                <textarea className="col-10 tex1" rows="" />
-                                                                                                                              </div>{" "}
-                                                                                                                              <div className="text-end">
-                                                                                                                                <Button> Cancel </Button> <Button> Add Section </Button>{" "}
-                                                                                                                              </div>{" "}
-                                                                                                                            </div>
-                                                                                                                          )}{" "} */
-    } { " " } <
-    /div>{" "} < /
-Card > { " " } <
-    /div>
-);
-};
+      <div className='card p-2'>
+      <CardContent>
+        <div className='d-flex justify-content-start section-container'>
+        <Typography  variant="subtitle1">
+        <b> Section 1:</b> <FileCopyIcon sx={{ fontSize: 15 }} /> Introduction
+        </Typography>
 
-export default Curriculum;
+        <div className='section-actions'>
+            <EditIcon fontSize="small" className='mx-1' />
+            <DeleteIcon fontSize="small" className='mx-1' />
+        </div>
+        </div>
+
+        <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Accordion 1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Accordion 2</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    
+
+
+    
+     
+      </CardContent>
+   
+    </div>
+
+    <div className='m-2'>
+        <Button variant="contained"><AddIcon /> Section</Button>
+    </div>
+
+
+      </Card>
+      </div>
+  )
+}
+
+export default Curriculum

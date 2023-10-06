@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useLocation } from "react-router-dom";
+
 import {  Space , Typography  } from 'antd';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './ManageCourses.css'
-import { Layout, Menu , Col, Row ,Button , Card ,Select } from 'antd';
+import { Layout, Menu , Col, Row, Card ,Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
+import { Button } from '@mui/material';
 
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -47,10 +50,55 @@ const headerStyle = {
 const ManageCourses = () => {
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectTab, setselectTab] = useState(window.history.state)
+  const location = useLocation();
+
+
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+
+    if(index == "intended-learners"){
+      setselectTab("intended-learners")
+      window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
+    }else if (index == "curriculum"){
+      setselectTab("curriculum")
+      window.history.pushState("curriculum", "Manage Course", `#curriculum`);
+    }else if (index == "course-landing-page"){
+      setselectTab("course-landing-page")
+      window.history.pushState("course-landing-page", "Manage Course", `#course-landing-page`);
+    }else if (index == "pricing"){
+      setselectTab("pricing")
+      window.history.pushState("pricing", "Manage Course", `#pricing`);
+    }else if (index == "course-messages"){
+      setselectTab("course-messages")
+      window.history.pushState("course-messages", "Manage Course", `#course-messages`);
+    }else if (index == "promotions"){
+      setselectTab("promotions")
+      window.history.pushState("promotions", "Manage Course", `#promotions`);
+    }else if (index == "settings"){
+      setselectTab("settings")
+      window.history.pushState("settings", "Manage Course", `#settings`);
+    }else{
+      setselectTab("intended-learners")
+      window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
+    }    
+
   };
+
+  React.useEffect(() => {
+    setselectTab(window.history.state)
+
+    if(window.history.state == null){
+      setselectTab(window.location.href.replace(window.location.pathname,"").replace(/.*#/, ''))
+    }
+
+    if(!window.location.href.includes("#")){
+      setselectTab("intended-learners")
+      window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
+  }
+
+  },[window.history.state]);
 
 
   return (
@@ -83,7 +131,7 @@ const ManageCourses = () => {
    
         <ListItemButton
           selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
+          onClick={(event) => handleListItemClick(event, "intended-learners")}
         >
           <ListItemIcon>
             <LocalLibraryIcon />
@@ -95,7 +143,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
+          onClick={(event) => handleListItemClick(event, "curriculum")}
         >
           <ListItemIcon>
             <LibraryBooksIcon />
@@ -108,7 +156,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
+          onClick={(event) => handleListItemClick(event, "course-landing-page")}
         >
           <ListItemIcon>
             <LayersIcon />
@@ -119,7 +167,7 @@ const ManageCourses = () => {
       
         <ListItemButton
           selected={selectedIndex === 3}
-          onClick={(event) => handleListItemClick(event, 3)}
+          onClick={(event) => handleListItemClick(event, "pricing")}
         >
           <ListItemIcon>
             <MonetizationOnIcon />
@@ -131,7 +179,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 4}
-          onClick={(event) => handleListItemClick(event, 4)}>
+          onClick={(event) => handleListItemClick(event, "course-messages")}>
           <ListItemIcon>
             <ForumIcon />
           </ListItemIcon>
@@ -140,7 +188,7 @@ const ManageCourses = () => {
 
         <ListItemButton
           selected={selectedIndex === 5}
-          onClick={(event) => handleListItemClick(event, 5)}>
+          onClick={(event) => handleListItemClick(event, "promotions")}>
           <ListItemIcon>
             <TrendingUpIcon />
           </ListItemIcon>
@@ -149,7 +197,7 @@ const ManageCourses = () => {
 
         <ListItemButton
           selected={selectedIndex === 6}
-          onClick={(event) => handleListItemClick(event, 6)}>
+          onClick={(event) => handleListItemClick(event, "settings")}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
@@ -157,7 +205,7 @@ const ManageCourses = () => {
         </ListItemButton>
 
         <ListItemText>
-           <Button className='mx-4 w-75 my-3' type="danger">Submit For Review</Button>
+           <Button className='mx-4 w-75 my-3' variant="contained">Submit For Review</Button>
         </ListItemText>
         
 
@@ -168,13 +216,13 @@ const ManageCourses = () => {
 
     {/* HERE */}
     {/*  */}
-    {selectedIndex == 0 ? <IntendedLearners /> : 
-    selectedIndex == 1 ?  <Curriculum /> : 
-    selectedIndex == 2 ? <Basics /> : 
-    selectedIndex == 3 ? <Pricing /> : 
-    selectedIndex == 4 ? <CourseMessages /> :
-    selectedIndex == 5 ? <Promotion />  : 
-    selectedIndex == 6 ? <Settings /> 
+    { selectTab == "intended-learners"   ? <IntendedLearners /> : 
+     selectTab == "curriculum" ?  <Curriculum /> : 
+     selectTab == "course-landing-page" ? <Basics /> : 
+     selectTab == "pricing" ? <Pricing /> : 
+     selectTab == "course-messages" ? <CourseMessages /> :
+     selectTab == "promotions" ? <Promotion />  : 
+     selectTab == "settings" ? <Settings /> 
     : ""}
 
 

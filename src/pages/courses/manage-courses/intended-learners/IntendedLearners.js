@@ -139,7 +139,7 @@ const onFinish = (values) => {
 
                        <div class="input-group">
                         <input maxLength={160} type="text" class="form-control" placeholder="Example" />
-                        <span class="input-group-text" id="res-3">  {fields.length > 0 ? (
+                        <span class="input-group-text btn btn-danger text-white" id="res-3">  {fields.length > 0 ? (
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
                           onClick={() => remove(field.name)}
@@ -223,7 +223,7 @@ const onFinish = (values) => {
 
                        <div class="input-group">
                         <input maxLength={160} type="text" class="form-control" placeholder="Example" />
-                        <span class="input-group-text" id="res-3">  {fields.length > 0 ? (
+                        <span class="input-group-text btn btn-danger text-white" id="res-3">  {fields.length > 0 ? (
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
                           onClick={() => remove(field.name)}
@@ -295,7 +295,7 @@ const onFinish = (values) => {
 
                        <div class="input-group">
                         <input maxLength={160} type="text" class="form-control" placeholder="Example" />
-                        <span class="input-group-text" id="res-3">  {fields.length > 0 ? (
+                        <span class="input-group-text btn btn-danger text-white" id="res-3">  {fields.length > 0 ? (
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
                           onClick={() => remove(field.name)}
