@@ -34,7 +34,7 @@ function RevenueReport() {
                   data: [2, 5.5, 2, 8.5, 1.5, 5],
                 },
               ]}
-              width={800}
+              width={890}
               height={500}
             />
           </Card>
@@ -57,7 +57,7 @@ function RevenueReport() {
                   data: [2, 5.5, 2, 8.5, 1.5, 5],
                 },
               ]}
-              width={800}
+              width={890}
               height={500}
             />
           </Card>
@@ -80,7 +80,7 @@ function RevenueReport() {
                   data: [2, 5.5, 2, 8.5, 1.5, 5],
                 },
               ]}
-              width={800}
+              width={890}
               height={500}
             />
           </Card>

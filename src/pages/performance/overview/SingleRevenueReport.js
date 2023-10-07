@@ -22,73 +22,81 @@ const SingleRevenueReport = () => {
         <div className="row">
           <div className="col-12">
             <p className="fs-5">
-              Revenue Report: <span className="fs-2 font-bold">Mar 2019</span>
+              Revenue Report: <span className="fs-4 font-bold"> Mar 2019</span>
             </p>
           </div>
         </div>
       </div>
-      <p className="font-bold fs-10 mb-0">
-        You earned $71 during this period. May 8, 2019 is the expected payment
-        date for this payment.
-      </p>
-      <p>
-        Total for this money is not yet finalized. As a refund or an external
-        payment may still be applied.{" "}
-        <a href="#">Payment and revenue reports.</a>
-      </p>
+      <div className="container ml-5">
+        <p className="font-bold fs-10 mb-0">
+          You earned $71 during this period. May 8, 2019 is the expected payment
+          date for this payment.
+        </p>
+        <p>
+          Total for this money is not yet finalized. As a refund or an external
+          payment may still be applied.
+          <a href="#"> Payment and revenue reports.</a>
+        </p>
+      </div>
 
       <div className="container">
         <div className="row text-center">
           <div className="col-4">
-            <PieChart
-              series={[
-                {
-                  data,
-                  highlightScope: { faded: "global", highlighted: "item" },
-                  faded: { innerRadius: 30, additionalRadius: -30 },
-                },
-              ]}
-              sx={{
-                [`& .${pieArcClasses.faded}`]: {
-                  fill: "gray",
-                },
-              }}
-              height={200}
-            />
+            <Card>
+              <PieChart
+                series={[
+                  {
+                    data,
+                    highlightScope: { faded: "global", highlighted: "item" },
+                    faded: { innerRadius: 30, additionalRadius: -30 },
+                  },
+                ]}
+                sx={{
+                  [`& .${pieArcClasses.faded}`]: {
+                    fill: "gray",
+                  },
+                }}
+                height={200}
+              />
+            </Card>
           </div>
           <div className="col-4">
-            <PieChart
-              series={[
-                {
-                  data,
-                  highlightScope: { faded: "global", highlighted: "item" },
-                  faded: { innerRadius: 30, additionalRadius: -30 },
-                },
-              ]}
-              sx={{
-                [`& .${pieArcClasses.faded}`]: {
-                  fill: "gray",
-                },
-              }}
-              height={200}
-            />
+            <Card>
+              <PieChart
+                series={[
+                  {
+                    data,
+                    highlightScope: { faded: "global", highlighted: "item" },
+                    faded: { innerRadius: 30, additionalRadius: -30 },
+                  },
+                ]}
+                sx={{
+                  [`& .${pieArcClasses.faded}`]: {
+                    fill: "gray",
+                  },
+                }}
+                height={200}
+              />
+            </Card>
           </div>
           <div className="col-4">
-            <PieChart
-              series={[
-                {
-                  data,
-                  highlightScope: { faded: "global", highlighted: "item" },
-                  faded: { innerRadius: 30, additionalRadius: -30 },
-                },
-              ]}
-              sx={{
-                [`& .${pieArcClasses.faded}`]: {
-                  fill: "gray",
-                },
-              }}
-              height={200}
-            />
+            <Card>
+              <PieChart
+                series={[
+                  {
+                    data,
+                    highlightScope: { faded: "global", highlighted: "item" },
+                    faded: { innerRadius: 30, additionalRadius: -30 },
+                  },
+                ]}
+                sx={{
+                  [`& .${pieArcClasses.faded}`]: {
+                    fill: "gray",
+                  },
+                }}
+                height={200}
+              />
+            </Card>
           </div>
         </div>
       </div>
