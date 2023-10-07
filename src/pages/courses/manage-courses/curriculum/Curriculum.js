@@ -102,13 +102,27 @@ const Curriculum = () => {
                         onClick={() => setcurriculumvisiblity("")}
                         variant="outlined"
                       >
-                        Cancel
+                        <CloseIcon /> Cancel
                       </Button>
                     </div>
                   ) : curriculumvisiblity == "slide" ? (
-                    <div>Slide</div>
+                    <div>
+                      <Button
+                        onClick={() => setcurriculumvisiblity("")}
+                        variant="outlined"
+                      >
+                        <CloseIcon /> Cancel
+                      </Button>
+                    </div>
                   ) : curriculumvisiblity == "article" ? (
-                    <div>Article</div>
+                    <div>
+                      <Button
+                        onClick={() => setcurriculumvisiblity("")}
+                        variant="outlined"
+                      >
+                        <CloseIcon /> Cancel
+                      </Button>
+                    </div>
                   ) : (
                     <div className="d-flex justify-content-center">
                       <div className="mx-2">
