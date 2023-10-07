@@ -60,27 +60,35 @@ const ManageCourses = () => {
 
     if(index == "intended-learners"){
       setselectTab("intended-learners")
+      setSelectedIndex(0)
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
     }else if (index == "curriculum"){
       setselectTab("curriculum")
+      setSelectedIndex(1)
       window.history.pushState("curriculum", "Manage Course", `#curriculum`);
     }else if (index == "course-landing-page"){
       setselectTab("course-landing-page")
+      setSelectedIndex(2)
       window.history.pushState("course-landing-page", "Manage Course", `#course-landing-page`);
     }else if (index == "pricing"){
       setselectTab("pricing")
+      setSelectedIndex(3)
       window.history.pushState("pricing", "Manage Course", `#pricing`);
     }else if (index == "course-messages"){
       setselectTab("course-messages")
+      setSelectedIndex(4)
       window.history.pushState("course-messages", "Manage Course", `#course-messages`);
     }else if (index == "promotions"){
       setselectTab("promotions")
+      setSelectedIndex(5)
       window.history.pushState("promotions", "Manage Course", `#promotions`);
     }else if (index == "settings"){
       setselectTab("settings")
+      setSelectedIndex(6)
       window.history.pushState("settings", "Manage Course", `#settings`);
     }else{
       setselectTab("intended-learners")
+      setSelectedIndex(0)
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
     }    
 
@@ -89,12 +97,51 @@ const ManageCourses = () => {
   React.useEffect(() => {
     setselectTab(window.history.state)
 
+    if(window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "intended-learners"){
+      setSelectedIndex(0)
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "curriculum"){
+      setSelectedIndex(1)
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "course-landing-page"){
+      setSelectedIndex(2)
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "pricing"){
+      setSelectedIndex(3)
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "course-messages"){
+      setSelectedIndex(4)
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "promotions"){
+      setSelectedIndex(5)
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "settings"){
+      setSelectedIndex(6)
+    }else{
+      setSelectedIndex(0)
+    }  
+
     if(window.history.state == null){
+
       setselectTab(window.location.href.replace(window.location.pathname,"").replace(/.*#/, ''))
+
+      if(window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "intended-learners"){
+        setSelectedIndex(0)
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "curriculum"){
+        setSelectedIndex(1)
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "course-landing-page"){
+        setSelectedIndex(2)
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "pricing"){
+        setSelectedIndex(3)
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "course-messages"){
+        setSelectedIndex(4)
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "promotions"){
+        setSelectedIndex(5)
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "settings"){
+        setSelectedIndex(6)
+      }else{
+        setSelectedIndex(0)
+      }   
+
     }
 
     if(!window.location.href.includes("#")){
       setselectTab("intended-learners")
+      setSelectedIndex(0)
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
   }
 

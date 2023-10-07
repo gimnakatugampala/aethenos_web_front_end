@@ -6,6 +6,8 @@ import { CardContent } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -88,7 +90,26 @@ const Curriculum = () => {
                 </AccordionSummary>
 
                 <AccordionDetails>
-                  <div className="row"></div>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                          m: 1,
+                          width: 128,
+                          height: 128,
+                        },
+                      }}
+                    >
+                    <Paper elevation={3} >
+                      Lorem
+                    </Paper>
+                  </Box>
+                    </div>
+
+                  </div>
                 </AccordionDetails>
               </Accordion>
 
@@ -111,7 +132,6 @@ const Curriculum = () => {
 
                   {showContentAdd ? (
                     <Button
-                      onClick={handleContentshow}
                       className="mx-2"
                       size="small"
                       variant="contained"
@@ -120,7 +140,6 @@ const Curriculum = () => {
                     </Button>
                   ) : (
                     <Button
-                      onClick={handleContentshow}
                       className="mx-2"
                       size="small"
                       variant="outlined"
