@@ -104,13 +104,16 @@ const Curriculum = () => {
                   {/* Landing Content */}
                   {curriculumvisiblity == "video" ? (
                     <div>
-                      <Button onClick={() => setcurriculumvisiblity("")} variant="outlined">Cancel</Button>
-
+                      <Button onClick={() => setcurriculumvisiblity("")} variant="outlined"><CloseIcon /> Cancel</Button>
                     </div>
                   ) : curriculumvisiblity == "slide" ? (
-                    <div>Slide</div>
+                    <div>
+                      <Button onClick={() => setcurriculumvisiblity("")} variant="outlined"><CloseIcon /> Cancel</Button>
+                    </div>
                   ) : curriculumvisiblity == "article" ? (
-                    <div>Article</div>
+                    <div>
+                      <Button onClick={() => setcurriculumvisiblity("")} variant="outlined"><CloseIcon /> Cancel</Button>
+                    </div>
                   ) : (
 
                     <div className="d-flex justify-content-center">
