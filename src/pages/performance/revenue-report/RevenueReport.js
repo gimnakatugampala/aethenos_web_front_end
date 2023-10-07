@@ -124,43 +124,71 @@ function RevenueReport() {
             ),
             headerStyle: headerCellStyle,
           },
-          { title: "Amount", field: "amount", headerStyle: headerCellStyle },
+          {
+            title: "Pre-tax Amount",
+            field: "amount",
+            headerStyle: headerCellStyle,
+          },
           {
             title: "Expected Payment Date",
             field: "expectedPaymentDate",
             headerStyle: headerCellStyle,
           },
-          { title: "Notes", field: "notes", headerStyle: headerCellStyle },
+          {
+            title: "Withholding Tax",
+            field: "withholdingTax",
+            headerStyle: headerCellStyle,
+          },
+          {
+            title: "Net Earning",
+            field: "netEarning",
+            headerStyle: headerCellStyle,
+          },
+          {
+            title: "Expected Payment Date",
+            field: "expectedPaymentDate",
+            headerStyle: headerCellStyle,
+          },
         ]}
         data={[
           {
             timePeriod: "Mar 2023",
             amount: "$100",
             expectedPaymentDate: "2023-03-15",
+            withholdingTax: "$50",
+            netEarning: "$20",
             notes: "Note 1",
           },
           {
             timePeriod: "Apr 2023",
             amount: "$150",
             expectedPaymentDate: "2023-04-15",
+            withholdingTax: "$50",
+            netEarning: "$20",
             notes: "Note 2",
           },
           {
             timePeriod: "May 2023",
             amount: "$200",
             expectedPaymentDate: "2023-05-15",
+            withholdingTax: "$50",
+            netEarning: "$20",
             notes: "Note 3",
           },
           {
             timePeriod: "Jun 2023",
             amount: "$250",
             expectedPaymentDate: "2023-06-15",
+            withholdingTax: "$50",
+            netEarning: "$20",
             notes: "Note 4",
           },
           {
             timePeriod: "Jul 2023",
             amount: "$300",
             expectedPaymentDate: "2023-07-15",
+            withholdingTax: "$50",
+            netEarning: "$20",
             notes: "Note 5",
           },
         ]}
