@@ -8,6 +8,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import { CardActionArea } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
+
+
 
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -17,13 +21,19 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import SlideshowIcon from '@mui/icons-material/Slideshow';
+import ArticleIcon from '@mui/icons-material/Article';
 
 import "./Curriculum.css";
 
 const Curriculum = () => {
   const [showContentAdd, setshowContentAdd] = useState(false);
+  const [curriculumvisiblity, setcurriculumvisiblity] = useState("")
 
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
+
+
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -90,26 +100,69 @@ const Curriculum = () => {
                 </AccordionSummary>
 
                 <AccordionDetails>
-                  <div className="row">
-                    <div className="col-md-4">
-                      <Box
-                      sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        '& > :not(style)': {
-                          m: 1,
-                          width: 128,
-                          height: 128,
-                        },
-                      }}
-                    >
-                    <Paper elevation={3} >
-                      Lorem
-                    </Paper>
-                  </Box>
-                    </div>
 
-                  </div>
+                  {/* Landing Content */}
+                  {curriculumvisiblity == "video" ? (
+                    <div>
+                      <Button onClick={() => setcurriculumvisiblity("")} variant="outlined">Cancel</Button>
+
+                    </div>
+                  ) : curriculumvisiblity == "slide" ? (
+                    <div>Slide</div>
+                  ) : curriculumvisiblity == "article" ? (
+                    <div>Article</div>
+                  ) : (
+
+                    <div className="d-flex justify-content-center">
+                     <div className="mx-2">
+                     <Card sx={{width:120}} elevation={3}>
+                       <CardActionArea onClick={() => setcurriculumvisiblity("video")} className="d-flex justify-content-center align-items-center text-center">
+                         <CardContent>
+                           <PlayCircleIcon fontSize="large" />
+ 
+                           <p className="my-2">
+                             Video
+                           </p>
+ 
+                         </CardContent>
+                       </CardActionArea>
+                     </Card>
+                     </div>
+ 
+                     <div className="mx-2">
+                     <Card sx={{width:120}} elevation={3}>
+                       <CardActionArea onClick={() => setcurriculumvisiblity("slide")}  className="d-flex justify-content-center align-items-center text-center">
+                         <CardContent>
+                           <SlideshowIcon fontSize="large" />
+ 
+                           <p className="my-2">
+                             Slide Mashup
+                           </p>
+ 
+                         </CardContent>
+                       </CardActionArea>
+                     </Card>
+                     </div>
+ 
+                     <div className="mx-2">
+                     <Card sx={{width:120}} elevation={3}>
+                       <CardActionArea onClick={() => setcurriculumvisiblity("article")}  className="d-flex justify-content-center align-items-center text-center">
+                         <CardContent>
+                           <ArticleIcon fontSize="large" />
+ 
+                           <p className="my-2">
+                             Articles
+                           </p>
+ 
+                         </CardContent>
+                       </CardActionArea>
+                     </Card>
+                     </div>
+ 
+                   </div>
+                  )}
+                 
+
                 </AccordionDetails>
               </Accordion>
 
