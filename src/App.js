@@ -12,7 +12,7 @@ import AddCourses from "./pages/courses/add-courses/AddCourses";
 import EditCourse from "./pages/courses/edit-courses/EditCourse";
 import ManageCourses from "./pages/courses/manage-courses/ManageCourses";
 
-import Reviews from "./pages/reviews/Reviews";
+import Reviews from "./pages/performance/reviews/Reviews";
 import Overview from "./pages/performance/overview/Overview";
 import RevenueReport from "./pages/performance/revenue-report/RevenueReport";
 import SingleRevenueReport from "./pages/performance/overview/SingleRevenueReport";
