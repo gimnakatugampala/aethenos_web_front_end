@@ -27,57 +27,51 @@ const QA = () => {
           </select>
         </div>
       </div>
-      <div className="container"></div>
-      <div className="row">
-        <div className="col-2">
-          <FormGroup>
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Unread"
-            />
-          </FormGroup>
-        </div>
-        <div className="col-2">
-          <FormGroup>
-            <FormControlLabel
-              Notopanswer
-              control={<Checkbox />}
-              label="No top answer"
-            />
-          </FormGroup>
-        </div>
-        <div className="col-2">
-          <FormGroup>
-            <FormControlLabel
-              noAnswer
-              control={<Checkbox />}
-              label="No answers"
-            />
-          </FormGroup>
-        </div>
-        <div className="col-3">
-          <FormGroup>
-            <FormControlLabel
-              noIinstructorAnswer
-              control={<Checkbox />}
-              label="No instructor answer"
-            />
-          </FormGroup>
-        </div>
-        <div className="col-3">
-          <div className="row">
-            <div className="col-3">
-              <p>Sort by:</p>
-            </div>
-            <div className="col-9">
-              <select className="form-select w-70">
-                <option value="newestToOldest">Newest to Oldest</option>
-                <option value="oldestToNewest">Oldest to Newest</option>
-                <option value="priceLowToHigh">Price: Low to High</option>
-                <option value="priceHighToLow">Price: High to Low</option>
-                <option value="ratingHighToLow">Rating: High to Low</option>
-              </select>
-            </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-3">
+            <FormGroup>
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label="Unread"
+              />
+            </FormGroup>
+          </div>
+          <div className="col-3">
+            <FormGroup>
+              <FormControlLabel
+                Notopanswer
+                control={<Checkbox />}
+                label={<span className="fs-7">No top answer</span>}
+              />
+            </FormGroup>
+          </div>
+          <div className="col-3">
+            <FormGroup>
+              <FormControlLabel
+                noAnswer
+                control={<Checkbox />}
+                label={<span className="fs-6">No answers</span>}
+              />
+            </FormGroup>
+          </div>
+          <div className="col-3">
+            <FormGroup>
+              <FormControlLabel
+                noIinstructorAnswer
+                control={<Checkbox />}
+                label={<span className="fs-8">No instructor answer</span>}
+              />
+            </FormGroup>
+          </div>
+          <div className="col-3 mb-4">
+            <select className="form-select fs-6">
+              <option value="newestToOldest">Newest to Oldest</option>
+              <option value="oldestToNewest">Oldest to Newest</option>
+              <option value="priceLowToHigh">Price: Low to High</option>
+              <option value="priceHighToLow">Price: High to Low</option>
+              <option value="ratingHighToLow">Rating: High to Low</option>
+            </select>
           </div>
         </div>
       </div>

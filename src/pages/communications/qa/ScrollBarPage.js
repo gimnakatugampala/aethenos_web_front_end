@@ -3,7 +3,7 @@ import { MDBContainer } from "mdbreact";
 import "./QA.css";
 
 const ScrollBarPage = () => {
-  const scrollContainerStyle = { width: "800px", maxHeight: "500px" };
+  const scrollContainerStyle = { width: "700px", maxHeight: "500px" };
   return (
     <MDBContainer>
       <div
