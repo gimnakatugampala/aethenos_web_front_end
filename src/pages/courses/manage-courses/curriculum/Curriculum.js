@@ -6,13 +6,13 @@ import { CardContent } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import { CardActionArea } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import Form from 'react-bootstrap/Form';
 import RichTextEditor from "../../../../components/RichTextEditor";
 import Table from 'react-bootstrap/Table';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 
 import Typography from "@mui/material/Typography";
@@ -30,7 +30,10 @@ import "./Curriculum.css";
 
 const Curriculum = () => {
   const [showContentAdd, setshowContentAdd] = useState(false);
+  const [showMain, setshowMain] = useState(false)
+  const [showDescRes, setshowDescRes] = useState(true)
   const [curriculumvisiblity, setcurriculumvisiblity] = useState("");
+  const [extracurriculum, setextracurriculum] = useState("")
 
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
 
@@ -79,7 +82,10 @@ const Curriculum = () => {
 
                   {showContentAdd ? (
                     <Button
-                      onClick={handleContentshow}
+                      onClick={() => {
+                        setshowDescRes(true)
+                        setshowMain(false)
+                        handleContentshow()}}
                       className="mx-2"
                       size="small"
                       variant="contained"
@@ -88,7 +94,10 @@ const Curriculum = () => {
                     </Button>
                   ) : (
                     <Button
-                      onClick={handleContentshow}
+                      onClick={() => {
+                        setshowDescRes(false)
+                        setshowMain(true)
+                        handleContentshow()}}
                       className="mx-2"
                       size="small"
                       variant="outlined"
@@ -99,110 +108,190 @@ const Curriculum = () => {
                 </AccordionSummary>
 
                 <AccordionDetails>
+
                   {/* Landing Content */}
-                  {curriculumvisiblity == "video" ? (
-                    <div>
-                      <Button
-                        onClick={() => setcurriculumvisiblity("")}
-                        variant="contained"
-                      >
-                        <CloseIcon /> Cancel
-                      </Button>
+                  {showMain ? (
+                      curriculumvisiblity == "video" ? (
+                      <div>
+                        <Button
+                          onClick={() => setcurriculumvisiblity("")}
+                          variant="contained"
+                        >
+                          <CloseIcon /> Cancel
+                        </Button>
+  
+                        {/* Upload Input */}
+                        <Form.Group controlId="formFile" className="my-3">
+                        <Form.Control placeholder="Add a Video" type="file" />
+                        <Form.Label style={{fontSize:11}}><b>Note:</b> All files should be at least 720p and less than 4.0 GB.</Form.Label>
+                      </Form.Group>
+  
+  
+                      {/* After Upload */}
+                      <Table striped bordered hover>
+                          <thead>
+                            <tr>
+                              <th>Filename</th>
+                              <th>Type</th>
+                              <th>Status</th>
+                              <th>Date</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>326768.mp4</td>
+                              <td>Video</td>
+                              <td>Processing</td>
+                              <td>10/07/2023</td>
+                              <td>
+                              <Button size="sm" variant="text">Replace</Button>
+                              </td>
+                            </tr>
+  
+                          </tbody>
+                        </Table>
+                      
+                        <p><b>Note:</b> This video is still being processed. We will send you an email when it is ready.</p>
+                        
+                      </div>
+                    ) : curriculumvisiblity == "article" ? (
+                      <div>
+                        <Button
+                          onClick={() => setcurriculumvisiblity("")}
+                          variant="contained"
+                        >
+                          <CloseIcon /> Cancel
+                        </Button>
+  
+                        <div className="my-3">
+  
+                        <Typography variant="h6" component="h6">
+                          Article
+                        </Typography>
+  
+                          <RichTextEditor />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="d-flex justify-content-center">
+                        <div className="mx-2">
+                          <Card sx={{ width: 120 }} elevation={3}>
+                            <CardActionArea
+                              onClick={() => {
+                                setshowDescRes(true)
+                                setcurriculumvisiblity("video")
+                              }}
+                              className="d-flex justify-content-center align-items-center text-center"
+                            >
+                              <CardContent>
+                                <PlayCircleIcon fontSize="large" />
+  
+                                <p className="my-2">Video</p>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </div>
+  
+  
+                        <div className="mx-2">
+                          <Card sx={{ width: 120 }} elevation={3}>
+                            <CardActionArea
+                              onClick={() => {
+                                setshowDescRes(true)
+                                setcurriculumvisiblity("article")
+                              }}
+                              className="d-flex justify-content-center align-items-center text-center"
+                            >
+                              <CardContent>
+                                <ArticleIcon fontSize="large" />
+  
+                                <p className="my-2">Articles</p>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </div>
+                      </div>
+                    )
+                  ) : (
+                      <></>
+                  )}
+                 
+                 
 
-                      {/* Upload Input */}
-                     <Form.Group controlId="formFile" className="my-3">
-                      <Form.Control placeholder="Add a Video" type="file" />
-                      <Form.Label style={{fontSize:11}}><b>Note:</b> All files should be at least 720p and less than 4.0 GB.</Form.Label>
-                    </Form.Group>
+
+                     {/* Always There */}
+                     {extracurriculum == "desc" && (
+                      <>
+                       <Button onClick={() => setextracurriculum("")}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                       <Button onClick={() => setextracurriculum("resourses")}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                       <RichTextEditor />
+                       </>
+                     )}
 
 
-                    {/* After Upload */}
-                    <Table striped bordered hover>
-                        <thead>
-                          <tr>
-                            <th>Filename</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>326768.mp4</td>
-                            <td>Video</td>
-                            <td>Processing</td>
-                            <td>10/07/2023</td>
-                            <td>
-                            <Button size="sm" variant="text">Replace</Button>
-                            </td>
-                          </tr>
-
-                        </tbody>
-                      </Table>
-                      <p><b>Note:</b> This video is still being processed. We will send you an email when it is ready.</p>
 
                       {/* Add Description & Resourses */}
-                      <Button className="mx-2" variant="outlined"><AddIcon /> Description</Button>
-                      <Button className="mx-2" variant="outlined"><AddIcon /> Resourses</Button>
+                      {showDescRes && (
+                        <>
+                      {extracurriculum == "" && (
+                      <>
+                      <Button onClick={() => setextracurriculum("desc")} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                      <Button onClick={() => setextracurriculum("resourses")}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                      </>
+                      )}
 
-                     {/* After Video is Procceed */}
-                      
-                    </div>
-                  ) : curriculumvisiblity == "article" ? (
-                    <div>
-                      <Button
-                        onClick={() => setcurriculumvisiblity("")}
-                        variant="outlined"
-                      >
-                        <CloseIcon /> Cancel
-                      </Button>
+                      {extracurriculum == "resourses" && (
+                        <div>
+                          <Button onClick={() => setextracurriculum("")}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                          <Button onClick={() => setextracurriculum("desc")} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                          
+                          {/* Tabs */}
+                          <Tabs
+                          defaultActiveKey="d-file"
+                          id="uncontrolled-tab-example"
+                          className="my-3"
+                        >
+                          <Tab eventKey="d-file" title="Downloadable File">
 
-                      <div className="my-3">
+                          <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Control type="file" />
+                            <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lecture. This file is going to be seen as a lecture extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                          </Form.Group>
+                            
+                          </Tab>
+                          <Tab eventKey="e-r" title="External Resources">
+                          <Form>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>Title</Form.Label>
+                              <Form.Control type="text" placeholder="A Descriptive Title" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>URL</Form.Label>
+                              <Form.Control type="text" placeholder="https://example.com" />
+                            </Form.Group>
+                            <Button variant="contained">Add Link</Button>
+                          </Form>
+                          </Tab>
+                          <Tab eventKey="source-code" title="Source Code">
 
-                      <Typography variant="h6" component="h6">
-                        Article
-                      </Typography>
+                          <Form.Group controlId="formFile" className="mb-3">
+                            <Form.Control type="file" />
+                            <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                          </Form.Group>
 
-                        <RichTextEditor />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="d-flex justify-content-center">
-                      <div className="mx-2">
-                        <Card sx={{ width: 120 }} elevation={3}>
-                          <CardActionArea
-                            onClick={() => setcurriculumvisiblity("video")}
-                            className="d-flex justify-content-center align-items-center text-center"
-                          >
-                            <CardContent>
-                              <PlayCircleIcon fontSize="large" />
+                          </Tab>
+                        </Tabs>
+                        </div>
+                      )}
+                        </>
+                      )}
+                   
 
-                              <p className="my-2">Video</p>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </div>
-
-
-                      <div className="mx-2">
-                        <Card sx={{ width: 120 }} elevation={3}>
-                          <CardActionArea
-                            onClick={() => setcurriculumvisiblity("article")}
-                            className="d-flex justify-content-center align-items-center text-center"
-                          >
-                            <CardContent>
-                              <ArticleIcon fontSize="large" />
-
-                              <p className="my-2">Articles</p>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </div>
-                    </div>
-                  )}
                 </AccordionDetails>
               </Accordion>
+
+              {/* 2 */}
 
               <Accordion className="my-3">
                 <AccordionSummary

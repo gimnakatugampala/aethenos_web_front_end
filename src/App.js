@@ -17,6 +17,7 @@ import Overview from "./pages/performance/overview/Overview";
 import RevenueReport from "./pages/performance/revenue-report/RevenueReport";
 import SingleRevenueReport from "./pages/performance/overview/SingleRevenueReport";
 import TrafficConversation from "./pages/performance/traffic-conversations/TrafficConversation";
+import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
 
 import theme from "./commonFunctions/theme";
 
@@ -54,6 +55,14 @@ function App() {
               path="/performance/revenue-report"
               component={RevenueReport}
             />
+
+            <Route
+              exact
+              path="/performance/engagement"
+              component={CourseEngagement}
+            />
+
+            
             <Route
               exact
               path="/performance/revenue-report/:id"
