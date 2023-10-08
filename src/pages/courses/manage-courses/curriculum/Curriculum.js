@@ -31,6 +31,7 @@ import "./Curriculum.css";
 const Curriculum = () => {
   const [showContentAdd, setshowContentAdd] = useState(false);
   const [showMain, setshowMain] = useState(false)
+  const [showDescRes, setshowDescRes] = useState(true)
   const [curriculumvisiblity, setcurriculumvisiblity] = useState("");
   const [extracurriculum, setextracurriculum] = useState("")
 
@@ -81,7 +82,10 @@ const Curriculum = () => {
 
                   {showContentAdd ? (
                     <Button
-                      onClick={handleContentshow}
+                      onClick={() => {
+                        setshowDescRes(true)
+                        setshowMain(false)
+                        handleContentshow()}}
                       className="mx-2"
                       size="small"
                       variant="contained"
@@ -91,6 +95,8 @@ const Curriculum = () => {
                   ) : (
                     <Button
                       onClick={() => {
+                        setshowDescRes(false)
+                        setshowMain(true)
                         handleContentshow()}}
                       className="mx-2"
                       size="small"
@@ -104,7 +110,8 @@ const Curriculum = () => {
                 <AccordionDetails>
 
                   {/* Landing Content */}
-                    {curriculumvisiblity == "video" ? (
+                  {showMain ? (
+                      curriculumvisiblity == "video" ? (
                       <div>
                         <Button
                           onClick={() => setcurriculumvisiblity("")}
@@ -114,7 +121,7 @@ const Curriculum = () => {
                         </Button>
   
                         {/* Upload Input */}
-                       <Form.Group controlId="formFile" className="my-3">
+                        <Form.Group controlId="formFile" className="my-3">
                         <Form.Control placeholder="Add a Video" type="file" />
                         <Form.Label style={{fontSize:11}}><b>Note:</b> All files should be at least 720p and less than 4.0 GB.</Form.Label>
                       </Form.Group>
@@ -144,7 +151,7 @@ const Curriculum = () => {
   
                           </tbody>
                         </Table>
-                     
+                      
                         <p><b>Note:</b> This video is still being processed. We will send you an email when it is ready.</p>
                         
                       </div>
@@ -171,7 +178,10 @@ const Curriculum = () => {
                         <div className="mx-2">
                           <Card sx={{ width: 120 }} elevation={3}>
                             <CardActionArea
-                              onClick={() => setcurriculumvisiblity("video")}
+                              onClick={() => {
+                                setshowDescRes(true)
+                                setcurriculumvisiblity("video")
+                              }}
                               className="d-flex justify-content-center align-items-center text-center"
                             >
                               <CardContent>
@@ -187,7 +197,10 @@ const Curriculum = () => {
                         <div className="mx-2">
                           <Card sx={{ width: 120 }} elevation={3}>
                             <CardActionArea
-                              onClick={() => setcurriculumvisiblity("article")}
+                              onClick={() => {
+                                setshowDescRes(true)
+                                setcurriculumvisiblity("article")
+                              }}
                               className="d-flex justify-content-center align-items-center text-center"
                             >
                               <CardContent>
@@ -199,7 +212,11 @@ const Curriculum = () => {
                           </Card>
                         </div>
                       </div>
-                    )}
+                    )
+                  ) : (
+                      <></>
+                  )}
+                 
                  
 
 
@@ -215,6 +232,8 @@ const Curriculum = () => {
 
 
                       {/* Add Description & Resourses */}
+                      {showDescRes && (
+                        <>
                       {extracurriculum == "" && (
                       <>
                       <Button onClick={() => setextracurriculum("desc")} className="m-2" variant="outlined"><AddIcon /> Description</Button>
@@ -265,6 +284,9 @@ const Curriculum = () => {
                         </Tabs>
                         </div>
                       )}
+                        </>
+                      )}
+                   
 
                 </AccordionDetails>
               </Accordion>
