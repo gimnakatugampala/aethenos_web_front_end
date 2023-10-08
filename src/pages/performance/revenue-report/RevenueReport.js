@@ -194,6 +194,7 @@ function RevenueReport() {
         ]}
         options={{
           sorting: true,
+          exportButton: true,
         }}
       />
     </Card>

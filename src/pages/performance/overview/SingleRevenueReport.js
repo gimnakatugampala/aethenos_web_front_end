@@ -196,6 +196,7 @@ const SingleRevenueReport = () => {
             ]}
             options={{
               sorting: true,
+              exportButton: true,
             }}
           />
         </Tab>
@@ -293,6 +294,7 @@ const SingleRevenueReport = () => {
             ]}
             options={{
               sorting: true,
+              exportButton: true,
             }}
           />
         </Tab>
@@ -390,6 +392,7 @@ const SingleRevenueReport = () => {
             ]}
             options={{
               sorting: true,
+              exportButton: true,
             }}
           />
         </Tab>
