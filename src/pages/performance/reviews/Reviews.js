@@ -15,6 +15,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import CommentBox from "./CommentBox";
 
+
 const Reviews = () => {
   const handleRate = (rating) => {
     // Handle rating logic here (e.g., send it to the server).
