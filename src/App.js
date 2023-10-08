@@ -16,6 +16,7 @@ import Reviews from "./pages/reviews/Reviews";
 import Overview from "./pages/performance/overview/Overview";
 import RevenueReport from "./pages/performance/revenue-report/RevenueReport";
 import SingleRevenueReport from "./pages/performance/overview/SingleRevenueReport";
+import TrafficConversation from "./pages/performance/traffic-conversations/TrafficConversation";
 
 import theme from "./commonFunctions/theme";
 
@@ -60,6 +61,7 @@ function App() {
             />
             <Route exact path="/performance/overview" component={Overview} />
             <Route exact path="/performance/reviews" component={Reviews} />
+            <Route exact path="/performance/traffic-conversations" component={TrafficConversation} />
           </Main>
           <Redirect from="*" to="/courses" />
         </Switch>
