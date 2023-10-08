@@ -12,12 +12,14 @@ import AddCourses from "./pages/courses/add-courses/AddCourses";
 import EditCourse from "./pages/courses/edit-courses/EditCourse";
 import ManageCourses from "./pages/courses/manage-courses/ManageCourses";
 
-import Reviews from "./pages/reviews/Reviews";
+import Reviews from "./pages/performance/reviews/Reviews";
 import Overview from "./pages/performance/overview/Overview";
 import RevenueReport from "./pages/performance/revenue-report/RevenueReport";
 import SingleRevenueReport from "./pages/performance/overview/SingleRevenueReport";
 import TrafficConversation from "./pages/performance/traffic-conversations/TrafficConversation";
 import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
+
+import QA from "./pages/communications/qa/QA";
 
 import theme from "./commonFunctions/theme";
 
@@ -49,6 +51,13 @@ function App() {
             <Route exact path="/courses" component={AllCourses} />
             <Route exact path="/add-courses" component={AddCourses} />
             <Route exact path="/edit-course" component={EditCourse} />
+
+            <Route
+              exact
+              path="/communications/qa"
+              component={QA}
+            />
+
 
             <Route
               exact
