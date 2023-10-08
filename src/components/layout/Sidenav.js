@@ -230,7 +230,7 @@ function Sidenav({ color }) {
                 background: page === "performance/engagement" ? color : "",
               }}
            >{signup}</span>
-            <span className="label">Course&Engagement</span>
+            <span className="label">Course Engagement</span>
           </NavLink>
         </Menu.Item>
 
