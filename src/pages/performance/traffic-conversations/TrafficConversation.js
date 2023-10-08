@@ -85,10 +85,7 @@ const TrafficConversation = () => {
         }
       >
     
-It appears you want to change the X-axis to display months while keeping the series data as numbers. Here's an example of how to modify your code accordingly:
 
-jsx
-Copy code
 <Card>
   <LineChart
     xAxis={[
