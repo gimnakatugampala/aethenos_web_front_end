@@ -19,6 +19,8 @@ import SingleRevenueReport from "./pages/performance/overview/SingleRevenueRepor
 import TrafficConversation from "./pages/performance/traffic-conversations/TrafficConversation";
 import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
 
+import QA from "./pages/communications/qa/QA";
+
 import theme from "./commonFunctions/theme";
 
 import Main from "./components/layout/Main";
@@ -49,6 +51,13 @@ function App() {
             <Route exact path="/courses" component={AllCourses} />
             <Route exact path="/add-courses" component={AddCourses} />
             <Route exact path="/edit-course" component={EditCourse} />
+
+            <Route
+              exact
+              path="/communications/qa"
+              component={QA}
+            />
+
 
             <Route
               exact
