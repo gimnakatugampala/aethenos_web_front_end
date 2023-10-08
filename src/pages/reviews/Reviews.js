@@ -4,19 +4,35 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircleRounded";
+import {
+  Link,
+  MemoryRouter,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import CommentBox from "./CommentBox";
 
 const Reviews = () => {
   const handleRate = (rating) => {
     // Handle rating logic here (e.g., send it to the server).
     console.log(`Rated with ${rating} stars`);
   };
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const page = parseInt(query.get("page") || "1", 10);
 
   return (
     <div>
       <div className="contariner">
         <div className="row">
           <p className="fs-5 font-bold">Review</p>
-          <div className="col-3 bg-white pt-4 mt-0">
+          <div
+            className="col-3 bg-white pt-4 mt-0"
+            style={{ height: "1000vh" }}
+          >
             <div className="combo-box mb-4">
               <select className="form-select">
                 <option value="option1">All Courses</option>
@@ -91,7 +107,9 @@ const Reviews = () => {
             </button>
           </div>
 
+          {/* second column */}
           <div className="col-9">
+            {/* 1st card */}
             <div className="card p-2">
               <div className="row p-3 ml-5 mr-5">
                 <div className="col-3">
@@ -203,16 +221,29 @@ const Reviews = () => {
                   <div className="col-3">Knowledgable Instruction</div>
                 </div>
                 <div className="pl-5">
-                  <button
-                    type="button"
-                    className="btn btn-outline-success btn-block ml-5"
-                    style={{ width: "20%" }}
-                  >
-                    Respond
-                  </button>
+                  <CommentBox />
                 </div>
               </Card.Body>
             </Card>
+            <div className="container">
+              <div className="row">
+                <div className="col-12 d-flex justify-content-center">
+                  <Pagination
+                    page={page}
+                    count={10}
+                    renderItem={(item) => (
+                      <PaginationItem
+                        component={Link}
+                        to={`/inbox${
+                          item.page === 1 ? "" : `?page=${item.page}`
+                        }`}
+                        {...item}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
