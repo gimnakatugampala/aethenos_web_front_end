@@ -32,7 +32,7 @@ const TrafficConversation = () => {
   
 
     <Card>
-    <p className="fs-5 font-bold">Traffic-Conversations</p>
+    <p className="fs-5 font-bold">Traffic Conversations</p>
     <p className="fs-6">Use this table to understand what webpages are giving you the most traffic</p>
     <div className='mb-3'>
     <Dropdown>
@@ -85,10 +85,7 @@ const TrafficConversation = () => {
         }
       >
     
-It appears you want to change the X-axis to display months while keeping the series data as numbers. Here's an example of how to modify your code accordingly:
 
-jsx
-Copy code
 <Card>
   <LineChart
     xAxis={[
