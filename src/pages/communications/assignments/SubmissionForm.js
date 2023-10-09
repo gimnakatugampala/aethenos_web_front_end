@@ -37,7 +37,13 @@ const Submission = () => {
             <Button variant="outlined" color="primary" className="mr-2">
               Save Draft
             </Button>
-            <Button variant="contained" color="primary">
+
+            <Button
+              variant="contained"
+              color="primary"
+              className="mr-2"
+              style={{ marginLeft: "10px" }}
+            >
               Submit
             </Button>
           </div>

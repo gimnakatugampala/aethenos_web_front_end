@@ -3,6 +3,7 @@ import Face6Icon from "@mui/icons-material/Face6";
 import Card from "react-bootstrap/Card";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Inputs from "./Inputs";
 
 const Announcements = () => {
   const [inputText, setInputText] = useState("");
@@ -81,15 +82,7 @@ const Announcements = () => {
                 </Button>
               </div>
             ))}
-            <TextField
-              id="inputText"
-              label="Enter your text"
-              variant="outlined"
-              fullWidth
-              value={inputText}
-              onChange={handleInputChange}
-              className="mb-2"
-            />
+            <Inputs />
             <Button
               variant="contained"
               color="primary"

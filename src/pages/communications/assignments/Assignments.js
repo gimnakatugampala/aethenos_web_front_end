@@ -9,6 +9,7 @@ import Instruction from "./Instructions";
 import SubmissionForm from "./SubmissionForm";
 import Instructor from "./Instructor";
 import Feedback from "./Feedback";
+import Inputs from "./Inputs";
 
 const steps = [
   "Instruction",
@@ -45,18 +46,17 @@ export default function HorizontalLinearStepper() {
   };
 
   const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
+    // if (!isStepOptional(activeStep)) {
+    //   // You probably want to guard against something like this,
+    //   // it should never occur unless someone's actively trying to break something.
+    //   throw new Error("You can't skip a step that isn't optional.");
+    // }
+    // setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // setSkipped((prevSkipped) => {
+    //   const newSkipped = new Set(prevSkipped.values());
+    //   newSkipped.add(activeStep);
+    //   return newSkipped;
+    // });
   };
 
   const handleReset = () => {
@@ -71,9 +71,9 @@ export default function HorizontalLinearStepper() {
           const labelProps = {};
           if (isStepOptional(index)) {
           }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
+          // if (isStepSkipped(index)) {
+          // stepProps.completed = false;
+          // }
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -107,11 +107,11 @@ export default function HorizontalLinearStepper() {
               Back
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
-            {isStepOptional(activeStep) && (
+            {/* {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
-            )}
+            )} */}
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? "Finish" : "Next"}
             </Button>
