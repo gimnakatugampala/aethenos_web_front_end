@@ -1,10 +1,8 @@
-import React from 'react'
-import './Annoucements.css'
+import React from "react";
+import "./Annoucements.css";
 
 const Annoucements = () => {
-  return (
-    <div>Annoucements</div>
-  )
-}
+  return <div>Annoucements</div>;
+};
 
-export default Annoucements
+export default Annoucements;
