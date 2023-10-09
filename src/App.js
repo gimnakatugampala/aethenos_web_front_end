@@ -20,6 +20,7 @@ import TrafficConversation from "./pages/performance/traffic-conversations/Traff
 import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
 import Annoucements from "./pages/communications/annoucements/Annoucements";
 import Assignments from "./pages/communications/assignments/Assignments";
+import Students from "./pages/performance/students/Students";
 
 import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
@@ -103,6 +104,7 @@ function App() {
             <Route exact path="/performance/overview" component={Overview} />
             <Route exact path="/performance/reviews" component={Reviews} />
             <Route exact path="/performance/traffic-conversations" component={TrafficConversation} />
+            <Route exact path="/performance/students" component={Students} />
           </Main>
           <Redirect from="*" to="/courses" />
         </Switch>
