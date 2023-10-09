@@ -19,6 +19,7 @@ import SingleRevenueReport from "./pages/performance/overview/SingleRevenueRepor
 import TrafficConversation from "./pages/performance/traffic-conversations/TrafficConversation";
 import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
 import Annoucements from "./pages/communications/annoucements/Annoucements";
+import Assignments from "./pages/communications/assignments/Assignments";
 
 import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
@@ -71,6 +72,13 @@ function App() {
               exact
               path="/communications/announcements"
               component={Annoucements}
+            />
+
+
+            <Route
+              exact
+              path="/communications/assignments"
+              component={Assignments}
             />
 
 
