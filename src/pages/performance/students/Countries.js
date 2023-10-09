@@ -1,6 +1,5 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "./App.css";
 
 function App() {
   const center = [51.505, -0.09]; // Initial map center coordinates
