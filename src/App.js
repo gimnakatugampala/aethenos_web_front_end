@@ -20,6 +20,7 @@ import TrafficConversation from "./pages/performance/traffic-conversations/Traff
 import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
 
 import QA from "./pages/communications/qa/QA";
+import Messages from "./pages/communications/messages/Messages";
 
 import theme from "./commonFunctions/theme";
 
@@ -56,6 +57,11 @@ function App() {
               exact
               path="/communications/qa"
               component={QA}
+            />
+            <Route
+              exact
+              path="/communications/messages"
+              component={Messages}
             />
 
 
