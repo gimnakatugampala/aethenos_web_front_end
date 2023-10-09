@@ -18,6 +18,7 @@ import RevenueReport from "./pages/performance/revenue-report/RevenueReport";
 import SingleRevenueReport from "./pages/performance/overview/SingleRevenueReport";
 import TrafficConversation from "./pages/performance/traffic-conversations/TrafficConversation";
 import CourseEngagement from "./pages/performance/course-engagement/CourseEngagement";
+import Annoucements from "./pages/communications/annoucements/Annoucements";
 
 import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
@@ -52,16 +53,24 @@ function App() {
             <Route exact path="/courses" component={AllCourses} />
             <Route exact path="/add-courses" component={AddCourses} />
             <Route exact path="/edit-course" component={EditCourse} />
-
+            
             <Route
               exact
               path="/communications/qa"
               component={QA}
             />
+
             <Route
               exact
               path="/communications/messages"
               component={Messages}
+            />
+
+
+            <Route
+              exact
+              path="/communications/announcements"
+              component={Annoucements}
             />
 
 
