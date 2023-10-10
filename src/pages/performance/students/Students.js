@@ -194,7 +194,7 @@ const Students = () => {
         }}
       />
       <Card className="mt-5">
-        {/* <Countries /> */}
+        <Map />
       </Card>
       <div className="container">
         <div className="row">
