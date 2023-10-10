@@ -192,12 +192,14 @@ const Students = () => {
           exportButton: true,
         }}
       />
-      <Card className="mt-5"><Map /></Card>
+      <Card className="mt-5">
+        <Map />
+      </Card>
       <div className="container">
         <div className="row">
           <div className="col-6">
             <Card className="mt-5">
-              <div className="bg-secondary p-2 mb-1">
+              <div className="bg-secondary text-light p-2 mb-1">
                 <LanguageIcon />
                 Countries
               </div>
@@ -230,7 +232,7 @@ const Students = () => {
           </div>
           <div className="col-6">
             <Card className="mt-5">
-              <div className="bg-secondary p-2 mb-1">
+              <div className="bg-secondary text-light p-2 mb-1">
                 <TranslateIcon />
                 Languages
               </div>
