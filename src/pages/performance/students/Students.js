@@ -6,9 +6,9 @@ import Card from "react-bootstrap/Card";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
 import Button from "react-bootstrap/Button";
-import Countries from "./Countries";
 import TranslateIcon from "@mui/icons-material/Translate";
 import LanguageIcon from "@mui/icons-material/Language";
+import Map from "./Map";
 
 const Students = () => {
   const headerCellStyle = {
@@ -192,9 +192,7 @@ const Students = () => {
           exportButton: true,
         }}
       />
-      <Card className="mt-5">
-        <Countries />
-      </Card>
+      <Card className="mt-5"><Map /></Card>
       <div className="container">
         <div className="row">
           <div className="col-6">
