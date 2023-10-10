@@ -25,7 +25,7 @@ const Students = () => {
     <div>
       <div className="d-flex justify-content-between p-2">
       <Typography className="mb-4" variant="h4" gutterBottom>
-      Students
+             Students
         </Typography>
         <div className="btn btn-danger">
          <AddIcon /> Invite Students

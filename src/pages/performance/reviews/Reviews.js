@@ -11,6 +11,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import CommentBox from "./CommentBox";
@@ -29,7 +30,9 @@ const Reviews = () => {
     <div>
       <div className="contariner">
         <div className="row">
-          <p className="fs-5 font-bold">Review</p>
+        <Typography className="mb-4" variant="h4" gutterBottom>
+             Reviews
+        </Typography>
           <div
             className="col-3 bg-white pt-4 mt-0"
             style={{ height: "1000vh" }}

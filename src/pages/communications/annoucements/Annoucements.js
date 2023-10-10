@@ -6,6 +6,7 @@ import { Button, Card } from "antd";
 import MaterialTable from 'material-table';
 import Dropdown from 'react-bootstrap/Dropdown';
 import RichTextEditor from "../../../components/RichTextEditor";
+import Typography from "@mui/material/Typography";
 
 
 
@@ -25,24 +26,36 @@ const Annoucements = () => {
     setComposeVisible(!isComposeVisible);
   };
   return (
+    <>
+    <div className='row'>
+        <div className='col-md-3'>
+            <Typography className="mb-4" variant="h4" gutterBottom>
+            Annoucements
+            </Typography>
+        </div>
+
+        <div className='col-md-2'>
+    
+          <Dropdown>
+            <Dropdown.Toggle className='fw-bold' variant="Secondary" id="dropdown-basic">
+              The Roman  Republic
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/action-1">The Roman  Republic</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Last 12 months</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">All Courses</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          </div>
+      
+    </div>
+   
    
     <Card>
       
-      <div className='d-inline-flex'>
-    <p className="fs-5 font-bold"> Annoucements </p>&nbsp;&nbsp;
-    <Dropdown>
-      <Dropdown.Toggle className='fw-bold' variant="Secondary" id="dropdown-basic">
-        The Roman  Republic
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">The Roman  Republic</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Last 12 months</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">All Courses</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-    </div>
-    <br></br>
+{/*    
+    <br></br> */}
 
     {/* <div class="mb-3 d-flex justify-content-between">
     <p className="fs-6">minutes consumed by active students</p>
@@ -172,6 +185,7 @@ more</a>
 
 
 </Card>
+</>
   )
 }
 
