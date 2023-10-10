@@ -7,6 +7,7 @@ import { Button, Card } from "antd";
 import MaterialTable from 'material-table';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { BarChart } from '@mui/x-charts/BarChart';
+import Typography from "@mui/material/Typography";
 
 
 const CourseEngagement = () => {
@@ -55,12 +56,16 @@ const xLabels1 = [
 
   return (
 
-  
+  <>
+   <div className='row'>
+   <div className='col-md-4'>
 
-    <Card>
-      
-      <div className='d-inline-flex'>
-    <p className="fs-5 font-bold"> Course Engagement </p>
+<Typography className="mb-4" variant="h4" gutterBottom>
+            Course Engagement
+    </Typography>
+   </div>
+   <div className='col-md-3'>
+
     <Dropdown>
       <Dropdown.Toggle variant="Secondary" id="dropdown-basic">
         All Courses
@@ -72,9 +77,14 @@ const xLabels1 = [
         <Dropdown.Item href="#/action-3">All Courses</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
-    </div>
-    <br></br>
 
+   </div>
+
+    </div>
+
+
+    <Card>
+      
     <div class="mb-3 d-flex justify-content-between">
     <p className="fs-6">minutes consumed by active students</p>
     <div className="text-end">
@@ -173,6 +183,7 @@ const xLabels1 = [
     />
   
   </Card>
+  </>
   );
 }
 
