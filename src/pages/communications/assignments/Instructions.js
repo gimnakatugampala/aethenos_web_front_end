@@ -46,8 +46,8 @@ function Instruction() {
   };
 
   return (
-    <Card className="m-3">
-      <Card>
+  
+      <div>
         <div className="continer p-4">
           <h5>Assignment instructions</h5>
           <p>
@@ -101,8 +101,8 @@ function Instruction() {
             </Button>
           </Card.Body>
         </Card>
-      </Card>
-    </Card>
+      </div>
+   
   );
 }
 

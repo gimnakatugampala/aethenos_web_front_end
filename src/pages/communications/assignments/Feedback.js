@@ -41,7 +41,7 @@ const Announcements = () => {
 
   return (
     <div>
-      <Card>
+      {/* <Card> */}
         <Card.Body>
           <Card.Text style={{ fontWeight: "bold" }}>Give Feedback</Card.Text>
           <Card.Title className="fs-6">
@@ -84,7 +84,7 @@ const Announcements = () => {
             {editIndex !== -1 ? "Save Edit" : "Add Feedback"}
           </Button>
         </Card.Body>
-      </Card>
+      {/* </Card> */}
     </div>
   );
 };

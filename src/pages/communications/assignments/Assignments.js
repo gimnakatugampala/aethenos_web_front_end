@@ -9,7 +9,8 @@ import Instruction from "./Instructions";
 import SubmissionForm from "./SubmissionForm";
 import Instructor from "./Instructor";
 import Feedback from "./Feedback";
-import Card from "react-bootstrap/Card";
+import Card from '@mui/material/Card';
+
 import Inputs from "./Inputs";
 
 const steps = [
@@ -38,7 +39,12 @@ export default function HorizontalLinearStepper() {
       newSkipped.delete(activeStep);
     }
 
+   
+
+
+    
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    console.log(activeStep)
     setSkipped(newSkipped);
   };
 
@@ -65,8 +71,13 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <Card>
-      <Box sx={{ width: "100%" }}>
+    <div>
+      <Typography className="my-3" variant="h4" gutterBottom>
+             Assignments
+        </Typography>
+    
+    <Card className="p-4">
+      
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps = {};
@@ -85,14 +96,24 @@ export default function HorizontalLinearStepper() {
         </Stepper>
         {activeStep === steps.length ? (
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
+            <div className="d-flex justify-content-center align-items-center text-center my-4">
+              <div>
+             <Typography  variant="h5" gutterBottom>
+             All steps completed - you&apos;re finished
             </Typography>
+
+              <Typography  variant="body2" gutterBottom>
+             The Assignment Created Proccess is Done
+            </Typography>
+            </div>
+
+            </div>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
               <Button onClick={handleReset}>Reset</Button>
             </Box>
           </React.Fragment>
+     
         ) : (
           <React.Fragment>
             <div className="p-2">{activeStep === 0 && <Instruction />}</div>
@@ -109,18 +130,14 @@ export default function HorizontalLinearStepper() {
                 Back
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-              {/* {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )} */}
               <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length  ? "Finish" : "Next"}
               </Button>
             </Box>
           </React.Fragment>
         )}
-      </Box>
+    
     </Card>
+    </div>
   );
 }

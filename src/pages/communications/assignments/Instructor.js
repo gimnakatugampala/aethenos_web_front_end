@@ -42,7 +42,7 @@ const Announcements = () => {
 
   return (
     <div>
-      <Card>
+      <div>
         <div className="p-4">
           <p>
             <Face6Icon />
@@ -92,7 +92,7 @@ const Announcements = () => {
             </Button>
           </Card.Body>
         </Card>
-      </Card>
+      </div>
     </div>
   );
 };

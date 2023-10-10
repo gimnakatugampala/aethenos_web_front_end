@@ -13,7 +13,7 @@ const Submission = () => {
 
   return (
     <div>
-      <Card>
+      {/* <Card> */}
         <Card.Body>
           <textarea
             className="form-control"
@@ -48,7 +48,7 @@ const Submission = () => {
             </Button>
           </div>
         </Card.Body>
-      </Card>
+      {/* </Card> */}
     </div>
   );
 };
