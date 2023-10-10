@@ -72,7 +72,7 @@ export default function HorizontalLinearStepper() {
 
   return (
     <div>
-      <Typography className="my-3" variant="h4" gutterBottom>
+      <Typography className="mb-4" variant="h4" gutterBottom>
              Assignments
         </Typography>
     

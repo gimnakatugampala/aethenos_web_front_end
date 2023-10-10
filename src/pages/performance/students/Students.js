@@ -5,10 +5,12 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import Card from "react-bootstrap/Card";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
-import Button from "react-bootstrap/Button";
-// import Countries from "./Countries";
+import Button from '@mui/material/Button';
+import Typography from "@mui/material/Typography";
 import TranslateIcon from "@mui/icons-material/Translate";
 import LanguageIcon from "@mui/icons-material/Language";
+import AddIcon from '@mui/icons-material/Add';
+import ForumIcon from '@mui/icons-material/Forum';
 import Map from "./Map";
 
 const Students = () => {
@@ -16,15 +18,18 @@ const Students = () => {
     fontWeight: "bold",
   };
   const handleButtonClick = (rowData) => {
+    window.location.href = "/communications/messages"
     console.log("Button clicked for row with data:", rowData);
   };
   return (
-    <Card>
+    <div>
       <div className="d-flex justify-content-between p-2">
-        <p className="fs-5 font-bold">Students</p>
-        <button type="button" className="btn btn-primary ml-auto">
-          Invite Students
-        </button>
+      <Typography className="mb-4" variant="h4" gutterBottom>
+      Students
+        </Typography>
+        <div className="btn btn-danger">
+         <AddIcon /> Invite Students
+        </div>
       </div>
 
       <MaterialTable
@@ -64,12 +69,12 @@ const Students = () => {
             title: "Message",
             field: "messageButton",
             render: (rowData) => (
-              <Button
-                variant="btn btn-outline-dark"
+              <button
+                className="btn btn-success"
                 onClick={() => handleButtonClick(rowData)}
               >
-                Message
-              </Button>
+                <ForumIcon />
+              </button>
             ),
             headerStyle: headerCellStyle,
           },
@@ -200,7 +205,7 @@ const Students = () => {
         <div className="row">
           <div className="col-6">
             <Card className="mt-5">
-              <div className="bg-secondary text-light p-2 mb-1">
+              <div className="bg-danger text-light p-2 mb-1">
                 <LanguageIcon />
                 Countries
               </div>
@@ -233,7 +238,7 @@ const Students = () => {
           </div>
           <div className="col-6">
             <Card className="mt-5">
-              <div className="bg-secondary text-light p-2 mb-1">
+              <div className="bg-danger text-light p-2 mb-1">
                 <TranslateIcon />
                 Languages
               </div>
@@ -266,7 +271,7 @@ const Students = () => {
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 
