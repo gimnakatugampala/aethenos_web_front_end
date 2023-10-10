@@ -5,8 +5,9 @@ import {
   Col,
   InputGroup,
   FormControl,
-  Button,
 } from "react-bootstrap";
+import Button from '@mui/material/Button';
+
 import {
   Paper,
   List,
@@ -21,6 +22,9 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import SearchIcon from "@mui/icons-material/Search";
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ListItemButton from '@mui/material/ListItemButton';
 
 function Messages() {
   const initialMessages = {
@@ -83,10 +87,16 @@ function Messages() {
   );
 
   return (
-    <Card>
+    
       <div className="container">
         <div className="row">
-          <p className="fs-5 font-bold text-black">Messages</p>
+
+        {/* <div className="col-md-2"> */}
+             <Typography variant="h4" gutterBottom>
+             Messages
+            </Typography>
+        {/* </div> */}
+
           <div className="col-3">
             <FormGroup>
               <FormControlLabel
@@ -117,9 +127,7 @@ function Messages() {
                 control={<Checkbox />}
                 label={<span className="fs-8">No instructor answer</span>}
               />
-              <Button className="btn btn-outline-primary btn-light float-end mt-2 mb-0">
-                Compose
-              </Button>
+              <Button className="my-2" variant="contained">Compose</Button>
             </FormGroup>
           </div>
           <div className="col-3 mb-4">
@@ -132,11 +140,19 @@ function Messages() {
             </select>
           </div>
         </div>
-        <Card>
+        
+
+        <Card className="p-3">
           <Container fluid>
             <Row className="vh-100">
-              <Col sm={4} md={4} lg={3} className="bg-light border-right">
-                <h3 className="p-3">Chat Users</h3>
+
+              <Col sm={5} md={5} lg={4} className="bg-light border-right">
+
+                 <Typography className="p-3" variant="h5" gutterBottom>
+                 Chat Users
+               </Typography>
+
+                {/* <h3 className="p-3">Chat Users</h3> */}
                 <div className="input-group mb-3">
                   <input
                     type="text"
@@ -146,11 +162,46 @@ function Messages() {
                     onChange={(e) => setUserFilter(e.target.value)}
                     value={userFilter}
                   />
-                  <span className="input-group-text">
-                    <SearchIcon />
-                  </span>
+                  <Button variant="contained"><SearchIcon /></Button>
                 </div>
-                <ul className="list-group">
+
+                <List sx={{ width: '100%'}}>
+                {filteredUsers.map((user) => (
+                  <>
+                      <ListItem onClick={() => handleUserClick(user)} key={user} alignItems="flex-start">
+                        <ListItemButton selected={selectedUser === user ? true : false}>
+                        <ListItemAvatar>
+                          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={user}
+                          secondary={
+                            <React.Fragment>
+                              <Typography
+                                sx={{ display: 'inline' }}
+                                component="span"
+                                variant="body2"
+                                color="text.primary"
+                              >
+                                Ali Connors
+                              </Typography>
+                              {" — I'll be in your neighborhood doing errands this…"}
+                            </React.Fragment>
+                          }
+                        />
+                        </ListItemButton>
+                      </ListItem>
+                    <Divider variant="inset" component="li" /> 
+                    </>
+                ))}
+
+
+
+              
+                    </List>
+
+                {/*  List Group Now */}
+                {/* <ul className="list-group">
                   {filteredUsers.map((user) => (
                     <li
                       key={user}
@@ -162,12 +213,16 @@ function Messages() {
                       {user}
                     </li>
                   ))}
-                </ul>
+                </ul> */}
+
               </Col>
-              <Col sm={8} md={8} lg={9}>
+
+              <Col sm={7} md={7} lg={8}>
                 <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
-                  <h4>Chat with {selectedUser}</h4>
-                  <button className="btn btn-danger">Logout</button>
+                <Typography variant="h5" gutterBottom>
+                Chat with <b>{selectedUser}</b>
+               </Typography>
+
                 </div>
                 <Paper
                   elevation={3}
@@ -225,16 +280,17 @@ function Messages() {
                       if (e.key === "Enter") handleMessageSend();
                     }}
                   />
-                  <Button variant="primary" onClick={handleMessageSend}>
+                    <Button variant="contained" onClick={handleMessageSend}>
                     <SendIcon />
                   </Button>
                 </InputGroup>
               </Col>
+
             </Row>
           </Container>
         </Card>
       </div>
-    </Card>
+
   );
 }
 
