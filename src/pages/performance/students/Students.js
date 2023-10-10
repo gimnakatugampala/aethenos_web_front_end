@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 // import Countries from "./Countries";
 import TranslateIcon from "@mui/icons-material/Translate";
 import LanguageIcon from "@mui/icons-material/Language";
+import Map from "./Map";
 
 const Students = () => {
   const headerCellStyle = {
@@ -199,7 +200,7 @@ const Students = () => {
         <div className="row">
           <div className="col-6">
             <Card className="mt-5">
-              <div className="bg-secondary p-2 mb-1">
+              <div className="bg-secondary text-light p-2 mb-1">
                 <LanguageIcon />
                 Countries
               </div>
@@ -232,7 +233,7 @@ const Students = () => {
           </div>
           <div className="col-6">
             <Card className="mt-5">
-              <div className="bg-secondary p-2 mb-1">
+              <div className="bg-secondary text-light p-2 mb-1">
                 <TranslateIcon />
                 Languages
               </div>
