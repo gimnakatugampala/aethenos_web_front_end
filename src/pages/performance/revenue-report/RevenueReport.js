@@ -65,11 +65,11 @@ function RevenueReport() {
     fontWeight: "bold",
   };
   return (
-    <Card>
+    <Card className="p-2">
       <p className="fs-5 font-bold">Revenue Report</p>
       <h1 className="font-bold">$50,523.55</h1>
       <p className="fs-10">Your lifetime earnings of March 12 2019</p>
-      <Card>
+      <Card className="my-3">
         <LineChart
           xAxis={[
             {
@@ -113,6 +113,7 @@ function RevenueReport() {
           margin={{ left: 70 }}
         />
       </Card>
+
       <MaterialTable
         title="Revenue Report"
         columns={[

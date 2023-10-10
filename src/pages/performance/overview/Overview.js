@@ -5,12 +5,19 @@ import Tabs from "react-bootstrap/Tabs";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { Card } from "antd";
 import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 function RevenueReport() {
   return (
-    <Card>
-      <p className="fs-5 font-bold">Overview</p>
-      <p className="fs-6">Get top insights about your performance</p>
+    <div>
+      <div className="mb-5">
+       <Typography className="m-0 p-0" variant="h4" gutterBottom>
+       Overview
+      </Typography>
+      <span className="p-0 m-0">Get top insights about your performance</span>
+      </div>
+
+    <Card className="p-3">
       <Tabs
         defaultActiveKey="home"
         id="uncontrolled-tab-example"
@@ -96,11 +103,12 @@ function RevenueReport() {
               window.location.href = "/performance/revenue-report";
             }}
           >
-            Revenue Report >
+            Revenue Report 
           </Link>
         </Card>
       </div>
     </Card>
+    </div>
   );
 }
 

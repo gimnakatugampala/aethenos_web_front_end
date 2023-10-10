@@ -17,7 +17,7 @@ const SingleRevenueReport = () => {
     fontWeight: "bold",
   };
   return (
-    <Card>
+    <Card className="p-3">
       <div className="container text-center">
         <div className="row">
           <div className="col-12">
@@ -27,6 +27,7 @@ const SingleRevenueReport = () => {
           </div>
         </div>
       </div>
+      
       <div className="container ml-5">
         <p className="font-bold fs-10 mb-0">
           You earned $71 during this period. May 8, 2019 is the expected payment
