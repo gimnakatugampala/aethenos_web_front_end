@@ -17,6 +17,11 @@ import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from '@mui/material/Button';
+
+
 
 const messages = [
   {
@@ -106,21 +111,24 @@ export default function Questions() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <div class="input-group" style={{ padding: "8px" }}>
-        <input
-          type="text"
-          class="form-control form-control-sm"
-          placeholder="Search by Keyword"
+      <div class="p-3">
+
+      <InputGroup className="mb-3">
+        <Form.Control
           value={searchKeyword}
           onChange={handleSearchChange}
+          placeholder="Search by Keyword"
+          aria-label="Search by Keyword"
+          aria-describedby="basic-addon2"
         />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+
+        <Button variant="contained">
+          <i class="fas fa-search"></i>
+        </Button>
+      </InputGroup>
+
       </div>
-      <Paper square sx={{ height: "500px", overflow: "auto", pb: "50px" }}>
+      <Paper square sx={{ height: "505px", overflow: "auto", pb: "50px" }}>
         <List sx={{ mb: 2 }}>
           {filteredMessages.map(({ id, primary, secondary, person }) => (
             <React.Fragment key={id}>

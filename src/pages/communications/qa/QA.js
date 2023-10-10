@@ -5,27 +5,44 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Questions from "./Questions";
-import Button from "react-bootstrap/Button";
+import Button from '@mui/material/Button';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Card from "react-bootstrap/Card";
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+
 
 const QA = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-1">
-          <p className="fs-5 font-bold">Q&A</p>
+        <div className="col-md-2">
+             <Typography variant="h4" gutterBottom>
+             Q&A
+            </Typography>
         </div>
-        <div className="col-2">
-          <select className="form-select w-70">
-            <option value="all_courses">All Courses</option>
-            <option value="course_1">Course 1</option>
-            <option value="course_2">Course 2</option>
-            <option value="course_3">Course 3</option>
-            <option value="course_4">Course 4</option>
-          </select>
+
+        <div className="col-md-2">
+
+        <FormControl fullWidth>
+        <NativeSelect
+          defaultValue={10}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={10}>All Courses</option>
+          <option value={20}>Learn Photshop</option>
+          <option value={30}>Software Evelopment</option>
+        </NativeSelect>
+      </FormControl>
+
         </div>
+
       </div>
       <div className="container">
         <div className="row">
@@ -64,24 +81,33 @@ const QA = () => {
               />
             </FormGroup>
           </div>
-          <div className="col-3 mb-4">
-            <select className="form-select fs-6">
-              <option value="newestToOldest">Newest to Oldest</option>
-              <option value="oldestToNewest">Oldest to Newest</option>
-              <option value="priceLowToHigh">Price: Low to High</option>
-              <option value="priceHighToLow">Price: High to Low</option>
-              <option value="ratingHighToLow">Rating: High to Low</option>
-            </select>
+          <div className="col-3 my-4">
+          <FormControl fullWidth>
+        <NativeSelect
+          defaultValue={10}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={10}>Newest to Oldest</option>
+          <option value={20}>Oldest to Newest</option>
+          <option value={30}>Price: Low to High</option>
+          <option value={40}>Price: High to Low</option>
+          <option value={50}>Rating: High to Low</option>
+        </NativeSelect>
+      </FormControl>
+
           </div>
         </div>
       </div>
 
       <Card>
         <div className="row">
-          <div className="col-3">
+          <div className="col-md-4">
             <Questions />
           </div>
-          <div className="col-9">
+          <div className="col-md-8">
             <ScrollBarPage />
             <InputGroup className="mb-3">
               <Form.Control
@@ -91,9 +117,8 @@ const QA = () => {
               />
               <div className="col-2">
                 <Button
+                  variant="contained"
                   className="w-90"
-                  variant="outline-secondary bg-primary text-light"
-                  id="button-addon2"
                 >
                   Publish
                 </Button>

@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
 import Button from "react-bootstrap/Button";
-import Countries from "./Countries";
+// import Countries from "./Countries";
 import TranslateIcon from "@mui/icons-material/Translate";
 import LanguageIcon from "@mui/icons-material/Language";
 
@@ -193,7 +193,7 @@ const Students = () => {
         }}
       />
       <Card className="mt-5">
-        <Countries />
+        {/* <Countries /> */}
       </Card>
       <div className="container">
         <div className="row">
