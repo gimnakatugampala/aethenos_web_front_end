@@ -67,8 +67,8 @@ function RevenueReport() {
   return (
     <Card className="p-2">
       <p className="fs-5 font-bold">Revenue Report</p>
-      <h1 className="font-bold">$50,523.55</h1>
-      <p className="fs-10">Your lifetime earnings of March 12 2019</p>
+      <h1 className="font-bold m-0 p-0">$50,523.55</h1>
+      <p className="fs-10 m-0 p-0">Your lifetime earnings of March 12 2019</p>
       <Card className="my-3">
         <LineChart
           xAxis={[
@@ -82,7 +82,7 @@ function RevenueReport() {
           series={[
             {
               id: "France",
-              label: "French GDP per capita",
+              label: "Udemy Organic",
               data: FranceGDPperCapita,
               stack: "total",
               area: true,
@@ -90,7 +90,7 @@ function RevenueReport() {
             },
             {
               id: "Germany",
-              label: "German GDP per capita",
+              label: "Affliate Program",
               data: GermanyGDPperCapita,
               stack: "total",
               area: true,
@@ -98,7 +98,7 @@ function RevenueReport() {
             },
             {
               id: "United Kingdom",
-              label: "UK GDP per capita",
+              label: "Add Program",
               data: UKGDPperCapita,
               stack: "total",
               area: true,
@@ -108,7 +108,7 @@ function RevenueReport() {
           sx={{
             "--ChartsLegend-itemWidth": "200px",
           }}
-          width={890}
+          // width={890}
           height={400}
           margin={{ left: 70 }}
         />
