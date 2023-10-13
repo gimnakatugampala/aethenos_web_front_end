@@ -11,6 +11,8 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import LanguageIcon from "@mui/icons-material/Language";
 import AddIcon from '@mui/icons-material/Add';
 import ForumIcon from '@mui/icons-material/Forum';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 import Map from "./Map";
 
 const Students = () => {
@@ -24,16 +26,39 @@ const Students = () => {
   return (
     <div>
       <div className="d-flex justify-content-between p-2">
-      <Typography className="mb-4" variant="h4" gutterBottom>
-             Students
-        </Typography>
-        <div className="btn btn-danger">
-         <AddIcon /> Invite Students
+      <div className="row mb-2">
+        <div className="col-md-5">
+             <Typography variant="h4" gutterBottom>
+              Student
+            </Typography>
         </div>
+
+        <div className="col-md-6">
+
+        <FormControl fullWidth>
+        <NativeSelect
+          defaultValue={10}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={10}>All Courses</option>
+          <option value={20}>Learn Photoshop</option>
+          <option value={30}>Software Development</option>
+        </NativeSelect>
+      </FormControl>
+
+        </div>
+
+      </div>
+        {/* <div className="btn btn-danger">
+         <AddIcon /> Invite Students
+        </div> */}
       </div>
 
       <MaterialTable
-        title=" "
+        title="Student List"
         columns={[
           {
             title: "Name",
@@ -198,6 +223,7 @@ const Students = () => {
           exportButton: true,
         }}
       />
+
       <Card className="mt-5">
         <Map />
       </Card>
