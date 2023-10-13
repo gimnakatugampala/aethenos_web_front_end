@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Card from "react-bootstrap/Card";
 import PersonIcon from "@mui/icons-material/Person";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import Card from 'react-bootstrap/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
 
 function Instruction() {
   const [inputText, setInputText] = useState("");
@@ -48,22 +51,23 @@ function Instruction() {
   return (
   
       <div>
-        <div className="continer p-4">
-          <h5>Assignment instructions</h5>
-          <p>
+        <div className="container p-4">
+          <h5 className="p-0 m-0">Assignment instructions</h5>
+          <p className="my-1">
             <WatchLaterIcon /> 30 minutes to complete |<PersonIcon />
             one student solution
           </p>
         </div>
-        <Card>
-          <Card.Body>
-            <Card.Title className="fs-6">
+
+        <Card className="p-3">
+          <CardContent>
+            <Typography  className="fs-6">
               Briefly outline the role of the Roman Senate during the Republic
-            </Card.Title>
+            </Typography>
             <br />
-            <Card.Text style={{ fontWeight: "bold" }}>
+            <Typography  style={{ fontWeight: "bold" }}>
               Question for this assignment
-            </Card.Text>
+            </Typography>
             {displayedTexts.map((text, index) => (
               <div key={index}>
                 <p>{text}</p>
@@ -99,8 +103,9 @@ function Instruction() {
             >
               {editIndex !== -1 ? "Save Edit" : "Submit Question"}
             </Button>
-          </Card.Body>
+          </CardContent>
         </Card>
+        
       </div>
    
   );
