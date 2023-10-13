@@ -25,6 +25,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
+import { MessageBox } from 'react-chat-elements'
+
+import 'react-chat-elements/dist/main.css'
+import './Messages.css'
 
 function Messages() {
   const initialMessages = {
@@ -227,48 +231,47 @@ function Messages() {
                 <Paper
                   elevation={3}
                   className="p-3"
-                  style={{ minHeight: "70vh", overflowY: "auto" }}
+                  style={{ minHeight: "70vh", overflowY: "auto",background:'#D5D8DC' }}
                 >
                   <List>
-                    {messages.map((message, index) => (
-                      <ListItem
-                        key={index}
-                        alignItems={
-                          message.sender === "You" ? "flex-end" : "flex-start"
-                        }
-                      >
-                        <ListItemAvatar>
-                          <Avatar
-                            alt={message.sender}
-                            src="/static/images/avatar/1.jpg"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={message.sender}
-                          secondary={message.text}
-                          primaryTypographyProps={{
-                            sx: {
-                              fontWeight: "bold",
-                              color:
-                                message.sender === "You"
-                                  ? "primary.main"
-                                  : "secondary.main",
-                            },
-                          }}
-                          secondaryTypographyProps={{
-                            sx: {
-                              fontWeight: "normal",
-                              backgroundColor:
-                                message.sender === "You"
-                                  ? "primary.light"
-                                  : "secondary.light",
-                              borderRadius: "10px",
-                              padding: "10px",
-                            },
-                          }}
-                        />
-                      </ListItem>
-                    ))}
+                  
+                  {/* {messages.map((message, index) => (
+                    <div>{message.sender == "You" ? "Sender" : "Reciever"}</div>
+                   ))} */}
+
+<MessageBox
+styles={{width:300,color:'#000',fontWeight:'bold'}}
+
+  onReplyMessageClick={() => console.log('reply clicked!')}
+  position={'left'}
+  type={'text'}
+  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
+/>
+<MessageBox
+styles={{width:300,color:'#000',fontWeight:'bold'}}
+
+  onReplyMessageClick={() => console.log('reply clicked!')}
+  position={'left'}
+  type={'text'}
+  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
+/>
+
+<MessageBox
+styles={{width:300,background:'#e01D20',color:'#fff',fontWeight:'bold'}}
+  onReplyMessageClick={() => console.log('reply clicked!')}
+  position={'right'}
+  type={'text'}
+  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
+/>
+<MessageBox
+styles={{width:300,background:'#e01D20',color:'#fff',fontWeight:'bold'}}
+  onReplyMessageClick={() => console.log('reply clicked!')}
+  position={'right'}
+  type={'text'}
+  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
+/>
+                   
+                   
                   </List>
                 </Paper>
                 <InputGroup className="p-3">
