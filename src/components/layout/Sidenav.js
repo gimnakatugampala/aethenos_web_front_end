@@ -9,6 +9,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import SpeakerPhoneIcon from '@mui/icons-material/SpeakerPhone';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -225,11 +227,11 @@ function Sidenav({ color }) {
         <Menu.Item key="12">
           <NavLink to="/performance/engagement">
             <span
-              className="icon"
+              className="icon p-2"
               style={{
                 background: page === "performance/engagement" ? color : "",
               }}
-           >{signup}</span>
+           ><LocalLibraryIcon  /></span>
             <span className="label">Course Engagement</span>
           </NavLink>
         </Menu.Item>
@@ -237,11 +239,11 @@ function Sidenav({ color }) {
         <Menu.Item key="13">
           <NavLink to="/performance/traffic-conversations">
             <span
-              className="icon"
+              className="icon p-2"
               style={{
                 background: page === "/performance/traffic-conversations" ? color : "",
               }}
-           >{signup}</span>
+           ><QueryStatsIcon /></span>
             <span className="label">Traffic&Conversation</span>
           </NavLink>
         </Menu.Item>
