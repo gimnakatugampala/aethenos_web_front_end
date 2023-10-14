@@ -6,6 +6,9 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { Card } from "antd";
 import MaterialTable from 'material-table';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Typography from "@mui/material/Typography";
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
 
 const TrafficConversation = () => {
 
@@ -29,46 +32,62 @@ const TrafficConversation = () => {
 
   return (
 
-  
-
+  <>
+  <div className="mb-5">
+       <Typography className="m-0 p-0" variant="h4" gutterBottom>
+       Traffic Conversations
+      </Typography>
+      <span className="p-0 m-0">Use this table to understand what webpages are giving you the most traffic</span>
+      </div>
     <Card>
-    <p className="fs-5 font-bold">Traffic Conversations</p>
-    <p className="fs-6">Use this table to understand what webpages are giving you the most traffic</p>
-    <div className='mb-3'>
-    <Dropdown>
-      <Dropdown.Toggle variant="Secondary" id="dropdown-basic">
-        All channel
-      </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Last 30 days</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Last 12 months</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">All channel</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+
+<div className='p-3'>
+
+    <div className='row my-4'>
+    <div className='col-md-8'></div>
+      <div className='col-md-4'>
+    <FormControl fullWidth>
+        <NativeSelect
+          defaultValue={10}
+          inputProps={{
+            name: 'age',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={10}>Last 30 days</option>
+          <option value={20}>Last 12 months</option>
+          <option value={30}>All channel</option>
+        </NativeSelect>
+      </FormControl>
+      </div>
     </div>
-<div className='mb-5'>
-    <MaterialTable
-      title="Basic Traffic-Conversations Preview"
-      columns={[
-        { title: 'Source', field: 'name' },
-        { title: 'Channel', field: 'surname' },
-        { title: 'Coupon code', field: 'Couponcode'},
-        { title: 'Visitors', field: 'Visitors'},
 
-        
-      ]}
-      data={[
-        { name: 'Mehmet', surname: 'Baran', Couponcode: '--', Visitors: 63 },
-        { name: 'Zerya Betül', surname: 'Baran',  Couponcode: '--', Visitors: 233 },
-      ]}        
-      options={{
-        exportButton: true
-      }}
-    />
 
-</div>
-<p className="fs-6">Understand how people get to your landing page and whether they're enrolling</p>
+    <div className='mb-5'>
+        <MaterialTable
+          title="Coupon List"
+          columns={[
+            { title: 'Source', field: 'name' },
+            { title: 'Channel', field: 'surname' },
+            { title: 'Coupon code', field: 'Couponcode'},
+            { title: 'Visitors', field: 'Visitors'},
+
+            
+          ]}
+          data={[
+            { name: 'Mehmet', surname: 'Baran', Couponcode: '--', Visitors: 63 },
+            { name: 'Zerya Betül', surname: 'Baran',  Couponcode: '--', Visitors: 233 },
+          ]}        
+          options={{
+            exportButton: true
+          }}
+        />
+
+    </div>
+
+    </div>
+{/* <p className="fs-6">Understand how people get to your landing page and whether they're enrolling</p>
 
     <Tabs
       defaultActiveKey="home"
@@ -132,8 +151,9 @@ const TrafficConversation = () => {
       </Tab>
     
     </Tabs>
- 
+  */}
   </Card>
+  </>
   );
 }
 
