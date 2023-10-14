@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CommentSection } from "react-comments-section";
+import Button from '@mui/material/Button';
 import "react-comments-section/dist/index.css";
 
 const CommentBox = () => {
@@ -23,13 +24,14 @@ const CommentBox = () => {
 
   return (
     <div>
-      <button
-        type="button"
-        class="btn btn-outline-primary btn-block"
-        onClick={handleButtonClick}
-      >
-        Respond
-      </button>
+
+      {isExpanded ? (
+        <Button className="m-3" onClick={handleButtonClick} variant="outlined"><i class="fa-solid fa-xmark mx-2"></i> Cancel</Button>
+        ) : (
+        <Button className="m-3"  onClick={handleButtonClick} variant="contained"><i class="fa-solid fa-reply mx-2"></i> Respond</Button>
+
+      )}
+
 
       {isExpanded && (
         <CommentSection
@@ -37,14 +39,12 @@ const CommentBox = () => {
             currentUserId: "01a",
             currentUserImg:
               "https://ui-avatars.com/api/name=Riya&background=random",
-            currentUserProfile:
-              "https://www.linkedin.com/in/riya-negi-8879631a9/",
-            currentUserFullName: "Riya Negi",
+              currentUserFullName: "Gimna Katugampala",
           }}
-          logIn={{
-            loginLink: "http://localhost:3001/",
-            signupLink: "http://localhost:3001/",
-          }}
+          // logIn={{
+          //   loginLink: "http://localhost:3001/",
+          //   signupLink: "http://localhost:3001/",
+          // }}
           data={data}
         />
       )}
