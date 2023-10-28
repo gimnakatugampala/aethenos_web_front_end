@@ -125,9 +125,12 @@ function Header({
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <a href="/profile">
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
+         <Avatar /> Profile
         </MenuItem>
+        </a>
+        
         <MenuItem onClick={handleClose}>
           <Avatar /> My account
         </MenuItem>

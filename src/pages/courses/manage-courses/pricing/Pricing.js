@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import { Select, Radio } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
+import InputGroup from 'react-bootstrap/InputGroup';
+import { Button } from '@mui/material';
 
 const countries = [
   { country: "America", currency: "USD" },
@@ -66,10 +68,35 @@ const Pricing = () => {
           <div className="price-range-container">
             <div className="row">
               <div className="price-range col-6">
-                <h5>Price Range</h5>
-                <h3>$100-$200</h3>
+
+                    <Form.Label>Default Price (USD)</Form.Label>
+                      <InputGroup className="mb-3">
+                        <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
+                        <Form.Control
+                        // onChange={(e) => setDmaxPrice(e.target.value)}
+                          // value={DmaxPrice}
+                          placeholder="USD"
+                          aria-label="USD"
+                          aria-describedby="basic-addon1"
+                        />
+                      </InputGroup>
+                      {/* <Button  className='mx-1' variant="contained">Submit</Button> */}
+
+                
+
               </div>
-              <div className="radio-group col-6 mt-5">
+
+              <div className='col-md-2 d-flex align-items-center mt-3'>
+                <Button  className='mx-1' variant="contained">Submit</Button>
+                </div>
+
+                <div className='col-md-4'></div>
+
+                <div className="col-md-6">
+          <Form.Label>Price Range : $100-$200</Form.Label>
+          </div>
+
+              <div className="radio-group col-6 d-flex align-items-center mt-5">
                 <Radio.Group
                   onChange={(e) => handleRadioChange(e.target.value)}
                 >
@@ -81,13 +108,15 @@ const Pricing = () => {
             </div>
           </div>
 
+      
+
           <table className="table table-striped text-center">
             <thead>
               <tr>
                 <th scope="col">Country</th>
                 <th scope="col">Currency</th>
                 <th scope="col">Price</th>
-                <th scope="col">View Price Range</th>
+                <th scope="col">Price Range</th>
                 <th scope="col">Discount Type</th>
                 <th scope="col">Discount Amount</th>
               </tr>
@@ -100,7 +129,7 @@ const Pricing = () => {
                   <td>
                     <Form.Control type="text" />
                   </td>
-                  <td>$100-$200</td>
+                  <td>{countryData.currency == "USD" ? "$100-$200" : "100-200"}</td>
                   <td>
                     <Select
                       value={selectedDiscountTypes[index]}

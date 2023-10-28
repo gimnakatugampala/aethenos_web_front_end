@@ -25,6 +25,8 @@ import Students from "./pages/performance/students/Students";
 import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
 
+import MyProfile from "./pages/profile/my-profile/MyProfile";
+
 import theme from "./commonFunctions/theme";
 
 import Main from "./components/layout/Main";
@@ -50,11 +52,13 @@ function App() {
             <Route exact path="/tables" component={Tables} />
             <Route exact path="/billing" component={Billing} />
             <Route exact path="/rtl" component={Rtl} />
-            <Route exact path="/profile" component={Profile} />
+            {/* <Route exact path="/profile" component={Profile} /> */}
 
             <Route exact path="/courses" component={AllCourses} />
             <Route exact path="/add-courses" component={AddCourses} />
             <Route exact path="/edit-course" component={EditCourse} />
+
+            <Route exact path="/profile" component={MyProfile} />
             
             <Route
               exact

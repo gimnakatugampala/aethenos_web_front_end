@@ -324,11 +324,11 @@ const Promotion = () => {
 
               <div className='col-md-6'>
                 <div class="mb-3">
-                    <label class="form-label">Discount Type</label>
+                    <label class="form-label">Promotion Type</label>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Open this select menu</option>
-                        <option value="1">Percentage Discount</option>
-                        <option value="2">Fixed Cart Discount</option>
+                        <option value="1">Percentage Promotion</option>
+                        <option value="2">Fixed Cart Promotion</option>
                     </select>
                 </div>
               </div>
