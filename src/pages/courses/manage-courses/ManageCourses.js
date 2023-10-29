@@ -9,6 +9,7 @@ import { Layout, Menu , Col, Row, Card ,Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
 import { Button } from '@mui/material';
+import Modal from 'react-bootstrap/Modal';
 
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -22,6 +23,13 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 
 import IntendedLearners from './intended-learners/IntendedLearners';
 import Curriculum from './curriculum/Curriculum';
@@ -52,6 +60,11 @@ const ManageCourses = () => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectTab, setselectTab] = useState(window.history.state)
   const location = useLocation();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
 
@@ -252,7 +265,7 @@ const ManageCourses = () => {
         </ListItemButton>
 
         <ListItemText>
-           <Button className='mx-4 w-75 my-3' variant="contained">Submit For Review</Button>
+           <Button onClick={handleShow} className='mx-4 w-75 my-3' variant="contained">Submit For Review</Button>
         </ListItemText>
         
 
@@ -277,6 +290,38 @@ const ManageCourses = () => {
 
     
   </Row>
+
+
+  {/* Content Copyrights */}
+  <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Content Ownership</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h6 className='my-4'><b>Identify your ownership rights to the courses content</b></h6>
+
+          <p className='m-0 p-0'>Please select one of the options below</p>
+
+          <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue="female"
+        name="radio-buttons-group"
+      >
+        <FormControlLabel value="female" control={<Radio />} label="I created most or all of the contest of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos" />
+        <br />
+        <FormControlLabel value="male" control={<Radio />} label="I am a person or a company publishing this course through either partnership, contract, or employment with the creator of most or all of the content of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos" />
+        
+      </RadioGroup>
+
+<div className='d-flex justify-content-end'>
+
+      <Button className='my-4' variant='contained'>Accept</Button>
+</div>
+
+
+        </Modal.Body>
+       
+      </Modal>
 
 
   </Layout>
