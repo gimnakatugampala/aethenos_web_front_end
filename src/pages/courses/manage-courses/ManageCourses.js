@@ -62,9 +62,19 @@ const ManageCourses = () => {
   const location = useLocation();
 
   const [show, setShow] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleCloseVerification = () => {
+    setShow(false)
+    setShowVerification(false)
+  };
+  const handleShowVerification = () => {
+    setShow(false)
+    setShowVerification(true)
+  };
 
 
 
@@ -313,16 +323,39 @@ const ManageCourses = () => {
         
       </RadioGroup>
 
-<div className='d-flex justify-content-end'>
-
-      <Button className='my-4' variant='contained'>Accept</Button>
-</div>
+      <div className='d-flex justify-content-end'>
+            <Button onClick={handleShowVerification}  className='my-4' variant='contained'>Accept</Button>
+      </div>
 
 
         </Modal.Body>
        
       </Modal>
 
+
+      {/* Verification */}
+      <Modal show={showVerification} onHide={handleCloseVerification}>
+        <Modal.Header closeButton>
+          <Modal.Title>Verification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h6 className='my-1'><b>Complete Identify Verification</b></h6>
+
+          <p>Aethenos Has Developed a Program to Verify its Instructor When Submitting the Course for Review.</p>
+
+          <p>Verifying the ID card ensures that the individual submitting the course is who they claim to be. This is crucial for maintaining trust and credibility within the platform. It prevents individuals from impersonating someone else or creating courses under false pretenses.</p>
+
+
+         
+
+      <div className='d-flex justify-content-end'>
+            <Button onClick={() => window.location.href = "/verification"} className='my-2' variant='contained'>Continue</Button>
+      </div>
+
+
+        </Modal.Body>
+       
+      </Modal>
 
   </Layout>
   )
