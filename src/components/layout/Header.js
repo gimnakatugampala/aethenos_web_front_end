@@ -34,7 +34,9 @@ import Logout from '@mui/icons-material/Logout';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Popover from '@mui/material/Popover';
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PaidIcon from '@mui/icons-material/Paid';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 function Header({
@@ -127,29 +129,40 @@ function Header({
       >
         <a href="/profile">
         <MenuItem onClick={handleClose}>
-         <Avatar /> Profile
+        <ListItemIcon>
+         <AccountCircleIcon fontSize="medium" /> 
+         </ListItemIcon>
+         Profile
         </MenuItem>
         </a>
+
+        <Divider />
+        
+        <a href="/verification">
+        <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+          <CheckCircleIcon fontSize="medium" />
+        </ListItemIcon>
+           Verification
+        </MenuItem>
+        </a>
+
+        <Divider />
+
+        <a href="/payouts">
+        <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+            <PaidIcon fontSize="medium"  />
+          </ListItemIcon>
+          Payouts & Tax Details
+        </MenuItem>
+        </a>
+
+        <Divider />
         
         <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
+            <Logout fontSize="medium" />
           </ListItemIcon>
           Logout
         </MenuItem>

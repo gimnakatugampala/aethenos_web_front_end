@@ -21,6 +21,7 @@ import CourseEngagement from "./pages/performance/course-engagement/CourseEngage
 import Annoucements from "./pages/communications/annoucements/Annoucements";
 import Assignments from "./pages/communications/assignments/Assignments";
 import Students from "./pages/performance/students/Students";
+import Verification from "./pages/profile/verification/Verification";
 
 import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
@@ -59,6 +60,7 @@ function App() {
             <Route exact path="/edit-course" component={EditCourse} />
 
             <Route exact path="/profile" component={MyProfile} />
+            <Route exact path="/verification" component={Verification} />
             
             <Route
               exact
