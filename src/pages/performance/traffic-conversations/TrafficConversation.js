@@ -35,7 +35,7 @@ const TrafficConversation = () => {
   <>
   <div className="mb-5">
        <Typography className="m-0 p-0" variant="h4" gutterBottom>
-       Traffic Conversations
+       Traffic Conversions
       </Typography>
       <span className="p-0 m-0">Use this table to understand what webpages are giving you the most traffic</span>
       </div>

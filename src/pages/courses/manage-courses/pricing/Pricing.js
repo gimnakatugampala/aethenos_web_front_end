@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
+import getSymbolFromCurrency from 'currency-symbol-map'
 
 const countries = [
   { country: "America", currency: "USD" },
@@ -36,8 +37,7 @@ const countries = [
   { country: "Thailand", currency: "THB" },
   { country: "Turkey", currency: "TRY" },
   { country: "Vietnam", currency: "VND" },
-  { country: "European Union", currency: "EUR" },
-  { country: "Other Countries", currency: "Unknown" },
+  { country: "European Union", currency: "EUR" }
 ];
 
 const Pricing = () => {
@@ -67,34 +67,46 @@ const Pricing = () => {
         <div className="pricing-container">
           <div className="price-range-container">
             <div className="row">
-              <div className="price-range col-6">
 
+            <p>There should be Default Price AMount for the Other Countries not mentioned in the Table Below</p>
+
+              <div className="price-range col-3">
                     <Form.Label>Default Price (USD)</Form.Label>
                       <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                         <Form.Control
-                        // onChange={(e) => setDmaxPrice(e.target.value)}
-                          // value={DmaxPrice}
                           placeholder="USD"
                           aria-label="USD"
                           aria-describedby="basic-addon1"
                         />
                       </InputGroup>
-                      {/* <Button  className='mx-1' variant="contained">Submit</Button> */}
+                     
+              </div>
 
-                
+              <div className="col-md-4">
+              <Form.Label>Discount Type</Form.Label>
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">No Discount</option>
+                <option value="2">Percentage</option>
+                <option value="3">Fixed Discount</option>
+              </select>
+              </div>
 
+              <div className="col-md-3">
+              <Form.Label>Discount Amount</Form.Label>
+              <Form.Control type="text" />
               </div>
 
               <div className='col-md-2 d-flex align-items-center mt-3'>
                 <Button  className='mx-1' variant="contained">Submit</Button>
                 </div>
 
-                <div className='col-md-4'></div>
+              
 
                 <div className="col-md-6">
-          <Form.Label>Price Range : $100-$200</Form.Label>
-          </div>
+              <Form.Label>Price Range : $100-$200</Form.Label>
+              </div>
 
               <div className="radio-group col-6 d-flex align-items-center mt-5">
                 <Radio.Group
@@ -129,7 +141,7 @@ const Pricing = () => {
                   <td>
                     <Form.Control type="text" />
                   </td>
-                  <td>{countryData.currency == "USD" ? "$100-$200" : "100-200"}</td>
+                  <td>{`${getSymbolFromCurrency(countryData.currency)} 100 - ${getSymbolFromCurrency(countryData.currency)} 200`}</td>
                   <td>
                     <Select
                       value={selectedDiscountTypes[index]}

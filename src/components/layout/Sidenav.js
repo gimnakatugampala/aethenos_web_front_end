@@ -237,14 +237,14 @@ function Sidenav({ color }) {
         </Menu.Item>
 
         <Menu.Item key="13">
-          <NavLink to="/performance/traffic-conversations">
+          <NavLink to="/performance/traffic-conversions">
             <span
               className="icon p-2"
               style={{
-                background: page === "/performance/traffic-conversations" ? color : "",
+                background: page === "/performance/traffic-conversions" ? color : "",
               }}
            ><QueryStatsIcon /></span>
-            <span className="label">Traffic&Conversation</span>
+            <span className="label">Traffic&Conversions</span>
           </NavLink>
         </Menu.Item>
 

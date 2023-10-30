@@ -111,7 +111,7 @@ function App() {
             />
             <Route exact path="/performance/overview" component={Overview} />
             <Route exact path="/performance/reviews" component={Reviews} />
-            <Route exact path="/performance/traffic-conversations" component={TrafficConversation} />
+            <Route exact path="/performance/traffic-conversions" component={TrafficConversation} />
             <Route exact path="/performance/students" component={Students} />
           </Main>
           <Redirect from="*" to="/courses" />
