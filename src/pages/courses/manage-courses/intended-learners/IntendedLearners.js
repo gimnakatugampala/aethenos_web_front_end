@@ -5,6 +5,9 @@ import { Layout, Menu , Col, Row ,Button  ,Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
 import Card from '@mui/material/Card';
+import ButtonMaterial from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+
 
 import Typography from '@mui/material/Typography';
 import $ from "jquery";
@@ -77,9 +80,15 @@ const onFinish = (values) => {
     <div className='col-md-8'>
     <Card className="py-2 my-2 p-4"> 
 
+    <div className='d-flex justify-content-between'>
+
       <Typography className='my-2' variant="h4" >
           Intended Learners
       </Typography>
+
+      <ButtonMaterial variant="contained"><AddIcon /> SAVE</ButtonMaterial>
+    </div>
+
 
        <hr />
 

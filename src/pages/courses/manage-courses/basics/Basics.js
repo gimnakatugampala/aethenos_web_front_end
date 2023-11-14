@@ -8,6 +8,8 @@ import { Layout, Menu, Col, Row, Button, Select, Image, Upload } from "antd";
 import { Input } from "antd";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
+import ButtonMaterial from '@mui/material/Button';
+
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -49,9 +51,15 @@ const Basics = () => {
   return (
     <div className="col-md-8">
       <Card className="py-2 my-2 p-4">
+
+      <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
           Course Landing Page
         </Typography>
+
+        <ButtonMaterial variant="contained"><AddIcon /> SAVE</ButtonMaterial>
+        </div>
+
         <hr />
 
         <p>

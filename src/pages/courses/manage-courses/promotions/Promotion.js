@@ -6,7 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import AddIcon from "@mui/icons-material/Add";
 import { Card  } from 'antd';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -231,9 +231,14 @@ const Promotion = () => {
   return (
     <div className='col-md-8'>
     <Card className="py-2 my-2"> 
+
+    <div className='d-flex justify-content-between'>
         <Typography className='p-3' variant='h4'>
           Promotions
        </Typography>
+       <Button variant="contained"><AddIcon /> SAVE</Button>
+
+    </div>
        <hr />
 
     <div className='d-flex justify-content-end'>

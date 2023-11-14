@@ -182,9 +182,7 @@ const ManageCourses = () => {
           <span className='course-title-status'>DRAFT</span>
       </Space>
 
-      <Space size={15}>
-        <Button size="small" >SAVE</Button>
-      </Space>
+
      </div>
 
   </Header>

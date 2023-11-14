@@ -40,9 +40,15 @@ const Curriculum = () => {
   return (
     <div className="col-md-8 curriculum-container">
       <Card className="py-2 my-2 p-4">
+
+      <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
           Curriculum
         </Typography>
+        
+        <Button variant="contained"><AddIcon /> SAVE</Button>
+        </div>
+
         <hr />
 
         {/* Section 1 */}

@@ -6,6 +6,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
+import AddIcon from "@mui/icons-material/Add";
+
 import getSymbolFromCurrency from 'currency-symbol-map'
 
 const countries = [
@@ -59,9 +61,15 @@ const Pricing = () => {
   return (
     <div className="col-md-8">
       <Card className="py-2 my-2 p-4">
+      <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
           Pricing
         </Typography>
+
+        <Button variant="contained"><AddIcon /> SAVE</Button>
+
+        </div>
+
         <hr />
 
         <div className="pricing-container">
@@ -85,7 +93,7 @@ const Pricing = () => {
 
               <div className="col-md-4">
               <Form.Label>Discount Type</Form.Label>
-              <select class="form-select" aria-label="Default select example">
+              <select  class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
                 <option value="1">No Discount</option>
                 <option value="2">Percentage</option>

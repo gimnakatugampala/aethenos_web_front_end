@@ -8,6 +8,8 @@ import { Layout, Menu, Col, Row, Button, Card, Select } from "antd";
 import { Editor } from "@tinymce/tinymce-react";
 import { Input } from "antd";
 import RichTextEditor from "../../../../components/RichTextEditor";
+import AddIcon from "@mui/icons-material/Add";
+import ButtonMaterial from '@mui/material/Button';
 
 const { TextArea } = Input;
 const { SubMenu } = Menu;
@@ -36,9 +38,14 @@ const CourseMessages = () => {
   return (
     <div className="col-md-8">
       <Card className="py-2 my-2">
+
+      <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
           Course Messages
         </Typography>
+
+        <ButtonMaterial variant="contained"><AddIcon /> SAVE</ButtonMaterial>
+        </div>
         <hr />
 
         <div className="pricing-container">
