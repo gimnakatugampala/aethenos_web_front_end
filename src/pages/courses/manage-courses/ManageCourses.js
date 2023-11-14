@@ -193,7 +193,7 @@ const ManageCourses = () => {
 
   
 
-    <div className='col-md-3 p-5'>
+    <div className='col-md-3 p-4'>
     <List component="nav" aria-label="main mailbox folders">
 
    

@@ -139,6 +139,7 @@ const Pricing = () => {
                 <th scope="col">Price Range</th>
                 <th scope="col">Discount Type</th>
                 <th scope="col">Discount Amount</th>
+                <th scope="col">List Price</th>
               </tr>
             </thead>
             <tbody>
@@ -149,7 +150,7 @@ const Pricing = () => {
                   <td>
                     <Form.Control type="text" />
                   </td>
-                  <td>{`${getSymbolFromCurrency(countryData.currency)} 100 - ${getSymbolFromCurrency(countryData.currency)} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(countryData.currency)} 100 - ${getSymbolFromCurrency(countryData.currency)} 200`}</td>
                   <td>
                     <Select
                       value={selectedDiscountTypes[index]}
@@ -171,6 +172,9 @@ const Pricing = () => {
                   </td>
                   <td>
                     <Form.Control type="text" />
+                  </td>
+                  <td style={{whiteSpace:'nowrap'}}>
+                 {getSymbolFromCurrency(countryData.currency)} 90.00
                   </td>
                 </tr>
               ))}
