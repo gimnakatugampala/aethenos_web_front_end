@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
+import { css } from "../../manage-courses/pricing/Pricing.css";
 
 import getSymbolFromCurrency from 'currency-symbol-map'
 
@@ -76,10 +77,13 @@ const Pricing = () => {
           <div className="price-range-container">
             <div className="row">
 
-            <p>There should be Default Price AMount for the Other Countries not mentioned in the Table Below</p>
+            <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List 
+              
+Prices include VAT. 
+For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
 
-              <div className="price-range col-3">
-                    <Form.Label>Default Price (USD)</Form.Label>
+              <div className="price-range col-2">
+                    <Form.Label>Global List Price (USD)</Form.Label>
                       <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                         <Form.Control
@@ -88,10 +92,12 @@ const Pricing = () => {
                           aria-describedby="basic-addon1"
                         />
                       </InputGroup>
+                      <Form.Label>Price range: $20 – $250</Form.Label>
+
                      
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-2">
               <Form.Label>Discount Type</Form.Label>
               <select  class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
@@ -100,21 +106,31 @@ const Pricing = () => {
                 <option value="3">Fixed Discount</option>
               </select>
               </div>
-
-              <div className="col-md-3">
-              <Form.Label>Discount Amount</Form.Label>
+              <div className="col-md-2">
+              <Form.Label>Discount %</Form.Label>
               <Form.Control type="text" />
               </div>
 
-              <div className='col-md-2 d-flex align-items-center mt-3'>
+              <div className="col-md-2">
+              <Form.Label>Discount Amount (USD)</Form.Label>
+              <Form.Control type="text" />
+              </div>
+              <div className="col-md-2">
+              <Form.Label>Global Net Price (USD)</Form.Label>
+              <Form.Control type="text" />
+              <Form.Label>Minimum : $10</Form.Label>
+
+              </div>
+
+              <div className='col-md-2 d-flex align-items-center mb-3'>
                 <Button  className='mx-1' variant="contained">Submit</Button>
                 </div>
 
               
 
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
               <Form.Label>Price Range : $100-$200</Form.Label>
-              </div>
+              </div> */}
 
               <div className="radio-group col-6 d-flex align-items-center mt-5">
                 <Radio.Group
@@ -133,24 +149,38 @@ const Pricing = () => {
           <table className="table table-striped text-center">
             <thead>
               <tr>
-                <th scope="col">Country</th>
+                <th className="col-2" scope="col">Country</th>
                 <th scope="col">Currency</th>
-                <th scope="col">Price</th>
                 <th scope="col">Price Range</th>
-                <th scope="col">Discount Type</th>
-                <th scope="col">Discount Amount</th>
                 <th scope="col">List Price</th>
+
+                <th scope="col">Discount Type</th>
+                <th scope="col">Discount %</th>
+                <th scope="col">Discount Amount</th>
+                <th scope="col">Net Price</th>
+               
+
+
               </tr>
             </thead>
             <tbody>
               {countries.map((countryData, index) => (
-                <tr key={index}>
-                  <td>{countryData.country}</td>
+                <tr  key={index}>
+                  <td >{countryData.country}
+            
+             
+                 <td className="col-12 font-italic mt-5">  
+                <Form.Label className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+               
+                 
+                 </td>
+                 
                   <td>{countryData.currency}</td>
+                  
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(countryData.currency)} 100 - ${getSymbolFromCurrency(countryData.currency)} 200`}</td>
                   <td>
                     <Form.Control type="text" />
                   </td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(countryData.currency)} 100 - ${getSymbolFromCurrency(countryData.currency)} 200`}</td>
                   <td>
                     <Select
                       value={selectedDiscountTypes[index]}
@@ -173,10 +203,23 @@ const Pricing = () => {
                   <td>
                     <Form.Control type="text" />
                   </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                 {getSymbolFromCurrency(countryData.currency)} 90.00
+                  <td>
+                    <Form.Control type="text" />
                   </td>
+                  <td style={{whiteSpace:'nowrap'}}>
+                 {/* {getSymbolFromCurrency(countryData.currency)} 90.00 */}
+                 <Form.Control type="text" />
+                 <tr className="">
+                 <Form.Label>Minimum:$10</Form.Label>
+
+                 </tr>
+                  </td>
+                  <td>
+                  <Button className='mx-1' variant="contained">Submit</Button>                   </td>
+                
                 </tr>
+                
+                
               ))}
             </tbody>
           </table>
