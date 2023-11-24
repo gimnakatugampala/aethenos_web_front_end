@@ -5,18 +5,31 @@ import { Divider, Radio, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { Input } from 'antd';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
-
-const StepFour = () => {
+const StepFour = ({setcourse_test_video}) => {
 
     const [URL, setURL] = useState("")
 
     const onAddVideo = (e) =>{
-        // console.log(e.target.files[0])
+
+      if(e.target.files[0].type != "video/mp4"){
+        Swal.fire({
+          title: 'Upload Field!',
+          text: 'Please Add a Video!',
+          icon: 'error'
+        })
+
+        return
+      }
+   
         setURL(e.target.value)
-        // console.log(e)
+       
 
         let blobURL = window.URL.createObjectURL(e.target.files[0]);
+
+        setcourse_test_video(e.target.files[0])
 
 
           document.getElementById("add-course-test-video").src = blobURL;

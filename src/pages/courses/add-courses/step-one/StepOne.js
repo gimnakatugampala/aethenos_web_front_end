@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Divider, Radio, Typography } from 'antd';
 import { Input } from 'antd';
 
 import { Select, Space } from 'antd';
+import { getCourseCategories } from '../../../../api';
 import './StepOne.css'
 
 
-const StepOne = () => {
+const StepOne = ({setcourse_title , setcourse_category}) => {
+
+  const [categories, setcategories] = useState([])
+
+  useEffect(() => {
+    getCourseCategories(setcategories)
+  }, [])
+  
 
   const onChnageTitle = (e) => {
     document.getElementById("course-title-count").innerText = 60 - e.target.value.length;
-    // console.log(60 - e.target.value.length);
+    setcourse_title(e.target.value);
   };
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    setcourse_category(value);
   };
 
   return (
@@ -32,8 +40,7 @@ const StepOne = () => {
       </div>
       
       <div className='pt-3'>
-      {/* <Input className='course-title'  placeholder='Enter Course Title'  maxLength={20} onChange={onChange} /> */}
-
+      
       <div class="input-group">
         <input maxLength={60} onChange={onChnageTitle} type="text" class="form-control" placeholder="Enter Course Title" />
         <span class="input-group-text" id="course-title-count">60</span>
@@ -45,56 +52,7 @@ const StepOne = () => {
         placeholder="Select Course Category"
         allowClear
         onChange={handleChange}
-        options={[
-          {
-            value: 'development',
-            label: 'Development',
-          },
-          {
-            value: 'bisiness',
-            label: 'Business',
-          },
-          {
-            value: 'finance',
-            label: 'Finance & Accounting',
-          },
-          {
-            value: 'it',
-            label: 'IT & Software',
-          },
-          {
-            value: 'officep',
-            label: 'Office Productivity',
-          },
-          {
-            value: 'design',
-            label: 'Design',
-          },
-          {
-            value: 'marketing',
-            label: 'Marketing',
-          },
-          {
-            value: 'lifestyle',
-            label: 'Lifestyle',
-          },
-          {
-            value: 'photography',
-            label: 'Photography & Video',
-          },
-          {
-            value: 'health',
-            label: 'Health & Fitness',
-          },
-          {
-            value: 'music',
-            label: 'Music',
-          },
-          {
-            value: 'teaching',
-            label: 'Teaching & Academics',
-          },
-        ]}
+        options={categories}
         />
 
     </div>

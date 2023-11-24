@@ -12,6 +12,9 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Card , Space } from 'antd';
+import { addCourse } from '../../../api';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
@@ -19,6 +22,16 @@ const AddCourses = () => {
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+
+  const [course_title, setcourse_title] = useState("")
+  const [course_category, setcourse_category] = useState("")
+
+  const [course_keywords, setcourse_keywords] = useState([])
+
+  const [course_image, setcourse_image] = useState("")
+
+  const [course_test_video, setcourse_test_video] = useState("")
+
 
   const isStepOptional = (step) => {
     return step === 0;
@@ -30,6 +43,71 @@ const AddCourses = () => {
 
   const handleNext = () => {
     let newSkipped = skipped;
+
+    if(activeStep == 0){
+
+      if(course_title == ""){
+
+        Swal.fire({
+          title: 'Empty Field!',
+          text: 'Please Fill Course Title!',
+          icon: 'error'
+        })
+
+        return
+
+      }else if(course_category == ""){
+
+        Swal.fire({
+          title: 'Empty Field!',
+          text: 'Please Select a Course Category!',
+          icon: 'error'
+        })
+
+        return
+
+      }
+
+    }else if(activeStep == 1){
+
+      if(course_keywords.length != 5){
+        Swal.fire({
+          title: ' Keywords Error!',
+          text: 'Please Fill Only 5 Keywords!',
+          icon: 'error'
+        })
+
+        return
+
+      }
+
+    }else if(activeStep == 2){
+
+      if(course_image == ""){
+        Swal.fire({
+          title: ' Image Error!',
+          text: 'Please Upload an Image!',
+          icon: 'error'
+        })
+
+        return
+
+      }
+    }else if(activeStep == 3){
+
+      if(course_test_video == ""){
+        Swal.fire({
+          title: ' Video Error!',
+          text: 'Please Upload a Video!',
+          icon: 'error'
+        })
+
+        return
+
+      }
+
+   
+    }
     
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -41,6 +119,8 @@ const AddCourses = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
     }
+
+  
 
 
     // console.log(activeStep)
@@ -73,7 +153,21 @@ const AddCourses = () => {
 
   const handleClick = (e) =>{
     e.preventDefault()
-    window.location.href = "/courses"
+    // window.location.href = "/courses"
+
+    addCourse(
+      course_title,
+      course_category,
+      course_keywords,
+      course_image,
+      course_test_video
+    )
+
+    // console.log(course_title)
+    // console.log(course_category)
+    // console.log(course_keywords)
+    // console.log(course_image)
+    // console.log(course_test_video)
   }
 
   return (
@@ -123,13 +217,13 @@ const AddCourses = () => {
 
         <div className='my-5'>
           {activeStep == 0 ? (
-            <StepOne />
+            <StepOne setcourse_category={setcourse_category} setcourse_title={setcourse_title} />
           ) : activeStep == 1 ? (
-            <StepTwo />
+            <StepTwo course_keywords={course_keywords} setcourse_keywords={setcourse_keywords} />
           ) : activeStep == 2 ? (
-            <StepThree />
+            <StepThree setcourse_image={setcourse_image} />
           ) : activeStep == 3 && (
-            <StepFour />
+            <StepFour setcourse_test_video={setcourse_test_video} />
           ) }
         </div>
 

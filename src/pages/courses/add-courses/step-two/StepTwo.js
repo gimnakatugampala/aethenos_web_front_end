@@ -4,11 +4,12 @@ import { TagsInput } from "react-tag-input-component";
 import { Divider, Radio, Typography } from 'antd';
 import './StepTwo.css'
 
-const StepTwo = () => {
+const StepTwo = ({course_keywords, setcourse_keywords}) => {
 
   const [selected, setSelected] = useState(["it","software"]);
+
   
-  
+
 
   return (
     <div className='steptwo-container text-center'> 
@@ -25,11 +26,11 @@ const StepTwo = () => {
       </div>
 
     <div className='pt-3'>
-          <pre>{JSON.stringify(selected)}</pre>
+          <pre>{JSON.stringify(course_keywords)}</pre>
           <TagsInput
             className="select-keywords"
-            value={selected}
-            onChange={setSelected}
+            value={course_keywords}
+            onChange={setcourse_keywords}
             name="keywords"
             placeHolder="Enter Search Keywords"
           />
