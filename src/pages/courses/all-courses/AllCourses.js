@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
-
 import { Radio } from 'antd';
 import { Select } from 'antd';
 import { Input, Space , Badge , Image ,Col, Divider, Row } from 'antd';
@@ -12,7 +11,7 @@ import Colors from '../../../commonFunctions/Colors';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { GetAllCourses } from '../../../api';
-
+import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 import './AllCourses.css'
 const { Search } = Input;
 
@@ -80,11 +79,14 @@ const AllCourses = () => {
 {/* List */}
 <div className='container my-3'>
 
+  <MainLoader />
+
 {/* List One */}
-<CourseItem title="Learn Photoshop in 20 Min" adminreview="draft" status="Requested" filledPercent={49} seenBy="PUBLIC" />
+{/* <CourseItem title="Learn Photoshop in 20 Min" adminreview="draft" status="Requested" filledPercent={49} seenBy="PUBLIC" />
 <CourseItem title="Learn Webdevelopment in 20 Min" adminreview="rejected"  status="Approved" filledPercent={49} seenBy="PRIVATE" />
 <CourseItem title="Learn AI in 20 Min" status="Draft" adminreview="pending" filledPercent={49} seenBy="PUBLIC" />
-<CourseItem title="Learn Mobile Development in 20 Min" adminreview="pending" status="Disapproved" filledPercent={49} seenBy="PUBLIC" />
+<CourseItem title="Learn Mobile Development in 20 Min" adminreview="pending" status="Disapproved" filledPercent={49} seenBy="PUBLIC" /> */}
+
     
   </div>
 
