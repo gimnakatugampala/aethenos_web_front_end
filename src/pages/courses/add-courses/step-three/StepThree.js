@@ -20,8 +20,8 @@ const StepThree = ({setcourse_image}) => {
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
-    setcourse_image(imageList[0].file)
     setImages(imageList);
+    setcourse_image(imageList[0].file)
   };
 
 

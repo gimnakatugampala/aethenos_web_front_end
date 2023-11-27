@@ -14,7 +14,9 @@ const StepFour = ({setcourse_test_video}) => {
 
     const onAddVideo = (e) =>{
 
-      if(e.target.files[0].type != "video/mp4"){
+      console.log(e.target.files[0].type)
+
+      if(!e.target.files[0].type.includes("video")){
         Swal.fire({
           title: 'Upload Field!',
           text: 'Please Add a Video!',
@@ -23,6 +25,7 @@ const StepFour = ({setcourse_test_video}) => {
 
         return
       }
+
    
         setURL(e.target.value)
        

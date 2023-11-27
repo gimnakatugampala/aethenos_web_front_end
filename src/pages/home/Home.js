@@ -6,6 +6,7 @@ import { Alert, Space, Spin } from 'antd';
 import { InfinitySpin } from  'react-loader-spinner'
 import { getUserStatus } from '../../api';
 
+
 const Home = () => {
 
     useEffect(() => {
@@ -14,10 +15,11 @@ const Home = () => {
             window.location.href = "/courses";
         }, 1000);
 
+        
+        
         console.log(window.localStorage.getItem("aethenos"))
       }, [])
       
-      // getUserStatus()
 
 
   return (

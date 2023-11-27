@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { Radio } from 'antd';
@@ -6,8 +6,14 @@ import { Select } from 'antd';
 import { Input, Space , Badge , Image ,Col, Divider, Row } from 'antd';
 import { Card } from 'antd';
 import { Button, Progress } from 'antd';
+import Modal from 'react-bootstrap/Modal';
 import CourseItem from '../../../components/course-item/CourseItem';
 import Colors from '../../../commonFunctions/Colors';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import validateEmail from '../../../commonFunctions/emailValid';
+
+
 import './AllCourses.css'
 const { Search } = Input;
 
@@ -75,6 +81,7 @@ const AllCourses = () => {
 <CourseItem title="Learn Mobile Development in 20 Min" adminreview="pending" status="Disapproved" filledPercent={49} seenBy="PUBLIC" />
     
   </div>
+
 
 
     

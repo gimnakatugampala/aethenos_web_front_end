@@ -28,6 +28,7 @@ import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
 
 import MyProfile from "./pages/profile/my-profile/MyProfile";
+import Login from "./pages/login/Login.js"
 
 import theme from "./commonFunctions/theme";
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/sign-up" exact component={SignUp} />
           <Route path="/sign-in" exact component={SignIn} />
+          <Route path="/login" exact component={Login} />
 
           <Route path="/courses/manage/2023/" exact component={ManageCourses} />
 
