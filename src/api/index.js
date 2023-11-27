@@ -126,6 +126,14 @@ export const InstructorVerify = async() =>{
 
       if(result.message == "Error"){
         ErrorAlert(result.message,result.variable)
+        return
+      }
+
+      if(result.variable == "200"){
+        SuccessAlert("Course Added!",result.message)
+  
+        window.location.href = "/courses"
+  
       }
 
       Unauthorized(result.status,"add-courses")
@@ -134,3 +142,26 @@ export const InstructorVerify = async() =>{
 
  }
  
+ export const GetAllCourses = async() =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByInstructor", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+
+   
+
+    Unauthorized(result.status,"courses")
+  })
+  .catch(error => console.log('error', error));
+
+ }

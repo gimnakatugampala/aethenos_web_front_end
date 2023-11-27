@@ -11,13 +11,19 @@ import CourseItem from '../../../components/course-item/CourseItem';
 import Colors from '../../../commonFunctions/Colors';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import validateEmail from '../../../commonFunctions/emailValid';
-
+import { GetAllCourses } from '../../../api';
 
 import './AllCourses.css'
 const { Search } = Input;
 
 const AllCourses = () => {
+
+  const [courses, setcourses] = useState([])
+
+  useEffect(() => {
+    GetAllCourses(setcourses)
+  }, [])
+  
 
 
   const handleChange = (value) => {
