@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { Card , Space } from 'antd';
 import { addCourse } from '../../../api';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 import 'sweetalert2/src/sweetalert2.scss'
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
@@ -31,6 +32,8 @@ const AddCourses = () => {
   const [course_image, setcourse_image] = useState("")
 
   const [course_test_video, setcourse_test_video] = useState("")
+
+  const [loading, setloading] = useState(false)
 
 
   const isStepOptional = (step) => {
@@ -153,14 +156,16 @@ const AddCourses = () => {
 
   const handleClick = (e) =>{
     e.preventDefault()
-    // window.location.href = "/courses"
+
+    setloading(true)
 
     addCourse(
       course_title,
       course_category,
       course_keywords,
       course_image,
-      course_test_video
+      course_test_video,
+      setloading
     )
 
     // console.log(course_title)
@@ -173,88 +178,95 @@ const AddCourses = () => {
   return (
    <div>
 
-<Card bordered={false}>  
-  <Box direction='vertical' sx={{ width: '100%'}}>
-        
-      <Stepper className='my-2' activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-
-          if (index == 0) {
-            labelProps.optional = (
-              <Typography variant="caption">Step One</Typography>
-            );
-          }else if(index == 1){
-            labelProps.optional = (
-              <Typography variant="caption">Step Two</Typography>
-            );
-          }else if(index == 2){
-            labelProps.optional = (
-              <Typography variant="caption">Step Three</Typography>
-            );
-          }else if(index == 3){
-            labelProps.optional = (
-              <Typography variant="caption">Step Four</Typography>
-            );
-          }
-
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-
-      </Stepper>
-      
-        <React.Fragment>
-
-
-        <div className='my-5'>
-          {activeStep == 0 ? (
-            <StepOne setcourse_category={setcourse_category} setcourse_title={setcourse_title} />
-          ) : activeStep == 1 ? (
-            <StepTwo course_keywords={course_keywords} setcourse_keywords={setcourse_keywords} />
-          ) : activeStep == 2 ? (
-            <StepThree setcourse_image={setcourse_image} />
-          ) : activeStep == 3 && (
-            <StepFour setcourse_test_video={setcourse_test_video} />
-          ) }
-        </div>
-
-      
-          <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2}}>
-        
-            <Button
-            className='mt-5'
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-
-            <Button className='mt-5' onClick={handleNext}>
-              {activeStep === steps.length -1 ? <Button onClick={handleClick} variant="contained" color='primary'>Create Course</Button> : 'Next'}
-            </Button>
-
-          </Box>
-          
-
-        </React.Fragment>
+    {loading && <MainLoader /> }
     
- 
+      <Card bordered={false}>  
+      <Box direction='vertical' sx={{ width: '100%'}}>
+            
+          <Stepper className='my-2' activeStep={activeStep}>
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
 
-   
-    </Box>
+              if (index == 0) {
+                labelProps.optional = (
+                  <Typography variant="caption">Step One</Typography>
+                );
+              }else if(index == 1){
+                labelProps.optional = (
+                  <Typography variant="caption">Step Two</Typography>
+                );
+              }else if(index == 2){
+                labelProps.optional = (
+                  <Typography variant="caption">Step Three</Typography>
+                );
+              }else if(index == 3){
+                labelProps.optional = (
+                  <Typography variant="caption">Step Four</Typography>
+                );
+              }
+
+              if (isStepSkipped(index)) {
+                stepProps.completed = false;
+              }
+
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+
+          </Stepper>
+          
+            <React.Fragment>
+
+
+            <div className='my-5'>
+              {activeStep == 0 ? (
+                <StepOne setcourse_category={setcourse_category} setcourse_title={setcourse_title} />
+              ) : activeStep == 1 ? (
+                <StepTwo course_keywords={course_keywords} setcourse_keywords={setcourse_keywords} />
+              ) : activeStep == 2 ? (
+                <StepThree setcourse_image={setcourse_image} />
+              ) : activeStep == 3 && (
+                <StepFour setcourse_test_video={setcourse_test_video} />
+              ) }
+            </div>
+
+          
+              <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2}}>
+            
+                <Button
+                className='mt-5'
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                <Box sx={{ flex: '1 1 auto' }} />
+
+                <Button className='mt-5' onClick={handleNext}>
+                  {activeStep === steps.length -1 ? <Button onClick={handleClick} variant="contained" color='primary'>Create Course</Button> : 'Next'}
+                </Button>
+
+              </Box>
+              
+
+            </React.Fragment>
+        
+    
+
+      
+        </Box>
     </Card>
+    
+
+    
+
+
    </div>
   )
 }

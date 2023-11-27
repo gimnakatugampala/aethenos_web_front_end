@@ -13,7 +13,9 @@ const Unauthorized = (result,rediect_url) =>{
 
 }
 
-export const LoginInstructor = async(email, password,url) =>{
+export const LoginInstructor = async(email, password,url,setloading) =>{
+
+  setloading(true)
 
   var formdata = new FormData();
   formdata.append("email", `${email}`);
@@ -31,7 +33,9 @@ export const LoginInstructor = async(email, password,url) =>{
       console.log(result)
 
       if(result.message == "incorrect password."){
+        setloading(false)
         ErrorAlert(result.message, result.variable)
+        return
       }else{
 
         SuccessAlert("Login Successful!","Successfully Login as an Instructor")
@@ -45,6 +49,8 @@ export const LoginInstructor = async(email, password,url) =>{
         }
 
         window.localStorage.setItem("aethenos", JSON.stringify(user));
+
+        setloading(false)
 
         window.location.href = `/${url}`
 
@@ -94,7 +100,10 @@ export const InstructorVerify = async() =>{
  }
 
 
- export const addCourse = async(course_title,course_category,course_keywords,course_image,course_test_video) =>{
+ export const addCourse = async(course_title,course_category,course_keywords,course_image,course_test_video,setloading) =>{
+
+
+    setloading(true)
 
    var myHeaders = new Headers();
    myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
@@ -125,11 +134,13 @@ export const InstructorVerify = async() =>{
       console.log(result)
 
       if(result.message == "Error"){
+        setloading(false)
         ErrorAlert(result.message,result.variable)
         return
       }
 
       if(result.variable == "200"){
+        setloading(false)
         SuccessAlert("Course Added!",result.message)
   
         window.location.href = "/courses"
@@ -142,7 +153,7 @@ export const InstructorVerify = async() =>{
 
  }
  
- export const GetAllCourses = async() =>{
+ export const GetAllCourses = async(setcourses) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
@@ -157,9 +168,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
   .then(response => response.json())
   .then(result => {
     console.log(result)
-
-   
-
+    setcourses(result)
     Unauthorized(result.status,"courses")
   })
   .catch(error => console.log('error', error));

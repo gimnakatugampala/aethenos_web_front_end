@@ -9,8 +9,9 @@ import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
+import { FILE_PATH } from '../../commonFunctions/FilePaths';
 
-const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
+const CourseItem = ({course,filledPercent}) => {
 
   const [percent, setPercent] = useState(filledPercent);
   const [loading, setLoading] = useState(true);
@@ -36,9 +37,7 @@ const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
 
 
   setTimeout(() => {
-
     setLoading(false)
-    
   }, 3000);
   
 
@@ -46,18 +45,18 @@ const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
     <Skeleton loading={loading} active avatar>
     <div className='my-3'>
 
-    <Badge.Ribbon text={status} color={status == "Draft" ? "cyan" : status == "Approved" ? "green" : status == "Requested" ? "yellow" : status == "Disapproved" ? "red" : "lime"}>
+    {/* <Badge.Ribbon text={status} color={status == "Draft" ? "cyan" : status == "Approved" ? "green" : status == "Requested" ? "yellow" : status == "Disapproved" ? "red" : "lime"}> */}
     <Card className='card-item'>
 
     <div className='row'>
     <div className="col-md-2 pr-0">
         <Image
           width={100}
-          src={`https://i0.wp.com/iubs.org/wp-content/uploads/2021/12/blank.jpg?fit=300%2C300&ssl=1`}
+          src={course.img == null ? 'https://i0.wp.com/iubs.org/wp-content/uploads/2021/12/blank.jpg?fit=300%2C300&ssl=1' : FILE_PATH + course.img}
           placeholder={
             <Image
               preview={false}
-              src="https://i0.wp.com/iubs.org/wp-content/uploads/2021/12/blank.jpg?fit=300%2C300&ssl=1"
+              src={course.img == null ? 'https://i0.wp.com/iubs.org/wp-content/uploads/2021/12/blank.jpg?fit=300%2C300&ssl=1' : FILE_PATH + course.img}
               width={100}
             />
           }
@@ -66,25 +65,35 @@ const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
     
       
     <div className="col-md-10 p-0">
-        <h5 className="card-title"><b>{title}</b> {adminreview == 'rejected' && (<a className='mx-2' href="edit-course"><EditIcon /></a>)} </h5> 
-        <p className='availblity'>{seenBy}</p>
+        <h5 className="card-title"><b>{course.courseTitle == null ? "N/A" : course.courseTitle}</b> {course.approvalType.id == '2' && (<a className='mx-2' href="edit-course"><EditIcon /></a>)} </h5> 
+        <p className='availblity'>{course.courseCategory.name == null ? "N/A" : course.courseCategory.name}</p>
 
         <div>
           <span className='pending-text'>
-          {adminreview == 'draft' ? (
+
+          {course.approvalType.id == '1' ? (
+
             <Chip label="Draft" color="secondary" variant="outlined" />
-          ) : adminreview == 'rejected' ? (
-            <Popover content={content} >
+
+          ) : course.approvalType.id  == '2' ? (
+
+            <Popover content={course.comment} >
             <Chip 
               aria-owns={open ? 'mouse-over-popover' : undefined}
               icon={<MoreVertIcon />}
-              // aria-haspopup="true"
-              // onMouseEnter={handlePopoverOpen}
-              // onMouseLeave={handlePopoverClose}
               label="Rejected" color="primary" variant="outlined" />
               </Popover>
-          ) : adminreview == 'pending' && (
+
+          ) : course.approvalType.id  == '3' ? (
             <Chip label="Pending" color="success" variant="outlined" />
+
+          ) : course.approvalType.id  == '4' ? (
+
+            <Chip label="Disapproved" color="danger" variant="outlined" />
+
+          ) : course.approvalType.id  == '5' && (
+
+            <Chip label="Approved" color="success" variant="outlined" />
           ) }
 
             
@@ -97,11 +106,9 @@ const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
     </div>
 
    
-
-
-        {adminreview == 'pending' && (
+        {course.approvalType.id == '3' || course.approvalType.id == "4" || course.approvalType.id == "5" && (
             <div className='d-flex justify-content-center'> 
-              <a className='card-item-link' href="/courses/manage/2023/">Manage Course</a>
+              <a className='card-item-link' href={`/courses/manage/${course.code}/`}>Manage Course</a>
             </div> 
         )}
 
@@ -110,7 +117,7 @@ const CourseItem = ({title, status, filledPercent, seenBy , adminreview}) => {
 
 
     </Card>
-    </Badge.Ribbon>
+    {/* </Badge.Ribbon> */}
     </div>
   </Skeleton>
   )
