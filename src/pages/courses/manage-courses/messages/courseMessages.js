@@ -10,6 +10,9 @@ import { Input } from "antd";
 import RichTextEditor from "../../../../components/RichTextEditor";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonMaterial from '@mui/material/Button';
+import JoditEditor from "jodit-react";
+import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
+import { AddCourseMessages } from "../../../../api";
 
 const { TextArea } = Input;
 const { SubMenu } = Menu;
@@ -24,17 +27,30 @@ const headerStyle = {
   backgroundColor: "#000",
 };
 
-const CourseMessages = () => {
+const CourseMessages = ({code}) => {
+
   const [val, setval] = useState("");
 
-  const handleClick = (e) => {
-    console.log("click ", e);
-  };
+  const [welcomemsg, setwelcomemsg] = useState("")
+  const [congratsmsg, setcongratsmsg] = useState("")
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  const handleClick = () =>{
 
+    if(congratsmsg == "<p><br></p>"){
+      ErrorAlert("Empty Field","Please Enter a Congratulations Message")
+      return
+    }else if(welcomemsg == "<p><br></p>"){
+      ErrorAlert("Empty Field","Please Enter a Welcome Message")
+      return
+    }
+
+    AddCourseMessages(code)
+
+    console.log(congratsmsg)
+    console.log(welcomemsg)
+  }
+  
+  console.log(code)
   return (
     <div className="col-md-8">
       <Card className="py-2 my-2">
@@ -44,7 +60,7 @@ const CourseMessages = () => {
           Course Messages
         </Typography>
 
-        <ButtonMaterial variant="contained"><AddIcon /> SAVE</ButtonMaterial>
+        <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>
         </div>
         <hr />
 
@@ -60,10 +76,10 @@ const CourseMessages = () => {
 
           <Space direction="vertical" size="middle">
             <Typography variant="h6">Welcome Message</Typography>
-            <RichTextEditor />
+            <JoditEditor onChange={(value) => setwelcomemsg(value)} />
             <br />
             <Typography variant="h6">Congratulations Message</Typography>
-            <RichTextEditor />
+            <JoditEditor onChange={(value) => setcongratsmsg(value)} />
           </Space>
         </div>
       </Card>
