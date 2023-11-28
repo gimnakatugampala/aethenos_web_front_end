@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation , useParams} from "react-router-dom";
 
 import {  Space , Typography  } from 'antd';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -57,6 +57,9 @@ const headerStyle = {
 
 
 const ManageCourses = () => {
+
+  // course code
+  let { code } = useParams();
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [selectTab, setselectTab] = useState(window.history.state)
@@ -167,6 +170,8 @@ const ManageCourses = () => {
       setSelectedIndex(0)
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
   }
+
+  // console.log(code)
 
   },[window.history.state]);
 
@@ -284,13 +289,13 @@ const ManageCourses = () => {
 
     {/* HERE */}
     {/*  */}
-    { selectTab == "intended-learners"   ? <IntendedLearners /> : 
-     selectTab == "curriculum" ?  <Curriculum /> : 
-     selectTab == "course-landing-page" ? <Basics /> : 
-     selectTab == "pricing" ? <Pricing /> : 
-     selectTab == "course-messages" ? <CourseMessages /> :
-     selectTab == "promotions" ? <Promotion />  : 
-     selectTab == "settings" ? <Settings /> 
+    { selectTab == "intended-learners"   ? <IntendedLearners code={code} /> : 
+     selectTab == "curriculum" ?  <Curriculum  code={code}  /> : 
+     selectTab == "course-landing-page" ? <Basics  code={code}  /> : 
+     selectTab == "pricing" ? <Pricing  code={code}  /> : 
+     selectTab == "course-messages" ? <CourseMessages  code={code}  /> :
+     selectTab == "promotions" ? <Promotion  code={code}  />  : 
+     selectTab == "settings" ? <Settings  code={code}  /> 
     : ""}
 
 

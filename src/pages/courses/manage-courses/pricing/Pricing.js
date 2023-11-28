@@ -61,8 +61,8 @@ const Pricing = () => {
 
   return (
     <div className="col-md-8">
-      <Card className="py-2 my-2 p-4">
-      <div className='d-flex justify-content-between'>
+      <Card className="py-2 my-2">
+      <div className='d-flex justify-content-between p-4'>
         <Typography className="p-3" variant="h4">
           Pricing
         </Typography>
@@ -74,31 +74,27 @@ const Pricing = () => {
         <hr />
 
         <div className="pricing-container">
-          <div className="price-range-container">
-            <div className="row">
-
+          <div className="price-range-container p-3">
             <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List 
-              
 Prices include VAT. 
 For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
 
-              <div className="price-range col-2">
-                    <Form.Label>Global List Price (USD)</Form.Label>
-                      <InputGroup className="mb-3">
-                        <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
-                        <Form.Control
-                          placeholder="USD"
-                          aria-label="USD"
-                          aria-describedby="basic-addon1"
-                        />
-                      </InputGroup>
-                      <Form.Label>Price range: $20 – $250</Form.Label>
-
-                     
+            <div className="row">
+              <div className="price-range col-md-2">
+                <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
+                  <InputGroup className="mb-3">
+                    <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
+                    <Form.Control
+                      placeholder="USD"
+                      aria-label="USD"
+                      aria-describedby="basic-addon1"
+                    />
+                  </InputGroup>
+                  <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: $20 – $250</i></Form.Label>
               </div>
 
-              <div className="col-md-2">
-              <Form.Label>Discount Type</Form.Label>
+              <div className="col-md-3">
+              <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
               <select  class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
                 <option value="1">No Discount</option>
@@ -106,23 +102,25 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <option value="3">Fixed Discount</option>
               </select>
               </div>
+
               <div className="col-md-2">
-              <Form.Label>Discount %</Form.Label>
+              <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
               <Form.Control type="text" />
               </div>
 
               <div className="col-md-2">
-              <Form.Label>Discount Amount (USD)</Form.Label>
+              <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
               <Form.Control type="text" />
               </div>
+
               <div className="col-md-2">
-              <Form.Label>Global Net Price (USD)</Form.Label>
+              <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
               <Form.Control type="text" />
-              <Form.Label>Minimum : $10</Form.Label>
+              <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : $10</i></Form.Label>
 
               </div>
 
-              <div className='col-md-2 d-flex align-items-center mb-3'>
+              <div className='col-md-1 d-flex align-items-center mb-3'>
                 <Button  className='mx-1' variant="contained">Submit</Button>
                 </div>
 
@@ -132,7 +130,9 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
               <Form.Label>Price Range : $100-$200</Form.Label>
               </div> */}
 
-              <div className="radio-group col-6 d-flex align-items-center mt-5">
+              <div className="col-6"></div>
+
+              <div className="radio-group col-6 d-flex align-items-center mt-4">
                 <Radio.Group
                   onChange={(e) => handleRadioChange(e.target.value)}
                 >
@@ -170,7 +170,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
             
              
                  <td className="col-12 font-italic mt-5">  
-                <Form.Label className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
                
                  
                  </td>
@@ -207,15 +207,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     <Form.Control type="text" />
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                 {/* {getSymbolFromCurrency(countryData.currency)} 90.00 */}
                  <Form.Control type="text" />
                  <tr className="">
-                 <Form.Label>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
                  </tr>
                   </td>
-                  <td>
-                  <Button className='mx-1' variant="contained">Submit</Button>                   </td>
                 
                 </tr>
                 
