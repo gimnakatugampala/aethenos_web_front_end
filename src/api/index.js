@@ -236,18 +236,71 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
  }
 
 
- export const AddCourseMessages = async(code) =>{
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+ export const AddCourseMessages = async(code,congratsmsg,welcomemsg) =>{
+
+
+  var formdata = new FormData();
+  formdata.append("course_code", `${code}`);
+  formdata.append("congratulations_msg", `${congratsmsg}`);
+  formdata.append("welcome_msg", `${welcomemsg}`);
   
   var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/savemessages", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+
+
+      if(result.variable == "200"){
+        SuccessAlert("Saved!",result.message)
+      }else{
+        ErrorAlert("Error!",result.message)
+      }
+
+
+    })
+    .catch(error => console.log('error', error));
+ }
+
+ export const GetCourseMessages = async(code,setcongratsmsg,setwelcomemsg) =>{
+
+  var requestOptions = {
     method: 'GET',
-    headers: myHeaders,
     redirect: 'follow'
   };
   
   fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getMessages/${code}`, requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result))
+    .then(result => {
+
+      setcongratsmsg(result.congratulations_msg)
+      setwelcomemsg(result.welcome_msg)
+
+
+    })
     .catch(error => console.log('error', error));
+ }
+
+ export const GetCourseTitle = async(code) =>{
+
+  var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitleAndApproveType/${code}`, requestOptions)
+  .then(response => response.json())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
  }

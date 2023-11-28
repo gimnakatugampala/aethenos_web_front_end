@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Space } from "antd";
 import Typography from "@mui/material/Typography";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -12,7 +12,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ButtonMaterial from '@mui/material/Button';
 import JoditEditor from "jodit-react";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
-import { AddCourseMessages } from "../../../../api";
+import { AddCourseMessages , GetCourseMessages } from "../../../../api";
+
 
 const { TextArea } = Input;
 const { SubMenu } = Menu;
@@ -44,13 +45,15 @@ const CourseMessages = ({code}) => {
       return
     }
 
-    AddCourseMessages(code)
+    AddCourseMessages(code,congratsmsg,welcomemsg)
 
-    console.log(congratsmsg)
-    console.log(welcomemsg)
   }
+
+  useEffect(() => {
+    GetCourseMessages(code,setcongratsmsg,setwelcomemsg)
+  }, [])
   
-  console.log(code)
+  
   return (
     <div className="col-md-8">
       <Card className="py-2 my-2">
@@ -76,10 +79,10 @@ const CourseMessages = ({code}) => {
 
           <Space direction="vertical" size="middle">
             <Typography variant="h6">Welcome Message</Typography>
-            <JoditEditor onChange={(value) => setwelcomemsg(value)} />
+            <JoditEditor value={welcomemsg} onChange={(value) => setwelcomemsg(value)} />
             <br />
             <Typography variant="h6">Congratulations Message</Typography>
-            <JoditEditor onChange={(value) => setcongratsmsg(value)} />
+            <JoditEditor value={congratsmsg} onChange={(value) => setcongratsmsg(value)} />
           </Space>
         </div>
       </Card>
