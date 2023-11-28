@@ -38,7 +38,7 @@ import Pricing from './pricing/Pricing';
 import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
-import { InstructorVerify } from '../../../api'
+import { InstructorVerify , GetCourseTitle } from '../../../api'
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -67,6 +67,9 @@ const ManageCourses = () => {
 
   const [show, setShow] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
+
+  const [course_title, setcourse_title] = useState("")
+  const [status_type, setstatus_type] = useState("")
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -173,6 +176,8 @@ const ManageCourses = () => {
 
   // console.log(code)
 
+  GetCourseTitle(code,setcourse_title,setstatus_type)
+
   },[window.history.state]);
 
 
@@ -183,8 +188,8 @@ const ManageCourses = () => {
 
      <Space size={30}>
           <a className='link-back' href='/courses'><ArrowBackIosIcon fontSize="small" /> Back to Courses</a>
-          <span className='course-title'>Learn Photoshop in 20min</span>
-          <span className='course-title-status'>DRAFT</span>
+          <span className='course-title'>{course_title}</span>
+          <span className='course-title-status'>{status_type}</span>
       </Space>
 
 
