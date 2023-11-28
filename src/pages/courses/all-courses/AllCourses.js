@@ -81,9 +81,9 @@ const AllCourses = () => {
 
 
 {/* List One */}
-{courses.length > 0 ? 
-courses.map((course) => (
-<CourseItem course={course}  filledPercent={49}  />
+{courses != null && courses.length > 0 ? 
+courses.map((course,key) => (
+<CourseItem key={key} course={course}  filledPercent={49}  />
 ))
 : "No Courses Available"}
 

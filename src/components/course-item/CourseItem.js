@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Input, Space , Badge , Image ,Col, Divider, Row } from 'antd';
 import { Card  } from 'antd';
 import { Button, Progress } from 'antd';
-import { Avatar, List, Skeleton, Switch , Popover  } from 'antd';
+import { Avatar, List, Skeleton, Switch , Popover ,Tag  } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import Chip from '@mui/material/Chip';
 // import Popover from '@mui/material/Popover';
@@ -71,8 +71,9 @@ const CourseItem = ({course,filledPercent}) => {
         <div>
           <span className='pending-text'>
 
-          {course.approvalType.id == '1' ? (
+          {course.approvalType.id != null && course.approvalType.id == '1' ? (
 
+            // <Chip label="Draft" color="secondary" variant="outlined" />
             <Chip label="Draft" color="secondary" variant="outlined" />
 
           ) : course.approvalType.id  == '2' ? (
@@ -83,17 +84,14 @@ const CourseItem = ({course,filledPercent}) => {
               icon={<MoreVertIcon />}
               label="Rejected" color="primary" variant="outlined" />
               </Popover>
-
           ) : course.approvalType.id  == '3' ? (
             <Chip label="Pending" color="success" variant="outlined" />
-
           ) : course.approvalType.id  == '4' ? (
-
-            <Chip label="Disapproved" color="danger" variant="outlined" />
-
-          ) : course.approvalType.id  == '5' && (
-
+            <Chip label="Disapproved" color="primary" variant="outlined" />
+          ) : course.approvalType.id  == '5' ? (
             <Chip label="Approved" color="success" variant="outlined" />
+          ): course.approvalType.id  == '7' && (
+            <Chip label="Requested" color="warning" variant="outlined" />
           ) }
 
             
@@ -106,11 +104,11 @@ const CourseItem = ({course,filledPercent}) => {
     </div>
 
    
-        {course.approvalType.id == '3' || course.approvalType.id == "4" || course.approvalType.id == "5" && (
+        {course.approvalType.id != null && course.approvalType.id == 3 && (
             <div className='d-flex justify-content-center'> 
               <a className='card-item-link' href={`/courses/manage/${course.code}/`}>Manage Course</a>
             </div> 
-        )}
+         )}
 
 
 

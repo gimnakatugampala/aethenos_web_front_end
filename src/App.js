@@ -49,7 +49,7 @@ function App() {
           {/* <Route path="/sign-in" exact component={SignIn} /> */}
           <Route path="/login" exact component={SignIn} />
 
-          <Route path="/courses/manage/2023/" exact component={ManageCourses} />
+          <Route path="/courses/manage/:code/" exact component={ManageCourses} />
 
           <Main>
             <Route exact path="/dashboard" component={Home} />
