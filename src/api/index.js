@@ -106,7 +106,7 @@ export const InstructorVerify = async() =>{
     setloading(true)
 
    var myHeaders = new Headers();
-   myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
+   myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
    
    var formdata = new FormData();
    formdata.append("course_title", `${course_title}`);
@@ -175,26 +175,39 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
 
  }
 
- export const GetIntendedLeaners = async(code) =>{
+ export const GetIntendedLeaners = async(code,setstudentsLearnData,setrequirementsData,setwhosData) =>{
 
   var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  
   var requestOptions = {
     method: 'GET',
-    redirect: 'follow',
-    headers: myHeaders
+    headers: myHeaders,
+    redirect: 'follow'
   };
   
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getIntendedLearners/22a9e97e-c4df-4333-982d-b73654d81be1", requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getIntendedLearners/${code}`, requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result))
+    .then(result => {
+
+      Unauthorized(result.status,`courses/manage/${code}/#intended-learners`)
+
+      setstudentsLearnData(result.studentsLearn)
+      setrequirementsData(result.requirements)
+      setwhosData(result.who)
+
+      console.log(result)
+    
+    })
     .catch(error => console.log('error', error));
 
  }
 
- export const AddIntendedLeaners = async(item) =>{
+ export const AddIntendedLeaners = async(item,code) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
   
   var raw = JSON.stringify(item);
   
@@ -207,7 +220,17 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
   
   fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/saveIntendedLearners", requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result))
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#intended-learners`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Saved!",result.message)
+      }else{
+        ErrorAlert("Error!",result.message)
+      }
+    })
     .catch(error => console.log('error', error));
 
  }

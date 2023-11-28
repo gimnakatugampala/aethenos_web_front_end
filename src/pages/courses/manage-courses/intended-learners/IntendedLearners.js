@@ -51,6 +51,9 @@ const formItemLayout = {
     },
   };
   
+  let getstudentsLearnLen;
+  let getrequirementsLen;
+  let getwhoDataLen;
 
 const IntendedLearners = ({code}) => {
 
@@ -58,7 +61,11 @@ const IntendedLearners = ({code}) => {
   const [requirements, setrequirements] = useState([])
   const [whos, setwhos] = useState([])
 
-    
+  const [studentsLearnData, setstudentsLearnData] = useState([])
+  const [requirementsData, setrequirementsData] = useState([])
+  const [whosData, setwhosData] = useState([])
+
+
   const onChangeResOne = e => {
     document.getElementById("res-1").innerText = 160 - e.target.value.length
     // console.log('click ', e);
@@ -82,15 +89,23 @@ const onFinish = (values) => {
 
 useEffect(() => {
  
-  GetIntendedLeaners(code)
+  GetIntendedLeaners(code,setstudentsLearnData,setrequirementsData,setwhosData)
 
-}, [])
+  getstudentsLearnLen =studentsLearn.length
+  getrequirementsLen =requirements.length
+  getwhoDataLen =whos.length
+
+}, [getstudentsLearnLen])
 
 // Enter Data to Array - Students Learn
 const handleInputChange = (index, value) => {
   const updatedValues = [...studentsLearn];
   updatedValues[index] = value;
   setstudentsLearn(updatedValues);
+  // console.log(index)
+  // // console.log(studentsLearn.length)
+  // // console.log(getstudentsLearnLen)
+
 };
 
 // Remove Data to Array
@@ -139,41 +154,59 @@ const saveIntendedLeaners = (e) =>{
   e.preventDefault()
 
   // ist 3 values complusory
-  if(studentsLearn.length < 3){
+  if(studentsLearn.length < 3 && studentsLearnData.length < 3){
     ErrorAlert("Empty Field!","Please at least 3 inputs in what will students learn")
     return
   }else if(studentsLearn.some(value => value == "")){
     ErrorAlert("Empty Field!","Please at least fill forms in what will students learn")
     return
-  }else if(requirements.length < 3){
+  }else if(requirements.length < 3 && requirementsData.length < 3){
     ErrorAlert("Empty Field!","Please at least 3 inputs in requirements or prerequisites")
     return
   }else if(requirements.some(value => value == "")){
     ErrorAlert("Empty Field!","Please at least fill forms in requirements or prerequisites")
     return
-  }else if(whos.length < 1){
-    ErrorAlert("Empty Field!","Please at least 3 inputs in Who is this course for")
+  }else if(whos.length < 1 && whosData.length < 1){
+    ErrorAlert("Empty Field!","Please at least 1 input in Who is this course for")
     return
   }else if(whos.some(value => value == "")){
     ErrorAlert("Empty Field!","Please at least fill forms in Who is this course for")
     return
   }
 
+  for (let i = studentsLearn.length - 1; i >= 0; i--) {
+    if (studentsLearn[i] === undefined) {
+      studentsLearn.splice(i, 1);
+    }
+  }
+
+  for (let i = requirements.length - 1; i >= 0; i--) {
+    if (requirements[i] === undefined) {
+      requirements.splice(i, 1);
+    }
+  }
+
+  for (let i = whos.length - 1; i >= 0; i--) {
+    if (whos[i] === undefined) {
+      whos.splice(i, 1);
+    }
+  }
+
 
   const item = {
     course_code:code,
-    studentsLearn:studentsLearn,
-    requirements:requirements,
-    who:whos
+    studentsLearn:[...studentsLearnData,...studentsLearn],
+    requirements:[...requirementsData,...requirements],
+    who:[...whosData,...whos]
   }
 
-  AddIntendedLeaners(item)
+  AddIntendedLeaners(item,code)
 
   // console.log(studentsLearn)
   // console.log(requirements)
   // console.log(whos)
 
-  console.log(JSON.stringify(item))
+  console.log(item)
 
 }
 
@@ -214,24 +247,36 @@ const saveIntendedLeaners = (e) =>{
 
           {/* 1 */}
           <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleInputChange(0,e.target.value)} type="text" class="form-control" placeholder="Example: Define User Roles" />
+            <input value={studentsLearnData[0] == null ? studentsLearn[0] : studentsLearnData[0]} maxLength={160} onChange={(e) => handleInputChange(0,e.target.value)} type="text" class="form-control" placeholder="Example: Define User Roles" />
             <span class="input-group-text" id="res-1">160</span>
           </div>
 
 
             {/* 2 */}
             <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleInputChange(1,e.target.value)} type="text" class="form-control" placeholder="Example: Estimate Project Timelines" />
+            <input value={studentsLearnData[1] == null ? studentsLearn[1] : studentsLearnData[1]} maxLength={160} onChange={(e) => handleInputChange(1,e.target.value)} type="text" class="form-control" placeholder="Example: Estimate Project Timelines" />
             <span class="input-group-text" id="res-2">160</span>
           </div>
 
       
 
             {/* 3 */}
-            <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleInputChange(2,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
+          <div class="input-group mb-3">
+            <input value={studentsLearnData[2] == null ? studentsLearn[2] : studentsLearnData[2]} maxLength={160} onChange={(e) => handleInputChange(2,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
             <span class="input-group-text" id="res-3">160</span>
           </div>
+
+          {studentsLearnData.length > 3 && (
+            studentsLearnData.slice(3).map((item,key) => (
+            <div key={key} class="input-group mb-3">
+            <input value={item} maxLength={160} onChange={(e) => handleInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
+            <span class="input-group-text" id="res-3">{key}</span>
+            </div>
+              
+              ))
+          )}
+
+
 
           
         </Form>
@@ -247,15 +292,14 @@ const saveIntendedLeaners = (e) =>{
                 <>
                   {fields.map((field, index) => (
                     <Form.Item required={false} key={field.key}>
-
                        <div class="input-group">
-                        <input onChange={(e) => handleInputChange(index+3,e.target.value)} maxLength={160} type="text" class="form-control" placeholder="Example" />
+                        <input onChange={(e) => {handleInputChange(index + 3,e.target.value)}} maxLength={160} type="text" class="form-control" placeholder="Example" />
                         <span class="input-group-text btn btn-danger text-white" id="res-3">  {fields.length > 0 ? (
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
                           onClick={() => {
                             remove(field.name)
-                            handleRemoveInput(index+3)
+                            handleRemoveInput(index)
                           }}
                         />
                       ) : null}</span>
@@ -300,14 +344,14 @@ const saveIntendedLeaners = (e) =>{
 
           {/* 1 */}
           <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleRequirementInputChange(0,e.target.value)} type="text" class="form-control" placeholder="Example: Define User Roles" />
+            <input value={requirementsData[0] == null ? requirements[0] : requirementsData[0]} maxLength={160} onChange={(e) => handleRequirementInputChange(0,e.target.value)} type="text" class="form-control" placeholder="Example: Define User Roles" />
             <span class="input-group-text" id="res-1">160</span>
           </div>
 
 
             {/* 2 */}
             <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleRequirementInputChange(1,e.target.value)} type="text" class="form-control" placeholder="Example: Estimate Project Timelines" />
+            <input value={requirementsData[1] == null ? requirements[1] : requirementsData[1]} maxLength={160} onChange={(e) => handleRequirementInputChange(1,e.target.value)} type="text" class="form-control" placeholder="Example: Estimate Project Timelines" />
             <span class="input-group-text" id="res-2">160</span>
           </div>
 
@@ -315,9 +359,22 @@ const saveIntendedLeaners = (e) =>{
 
             {/* 3 */}
             <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleRequirementInputChange(2,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
+            <input value={requirementsData[2] == null ? requirements[2] : requirementsData[2]} maxLength={160} onChange={(e) => handleRequirementInputChange(2,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
             <span class="input-group-text" id="res-3">160</span>
           </div>
+
+          {requirementsData.length > 3 && (
+            requirementsData.slice(3).map((item,key) => (
+            <div key={key} class="input-group mb-3">
+            <input value={item} maxLength={160} onChange={(e) => handleRequirementInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
+            <span class="input-group-text" id="res-3">{key}</span>
+            </div>
+              
+              ))
+          )}
+
+        
+     
 
           
         </Form>
@@ -339,7 +396,7 @@ const saveIntendedLeaners = (e) =>{
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
                           onClick={() => {
-                            handleRequirementRemoveInput(index + 3)
+                            handleRequirementRemoveInput(index)
                             remove(field.name)
                           }}
                         />
@@ -390,9 +447,19 @@ const saveIntendedLeaners = (e) =>{
 
           {/* 1 */}
           <div class="input-group mb-3">
-            <input maxLength={160} onChange={(e) => handleWhosInputChange(0,e.target.value)} type="text" class="form-control" placeholder="Example: Beginner Python developers curious about data science" />
+            <input value={whosData[0] == null ? whos[0] : whosData[0]} maxLength={160} onChange={(e) => handleWhosInputChange(0,e.target.value)} type="text" class="form-control" placeholder="Example: Beginner Python developers curious about data science" />
             <span class="input-group-text" id="res-1">160</span>
           </div>
+
+          {whosData.length > 1 && (
+            whosData.slice(1).map((item,key) => (
+            <div key={key} class="input-group mb-3">
+            <input value={item} maxLength={160} onChange={(e) => handleWhosInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
+            <span class="input-group-text" id="res-3">{key}</span>
+            </div>
+              
+              ))
+          )}
           
         </Form>
         </div>
@@ -409,12 +476,12 @@ const saveIntendedLeaners = (e) =>{
                     <Form.Item required={false} key={field.key}>
 
                        <div class="input-group">
-                        <input onChange={(e) => handleWhosInputChange(index+1,e.target.value)} maxLength={160} type="text" class="form-control" placeholder="Example" />
+                        <input onChange={(e) => handleWhosInputChange(index + 1,e.target.value)} maxLength={160} type="text" class="form-control" placeholder="Example" />
                         <span class="input-group-text btn btn-danger text-white" id="res-3">  {fields.length > 0 ? (
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
                           onClick={() => {
-                            handleWhosRemoveInput(index+1)
+                            handleWhosRemoveInput(index)
                             remove(field.name)
                           }}
                         />
