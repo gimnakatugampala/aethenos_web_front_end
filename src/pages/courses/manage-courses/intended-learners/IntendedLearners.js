@@ -269,8 +269,16 @@ const saveIntendedLeaners = (e) =>{
           {studentsLearnData.length > 3 && (
             studentsLearnData.slice(3).map((item,key) => (
             <div key={key} class="input-group mb-3">
-            <input value={item} maxLength={160} onChange={(e) => handleInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
-            <span class="input-group-text" id="res-3">{key}</span>
+            <input value={item} maxLength={160} onChange={(e) => handleInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example" />
+            {/* <span class="input-group-text btn btn-danger text-white" id="res-3"> 
+                        <MinusCircleOutlined
+                          className="dynamic-delete-button"
+                          onClick={() => {
+                            handleRemoveInput(key)
+                            // console.log(key)
+                          }}
+                        />
+                      </span> */}
             </div>
               
               ))
@@ -367,7 +375,7 @@ const saveIntendedLeaners = (e) =>{
             requirementsData.slice(3).map((item,key) => (
             <div key={key} class="input-group mb-3">
             <input value={item} maxLength={160} onChange={(e) => handleRequirementInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
-            <span class="input-group-text" id="res-3">{key}</span>
+            {/* <span class="input-group-text" id="res-3">{key}</span> */}
             </div>
               
               ))
@@ -455,7 +463,7 @@ const saveIntendedLeaners = (e) =>{
             whosData.slice(1).map((item,key) => (
             <div key={key} class="input-group mb-3">
             <input value={item} maxLength={160} onChange={(e) => handleWhosInputChange(key,e.target.value)} type="text" class="form-control" placeholder="Example: Identity and Manage project risks" />
-            <span class="input-group-text" id="res-3">{key}</span>
+            {/* <span class="input-group-text" id="res-3">{key}</span> */}
             </div>
               
               ))
