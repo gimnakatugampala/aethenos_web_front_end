@@ -174,3 +174,4 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
   .catch(error => console.log('error', error));
 
  }
+
