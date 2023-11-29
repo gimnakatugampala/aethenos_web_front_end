@@ -1,18 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Divider, Radio, Typography } from 'antd';
 import { Input } from 'antd';
 
 import { Select, Space } from 'antd';
+
 import './StepOne.css'
+import { getCourseCategories } from '../../../../api';
 
 
-const StepOne = () => {
+
+
+const StepOne = ({course_title,setcourse_title,course_cat,setcourse_cat}) => {
+
+  const [categoriesData, setcategories] = useState([])
 
   const onChnageTitle = (e) => {
     document.getElementById("course-title-count").innerText = 60 - e.target.value.length;
     // console.log(60 - e.target.value.length);
   };
+
+  useEffect(() => {
+    getCourseCategories(setcategories)
+
+    console.log(categoriesData)
+  }, [])
+
+ 
+  
+  
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
@@ -35,7 +51,7 @@ const StepOne = () => {
       {/* <Input className='course-title'  placeholder='Enter Course Title'  maxLength={20} onChange={onChange} /> */}
 
       <div class="input-group">
-        <input maxLength={60} onChange={onChnageTitle} type="text" class="form-control" placeholder="Enter Course Title" />
+        <input value={course_title} maxLength={60} onChange={(e) => setcourse_title(e.target.value)} type="text" class="form-control" placeholder="Enter Course Title" />
         <span class="input-group-text" id="course-title-count">60</span>
       </div>
 
@@ -43,58 +59,10 @@ const StepOne = () => {
         className='my-2 category-select'
         size='large'
         placeholder="Select Course Category"
+        value={course_cat}
         allowClear
-        onChange={handleChange}
-        options={[
-          {
-            value: 'development',
-            label: 'Development',
-          },
-          {
-            value: 'bisiness',
-            label: 'Business',
-          },
-          {
-            value: 'finance',
-            label: 'Finance & Accounting',
-          },
-          {
-            value: 'it',
-            label: 'IT & Software',
-          },
-          {
-            value: 'officep',
-            label: 'Office Productivity',
-          },
-          {
-            value: 'design',
-            label: 'Design',
-          },
-          {
-            value: 'marketing',
-            label: 'Marketing',
-          },
-          {
-            value: 'lifestyle',
-            label: 'Lifestyle',
-          },
-          {
-            value: 'photography',
-            label: 'Photography & Video',
-          },
-          {
-            value: 'health',
-            label: 'Health & Fitness',
-          },
-          {
-            value: 'music',
-            label: 'Music',
-          },
-          {
-            value: 'teaching',
-            label: 'Teaching & Academics',
-          },
-        ]}
+        onChange={(value) => setcourse_cat(value)}
+        options={categoriesData}
         />
 
     </div>

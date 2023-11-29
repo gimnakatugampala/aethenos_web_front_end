@@ -1,5 +1,5 @@
 import './EditCourse.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StepOne from './step-one/StepOne';
 import StepTwo from './step-two/StepTwo';
 import StepThree from './step-three/StepThree';
@@ -12,10 +12,42 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Card , Space } from 'antd';
+import { getEditCourse } from '../../../api';
+import { EditCourses } from '../../../api';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
 const EditCourse = () => {
+
+  const [course_title, setcourse_title] = useState("")
+  const [course_cat, setcourse_cat] = useState("")
+
+  const [keywords, setkeywords] = useState([])
+
+  const [preview_img, setpreview_img] = useState('')
+  const [course_img, setcourse_img] = useState('')
+
+  const [preview_video, setpreview_video] = useState('')
+  const [course_video, setcourse_video] = useState('')
+
+
+
+
+  useEffect(() => {
+    
+    // console.log(new URLSearchParams(window.location.search).get("code"))
+
+    getEditCourse(
+      new URLSearchParams(window.location.search).get("code"),
+      setcourse_title,
+      setcourse_cat,
+      setkeywords,
+      setpreview_img,
+      setpreview_video
+      )
+  
+  }, [])
+  
  
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
@@ -73,7 +105,17 @@ const EditCourse = () => {
   
     const handleClick = (e) =>{
       e.preventDefault()
-      window.location.href = "/courses"
+
+      EditCourses(
+        new URLSearchParams(window.location.search).get("code"),
+        course_title,
+        keywords,
+        course_cat,
+        course_img,
+        course_video
+        )
+
+      // window.location.href = "/courses"
     }
   
     return (
@@ -123,13 +165,13 @@ const EditCourse = () => {
   
           <div className='my-5'>
             {activeStep == 0 ? (
-              <StepOne />
+              <StepOne course_cat={course_cat} setcourse_cat={setcourse_cat} course_title={course_title} setcourse_title={setcourse_title} />
             ) : activeStep == 1 ? (
-              <StepTwo />
+              <StepTwo keywords={keywords} setkeywords={setkeywords} />
             ) : activeStep == 2 ? (
-              <StepThree />
+              <StepThree preview_img={preview_img} setpreview_img={setpreview_img} setcourse_img={setcourse_img} />
             ) : activeStep == 3 && (
-              <StepFour />
+              <StepFour preview_video={preview_video} setcourse_video={setcourse_video} />
             ) }
           </div>
   

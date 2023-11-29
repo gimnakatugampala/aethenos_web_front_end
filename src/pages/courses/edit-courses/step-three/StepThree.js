@@ -1,68 +1,30 @@
 import React, { useState } from 'react'
 import { Tree } from 'antd';
 import { Divider, Radio, Typography } from 'antd';
+import ImageUploading from 'react-images-uploading';
 import { PlusOutlined } from '@ant-design/icons';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CreateIcon from '@mui/icons-material/Create';
+import Button from '@mui/material/Button';
 import { Modal, Upload } from 'antd';
 
 import './StepThree.css'
 
 
+const StepThree = ({preview_img,setpreview_img,setcourse_img}) => {
 
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 69;
 
-const StepThree = () => {
-
-
-  const [expandedKeys, setExpandedKeys] = useState(['all']);
-  const [checkedKeys, setCheckedKeys] = useState([]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
-  const onExpand = (expandedKeysValue) => {
-    console.log('onExpand', expandedKeysValue);
-    setExpandedKeys(expandedKeysValue);
-    setAutoExpandParent(false);
-  };
-  const onCheck = (checkedKeysValue) => {
-    console.log('onCheck', checkedKeysValue);
-    setCheckedKeys(checkedKeysValue);
-  };
-  const onSelect = (selectedKeysValue, info) => {
-    console.log('onSelect', info);
-    setSelectedKeys(selectedKeysValue);
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setpreview_img(imageList[0].data_url);
+    setcourse_img(imageList[0].file)
   };
 
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([]);
-  const handleCancel = () => setPreviewOpen(false);
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+
 
   return (
     <div className='stepthree-container text-center'>
@@ -78,25 +40,55 @@ const StepThree = () => {
       </div>
 
       <div className='pt-3'>
-      <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        listType="picture-card"
-        fileList={fileList}
-        onPreview={handlePreview} 
-        maxCount={1}
-        onChange={handleChange}
+            <img
+                 width={200}
+                 height={200}
+                 id
+                src={preview_img == "" ?  'https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg' : preview_img}
+              />
+
+<ImageUploading
+        value={images}
+        onChange={onChange}
+        maxNumber={maxNumber}
+        dataURLKey="data_url"
       >
-        {fileList.length >= 8 ? null : uploadButton}
-      </Upload>
-      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img
-          alt="example"
-          style={{
-            width: '100%',
-          }}
-          src={previewImage}
-        />
-      </Modal>
+        {({
+          imageList,
+          onImageUpload,
+          onImageRemoveAll,
+          onImageUpdate,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          // write your building UI
+          <div className="upload__image-wrapper  border border-2 p-5">
+            <Button size="small" style={isDragging ? { color: 'red' } : undefined}
+              onClick={onImageUpload}
+              {...dragProps} variant="contained"><FileUploadIcon /> Click or Drop here</Button>
+       
+            &nbsp;
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                {/* <img className='m-2' src={preview_img['data_url']} alt="" width="100" /> */}
+                <div className="image-item__btn-wrapper">
+                <Button size="small" className='m-2' onClick={() => onImageUpdate(index)} variant="contained" color="info">
+              <CreateIcon />  Update
+                </Button>
+              
+
+                  <Button size="small" className='m-2' onClick={() => onImageRemove(index)} variant="outlined" color="error">
+                  <DeleteIcon />  Remove
+                  </Button>
+
+          
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
     
       </div>
 

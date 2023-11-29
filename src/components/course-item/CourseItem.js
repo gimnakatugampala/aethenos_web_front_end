@@ -65,7 +65,7 @@ const CourseItem = ({course,filledPercent}) => {
     
       
     <div className="col-md-10 p-0">
-        <h5 className="card-title"><b>{course.courseTitle == null ? "N/A" : course.courseTitle}</b> {course.approvalType.id == '2' && (<a className='mx-2' href="edit-course"><EditIcon /></a>)} </h5> 
+        <h5 className="card-title"><b>{course.courseTitle == null ? "N/A" : course.courseTitle}</b> {course.approvalType.id == '2' && (<a className='mx-2' href={`edit-course?code=${course.code}`}><EditIcon /></a>)} </h5> 
         <p className='availblity'>{course.courseCategory.name == null ? "N/A" : course.courseCategory.name}</p>
 
         <div>

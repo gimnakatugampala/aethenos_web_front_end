@@ -152,6 +152,81 @@ export const InstructorVerify = async() =>{
      .catch(error => console.log('error', error));
 
  }
+
+ export const getEditCourse = (code,setcourse_title,setcourse_cat,setkeywords,setpreview_img,setpreview_video) =>{
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/editcourse/getCourseByCode/${code}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+
+    Unauthorized(result.status,`edit-course?code=${code}`)
+
+    setcourse_title(result.course_title)
+    setcourse_cat(result.course_category_id)
+    setkeywords(result.keywordArray)
+    setpreview_img(`http://185.209.223.202:8080/aethenos-assert/${result.img}`)
+    setpreview_video(`http://185.209.223.202:8080/aethenos-assert/${result.test_video}`)
+
+
+  })
+  .catch(error => console.log('error', error));
+ }
+
+ export const EditCourses = async(code,course_title,keywords,course_cat,course_img,course_video) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var formdata = new FormData();
+  formdata.append("code", `${code}`);
+  formdata.append("course_title", `${course_title}`);
+  formdata.append("img", course_img);
+  formdata.append("test_video", course_video);
+  formdata.append("approval_type_id", "1");
+  formdata.append("course_category_id", `${course_cat}`);
+  formdata.append("keywords", `${keywords[0]}`);
+  formdata.append("keywords", `${keywords[1]}`);
+  formdata.append("keywords", `${keywords[2]}`);
+  formdata.append("keywords", `${keywords[3]}`);
+  formdata.append("keywords", `${keywords[4]}`);
+  
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/editcourse/updateCourse", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+
+      Unauthorized(result.status,`edit-course?code=${code}`)
+
+      console.log(result)
+      if(result.variable == "200"){
+        SuccessAlert("Course Updated!",result.message)
+
+        setTimeout(() => {
+          window.location.href = "/courses"
+        }, 1000);
+      }else{
+        ErrorAlert("Error",result.message)
+      }
+
+    })
+    .catch(error => console.log('error', error));
+
+ }
  
  export const GetAllCourses = async(setcourses) =>{
 
@@ -455,5 +530,51 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
+ export const GetPromotions = async(code,setpromotions) =>{
 
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
 
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoupons/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => setpromotions(result))
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const AddPromotions = async(code,
+  promo_code,
+  promo_desc,
+  promo_type,
+  promo_amount,
+  promo_date) =>{
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var formdata = new FormData();
+  formdata.append("course_code", `${code}`);
+  formdata.append("coupon_code", `${promo_code}`);
+  formdata.append("coupon_description", `${promo_desc}`);
+  formdata.append("promotion_type", `${promo_type}`);
+  formdata.append("amount", `${promo_amount}`);
+  formdata.append("ex_date", `${promo_date}`);
+  
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/managecourse/addCoupons", requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+ }
