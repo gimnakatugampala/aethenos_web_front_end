@@ -28,8 +28,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment';
+import ButtonBootstrap from 'react-bootstrap/Button';
 import { GetPromotions , AddPromotions } from '../../../../api';
-
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
+import { ActivatePromotions , DeactivatedPromotions } from '../../../../api';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 
 const columns = [
@@ -61,7 +66,7 @@ function createData(code, couptype, coupamount, description,ex_date,actions) {
   return { code, couptype, coupamount, description,ex_date,actions };
 }
 
-const rows = []
+// const rows = []
 
 const options = [];
 for (let i = 10; i < 36; i++) {
@@ -80,6 +85,10 @@ const Promotion = ({code}) => {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [open, setOpen] = React.useState(false);
 
+    const [rows, setrows] = useState([])
+
+    const [openEdit, setopenEdit] = useState(false)
+
     const [promotions, setpromotions] = useState([])
 
 
@@ -88,6 +97,12 @@ const Promotion = ({code}) => {
     const [promo_type, setpromo_type] = useState("")
     const [promo_amount, setpromo_amount] = useState("")
     const [promo_date, setpromo_date] = useState("")
+
+    const [edit_promo_code, setedit_promo_code] = useState("")
+    const [edit_promo_desc, setedit_promo_desc] = useState("")
+    const [edit_promo_type, setedit_promo_type] = useState("")
+    const [edit_promo_amount, setedit_promo_amount] = useState("")
+    const [edit_promo_date, setedit_promo_date] = useState("")
 
 
     const handleClick = () => {
@@ -115,6 +130,10 @@ const Promotion = ({code}) => {
     const handleClose = () => {
       setOpen(false);
     };
+
+    const handleCloseEdit = () => {
+      setopenEdit(!openEdit);
+    };
   
 
     const handleChangePage = (event, newPage) => {
@@ -131,18 +150,64 @@ const Promotion = ({code}) => {
     }, [])
 
     useEffect(() => {
-      console.log(promotions)
 
-      promotions.map(p => {
-        rows.push(createData(p.coupon_code, p.promotion_type, p.amount,p.coupon_description , moment(p.ex_date).format('l'), 
+      setrows(promotions.map(p =>(createData(p.coupon_code, p.promotion_type, p.amount,p.coupon_description , moment(p.ex_date).format('l'), 
         <>
-        <Button variant="contained"><EditIcon /></Button>
+        <ButtonBootstrap onClick={() => handleApprove(p.coupon_code)} variant="success"><CheckIcon /></ButtonBootstrap>
+        <ButtonBootstrap className='mx-1' onClick={() => {
+          setedit_promo_code(p.coupon_code)
+          setedit_promo_desc(p.coupon_description)
+          setedit_promo_type(p.promotion_type)
+          setedit_promo_amount(p.amount)
+          setedit_promo_date(p.ex_date)
+          handleCloseEdit()
+          }} variant="primary"><EditIcon /></ButtonBootstrap>
+
+        <ButtonBootstrap onClick={() => handleDisaprove(p.coupon_code)} variant="danger"><CloseIcon /></ButtonBootstrap>
         </> ))
-    })
+    ))
 
 
-    },[promotions,code])
+    },[promotions])
     
+
+    const handleApprove = (ID) =>{
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "This Promotion will be Activated!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, activate it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          ActivatePromotions(ID)
+        }
+      });
+
+    }
+
+    const handleDisaprove = (ID) =>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "This Promotion will be Deactivated!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, deactivate it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          
+          DeactivatedPromotions(ID)
+
+        }
+      });
+
+    }
     
 
   return (
@@ -213,7 +278,7 @@ const Promotion = ({code}) => {
 
     </Card>
 
-{/* Modal */}
+{/* Add Modal */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -265,6 +330,61 @@ const Promotion = ({code}) => {
                 <div class="mb-3">
                     <label class="form-label">Coupon Expiry Date</label>
                     <input onChange={(e) => setpromo_date(e.target.value)} type="date" class="form-control" placeholder="Coupon Expiry Date" />
+                </div>
+              </div>
+
+
+            </div>
+
+            <Button onClick={handleClick} variant="contained">SAVE</Button>
+
+        </DialogContent>
+      </Dialog>
+
+
+      {/* Edit Modal */}
+      <Dialog
+        open={openEdit}
+        onClose={handleCloseEdit}
+        aria-describedby="scroll-dialog-description"
+      >
+        <div className='d-flex justify-content-between align-items-center'>
+            <DialogTitle>Edit Coupons - {edit_promo_code}</DialogTitle>
+           <span onClick={handleCloseEdit} className='px-3'><i class="fa-solid fa-circle-xmark fa-2x"></i></span>
+        </div>
+
+        <DialogContent>
+            <div className='row'>
+
+              <div className='col-md-12'>
+              <div class="mb-3">
+                <label class="form-label">Coupon Description</label>
+                <textarea value={edit_promo_desc} onChange={(e) => setedit_promo_desc(e.target.value)} class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+
+              <div className='col-md-6'>
+                <div class="mb-3">
+                    <label class="form-label">Promotion Type</label>
+                    <select value={edit_promo_type} onChange={(e) => setedit_promo_type(e.target.value)} class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">Percentage Promotion</option>
+                        <option value="2">Fixed Cart Promotion</option>
+                    </select>
+                </div>
+              </div>
+
+              <div className='col-md-6'>
+                <div class="mb-3">
+                    <label class="form-label">Coupon Amount</label>
+                    <input value={edit_promo_amount} onChange={(e) => setedit_promo_amount(e.target.value)} type="text" class="form-control" placeholder="Coupon Amount" />
+                </div>
+              </div>
+
+              <div className='col-md-6'>
+                <div class="mb-3">
+                    <label class="form-label">Coupon Expiry Date</label>
+                    <input value={edit_promo_date} onChange={(e) => setedit_promo_date(e.target.value)} type="date" class="form-control" placeholder="Coupon Expiry Date" />
                 </div>
               </div>
 

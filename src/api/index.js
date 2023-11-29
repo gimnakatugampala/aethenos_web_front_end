@@ -543,7 +543,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   
   fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoupons/${code}`, requestOptions)
     .then(response => response.json())
-    .then(result => setpromotions(result))
+    .then(result => {
+
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+      setpromotions(result)
+    })
     .catch(error => console.log('error', error));
 
  }
@@ -589,4 +593,68 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
       Unauthorized(result.status,`courses/manage/${code}/#promotions`)
     })
     .catch(error => console.log('error', error));
+ }
+
+ export const ActivatePromotions = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/setCouponActive/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Activated",result.message)
+
+
+
+      }else{
+        ErrorAlert("Error",result.message)
+      }
+
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+
+    })
+    .catch(error => console.log('error', error));
+ }
+
+
+ export const DeactivatedPromotions = async(code) =>{
+
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/setCouponDeactive/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Deactivated",result.message)
+        return
+      }else{
+        ErrorAlert("Error",result.message)
+      }
+
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+
+    })
+    .catch(error => console.log('error', error));
+
  }
