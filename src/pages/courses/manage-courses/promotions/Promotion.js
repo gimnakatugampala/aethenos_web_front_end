@@ -26,6 +26,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import EditIcon from '@mui/icons-material/Edit';
+import moment from 'moment';
 import { GetPromotions , AddPromotions } from '../../../../api';
 
 
@@ -42,16 +44,24 @@ const columns = [
     id: 'description',
     label: <b>Description</b>,
     minWidth: 200,
+  },
+  {
+    id: 'ex_date',
+    label: <b>Expiration Date</b>,
+    minWidth: 200,
+  },
+  {
+    id:"actions",
+    label: <b>Actions</b>,
+    minWidth: 200,
   }
 ];
 
-function createData(code, couptype, coupamount, description) {
-  return { code, couptype, coupamount, description };
+function createData(code, couptype, coupamount, description,ex_date,actions) {
+  return { code, couptype, coupamount, description,ex_date,actions };
 }
 
-const rows = [
-  createData('123', 'Product Discount', 2444, "Descriptio"),
-];
+const rows = []
 
 const options = [];
 for (let i = 10; i < 36; i++) {
@@ -61,7 +71,7 @@ for (let i = 10; i < 36; i++) {
   });
 }
 
-let promotionsData = []
+
 
 const Promotion = ({code}) => {
 
@@ -93,7 +103,8 @@ const Promotion = ({code}) => {
         promo_desc,
         promo_type,
         promo_amount,
-        promo_date)
+        promo_date,
+        setOpen)
     };
    
   
@@ -104,8 +115,6 @@ const Promotion = ({code}) => {
     const handleClose = () => {
       setOpen(false);
     };
-  
-
   
 
     const handleChangePage = (event, newPage) => {
@@ -122,8 +131,17 @@ const Promotion = ({code}) => {
     }, [])
 
     useEffect(() => {
-      
-    }, [])
+      console.log(promotions)
+
+      promotions.map(p => {
+        rows.push(createData(p.coupon_code, p.promotion_type, p.amount,p.coupon_description , moment(p.ex_date).format('l'), 
+        <>
+        <Button variant="contained"><EditIcon /></Button>
+        </> ))
+    })
+
+
+    },[promotions,code])
     
     
 
@@ -135,7 +153,6 @@ const Promotion = ({code}) => {
         <Typography className='p-3' variant='h4'>
           Promotions
        </Typography>
-       <Button variant="contained"><AddIcon /> SAVE</Button>
 
     </div>
        <hr />

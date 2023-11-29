@@ -9,8 +9,6 @@ import './StepOne.css'
 import { getCourseCategories } from '../../../../api';
 
 
-
-
 const StepOne = ({course_title,setcourse_title,course_cat,setcourse_cat}) => {
 
   const [categoriesData, setcategories] = useState([])
@@ -26,13 +24,7 @@ const StepOne = ({course_title,setcourse_title,course_cat,setcourse_cat}) => {
     console.log(categoriesData)
   }, [])
 
- 
-  
-  
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
 
   return (
     <div className="stepone-container">

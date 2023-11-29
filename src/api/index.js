@@ -553,7 +553,8 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   promo_desc,
   promo_type,
   promo_amount,
-  promo_date) =>{
+  promo_date,
+  setOpen) =>{
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
@@ -573,8 +574,19 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
     redirect: 'follow'
   };
   
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/managecourse/addCoupons", requestOptions)
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCoupons", requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result))
+    .then(result => {
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Promotion Added",result.message)
+        setOpen(false)
+      }else{
+        ErrorAlert("Error",result.message)
+      }
+
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+    })
     .catch(error => console.log('error', error));
  }
