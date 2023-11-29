@@ -628,8 +628,6 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
 
  export const DeactivatedPromotions = async(code) =>{
-
-
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
 
@@ -656,5 +654,64 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
     })
     .catch(error => console.log('error', error));
+
+ }
+
+ export const GetPromotionsTypes = async(setpromo_types) =>{
+
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getAllPromotionType", requestOptions)
+    .then(response => response.json())
+    .then(result => setpromo_types(result))
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const UpdatePromotions = async(code,
+  edit_promo_code,
+  edit_promo_desc,
+  edit_promo_type_id,
+  edit_promo_amount,
+  edit_promo_date,
+  setopenEdit) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var formdata = new FormData();
+// formdata.append("course_code",` ${code}`);
+formdata.append("coupon_code", `${edit_promo_code}`);
+formdata.append("coupon_description", `${edit_promo_desc}`);
+formdata.append("promotion_type", `${edit_promo_type_id}`);
+formdata.append("amount", `${edit_promo_amount}`);
+formdata.append("ex_date", `${edit_promo_date}`);
+
+var requestOptions = {
+  method: 'PUT',
+  body: formdata,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateCoupon", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated!",result.message)
+      setopenEdit(false)
+      return
+    }else{
+      ErrorAlert("Error",result.message)
+    }
+
+    Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+  })
+  .catch(error => console.log('error', error));
 
  }

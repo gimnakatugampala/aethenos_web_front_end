@@ -32,7 +32,7 @@ import ButtonBootstrap from 'react-bootstrap/Button';
 import { GetPromotions , AddPromotions } from '../../../../api';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
-import { ActivatePromotions , DeactivatedPromotions } from '../../../../api';
+import { ActivatePromotions , DeactivatedPromotions , UpdatePromotions , GetPromotionsTypes } from '../../../../api';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -91,6 +91,8 @@ const Promotion = ({code}) => {
 
     const [promotions, setpromotions] = useState([])
 
+    const [promo_types, setpromo_types] = useState([])
+
 
     const [promo_code, setpromo_code] = useState("")
     const [promo_desc, setpromo_desc] = useState("")
@@ -101,6 +103,7 @@ const Promotion = ({code}) => {
     const [edit_promo_code, setedit_promo_code] = useState("")
     const [edit_promo_desc, setedit_promo_desc] = useState("")
     const [edit_promo_type, setedit_promo_type] = useState("")
+    const [edit_promo_type_id, setedit_promo_type_id] = useState("")
     const [edit_promo_amount, setedit_promo_amount] = useState("")
     const [edit_promo_date, setedit_promo_date] = useState("")
 
@@ -121,6 +124,24 @@ const Promotion = ({code}) => {
         promo_date,
         setOpen)
     };
+
+    const handleClickUpdate = () =>{
+      console.log(code)
+      console.log(edit_promo_code)
+      console.log(edit_promo_desc)
+      console.log(edit_promo_type)
+      console.log(edit_promo_amount)
+      console.log(edit_promo_date)
+      console.log(edit_promo_type_id)
+
+      UpdatePromotions(code,
+        edit_promo_code,
+        edit_promo_desc,
+        edit_promo_type_id,
+        edit_promo_amount,
+        edit_promo_date,
+        setopenEdit)
+    }
    
   
     const handleClickOpen = (scrollType) => () => {
@@ -147,6 +168,9 @@ const Promotion = ({code}) => {
 
     useEffect(() => {
       GetPromotions(code,setpromotions)
+      GetPromotionsTypes(setpromo_types)
+
+      console.log(promotions)
     }, [])
 
     useEffect(() => {
@@ -159,7 +183,11 @@ const Promotion = ({code}) => {
           setedit_promo_desc(p.coupon_description)
           setedit_promo_type(p.promotion_type)
           setedit_promo_amount(p.amount)
-          setedit_promo_date(p.ex_date)
+          setedit_promo_date(moment(p.ex_date).format("YYYY-MM-DD"))
+          // console.log(moment(p.ex_date).format("DD-MM-YYYY"))
+          setedit_promo_type_id(p.promotion_type_id)
+
+
           handleCloseEdit()
           }} variant="primary"><EditIcon /></ButtonBootstrap>
 
@@ -312,9 +340,10 @@ const Promotion = ({code}) => {
                 <div class="mb-3">
                     <label class="form-label">Promotion Type</label>
                     <select onChange={(e) => setpromo_type(e.target.value)} class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">Percentage Promotion</option>
-                        <option value="2">Fixed Cart Promotion</option>
+                        <option value="0" selected>Open this select menu</option>
+                        {promo_types.map((type) => (
+                          <option key={type.id} value={type.id}>{type.name}</option>
+                        ))}
                     </select>
                 </div>
               </div>
@@ -366,10 +395,11 @@ const Promotion = ({code}) => {
               <div className='col-md-6'>
                 <div class="mb-3">
                     <label class="form-label">Promotion Type</label>
-                    <select value={edit_promo_type} onChange={(e) => setedit_promo_type(e.target.value)} class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">Percentage Promotion</option>
-                        <option value="2">Fixed Cart Promotion</option>
+                    <select value={edit_promo_type_id} onChange={(e) => setedit_promo_type_id(e.target.value)} class="form-select" aria-label="Default select example">
+                        {/* <option value={edit_promo_type}>{promo_types.map((t) => t.id ==  edit_promo_type && t.name)}</option> */}
+                        {promo_types.map((type) => (
+                          <option key={type.id} value={type.id}>{type.name}</option>
+                        )) }
                     </select>
                 </div>
               </div>
@@ -391,7 +421,7 @@ const Promotion = ({code}) => {
 
             </div>
 
-            <Button onClick={handleClick} variant="contained">SAVE</Button>
+            <Button onClick={handleClickUpdate} variant="contained">UPDATE</Button>
 
         </DialogContent>
       </Dialog>
