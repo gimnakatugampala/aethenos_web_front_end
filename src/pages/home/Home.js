@@ -11,13 +11,19 @@ const Home = () => {
 
     useEffect(() => {
 
-        window.setTimeout(function(){
-            window.location.href = "/courses";
-        }, 1000);
+        // window.setTimeout(function(){
+        //     window.location.href = "/courses";
+        // }, 1000);
+
+        if(window.localStorage.getItem("aethenos") == null){
+          window.location.href = `/login?sessionTimeout=true&rediect-url=courses`
+        }else{
+          window.location.href = "/courses";
+        }
 
         
         
-        console.log(window.localStorage.getItem("aethenos"))
+        // console.log(window.localStorage.getItem("aethenos"))
       }, [])
       
 

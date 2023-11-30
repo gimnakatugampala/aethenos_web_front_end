@@ -13,7 +13,7 @@ import RichTextEditor from "../../../../components/RichTextEditor";
 import Table from 'react-bootstrap/Table';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
+import JoditEditor from "jodit-react";
 
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -44,6 +44,20 @@ const Curriculum = ({code}) => {
   const [curriculum, setcurriculum] = useState("")
 
 
+  // Get Section data
+  const [sectionData, setsectionData] = useState([])
+
+
+  // Curriculum Item Data
+  const [article, setarticle] = useState("")
+  const [curriculum_desc, setcurriculum_desc] = useState("")
+  const [curriclum_ex_res_tile, setcurriclum_ex_res_tile] = useState("")
+  const [curriculum_ex_res_link, setcurriculum_ex_res_link] = useState("")
+  const [curriculum_download_file, setcurriculum_download_file] = useState("")
+  const [curriculum_source_code, setcurriculum_source_code] = useState("")
+  const [curriculum_video, setcurriculum_video] = useState("")
+
+
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
 
   const showAddSectionInput = () => setshowSectionInput(!showSectionInput)
@@ -64,10 +78,28 @@ const Curriculum = ({code}) => {
     setcurriculum(false)
   }
 
+  // Save Section
+  const handleSaveSection = () => {
+    console.log(code)
+    console.log(article)
+    console.log(curriculum_desc)
+    console.log(curriclum_ex_res_tile)
+    console.log(curriculum_ex_res_link)
+    console.log(curriculum_source_code)
+    console.log(curriculum_download_file)
+    console.log(curriculum_video)
+  }
+
 
   useEffect(() => {
-    GetCurriculum(code)
+    GetCurriculum(code,setsectionData)
   }, [])
+
+  useEffect(() => {
+  sectionData.forEach(f => {
+      console.log(f)
+    })
+  },[])
   
 
   return (
@@ -86,23 +118,25 @@ const Curriculum = ({code}) => {
         {/* Section 1 */}
 
         <div className="card p-2">
+     {sectionData !== null && sectionData.length > 0 && sectionData.map((section,index) => (
+
           <CardContent>
-            <div className="d-flex justify-content-start section-container">
+            <div className="d-flex justify-content-between section-container">
               <Typography variant="subtitle1">
-                <b> Section 1:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
-                Introduction
+                <b> Section {index + 1}:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
+                {section.sectionName[0]}
               </Typography>
 
-              <div className="section-actions">
-                <EditIcon fontSize="small" className="mx-1" />
-                <DeleteIcon fontSize="small" className="mx-1" />
-              </div>
+              <Button onClick={handleSaveSection} size="sm" variant="contained">SAVE</Button>
+
+       
             </div>
 
-            {/* Curriculum List */}
+ 
             <div className="my-2">
-              {/* 1 */}
-              <Accordion className="my-3">
+
+              {section.sectionCurriculumItem.length > 0 && section.sectionCurriculumItem.map((item,index) => (
+              <Accordion key={index} className="my-3">
                 <AccordionSummary
                   className="accordian-header d-flex justify-content-between align-items-center"
                   expandIcon={<ExpandMoreIcon />}
@@ -110,14 +144,9 @@ const Curriculum = ({code}) => {
                   id="panel1a-header"
                 >
                   <Typography>
-                    <CheckCircleIcon fontSize="small" /> Lecture 1:{" "}
-                    <FileCopyIcon sx={{ fontSize: 15 }} /> Introduction
+                    <CheckCircleIcon fontSize="small" /> Lecture {index + 1}:{" "}
+                    <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
                   </Typography>
-
-                  {/* <div className="accordian-actions">
-                    <EditIcon fontSize="small" />
-                    <DeleteIcon fontSize="small" />
-                  </div> */}
 
                   {showContentAdd ? (
                     <Button
@@ -161,7 +190,7 @@ const Curriculum = ({code}) => {
   
                         {/* Upload Input */}
                         <Form.Group controlId="formFile" className="my-3">
-                        <Form.Control placeholder="Add a Video" type="file" />
+                        <Form.Control onClick={(e) => setcurriculum_video(e.target.files[0])} placeholder="Add a Video" type="file" />
                         <Form.Label style={{fontSize:11}}><b>Note:</b> All files should be at least 720p and less than 4.0 GB.</Form.Label>
                       </Form.Group>
   
@@ -209,7 +238,7 @@ const Curriculum = ({code}) => {
                           Article
                         </Typography>
   
-                          <RichTextEditor />
+                          <JoditEditor value={article} onChange={(e) => setarticle(e)} />
                         </div>
                       </div>
                     ) : (
@@ -256,19 +285,16 @@ const Curriculum = ({code}) => {
                       <></>
                   )}
                  
-                 
-
+                
 
                      {/* Always There */}
                      {extracurriculum == "desc" && (
                       <>
                        <Button onClick={() => setextracurriculum("")}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
                        <Button onClick={() => setextracurriculum("resourses")}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
-                       <RichTextEditor />
+                       <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
                        </>
                      )}
-
-
 
                       {/* Add Description & Resourses */}
                       {showDescRes && (
@@ -294,27 +320,30 @@ const Curriculum = ({code}) => {
                           <Tab eventKey="d-file" title="Downloadable File">
 
                           <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Control type="file" />
+                            <Form.Control  onChange={(e) => setcurriculum_download_file(e.target.files[0])} type="file" />
                             <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lecture. This file is going to be seen as a lecture extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
                           </Form.Group>
                             
                           </Tab>
                           <Tab eventKey="e-r" title="External Resources">
-                          <Form>
+
+                          <Form> 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                               <Form.Label>Title</Form.Label>
-                              <Form.Control type="text" placeholder="A Descriptive Title" />
+                              <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
                             </Form.Group>
+
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                               <Form.Label>URL</Form.Label>
-                              <Form.Control type="text" placeholder="https://example.com" />
+                              <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://example.com" />
                             </Form.Group>
-                            <Button variant="contained">Add Link</Button>
+                            {/* <Button variant="contained">Add Link</Button> */}
                           </Form>
+
                           </Tab>
                           <Tab eventKey="source-code" title="Source Code">
 
-                          <Form.Group controlId="formFile" className="mb-3">
+                          <Form.Group onChange={(e) => setcurriculum_source_code(e.target.files[0])} controlId="formFile" className="mb-3">
                             <Form.Control type="file" />
                             <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
                           </Form.Group>
@@ -329,45 +358,9 @@ const Curriculum = ({code}) => {
 
                 </AccordionDetails>
               </Accordion>
+              ))}
+    
 
-              {/* 2 */}
-
-              <Accordion className="my-3">
-                <AccordionSummary
-                  className="accordian-header d-flex justify-content-between align-items-center"
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography>
-                    <CheckCircleIcon fontSize="small" /> Lecture 2:{" "}
-                    <FileCopyIcon sx={{ fontSize: 15 }} /> Deep Learning
-                  </Typography>
-
-                  {/* <div className="accordian-actions">
-                    <EditIcon fontSize="small" />
-                    <DeleteIcon fontSize="small" />
-                  </div> */}
-
-                  {showContentAdd ? (
-                    <Button className="mx-2" size="small" variant="contained">
-                      <CloseIcon /> Cancel
-                    </Button>
-                  ) : (
-                    <Button className="mx-2" size="small" variant="outlined">
-                      <AddIcon /> Content
-                    </Button>
-                  )}
-                </AccordionSummary>
-
-                <AccordionDetails>
-                  <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Suspendisse malesuada lacus ex, sit amet blandit leo
-                    lobortis eget.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
             </div>
 
             <div className="m-2">
@@ -396,6 +389,7 @@ const Curriculum = ({code}) => {
 
             </div>
           </CardContent>
+     ))}
         </div>
 
         <div className="m-2">

@@ -735,7 +735,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  }
 
- export const GetCurriculum = async(code) =>{
+ export const GetCurriculum = async(code,setsectionData) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
@@ -750,6 +750,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     .then(response => response.json())
     .then(result => {
       console.log(result)
+      setsectionData(result)
+
 
       Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
     })
