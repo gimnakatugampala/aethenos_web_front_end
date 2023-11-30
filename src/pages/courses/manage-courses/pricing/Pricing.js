@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import { Select, Radio } from "antd";
@@ -8,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import { css } from "../../manage-courses/pricing/Pricing.css";
+import { GetDiscountTypes } from "../../../../api";
 
 import getSymbolFromCurrency from 'currency-symbol-map'
 
@@ -44,6 +45,34 @@ const countries = [
 ];
 
 const Pricing = () => {
+
+  const [dis_types, setdis_types] = useState([])
+
+  const [DGlobalPricing, setDGlobalPricing] = useState("")
+  const [DDisType, setDDisType] = useState("")
+  const [DDisPercent, setDDisPercent] = useState("")
+  const [DDisAmt, setDDisAmt] = useState("")
+  const [DGlobalNetPrice, setDGlobalNetPrice] = useState("")
+  
+
+  useEffect(() => {
+
+    GetDiscountTypes(setdis_types)
+ 
+  }, [])
+
+
+  const handleSaveDefaultPricing = () =>{
+    console.log(DGlobalPricing)
+    console.log(DDisType)
+    console.log(DDisPercent)
+    console.log(DDisAmt)
+    console.log(DGlobalNetPrice)
+  }
+
+
+  
+
   const initialDiscountTypes = new Array(countries.length).fill("No Discount");
   const [selectedDiscountTypes, setSelectedDiscountTypes] =
     useState(initialDiscountTypes);
@@ -85,6 +114,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <InputGroup className="mb-3">
                     <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                     <Form.Control
+                    onChange={(e) => setDGlobalPricing(e.target.value)}
                       placeholder="USD"
                       aria-label="USD"
                       aria-describedby="basic-addon1"
@@ -95,33 +125,33 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
 
               <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
-              <select  class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">No Discount</option>
-                <option value="2">Percentage</option>
-                <option value="3">Fixed Discount</option>
+              <select onChange={(e) => setDDisType(e.target.value)} class="form-select" aria-label="Default select example">
+                <option value="0" selected>Open this select menu</option>
+                {dis_types.map((type,index) => (
+                  <option key={index} value={type.id}>{type.name}</option>
+                ))}
               </select>
               </div>
 
               <div className="col-md-2">
               <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
-              <Form.Control type="text" />
+              <Form.Control onChange={(e) => setDDisPercent(e.target.value)} type="text" />
               </div>
 
               <div className="col-md-2">
               <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
-              <Form.Control type="text" />
+              <Form.Control onChange={(e) => setDDisAmt(e.target.value)} type="text" />
               </div>
 
               <div className="col-md-2">
               <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
-              <Form.Control type="text" />
+              <Form.Control onChange={(e) => setDGlobalNetPrice(e.target.value)} type="text" />
               <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : $10</i></Form.Label>
 
               </div>
 
               <div className='col-md-1 d-flex align-items-center mb-3'>
-                <Button  className='mx-1' variant="contained">Submit</Button>
+                <Button onClick={handleSaveDefaultPricing} className='mx-1' variant="contained">Submit</Button>
                 </div>
 
               
@@ -189,15 +219,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                         handleDiscountTypeChange(value, index)
                       }
                     >
-                      <Select.Option value="No Discount">
-                        --- NO DISCOUNT ---
+                      {dis_types.map((type)=>(
+                      <Select.Option key={type.id} value={type.id}>
+                        {type.name}
                       </Select.Option>
-                      <Select.Option value="Percentage">
+                      ))}
+                      {/* <Select.Option value="Percentage">
                         By Percentage
                       </Select.Option>
                       <Select.Option value="Fixed Discount">
                         By Value
-                      </Select.Option>
+                      </Select.Option> */}
                     </Select>
                   </td>
                   <td>

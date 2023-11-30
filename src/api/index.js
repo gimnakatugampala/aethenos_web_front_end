@@ -244,6 +244,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
   .then(result => {
     console.log(result)
     setcourses(result)
+
+    if(result.variable == "This is not an instructor"){
+      Unauthorized(401,"courses")
+    }
+
     Unauthorized(result.status,"courses")
   })
   .catch(error => console.log('error', error));
@@ -713,5 +718,70 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     Unauthorized(result.status,`courses/manage/${code}/#promotions`)
   })
   .catch(error => console.log('error', error));
+
+ }
+
+ export const GetDiscountTypes = async(setdis_types) =>{
+
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getAllDiscountType", requestOptions)
+    .then(response => response.json())
+    .then(result => setdis_types(result))
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const GetCurriculum = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCurriculum/123456", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    })
+    .catch(error => console.log('error', error));
+ }
+
+ export const AddCurriculum = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var formdata = new FormData();
+  formdata.append("courseCode", "123456");
+  formdata.append("sectionName", "Test Secton Name 02");
+  formdata.append("article", "Lorem");
+  // formdata.append("video", fileInput.files[0], "[PROXY]");
+  formdata.append("description", "Test Description");
+  // formdata.append("downloadableFile", fileInput.files[0], "[PROXY]");
+  formdata.append("externalResourcesTitle", "Test Resources File");
+  formdata.append("externalResourcesUrl", "www.testurl.com");
+  // formdata.append("sourceCode", fileInput.files[0], "[PROXY]");
+  
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCurriculum", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
 
  }

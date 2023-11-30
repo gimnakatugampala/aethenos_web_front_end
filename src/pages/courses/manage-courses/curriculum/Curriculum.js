@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "antd";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -26,16 +26,49 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
+import {GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 
-const Curriculum = () => {
+const Curriculum = ({code}) => {
+
   const [showContentAdd, setshowContentAdd] = useState(false);
   const [showMain, setshowMain] = useState(false)
   const [showDescRes, setshowDescRes] = useState(true)
   const [curriculumvisiblity, setcurriculumvisiblity] = useState("");
   const [extracurriculum, setextracurriculum] = useState("")
 
+  const [showSectionInput, setshowSectionInput] = useState(false)
+  const [showCurriculumItemInput, setshowCurriculumItemInput] = useState(false)
+
+  const [section, setsection] = useState("")
+  const [curriculum, setcurriculum] = useState("")
+
+
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
+
+  const showAddSectionInput = () => setshowSectionInput(!showSectionInput)
+  const handleshowCurriculumItemInput = () => setshowCurriculumItemInput(!showCurriculumItemInput)
+
+  // Add Section
+  const handleSubmitSection = () =>{
+      console.log(section)
+      setshowSectionInput(false)
+      setsection("")
+  }
+
+  // Add Curriculum Lecture
+  const handleSaveCurriculum = () =>{
+    console.log(curriculum)
+
+    setshowCurriculumItemInput(false)
+    setcurriculum(false)
+  }
+
+
+  useEffect(() => {
+    GetCurriculum(code)
+  }, [])
+  
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -46,7 +79,6 @@ const Curriculum = () => {
           Curriculum
         </Typography>
         
-        <Button variant="contained"><AddIcon /> SAVE</Button>
         </div>
 
         <hr />
@@ -69,6 +101,7 @@ const Curriculum = () => {
 
             {/* Curriculum List */}
             <div className="my-2">
+              {/* 1 */}
               <Accordion className="my-3">
                 <AccordionSummary
                   className="accordian-header d-flex justify-content-between align-items-center"
@@ -81,10 +114,10 @@ const Curriculum = () => {
                     <FileCopyIcon sx={{ fontSize: 15 }} /> Introduction
                   </Typography>
 
-                  <div className="accordian-actions">
+                  {/* <div className="accordian-actions">
                     <EditIcon fontSize="small" />
                     <DeleteIcon fontSize="small" />
-                  </div>
+                  </div> */}
 
                   {showContentAdd ? (
                     <Button
@@ -311,10 +344,10 @@ const Curriculum = () => {
                     <FileCopyIcon sx={{ fontSize: 15 }} /> Deep Learning
                   </Typography>
 
-                  <div className="accordian-actions">
+                  {/* <div className="accordian-actions">
                     <EditIcon fontSize="small" />
                     <DeleteIcon fontSize="small" />
-                  </div>
+                  </div> */}
 
                   {showContentAdd ? (
                     <Button className="mx-2" size="small" variant="contained">
@@ -338,17 +371,61 @@ const Curriculum = () => {
             </div>
 
             <div className="m-2">
-              <Button variant="contained">
-                <AddIcon /> Curriculum Item
-              </Button>
+
+            {showCurriculumItemInput && (
+                    <>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Add Lecture</Form.Label>
+                    <Form.Control onChange={(e) => setcurriculum(e.target.value)} type="text" placeholder="Type Lecture Name" />
+                  </Form.Group>
+                  <Button onClick={handleSaveCurriculum} className="mx-1" variant="outlined">
+                      ADD
+                    </Button>
+                    <Button onClick={handleshowCurriculumItemInput} variant="contained">
+                      Cancel
+                    </Button>
+                    </>
+                  )}
+
+                  {showCurriculumItemInput == false && (
+
+                  <Button onClick={handleshowCurriculumItemInput} variant="contained">
+                    <AddIcon /> Curriculum Item
+                  </Button>
+                  )}
+
             </div>
           </CardContent>
         </div>
 
         <div className="m-2">
-          <Button variant="contained">
-            <AddIcon /> Section
-          </Button>
+
+          {showSectionInput && (
+            <>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Add Section</Form.Label>
+              <Form.Control onChange={(e) => setsection(e.target.value)} type="text" placeholder="Type Section Name" />
+            </Form.Group>
+            <Button onClick={handleSubmitSection} className="mx-1" variant="outlined">
+                ADD
+              </Button>
+              <Button onClick={() => {
+                showAddSectionInput()
+                setsection("")
+                }} variant="contained">
+                Cancel
+              </Button>
+            </>
+          )}
+
+          {showSectionInput == false && (
+                  <Button onClick={showAddSectionInput} variant="contained">
+                    <AddIcon /> Section
+                  </Button>
+
+          )}
+
+
         </div>
       </Card>
     </div>
