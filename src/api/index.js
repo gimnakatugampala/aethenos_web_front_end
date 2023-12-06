@@ -848,6 +848,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     }else{
       setDDisPercent(0)
       setDDisAmt(0)
+      setDGlobalNetPrice((parseFloat(result.value) - parseFloat(result.discountValue)).toFixed(2))
     }
 
     
