@@ -102,7 +102,6 @@ export const InstructorVerify = async() =>{
 
  export const addCourse = async(course_title,course_category,course_keywords,course_image,course_test_video,setloading) =>{
 
-
     setloading(true)
 
    var myHeaders = new Headers();
@@ -149,7 +148,10 @@ export const InstructorVerify = async() =>{
 
       Unauthorized(result.status,"add-courses")
      })
-     .catch(error => console.log('error', error));
+     .catch(error => {
+      setloading(false)
+      ErrorAlert("Error","Something Went Wong")
+     });
 
  }
 
@@ -243,13 +245,15 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
   .then(response => response.json())
   .then(result => {
     console.log(result)
-    setcourses(result)
-
+    
     if(result.variable == "This is not an instructor"){
       Unauthorized(401,"courses")
     }
-
     Unauthorized(result.status,"courses")
+
+    setcourses(result.sort((a, b) => new Date(b.created_date) - new Date(a.created_date)))
+
+
   })
   .catch(error => console.log('error', error));
 
@@ -750,10 +754,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     .then(response => response.json())
     .then(result => {
       console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
       setsectionData(result)
 
 
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
     })
     .catch(error => console.log('error', error));
  }
@@ -784,6 +788,120 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCurriculum", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const GetCoursePricingType = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getFreeCourse/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const GetPriceDefault = async(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice) =>{
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefaultCoursePricing/${code}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+
+    Unauthorized(result.status,`courses/manage/${code}/#pricing`)
+
+    console.log(result)
+    setDGlobalPricing(result.value)
+    setDDisType(result.discountTypeId)
+    setPriceRangeMinDefault(result.minPrice)
+    setPriceRangeMaxDefault(result.maxPrice)
+
+
+    if(result.discountTypeId == 2){
+      setDDisPercent(result.discountValue)
+      setshowDefaultPercentDiscountInput(true)
+      setshowDefaultValueDiscountInput(false)
+
+      setDGlobalNetPrice((parseFloat(result.value) - parseFloat(result.value) * parseFloat(result.discountValue)/100).toFixed(2))
+      
+    }else if(result.discountTypeId == 3){
+      setDDisAmt(result.discountValue)
+      setshowDefaultPercentDiscountInput(false)
+      setshowDefaultValueDiscountInput(true)
+      setDGlobalNetPrice((parseFloat(result.value) - parseFloat(result.discountValue)).toFixed(2))
+    }else{
+      setDDisPercent(0)
+      setDDisAmt(0)
+    }
+
+    
+  })
+  .catch(error => console.log('error', error));
+
+ }
+
+ export const SavePriceDefault = async(code,DGlobalPricing,DDisType,DDisPercent,DDisAmt,DGlobalNetPrice) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var formdata = new FormData();
+  formdata.append("courseCode", `${code}`);
+  formdata.append("globalListPrice", `${DGlobalPricing}`);
+  formdata.append("discountType", `${DDisType}`);
+
+  if(DDisType == "1"){
+    formdata.append("discountAmount", `0`);
+  }else if(DDisType == "2"){
+    formdata.append("discountAmount", `${DDisPercent}`);
+  }else if(DDisType == "3"){
+    formdata.append("discountAmount", `${DDisAmt}`);
+  }
+
+  formdata.append("globalNetPrice", `${DGlobalNetPrice}`);
+
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCourseDefaultPrice", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+
+
+      Unauthorized(result.status,`courses/manage/${code}/#pricing`)
+
+      console.log(result)
+
+      if(result.message == "Error"){
+        ErrorAlert("Error",result.variable)
+      }
+
+      if(result.variable == "200"){
+        SuccessAlert("Added!",result.message)
+      }
+
+
+    })
     .catch(error => console.log('error', error));
 
  }
