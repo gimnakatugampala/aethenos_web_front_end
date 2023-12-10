@@ -224,6 +224,9 @@ const Pricing = ({code}) => {
   const [USADisAmt, setUSADisAmt] = useState("")
   const [USANetPrice, setUSANetPrice] = useState("")
 
+  const [showInputDisAmtUSA, setshowInputDisAmtUSA] = useState(false)
+  const [showInputPercentUSA, setshowInputPercentUSA] = useState(false)
+
   // ---------------------
   // Discount Type USA
   const handleDefaultDiscountTypeUSA = (value) =>{
@@ -233,16 +236,15 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputDisAmtUSA(false)
+      setshowInputPercentUSA(false)
+
       setUSANetPrice(USAListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentUSA(true)
+      setshowInputDisAmtUSA(false)
       console.log(USADisPercent)
       console.log(USAListPrice)
 
@@ -250,16 +252,15 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+      setshowInputPercentUSA(false)
+      setshowInputDisAmtUSA(true)
 
       setUSANetPrice(parseFloat(USAListPrice) - parseFloat(USADisAmt == "" ? 0 : USADisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputDisAmtUSA(false)
+      setshowInputPercentUSA(false)
       setUSANetPrice(USAListPrice)
 
     }
@@ -315,6 +316,9 @@ const Pricing = ({code}) => {
   const [AusDisAmt, setAusDisAmt] = useState("")
   const [AusNetPrice, setAusNetPrice] = useState("")
 
+  const [showInputDisAmtAus, setshowInputDisAmtAus] = useState(false)
+  const [showInputPercentAus, setshowInputPercentAus] = useState(false)
+
     // ---------------------
   // Discount Type Aus
   const handleDefaultDiscountTypeAus = (value) =>{
@@ -324,16 +328,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputDisAmtAus(false)
+      setshowInputPercentAus(false)
+
       setAusNetPrice(AusListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentAus(true)
+      setshowInputDisAmtAus(false)
+
       console.log(AusDisPercent)
       console.log(AusListPrice)
 
@@ -341,16 +345,18 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+      setshowInputPercentAus(false)
+      setshowInputDisAmtAus(true)
+
+
 
       setAusNetPrice(parseFloat(AusListPrice) - parseFloat(AusDisAmt == "" ? 0 : AusDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputDisAmtAus(false)
+      setshowInputPercentAus(false)
+
       setAusNetPrice(AusListPrice)
 
     }
@@ -407,6 +413,9 @@ const Pricing = ({code}) => {
   const [BrazilDisAmt, setBrazilDisAmt] = useState("")
   const [BrazilNetPrice, setBrazilNetPrice] = useState("")
 
+  const [showInputDisAmtBrzail, setshowInputDisAmtBrzail] = useState(false)
+  const [showInputPercentBrzail, setshowInputPercentBrzail] = useState(false)
+
       // ---------------------
   // Discount Type Brazil
   const handleDefaultDiscountTypeBrazil = (value) =>{
@@ -416,16 +425,17 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputDisAmtBrzail(false)
+      setshowInputPercentBrzail(false)
+
       setBrazilNetPrice(BrazilListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentBrzail(true)
+      setshowInputDisAmtBrzail(false)
+
+
       console.log(BrazilDisPercent)
       console.log(BrazilListPrice)
 
@@ -433,16 +443,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+      setshowInputPercentBrzail(false)
+      setshowInputDisAmtBrzail(true)
+
 
       setBrazilNetPrice(parseFloat(BrazilListPrice) - parseFloat(BrazilDisAmt == "" ? 0 : BrazilDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentBrzail(false)
+      setshowInputDisAmtBrzail(false)
       setBrazilNetPrice(BrazilListPrice)
 
     }
@@ -498,6 +508,9 @@ const Pricing = ({code}) => {
   const [CanadaDisAmt, setCanadaDisAmt] = useState("")
   const [CanadaNetPrice, setCanadaNetPrice] = useState("")
 
+  const [showInputDisAmtCanada, setshowInputDisAmtCanada] = useState(false)
+  const [showInputPercentCanada, setshowInputPercentCanada] = useState(false)
+
       // ---------------------
   // Discount Type Canada
   const handleDefaultDiscountTypeCanada = (value) =>{
@@ -507,16 +520,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentCanada(false)
+      setshowInputDisAmtCanada(false)
+
       setCanadaNetPrice(CanadaListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentCanada(true)
+      setshowInputDisAmtCanada(false)
+
       console.log(CanadaDisPercent)
       console.log(CanadaListPrice)
 
@@ -524,16 +537,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+      setshowInputPercentCanada(false)
+      setshowInputDisAmtCanada(true)
+
 
       setCanadaNetPrice(parseFloat(CanadaListPrice) - parseFloat(CanadaDisAmt == "" ? 0 : CanadaDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentCanada(false)
+      setshowInputDisAmtCanada(false)
       setCanadaNetPrice(CanadaListPrice)
 
     }
@@ -589,6 +602,9 @@ const Pricing = ({code}) => {
   const [ChileDisAmt, setChileDisAmt] = useState("")
   const [ChileNetPrice, setChileNetPrice] = useState("")
 
+  const [showInputDisAmtChile, setshowInputDisAmtChile] = useState(false)
+  const [showInputPercentChile, setshowInputPercentChile] = useState(false)
+
    // ---------------------
   // Discount Type Chile
   const handleDefaultDiscountTypeChile = (value) =>{
@@ -598,16 +614,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentChile(false)
+      setshowInputDisAmtChile(false)
       setChileNetPrice(ChileListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentChile(true)
+      setshowInputDisAmtChile(false)
+
       console.log(ChileDisPercent)
       console.log(ChileListPrice)
 
@@ -615,16 +631,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+    
+
+      setshowInputPercentChile(false)
+      setshowInputDisAmtChile(true)
 
       setChileNetPrice(parseFloat(ChileListPrice) - parseFloat(ChileDisAmt == "" ? 0 : ChileDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentChile(false)
+      setshowInputDisAmtChile(false)
       setChileNetPrice(ChileListPrice)
 
     }
@@ -679,6 +695,9 @@ const Pricing = ({code}) => {
   const [ColumbiaDisAmt, setColumbiaDisAmt] = useState("")
   const [ColumbiaNetPrice, setColumbiaNetPrice] = useState("")
 
+  const [showInputDisAmtColumbia, setshowInputDisAmtColumbia] = useState(false)
+  const [showInputPercentColumbia, setshowInputPercentColumbia] = useState(false)
+
 
   // ---------------------
   // Discount Type Columbia
@@ -689,16 +708,15 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentColumbia(false)
+      setshowInputDisAmtColumbia(false)
       setColumbiaNetPrice(ColumbiaListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentColumbia(true)
+      setshowInputDisAmtColumbia(false)
+
       console.log(ColumbiaDisPercent)
       console.log(ColumbiaListPrice)
 
@@ -706,16 +724,15 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+   
+      setshowInputPercentColumbia(false)
+      setshowInputDisAmtColumbia(true)
 
       setColumbiaNetPrice(parseFloat(ColumbiaListPrice) - parseFloat(ColumbiaDisAmt == "" ? 0 : ColumbiaDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentColumbia(false)
+      setshowInputDisAmtColumbia(false)
       setColumbiaNetPrice(ColumbiaListPrice)
 
     }
@@ -770,6 +787,9 @@ const Pricing = ({code}) => {
   const [EgyptDisAmt, setEgyptDisAmt] = useState("")
   const [EgyptNetPrice, setEgyptNetPrice] = useState("")
 
+  const [showInputDisAmtEgypt, setshowInputDisAmtEgypt] = useState(false)
+  const [showInputPercentEgypt, setshowInputPercentEgypt] = useState(false)
+
 
     // ---------------------
   // Discount Type Egypt
@@ -780,16 +800,15 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentEgypt(false)
+      setshowInputDisAmtEgypt(false)
       setEgyptNetPrice(EgyptListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentEgypt(true)
+      setshowInputDisAmtEgypt(false)
       console.log(EgyptDisPercent)
       console.log(EgyptListPrice)
 
@@ -797,16 +816,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+ 
+
+      setshowInputPercentEgypt(false)
+      setshowInputDisAmtEgypt(true)
 
       setEgyptNetPrice(parseFloat(EgyptListPrice) - parseFloat(EgyptDisAmt == "" ? 0 : EgyptDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentEgypt(false)
+      setshowInputDisAmtEgypt(false)
       setEgyptNetPrice(EgyptListPrice)
 
     }
@@ -861,6 +880,9 @@ const Pricing = ({code}) => {
   const [EUDisAmt, setEUDisAmt] = useState("")
   const [EUNetPrice, setEUNetPrice] = useState("")
 
+  const [showInputDisAmtEU, setshowInputDisAmtEU] = useState(false)
+  const [showInputPercentEU, setshowInputPercentEU] = useState(false)
+
       // ---------------------
   // Discount Type EU
   const handleDefaultDiscountTypeEU = (value) =>{
@@ -870,16 +892,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputDisAmtEU(false)
+      setshowInputPercentEU(false)
       setEUNetPrice(EUListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentEU(true)
+      setshowInputDisAmtEU(false)
       console.log(EUDisPercent)
       console.log(EUListPrice)
 
@@ -887,16 +909,18 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+  
+
+      
+      setshowInputPercentEU(false)
+      setshowInputDisAmtEU(true)
 
       setEUNetPrice(parseFloat(EUListPrice) - parseFloat(EUDisAmt == "" ? 0 : EUDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+    
+      setshowInputPercentEU(false)
+      setshowInputDisAmtEU(false)
       setEUNetPrice(EUListPrice)
 
     }
@@ -951,6 +975,9 @@ const Pricing = ({code}) => {
   const [GBPDisAmt, setGBPDisAmt] = useState("")
   const [GBPNetPrice, setGBPNetPrice] = useState("")
 
+  const [showInputDisAmtGBP, setshowInputDisAmtGBP] = useState(false)
+  const [showInputPercentGBP, setshowInputPercentGBP] = useState(false)
+
   // ---------------------
   // Discount Type GBP
   const handleDefaultDiscountTypeGBP = (value) =>{
@@ -960,16 +987,17 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentGBP(false)
+      setshowInputDisAmtGBP(false)
+
       setGBPNetPrice(GBPListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+ 
+      setshowInputPercentGBP(true)
+      setshowInputDisAmtGBP(false)
+
       console.log(GBPDisPercent)
       console.log(GBPListPrice)
 
@@ -977,16 +1005,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+       
+      setshowInputPercentGBP(false)
+      setshowInputDisAmtGBP(true)
 
       setGBPNetPrice(parseFloat(GBPListPrice) - parseFloat(GBPDisAmt == "" ? 0 : GBPDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentGBP(false)
+      setshowInputDisAmtGBP(false)
       setGBPNetPrice(GBPListPrice)
 
     }
@@ -1041,6 +1069,9 @@ const Pricing = ({code}) => {
   const [IndonesiaDisAmt, setIndonesiaDisAmt] = useState("")
   const [IndonesiaNetPrice, setIndonesiaNetPrice] = useState("")
 
+  const [showInputDisAmtIndonesia, setshowInputDisAmtIndonesia] = useState(false)
+  const [showInputPercentIndonesia, setshowInputPercentIndonesia] = useState(false)
+
     // ---------------------
   // Discount Type Indo
   const handleDefaultDiscountTypeIndo = (value) =>{
@@ -1050,16 +1081,17 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentIndonesia(false)
+      setshowInputDisAmtIndonesia(false)
+
       setIndonesiaNetPrice(IndonesiaListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentIndonesia(true)
+      setshowInputDisAmtIndonesia(false)
+
+  
       console.log(IndonesiaDisPercent)
       console.log(IndonesiaListPrice)
 
@@ -1067,16 +1099,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+ 
+
+      setshowInputPercentIndonesia(false)
+      setshowInputDisAmtIndonesia(true)
 
       setIndonesiaNetPrice(parseFloat(IndonesiaListPrice) - parseFloat(IndonesiaDisAmt == "" ? 0 : IndonesiaDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentIndonesia(false)
+      setshowInputDisAmtIndonesia(false)
       setIndonesiaNetPrice(IndonesiaListPrice)
 
     }
@@ -1131,6 +1163,9 @@ const Pricing = ({code}) => {
   const [IsrealDisAmt, setIsrealDisAmt] = useState("")
   const [IsrealNetPrice, setIsrealNetPrice] = useState("")
 
+  const [showInputDisAmtIsreal, setshowInputDisAmtIsreal] = useState(false)
+  const [showInputPercentIsreal, setshowInputPercentIsreal] = useState(false)
+
       // ---------------------
   // Discount Type Isreal
   const handleDefaultDiscountTypeIsreal = (value) =>{
@@ -1140,16 +1175,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputDisAmtIsreal(false)
+      setshowInputPercentIsreal(false)
       setIsrealNetPrice(IsrealListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputDisAmtIsreal(false)
+      setshowInputPercentIsreal(true)
+
       console.log(IsrealDisPercent)
       console.log(IsrealListPrice)
 
@@ -1157,16 +1192,17 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+      setshowInputDisAmtIsreal(true)
+      setshowInputPercentIsreal(false)
 
       setIsrealNetPrice(parseFloat(IsrealListPrice) - parseFloat(IsrealDisAmt == "" ? 0 : IsrealDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+    
+
+      setshowInputDisAmtIsreal(false)
+      setshowInputPercentIsreal(false)
       setIsrealNetPrice(IsrealListPrice)
 
     }
@@ -1221,6 +1257,9 @@ const Pricing = ({code}) => {
   const [IndiaDisAmt, setIndiaDisAmt] = useState("")
   const [IndiaNetPrice, setIndiaNetPrice] = useState("")
 
+  const [showInputDisAmtIndia, setshowInputDisAmtIndia] = useState(false)
+  const [showInputPercentIndia, setshowInputPercentIndia] = useState(false)
+
         // ---------------------
   // Discount Type India
   const handleDefaultDiscountTypeIndia = (value) =>{
@@ -1229,17 +1268,16 @@ const Pricing = ({code}) => {
     // 3 - By Value
 
     if(value == '1'){
-
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentIndia(false)
+      setshowInputDisAmtIndia(false)
       setIndiaNetPrice(IndiaListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+  
+
+      setshowInputPercentIndia(true)
+      setshowInputDisAmtIndia(false)
       console.log(IndiaDisPercent)
       console.log(IndiaListPrice)
 
@@ -1247,16 +1285,18 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+
+      setshowInputPercentIndia(false)
+      setshowInputDisAmtIndia(true)
 
       setIndiaNetPrice(parseFloat(IndiaListPrice) - parseFloat(IndiaDisAmt == "" ? 0 : IndiaDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+
+      setshowInputPercentIndia(false)
+      setshowInputDisAmtIndia(false)
       setIndiaNetPrice(IndiaListPrice)
 
     }
@@ -1310,6 +1350,9 @@ const Pricing = ({code}) => {
   const [JapanDisAmt, setJapanDisAmt] = useState("")
   const [JapanNetPrice, setJapanNetPrice] = useState("")
 
+  const [showInputDisAmtJapan, setshowInputDisAmtJapan] = useState(false)
+  const [showInputPercentJapan, setshowInputPercentJapan] = useState(false)
+
           // ---------------------
   // Discount Type Japan
   const handleDefaultDiscountTypeJapan = (value) =>{
@@ -1319,16 +1362,15 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentJapan(false)
+      setshowInputDisAmtJapan(false)
       setJapanNetPrice(JapanListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+    
+      setshowInputPercentJapan(true)
+      setshowInputDisAmtJapan(false)
       console.log(JapanDisPercent)
       console.log(JapanListPrice)
 
@@ -1336,16 +1378,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
 
+
+      setshowInputPercentJapan(false)
+      setshowInputDisAmtJapan(true)
       setJapanNetPrice(parseFloat(JapanListPrice) - parseFloat(JapanDisAmt == "" ? 0 : JapanDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentJapan(false)
+      setshowInputDisAmtJapan(false)
       setJapanNetPrice(JapanListPrice)
 
     }
@@ -1399,6 +1441,9 @@ const Pricing = ({code}) => {
   const [SKDisAmt, setSKDisAmt] = useState("")
   const [SKNetPrice, setSKNetPrice] = useState("")
 
+  const [showInputDisAmtSK, setshowInputDisAmtSK] = useState(false)
+  const [showInputPercentSK, setshowInputPercentSK] = useState(false)
+
            // ---------------------
   // Discount Type SK
   const handleDefaultDiscountTypeSK = (value) =>{
@@ -1408,16 +1453,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+    
+      setshowInputPercentSK(false)
+      setshowInputDisAmtSK(false)
       setSKNetPrice(SKListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentSK(true)
+      setshowInputDisAmtSK(false)
       console.log(SKDisPercent)
       console.log(SKListPrice)
 
@@ -1425,16 +1470,17 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+  
+
+      setshowInputPercentSK(false)
+      setshowInputDisAmtSK(true)
 
       setSKNetPrice(parseFloat(SKListPrice) - parseFloat(SKDisAmt == "" ? 0 : SKDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentSK(false)
+      setshowInputDisAmtSK(false)
       setSKNetPrice(SKListPrice)
 
     }
@@ -1488,6 +1534,9 @@ const Pricing = ({code}) => {
   const [MexicoDisAmt, setMexicoDisAmt] = useState("")
   const [MexicoNetPrice, setMexicoNetPrice] = useState("")
 
+  const [showInputDisAmtMexico, setshowInputDisAmtMexico] = useState(false)
+  const [showInputPercentMexico, setshowInputPercentMexico] = useState(false)
+
 
              // ---------------------
   // Discount Type Mexico
@@ -1498,16 +1547,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentMexico(false)
+      setshowInputDisAmtMexico(false)
       setMexicoNetPrice(MexicoListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+     
+      setshowInputPercentMexico(true)
+      setshowInputDisAmtMexico(false)
       console.log(MexicoDisPercent)
       console.log(MexicoListPrice)
 
@@ -1515,16 +1564,19 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+   
+
+      setshowInputPercentMexico(false)
+      setshowInputDisAmtMexico(true)
 
       setMexicoNetPrice(parseFloat(MexicoListPrice) - parseFloat(MexicoDisAmt == "" ? 0 : MexicoDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+
+      setshowInputPercentMexico(false)
+      setshowInputDisAmtMexico(false)
+
       setMexicoNetPrice(MexicoListPrice)
 
     }
@@ -1578,6 +1630,10 @@ const Pricing = ({code}) => {
   const [MalaysiaDisAmt, setMalaysiaDisAmt] = useState("")
   const [MalaysiaNetPrice, setMalaysiaNetPrice] = useState("")
 
+  const [showInputDisAmtMalaysia, setshowInputDisAmtMalaysia] = useState(false)
+
+  const [showInputPercentMalaysia, setshowInputPercentMalaysia] = useState(false)
+
                // ---------------------
   // Discount Type Malaysia
   const handleDefaultDiscountTypeMalaysia = (value) =>{
@@ -1587,16 +1643,17 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentMalaysia(false)
+      setshowInputDisAmtMalaysia(false)
       setMalaysiaNetPrice(MalaysiaListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentMalaysia(true)
+      setshowInputDisAmtMalaysia(false)
+
       console.log(MalaysiaDisPercent)
       console.log(MalaysiaListPrice)
 
@@ -1604,16 +1661,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+
+      setshowInputPercentMalaysia(false)
+      setshowInputDisAmtMalaysia(true)
 
       setMalaysiaNetPrice(parseFloat(MalaysiaListPrice) - parseFloat(MalaysiaDisAmt == "" ? 0 : MalaysiaDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentMalaysia(false)
+      setshowInputDisAmtMalaysia(false)
       setMalaysiaNetPrice(MalaysiaListPrice)
 
     }
@@ -1666,6 +1723,10 @@ const Pricing = ({code}) => {
   const [NigeriaDisPercent, setNigeriaDisPercent] = useState("")
   const [NigeriaDisAmt, setNigeriaDisAmt] = useState("")
   const [NIgeriaNetPrice, setNIgeriaNetPrice] = useState("")
+  
+  const [showInputDisAmtNigeria, setshowInputDisAmtNigeria] = useState(false)
+
+  const [showInputPercentNigeria, setshowInputPercentNigeria] = useState(false)
 
         // ---------------------
   // Discount Type Nigeria
@@ -1676,16 +1737,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+      setshowInputPercentNigeria(false)
+      setshowInputDisAmtNigeria(false)
       setNIgeriaNetPrice(NigeriaListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+      
+      setshowInputPercentNigeria(true)
+      setshowInputDisAmtNigeria(false)
+
       console.log(NigeriaDisPercent)
       console.log(NigeriaListPrice)
 
@@ -1693,16 +1754,16 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+
+      setshowInputPercentNigeria(false)
+      setshowInputDisAmtNigeria(true)
 
       setNIgeriaNetPrice(parseFloat(NigeriaListPrice) - parseFloat(NigeriaDisAmt == "" ? 0 : NigeriaDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+     
+      setshowInputPercentNigeria(false)
+      setshowInputDisAmtNigeria(false)
       setNIgeriaNetPrice(NigeriaListPrice)
 
     }
@@ -1756,6 +1817,10 @@ const Pricing = ({code}) => {
   const [NorwayDisAmt, setNorwayDisAmt] = useState("")
   const [NorwayNetPrice, setNorwayNetPrice] = useState("")
 
+  const [showInputDisAmtNorway, setshowInputDisAmtNorway] = useState(false)
+
+  const [showInputPercentNorway, setshowInputPercentNorway] = useState(false)
+
 
           // ---------------------
   // Discount Type Norway
@@ -1766,16 +1831,16 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentNorway(false)
+      setshowInputDisAmtNorway(false)
       setNorwayNetPrice(NorwayListPrice)
 
     }else if(value == '2'){
 
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(true)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentNorway(true)
+      setshowInputDisAmtNorway(false)
       console.log(NorwayDisPercent)
       console.log(NorwayListPrice)
 
@@ -1783,16 +1848,18 @@ const Pricing = ({code}) => {
 
 
     }else if(value == '3'){
-      // setshowDefaultDiscountInput(true)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(true)
+  
+
+      
+      setshowInputPercentNorway(false)
+      setshowInputDisAmtNorway(true)
 
       setNorwayNetPrice(parseFloat(NorwayListPrice) - parseFloat(NorwayDisAmt == "" ? 0 : NorwayDisAmt))
 
     }else{
-      // setshowDefaultDiscountInput(false)
-      // setshowDefaultPercentDiscountInput(false)
-      // setshowDefaultValueDiscountInput(false)
+
+      setshowInputPercentNorway(false)
+      setshowInputDisAmtNorway(false)
       setNorwayNetPrice(NorwayListPrice)
 
     }
@@ -1845,6 +1912,10 @@ const Pricing = ({code}) => {
   const [PeruDisPercent, setPeruDisPercent] = useState("")
   const [PeruDisAmt, setPeruDisAmt] = useState("")
   const [PeruNetPrice, setPeruNetPrice] = useState("")
+
+  const [showInputDisAmtPeru, setshowInputDisAmtPeru] = useState(false)
+
+  const [showInputPercentPeru, setshowInputPercentPeru] = useState(false)
   
          // ---------------------
     // Discount Type Peru
@@ -1855,16 +1926,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+
+        setshowInputPercentPeru(false)
+        setshowInputDisAmtPeru(false)
         setPeruNetPrice(PeruListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+       
+        setshowInputPercentPeru(true)
+        setshowInputDisAmtPeru(false)
         console.log(PeruDisPercent)
         console.log(PeruListPrice)
 
@@ -1872,16 +1943,18 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+
+
+        setshowInputPercentPeru(false)
+        setshowInputDisAmtPeru(true)
 
         setPeruNetPrice(parseFloat(PeruListPrice) - parseFloat(PeruDisAmt == "" ? 0 : PeruDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+
+
+        setshowInputPercentPeru(false)
+        setshowInputDisAmtPeru(false)
         setPeruNetPrice(PeruListPrice)
 
       }
@@ -1935,6 +2008,10 @@ const Pricing = ({code}) => {
   const [PhiliphinesDisAmt, setPhiliphinesDisAmt] = useState("")
   const [PhilipinesNetPrice, setPhilipinesNetPrice] = useState("")
 
+  const [showInputDisAmtPhilipines, setshowInputDisAmtPhilipines] = useState(false)
+
+  const [showInputPercentPhilipines, setshowInputPercentPhilipines] = useState(false)
+
 
           // ---------------------
     // Discount Type Philipines
@@ -1945,16 +2022,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+       
+        setshowInputPercentPhilipines(false)
+        setshowInputDisAmtPhilipines(false)
         setPhilipinesNetPrice(PhilipinesListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+ 
+        setshowInputPercentPhilipines(true)
+        setshowInputDisAmtPhilipines(false)
         console.log(PhilipinesDisPercent)
         console.log(PhilipinesListPrice)
 
@@ -1962,16 +2039,17 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+
+
+        setshowInputPercentPhilipines(false)
+        setshowInputDisAmtPhilipines(true)
 
         setPhilipinesNetPrice(parseFloat(PhilipinesListPrice) - parseFloat(PhiliphinesDisAmt == "" ? 0 : PhiliphinesDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+   
+        setshowInputPercentPhilipines(false)
+        setshowInputDisAmtPhilipines(false)
         setPhilipinesNetPrice(PhilipinesListPrice)
 
       }
@@ -2025,6 +2103,10 @@ const Pricing = ({code}) => {
   const [PolandDisAmt, setPolandDisAmt] = useState("")
   const [PolandNetPrice, setPolandNetPrice] = useState("")
 
+  const [showInputDisAmtPoland, setshowInputDisAmtPoland] = useState(false)
+
+  const [showInputPercentPoland, setshowInputPercentPoland] = useState(false)
+
 
           // ---------------------
     // Discount Type Poland
@@ -2035,16 +2117,17 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+    
+        setshowInputPercentPoland(false)
+        setshowInputDisAmtPoland(false)
         setPolandNetPrice(PolandListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+
+        setshowInputPercentPoland(true)
+        setshowInputDisAmtPoland(false)
+
         console.log(PolandDisPercent)
         console.log(PolandListPrice)
 
@@ -2052,16 +2135,17 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+
+
+        setshowInputPercentPoland(false)
+        setshowInputDisAmtPoland(true)
 
         setPolandNetPrice(parseFloat(PolandListPrice) - parseFloat(PolandDisAmt == "" ? 0 : PolandDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+     
+        setshowInputPercentPoland(false)
+        setshowInputDisAmtPoland(false)
         setPolandNetPrice(PolandListPrice)
 
       }
@@ -2116,6 +2200,10 @@ const Pricing = ({code}) => {
   const [RomaniaDisAmt, setRomaniaDisAmt] = useState("")
   const [RomaniaNetPrice, setRomaniaNetPrice] = useState("")
 
+  const [showInputDisAmtRomania, setshowInputDisAmtRomania] = useState(false)
+
+  const [showInputPercentRomania, setshowInputPercentRomania] = useState(false)
+
             // ---------------------
     // Discount Type Romania
     const handleDefaultDiscountTypeRomania = (value) =>{
@@ -2125,16 +2213,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+
+        setshowInputPercentRomania(false)
+        setshowInputDisAmtRomania(false)
         setRomaniaNetPrice(RomaniaListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+ 
+        setshowInputPercentRomania(true)
+        setshowInputDisAmtRomania(false)
         console.log(RomaniaDisPercent)
         console.log(RomaniaListPrice)
 
@@ -2142,16 +2230,18 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+
+
+        setshowInputPercentRomania(false)
+        setshowInputDisAmtRomania(true)
 
         setRomaniaNetPrice(parseFloat(RomaniaListPrice) - parseFloat(RomaniaDisAmt == "" ? 0 : RomaniaDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+
+
+        setshowInputPercentRomania(false)
+        setshowInputDisAmtRomania(false)
         setRomaniaNetPrice(RomaniaListPrice)
 
       }
@@ -2205,6 +2295,10 @@ const Pricing = ({code}) => {
   const [RussiaDisAmt, setRussiaDisAmt] = useState("")
   const [RussiaNetPrice, setRussiaNetPrice] = useState("")
 
+  const [showInputDisAmtRussia, setshowInputDisAmtRussia] = useState(false)
+
+  const [showInputPercentRussia, setshowInputPercentRussia] = useState(false)
+
           // ---------------------
     // Discount Type Russia
     const handleDefaultDiscountTypeRussia = (value) =>{
@@ -2214,16 +2308,15 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentRussia(false)
+        setshowInputDisAmtRussia(false)
         setRussiaNetPrice(RussiaListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+
+        setshowInputPercentRussia(true)
+        setshowInputDisAmtRussia(false)
         console.log(RussiaDisDisPercent)
         console.log(RussiaListPrice)
 
@@ -2231,16 +2324,18 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+     
+
+        
+        setshowInputPercentRussia(false)
+        setshowInputDisAmtRussia(true)
 
         setRussiaNetPrice(parseFloat(RussiaListPrice) - parseFloat(RussiaDisAmt == "" ? 0 : RussiaDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+       
+        setshowInputPercentRussia(false)
+        setshowInputDisAmtRussia(false)
         setRussiaNetPrice(RussiaListPrice)
 
       }
@@ -2294,6 +2389,10 @@ const Pricing = ({code}) => {
   const [SingaporeDisAmt, setSingaporeDisAmt] = useState("")
   const [SingaporeNetPrice, setSingaporeNetPrice] = useState("")
 
+  const [showInputDisAmtSingapore, setshowInputDisAmtSingapore] = useState(false)
+
+  const [showInputPercentSingapore, setshowInputPercentSingapore] = useState(false)
+
           // ---------------------
     // Discount Type Singapore
     const handleDefaultDiscountTypeSingapore = (value) =>{
@@ -2303,16 +2402,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+ 
+        setshowInputPercentSingapore(false)
+        setshowInputDisAmtSingapore(false)
         setSingaporeNetPrice(SingaporeListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+         
+        setshowInputPercentSingapore(true)
+        setshowInputDisAmtSingapore(false)
         console.log(SingaporeDisPercent)
         console.log(SingaporeListPrice)
 
@@ -2320,16 +2419,16 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+  
+
+        setshowInputPercentSingapore(false)
+        setshowInputDisAmtSingapore(true)
 
         setSingaporeNetPrice(parseFloat(SingaporeListPrice) - parseFloat(SingaporeDisAmt == "" ? 0 : SingaporeDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentSingapore(false)
+        setshowInputDisAmtSingapore(false)
         setSingaporeNetPrice(SingaporeListPrice)
 
       }
@@ -2383,6 +2482,10 @@ const Pricing = ({code}) => {
   const [ThailandDisAmt, setThailandDisAmt] = useState("")
   const [ThailandNetPrice, setThailandNetPrice] = useState("")
 
+  const [showInputDisAmtThailand, setshowInputDisAmtThailand] = useState(false)
+
+  const [showInputPercentThailand, setshowInputPercentThailand] = useState(false)
+
         // ---------------------
     // Discount Type Thailand
     const handleDefaultDiscountTypeThailand = (value) =>{
@@ -2392,16 +2495,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentThailand(false)
+        setshowInputDisAmtThailand(false)
         setThailandNetPrice(ThailandListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentThailand(true)
+        setshowInputDisAmtThailand(false)
+
+
         console.log(ThailandDisPercent)
         console.log(ThailandListPrice)
 
@@ -2409,16 +2512,16 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+   
+
+        setshowInputPercentThailand(false)
+        setshowInputDisAmtThailand(true)
 
         setThailandNetPrice(parseFloat(ThailandListPrice) - parseFloat(ThailandDisAmt == "" ? 0 : ThailandDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentThailand(false)
+        setshowInputDisAmtThailand(false)
         setThailandNetPrice(ThailandListPrice)
 
       }
@@ -2472,6 +2575,10 @@ const Pricing = ({code}) => {
   const [TurkeyDisAmt, setTurkeyDisAmt] = useState("")
   const [TurkeyNetPrice, setTurkeyNetPrice] = useState("")
 
+  const [showInputDisAmtTurkey, setshowInputDisAmtTurkey] = useState(false)
+
+  const [showInputPercentTurkey, setshowInputPercentTurkey] = useState(false)
+
           // ---------------------
     // Discount Type Turkey
     const handleDefaultDiscountTypeTurkey = (value) =>{
@@ -2481,16 +2588,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+     
+        setshowInputPercentTurkey(false)
+        setshowInputDisAmtTurkey(false)
         setTurkeyNetPrice(TurkeyListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+
+        setshowInputPercentTurkey(true)
+        setshowInputDisAmtTurkey(false)
         console.log(TurkeyDisPercent)
         console.log(TurkeyListPrice)
 
@@ -2498,16 +2605,19 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+
+
+        setshowInputPercentTurkey(false)
+        setshowInputDisAmtTurkey(true)
 
         setTurkeyNetPrice(parseFloat(TurkeyListPrice) - parseFloat(TurkeyDisAmt == "" ? 0 : TurkeyDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+    
+
+        
+        setshowInputPercentTurkey(false)
+        setshowInputDisAmtTurkey(false)
         setTurkeyNetPrice(TurkeyListPrice)
 
       }
@@ -2561,6 +2671,10 @@ const Pricing = ({code}) => {
   const [TaiwanDisAmt, setTaiwanDisAmt] = useState("")
   const [TaiwanNetPrice, setTaiwanNetPrice] = useState("")
 
+  const [showInputDisAmtTaiwan, setshowInputDisAmtTaiwan] = useState(false)
+
+  const [showInputPercentTaiwan, setshowInputPercentTaiwan] = useState(false)
+
            // ---------------------
     // Discount Type Taiwan
     const handleDefaultDiscountTypeTaiwan = (value) =>{
@@ -2570,16 +2684,15 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentTaiwan(false)
+        setshowInputDisAmtTaiwan(false)
         setTaiwanNetPrice(TaiwanListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+    
+        setshowInputPercentTaiwan(true)
+        setshowInputDisAmtTaiwan(false)
         console.log(TaiwanDisType)
         console.log(TaiwanListPrice)
 
@@ -2587,16 +2700,16 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+
+
+        setshowInputPercentTaiwan(false)
+        setshowInputDisAmtTaiwan(true)
 
         setTaiwanNetPrice(parseFloat(TaiwanListPrice) - parseFloat(TaiwanDisAmt == "" ? 0 : TaiwanDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentTaiwan(false)
+        setshowInputDisAmtTaiwan(false)
         setTaiwanNetPrice(TaiwanListPrice)
 
       }
@@ -2650,6 +2763,12 @@ const Pricing = ({code}) => {
   const [VietnamDisAmt, setVietnamDisAmt] = useState("")
   const [VietnamNetPrice, setVietnamNetPrice] = useState("")
 
+
+  const [showInputDisAmtVietnam, setshowInputDisAmtVietnam] = useState(false)
+
+  const [showInputPercentVietnam, setshowInputPercentVietnam] = useState(false)
+
+
         // ---------------------
     // Discount Type Vietnam
     const handleDefaultDiscountTypeVietnam = (value) =>{
@@ -2659,16 +2778,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+      
+        setshowInputPercentVietnam(false)
+        setshowInputDisAmtVietnam(false)
         setVietnamNetPrice(VietnamListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+  
+        setshowInputPercentVietnam(true)
+        setshowInputDisAmtVietnam(false)
         console.log(VietmanDisType)
         console.log(VietnamListPrice)
 
@@ -2676,16 +2795,17 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+   
+
+        setshowInputPercentVietnam(false)
+        setshowInputDisAmtVietnam(true)
 
         setVietnamNetPrice(parseFloat(VietnamListPrice) - parseFloat(VietnamDisAmt == "" ? 0 : VietnamDisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+      
+        setshowInputPercentVietnam(false)
+        setshowInputDisAmtVietnam(false)
         setVietnamNetPrice(VietnamListPrice)
 
       }
@@ -2739,6 +2859,10 @@ const Pricing = ({code}) => {
   const [SADisAmt, setSADisAmt] = useState("")
   const [SANetPrice, setSANetPrice] = useState("")
 
+  const [showInputDisAmtSA, setshowInputDisAmtSA] = useState(false)
+
+  const [showInputPercentSA, setshowInputPercentSA] = useState(false)
+
       // ---------------------
     // Discount Type SA
     const handleDefaultDiscountTypeSA = (value) =>{
@@ -2748,16 +2872,16 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+
+        setshowInputPercentSA(false)
+        setshowInputDisAmtSA(false)
         setSANetPrice(SAListPrice)
 
       }else if(value == '2'){
 
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(true)
-        // setshowDefaultValueDiscountInput(false)
+ 
+        setshowInputPercentSA(true)
+        setshowInputDisAmtSA(false)
         console.log(SADisType)
         console.log(SAListPrice)
 
@@ -2765,16 +2889,17 @@ const Pricing = ({code}) => {
 
 
       }else if(value == '3'){
-        // setshowDefaultDiscountInput(true)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(true)
+    
+
+        
+        setshowInputPercentSA(false)
+        setshowInputDisAmtSA(true)
 
         setSANetPrice(parseFloat(SAListPrice) - parseFloat(SADisAmt == "" ? 0 : SADisAmt))
 
       }else{
-        // setshowDefaultDiscountInput(false)
-        // setshowDefaultPercentDiscountInput(false)
-        // setshowDefaultValueDiscountInput(false)
+        setshowInputPercentSA(false)
+        setshowInputDisAmtSA(false)
         setSANetPrice(SAListPrice)
 
       }
@@ -2992,13 +3117,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentUSA && (
                   <Form.Control onChange={handleDefaultPercentageDiscountUSA}  type="text" />
+                    )}
                   </td>
                   <td>
+                  {showInputDisAmtUSA && (
                   <Form.Control onChange={handleDefaultDiscountAmtUSA} type="text" />
+                  )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{USANetPrice}</h6>
+                      <h6>{USANetPrice == "" ? "0.00" : USANetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3032,13 +3161,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtAus} type="text" />
+                  {showInputPercentAus && (
+                  <Form.Control onChange={handleDefaultPercentageDiscountAus} type="text" />
+                    )}
+                  
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultPercentageDiscountAus} type="text" />
+                  {showInputDisAmtAus && (
+                  <Form.Control onChange={handleDefaultDiscountAmtAus} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{AusNetPrice}</h6>
+                      <h6>{AusNetPrice == "" ? "0.00" : AusNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3073,13 +3207,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultPercentageDiscountBrazil} type="text" />
+                    {showInputPercentBrzail && (
+                        <Form.Control onChange={handleDefaultPercentageDiscountBrazil} type="text" />
+                      )}
                   </td>
                   <td>
+                    {showInputDisAmtBrzail && (
+
                   <Form.Control onChange={handleDefaultDiscountAmtBrazil} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{BrazilNetPrice}</h6>
+                      <h6>{BrazilNetPrice == "" ? "0.00" : BrazilNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3113,13 +3252,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentCanada && (
                   <Form.Control onChange={handleDefaultPercentageDiscountCanada} type="text" />
+                    )}
                   </td>
                   <td>
+                    
+                    {showInputDisAmtCanada && (
                   <Form.Control onChange={handleDefaultDiscountAmtCanada} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{CanadaNetPrice}</h6>
+                      <h6>{CanadaNetPrice == "" ? "0.00" : CanadaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3154,13 +3298,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultPercentageDiscountChile} type="text" />
+                    {showInputPercentChile && (
+                       <Form.Control onChange={handleDefaultPercentageDiscountChile} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtChile} type="text" />
+                    {showInputDisAmtChile && (
+                     <Form.Control onChange={handleDefaultDiscountAmtChile} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{ChileNetPrice}</h6>
+                      <h6>{ChileNetPrice == "" ? "0.00" : ChileNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3194,13 +3342,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultPercentageDiscountColumbia} type="text" />
+                    {showInputPercentColumbia && (
+                        <Form.Control onChange={handleDefaultPercentageDiscountColumbia} type="text" />
+                      )}
                   </td>
                   <td>
+                    {showInputDisAmtColumbia && (
                   <Form.Control onChange={handleDefaultDiscountAmtColumbia} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{ColumbiaNetPrice}</h6>
+                      <h6>{ColumbiaNetPrice == "" ? "0.00" : ColumbiaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3234,13 +3386,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentEgypt && (
                   <Form.Control onChange={handleDefaultPercentageDiscountEgypt} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtEgypt && (
                   <Form.Control onChange={handleDefaultDiscountAmtEgypt} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{EgyptNetPrice}</h6>
+                      <h6>{EgyptNetPrice == "" ? "0.00" : EgyptNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3274,13 +3430,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentEU && (
                   <Form.Control onChange={handleDefaultPercentageDiscountEU} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtEU} type="text" />
+                    {showInputDisAmtEU && (
+                    <Form.Control onChange={handleDefaultDiscountAmtEU} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{EUNetPrice}</h6>
+                      <h6>{EUNetPrice == "" ? "0.00" : EUNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3314,13 +3474,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentGBP && (
                   <Form.Control onChange={handleDefaultPercentageDiscountGBP} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtGBP} type="text" />
+                    {showInputDisAmtGBP && (
+                      <Form.Control onChange={handleDefaultDiscountAmtGBP} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{GBPNetPrice}</h6>
+                      <h6>{GBPNetPrice == "" ? "0.00" : GBPNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3354,13 +3518,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentIndonesia && (
                   <Form.Control onChange={handleDefaultPercentageDiscountIndo} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtIndonesia && (
                   <Form.Control onChange={handleDefaultDiscountAmtIndo} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{IndonesiaNetPrice}</h6>
+                      <h6>{IndonesiaNetPrice == "" ? "0.00" : IndonesiaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3394,13 +3562,19 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                    {showInputPercentIsreal && (
+
+                    <Form.Control onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtIsreal && (
+
                   <Form.Control onChange={handleDefaultDiscountAmtIsreal} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{IsrealNetPrice}</h6>
+                      <h6>{IsrealNetPrice == "" ? "0.00" : IsrealNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3434,13 +3608,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentIndia && (
                   <Form.Control onChange={handleDefaultPercentageDiscountIndia} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtIndia && (
+
                   <Form.Control onChange={handleDefaultDiscountAmtIndia} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{IndiaNetPrice}</h6>
+                      <h6>{IndiaNetPrice == "" ? "0.00" : IndiaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3474,13 +3653,21 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentJapan && (
+
                   <Form.Control onChange={handleDefaultPercentageDiscountJapan} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtJapan} type="text" />
+                    {
+                      showInputDisAmtJapan && (
+
+                <Form.Control onChange={handleDefaultDiscountAmtJapan} type="text" />
+                      )
+                    }
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{JapanNetPrice}</h6>
+                      <h6>{JapanNetPrice == "" ? "0.00" : JapanNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3514,13 +3701,19 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                      {showInputPercentSK && (
+
                   <Form.Control onChange={handleDefaultPercentageDiscountSK} type="text" />
+                      )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtSK} type="text" />
+                    {showInputDisAmtSK && (
+                      <Form.Control onChange={handleDefaultDiscountAmtSK} type="text" />
+
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{SKNetPrice}</h6>
+                      <h6>{SKNetPrice == "" ? "0.00" : SKNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3554,13 +3747,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentMexico && (
                   <Form.Control onChange={handleDefaultPercentageDiscountMexico} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtMexico} type="text" />
+                    {showInputDisAmtMexico && (
+
+                    <Form.Control onChange={handleDefaultDiscountAmtMexico} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{MexicoNetPrice}</h6>
+                      <h6>{MexicoNetPrice == "" ? "0.00" : MexicoNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3594,13 +3792,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentMalaysia && (
                   <Form.Control onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtMalaysia} type="text" />
+                    {showInputDisAmtMalaysia && (
+                      <Form.Control onChange={handleDefaultDiscountAmtMalaysia} type="text" />
+
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{MalaysiaNetPrice}</h6>
+                      <h6>{MalaysiaNetPrice == "" ? "0.00" : MalaysiaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3634,13 +3837,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentNigeria && (
                   <Form.Control onChange={handleDefaultPercentageDiscountNigeria} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtNigeria} type="text" />
+                    {showInputDisAmtNigeria && (
+                      <Form.Control onChange={handleDefaultDiscountAmtNigeria} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{NIgeriaNetPrice}</h6>
+                      <h6>{NIgeriaNetPrice == "" ? "0.00" : NIgeriaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3674,13 +3881,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentNorway && (
                   <Form.Control onChange={handleDefaultPercentageDiscountNorway} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtNorway && (
                   <Form.Control onChange={handleDefaultDiscountAmtNorway} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{NorwayNetPrice}</h6>
+                      <h6>{NorwayNetPrice == "" ? "0.00" : NorwayNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3714,13 +3925,19 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentPeru && (
+
                   <Form.Control onChange={handleDefaultPercentageDiscountPeru} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtPeru} type="text" />
+                   
+                    {showInputDisAmtPeru && (
+                <Form.Control onChange={handleDefaultDiscountAmtPeru} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PeruNetPrice}</h6>
+                      <h6>{PeruNetPrice == "" ? "0.00" : PhilipinesNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3755,13 +3972,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
+                    {showInputPercentPhilipines && (
+                      <Form.Control onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
+
+                    )}
                   </td>
                   <td>
+                  {showInputDisAmtPhilipines && (
                   <Form.Control onChange={handleDefaultDiscountAmtPhilipines} type="text" />
+                  )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PhilipinesNetPrice}</h6>
+                      <h6>{PhilipinesNetPrice == "" ? "0.00" : PhilipinesNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3795,13 +4017,19 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentPoland && (
+
                   <Form.Control onChange={handleDefaultPercentageDiscountPoland} type="text" />
+                    )}
                   </td>
                   <td>
-                  <Form.Control onChange={handleDefaultDiscountAmtPoland} type="text" />
+                    {showInputDisAmtPoland && (
+
+                <Form.Control onChange={handleDefaultDiscountAmtPoland} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PolandNetPrice}</h6>
+                      <h6>{PolandNetPrice == "" ? "0.00" : PolandNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3835,13 +4063,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentRomania && (
                   <Form.Control onChange={handleDefaultPercentageDiscountRomania} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtRomania && (
                   <Form.Control onChange={handleDefaultDiscountAmtRomania} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{RomaniaNetPrice}</h6>
+                      <h6>{RomaniaNetPrice == "" ? "0.00" : RomaniaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3875,13 +4107,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentRussia && (
+                      
                   <Form.Control onChange={handleDefaultPercentageDiscountRussia} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtRussia && (
                   <Form.Control onChange={handleDefaultDiscountAmtRussia}  type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{RussiaNetPrice}</h6>
+                      <h6>{RussiaNetPrice == "" ? "0.00" : RussiaNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3915,13 +4152,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentSingapore && (
                   <Form.Control onChange={handleDefaultPercentageDiscountSingapore} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtSingapore && (
+
                   <Form.Control onChange={handleDefaultDiscountAmtSingapore} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{SingaporeNetPrice}</h6>
+                      <h6>{SingaporeNetPrice == "" ? "0.00" : SingaporeNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3955,13 +4197,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentThailand && (
                   <Form.Control onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtThailand && (
                   <Form.Control onChange={handleDefaultDiscountAmtThailand} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{ThailandNetPrice}</h6>
+                      <h6>{ThailandNetPrice == "" ? "0.00" : ThailandNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3995,13 +4241,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentTurkey && (
                   <Form.Control onChange={handleDefaultPercentageDiscountTurkey} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtTurkey && (
                   <Form.Control onChange={handleDefaultDiscountAmtTurkey} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{TurkeyNetPrice}</h6>
+                      <h6>{TurkeyNetPrice == "" ? "0.00" : TurkeyNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -4035,13 +4285,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentTaiwan && (
                   <Form.Control onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtTaiwan && (
+
                   <Form.Control onChange={handleDefaultDiscountAmtTaiwan} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{TaiwanNetPrice}</h6>
+                      <h6>{TaiwanNetPrice == "" ? "0.00" : TaiwanNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -4075,13 +4330,19 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentVietnam && (
+
                   <Form.Control onChange={handleDefaultPercentageDiscountVietnam} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtVietnam && (
+
                   <Form.Control onChange={handleDefaultDiscountAmtVietnam} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{VietnamNetPrice}</h6>
+                      <h6>{VietnamNetPrice == "" ? "0.00" : VietnamNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -4116,13 +4377,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                     </Select>
                   </td>
                   <td>
+                    {showInputPercentSA && (
                   <Form.Control onChange={handleDefaultPercentageDiscountSA} type="text" />
+                    )}
                   </td>
                   <td>
+                    {showInputDisAmtSA && (
                   <Form.Control onChange={handleDefaultDiscountAmtSA} type="text" />
+                    )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{SANetPrice}</h6>
+                      <h6>{SANetPrice == "" ? "0.00" : SANetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
