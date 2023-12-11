@@ -1951,3 +1951,25 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     })
     .catch(error => console.log('error', error));
  }
+
+ export const SavePriceCountries = async(code) =>{
+
+var raw = "{\r\n    \"courseCode\": \"123456\",\r\n    \"value\": [\r\n        2000.0,\r\n        2600.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0\r\n    ],\r\n    \"discountType\": [\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        1\r\n    ],\r\n    \"country\": [\r\n        \"America\",\r\n        \"Australia\",\r\n        \"Brazil\",\r\n        \"Canada\",\r\n        \"Chile\",\r\n        \"Columbia\",\r\n        \"Egypt\",\r\n        \"European Union\",\r\n        \"Great Britain\",\r\n        \"Indonesia\",\r\n        \"Israel\",\r\n        \"India\",\r\n        \"Japan\",\r\n        \"South Korea\",\r\n        \"Mexico\",\r\n        \"Malaysia\",\r\n        \"Nigeria\",\r\n        \"Norway\",\r\n        \"Peru\",\r\n        \"Philippines\",\r\n        \"Poland\",\r\n        \"Romania\",\r\n        \"Russia\",\r\n        \"Singapore\",\r\n        \"Thailand\",\r\n        \"Turkey\",\r\n        \"Taiwan\",\r\n        \"Vietnam\",\r\n        \"South Africa\"\r\n    ],\r\n    \"discountValue\": [\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20\r\n    ]\r\n}";
+
+var myHeaders = new Headers();
+myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+var requestOptions = {
+  method: 'POST',
+  body: raw,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSingleCoursePricing", requestOptions)
+  .then(response => response.json())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+ }
+ 

@@ -153,41 +153,54 @@ const saveIntendedLeaners = (e) =>{
 
   e.preventDefault()
 
+  console.log(studentsLearn)
+  console.log(studentsLearnData)
+  console.log("------")
+  console.log(requirements)
+  console.log(requirementsData)
+  console.log("------")
+  console.log(whos)
+  console.log(whosData)
+
   // ist 3 values complusory
   if(studentsLearn.length < 3 && studentsLearnData.length < 3){
     ErrorAlert("Empty Field!","Please at least 3 inputs in what will students learn")
     return
   }else if(studentsLearn.some(value => value == "")){
-    ErrorAlert("Empty Field!","Please at least fill forms in what will students learn")
-    return
+    // ErrorAlert("Empty Field!","Please at least fill forms in what will students learn")
+    // return
+    setstudentsLearn([])
+
   }else if(requirements.length < 3 && requirementsData.length < 3){
     ErrorAlert("Empty Field!","Please at least 3 inputs in requirements or prerequisites")
     return
   }else if(requirements.some(value => value == "")){
-    ErrorAlert("Empty Field!","Please at least fill forms in requirements or prerequisites")
-    return
+    // ErrorAlert("Empty Field!","Please at least fill forms in requirements or prerequisites")
+    // return
+    setrequirements([])
   }else if(whos.length < 1 && whosData.length < 1){
     ErrorAlert("Empty Field!","Please at least 1 input in Who is this course for")
     return
   }else if(whos.some(value => value == "")){
-    ErrorAlert("Empty Field!","Please at least fill forms in Who is this course for")
-    return
+    // ErrorAlert("Empty Field!","Please at least fill forms in Who is this course for")
+    // return
+    setwhos([])
   }
 
   for (let i = studentsLearn.length - 1; i >= 0; i--) {
-    if (studentsLearn[i] === undefined) {
+    if (studentsLearn[i] == undefined || studentsLearn[i] == "") {
       studentsLearn.splice(i, 1);
     }
   }
 
   for (let i = requirements.length - 1; i >= 0; i--) {
-    if (requirements[i] === undefined) {
+    if (requirements[i] === undefined || requirements[i] == "") {
       requirements.splice(i, 1);
     }
   }
 
   for (let i = whos.length - 1; i >= 0; i--) {
-    if (whos[i] === undefined) {
+    if (whos[i] == undefined || whos[i] == "") {
       whos.splice(i, 1);
     }
   }
@@ -200,7 +213,7 @@ const saveIntendedLeaners = (e) =>{
     who:[...whosData,...whos]
   }
 
-  AddIntendedLeaners(item,code)
+  // AddIntendedLeaners(item,code)
 
   // console.log(studentsLearn)
   // console.log(requirements)

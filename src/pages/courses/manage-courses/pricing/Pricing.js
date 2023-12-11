@@ -8,7 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import { css } from "../../manage-courses/pricing/Pricing.css";
-import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing} from "../../../../api";
+import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing, SavePriceCountries} from "../../../../api";
 
 import getSymbolFromCurrency from 'currency-symbol-map'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -3189,6 +3189,8 @@ const Pricing = ({code}) => {
     console.log(inputValuesListPrice)
     console.log(selectDiscountTypeList)
     console.log(countriesData)
+
+    SavePriceCountries(code)
   }
 
   return (
