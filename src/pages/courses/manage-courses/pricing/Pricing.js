@@ -78,9 +78,241 @@ const Pricing = ({code}) => {
 
 
     // Get the Countries List WITH THE PRICES
-    GetCountriesListPricing(code,setcountriesData)
+    GetCountriesListPricing(code,setcountriesData,
+      setUSADisPercent,
+      setDDisAmt,
+      setUSADisType,
+      setshowInputDisAmtUSA,
+      setshowInputPercentUSA,
+      setUSAListPrice,
+      setUSANetPrice,
+      // -----
+      setAusDisPercent,
+      setAusDisAmt,
+      setAusDisType,
+      setshowInputDisAmtAus,
+      setshowInputPercentAus,
+      setAusListPrice,
+      setAusNetPrice,
+      // -----
+      setBrazilDisPercent,
+      setBrazilDisAmt,
+      setBrazilDisType,
+      setshowInputDisAmtBrzail,
+      setshowInputPercentBrzail,
+      setBrazilListPrice,
+      setBrazilNetPrice,
+      // ---------
+      setCanadaDisPercent,
+      setCanadaDisAmt,
+      setCanadaDisType,
+      setshowInputDisAmtCanada,
+      setshowInputPercentCanada,
+      setCanadaListPrice,
+      setCanadaNetPrice,
+      //  -------------
+      setChileDisPercent,
+      setChileDisAmt,
+      setChileDisType,
+      setshowInputDisAmtChile,
+      setshowInputPercentChile,
+      setChileListPrice,
+      setChileNetPrice,
+      // -----------
+      setColumbiaDisPercent,
+      setColumbiaDisAmt,
+      setColumbiaDisType,
+      setshowInputDisAmtColumbia,
+      setshowInputPercentColumbia,
+      setColumbiaListPrice,
+      setColumbiaNetPrice,
+      // --------------
+      setEgyptDisPercent,
+      setEgyptDisAmt,
+      setEgyptDisType,
+      setshowInputDisAmtEgypt,
+      setshowInputPercentEgypt,
+      setEgyptListPrice,
+      setEgyptNetPrice,
+      // ---------
+      setEUDisPercent,
+      setEUDisAmt,
+      setEUDisType,
+      setshowInputDisAmtEU,
+      setshowInputPercentEU,
+      setEUListPrice,
+      setEUNetPrice,
+      // ----
+      setGBPDisPercent,
+      setGBPDisAmt,
+      setGBPDisType,
+      setshowInputDisAmtGBP,
+      setshowInputPercentGBP,
+      setGBPListPrice,
+      setGBPNetPrice,
+      // ------------
+      setIndonesiaDisPercent,
+      setIndonesiaDisAmt,
+      setIndonesiaDisType,
+      setshowInputDisAmtIndonesia,
+      setshowInputPercentIndonesia,
+      setIndonesiaListPrice,
+      setIndonesiaNetPrice,
+      // ---------------
+      setIsrealDisPercent,
+      setIsrealDisAmt,
+      setIsrealDisType,
+      setshowInputDisAmtIsreal,
+      setshowInputPercentIsreal,
+      setIsrealListPrice,
+      setIsrealNetPrice,
+      // -------
+      setIndiaDisPercent,
+      setIndiaDisAmt,
+      setIndiaDisType,
+      setshowInputDisAmtIndia,
+      setshowInputPercentIndia,
+      setIndiaListPrice,
+      setIndiaNetPrice,
+      // -------------
+      setJapanDisPercent,
+      setJapanDisAmt,
+      setJapanDisType,
+      setshowInputDisAmtJapan,
+      setshowInputPercentJapan,
+      setJapanListPrice,
+      setJapanNetPrice,
+      // ---------------
+      setSKDisPercent,
+      setSKDisAmt,
+      setSKDisType,
+      setshowInputDisAmtSK,
+      setshowInputPercentSK,
+      setSKListPrice,
+      setSKNetPrice,
+      // -------------
+      setMexicoDisPercent,
+      setMexicoDisAmt,
+      setMexicoDisType,
+      setshowInputDisAmtMexico,
+      setshowInputPercentMexico,
+      setMexicoListPrice,
+      setMexicoNetPrice,
+      // --------------
+      setMalaysiaDisPercent,
+      setMalaysiaDisAmt,
+      setMalaysiaDisType,
+      setshowInputDisAmtMalaysia,
+      setshowInputPercentMalaysia,
+      setMalaysiaListPrice,
+      setMalaysiaNetPrice,
+      // -------------
+      setNigeriaDisPercent,
+      setNigeriaDisAmt,
+      setNigeriaDisType,
+      setshowInputDisAmtNigeria,
+      setshowInputPercentNigeria,
+      setNigeriaListPrice,
+      setNIgeriaNetPrice,
+      // -----------
+      setNorwayDisPercent,
+      setNorwayDisAmt,
+      setNorwayDisType,
+      setshowInputDisAmtNorway,
+      setshowInputPercentNorway,
+      setNorwayListPrice,
+      setNorwayNetPrice,
+      // ----------
+      setPeruDisPercent,
+      setPeruDisAmt,
+      setPeruDisType,
+      setshowInputDisAmtPeru,
+      setshowInputPercentPeru,
+      setPeruListPrice,
+      setPeruNetPrice,
+      // -----------
+      setPhilipinesDisPercent,
+      setPhiliphinesDisAmt,
+      setPhilipinesDisType,
+      setshowInputDisAmtPhilipines,
+      setshowInputPercentPhilipines,
+      setPhilipinesListPrice,
+      setPhilipinesNetPrice,
+      // ----------
+      setPolandDisPercent,
+      setPolandDisAmt,
+      setPolandDisType,
+      setshowInputDisAmtPoland,
+      setshowInputPercentPoland,
+      setPolandListPrice,
+      setPolandNetPrice,
+      // --------------
+      setRomaniaDisPercent,
+      setRomaniaDisAmt,
+      setRomaniaDisType,
+      setshowInputDisAmtRomania,
+      setshowInputPercentRomania,
+      setRomaniaListPrice,
+      setRomaniaNetPrice,
+      // --------------
+      setRussiaDisDisPercent,
+      setRussiaDisAmt,
+      setRussiaDisType,
+      setshowInputDisAmtRussia,
+      setshowInputPercentRussia,
+      setRussiaListPrice,
+      setRussiaNetPrice,
+      // ------------------
+      setSingaporeDisPercent,
+      setSingaporeDisAmt,
+      setSingaporeDisType,
+      setshowInputDisAmtSingapore,
+      setshowInputPercentSingapore,
+      setSingaporeListPrice,
+      setSingaporeNetPrice,
+      // -------------
+      setThailandDisPercent,
+      setThailandDisAmt,
+      setThailandDisType,
+      setshowInputDisAmtThailand,
+      setshowInputPercentThailand,
+      setThailandListPrice,
+      setThailandNetPrice,
+      // ---------------
+      setTurkeyDisPercent,
+      setTurkeyDisAmt,
+      setTurkeyDisType,
+      setshowInputDisAmtTurkey,
+      setshowInputPercentTurkey,
+      setTurkeyListPrice,
+      setTurkeyNetPrice,
+      // -------------
+      setTaiwanDisPercent,
+      setTaiwanDisAmt,
+      setTaiwanDisType,
+      setshowInputDisAmtTaiwan,
+      setshowInputPercentTaiwan,
+      setTaiwanListPrice,
+      setTaiwanNetPrice,
+      // ----------
+      setVietnamDisPercent,
+      setVietnamDisAmt,
+      setVietmanDisType,
+      setshowInputDisAmtVietnam,
+      setshowInputPercentVietnam,
+      setVietnamListPrice,
+      setVietnamNetPrice,
+      // ------------
+      setSADisPercent,
+      setSADisAmt,
+      setSADisType,
+      setshowInputDisAmtSA,
+      setshowInputPercentSA,
+      setSAListPrice,
+      setSANetPrice
+      )
  
-  }, [])
+  }, [code])
 
 
   // Select Free Or Paid Course
@@ -3098,9 +3330,9 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>USD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} 100 - ${getSymbolFromCurrency(("USD"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0].maxPrice}`}</td>
                   <td>
-                    <Form.Control  onChange={handleChangeGlobalPriceUSA} type="text" />
+                    <Form.Control value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
                   </td>
                   <td>
                     <Select
@@ -3118,12 +3350,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentUSA && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountUSA}  type="text" />
+                  <Form.Control value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
                     )}
                   </td>
                   <td>
                   {showInputDisAmtUSA && (
-                  <Form.Control onChange={handleDefaultDiscountAmtUSA} type="text" />
+                  <Form.Control value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
                   )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3143,7 +3375,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>AUD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} 100 - ${getSymbolFromCurrency(("AUD"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData[1].maxPrice}`}</td>
                   <td>
                     <Form.Control value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
                   </td>
@@ -3162,13 +3394,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                   {showInputPercentAus && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountAus} type="text" />
+                  <Form.Control value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
                     )}
                   
                   </td>
                   <td>
                   {showInputDisAmtAus && (
-                  <Form.Control onChange={handleDefaultDiscountAmtAus} type="text" />
+                  <Form.Control value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3189,7 +3421,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>BRL</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} 100 - ${getSymbolFromCurrency(("BRL"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData[2].maxPrice}`}</td>
                   <td>
                     <Form.Control value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
                   </td>
@@ -3208,13 +3440,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentBrzail && (
-                        <Form.Control onChange={handleDefaultPercentageDiscountBrazil} type="text" />
+                        <Form.Control value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
                       )}
                   </td>
                   <td>
                     {showInputDisAmtBrzail && (
 
-                  <Form.Control onChange={handleDefaultDiscountAmtBrazil} type="text" />
+                  <Form.Control value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3234,7 +3466,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>CAD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} 100 - ${getSymbolFromCurrency(("CAD"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData[3].maxPrice}`}</td>
                   <td>
                     <Form.Control value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
                   </td>
@@ -3253,13 +3485,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentCanada && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountCanada} type="text" />
+                  <Form.Control value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
                     )}
                   </td>
                   <td>
                     
                     {showInputDisAmtCanada && (
-                  <Form.Control onChange={handleDefaultDiscountAmtCanada} type="text" />
+                  <Form.Control value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3280,7 +3512,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>CLP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} 100 - ${getSymbolFromCurrency(("CLP"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData[4].maxPrice}`}</td>
                   <td>
                     <Form.Control value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
                   </td>
@@ -3299,12 +3531,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentChile && (
-                       <Form.Control onChange={handleDefaultPercentageDiscountChile} type="text" />
+                       <Form.Control value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtChile && (
-                     <Form.Control onChange={handleDefaultDiscountAmtChile} type="text" />
+                     <Form.Control value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3324,7 +3556,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>COP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} 100 - ${getSymbolFromCurrency(("COP"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData[5].maxPrice}`}</td>
                   <td>
                     <Form.Control value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
                   </td>
@@ -3343,12 +3575,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentColumbia && (
-                        <Form.Control onChange={handleDefaultPercentageDiscountColumbia} type="text" />
+                        <Form.Control value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
                       )}
                   </td>
                   <td>
                     {showInputDisAmtColumbia && (
-                  <Form.Control onChange={handleDefaultDiscountAmtColumbia} type="text" />
+                  <Form.Control value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3368,7 +3600,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>EGP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} 100 - ${getSymbolFromCurrency(("EGP"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData[6].maxPrice}`}</td>
                   <td>
                     <Form.Control value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
                   </td>
@@ -3387,12 +3619,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentEgypt && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountEgypt} type="text" />
+                  <Form.Control value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtEgypt && (
-                  <Form.Control onChange={handleDefaultDiscountAmtEgypt} type="text" />
+                  <Form.Control value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3412,7 +3644,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>EUR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} 100 - ${getSymbolFromCurrency(("EUR"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData[7].maxPrice}`}</td>
                   <td>
                     <Form.Control value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
                   </td>
@@ -3431,12 +3663,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentEU && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountEU} type="text" />
+                  <Form.Control value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtEU && (
-                    <Form.Control onChange={handleDefaultDiscountAmtEU} type="text" />
+                    <Form.Control value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3456,7 +3688,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>GBP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} 100 - ${getSymbolFromCurrency(("GBP"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData[8].maxPrice}`}</td>
                   <td>
                     <Form.Control value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
                   </td>
@@ -3475,12 +3707,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentGBP && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountGBP} type="text" />
+                  <Form.Control value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtGBP && (
-                      <Form.Control onChange={handleDefaultDiscountAmtGBP} type="text" />
+                      <Form.Control value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3500,7 +3732,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>IDR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} 100 - ${getSymbolFromCurrency(("IDR"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData[9].maxPrice}`}</td>
                   <td>
                     <Form.Control value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
                   </td>
@@ -3519,12 +3751,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentIndonesia && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountIndo} type="text" />
+                  <Form.Control value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtIndonesia && (
-                  <Form.Control onChange={handleDefaultDiscountAmtIndo} type="text" />
+                  <Form.Control value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3544,7 +3776,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>ILS</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} 100 - ${getSymbolFromCurrency(("ILS"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData[10].maxPrice}`}</td>
                   <td>
                     <Form.Control value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
                   </td>
@@ -3564,13 +3796,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                     {showInputPercentIsreal && (
 
-                    <Form.Control onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                    <Form.Control value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtIsreal && (
 
-                  <Form.Control onChange={handleDefaultDiscountAmtIsreal} type="text" />
+                  <Form.Control value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3590,7 +3822,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>INR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} 100 - ${getSymbolFromCurrency(("INR"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData[11].maxPrice}`}</td>
                   <td>
                     <Form.Control value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
                   </td>
@@ -3609,13 +3841,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentIndia && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountIndia} type="text" />
+                  <Form.Control value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtIndia && (
 
-                  <Form.Control onChange={handleDefaultDiscountAmtIndia} type="text" />
+                  <Form.Control value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3635,7 +3867,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>JPY</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} 100 - ${getSymbolFromCurrency(("JPY"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData[12].maxPrice}`}</td>
                   <td>
                     <Form.Control value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
                   </td>
@@ -3655,14 +3887,14 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                     {showInputPercentJapan && (
 
-                  <Form.Control onChange={handleDefaultPercentageDiscountJapan} type="text" />
+                  <Form.Control value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
                     )}
                   </td>
                   <td>
                     {
                       showInputDisAmtJapan && (
 
-                <Form.Control onChange={handleDefaultDiscountAmtJapan} type="text" />
+                <Form.Control value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
                       )
                     }
                   </td>
@@ -3683,7 +3915,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>KRW</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} 100 - ${getSymbolFromCurrency(("KRW"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData[13].maxPrice}`}</td>
                   <td>
                     <Form.Control value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
                   </td>
@@ -3703,12 +3935,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                       {showInputPercentSK && (
 
-                  <Form.Control onChange={handleDefaultPercentageDiscountSK} type="text" />
+                  <Form.Control value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
                       )}
                   </td>
                   <td>
                     {showInputDisAmtSK && (
-                      <Form.Control onChange={handleDefaultDiscountAmtSK} type="text" />
+                      <Form.Control value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
 
                     )}
                   </td>
@@ -3729,7 +3961,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>MXN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} 100 - ${getSymbolFromCurrency(("MXN"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData[14].maxPrice}`}</td>
                   <td>
                     <Form.Control value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
                   </td>
@@ -3748,13 +3980,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentMexico && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountMexico} type="text" />
+                  <Form.Control value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtMexico && (
 
-                    <Form.Control onChange={handleDefaultDiscountAmtMexico} type="text" />
+                    <Form.Control value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3774,7 +4006,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>MYR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} 100 - ${getSymbolFromCurrency(("MYR"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData[15].maxPrice}`}</td>
                   <td>
                     <Form.Control value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
                   </td>
@@ -3793,12 +4025,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentMalaysia && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
+                  <Form.Control value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtMalaysia && (
-                      <Form.Control onChange={handleDefaultDiscountAmtMalaysia} type="text" />
+                      <Form.Control 
+                      value={MalaysiaDisAmt} onChange={handleDefaultDiscountAmtMalaysia} type="text" />
 
                     )}
                   </td>
@@ -3819,7 +4052,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>NGN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} 100 - ${getSymbolFromCurrency(("NGN"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData[16].maxPrice}`}</td>
                   <td>
                     <Form.Control value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
                   </td>
@@ -3838,12 +4071,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentNigeria && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountNigeria} type="text" />
+                  <Form.Control value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtNigeria && (
-                      <Form.Control onChange={handleDefaultDiscountAmtNigeria} type="text" />
+                      <Form.Control value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3863,7 +4096,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>NOK</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} 100 - ${getSymbolFromCurrency(("NOK"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData[17].maxPrice}`}</td>
                   <td>
                     <Form.Control value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
                   </td>
@@ -3882,12 +4115,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentNorway && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountNorway} type="text" />
+                  <Form.Control value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtNorway && (
-                  <Form.Control onChange={handleDefaultDiscountAmtNorway} type="text" />
+                  <Form.Control value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3907,7 +4140,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>PEN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} 100 - ${getSymbolFromCurrency(("PEN"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData[18].maxPrice}`}</td>
                   <td>
                     <Form.Control value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
                   </td>
@@ -3927,17 +4160,17 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                     {showInputPercentPeru && (
 
-                  <Form.Control onChange={handleDefaultPercentageDiscountPeru} type="text" />
+                  <Form.Control value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
                     )}
                   </td>
                   <td>
                    
                     {showInputDisAmtPeru && (
-                <Form.Control onChange={handleDefaultDiscountAmtPeru} type="text" />
+                <Form.Control value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PeruNetPrice == "" ? "0.00" : PhilipinesNetPrice}</h6>
+                      <h6>{PeruNetPrice == "" ? "0.00" : PeruNetPrice}</h6>
                  <tr>
                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
 
@@ -3954,7 +4187,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>PHP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} 100 - ${getSymbolFromCurrency(("PHP"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData[19].maxPrice}`}</td>
                   <td>
                     <Form.Control value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
                   </td>
@@ -3973,13 +4206,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentPhilipines && (
-                      <Form.Control onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
+                      <Form.Control value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
 
                     )}
                   </td>
                   <td>
                   {showInputDisAmtPhilipines && (
-                  <Form.Control onChange={handleDefaultDiscountAmtPhilipines} type="text" />
+                  <Form.Control value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
                   )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -3999,7 +4232,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>PLN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} 100 - ${getSymbolFromCurrency(("PLN"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData[20].maxPrice}`}</td>
                   <td>
                     <Form.Control value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
                   </td>
@@ -4019,13 +4252,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                     {showInputPercentPoland && (
 
-                  <Form.Control onChange={handleDefaultPercentageDiscountPoland} type="text" />
+                  <Form.Control value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtPoland && (
 
-                <Form.Control onChange={handleDefaultDiscountAmtPoland} type="text" />
+                <Form.Control value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4045,7 +4278,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>RON</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} 100 - ${getSymbolFromCurrency(("RON"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData[21].maxPrice}`}</td>
                   <td>
                     <Form.Control value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
                   </td>
@@ -4064,12 +4297,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentRomania && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountRomania} type="text" />
+                  <Form.Control value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtRomania && (
-                  <Form.Control onChange={handleDefaultDiscountAmtRomania} type="text" />
+                  <Form.Control value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4089,7 +4322,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>RUB</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} 100 - ${getSymbolFromCurrency(("RUB"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData[22].maxPrice}`}</td>
                   <td>
                     <Form.Control value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
                   </td>
@@ -4109,12 +4342,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                     {showInputPercentRussia && (
                       
-                  <Form.Control onChange={handleDefaultPercentageDiscountRussia} type="text" />
+                  <Form.Control value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtRussia && (
-                  <Form.Control onChange={handleDefaultDiscountAmtRussia}  type="text" />
+                  <Form.Control value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4134,7 +4367,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>SGD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} 100 - ${getSymbolFromCurrency(("SGD"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData[23].maxPrice}`}</td>
                   <td>
                     <Form.Control value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
                   </td>
@@ -4153,13 +4386,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentSingapore && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountSingapore} type="text" />
+                  <Form.Control value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtSingapore && (
 
-                  <Form.Control onChange={handleDefaultDiscountAmtSingapore} type="text" />
+                  <Form.Control value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4179,7 +4412,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>THB</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} 100 - ${getSymbolFromCurrency(("THB"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData[24].maxPrice}`}</td>
                   <td>
                     <Form.Control value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
                   </td>
@@ -4198,12 +4431,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentThailand && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                  <Form.Control value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtThailand && (
-                  <Form.Control onChange={handleDefaultDiscountAmtThailand} type="text" />
+                  <Form.Control value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4223,7 +4456,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>TRY</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} 100 - ${getSymbolFromCurrency(("TRY"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData[25].maxPrice}`}</td>
                   <td>
                     <Form.Control value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
                   </td>
@@ -4242,12 +4475,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentTurkey && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountTurkey} type="text" />
+                  <Form.Control value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtTurkey && (
-                  <Form.Control onChange={handleDefaultDiscountAmtTurkey} type="text" />
+                  <Form.Control value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4267,7 +4500,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>TWD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} 100 - ${getSymbolFromCurrency(("TWD"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData[26].maxPrice}`}</td>
                   <td>
                     <Form.Control value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
                   </td>
@@ -4286,13 +4519,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentTaiwan && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
+                  <Form.Control value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtTaiwan && (
 
-                  <Form.Control onChange={handleDefaultDiscountAmtTaiwan} type="text" />
+                  <Form.Control value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4312,7 +4545,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>VND</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} 100 - ${getSymbolFromCurrency(("VND"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData[27].maxPrice}`}</td>
                   <td>
                     <Form.Control value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
                   </td>
@@ -4332,13 +4565,13 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td>
                     {showInputPercentVietnam && (
 
-                  <Form.Control onChange={handleDefaultPercentageDiscountVietnam} type="text" />
+                  <Form.Control value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtVietnam && (
 
-                  <Form.Control onChange={handleDefaultDiscountAmtVietnam} type="text" />
+                  <Form.Control value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
@@ -4359,7 +4592,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  </td>
 
                   <td>KRW</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} 100 - ${getSymbolFromCurrency(("KRW"))} 200`}</td>
+                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData[28].maxPrice}`}</td>
                   <td>
                     <Form.Control value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
                   </td>
@@ -4378,12 +4611,12 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   </td>
                   <td>
                     {showInputPercentSA && (
-                  <Form.Control onChange={handleDefaultPercentageDiscountSA} type="text" />
+                  <Form.Control value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
                     )}
                   </td>
                   <td>
                     {showInputDisAmtSA && (
-                  <Form.Control onChange={handleDefaultDiscountAmtSA} type="text" />
+                  <Form.Control value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
                     )}
                   </td>
                   <td style={{whiteSpace:'nowrap'}}>
