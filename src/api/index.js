@@ -805,7 +805,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   
   fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoursePayStatus/${code}`, requestOptions)
     .then(response => response.json())
-    .then(result => setPaid_Type(result.message))
+    .then(result => {
+      setPaid_Type(parseInt(result.message))
+      console.log(result)
+    })
     .catch(error => console.log('error', error));
 
  }
@@ -2143,5 +2146,37 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
   })
   .catch(error => console.log('error', error));
 
+ }
+
+ export const PricingConvertToFree = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addFreeCourse/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      Unauthorized(result.status,`courses/manage/${code}/#pricing`)
+      console.log(result)
+
+      if(result.message == "Error"){
+        ErrorAlert("Error",result.variable)
+        return
+      }
+
+      if(result.variable == "200"){
+        SuccessAlert("Updated",result.message)
+        return
+      }
+
+    })
+    .catch(error => console.log('error', error));
  }
  
