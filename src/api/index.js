@@ -792,7 +792,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  }
 
- export const GetCoursePricingType = async(code) =>{
+ export const GetCoursePricingType = async(code,setPaid_Type) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
@@ -803,9 +803,9 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     redirect: 'follow'
   };
   
-  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getFreeCourse/${code}`, requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoursePayStatus/${code}`, requestOptions)
     .then(response => response.json())
-    .then(result => console.log(result))
+    .then(result => setPaid_Type(result.message))
     .catch(error => console.log('error', error));
 
  }
@@ -1137,7 +1137,66 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
        setshowInputDisAmtSA,
        setshowInputPercentSA,
        setSAListPrice,
-       setSANetPrice
+       setSANetPrice,
+      //  ---------
+      setUSATip,
+      setUSAMinValue,
+      setAusTip,
+      setAusminValue,
+      setBrazilTip,
+      setBrazilminValue,
+      setCanadaTip,
+      setCanadaminValue,
+      setChileTip,
+      setChileminValue,
+      setColumbiaTip,
+      setColumbiaminValue,
+      setEgyptTip,
+      setEgyptminValue,
+      setEUTip,
+      setEUminValue,
+      setGBPTip,
+      setGBPminValue,
+      setIndonesiaTip,
+      setIndonesiaminValue,
+      setIsrealTip,
+      setIsrealminValue,
+      setIndiaTip,
+      setIndiaminValue,
+      setJapanTip,
+      setJapanminValue,
+      setSKTip,
+      setSKminValue,
+      setMexicoTip,
+      setMexicominValue,
+      setMalaysiaTip,
+      setMalaysiaminValue,
+      setNigeriaTip,
+      setNigeriaminValue,
+      setNorwayTip,
+      setNorwayminValue,
+      setPeruTip,
+      setPeruminvalue,
+      setPhilipinesTip,
+      setPhilipinesminValue,
+      setPolandTip,
+      setPolandminValue,
+      setRomaniaTip,
+      setRomaniaminvalue,
+      setRussiaTip,
+      setRussiaminValue,
+      setSingaporeTip,
+      setSingaporeminValue,
+      setThailandTip,
+      setThailandminValue,
+      setTurkeyTip,
+      setTurkeyminValue,
+      setTaiwanTip,
+      setTaiwanminValue,
+      setVietnamTip,
+      setVietnamminValue,
+      setSATip,
+      setSAminValue
       ) =>{
 
   var myHeaders = new Headers();
@@ -1150,7 +1209,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     redirect: 'follow'
   };
   
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoursePricing/123456", requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoursePricing/${code}`, requestOptions)
     .then(response => response.json())
     .then(result => {
 
@@ -1948,27 +2007,140 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     }
     // ---------- SA
 
+
+    // ---------------
+    setUSATip(result[0].tip)
+    setUSAMinValue(result[0].minimumPrice)
+
+    setAusTip(result[1].tip)
+    setAusminValue(result[1].minimumPrice)
+
+    setBrazilTip(result[2].tip)
+    setBrazilminValue(result[2].minimumPrice)
+
+    setCanadaTip(result[3].tip)
+    setCanadaminValue(result[3].minimumPrice)
+
+    setChileTip(result[4].tip)
+    setChileminValue(result[4].minimumPrice)
+
+    setColumbiaTip(result[5].tip)
+    setColumbiaminValue(result[5].minimumPrice)
+
+    setEgyptTip(result[6].tip)
+    setEgyptminValue(result[6].minimumPrice)
+
+    setEUTip(result[7].tip)
+    setEUminValue(result[7].minimumPrice)
+
+    setGBPTip(result[8].tip)
+    setGBPminValue(result[8].minimumPrice)
+
+    setIndonesiaTip(result[9].tip)
+    setIndonesiaminValue(result[9].minimumPrice)
+// -
+    setIsrealTip(result[10].tip)
+    setIsrealminValue(result[10].minimumPrice)
+
+    setIndiaTip(result[11].tip)
+    setIndiaminValue(result[11].minimumPrice)
+
+    setJapanTip(result[12].tip)
+    setJapanminValue(result[12].minimumPrice)
+
+    setSKTip(result[13].tip)
+    setSKminValue(result[13].minimumPrice)
+
+    setMexicoTip(result[14].tip)
+    setMexicominValue(result[14].minimumPrice)
+
+    setMalaysiaTip(result[15].tip)
+    setMalaysiaminValue(result[15].minimumPrice)
+
+    setNigeriaTip(result[16].tip)
+    setNigeriaminValue(result[16].minimumPrice)
+
+    setNorwayTip(result[17].tip)
+    setNorwayminValue(result[17].minimumPrice)
+
+    setPeruTip(result[18].tip)
+    setPeruminvalue(result[18].minimumPrice)
+
+    setPhilipinesTip(result[19].tip)
+    setPhilipinesminValue(result[19].minimumPrice)
+
+    setPolandTip(result[20].tip)
+    setPolandminValue(result[20].minimumPrice)
+
+
+    setRomaniaTip(result[21].tip)
+    setRomaniaminvalue(result[21].minimumPrice)
+
+    setRussiaTip(result[22].tip)
+    setRussiaminValue(result[22].minimumPrice)
+
+    setSingaporeTip(result[23].tip)
+    setSingaporeminValue(result[23].minimumPrice)
+
+    setThailandTip(result[24].tip)
+    setThailandminValue(result[24].minimumPrice)
+
+    setTurkeyTip(result[25].tip)
+    setTurkeyminValue(result[25].minimumPrice)
+
+    setTaiwanTip(result[26].tip)
+    setTaiwanminValue(result[26].minimumPrice)
+
+    setVietnamTip(result[27].tip)
+    setVietnamminValue(result[27].minimumPrice)
+
+    setSATip(result[28].tip)
+    setSAminValue(result[28].minimumPrice)
+
+
+
+
+
+
+    //  -----------------
+
     })
     .catch(error => console.log('error', error));
  }
 
- export const SavePriceCountries = async(code) =>{
+ export const SavePriceCountries = async(code,raw) =>{
 
-var raw = "{\r\n    \"courseCode\": \"123456\",\r\n    \"value\": [\r\n        2000.0,\r\n        2600.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0,\r\n        2500.0,\r\n        2000.0\r\n    ],\r\n    \"discountType\": [\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        1,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        2,\r\n        1\r\n    ],\r\n    \"country\": [\r\n        \"America\",\r\n        \"Australia\",\r\n        \"Brazil\",\r\n        \"Canada\",\r\n        \"Chile\",\r\n        \"Columbia\",\r\n        \"Egypt\",\r\n        \"European Union\",\r\n        \"Great Britain\",\r\n        \"Indonesia\",\r\n        \"Israel\",\r\n        \"India\",\r\n        \"Japan\",\r\n        \"South Korea\",\r\n        \"Mexico\",\r\n        \"Malaysia\",\r\n        \"Nigeria\",\r\n        \"Norway\",\r\n        \"Peru\",\r\n        \"Philippines\",\r\n        \"Poland\",\r\n        \"Romania\",\r\n        \"Russia\",\r\n        \"Singapore\",\r\n        \"Thailand\",\r\n        \"Turkey\",\r\n        \"Taiwan\",\r\n        \"Vietnam\",\r\n        \"South Africa\"\r\n    ],\r\n    \"discountValue\": [\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20,\r\n        25,\r\n        20\r\n    ]\r\n}";
+
+
 
 var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
 
 var requestOptions = {
   method: 'POST',
-  body: raw,
+  body: JSON.stringify(raw),
   headers: myHeaders,
   redirect: 'follow'
 };
 
 fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSingleCoursePricing", requestOptions)
   .then(response => response.json())
-  .then(result => console.log(result))
+  .then(result => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#pricing`)
+
+    if(result.message == "Error"){
+      ErrorAlert("Error",result.variable)
+      return
+    }
+
+    if(result.variable == "200"){
+      SuccessAlert("Added!",result.message)
+    }
+
+  })
   .catch(error => console.log('error', error));
 
  }

@@ -47,6 +47,17 @@ const countries = [
 
 const Pricing = ({code}) => {
 
+    // Select Free Or Paid Course
+    
+    const [Paid_Type, setPaid_Type] = useState(1)
+
+    const onChangePaidType = (e) => {
+      console.log('radio checked', e.target.value);
+      setPaid_Type(e.target.value);
+    };
+  
+
+
   const [dis_types, setdis_types] = useState([])
 
   const [countriesData, setcountriesData] = useState([])
@@ -68,7 +79,7 @@ const Pricing = ({code}) => {
   useEffect(() => {
 
     // Get Paid Type
-    // GetCoursePricingType(code)
+    // GetCoursePricingType(code,setPaid_Type)
 
     // Get the Discount Types for the Cmb Items
     GetDiscountTypes(setdis_types)
@@ -309,18 +320,72 @@ const Pricing = ({code}) => {
       setshowInputDisAmtSA,
       setshowInputPercentSA,
       setSAListPrice,
-      setSANetPrice
+      setSANetPrice,
+      // ------
+      //  ---------
+      setUSATip,
+      setUSAMinValue,
+      setAusTip,
+      setAusminValue,
+      setBrazilTip,
+      setBrazilminValue,
+      setCanadaTip,
+      setCanadaminValue,
+      setChileTip,
+      setChileminValue,
+      setColumbiaTip,
+      setColumbiaminValue,
+      setEgyptTip,
+      setEgyptminValue,
+      setEUTip,
+      setEUminValue,
+      setGBPTip,
+      setGBPminValue,
+      setIndonesiaTip,
+      setIndonesiaminValue,
+      setIsrealTip,
+      setIsrealminValue,
+      setIndiaTip,
+      setIndiaminValue,
+      setJapanTip,
+      setJapanminValue,
+      setSKTip,
+      setSKminValue,
+      setMexicoTip,
+      setMexicominValue,
+      setMalaysiaTip,
+      setMalaysiaminValue,
+      setNigeriaTip,
+      setNigeriaminValue,
+      setNorwayTip,
+      setNorwayminValue,
+      setPeruTip,
+      setPeruminvalue,
+      setPhilipinesTip,
+      setPhilipinesminValue,
+      setPolandTip,
+      setPolandminValue,
+      setRomaniaTip,
+      setRomaniaminvalue,
+      setRussiaTip,
+      setRussiaminValue,
+      setSingaporeTip,
+      setSingaporeminValue,
+      setThailandTip,
+      setThailandminValue,
+      setTurkeyTip,
+      setTurkeyminValue,
+      setTaiwanTip,
+      setTaiwanminValue,
+      setVietnamTip,
+      setVietnamminValue,
+      setSATip,
+      setSAminValue
       )
  
   }, [code])
 
 
-  // Select Free Or Paid Course
-  const [paidType, setpaidType] = useState(1)
-  const onChangePaidType = (e) => {
-    console.log('radio checked', e.target.value);
-    setpaidType(e.target.value);
-  };
 
   //  ---------------------
 
@@ -432,16 +497,7 @@ const Pricing = ({code}) => {
   
 
 
-  const initialDiscountTypes = new Array(countries.length).fill("No Discount");
-  const [selectedDiscountTypes, setSelectedDiscountTypes] =
-    useState(initialDiscountTypes);
 
-
-
-  const handleRadioChange = (value) => {
-    const updatedDiscountTypes = new Array(countries.length).fill(value);
-    setSelectedDiscountTypes(updatedDiscountTypes);
-  };
 
 
   // LIST COUNTRIES FUNCTIONS
@@ -455,6 +511,9 @@ const Pricing = ({code}) => {
   const [USADisPercent, setUSADisPercent] = useState("")
   const [USADisAmt, setUSADisAmt] = useState("")
   const [USANetPrice, setUSANetPrice] = useState("")
+
+  const [USATip, setUSATip] = useState("")
+  const [USAMinValue, setUSAMinValue] = useState("")
 
   const [showInputDisAmtUSA, setshowInputDisAmtUSA] = useState(false)
   const [showInputPercentUSA, setshowInputPercentUSA] = useState(false)
@@ -547,6 +606,8 @@ const Pricing = ({code}) => {
   const [AusDisPercent, setAusDisPercent] = useState("")
   const [AusDisAmt, setAusDisAmt] = useState("")
   const [AusNetPrice, setAusNetPrice] = useState("")
+  const [AusTip, setAusTip] = useState("")
+  const [AusminValue, setAusminValue] = useState("")
 
   const [showInputDisAmtAus, setshowInputDisAmtAus] = useState(false)
   const [showInputPercentAus, setshowInputPercentAus] = useState(false)
@@ -645,6 +706,10 @@ const Pricing = ({code}) => {
   const [BrazilDisAmt, setBrazilDisAmt] = useState("")
   const [BrazilNetPrice, setBrazilNetPrice] = useState("")
 
+  const [BrazilTip, setBrazilTip] = useState("")
+  const [BrazilminValue, setBrazilminValue] = useState("")
+
+
   const [showInputDisAmtBrzail, setshowInputDisAmtBrzail] = useState(false)
   const [showInputPercentBrzail, setshowInputPercentBrzail] = useState(false)
 
@@ -740,6 +805,9 @@ const Pricing = ({code}) => {
   const [CanadaDisAmt, setCanadaDisAmt] = useState("")
   const [CanadaNetPrice, setCanadaNetPrice] = useState("")
 
+  const [CanadaTip, setCanadaTip] = useState("")
+  const [CanadaminValue, setCanadaminValue] = useState("")
+
   const [showInputDisAmtCanada, setshowInputDisAmtCanada] = useState(false)
   const [showInputPercentCanada, setshowInputPercentCanada] = useState(false)
 
@@ -834,6 +902,9 @@ const Pricing = ({code}) => {
   const [ChileDisAmt, setChileDisAmt] = useState("")
   const [ChileNetPrice, setChileNetPrice] = useState("")
 
+  const [ChileTip, setChileTip] = useState("")
+  const [ChileminValue, setChileminValue] = useState("")
+
   const [showInputDisAmtChile, setshowInputDisAmtChile] = useState(false)
   const [showInputPercentChile, setshowInputPercentChile] = useState(false)
 
@@ -927,6 +998,9 @@ const Pricing = ({code}) => {
   const [ColumbiaDisAmt, setColumbiaDisAmt] = useState("")
   const [ColumbiaNetPrice, setColumbiaNetPrice] = useState("")
 
+  const [ColumbiaTip, setColumbiaTip] = useState("")
+  const [ColumbiaminValue, setColumbiaminValue] = useState("")
+
   const [showInputDisAmtColumbia, setshowInputDisAmtColumbia] = useState(false)
   const [showInputPercentColumbia, setshowInputPercentColumbia] = useState(false)
 
@@ -1018,6 +1092,9 @@ const Pricing = ({code}) => {
   const [EgyptDisPercent, setEgyptDisPercent] = useState("")
   const [EgyptDisAmt, setEgyptDisAmt] = useState("")
   const [EgyptNetPrice, setEgyptNetPrice] = useState("")
+
+  const [EgyptTip, setEgyptTip] = useState("")
+  const [EgyptminValue, setEgyptminValue] = useState("")
 
   const [showInputDisAmtEgypt, setshowInputDisAmtEgypt] = useState(false)
   const [showInputPercentEgypt, setshowInputPercentEgypt] = useState(false)
@@ -1111,6 +1188,9 @@ const Pricing = ({code}) => {
   const [EUDisPercent, setEUDisPercent] = useState("")
   const [EUDisAmt, setEUDisAmt] = useState("")
   const [EUNetPrice, setEUNetPrice] = useState("")
+
+  const [EUTip, setEUTip] = useState("")
+  const [EUminValue, setEUminValue] = useState("")
 
   const [showInputDisAmtEU, setshowInputDisAmtEU] = useState(false)
   const [showInputPercentEU, setshowInputPercentEU] = useState(false)
@@ -1207,6 +1287,9 @@ const Pricing = ({code}) => {
   const [GBPDisAmt, setGBPDisAmt] = useState("")
   const [GBPNetPrice, setGBPNetPrice] = useState("")
 
+  const [GBPTip, setGBPTip] = useState("")
+  const [GBPminValue, setGBPminValue] = useState("")
+
   const [showInputDisAmtGBP, setshowInputDisAmtGBP] = useState(false)
   const [showInputPercentGBP, setshowInputPercentGBP] = useState(false)
 
@@ -1300,6 +1383,9 @@ const Pricing = ({code}) => {
   const [IndonesiaDisPercent, setIndonesiaDisPercent] = useState("")
   const [IndonesiaDisAmt, setIndonesiaDisAmt] = useState("")
   const [IndonesiaNetPrice, setIndonesiaNetPrice] = useState("")
+
+  const [IndonesiaTip, setIndonesiaTip] = useState("")
+  const [IndonesiaminValue, setIndonesiaminValue] = useState("")
 
   const [showInputDisAmtIndonesia, setshowInputDisAmtIndonesia] = useState(false)
   const [showInputPercentIndonesia, setshowInputPercentIndonesia] = useState(false)
@@ -1395,6 +1481,9 @@ const Pricing = ({code}) => {
   const [IsrealDisAmt, setIsrealDisAmt] = useState("")
   const [IsrealNetPrice, setIsrealNetPrice] = useState("")
 
+  const [IsrealTip, setIsrealTip] = useState("")
+  const [IsrealminValue, setIsrealminValue] = useState("")
+
   const [showInputDisAmtIsreal, setshowInputDisAmtIsreal] = useState(false)
   const [showInputPercentIsreal, setshowInputPercentIsreal] = useState(false)
 
@@ -1489,6 +1578,9 @@ const Pricing = ({code}) => {
   const [IndiaDisAmt, setIndiaDisAmt] = useState("")
   const [IndiaNetPrice, setIndiaNetPrice] = useState("")
 
+  const [IndiaTip, setIndiaTip] = useState("")
+  const [IndiaminValue, setIndiaminValue] = useState("")
+
   const [showInputDisAmtIndia, setshowInputDisAmtIndia] = useState(false)
   const [showInputPercentIndia, setshowInputPercentIndia] = useState(false)
 
@@ -1582,6 +1674,9 @@ const Pricing = ({code}) => {
   const [JapanDisAmt, setJapanDisAmt] = useState("")
   const [JapanNetPrice, setJapanNetPrice] = useState("")
 
+  const [JapanTip, setJapanTip] = useState("")
+  const [JapanminValue, setJapanminValue] = useState("")
+
   const [showInputDisAmtJapan, setshowInputDisAmtJapan] = useState(false)
   const [showInputPercentJapan, setshowInputPercentJapan] = useState(false)
 
@@ -1672,6 +1767,9 @@ const Pricing = ({code}) => {
   const [SKDisPercent, setSKDisPercent] = useState("")
   const [SKDisAmt, setSKDisAmt] = useState("")
   const [SKNetPrice, setSKNetPrice] = useState("")
+
+  const [SKTip, setSKTip] = useState("")
+  const [SKminValue, setSKminValue] = useState("")
 
   const [showInputDisAmtSK, setshowInputDisAmtSK] = useState(false)
   const [showInputPercentSK, setshowInputPercentSK] = useState(false)
@@ -1765,6 +1863,9 @@ const Pricing = ({code}) => {
   const [MexicoDisPercent, setMexicoDisPercent] = useState("")
   const [MexicoDisAmt, setMexicoDisAmt] = useState("")
   const [MexicoNetPrice, setMexicoNetPrice] = useState("")
+
+  const [MexicoTip, setMexicoTip] = useState("")
+  const [MexicominValue, setMexicominValue] = useState("")
 
   const [showInputDisAmtMexico, setshowInputDisAmtMexico] = useState(false)
   const [showInputPercentMexico, setshowInputPercentMexico] = useState(false)
@@ -1862,6 +1963,9 @@ const Pricing = ({code}) => {
   const [MalaysiaDisAmt, setMalaysiaDisAmt] = useState("")
   const [MalaysiaNetPrice, setMalaysiaNetPrice] = useState("")
 
+  const [MalaysiaTip, setMalaysiaTip] = useState("")
+  const [MalaysiaminValue, setMalaysiaminValue] = useState("")
+
   const [showInputDisAmtMalaysia, setshowInputDisAmtMalaysia] = useState(false)
 
   const [showInputPercentMalaysia, setshowInputPercentMalaysia] = useState(false)
@@ -1955,6 +2059,9 @@ const Pricing = ({code}) => {
   const [NigeriaDisPercent, setNigeriaDisPercent] = useState("")
   const [NigeriaDisAmt, setNigeriaDisAmt] = useState("")
   const [NIgeriaNetPrice, setNIgeriaNetPrice] = useState("")
+
+  const [NigeriaTip, setNigeriaTip] = useState("")
+  const [NigeriaminValue, setNigeriaminValue] = useState("")
   
   const [showInputDisAmtNigeria, setshowInputDisAmtNigeria] = useState(false)
 
@@ -2048,6 +2155,9 @@ const Pricing = ({code}) => {
   const [NorwayDisPercent, setNorwayDisPercent] = useState("")
   const [NorwayDisAmt, setNorwayDisAmt] = useState("")
   const [NorwayNetPrice, setNorwayNetPrice] = useState("")
+
+  const [NorwayTip, setNorwayTip] = useState("")
+  const [NorwayminValue, setNorwayminValue] = useState("")
 
   const [showInputDisAmtNorway, setshowInputDisAmtNorway] = useState(false)
 
@@ -2145,6 +2255,9 @@ const Pricing = ({code}) => {
   const [PeruDisAmt, setPeruDisAmt] = useState("")
   const [PeruNetPrice, setPeruNetPrice] = useState("")
 
+  const [PeruTip, setPeruTip] = useState("")
+  const [Peruminvalue, setPeruminvalue] = useState("")
+
   const [showInputDisAmtPeru, setshowInputDisAmtPeru] = useState(false)
 
   const [showInputPercentPeru, setshowInputPercentPeru] = useState(false)
@@ -2240,6 +2353,9 @@ const Pricing = ({code}) => {
   const [PhiliphinesDisAmt, setPhiliphinesDisAmt] = useState("")
   const [PhilipinesNetPrice, setPhilipinesNetPrice] = useState("")
 
+  const [PhilipinesTip, setPhilipinesTip] = useState("")
+  const [PhilipinesminValue, setPhilipinesminValue] = useState("")
+
   const [showInputDisAmtPhilipines, setshowInputDisAmtPhilipines] = useState(false)
 
   const [showInputPercentPhilipines, setshowInputPercentPhilipines] = useState(false)
@@ -2334,6 +2450,9 @@ const Pricing = ({code}) => {
   const [PolandDisPercent, setPolandDisPercent] = useState("")
   const [PolandDisAmt, setPolandDisAmt] = useState("")
   const [PolandNetPrice, setPolandNetPrice] = useState("")
+
+  const [PolandTip, setPolandTip] = useState("")
+  const [PolandminValue, setPolandminValue] = useState("")
 
   const [showInputDisAmtPoland, setshowInputDisAmtPoland] = useState(false)
 
@@ -2432,6 +2551,9 @@ const Pricing = ({code}) => {
   const [RomaniaDisAmt, setRomaniaDisAmt] = useState("")
   const [RomaniaNetPrice, setRomaniaNetPrice] = useState("")
 
+  const [RomaniaTip, setRomaniaTip] = useState("")
+  const [Romaniaminvalue, setRomaniaminvalue] = useState("")
+
   const [showInputDisAmtRomania, setshowInputDisAmtRomania] = useState(false)
 
   const [showInputPercentRomania, setshowInputPercentRomania] = useState(false)
@@ -2527,6 +2649,9 @@ const Pricing = ({code}) => {
   const [RussiaDisAmt, setRussiaDisAmt] = useState("")
   const [RussiaNetPrice, setRussiaNetPrice] = useState("")
 
+  const [RussiaTip, setRussiaTip] = useState("")
+  const [RussiaminValue, setRussiaminValue] = useState("")
+
   const [showInputDisAmtRussia, setshowInputDisAmtRussia] = useState(false)
 
   const [showInputPercentRussia, setshowInputPercentRussia] = useState(false)
@@ -2621,6 +2746,9 @@ const Pricing = ({code}) => {
   const [SingaporeDisAmt, setSingaporeDisAmt] = useState("")
   const [SingaporeNetPrice, setSingaporeNetPrice] = useState("")
 
+  const [SingaporeTip, setSingaporeTip] = useState("")
+  const [SingaporeminValue, setSingaporeminValue] = useState("")
+
   const [showInputDisAmtSingapore, setshowInputDisAmtSingapore] = useState(false)
 
   const [showInputPercentSingapore, setshowInputPercentSingapore] = useState(false)
@@ -2714,6 +2842,9 @@ const Pricing = ({code}) => {
   const [ThailandDisAmt, setThailandDisAmt] = useState("")
   const [ThailandNetPrice, setThailandNetPrice] = useState("")
 
+  const [ThailandTip, setThailandTip] = useState("")
+  const [ThailandminValue, setThailandminValue] = useState("")
+
   const [showInputDisAmtThailand, setshowInputDisAmtThailand] = useState(false)
 
   const [showInputPercentThailand, setshowInputPercentThailand] = useState(false)
@@ -2806,6 +2937,9 @@ const Pricing = ({code}) => {
   const [TurkeyDisPercent, setTurkeyDisPercent] = useState("")
   const [TurkeyDisAmt, setTurkeyDisAmt] = useState("")
   const [TurkeyNetPrice, setTurkeyNetPrice] = useState("")
+
+  const [TurkeyTip, setTurkeyTip] = useState("")
+  const [TurkeyminValue, setTurkeyminValue] = useState("")
 
   const [showInputDisAmtTurkey, setshowInputDisAmtTurkey] = useState(false)
 
@@ -2903,6 +3037,9 @@ const Pricing = ({code}) => {
   const [TaiwanDisAmt, setTaiwanDisAmt] = useState("")
   const [TaiwanNetPrice, setTaiwanNetPrice] = useState("")
 
+  const [TaiwanTip, setTaiwanTip] = useState("")
+  const [TaiwanminValue, setTaiwanminValue] = useState("")
+
   const [showInputDisAmtTaiwan, setshowInputDisAmtTaiwan] = useState(false)
 
   const [showInputPercentTaiwan, setshowInputPercentTaiwan] = useState(false)
@@ -2994,6 +3131,9 @@ const Pricing = ({code}) => {
   const [VietnamDisPercent, setVietnamDisPercent] = useState("")
   const [VietnamDisAmt, setVietnamDisAmt] = useState("")
   const [VietnamNetPrice, setVietnamNetPrice] = useState("")
+
+  const [VietnamTip, setVietnamTip] = useState("")
+  const [VietnamminValue, setVietnamminValue] = useState("")
 
 
   const [showInputDisAmtVietnam, setshowInputDisAmtVietnam] = useState(false)
@@ -3091,6 +3231,9 @@ const Pricing = ({code}) => {
   const [SADisAmt, setSADisAmt] = useState("")
   const [SANetPrice, setSANetPrice] = useState("")
 
+  const [SATip, setSATip] = useState("")
+  const [SAminValue, setSAminValue] = useState("")
+
   const [showInputDisAmtSA, setshowInputDisAmtSA] = useState(false)
 
   const [showInputPercentSA, setshowInputPercentSA] = useState(false)
@@ -3186,11 +3329,249 @@ const Pricing = ({code}) => {
   // SUBMIT PRICES
   const handleSubmitAllPrices = () =>{
     
-    console.log(inputValuesListPrice)
-    console.log(selectDiscountTypeList)
-    console.log(countriesData)
+    // console.log(inputValuesListPrice)
+    // console.log(selectDiscountTypeList)
+    // console.log(countriesData)
 
-    SavePriceCountries(code)
+
+    var raw = [
+      {
+          "courseCode": `${code}`,
+          "netPrice": `${USANetPrice}`,
+          "listPrice": `${USAListPrice}`,
+          "discountType": `${USADisType}`,
+          "country": "America",
+          "discountValue": `${USADisType == "1" ? 0.00 : USADisType == "2" ? USADisPercent : USADisAmt}`
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice": `${AusNetPrice}`,
+          "listPrice": `${AusListPrice}`,
+          "discountType":`${AusDisType}`,
+          "country": "Australia",
+          "discountValue": `${AusDisType == "1" ? 0.00 : AusDisType == "2" ? AusDisPercent : AusDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${BrazilNetPrice}`,
+          "listPrice": `${BrazilListPrice}`,
+          "discountType": `${BrazilDisType}`,
+          "country": "Brazil",
+          "discountValue": `${BrazilDisType == "1" ? 0.00 : BrazilDisType == "2" ? BrazilDisPercent : BrazilDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${CanadaNetPrice}`,
+          "listPrice": `${CanadaListPrice}`,
+          "discountType": `${CanadaDisType}`,
+          "country": "Canada",
+          "discountValue": `${CanadaDisType == "1" ? 0.00 : CanadaDisType == "2" ? CanadaDisPercent : CanadaDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${ChileNetPrice}`,
+          "listPrice": `${ChileListPrice}`,
+          "discountType": `${ChileDisType}`,
+          "country": "Chile",
+          "discountValue": `${ChileDisType == "1" ? 0.00 : ChileDisType == "2" ? ChileDisPercent : ChileDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${ColumbiaNetPrice}`,
+          "listPrice": `${ColumbiaListPrice}`,
+          "discountType": `${ColumbiaDisType}`,
+          "country": "Columbia",
+          "discountValue": `${ColumbiaDisType == "1" ? 0.00 : ColumbiaDisType == "2" ? ColumbiaDisPercent : ColumbiaDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${EgyptNetPrice}`,
+          "listPrice": `${EgyptListPrice}`,
+          "discountType": `${EgyptDisType}`,
+          "country": "Egypt",
+          "discountValue": `${EgyptDisType == "1" ? 0.00 : EgyptDisType == "2" ? EgyptDisPercent : EgyptDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${EUNetPrice}`,
+          "listPrice": `${EUListPrice}`,
+          "discountType": `${EUDisType}`,
+          "country": "European Union",
+          "discountValue": `${EUDisType == "1" ? 0.00 : EUDisType == "2" ? EUDisPercent : EUDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${GBPNetPrice}`,
+          "listPrice": `${GBPListPrice}`,
+          "discountType":`${GBPDisType}`,
+          "country": "Great Britain",
+          "discountValue": `${GBPDisType == "1" ? 0.00 : GBPDisType == "2" ? GBPDisPercent : GBPDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${IndonesiaNetPrice}`,
+          "listPrice": `${IndonesiaListPrice}`,
+          "discountType": `${IndonesiaDisType}`,
+          "country": "Indonesia",
+          "discountValue": `${IndonesiaDisType == "1" ? 0.00 : IndonesiaDisType == "2" ? IndonesiaDisPercent : IndonesiaDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${IsrealNetPrice}`,
+          "listPrice": `${IsrealListPrice}`,
+          "discountType": `${IsrealDisType}`,
+          "country": "Israel",
+          "discountValue": `${IsrealDisType == "1" ? 0.00 : IsrealDisType == "2" ? IsrealDisPercent : IsrealDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${IndiaNetPrice}`,
+          "listPrice": `${IndiaListPrice}`,
+          "discountType": `${IndiaDisType}`,
+          "country": "India",
+          "discountValue": `${IndiaDisType == "1" ? 0.00 : IndiaDisType == "2" ? IndiaDisPercent : IndiaDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${JapanNetPrice}`,
+          "listPrice": `${JapanListPrice}`,
+          "discountType": `${JapanDisType}`,
+          "country": "Japan",
+          "discountValue": `${JapanDisType == "1" ? 0.00 : JapanDisType == "2" ? JapanDisPercent : JapanDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${SKNetPrice}`,
+          "listPrice": `${SKListPrice}`,
+          "discountType": `${SKDisType}`,
+          "country": "South Korea",
+          "discountValue": `${SKDisType == "1" ? 0.00 : SKDisType == "2" ? SKDisPercent : SKDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${MexicoNetPrice}`,
+          "listPrice": `${MexicoListPrice}`,
+          "discountType": `${MexicoDisType}`,
+          "country": "Mexico",
+          "discountValue": `${MexicoDisType == "1" ? 0.00 : MexicoDisType == "2" ? MexicoDisPercent : MexicoDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${MalaysiaNetPrice}`,
+          "listPrice": `${MalaysiaListPrice}`,
+          "discountType": `${MalaysiaDisType}`,
+          "country": "Malaysia",
+          "discountValue": `${MalaysiaDisType == "1" ? 0.00 : MalaysiaDisType == "2" ? MalaysiaDisPercent : MalaysiaDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${NIgeriaNetPrice}`,
+          "listPrice": `${NigeriaListPrice}`,
+          "discountType": `${NigeriaDisType}`,
+          "country": "Nigeria",
+          "discountValue": `${NigeriaDisType == "1" ? 0.00 : NigeriaDisType == "2" ? NigeriaDisPercent : NigeriaDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${NorwayNetPrice}`,
+          "listPrice": `${NorwayListPrice}`,
+          "discountType": `${NorwayDisType}`,
+          "country": "Norway",
+          "discountValue": `${NorwayDisType == "1" ? 0.00 : NorwayDisType == "2" ? NorwayDisPercent : NorwayDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${PeruNetPrice}`,
+          "listPrice": `${PeruListPrice}`,
+          "discountType": `${PeruDisType}`,
+          "country": "Peru",
+          "discountValue": `${PeruDisType == "1" ? 0.00 : PeruDisType == "2" ? PeruDisPercent : PeruDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${PhilipinesNetPrice}`,
+          "listPrice": `${PhilipinesListPrice}`,
+          "discountType": `${PhilipinesDisType}`,
+          "country": "Philippines",
+          "discountValue": `${PhilipinesDisType == "1" ? 0.00 : PhilipinesDisType == "2" ? PhilipinesDisPercent : PhiliphinesDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${PolandNetPrice}`,
+          "listPrice": `${PolandListPrice}`,
+          "discountType": `${PolandDisType}`,
+          "country": "Poland",
+          "discountValue": `${PolandDisType == "1" ? 0.00 : PolandDisType == "2" ? PolandDisPercent : PolandDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${RomaniaNetPrice}`,
+          "listPrice": `${RomaniaListPrice}`,
+          "discountType": `${RomaniaDisType}`,
+          "country": "Romania",
+          "discountValue": `${RomaniaDisType == "1" ? 0.00 : RomaniaDisType == "2" ? RomaniaDisPercent : RomaniaDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${RussiaNetPrice}`,
+          "listPrice": `${RussiaListPrice}`,
+          "discountType":`${RussiaDisType}`,
+          "country": "Russia",
+          "discountValue": `${RussiaDisType == "1" ? 0.00 : RussiaDisType == "2" ? RussiaDisDisPercent : RussiaDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${SingaporeNetPrice}`,
+          "listPrice": `${SingaporeListPrice}`,
+          "discountType": `${SingaporeDisType}`,
+          "country": "Singapore",
+          "discountValue": `${SingaporeDisType == "1" ? 0.00 : SingaporeDisType == "2" ? SingaporeDisPercent : SingaporeDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${ThailandNetPrice}`,
+          "listPrice": `${ThailandListPrice}`,
+          "discountType": `${ThailandDisType}`,
+          "country": "Thailand",
+          "discountValue": `${ThailandDisType == "1" ? 0.00 : ThailandDisType == "2" ? ThailandDisPercent : ThailandDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${TurkeyNetPrice}`,
+          "listPrice": `${TurkeyListPrice}`,
+          "discountType": `${TurkeyDisType}`,
+          "country": "Turkey",
+          "discountValue": `${TurkeyDisType == "1" ? 0.00 : TurkeyDisType == "2" ? TurkeyDisPercent : TurkeyDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${TaiwanNetPrice}`,
+          "listPrice": `${TaiwanListPrice}`,
+          "discountType": `${TaiwanDisType}`,
+          "country": "Taiwan",
+          "discountValue":  `${TaiwanDisType == "1" ? 0.00 : TaiwanDisType == "2" ? TaiwanDisPercent : TaiwanDisAmt}`,
+      },
+      {
+          "courseCode": `${code}`,
+          "netPrice":`${VietnamNetPrice}`,
+          "listPrice": `${VietnamListPrice}`,
+          "discountType": `${VietmanDisType}`,
+          "country": "Vietnam",
+          "discountValue": `${VietmanDisType == "1" ? 0.00 : VietmanDisType == "2" ? VietnamDisPercent : VietnamDisAmt}`,
+      },
+         {
+          "courseCode": `${code}`,
+          "netPrice":`${SANetPrice}`,
+          "listPrice": `${SAListPrice}`,
+          "discountType": `${SADisType}`,
+          "country": "South Africa",
+          "discountValue": `${SADisType == "1" ? 0.00 : SADisType == "2" ? SADisPercent : SADisAmt}`,
+      }
+    ]
+
+    console.log(raw)
+
+    SavePriceCountries(code,raw)
   }
 
   return (
@@ -3210,13 +3591,13 @@ const Pricing = ({code}) => {
         {/* Paid Type */}
         <div className="container m-2">
         <h6>What is the Paid Type of this Course ?</h6>
-          <Radio.Group onChange={onChangePaidType} value={paidType}>
+          <Radio.Group onChange={onChangePaidType} value={Paid_Type}>
           <Radio value={1}>Free Course</Radio>
           <Radio value={2}>Paid Course</Radio>
         </Radio.Group>
         </div>
 
-        {paidType == 2 && (
+        {Paid_Type == 2 && (
         <div className="pricing-container">
           <div className="price-range-container p-3">
             <p>The Global List Price will be used for all countries unless individual country prices are specified below.</p>
@@ -3292,15 +3673,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
 
               <div className="col-6"></div>
 
-              <div className="radio-group col-6 d-flex align-items-center mt-4">
-                <Radio.Group
-                  onChange={(e) => handleRadioChange(e.target.value)}
-                >
-                  <Radio value="No Discount">No Discount</Radio>
-                  <Radio value="Percentage">Percentage</Radio>
-                  <Radio value="Fixed Discount">Fixed Discount</Radio>
-                </Radio.Group>
-              </div>
+          
             </div>
           </div>
 
@@ -3328,7 +3701,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td >America
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {USATip}</Form.Label></td>
                  </td>
 
                   <td>USD</td>
@@ -3363,7 +3736,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{USANetPrice == "" ? "0.00" : USANetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3373,7 +3746,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Australia
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {AusTip}</Form.Label></td>
                  </td>
 
                   <td>AUD</td>
@@ -3408,7 +3781,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{AusNetPrice == "" ? "0.00" : AusNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3419,7 +3792,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Brazil
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {BrazilTip}</Form.Label></td>
                  </td>
 
                   <td>BRL</td>
@@ -3454,7 +3827,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{BrazilNetPrice == "" ? "0.00" : BrazilNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3464,7 +3837,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Canada
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {CanadaTip}</Form.Label></td>
                  </td>
 
                   <td>CAD</td>
@@ -3499,7 +3872,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{CanadaNetPrice == "" ? "0.00" : CanadaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3510,7 +3883,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Chile
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {ChileTip}</Form.Label></td>
                  </td>
 
                   <td>CLP</td>
@@ -3544,7 +3917,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{ChileNetPrice == "" ? "0.00" : ChileNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3554,7 +3927,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Columbia
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {ColumbiaTip}</Form.Label></td>
                  </td>
 
                   <td>COP</td>
@@ -3588,7 +3961,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{ColumbiaNetPrice == "" ? "0.00" : ColumbiaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3598,7 +3971,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Egypt
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {EgyptTip}</Form.Label></td>
                  </td>
 
                   <td>EGP</td>
@@ -3632,7 +4005,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{EgyptNetPrice == "" ? "0.00" : EgyptNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3642,7 +4015,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>European Union
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {EUTip}</Form.Label></td>
                  </td>
 
                   <td>EUR</td>
@@ -3676,7 +4049,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{EUNetPrice == "" ? "0.00" : EUNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3686,7 +4059,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Great Britain
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {GBPTip}</Form.Label></td>
                  </td>
 
                   <td>GBP</td>
@@ -3720,7 +4093,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{GBPNetPrice == "" ? "0.00" : GBPNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3730,7 +4103,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Indonesia
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {IndonesiaTip}</Form.Label></td>
                  </td>
 
                   <td>IDR</td>
@@ -3764,7 +4137,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{IndonesiaNetPrice == "" ? "0.00" : IndonesiaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3774,7 +4147,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Israel
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {IsrealTip}</Form.Label></td>
                  </td>
 
                   <td>ILS</td>
@@ -3810,7 +4183,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{IsrealNetPrice == "" ? "0.00" : IsrealNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3820,7 +4193,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>India
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {IndiaTip}</Form.Label></td>
                  </td>
 
                   <td>INR</td>
@@ -3855,7 +4228,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{IndiaNetPrice == "" ? "0.00" : IndiaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3865,7 +4238,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Japan
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {JapanTip}</Form.Label></td>
                  </td>
 
                   <td>JPY</td>
@@ -3903,7 +4276,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{JapanNetPrice == "" ? "0.00" : JapanNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("JPY"))} {JapanminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3913,7 +4286,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>South Korea
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {SKTip}</Form.Label></td>
                  </td>
 
                   <td>KRW</td>
@@ -3949,7 +4322,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{SKNetPrice == "" ? "0.00" : SKNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -3959,7 +4332,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Mexico
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {MexicoTip}</Form.Label></td>
                  </td>
 
                   <td>MXN</td>
@@ -3994,7 +4367,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{MexicoNetPrice == "" ? "0.00" : MexicoNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4004,7 +4377,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Malaysia
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {MalaysiaTip}</Form.Label></td>
                  </td>
 
                   <td>MYR</td>
@@ -4040,7 +4413,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{MalaysiaNetPrice == "" ? "0.00" : MalaysiaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4050,7 +4423,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Nigeria
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {NigeriaTip}</Form.Label></td>
                  </td>
 
                   <td>NGN</td>
@@ -4084,7 +4457,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{NIgeriaNetPrice == "" ? "0.00" : NIgeriaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4094,7 +4467,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Norway
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {NorwayTip}</Form.Label></td>
                  </td>
 
                   <td>NOK</td>
@@ -4128,7 +4501,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{NorwayNetPrice == "" ? "0.00" : NorwayNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4138,7 +4511,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                  <tr>
                   <td>Peru
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {PeruTip}</Form.Label></td>
                  </td>
 
                   <td>PEN</td>
@@ -4174,7 +4547,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{PeruNetPrice == "" ? "0.00" : PeruNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4185,7 +4558,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <tr>
                   <td>Philippines
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {PhilipinesTip}</Form.Label></td>
                  </td>
 
                   <td>PHP</td>
@@ -4220,7 +4593,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{PhilipinesNetPrice == "" ? "0.00" : PhilipinesNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4230,7 +4603,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Poland
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {PolandTip}</Form.Label></td>
                  </td>
 
                   <td>PLN</td>
@@ -4266,7 +4639,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{PolandNetPrice == "" ? "0.00" : PolandNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PLN"))} {PolandminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4276,7 +4649,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Romania
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {RomaniaTip}</Form.Label></td>
                  </td>
 
                   <td>RON</td>
@@ -4310,7 +4683,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{RomaniaNetPrice == "" ? "0.00" : RomaniaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4320,7 +4693,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Russia
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {RussiaTip}</Form.Label></td>
                  </td>
 
                   <td>RUB</td>
@@ -4355,7 +4728,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{RussiaNetPrice == "" ? "0.00" : RussiaNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4365,7 +4738,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Singapore
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {SingaporeTip}</Form.Label></td>
                  </td>
 
                   <td>SGD</td>
@@ -4400,7 +4773,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{SingaporeNetPrice == "" ? "0.00" : SingaporeNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4410,7 +4783,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Thailand
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {ThailandTip}</Form.Label></td>
                  </td>
 
                   <td>THB</td>
@@ -4444,7 +4817,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{ThailandNetPrice == "" ? "0.00" : ThailandNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4454,7 +4827,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>Turkey
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {TurkeyTip}</Form.Label></td>
                  </td>
 
                   <td>TRY</td>
@@ -4488,7 +4861,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{TurkeyNetPrice == "" ? "0.00" : TurkeyNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4498,7 +4871,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                    <tr>
                   <td>Taiwan
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {TaiwanTip}</Form.Label></td>
                  </td>
 
                   <td>TWD</td>
@@ -4533,7 +4906,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{TaiwanNetPrice == "" ? "0.00" : TaiwanNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4543,7 +4916,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <tr>
                   <td>Vietnam
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {VietnamTip}</Form.Label></td>
                  </td>
 
                   <td>VND</td>
@@ -4579,7 +4952,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{VietnamNetPrice == "" ? "0.00" : VietnamNetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
 
                  </tr>
                   </td>
@@ -4590,7 +4963,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <tr>
                   <td>South Africa
                  <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
+                  <Form.Label  className="mt-3 tit fst-italic"> Tip: {SATip}</Form.Label></td>
                  </td>
 
                   <td>KRW</td>
@@ -4624,7 +4997,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <td style={{whiteSpace:'nowrap'}}>
                       <h6>{SANetPrice == "" ? "0.00" : SANetPrice}</h6>
                  <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
+                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
 
                  </tr>
                   </td>
