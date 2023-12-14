@@ -274,6 +274,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   .then(response => response.json())
   .then(result => {
     console.log(result)
+
+    Unauthorized(result.status,`/courses/manage/${code}/#course-landing-page`)
+
     setcourse_title(result.title)
     setstatus_type(result.approveType)
   })
@@ -468,6 +471,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
     .then(result => {
 
       console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
 
       setcourse_title(result.courseTitle)
       setcourse_subtitle(result.courseSubTitle)
@@ -477,10 +481,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
       setcourse_sub_cat(result.subCategoryId)
       setlevel(result.levelId)
       setlang(result.languageId)
-      setpreview_img(`http://185.209.223.202:8080/aethenos-assert/${result.courseImage}`)
-      // seVideoSrc(`http://185.209.223.202:8080/aethenos-assert/${result.promotionalVideo}`)
+      setpreview_img(`${result.courseImage}`)
+      seVideoSrc(`${result.promotionalVideo}`)
 
-      Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
     })
     .catch(error => console.log('error', error));
 

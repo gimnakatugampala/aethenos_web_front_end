@@ -49,7 +49,7 @@ const StepFour = ({setcourse_test_video}) => {
        </Typography.Title>
 
        <p>Please Upload a Test Video to See Your Quality of Filming.</p>
-       <Input onChange={onAddVideo} type='file' placeholder="Basic usage" />
+       <Input onChange={onAddVideo} accept="video/*" type='file' placeholder="Basic usage" />
 
              <video id='add-course-test-video' width={URL != "" ? "320" : "0"} height={URL != "" ? "240" : "0"} autoPlay>
                 Your browser does not support the video tag.

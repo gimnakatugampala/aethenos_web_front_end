@@ -16,6 +16,7 @@ import ImageUploader from 'react-images-upload';
 import ReactPlayer from 'react-player'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import { AddCourseLandingPage } from "../../../../api";
+import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 
 
 const { TextArea } = Input;
@@ -30,10 +31,7 @@ const headerStyle = {
   backgroundColor: "#000",
 };
 
-let dataLangData = []
-let dataLevelData = []
-let datacatData = []
-let datasubCatData = []
+
 
 const Basics = ({code}) => {
 
@@ -77,8 +75,32 @@ const Basics = ({code}) => {
     console.log(course_cat)
     console.log(course_sub_cat)
     console.log(keywords)
-    console.log(promo_vid)
     console.log(course_image)
+    console.log(promo_vid) 
+    console.log(videoSrc)
+
+    if(course_title == ""){
+      ErrorAlert("Empty Field","Please Enter Course Title")
+      return
+    }else if(course_subtitle == ""){
+      ErrorAlert("Empty Field","Please Enter Course Sub Title")
+      return
+    }else if(course_desc == ""){
+      ErrorAlert("Empty Field","Please Enter Course Description")
+      return
+    }else if(lang == ""){
+      ErrorAlert("Empty Field","Please Select a Language")
+      return
+    }else if(level == ""){
+      ErrorAlert("Empty Field","Please Select a Level")
+      return
+    }else if(course_cat == ""){
+      ErrorAlert("Empty Field","Please Select a Course Category")
+      return
+    }else if(course_sub_cat == ""){
+      ErrorAlert("Empty Field","Please Select a Course Sub Category")
+      return
+    }
 
     AddCourseLandingPage(
       code,
@@ -141,7 +163,7 @@ const handleFileChange = (event) => {
 
 
   useEffect(() => {
-    GetCourseLandingPage(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang)
+    GetCourseLandingPage(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setpromo_vid)
 
     GetLanguages(setlangData)
 
@@ -151,51 +173,32 @@ const handleFileChange = (event) => {
 
     GetSubCategories(setsubcatData)
 
-    console.log(levelData)
 
   
 
   }, [code])
 
-  useEffect(() => {
-
-    dataLangData = langData.map(lang => {
-      return { ...langData, 
-        label: lang.name,
-        value: lang.id,
-       };
-  })
-
-  dataLevelData = levelData.map(level => {
-    return { ...levelData, 
-      label: level.name,
-      value: level.id,
-     };
-})
-
-datacatData = cat.map(c => {
-    return { ...cat, 
-      label: c.name,
-      value: c.id,
-     };
-})
-
-
-datasubCatData = subcatData.map(c => {
-  return { ...subcatData, 
-    label: c.name,
-    value: c.id,
-   };
-})
-
-
-
-
-
-
-
-  }, [langData,levelData,cat,subcatData])
+ 
+  const  isDataURI = (dataURI) => {
+    // Check if the string starts with 'data:'
+    if (dataURI.startsWith('data:')) {
+      // Extract the media type and data
+      const [, mediaType, base64Data] = dataURI.match(/^data:([^;]+);base64,(.+)$/);
   
+      // Check if the media type is present and the base64 data is valid
+      if (mediaType && base64Data) {
+        try {
+          // Decode the base64 data to check if it's a valid base64 string
+          atob(base64Data);
+          return true; // Valid data URI
+        } catch (error) {
+          return false; // Invalid base64 data
+        }
+      }
+    }
+  
+    return false; // Not a valid data URI
+  }
   
 
   return (
@@ -234,7 +237,7 @@ datasubCatData = subcatData.map(c => {
                 placeholder="Course title"
               />
               <span class="input-group-text" id="res-1">
-                60
+                {60 - course_title.length}
               </span>
             </div>
           </div>
@@ -244,14 +247,14 @@ datasubCatData = subcatData.map(c => {
             <div class="input-group mb-3">
               <input
               value={course_subtitle}
-                maxLength={60}
+                maxLength={120}
                 onChange={(e) => setcourse_subtitle(e.target.value)}
                 type="text"
                 class="form-control"
                 placeholder="Insert your course subtitle"
               />
               <span class="input-group-text" id="res-2">
-                120
+                {120 - course_subtitle.length}
               </span>
             </div>
           </div>
@@ -295,7 +298,7 @@ datasubCatData = subcatData.map(c => {
             </div>
 
             <div className="col-md-3">
-              <Form.Select value={subcatData} onChange={(e) => setcourse_sub_cat(e.target.value)} aria-label="Default select example">
+              <Form.Select value={course_sub_cat} onChange={(e) => setcourse_sub_cat(e.target.value)} aria-label="Default select example">
               <option value="">Select Course Sub Category</option>
               {subcatData.map((subcategory,index) => (
               <option key={index} value={subcategory.id}>{subcategory.name}</option>
@@ -321,12 +324,8 @@ datasubCatData = subcatData.map(c => {
               <h6>
                 <b>Course image</b>
               </h6>
-              <img
-                 width={200}
-                 height={200}
-                 id
-                src={preview_img == "" ?  'https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg' : preview_img}
-              />
+              {preview_img == "" ? <img height={200} width={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img height={200} width={200} src={preview_img} /> : <img height={200} width={200} src={`${FILE_PATH}${preview_img}`} /> }
+            
 
      
             </div>
@@ -356,7 +355,7 @@ datasubCatData = subcatData.map(c => {
               </h6>
 
              {videoSrc == "" ? (<img src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" width="200" height="200" />) : 
-            <ReactPlayer width={200} height={200} url={videoSrc} /> } 
+           isDataURI(videoSrc) ?  <ReactPlayer  width={200} height={200} url={`${videoSrc}`} /> : <ReactPlayer  width={200} height={200} url={`${FILE_PATH}${videoSrc}`} /> } 
               
             </div>
 
