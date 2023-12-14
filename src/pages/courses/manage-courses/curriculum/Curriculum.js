@@ -135,8 +135,8 @@ const Curriculum = ({code}) => {
  
             <div className="my-2">
 
-              {section.sectionCurriculumItem.length > 0 && section.sectionCurriculumItem.map((item,index) => (
-              <Accordion key={index} className="my-3">
+              {/* {section.sectionCurriculumItem.length > 0 && section.sectionCurriculumItem.map((item,index) => ( */}
+              <Accordion className="my-3">
                 <AccordionSummary
                   className="accordian-header d-flex justify-content-between align-items-center"
                   expandIcon={<ExpandMoreIcon />}
@@ -144,8 +144,8 @@ const Curriculum = ({code}) => {
                   id="panel1a-header"
                 >
                   <Typography>
-                    <CheckCircleIcon fontSize="small" /> Lecture {index + 1}:{" "}
-                    <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                    <CheckCircleIcon fontSize="small" /> Lecture 1:{" "}
+                    <FileCopyIcon sx={{ fontSize: 15 }} /> Lecture 1
                   </Typography>
 
                   {showContentAdd ? (
@@ -358,7 +358,7 @@ const Curriculum = ({code}) => {
 
                 </AccordionDetails>
               </Accordion>
-              ))}
+              {/* // ))} */}
     
 
             </div>

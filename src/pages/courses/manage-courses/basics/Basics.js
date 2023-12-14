@@ -4,6 +4,7 @@ import { Space } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AddIcon from "@mui/icons-material/Add";
+import Form from 'react-bootstrap/Form';
 import { Layout, Menu, Col, Row, Button, Select, Image, Upload } from "antd";
 import { Input } from "antd";
 import Card from "@mui/material/Card";
@@ -150,6 +151,8 @@ const handleFileChange = (event) => {
 
     GetSubCategories(setsubcatData)
 
+    console.log(levelData)
+
   
 
   }, [code])
@@ -262,47 +265,43 @@ datasubCatData = subcatData.map(c => {
             <h6>Basic Info</h6>
 
             <div className="col-md-3">
-              <Select
-                size="large"
-                style={{ width: "100%" }}
-                value={lang}
-                onChange={(value) => setlang(value)}
-                options={dataLangData}
-              />
+            <Form.Select value={lang} onChange={(e) => setlang(e.target.value)} aria-label="Default select example">
+            <option value="">Select Course Language</option>
+            {langData.map((lang,index) => (
+            <option key={index} value={lang.id}>{lang.name}</option>
+            ))}
+        
+          </Form.Select>
             </div>
 
             <div className="col-md-3">
-              <Select
-                size="large"
-                style={{ width: "100%" }}
-                value={level}
-                onChange={(value) =>setlevel(value)}
-                options={dataLevelData}
-              />
+
+            <Form.Select value={level} onChange={(e) => setlevel(e.target.value)} aria-label="Default select example">
+            <option value="">Select Course Level</option>
+            {levelData.map((level,index) => (
+            <option key={index} value={level.id}>{level.name}</option>
+            ))}
+          </Form.Select>
+            </div>
+            
+            <div className="col-md-3">
+
+            <Form.Select value={course_cat} onChange={(e) => setcourse_cat(e.target.value)} aria-label="Default select example">
+            <option value="">Select Course Category</option>
+            {cat.map((category,index) => (
+            <option key={index} value={category.id}>{category.name}</option>
+            ))}
+          </Form.Select>
             </div>
 
             <div className="col-md-3">
-              <Select
-                size="large"
-                style={{ width: "100%" }}
-                value={course_cat}
-                placeholder="Select Course Category"
-                allowClear
-                onChange={(value) => setcourse_cat(value)}
-                options={datacatData}
-              />
-            </div>
+              <Form.Select value={subcatData} onChange={(e) => setcourse_sub_cat(e.target.value)} aria-label="Default select example">
+              <option value="">Select Course Sub Category</option>
+              {subcatData.map((subcategory,index) => (
+              <option key={index} value={subcategory.id}>{subcategory.name}</option>
+              ))}
+            </Form.Select>
 
-            <div className="col-md-3">
-              <Select
-                size="large"
-                style={{ width: "100%" }}
-                value={course_sub_cat}
-                placeholder="Select Sub Course Category"
-                allowClear
-                onChange={(value) => setcourse_sub_cat(value)}
-                options={datasubCatData}
-              />
             </div>
 
             <div className="col-md-12 my-3">
