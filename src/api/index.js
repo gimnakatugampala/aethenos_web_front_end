@@ -558,7 +558,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
     .then(result => {
 
       Unauthorized(result.status,`courses/manage/${code}/#promotions`)
-      setpromotions(result)
+      if(result.message == "Error"){
+        setpromotions([])
+      }else{
+        setpromotions(result)
+      }
     })
     .catch(error => console.log('error', error));
 

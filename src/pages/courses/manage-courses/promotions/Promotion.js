@@ -175,25 +175,29 @@ const Promotion = ({code}) => {
 
     useEffect(() => {
 
-      setrows(promotions.map(p =>(createData(p.coupon_code, p.promotion_type, p.amount,p.coupon_description , moment(p.ex_date).format('l'), 
-        <>
-        <ButtonBootstrap onClick={() => handleApprove(p.coupon_code)} variant="success"><CheckIcon /></ButtonBootstrap>
-        <ButtonBootstrap className='mx-1' onClick={() => {
-          setedit_promo_code(p.coupon_code)
-          setedit_promo_desc(p.coupon_description)
-          setedit_promo_type(p.promotion_type)
-          setedit_promo_amount(p.amount)
-          setedit_promo_date(moment(p.ex_date).format("YYYY-MM-DD"))
-          // console.log(moment(p.ex_date).format("DD-MM-YYYY"))
-          setedit_promo_type_id(p.promotion_type_id)
+      // if(promotions != null){
 
+        setrows(promotions.map(p =>(createData(p.coupon_code, p.promotion_type, p.amount,p.coupon_description , moment(p.ex_date).format('l'), 
+          <>
+          <ButtonBootstrap onClick={() => handleApprove(p.coupon_code)} variant="success"><CheckIcon /></ButtonBootstrap>
+          <ButtonBootstrap className='mx-1' onClick={() => {
+            setedit_promo_code(p.coupon_code)
+            setedit_promo_desc(p.coupon_description)
+            setedit_promo_type(p.promotion_type)
+            setedit_promo_amount(p.amount)
+            setedit_promo_date(moment(p.ex_date).format("YYYY-MM-DD"))
+            // console.log(moment(p.ex_date).format("DD-MM-YYYY"))
+            setedit_promo_type_id(p.promotion_type_id)
+  
+  
+            handleCloseEdit()
+            }} variant="primary"><EditIcon /></ButtonBootstrap>
+  
+          <ButtonBootstrap onClick={() => handleDisaprove(p.coupon_code)} variant="danger"><CloseIcon /></ButtonBootstrap>
+          </> ))
+      ))
+      // }
 
-          handleCloseEdit()
-          }} variant="primary"><EditIcon /></ButtonBootstrap>
-
-        <ButtonBootstrap onClick={() => handleDisaprove(p.coupon_code)} variant="danger"><CloseIcon /></ButtonBootstrap>
-        </> ))
-    ))
 
 
     },[promotions])
@@ -272,7 +276,7 @@ const Promotion = ({code}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {rows.length > 0 ? rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -289,7 +293,9 @@ const Promotion = ({code}) => {
                     })}
                   </TableRow>
                 );
-              })}
+              }) : <div className='d-flex justify-content-center align-items-center'>
+              <p>No Promotions Available</p>
+              </div>}
           </TableBody>
         </Table>
       </TableContainer>
