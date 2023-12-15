@@ -38,7 +38,9 @@ const Curriculum = ({code}) => {
   const [extracurriculum, setextracurriculum] = useState("")
 
   const [showSectionInput, setshowSectionInput] = useState(false)
-  const [showCurriculumItemInput, setshowCurriculumItemInput] = useState(false)
+
+
+
 
   const [section, setsection] = useState("")
   const [curriculum, setcurriculum] = useState("")
@@ -57,11 +59,16 @@ const Curriculum = ({code}) => {
   const [curriculum_source_code, setcurriculum_source_code] = useState("")
   const [curriculum_video, setcurriculum_video] = useState("")
 
+  const [showCurriculumItem, setshowCurriculumItem] = useState(false)
+  const [showLecInput, setshowLecInput] = useState(false)
+  const [showQuizInput, setshowQuizInput] = useState(false)
+
 
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
 
   const showAddSectionInput = () => setshowSectionInput(!showSectionInput)
-  const handleshowCurriculumItemInput = () => setshowCurriculumItemInput(!showCurriculumItemInput)
+
+  
 
   // Add Section
   const handleSubmitSection = () =>{
@@ -70,25 +77,52 @@ const Curriculum = ({code}) => {
       setsection("")
   }
 
-  // Add Curriculum Lecture
-  const handleSaveCurriculum = () =>{
-    console.log(curriculum)
+  // Show Curriculum Item
+  const handleshowCurriculumItems = () => {
+    setshowCurriculumItem(!showCurriculumItem)
 
-    setshowCurriculumItemInput(false)
-    setcurriculum(false)
   }
 
-  // Save Section
-  const handleSaveSection = () => {
-    console.log(code)
-    console.log(article)
-    console.log(curriculum_desc)
-    console.log(curriclum_ex_res_tile)
-    console.log(curriculum_ex_res_link)
-    console.log(curriculum_source_code)
-    console.log(curriculum_download_file)
-    console.log(curriculum_video)
+    // Show Lecture Input
+    const handleshowLectureInput = () => {
+      setshowLecInput(!showLecInput)
+      setshowCurriculumItem(false)
+    }
+      
+  
+
+    // Save Lecture
+    const handleSaveLecture = () =>{
+      setshowLecInput(false)
+    }
+  
+    // Cancel Lecture
+    const handleCancelLectureInput = () =>{
+      setshowLecInput(false)
+      setshowCurriculumItem(true)
+    }
+
+    // ----------------
+
+    // Show Quiz Input
+    const handleShowQuizInput = () =>{
+      setshowQuizInput(!showQuizInput)
+      setshowCurriculumItem(false)
+    }
+
+    // Save Quiz
+    const handleSaveQuiz = () =>{
+      setshowQuizInput(false)
   }
+
+  // Cancel Quiz
+  const handleCancelQuizInput = () =>{
+    setshowQuizInput(false)
+    setshowCurriculumItem(true)
+  }
+
+  
+
 
 
   useEffect(() => {
@@ -100,7 +134,8 @@ const Curriculum = ({code}) => {
       console.log(f)
     })
   },[])
-  
+
+
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -127,7 +162,6 @@ const Curriculum = ({code}) => {
                 {section.sectionName[0]}
               </Typography>
 
-              <Button onClick={handleSaveSection} size="sm" variant="contained">SAVE</Button>
 
        
             </div>
@@ -363,31 +397,92 @@ const Curriculum = ({code}) => {
 
             </div>
 
+        {/* Curriculum Item ACTION */}
             <div className="m-2">
 
-            {showCurriculumItemInput && (
-                    <>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Add Lecture</Form.Label>
-                    <Form.Control onChange={(e) => setcurriculum(e.target.value)} type="text" placeholder="Type Lecture Name" />
-                  </Form.Group>
-                  <Button onClick={handleSaveCurriculum} className="mx-1" variant="outlined">
-                      ADD
-                    </Button>
-                    <Button onClick={handleshowCurriculumItemInput} variant="contained">
-                      Cancel
-                    </Button>
-                    </>
-                  )}
 
-                  {showCurriculumItemInput == false && (
+              {showCurriculumItem && (
+                <div className="border border-danger p-1">
 
-                  <Button onClick={handleshowCurriculumItemInput} variant="contained">
-                    <AddIcon /> Curriculum Item
-                  </Button>
-                  )}
+                  <Button onClick={handleshowCurriculumItems} variant="text"><CloseIcon /></Button>
+
+                    <Button onClick={handleshowLectureInput} variant="text">
+                      <AddIcon />
+                      Lecture
+                    </Button>
+
+                    <Button onClick={handleShowQuizInput} variant="text">
+                    <AddIcon />
+                      Quiz
+                    </Button>
+                </div>
+              )}
+
+            
+            
+                {showCurriculumItem == false && showLecInput == false && showQuizInput == false && (
+                <Button onClick={handleshowCurriculumItems} variant="contained">
+                  <AddIcon /> Curriculum Item
+                </Button>
+
+                )}
+          
 
             </div>
+
+            {/* Curriculum Item ACTION */}
+
+            {/* Curriculum Item > Lectures */}
+
+            {showLecInput && (
+              <>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Add Lecture</Form.Label>
+                    <Form.Control onChange={(e) => setcurriculum(e.target.value)} type="text" placeholder="Type Lecture Name" />
+            </Form.Group>
+
+              <Button onClick={handleSaveLecture} className="mx-1" variant="outlined">
+                  ADD
+                </Button>
+                
+                <Button onClick={handleCancelLectureInput} variant="contained">
+                  Cancel
+                </Button>
+              </>
+            )}
+            {/* Curriculum Item > Lectures */}
+
+            {/* Curriculum Item > Quiz */}
+
+            {showQuizInput && (
+
+            <div className="p-4 m-2">
+            
+            <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Quiz Title</Form.Label>
+              <Form.Control type="text" placeholder="Enter a Title" />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Quiz Description</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+            </Form>
+
+            <Button onClick={handleSaveQuiz} className="mx-1" variant="outlined">
+              ADD
+            </Button>
+            
+            <Button onClick={handleCancelQuizInput} variant="contained">
+              Cancel
+            </Button>
+            </div>
+            )}
+
+
+
+            {/* Curriculum Item > Quiz */}
+
           </CardContent>
      ))}
         </div>
