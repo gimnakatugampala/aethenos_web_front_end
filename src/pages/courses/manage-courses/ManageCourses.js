@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState , useRef } from 'react';
 import { useLocation , useParams} from "react-router-dom";
-
+import Persona from "persona";
 import {  Space , Typography  } from 'antd';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -71,8 +71,59 @@ const ManageCourses = () => {
   const [course_title, setcourse_title] = useState("")
   const [status_type, setstatus_type] = useState("")
 
+  // -------- PERSONA ---------------
+  const [options, setOptions] = useState({
+    templateId: "tmpl_JAZjHuAT738Q63BdgCuEJQre"
+  });
+
+  const [flowType, setFlowType] = useState("embedded");
+
+  const embeddedClientRef = useRef(null);
+
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    // setShow(true)
+
+    // PERSONA
+    const client = new Persona.Client({
+      ...options,
+      environment: "sandbox",
+      onLoad: (error) => {
+        if (error) {
+          console.error(
+            `Failed with code: ${error.code} and message ${error.message}`
+          );
+        }
+
+        client.open();
+      },
+      onStart: (inquiryId) => {
+        console.log(`Started inquiry ${inquiryId}`);
+      },
+      onComplete: (inquiryId) => {
+        console.log(`Sending finished inquiry ${inquiryId} to backend`);
+        fetch(`/server-handler?inquiry-id=${inquiryId}`);
+      },
+      onEvent: (name, meta) => {
+        switch (name) {
+          case "start":
+            console.log(`Received event: start`);
+            break;
+          default:
+            console.log(
+              `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+            );
+        }
+      }
+    });
+    embeddedClientRef.current = client;
+
+    window.exit = (force) =>
+      client ? client.exit(force) : alert("Initialize client first");
+
+  
+  
+  };
 
   const handleCloseVerification = () => {
     setShow(false)
@@ -179,6 +230,7 @@ const ManageCourses = () => {
   GetCourseTitle(code,setcourse_title,setstatus_type)
 
   },[window.history.state]);
+
 
 
   return (
