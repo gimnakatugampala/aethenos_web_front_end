@@ -26,7 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
-import {GetCurriculum} from "../../../../api"
+import {AddCurriculumSection, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 
 const Curriculum = ({code}) => {
@@ -73,8 +73,10 @@ const Curriculum = ({code}) => {
   // Add Section
   const handleSubmitSection = () =>{
       console.log(section)
-      setshowSectionInput(false)
-      setsection("")
+      AddCurriculumSection(code,section,setshowSectionInput,setsection)
+      
+      // setsection("")
+
   }
 
   // Show Curriculum Item
@@ -493,7 +495,7 @@ const Curriculum = ({code}) => {
             <>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Add Section</Form.Label>
-              <Form.Control onChange={(e) => setsection(e.target.value)} type="text" placeholder="Type Section Name" />
+              <Form.Control value={section} onChange={(e) => setsection(e.target.value)} type="text" placeholder="Type Section Name" />
             </Form.Group>
             <Button onClick={handleSubmitSection} className="mx-1" variant="outlined">
                 ADD

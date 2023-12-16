@@ -757,7 +757,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     redirect: 'follow'
   };
   
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCurriculum/123456", requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCurriculum/${code}`, requestOptions)
     .then(response => response.json())
     .then(result => {
       console.log(result)
@@ -2187,3 +2187,36 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
  }
  
+ export const AddCurriculumSection = async(code,section,setshowSectionInput,setsection) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+
+  var formdata = new FormData();
+  formdata.append("CourseCode", `${code}`);
+  formdata.append("SectionName", `${section}`);
+
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSection", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+      if(result.message == "Course section Added successfully"){
+          SuccessAlert("Section Added",result.message)
+          setshowSectionInput(false)
+          setsection("")
+          return
+      }
+    })
+    .catch(error => console.log('error', error));
+
+ }
