@@ -60,7 +60,7 @@ const Curriculum = ({code}) => {
   const [curriculum_video, setcurriculum_video] = useState("")
 
   const [showCurriculumItem, setshowCurriculumItem] = useState(null)
-  const [showLecInput, setshowLecInput] = useState(false)
+  const [showLecInput, setshowLecInput] = useState(null)
   const [showQuizInput, setshowQuizInput] = useState(false)
 
 
@@ -411,10 +411,11 @@ const Curriculum = ({code}) => {
 
                   <Button onClick={() => {
                     // handleshowCurriculumItems()
+                    setshowLecInput(null)
                     setshowCurriculumItem(null)
                     }} variant="text"><CloseIcon /></Button>
-
-                    <Button onClick={handleshowLectureInput} variant="text">
+{/* handleshowLectureInput */}
+                    <Button onClick={() => setshowLecInput(showLecInput == index ? null : index)} variant="text">
                       <AddIcon />
                       Lecture
                     </Button>
@@ -426,7 +427,7 @@ const Curriculum = ({code}) => {
                 </div>
               )}
 
-            
+{/* const [showLecInput, setshowLecInput] = useState(false) */}
 {/* && showLecInput == false && showQuizInput == false */}
                 {showCurriculumItem != index && (
                 <Button onClick={() => setshowCurriculumItem(showCurriculumItem == index ? null : index)} variant="contained">
@@ -444,7 +445,7 @@ const Curriculum = ({code}) => {
 
             {/* Curriculum Item > Lectures */}
 
-            {showLecInput && (
+            {showLecInput == index && (
               <>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Add Lecture</Form.Label>
@@ -454,8 +455,8 @@ const Curriculum = ({code}) => {
               <Button onClick={handleSaveLecture} className="mx-1" variant="outlined">
                   ADD
                 </Button>
-                
-                <Button onClick={handleCancelLectureInput} variant="contained">
+                {/* handleCancelLectureInput */}
+                <Button onClick={() => setshowLecInput(null)} variant="contained">
                   Cancel
                 </Button>
               </>
