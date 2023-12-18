@@ -61,7 +61,7 @@ const Curriculum = ({code}) => {
 
   const [showCurriculumItem, setshowCurriculumItem] = useState(null)
   const [showLecInput, setshowLecInput] = useState(null)
-  const [showQuizInput, setshowQuizInput] = useState(false)
+  const [showQuizInput, setshowQuizInput] = useState(null)
 
 
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
@@ -411,24 +411,24 @@ const Curriculum = ({code}) => {
 
                   <Button onClick={() => {
                     // handleshowCurriculumItems()
+                    setshowQuizInput(null)
                     setshowLecInput(null)
                     setshowCurriculumItem(null)
                     }} variant="text"><CloseIcon /></Button>
-{/* handleshowLectureInput */}
+
                     <Button onClick={() => setshowLecInput(showLecInput == index ? null : index)} variant="text">
                       <AddIcon />
                       Lecture
                     </Button>
-
-                    <Button onClick={handleShowQuizInput} variant="text">
+                    {/* const [showQuizInput, setshowQuizInput] = useState(false) */}
+                    {/* handleShowQuizInput */}
+                    <Button onClick={() => setshowQuizInput(showQuizInput == index ? null : index)} variant="text">
                     <AddIcon />
                       Quiz
                     </Button>
                 </div>
               )}
 
-{/* const [showLecInput, setshowLecInput] = useState(false) */}
-{/* && showLecInput == false && showQuizInput == false */}
                 {showCurriculumItem != index && (
                 <Button onClick={() => setshowCurriculumItem(showCurriculumItem == index ? null : index)} variant="contained">
                   <AddIcon /> Curriculum Item
@@ -465,7 +465,7 @@ const Curriculum = ({code}) => {
 
             {/* Curriculum Item > Quiz */}
 
-            {showQuizInput && (
+            {showQuizInput == index && (
 
             <div className="p-4 m-2">
             
@@ -484,7 +484,7 @@ const Curriculum = ({code}) => {
               ADD
             </Button>
             
-            <Button onClick={handleCancelQuizInput} variant="contained">
+            <Button onClick={() => setshowQuizInput(null) } variant="contained">
               Cancel
             </Button>
             </div>
