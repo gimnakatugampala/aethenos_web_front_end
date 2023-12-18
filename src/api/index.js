@@ -2274,3 +2274,61 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
 
  }
+
+ export const OwnThisContent = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/ownThisCourse/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      if(result.variable == "200"){
+        return "Owned"
+      }else{
+        return "AlreadyOwned"
+      }
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const RequestSubmitReview = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/submitForReview/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Success",result.message);
+
+        setTimeout(() => {
+          window.location.href = "/courses"
+        }, 1300);
+
+        return
+      }
+
+    })
+    .catch(error => console.log('error', error));
+
+ }

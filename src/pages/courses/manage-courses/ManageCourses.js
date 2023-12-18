@@ -38,7 +38,7 @@ import Pricing from './pricing/Pricing';
 import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
-import { InstructorVerify , GetCourseTitle } from '../../../api'
+import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview} from '../../../api'
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -85,41 +85,45 @@ const ManageCourses = () => {
     // setShow(true)
 
     // PERSONA
-    const client = new Persona.Client({
-      ...options,
-      environment: "sandbox",
-      onLoad: (error) => {
-        if (error) {
-          console.error(
-            `Failed with code: ${error.code} and message ${error.message}`
-          );
-        }
+    // const client = new Persona.Client({
+    //   ...options,
+    //   environment: "sandbox",
+    //   onLoad: (error) => {
+    //     if (error) {
+    //       console.error(
+    //         `Failed with code: ${error.code} and message ${error.message}`
+    //       );
+    //     }
 
-        client.open();
-      },
-      onStart: (inquiryId) => {
-        console.log(`Started inquiry ${inquiryId}`);
-      },
-      onComplete: (inquiryId) => {
-        console.log(`Sending finished inquiry ${inquiryId} to backend`);
-        fetch(`/server-handler?inquiry-id=${inquiryId}`);
-      },
-      onEvent: (name, meta) => {
-        switch (name) {
-          case "start":
-            console.log(`Received event: start`);
-            break;
-          default:
-            console.log(
-              `Received event: ${name} with meta: ${JSON.stringify(meta)}`
-            );
-        }
-      }
-    });
-    embeddedClientRef.current = client;
+    //     client.open();
+    //   },
+    //   onStart: (inquiryId) => {
+    //     console.log(`Started inquiry ${inquiryId}`);
+    //   },
+    //   onComplete: (inquiryId) => {
+    //     console.log(`Sending finished inquiry ${inquiryId} to backend`);
+    //     fetch(`/server-handler?inquiry-id=${inquiryId}`);
+    //   },
+    //   onEvent: (name, meta) => {
+    //     switch (name) {
+    //       case "start":
+    //         console.log(`Received event: start`);
+    //         break;
+    //       default:
+    //         console.log(
+    //           `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+    //         );
+    //     }
+    //   }
+    // });
+    // embeddedClientRef.current = client;
 
-    window.exit = (force) =>
-      client ? client.exit(force) : alert("Initialize client first");
+    // window.exit = (force) =>
+    //   client ? client.exit(force) : alert("Initialize client first");
+
+    // OwnThisContent(code)
+
+    RequestSubmitReview(code)
 
   
   
