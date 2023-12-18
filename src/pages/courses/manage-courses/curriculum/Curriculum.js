@@ -31,8 +31,8 @@ import "./Curriculum.css";
 
 const Curriculum = ({code}) => {
 
-  const [showContentAdd, setshowContentAdd] = useState(false);
-  const [showMain, setshowMain] = useState(false)
+  const [showContentAdd, setshowContentAdd] = useState(null);
+  const [showMain, setshowMain] = useState(null)
   const [showDescRes, setshowDescRes] = useState(true)
   const [curriculumvisiblity, setcurriculumvisiblity] = useState("");
   const [extracurriculum, setextracurriculum] = useState("")
@@ -59,7 +59,7 @@ const Curriculum = ({code}) => {
   const [curriculum_source_code, setcurriculum_source_code] = useState("")
   const [curriculum_video, setcurriculum_video] = useState("")
 
-  const [showCurriculumItem, setshowCurriculumItem] = useState(false)
+  const [showCurriculumItem, setshowCurriculumItem] = useState(null)
   const [showLecInput, setshowLecInput] = useState(false)
   const [showQuizInput, setshowQuizInput] = useState(false)
 
@@ -154,24 +154,21 @@ const Curriculum = ({code}) => {
 
         {/* Section 1 */}
 
-        <div className="card p-2">
      {sectionData !== null && sectionData.length > 0 && sectionData.map((section,index) => (
+        <div key={index} className="card p-2 my-3">
 
           <CardContent>
             <div className="d-flex justify-content-between section-container">
               <Typography variant="subtitle1">
                 <b> Section {index + 1}:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
-                {section.sectionName[0]}
+                {section.courseSection.sectionName}
               </Typography>
-
-
-       
             </div>
 
  
             <div className="my-2">
 
-              {/* {section.sectionCurriculumItem.length > 0 && section.sectionCurriculumItem.map((item,index) => ( */}
+             
               <Accordion className="my-3">
                 <AccordionSummary
                   className="accordian-header d-flex justify-content-between align-items-center"
@@ -184,12 +181,15 @@ const Curriculum = ({code}) => {
                     <FileCopyIcon sx={{ fontSize: 15 }} /> Lecture 1
                   </Typography>
 
-                  {showContentAdd ? (
+                  {showContentAdd == index ? (
                     <Button
                       onClick={() => {
                         setshowDescRes(true)
-                        setshowMain(false)
-                        handleContentshow()}}
+                        setshowMain(showMain == index ? null : index)
+                        console.log(index)
+                        setshowContentAdd(showContentAdd == index ? null : index)
+                        // handleContentshow()
+                      }}
                       className="mx-2"
                       size="small"
                       variant="contained"
@@ -200,8 +200,11 @@ const Curriculum = ({code}) => {
                     <Button
                       onClick={() => {
                         setshowDescRes(false)
-                        setshowMain(true)
-                        handleContentshow()}}
+                        setshowMain(showMain == index ? null : index)
+                        console.log(index)
+                        setshowContentAdd(showContentAdd == index ? null : index)
+                        // handleContentshow()
+                      }}
                       className="mx-2"
                       size="small"
                       variant="outlined"
@@ -214,7 +217,7 @@ const Curriculum = ({code}) => {
                 <AccordionDetails>
 
                   {/* Landing Content */}
-                  {showMain ? (
+                  {showMain == index ? (
                       curriculumvisiblity == "video" ? (
                       <div>
                         <Button
@@ -394,7 +397,7 @@ const Curriculum = ({code}) => {
 
                 </AccordionDetails>
               </Accordion>
-              {/* // ))} */}
+             
     
 
             </div>
@@ -403,10 +406,13 @@ const Curriculum = ({code}) => {
             <div className="m-2">
 
 
-              {showCurriculumItem && (
+              {showCurriculumItem == index && (
                 <div className="border border-danger p-1">
 
-                  <Button onClick={handleshowCurriculumItems} variant="text"><CloseIcon /></Button>
+                  <Button onClick={() => {
+                    // handleshowCurriculumItems()
+                    setshowCurriculumItem(null)
+                    }} variant="text"><CloseIcon /></Button>
 
                     <Button onClick={handleshowLectureInput} variant="text">
                       <AddIcon />
@@ -421,14 +427,16 @@ const Curriculum = ({code}) => {
               )}
 
             
-            
-                {showCurriculumItem == false && showLecInput == false && showQuizInput == false && (
-                <Button onClick={handleshowCurriculumItems} variant="contained">
+{/* && showLecInput == false && showQuizInput == false */}
+                {showCurriculumItem != index && (
+                <Button onClick={() => setshowCurriculumItem(showCurriculumItem == index ? null : index)} variant="contained">
                   <AddIcon /> Curriculum Item
                 </Button>
 
                 )}
-          
+
+        
+
 
             </div>
 
@@ -486,8 +494,8 @@ const Curriculum = ({code}) => {
             {/* Curriculum Item > Quiz */}
 
           </CardContent>
-     ))}
         </div>
+     ))}
 
         <div className="m-2">
 

@@ -5,25 +5,24 @@ import './Home.css'
 import { Alert, Space, Spin } from 'antd';
 import { InfinitySpin } from  'react-loader-spinner'
 import { getUserStatus } from '../../api';
+import Cookies from 'js-cookie'
 
 
 const Home = () => {
 
     useEffect(() => {
 
-        // window.setTimeout(function(){
-        //     window.location.href = "/courses";
-        // }, 1000);
+    
 
-        if(window.localStorage.getItem("aethenos") == null){
+        if(Cookies.get('aethenos') == null){
           window.location.href = `/login?sessionTimeout=true&rediect-url=courses`
+
         }else{
           window.location.href = "/courses";
         }
 
-        
-        
-        // console.log(window.localStorage.getItem("aethenos"))
+        // Check Id the User is Instructor Or NOT
+      
       }, [])
       
 
