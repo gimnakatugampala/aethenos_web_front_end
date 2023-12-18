@@ -1,13 +1,16 @@
 import SuccessAlert from "../commonFunctions/Alerts/SuccessAlert";
 import ErrorAlert from "../commonFunctions/Alerts/ErrorAlert";
-const CURRENT_USER = JSON.parse(window.localStorage.getItem("aethenos"));
+import Cookies from 'js-cookie'
+
+const CURRENT_USER = Cookies.get('aethenos');
 
 
 // Unauthorized
 const Unauthorized = (result,rediect_url) =>{
 
   if(result == 401){
-    window.localStorage.removeItem("aethenos")
+    // window.localStorage.removeItem("aethenos")
+    Cookies.remove('aethenos', { path: '' })
     window.location.href = `/login?sessionTimeout=true&rediect-url=${rediect_url}`
   }
 
@@ -40,19 +43,26 @@ export const LoginInstructor = async(email, password,url,setloading) =>{
 
         SuccessAlert("Login Successful!","Successfully Login as an Instructor")
 
-        const user = {
-          token:result.token,
-          email:result.email,
-          firstname:result.fname,
-          lastname:result.lname,
-          status:"Instructor"
-        }
+        Cookies.set('aethenos', result.token, { expires: 7, path: '' })
 
-        window.localStorage.setItem("aethenos", JSON.stringify(user));
+        // const user = {
+        //   token:result.token,
+        //   email:result.email,
+        //   firstname:result.fname,
+        //   lastname:result.lname,
+        //   status:"Instructor"
+        // }
+
+        // window.localStorage.setItem("aethenos", JSON.stringify(user));
+
+
 
         setloading(false)
 
-        window.location.href = `/${url}`
+        setTimeout(() => {
+          window.location.href = `/${url}`
+        }, 1500);
+
 
       }
     })
@@ -105,7 +115,7 @@ export const InstructorVerify = async() =>{
     setloading(true)
 
    var myHeaders = new Headers();
-   myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
    
    var formdata = new FormData();
    formdata.append("course_title", `${course_title}`);
@@ -157,7 +167,7 @@ export const InstructorVerify = async() =>{
 
  export const getEditCourse = (code,setcourse_title,setcourse_cat,setkeywords,setpreview_img,setpreview_video) =>{
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
 var requestOptions = {
   method: 'GET',
@@ -186,7 +196,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/editcourse/getCourse
  export const EditCourses = async(code,course_title,keywords,course_cat,course_img,course_video) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("code", `${code}`);
@@ -233,7 +243,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/editcourse/getCourse
  export const GetAllCourses = async(setcourses) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
 var requestOptions = {
   method: 'GET',
@@ -262,7 +272,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
  export const GetCourseTitle = async(code,setcourse_title,setstatus_type) =>{
 
   var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
+myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
 var requestOptions = {
   method: 'GET',
@@ -275,7 +285,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   .then(result => {
     console.log(result)
 
-    Unauthorized(result.status,`/courses/manage/${code}/#course-landing-page`)
+    Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
 
     setcourse_title(result.title)
     setstatus_type(result.approveType)
@@ -287,7 +297,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
  export const GetIntendedLeaners = async(code,setstudentsLearnData,setrequirementsData,setwhosData) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
   
   var requestOptions = {
     method: 'GET',
@@ -316,7 +326,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
   
   var raw = JSON.stringify(item);
   
@@ -347,7 +357,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  export const AddCourseMessages = async(code,congratsmsg,welcomemsg) =>{
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("course_code", `${code}`);
@@ -382,7 +392,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  export const GetCourseMessages = async(code,setcongratsmsg,setwelcomemsg) =>{
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'GET',
@@ -458,7 +468,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
  export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'GET',
@@ -503,7 +513,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   course_image) =>{
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+    myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("courseCode", `${code}`);
@@ -545,7 +555,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
  export const GetPromotions = async(code,setpromotions) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'GET',
@@ -577,7 +587,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   setOpen) =>{
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+    myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("course_code", `${code}`);
@@ -614,7 +624,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
  export const ActivatePromotions = async(code) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'PUT',
@@ -645,7 +655,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  export const DeactivatedPromotions = async(code) =>{
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'PUT',
@@ -696,7 +706,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   setopenEdit) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
 // formdata.append("course_code",` ${code}`);
@@ -749,7 +759,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
  export const GetCurriculum = async(code,setsectionData) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'GET',
@@ -772,7 +782,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
  export const AddCurriculum = async(code) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("courseCode", "123456");
@@ -802,7 +812,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
  export const GetCoursePricingType = async(code,setPaid_Type) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'GET',
@@ -822,7 +832,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  export const GetPriceDefault = async(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice) =>{
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
   method: 'GET',
@@ -870,7 +880,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
  export const SavePriceDefault = async(code,DGlobalPricing,DDisType,DDisPercent,DDisAmt,DGlobalNetPrice) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("courseCode", `${code}`);
@@ -1210,7 +1220,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
       ) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
 
   var requestOptions = {
@@ -2125,7 +2135,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
 
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
 var requestOptions = {
   method: 'POST',
@@ -2158,7 +2168,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
  export const PricingConvertToFree = async(code) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
 
   var requestOptions = {
@@ -2190,7 +2200,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
  export const AddCurriculumSection = async(code,section,setshowSectionInput,setsection) =>{
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER.token}`);
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("CourseCode", `${code}`);
