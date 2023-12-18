@@ -3,6 +3,7 @@ import ErrorAlert from "../commonFunctions/Alerts/ErrorAlert";
 import Cookies from 'js-cookie'
 
 const CURRENT_USER = Cookies.get('aethenos');
+const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
 
 
 // Unauthorized
@@ -2226,6 +2227,47 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
           setsection("")
           return
       }
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const AddLectureTitle = async(code,lecturetitle,courseID,setlecturetitle,setshowLecInput,setshowCurriculumItem) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+  formdata.append("title", `${lecturetitle}`);
+  formdata.append("courseSectionId", `${courseID}`);
+
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addLecture", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+      if(result.message == "Error"){
+        ErrorAlert("Error",result.variable)
+        return
+      }
+
+      if(result.variable == "200"){
+        SuccessAlert("Success",result.message)
+        setshowLecInput(null)
+        setshowCurriculumItem(null)
+        setlecturetitle("")
+        return
+      }
+
     })
     .catch(error => console.log('error', error));
 

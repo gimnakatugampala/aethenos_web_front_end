@@ -26,8 +26,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
-import {AddCurriculumSection, GetCurriculum} from "../../../../api"
+import {AddCurriculumSection, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
+import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 
 const Curriculum = ({code}) => {
 
@@ -43,7 +44,7 @@ const Curriculum = ({code}) => {
 
 
   const [section, setsection] = useState("")
-  const [curriculum, setcurriculum] = useState("")
+  const [lecturetitle, setlecturetitle] = useState("")
 
 
   // Get Section data
@@ -73,6 +74,12 @@ const Curriculum = ({code}) => {
   // Add Section
   const handleSubmitSection = () =>{
       console.log(section)
+
+      if(section == ""){
+        ErrorAlert("Empty Field","Please Fill The Section Title")
+        return
+      }
+
       AddCurriculumSection(code,section,setshowSectionInput,setsection)
       
       // setsection("")
@@ -94,8 +101,16 @@ const Curriculum = ({code}) => {
   
 
     // Save Lecture
-    const handleSaveLecture = () =>{
-      setshowLecInput(false)
+    const handleSaveLecture = (courseID) =>{
+      // setshowLecInput(false)
+      if(lecturetitle == ""){
+        ErrorAlert("Empty Field","Please Enter Lecture Title")
+        return
+      }
+
+      AddLectureTitle(code,lecturetitle,courseID,setlecturetitle,setshowLecInput,setshowCurriculumItem)
+
+      console.log(lecturetitle,courseID)
     }
   
     // Cancel Lecture
@@ -449,10 +464,10 @@ const Curriculum = ({code}) => {
               <>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Add Lecture</Form.Label>
-                    <Form.Control onChange={(e) => setcurriculum(e.target.value)} type="text" placeholder="Type Lecture Name" />
+                    <Form.Control onChange={(e) => setlecturetitle(e.target.value)} type="text" placeholder="Type Lecture Name" />
             </Form.Group>
 
-              <Button onClick={handleSaveLecture} className="mx-1" variant="outlined">
+              <Button onClick={() => handleSaveLecture(section.courseSection.sectionId)} className="mx-1" variant="outlined">
                   ADD
                 </Button>
                 {/* handleCancelLectureInput */}
