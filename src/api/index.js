@@ -2198,7 +2198,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
  }
  
- export const AddCurriculumSection = async(code,section,setshowSectionInput,setsection) =>{
+ export const AddCurriculumSection = async(code,section,setshowSectionInput,setsection,setsectionData) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2225,6 +2225,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
           SuccessAlert("Section Added",result.message)
           setshowSectionInput(false)
           setsection("")
+          GetCurriculum(code,setsectionData) 
           return
       }
     })
@@ -2232,7 +2233,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const AddLectureTitle = async(code,lecturetitle,courseID,setlecturetitle,setshowLecInput,setshowCurriculumItem) =>{
+ export const AddLectureTitle = async(code,lecturetitle,courseID,setlecturetitle,setshowLecInput,setshowCurriculumItem,setsectionData) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2265,6 +2266,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
         setshowLecInput(null)
         setshowCurriculumItem(null)
         setlecturetitle("")
+        GetCurriculum(code,setsectionData)
         return
       }
 

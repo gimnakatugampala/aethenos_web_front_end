@@ -63,6 +63,8 @@ const Curriculum = ({code}) => {
   const [showCurriculumItem, setshowCurriculumItem] = useState(null)
   const [showLecInput, setshowLecInput] = useState(null)
   const [showQuizInput, setshowQuizInput] = useState(null)
+  const [showDescription, setshowDescription] = useState(null)
+  const [showResources, setshowResources] = useState(null)
 
 
   const handleContentshow = () => setshowContentAdd(!showContentAdd);
@@ -80,7 +82,7 @@ const Curriculum = ({code}) => {
         return
       }
 
-      AddCurriculumSection(code,section,setshowSectionInput,setsection)
+      AddCurriculumSection(code,section,setshowSectionInput,setsection,setsectionData)
       
       // setsection("")
 
@@ -108,7 +110,7 @@ const Curriculum = ({code}) => {
         return
       }
 
-      AddLectureTitle(code,lecturetitle,courseID,setlecturetitle,setshowLecInput,setshowCurriculumItem)
+      AddLectureTitle(code,lecturetitle,courseID,setlecturetitle,setshowLecInput,setshowCurriculumItem,setsectionData)
 
       console.log(lecturetitle,courseID)
     }
@@ -183,8 +185,8 @@ const Curriculum = ({code}) => {
  
             <div className="my-2">
 
-             
-              <Accordion className="my-3">
+            {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,index) => (
+              <Accordion key={index} className="my-3">
                 <AccordionSummary
                   className="accordian-header d-flex justify-content-between align-items-center"
                   expandIcon={<ExpandMoreIcon />}
@@ -192,17 +194,17 @@ const Curriculum = ({code}) => {
                   id="panel1a-header"
                 >
                   <Typography>
-                    <CheckCircleIcon fontSize="small" /> Lecture 1:{" "}
-                    <FileCopyIcon sx={{ fontSize: 15 }} /> Lecture 1
+                    <CheckCircleIcon fontSize="small" /> Lecture {index + 1}:{" "}
+                    <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
                   </Typography>
 
                   {showContentAdd == index ? (
                     <Button
                       onClick={() => {
                         setshowDescRes(true)
-                        setshowMain(showMain == index ? null : index)
+                        setshowMain(null)
                         console.log(index)
-                        setshowContentAdd(showContentAdd == index ? null : index)
+                        setshowContentAdd(null)
                         // handleContentshow()
                       }}
                       className="mx-2"
@@ -339,31 +341,34 @@ const Curriculum = ({code}) => {
                       <></>
                   )}
                  
-                
 
                      {/* Always There */}
-                     {extracurriculum == "desc" && (
+                     {showDescription == index && (
                       <>
-                       <Button onClick={() => setextracurriculum("")}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                       <Button onClick={() => setextracurriculum("resourses")}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                       <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                       <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
                        <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
+
+                       <div className="d-flex my-2">
+                       <Button onClick={() => setshowDescription(null)} className="mr-1" variant="outlined">Cancel</Button>
+                       <Button className="ml-1"  variant="contained">Save</Button>
+                       </div>
                        </>
                      )}
 
                       {/* Add Description & Resourses */}
-                      {showDescRes && (
-                        <>
-                      {extracurriculum == "" && (
+                       
+                      {showMain == null && (
                       <>
-                      <Button onClick={() => setextracurriculum("desc")} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                      <Button onClick={() => setextracurriculum("resourses")}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                      <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                      <Button onClick={() => setshowResources(showResources == index ? null : index)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
                       </>
                       )}
 
-                      {extracurriculum == "resourses" && (
+                      {showResources == index && (
                         <div>
-                          <Button onClick={() => setextracurriculum("")}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                          <Button onClick={() => setextracurriculum("desc")} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                          <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                          <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
                           
                           {/* Tabs */}
                           <Tabs
@@ -406,12 +411,16 @@ const Curriculum = ({code}) => {
                         </Tabs>
                         </div>
                       )}
-                        </>
-                      )}
+                      
+                      
                    
 
                 </AccordionDetails>
               </Accordion>
+
+            ))}
+            
+             
              
     
 
