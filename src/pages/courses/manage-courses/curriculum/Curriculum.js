@@ -26,7 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumSection, AddCurriculumSourceCode, AddLectureTitle, GetCurriculum} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 
@@ -210,6 +210,7 @@ const Curriculum = ({code}) => {
 
    }  
   
+  //  Save Article > Article
    const handleSaveArticle = (ID) =>{
 
     if(article == ""){
@@ -220,7 +221,12 @@ const Curriculum = ({code}) => {
     AddCurriculumArticle(code,ID,article,setsectionData,setarticle,setshowMain)
    }
 
-
+// Save Video > Video
+   const handleSaveVideo = (video,ID) =>{
+      // console.log(video)
+      // console.log(ID)
+      AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
+   }
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -312,7 +318,7 @@ const Curriculum = ({code}) => {
   
                         {/* Upload Input */}
                         <Form.Group controlId="formFile" className="my-3">
-                        <Form.Control onClick={(e) => setcurriculum_video(e.target.files[0])} placeholder="Add a Video" type="file" />
+                        <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
                         <Form.Label style={{fontSize:11}}><b>Note:</b> All files should be at least 720p and less than 4.0 GB.</Form.Label>
                       </Form.Group>
   

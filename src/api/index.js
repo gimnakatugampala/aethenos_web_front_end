@@ -2534,6 +2534,40 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
+ export const AddCurriculumVideo = async(code,ID,video,setsectionData,setshowMain) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+  formdata.append("CurriculumItemId", `${ID}`);
+  formdata.append("Video", video);
+
+  var requestOptions = {
+    method: 'PUT',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addVideo", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Uploaded",result.message)
+        GetCurriculum(code,setsectionData)
+        setshowMain(null)
+        return
+      }
+
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
  export const VerifyTheInstructor = async(code) =>{
 
   var requestOptions = {
