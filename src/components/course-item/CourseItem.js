@@ -104,13 +104,17 @@ const CourseItem = ({course,filledPercent}) => {
     </div>
 
    
-        {course.approvalType.id != null && course.approvalType.id == 3 && (
+        {course.approvalType.id != null && course.approvalType.id == 3 || course.approvalType.id == 5 && (
             <div className='d-flex justify-content-center'> 
               <a className='card-item-link' href={`/courses/manage/${course.code}/`}>Manage Course</a>
             </div> 
          )}
 
-
+          {course.approvalType.id != null && course.approvalType.id == 4 && (
+              <div className='d-flex justify-content-center'> 
+              <a className='card-item-link' href={`/courses/manage/${course.code}/`}>Manage Course</a>
+            </div> 
+          )}
 
 
 

@@ -2356,3 +2356,16 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
 
  }
+
+ export const VerifyTheInstructor = async(code) =>{
+  
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  
+  fetch("http://localhost:8080/instructor/verifyInstructorProfile", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+ }
