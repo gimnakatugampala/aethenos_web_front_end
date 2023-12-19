@@ -26,7 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
-import {AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumSection, AddCurriculumSourceCode, AddLectureTitle, GetCurriculum} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumSection, AddCurriculumSourceCode, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 
@@ -210,6 +210,15 @@ const Curriculum = ({code}) => {
 
    }  
   
+   const handleSaveArticle = (ID) =>{
+
+    if(article == ""){
+      ErrorAlert("Empty Field","Please Enter Article Text")
+      return
+    }
+
+    AddCurriculumArticle(code,ID,article,setsectionData,setarticle,setshowMain)
+   }
 
 
 
@@ -352,6 +361,9 @@ const Curriculum = ({code}) => {
                         </Typography>
   
                           <JoditEditor value={article} onChange={(e) => setarticle(e)} />
+                          <div className="d-flex flex-start my-2">
+                             <Button onClick={(e) => handleSaveArticle(item.id)} variant="contained">SAVE</Button>
+                          </div>
                         </div>
                       </div>
                     ) : (
