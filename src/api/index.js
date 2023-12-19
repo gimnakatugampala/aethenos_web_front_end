@@ -2132,8 +2132,6 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
  export const SavePriceCountries = async(code,raw) =>{
 
 
-
-
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2357,8 +2355,151 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const VerifyTheInstructor = async(code) =>{
+ export const AddCurriculumDescription = async(code,ID,curriculum_desc,setcurriculum_desc,setshowDescription,setsectionData) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+  formdata.append("CurriculumItemId", `${ID}`);
+  formdata.append("Description", `${curriculum_desc}`);
+
+  var requestOptions = {
+    method: 'PUT',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addDescription", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Added",result.message)
+        setshowDescription(null)
+        setcurriculum_desc("")
+        GetCurriculum(code,setsectionData)
+        return
+      }
+    
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
+ export const AddCurriculumDownloadable = async(code,ID,file,setshowResources,setsectionData) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+formdata.append("CurriculumItemId", `${ID}`);
+formdata.append("downloadableFile", file);
+
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addDownloadableFile", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Added",result.message)
+      GetCurriculum(code,setsectionData)
+      setshowResources(null)
+      return
+    }
+
+  })
+  .catch(error => console.log('error', error));
+
+ }
+
+ export const AddCurriculumExternalResourses = async(code,ID,curriclum_ex_res_tile,curriculum_ex_res_link,setcurriclum_ex_res_tile,setcurriculum_ex_res_link,setsectionData) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+  formdata.append("CurriculumItemId", `${ID}`);
+  formdata.append("Title", `${curriclum_ex_res_tile}`);
+  formdata.append("Url", `${curriculum_ex_res_link}`);
+
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addExternalResource", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Added",result.message)
+      GetCurriculum(code,setsectionData)
+      setcurriclum_ex_res_tile("")
+      setcurriculum_ex_res_link("")
+    }else{
+      ErrorAlert("Error","Something Went Wrong")
+    }
+
+    
+
+  })
+  .catch(error => console.log('error', error));
+
+ }
+
+ export const AddCurriculumSourceCode = async(code,ID,file,setsectionData) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+formdata.append("CurriculumItemId", `${ID}`);
+formdata.append("SourceCode", file);
+
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSourceCode", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+
+    console.log(result)
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Added!",result.message)
+      GetCurriculum(code,setsectionData)
+      return
+    }
   
+  })
+  .catch(error => console.log('error', error));
+
+ }
+
+ export const VerifyTheInstructor = async(code) =>{
+
   var requestOptions = {
     method: 'GET',
     redirect: 'follow'

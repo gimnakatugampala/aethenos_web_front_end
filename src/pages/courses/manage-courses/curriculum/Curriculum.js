@@ -26,7 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
-import {AddCurriculumSection, AddLectureTitle, GetCurriculum} from "../../../../api"
+import {AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumSection, AddCurriculumSourceCode, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 
@@ -153,6 +153,63 @@ const Curriculum = ({code}) => {
       console.log(f)
     })
   },[])
+
+  // Save Description in Lecture
+  const handleSaveDescription = (ID) => {
+    console.log(ID)
+    console.log(curriculum_desc)
+
+    if(curriculum_desc == ""){
+      ErrorAlert("Empty Field","Please Enter Description")
+      return
+    }
+
+    // setcurriculum_desc
+    AddCurriculumDescription(code,ID,curriculum_desc,setcurriculum_desc,setshowDescription,setsectionData)
+
+  }
+
+  // Save Resources > Downloadable
+  const handleDownloadbaleFile = (e,ID) =>{
+    console.log(e.target.files[0])
+
+    // setcurriculum_download_file(e.target.files[0])
+    AddCurriculumDownloadable(code,ID,e.target.files[0],setshowResources,setsectionData)
+    
+  }
+
+   // Save Resources > External Reourses
+   const handleExternalResources = (ID) =>{
+      // console.log(ID)
+
+
+      if(curriclum_ex_res_tile == ""){
+
+        ErrorAlert("Empty Field","Please Enter Title")
+        return
+
+      }else if(curriculum_ex_res_link == ""){
+        ErrorAlert("Empty Field","Please Enter Link")
+        return
+
+      }else{
+        AddCurriculumExternalResourses(code,ID,curriclum_ex_res_tile,curriculum_ex_res_link,setcurriclum_ex_res_tile,setcurriculum_ex_res_link,setsectionData)
+      }
+
+
+
+   }
+
+  //  Save Resource > Source Code
+   const handleSaveSourceCode = (ID,e) =>{
+
+    console.log(ID)
+    console.log(e.target.files[0])
+
+    AddCurriculumSourceCode(code,ID,e.target.files[0],setsectionData)
+
+   }  
+  
 
 
 
@@ -342,7 +399,7 @@ const Curriculum = ({code}) => {
                   )}
                  
 
-                     {/* Always There */}
+                     {/* Always There  : Description */}
                      {showDescription == index && (
                       <>
                        <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
@@ -351,7 +408,7 @@ const Curriculum = ({code}) => {
 
                        <div className="d-flex my-2">
                        <Button onClick={() => setshowDescription(null)} className="mr-1" variant="outlined">Cancel</Button>
-                       <Button className="ml-1"  variant="contained">Save</Button>
+                       <Button onClick={() => handleSaveDescription(item.id)} className="ml-1"  variant="contained">Save</Button>
                        </div>
                        </>
                      )}
@@ -379,7 +436,8 @@ const Curriculum = ({code}) => {
                           <Tab eventKey="d-file" title="Downloadable File">
 
                           <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Control  onChange={(e) => setcurriculum_download_file(e.target.files[0])} type="file" />
+                          {/* (e) =>  */}
+                            <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
                             <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lecture. This file is going to be seen as a lecture extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
                           </Form.Group>
                             
@@ -396,13 +454,13 @@ const Curriculum = ({code}) => {
                               <Form.Label>URL</Form.Label>
                               <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://example.com" />
                             </Form.Group>
-                            {/* <Button variant="contained">Add Link</Button> */}
+                            <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
                           </Form>
 
                           </Tab>
                           <Tab eventKey="source-code" title="Source Code">
 
-                          <Form.Group onChange={(e) => setcurriculum_source_code(e.target.files[0])} controlId="formFile" className="mb-3">
+                          <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
                             <Form.Control type="file" />
                             <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
                           </Form.Group>
