@@ -1,4 +1,4 @@
-import React, { useState , useRef } from 'react';
+import React, { useState , useRef, useEffect } from 'react';
 import { useLocation , useParams} from "react-router-dom";
 import Persona from "persona";
 import {  Space , Typography  } from 'antd';
@@ -38,7 +38,7 @@ import Pricing from './pricing/Pricing';
 import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
-import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview} from '../../../api'
+import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckContentOwnership} from '../../../api'
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -71,6 +71,8 @@ const ManageCourses = () => {
   const [course_title, setcourse_title] = useState("")
   const [status_type, setstatus_type] = useState("")
 
+  const [courseOwnership, setcourseOwnership] = useState("")
+
   // -------- PERSONA ---------------
   const [options, setOptions] = useState({
     templateId: "tmpl_JAZjHuAT738Q63BdgCuEJQre"
@@ -82,7 +84,13 @@ const ManageCourses = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    // setShow(true)
+
+    // Get Content Ownership
+    if(courseOwnership == 0){
+      setShow(true)
+    }
+
+
 
     // PERSONA
     // const client = new Persona.Client({
@@ -121,9 +129,10 @@ const ManageCourses = () => {
     // window.exit = (force) =>
     //   client ? client.exit(force) : alert("Initialize client first");
 
+
     // OwnThisContent(code)
 
-    RequestSubmitReview(code)
+    // RequestSubmitReview(code)
 
   
   
@@ -235,6 +244,12 @@ const ManageCourses = () => {
 
   },[window.history.state]);
 
+  useEffect(() => {
+    CheckContentOwnership(code,setcourseOwnership)
+
+    console.log(courseOwnership)
+  }, [courseOwnership])
+  
 
 
   return (

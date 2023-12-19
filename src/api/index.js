@@ -2301,6 +2301,27 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
+ export const CheckContentOwnership = async(code,setcourseOwnership) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseIsOwned/${code}`, requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      setcourseOwnership(result)
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
  export const RequestSubmitReview = async(code) =>{
 
   var myHeaders = new Headers();
