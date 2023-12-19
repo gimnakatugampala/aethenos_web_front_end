@@ -39,6 +39,7 @@ import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
 import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckContentOwnership} from '../../../api'
+import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -72,7 +73,7 @@ const ManageCourses = () => {
   const [status_type, setstatus_type] = useState("")
 
   const [courseOwnership, setcourseOwnership] = useState("")
-
+  const [checkOnwership, setcheckOnwership] = useState("")
   // -------- PERSONA ---------------
   const [options, setOptions] = useState({
     templateId: "tmpl_JAZjHuAT738Q63BdgCuEJQre"
@@ -138,13 +139,16 @@ const ManageCourses = () => {
   
   };
 
-  const handleCloseVerification = () => {
-    setShow(false)
-    setShowVerification(false)
-  };
+
   const handleShowVerification = () => {
+
+    if(checkOnwership == "" || checkOnwership == false){
+      ErrorAlert("Unchecked Ownership","Please Accept the Content Ownership")
+      return
+    }
+
     setShow(false)
-    setShowVerification(true)
+
   };
 
 // console.log(InstructorVerify())
@@ -246,8 +250,6 @@ const ManageCourses = () => {
 
   useEffect(() => {
     CheckContentOwnership(code,setcourseOwnership)
-
-    console.log(courseOwnership)
   }, [courseOwnership])
   
 
@@ -391,16 +393,15 @@ const ManageCourses = () => {
 
           <p className='m-0 p-0'>Please select one of the options below</p>
 
-          <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="female"
-        name="radio-buttons-group"
-      >
-        <FormControlLabel value="female" control={<Radio />} label="I created most or all of the contest of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos" />
-        <br />
-        <FormControlLabel value="male" control={<Radio />} label="I am a person or a company publishing this course through either partnership, contract, or employment with the creator of most or all of the content of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos" />
+          <div className="form-check my-3">
+          <input onChange={(e) => setcheckOnwership(e.target.checked)} className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+          <label className="form-check-label" for="flexCheckDefault"> 
         
-      </RadioGroup>
+         <p><b>I created most or all of the contest of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos.</b></p> 
+           </label>
+        </div>
+
+      
 
       <div className='d-flex justify-content-end'>
             <Button onClick={handleShowVerification}  className='my-4' variant='contained'>Accept</Button>
@@ -412,29 +413,6 @@ const ManageCourses = () => {
       </Modal>
 
 
-      {/* Verification */}
-      <Modal show={showVerification} onHide={handleCloseVerification}>
-        <Modal.Header closeButton>
-          <Modal.Title>Verification</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h6 className='my-1'><b>Complete Identify Verification</b></h6>
-
-          <p>Aethenos Has Developed a Program to Verify its Instructor When Submitting the Course for Review.</p>
-
-          <p>Verifying the ID card ensures that the individual submitting the course is who they claim to be. This is crucial for maintaining trust and credibility within the platform. It prevents individuals from impersonating someone else or creating courses under false pretenses.</p>
-
-
-         
-
-      <div className='d-flex justify-content-end'>
-            <Button onClick={() => window.location.href = "/verification"} className='my-2' variant='contained'>Continue</Button>
-      </div>
-
-
-        </Modal.Body>
-       
-      </Modal>
 
   </Layout>
   )

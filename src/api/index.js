@@ -2291,11 +2291,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(result => {
       console.log(result)
 
-      if(result.variable == "200"){
-        return "Owned"
-      }else{
-        return "AlreadyOwned"
-      }
+      // if(result.variable == "200"){
+      //   return "Owned"
+      // }else{
+      //   return "AlreadyOwned"
+      // }
     })
     .catch(error => console.log('error', error));
 
