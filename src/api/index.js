@@ -2275,7 +2275,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const OwnThisContent = async(code) =>{
+ export const OwnThisContent = async(code,setShow) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2291,11 +2291,14 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(result => {
       console.log(result)
 
-      // if(result.variable == "200"){
-      //   return "Owned"
-      // }else{
-      //   return "AlreadyOwned"
-      // }
+      if(result.variable == "200"){
+        // return "Owned"
+        setShow(false)
+      }else{
+        // return "AlreadyOwned"
+
+        ErrorAlert("Error","Something Went Wrong")
+      }
     })
     .catch(error => console.log('error', error));
 

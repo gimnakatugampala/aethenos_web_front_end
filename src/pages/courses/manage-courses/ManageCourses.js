@@ -89,9 +89,13 @@ const ManageCourses = () => {
     // Get Content Ownership
     if(courseOwnership == 0){
       setShow(true)
+      return
     }
 
+    // Check Personal ID
 
+    // Send to Request
+    RequestSubmitReview(code)
 
     // PERSONA
     // const client = new Persona.Client({
@@ -131,9 +135,9 @@ const ManageCourses = () => {
     //   client ? client.exit(force) : alert("Initialize client first");
 
 
-    // OwnThisContent(code)
+    // 
 
-    // RequestSubmitReview(code)
+    
 
   
   
@@ -147,7 +151,15 @@ const ManageCourses = () => {
       return
     }
 
-    setShow(false)
+    // setShow(false)
+
+    // Send Ownersship
+    OwnThisContent(code,setShow)
+
+    // Check the Personal Verification
+
+    // Send to Request
+    RequestSubmitReview(code)
 
   };
 
