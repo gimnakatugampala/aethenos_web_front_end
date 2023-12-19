@@ -26,7 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import ArticleIcon from "@mui/icons-material/Article";
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 
@@ -56,9 +56,9 @@ const Curriculum = ({code}) => {
   const [curriculum_desc, setcurriculum_desc] = useState("")
   const [curriclum_ex_res_tile, setcurriclum_ex_res_tile] = useState("")
   const [curriculum_ex_res_link, setcurriculum_ex_res_link] = useState("")
-  const [curriculum_download_file, setcurriculum_download_file] = useState("")
-  const [curriculum_source_code, setcurriculum_source_code] = useState("")
-  const [curriculum_video, setcurriculum_video] = useState("")
+
+  const [quizTitle, setquizTitle] = useState("")
+  const [quizDesc, setquizDesc] = useState("")
 
   const [showCurriculumItem, setshowCurriculumItem] = useState(null)
   const [showLecInput, setshowLecInput] = useState(null)
@@ -123,26 +123,7 @@ const Curriculum = ({code}) => {
 
     // ----------------
 
-    // Show Quiz Input
-    const handleShowQuizInput = () =>{
-      setshowQuizInput(!showQuizInput)
-      setshowCurriculumItem(false)
-    }
-
-    // Save Quiz
-    const handleSaveQuiz = () =>{
-      setshowQuizInput(false)
-  }
-
-  // Cancel Quiz
-  const handleCancelQuizInput = () =>{
-    setshowQuizInput(false)
-    setshowCurriculumItem(true)
-  }
-
   
-
-
 
   useEffect(() => {
     GetCurriculum(code,setsectionData)
@@ -227,6 +208,41 @@ const Curriculum = ({code}) => {
       // console.log(ID)
       AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
    }
+
+  //  Save Quiz > First Step
+    // Show Quiz Input
+    const handleShowQuizInput = () =>{
+      setshowQuizInput(!showQuizInput)
+      setshowCurriculumItem(false)
+    }
+
+    // Save Quiz
+    const handleSaveQuiz = (sectionID) =>{
+      // setshowQuizInput(null)
+
+      console.log(sectionID)
+      console.log(quizTitle)
+      console.log(quizDesc)
+
+      if(quizTitle == ""){
+        ErrorAlert("Empty Field","Please Enter Quiz Title")
+      }else if(quizDesc == ""){
+        ErrorAlert("Empty Field","Please Enter Quiz Description")
+      }else{
+
+        AddCurriculumQuiz(code,setsectionData,sectionID,quizTitle,quizDesc,setshowQuizInput,setshowCurriculumItem,setquizTitle,setquizDesc)
+
+      }
+
+  }
+
+
+  // Cancel Quiz
+  const handleCancelQuizInput = () =>{
+    setshowQuizInput(false)
+    setshowCurriculumItem(true)
+  }
+
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -568,19 +584,19 @@ const Curriculum = ({code}) => {
             {showQuizInput == index && (
 
             <div className="p-4 m-2">
-            
+       
             <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Quiz Title</Form.Label>
-              <Form.Control type="text" placeholder="Enter a Title" />
+              <Form.Control onChange={(e) => setquizTitle(e.target.value)} type="text" placeholder="Enter a Title" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Quiz Description</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control onChange={(e) => setquizDesc(e.target.value)} as="textarea" rows={3} />
             </Form.Group>
             </Form>
 
-            <Button onClick={handleSaveQuiz} className="mx-1" variant="outlined">
+            <Button onClick={() => handleSaveQuiz(section.courseSection.sectionId)} className="mx-1" variant="outlined">
               ADD
             </Button>
             

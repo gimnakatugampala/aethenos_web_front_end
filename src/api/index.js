@@ -2568,6 +2568,44 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
+ export const AddCurriculumQuiz = async(code,setsectionData,sectionID,quizTitle,quizDesc,setshowQuizInput,setshowCurriculumItem,setquizTitle,setquizDesc) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+  formdata.append("title", `${quizTitle}`);
+  formdata.append("description", `${quizDesc}`);
+  formdata.append("courseSectionId", `${sectionID}`);
+
+  var requestOptions = {
+    method: 'POST',
+    body: formdata,
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQuiz", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Added",result.message)
+        GetCurriculum(code,setsectionData)
+        setshowQuizInput(null)
+        setshowCurriculumItem(null)
+        setquizTitle("")
+        setquizDesc("")
+        return
+      }
+
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
  export const VerifyTheInstructor = async(code) =>{
 
   var requestOptions = {
