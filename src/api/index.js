@@ -295,6 +295,24 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
+ export const UpdateCourseProgress = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/courseCurriculumProgress/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+ }
+
  export const GetIntendedLeaners = async(code,setstudentsLearnData,setrequirementsData,setwhosData) =>{
 
   var myHeaders = new Headers();
@@ -347,6 +365,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
       if(result.variable == "200"){
         SuccessAlert("Saved!",result.message)
+        UpdateCourseProgress(code)
       }else{
         ErrorAlert("Error!",result.message)
       }
@@ -381,6 +400,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
       if(result.variable == "200"){
         SuccessAlert("Saved!",result.message)
+        UpdateCourseProgress(code)
       }else{
         ErrorAlert("Error!",result.message)
       }
@@ -542,6 +562,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
       
       if(result.variable == "200"){
         SuccessAlert("Saved",result.message)
+        UpdateCourseProgress(code)
       }else{
         ErrorAlert("Error",result.message)
       }
@@ -780,35 +801,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     .catch(error => console.log('error', error));
  }
 
- export const AddCurriculum = async(code) =>{
 
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
-
-  var formdata = new FormData();
-  formdata.append("courseCode", "123456");
-  formdata.append("sectionName", "Test Secton Name 02");
-  formdata.append("article", "Lorem");
-  // formdata.append("video", fileInput.files[0], "[PROXY]");
-  formdata.append("description", "Test Description");
-  // formdata.append("downloadableFile", fileInput.files[0], "[PROXY]");
-  formdata.append("externalResourcesTitle", "Test Resources File");
-  formdata.append("externalResourcesUrl", "www.testurl.com");
-  // formdata.append("sourceCode", fileInput.files[0], "[PROXY]");
-  
-  var requestOptions = {
-    method: 'POST',
-    body: formdata,
-    headers: myHeaders,
-    redirect: 'follow'
-  };
-  
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCurriculum", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-
- }
 
  export const GetCoursePricingType = async(code,setPaid_Type) =>{
 
@@ -2157,6 +2150,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
     if(result.variable == "200"){
       SuccessAlert("Added!",result.message)
+      UpdateCourseProgress(code)
     }
 
   })
@@ -2221,6 +2215,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
       if(result.message == "Course section Added successfully"){
           SuccessAlert("Section Added",result.message)
+          UpdateCourseProgress(code)
           setshowSectionInput(false)
           setsection("")
           GetCurriculum(code,setsectionData) 
@@ -2598,6 +2593,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
         setshowCurriculumItem(null)
         setquizTitle("")
         setquizDesc("")
+        return
+      }
+
+      if(result.message == "Error"){
+        ErrorAlert("Error",result.variable)
         return
       }
 

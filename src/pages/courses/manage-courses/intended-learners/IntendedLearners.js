@@ -213,7 +213,7 @@ const saveIntendedLeaners = (e) =>{
     who:[...whosData,...whos]
   }
 
-  // AddIntendedLeaners(item,code)
+  AddIntendedLeaners(item,code)
 
   // console.log(studentsLearn)
   // console.log(requirements)

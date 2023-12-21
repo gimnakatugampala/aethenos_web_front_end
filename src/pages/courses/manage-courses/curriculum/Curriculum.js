@@ -24,7 +24,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import SlideshowIcon from "@mui/icons-material/Slideshow";
+import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
@@ -36,6 +36,7 @@ const Curriculum = ({code}) => {
   const [showMain, setshowMain] = useState(null)
   const [showDescRes, setshowDescRes] = useState(true)
   const [curriculumvisiblity, setcurriculumvisiblity] = useState("");
+  const [curriculumvisiblitymc, setcurriculumvisiblitymc] = useState("")
   const [extracurriculum, setextracurriculum] = useState("")
 
   const [showSectionInput, setshowSectionInput] = useState(false)
@@ -274,7 +275,8 @@ const Curriculum = ({code}) => {
             <div className="my-2">
 
             {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,index) => (
-              <Accordion key={index} className="my-3">
+              item.type == "Lecture" ? 
+              (<Accordion key={index} className="my-3">
                 <AccordionSummary
                   className="accordian-header d-flex justify-content-between align-items-center"
                   expandIcon={<ExpandMoreIcon />}
@@ -508,7 +510,226 @@ const Curriculum = ({code}) => {
                    
 
                 </AccordionDetails>
-              </Accordion>
+              </Accordion>) : 
+              (
+                // Quiz Accordance
+              <Accordion key={index} className="my-3">
+                <AccordionSummary
+                  className="accordian-header d-flex justify-content-between align-items-center"
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>
+                    <CheckCircleIcon fontSize="small" /> Quiz {index + 1}:{" "}
+                    <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                  </Typography>
+
+                  {showContentAdd == index ? (
+                    <Button
+                      onClick={() => {
+                        setshowDescRes(true)
+                        setshowMain(null)
+                        console.log(index)
+                        setshowContentAdd(null)
+                        setcurriculumvisiblitymc("")
+                        // handleContentshow()
+                      }}
+                      className="mx-2"
+                      size="small"
+                      variant="contained"
+                    >
+                      <CloseIcon /> Cancel
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        setshowMain(showMain == index ? null : index)
+                        setshowContentAdd(showContentAdd == index ? null : index)
+                      }}
+                      className="mx-2"
+                      size="small"
+                      variant="outlined"
+                    >
+                      <AddIcon /> Questions
+                    </Button>
+                  )}
+                </AccordionSummary>
+
+                <AccordionDetails>
+
+                  {/* Landing Content */}
+                  {showMain == index ? (
+                      curriculumvisiblitymc == "mc" ? (
+                      <div>
+
+                        <Button
+                        className="my-2"
+                          onClick={() => setcurriculumvisiblitymc("")}
+                          variant="contained"
+                        >
+                          <CloseIcon /> Cancel
+                        </Button>
+                        
+                        {/* MCQ */}
+                      <Form>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Label>Question</Form.Label>
+                        <Form.Control as="textarea" rows={3} />
+                      </Form.Group>
+                        <Form.Label>Answers</Form.Label>
+
+                      <div className="row">
+
+                        {/* 1 */}
+                          <div className="col-md-1">
+                            <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                          </div>
+                          <div className="col-md-11 mb-3">
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Control as="textarea" rows={3} />
+                          </Form.Group>
+                          <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                          </div>
+
+                        {/* 2 */}
+                          <div className="col-md-1">
+                            <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                          </div>
+                          <div className="col-md-11 mb-3">
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Control as="textarea" rows={3} />
+                          </Form.Group>
+                          <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                          </div>
+
+                      {/* 3 */}
+                      <div className="col-md-1">
+                        <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                      </div>
+
+                      <div className="col-md-11 mb-3">
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Control as="textarea" rows={3} />
+                      </Form.Group>
+                      <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                      </div>
+
+                      {/* 4 */}
+                      <div className="col-md-1">
+                         <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                      </div>
+
+                      <div className="col-md-11 mb-3">
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Control as="textarea" rows={3} />
+                      </Form.Group>
+                      <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                      </div>
+
+
+
+                      {/* 5*/}
+                      <div className="col-md-1">
+                         <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                      </div>
+
+                      <div className="col-md-11 mb-3">
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                        <Form.Control as="textarea" rows={3} />
+                      </Form.Group>
+                      <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                      </div>
+
+
+                      </div>
+
+
+                    </Form>
+                        
+                        
+                      </div>
+                    )  : (
+                      <div className="d-flex justify-content-center">
+                        <div className="mx-2">
+                          <Card sx={{ width: 140 }} elevation={3}>
+                            <CardActionArea
+                              onClick={() => {
+                                setshowDescRes(true)
+                                setcurriculumvisiblitymc("mc")
+                              }}
+                              className="d-flex justify-content-center align-items-center text-center"
+                            >
+                              <CardContent>
+                                <HelpIcon fontSize="large" />
+                                <p className="my-2">Multiple Choice</p>
+                              </CardContent>
+                            </CardActionArea>
+                          </Card>
+                        </div>
+
+                      </div>
+                    )
+                  ) : (
+                      <></>
+                  )}
+                 
+
+           
+
+                      {showResources == index && (
+                        <div>
+                          <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                          <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                          
+                          {/* Tabs */}
+                          <Tabs
+                          defaultActiveKey="d-file"
+                          id="uncontrolled-tab-example"
+                          className="my-3"
+                        >
+                          <Tab eventKey="d-file" title="Downloadable File">
+
+                          <Form.Group controlId="formFile" className="mb-3">
+                          {/* (e) =>  */}
+                            <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
+                            <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lecture. This file is going to be seen as a lecture extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                          </Form.Group>
+                            
+                          </Tab>
+                          <Tab eventKey="e-r" title="External Resources">
+
+                          <Form> 
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>Title</Form.Label>
+                              <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>URL</Form.Label>
+                              <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://example.com" />
+                            </Form.Group>
+                            <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
+                          </Form>
+
+                          </Tab>
+                          <Tab eventKey="source-code" title="Source Code">
+
+                          <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
+                            <Form.Control type="file" />
+                            <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                          </Form.Group>
+
+                          </Tab>
+                        </Tabs>
+                        </div>
+                      )}
+                      
+                      
+                   
+
+                </AccordionDetails>
+              </Accordion>)
 
             ))}
             
@@ -588,11 +809,11 @@ const Curriculum = ({code}) => {
             <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Quiz Title</Form.Label>
-              <Form.Control onChange={(e) => setquizTitle(e.target.value)} type="text" placeholder="Enter a Title" />
+              <Form.Control value={quizTitle} onChange={(e) => setquizTitle(e.target.value)} type="text" placeholder="Enter a Title" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Quiz Description</Form.Label>
-              <Form.Control onChange={(e) => setquizDesc(e.target.value)} as="textarea" rows={3} />
+              <Form.Control value={quizDesc} onChange={(e) => setquizDesc(e.target.value)} as="textarea" rows={3} />
             </Form.Group>
             </Form>
 
