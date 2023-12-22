@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Paper, Container, Box, Button, Grid } from "@mui/material";
 import { Card } from "antd";
+import { GetAdminDisApproveComment } from "../../../../api";
 
-function App() {
+function App({code}) {
+
+  const [comment, setcomment] = useState("")
+
+  useEffect(() => {
+    GetAdminDisApproveComment(code,setcomment)
+  }, [code])
+  
+
   return (
     <div className="col-md-8">
       <Card className="py-2 my-2">
@@ -26,7 +35,7 @@ function App() {
                 DISAPPROVED
               </Typography>
               <Typography variant="body1" gutterBottom>
-                This content has been disapproved.
+                {comment}
               </Typography>
             </Paper>
           </Box>

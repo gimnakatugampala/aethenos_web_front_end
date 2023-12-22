@@ -2606,6 +2606,87 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
+ export const AddCurriculumQnAQuiz = async(code,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+formdata.append("question", `${question}`);
+formdata.append("quizId", `${ID}`);
+formdata.append("answer", `${answerOne},${answerTwo},${answerThree},${answerFour},${answerFive}`);
+formdata.append("explanation", `${answerExplainOne},${answerExplainTwo},${answerExplainThree},${answerExplainFour},${answerExplainFive}`);
+
+if(answerOption == "ans1"){
+  formdata.append("correctAnswer", "true,false,false,false,false");
+}else if(answerOption == "ans2"){
+  formdata.append("correctAnswer", "false,true,false,false,false");
+}else if(answerOption == "ans3"){
+  formdata.append("correctAnswer", "false,false,true,false,false");
+}else if(answerOption == "ans4"){
+  formdata.append("correctAnswer", "false,false,false,true,false");
+}else if(answerOption == "ans5"){
+  formdata.append("correctAnswer", "false,false,false,false,true");
+}
+
+formdata.append("lectureId", "42");
+
+var requestOptions = {
+  method: 'PUT',
+  body: formdata,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQuestionAndAnswers", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Added",result.message)
+      return
+    }
+
+    if(result.message == "Error"){
+      ErrorAlert("Error",result.variable)
+      return
+    }
+
+
+
+
+  })
+  .catch(error => console.log('error', error));
+
+
+ }
+
+ export const GetAdminDisApproveComment = async(code,setcomment) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseComment/${code}`, requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#settings`)
+      setcomment(result)
+    })
+    .catch(error => console.log('error', error));
+
+
+ }
+
  export const VerifyTheInstructor = async(code) =>{
 
   var requestOptions = {
