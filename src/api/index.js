@@ -262,7 +262,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
     }
     Unauthorized(result.status,"courses")
 
-    setcourses(result.sort((a, b) => new Date(b.created_date) - new Date(a.created_date)))
+    setcourses(result.sort((a, b) => new Date(b.course.created_date) - new Date(a.course.created_date)))
 
 
   })
