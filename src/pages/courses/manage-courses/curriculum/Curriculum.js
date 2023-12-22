@@ -26,9 +26,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
+
 
 const Curriculum = ({code}) => {
 
@@ -40,6 +43,27 @@ const Curriculum = ({code}) => {
   const [extracurriculum, setextracurriculum] = useState("")
 
   const [showSectionInput, setshowSectionInput] = useState(false)
+
+  const [question, setquestion] = useState("")
+
+  const [answerOptionOne, setanswerOptionOne] = useState("ans1")
+  const [answerOptionTwo, setanswerOptionTwo] = useState("ans2")
+  const [answerOptionThree, setanswerOptionThree] = useState("ans3")
+  const [answerOptionFour, setanswerOptionFour] = useState("ans4")
+  const [answerOptionFive, setanswerOptionFive] = useState("ans5")
+  const [answerOption, setanswerOption] = useState("")
+
+  const [answerOne, setanswerOne] = useState("")
+  const [answerTwo, setanswerTwo] = useState("")
+  const [answerThree, setanswerThree] = useState("")
+  const [answerFour, setanswerFour] = useState("")
+  const [answerFive, setanswerFive] = useState("")
+
+  const [answerExplainOne, setanswerExplainOne] = useState("")
+  const [answerExplainTwo, setanswerExplainTwo] = useState("")
+  const [answerExplainThree, setanswerExplainThree] = useState("")
+  const [answerExplainFour, setanswerExplainFour] = useState("")
+  const [answerExplainFive, setanswerExplainFive] = useState("")
 
 
 
@@ -234,6 +258,73 @@ const Curriculum = ({code}) => {
         AddCurriculumQuiz(code,setsectionData,sectionID,quizTitle,quizDesc,setshowQuizInput,setshowCurriculumItem,setquizTitle,setquizDesc)
 
       }
+
+  }
+
+  // Save > Answer & Question
+  const handleQuestionsAnswer = (ID) =>{
+    console.log(ID)
+    console.log(question)
+
+    
+    console.log(answerOption)
+
+    console.log(answerOne)
+    console.log(answerExplainOne)
+
+ 
+    console.log(answerTwo)
+    console.log(answerExplainTwo)
+
+    console.log(answerThree)
+    console.log(answerExplainThree)
+
+    console.log(answerFour)
+    console.log(answerExplainFour)
+
+    console.log(answerFive)
+    console.log(answerExplainFive)
+
+    if(question == ""){
+      ErrorAlert("Empty Field","Please Enter a Question");
+      return
+    }else if(answerOption == ""){
+      ErrorAlert("Empty Field","Please Select a Correct Answer");
+      return
+    }else if(answerOne == ""){
+      ErrorAlert("Empty Field","Please Enter Answer One");
+      return
+    }else if(answerExplainOne == ""){
+      ErrorAlert("Empty Field","Please Enter Answer One Explanation");
+      return
+    }else if(answerTwo == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Two");
+      return
+    }else if(answerExplainTwo == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Two Explanation");
+      return
+    }else if(answerThree == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Three");
+      return
+    }else if(answerExplainThree == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Three Explanation");
+      return
+    }else if(answerFour == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Four");
+      return
+    }else if(answerExplainFour == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Four Explanation");
+      return
+    }else if(answerFive == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Five");
+      return
+    }else if(answerExplainFive == ""){
+      ErrorAlert("Empty Field","Please Enter Answer Five Explanation");
+      return
+    }else{
+
+    }
+
 
   }
 
@@ -575,73 +666,86 @@ const Curriculum = ({code}) => {
                       <Form>
                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Question</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control value={question} onChange={(e) => setquestion(e.target.value)} as="textarea" rows={3} />
                       </Form.Group>
-                        <Form.Label>Answers</Form.Label>
 
+                      <Form.Label>Answers</Form.Label>
+                      <RadioGroup
+                        name="group1"
+                        onChange={(e) => setanswerOption(e.target.value)}
+                        value={answerOption}
+                      >
                       <div className="row">
 
                         {/* 1 */}
                           <div className="col-md-1">
-                            <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                            <Radio value={answerOptionOne} onChange={(e) => setanswerOptionOne(e.target.value)} />
                           </div>
                           <div className="col-md-11 mb-3">
                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Control value={answerOne} onChange={(e) => setanswerOne(e.target.value)} as="textarea" rows={3} />
                           </Form.Group>
-                          <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                          <Form.Control value={answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
                           </div>
 
                         {/* 2 */}
                           <div className="col-md-1">
-                            <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                            <Radio value={answerOptionTwo} onChange={(e) => setanswerOptionTwo(e.target.value)} />
                           </div>
                           <div className="col-md-11 mb-3">
                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Control value={answerTwo} onChange={(e) => setanswerTwo(e.target.value)} as="textarea" rows={3} />
                           </Form.Group>
-                          <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                          <Form.Control value={answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
                           </div>
 
                       {/* 3 */}
                       <div className="col-md-1">
-                        <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                        <Radio value={answerOptionThree} onChange={(e) => setanswerOptionThree(e.target.value)} />
                       </div>
 
                       <div className="col-md-11 mb-3">
                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control value={answerThree} onChange={(e) => setanswerThree(e.target.value)} as="textarea" rows={3} />
                       </Form.Group>
-                      <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                      <Form.Control value={answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
                       </div>
 
                       {/* 4 */}
                       <div className="col-md-1">
-                         <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                         <Radio value={answerOptionFour} onChange={(e) => setanswerOptionFour(e.target.value)} />
                       </div>
 
                       <div className="col-md-11 mb-3">
                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control value={answerFour} onChange={(e) => setanswerFour(e.target.value)} as="textarea" rows={3} />
                       </Form.Group>
-                      <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                      <Form.Control value={answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
                       </div>
 
 
 
                       {/* 5*/}
                       <div className="col-md-1">
-                         <Form.Check name="group1" type="radio" aria-label="radio 1" />
+                         <Radio value={answerOptionFive} onChange={(e) => setanswerOptionFive(e.target.value)} />
+
                       </div>
 
                       <div className="col-md-11 mb-3">
                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                        <Form.Control as="textarea" rows={3} />
+                        <Form.Control value={answerFive} onChange={(e) => setanswerFive(e.target.value)} as="textarea" rows={3} />
                       </Form.Group>
-                      <Form.Control type="text" placeholder="Explain why this is or isn't the best answer" />
+                      <Form.Control value={answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
                       </div>
 
 
+                      </div>
+                      </RadioGroup>
+
+                      <div className="d-flex justify-content-end">
+                      <Button onClick={() => handleQuestionsAnswer(item.id)}  variant="outlined">
+                        ADD
+                      </Button>
                       </div>
 
 
