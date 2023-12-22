@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Paper, Container, Box, Button, Grid } from "@mui/material";
 import { Card } from "antd";
-import { GetAdminDisApproveComment } from "../../../../api";
+import { GetAdminDisApproveComment, UnpublishCourse } from "../../../../api";
 
 function App({code}) {
 
@@ -9,7 +9,12 @@ function App({code}) {
 
   useEffect(() => {
     GetAdminDisApproveComment(code,setcomment)
-  }, [code])
+  }, [code,comment])
+
+
+  const handleunpublish = () =>{
+    UnpublishCourse(code)
+  }
   
 
   return (
@@ -22,6 +27,7 @@ function App({code}) {
 
         <Container maxWidth="md">
           <Box my={4}>
+            {comment != "" && (
             <Paper
               elevation={0}
               sx={{
@@ -38,6 +44,7 @@ function App({code}) {
                 {comment}
               </Typography>
             </Paper>
+            )}
           </Box>
           <Box my={4}>
             <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
@@ -50,7 +57,7 @@ function App({code}) {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Grid container justifyContent="flex-end">
-                    <Button variant="contained" color="secondary">
+                    <Button onClick={handleunpublish} variant="contained" color="secondary">
                       Unpublish
                     </Button>
                   </Grid>

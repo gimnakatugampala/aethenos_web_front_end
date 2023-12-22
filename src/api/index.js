@@ -2687,6 +2687,30 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
 
  }
 
+ export const UnpublishCourse = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/setUnPublishCourse/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      Unauthorized(result.status,`courses/manage/${code}/#settings`)
+      console.log(result)
+      if(result.variable == "200"){
+        SuccessAlert("Success","Course Successfully Unpublished")
+        return
+      }
+    })
+    .catch(error => console.log('error', error));
+ }
+
  export const VerifyTheInstructor = async(code) =>{
 
   var requestOptions = {
