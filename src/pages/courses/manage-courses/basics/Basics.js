@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import ButtonMaterial from '@mui/material/Button';
 import { TagsInput } from "react-tag-input-component";
-import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories } from "../../../../api";
+import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress } from "../../../../api";
 import ImageUploader from 'react-images-upload';
 import ReactPlayer from 'react-player'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -101,6 +101,8 @@ const Basics = ({code}) => {
       ErrorAlert("Empty Field","Please Select a Course Sub Category")
       return
     }
+
+    
 
     AddCourseLandingPage(
       code,

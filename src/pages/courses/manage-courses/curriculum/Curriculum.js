@@ -262,28 +262,33 @@ const Curriculum = ({code}) => {
   }
 
   // Save > Answer & Question
-  const handleQuestionsAnswer = (ID) =>{
+  const handleQuestionsAnswer = (item) =>{
+    // console.log(item.id)
+
+    let ID = item.id // Lect ID
+    let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id // Curriculum ID
+    // console.log(item.getQuizs.length)
     console.log(ID)
-    console.log(question)
+    console.log(curriculumID)
 
     
-    console.log(answerOption)
+    // console.log(answerOption)
 
-    console.log(answerOne)
-    console.log(answerExplainOne)
+    // console.log(answerOne)
+    // console.log(answerExplainOne)
 
  
-    console.log(answerTwo)
-    console.log(answerExplainTwo)
+    // console.log(answerTwo)
+    // console.log(answerExplainTwo)
 
-    console.log(answerThree)
-    console.log(answerExplainThree)
+    // console.log(answerThree)
+    // console.log(answerExplainThree)
 
-    console.log(answerFour)
-    console.log(answerExplainFour)
+    // console.log(answerFour)
+    // console.log(answerExplainFour)
 
-    console.log(answerFive)
-    console.log(answerExplainFive)
+    // console.log(answerFive)
+    // console.log(answerExplainFive)
 
     if(question == ""){
       ErrorAlert("Empty Field","Please Enter a Question");
@@ -322,8 +327,7 @@ const Curriculum = ({code}) => {
       ErrorAlert("Empty Field","Please Enter Answer Five Explanation");
       return
     }else{
-      console.log(ID)
-      AddCurriculumQnAQuiz(code,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption)
+      AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption)
     }
 
 
@@ -744,11 +748,11 @@ const Curriculum = ({code}) => {
                       </RadioGroup>
 
                       <div className="d-flex justify-content-end">
-                      <Button onClick={() => handleQuestionsAnswer(item.id)}  variant="outlined">
+                      <Button onClick={() => handleQuestionsAnswer(item)}  variant="outlined">
                         ADD
                       </Button>
                       </div>
-
+                     
 
                     </Form>
                         
@@ -774,7 +778,7 @@ const Curriculum = ({code}) => {
                         </div>
 
                       </div>
-                    )
+                    ) 
                   ) : (
                       <></>
                   )}

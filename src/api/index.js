@@ -2183,6 +2183,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
       if(result.variable == "200"){
         SuccessAlert("Updated",result.message)
+        UpdateCourseProgress(code)
         return
       }
 
@@ -2554,6 +2555,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
       if(result.variable == "200"){
         SuccessAlert("Uploaded",result.message)
         GetCurriculum(code,setsectionData)
+        UpdateCourseProgress(code)
         setshowMain(null)
         return
       }
@@ -2606,16 +2608,22 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
- export const AddCurriculumQnAQuiz = async(code,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption) =>{
+ export const AddCurriculumQnAQuiz = async(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
 formdata.append("question", `${question}`);
-formdata.append("quizId", `${ID}`);
+
+if(curriculumID != "" ){
+  formdata.append("quizId", `${curriculumID}`)
+}
+
+
 formdata.append("answer", `${answerOne},${answerTwo},${answerThree},${answerFour},${answerFive}`);
 formdata.append("explanation", `${answerExplainOne},${answerExplainTwo},${answerExplainThree},${answerExplainFour},${answerExplainFive}`);
+
 
 if(answerOption == "ans1"){
   formdata.append("correctAnswer", "true,false,false,false,false");
@@ -2629,7 +2637,7 @@ if(answerOption == "ans1"){
   formdata.append("correctAnswer", "false,false,false,false,true");
 }
 
-formdata.append("lectureId", "42");
+formdata.append("lectureId", `${ID}`);
 
 var requestOptions = {
   method: 'PUT',
