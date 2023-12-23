@@ -344,6 +344,43 @@ const Curriculum = ({code}) => {
     setshowCurriculumItem(true)
   }
 
+  // Get Quiz Data
+  const handleFillQuiz = (item) => {
+   
+
+    setquestion(item.getQuizs.length == 0 ? "" : item.getQuizs[0].question)
+
+    setanswerOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].name)
+    setanswerTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].name)
+    setanswerThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].name)
+    setanswerFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].name)
+    setanswerFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].name)
+
+    setanswerExplainOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].explanation)
+    setanswerExplainTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].explanation)
+    setanswerExplainThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].explanation)
+    setanswerExplainFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].explanation)
+    setanswerExplainFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].explanation)
+
+    if(item.getQuizs.length != 0){  
+      if(item.getQuizs[0].getAnswers[0].correctAnswer == true){
+        setanswerOption("ans1")
+      }else if(item.getQuizs[0].getAnswers[1].correctAnswer == true){
+        setanswerOption("ans2")
+      }else if(item.getQuizs[0].getAnswers[2].correctAnswer == true){
+        setanswerOption("ans3")
+      }else if(item.getQuizs[0].getAnswers[3].correctAnswer == true){
+        setanswerOption("ans4")
+      }else if(item.getQuizs[0].getAnswers[4].correctAnswer == true){
+        setanswerOption("ans5")
+      }
+    }else{
+      setanswerOption("")
+    }
+
+
+  }
+
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -447,24 +484,29 @@ const Curriculum = ({code}) => {
                             <tr>
                               <th>Filename</th>
                               <th>Type</th>
-                              <th>Status</th>
-                              <th>Date</th>
-                              <th></th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>326768.mp4</td>
-                              <td>Video</td>
-                              <td>Processing</td>
-                              <td>10/07/2023</td>
-                              <td>
-                              <Button size="sm" variant="text">Replace</Button>
-                              </td>
-                            </tr>
+                          {item.curriculumItemFiles.length > 0 && (
+                            item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
+                                item.curriculumItemFiles
+                                    .filter(video => video.filetype === "Video")
+                                    .map((video, index) => (
+                                        <tr key={index}>
+                                          <td>{video.url}</td>
+                                          <td>Video</td>
+                                        </tr>
+                                    ))
+                            ) : (
+                                <p>No Video</p>
+                            )
+                       )}
   
                           </tbody>
                         </Table>
+
+                 
+
                       
                         <p><b>Note:</b> This video is still being processed. We will send you an email when it is ready.</p>
                         
@@ -480,9 +522,13 @@ const Curriculum = ({code}) => {
   
                         <div className="my-3">
   
-                        <Typography variant="h6" component="h6">
+                        {/* <Typography variant="h6" component="h6">
                           Article
-                        </Typography>
+                        </Typography> */}
+
+                        <ListGroup className="my-3">
+                          <ListGroup.Item>{removeHtmlTags(item.article)}</ListGroup.Item>
+                        </ListGroup>
   
                           <JoditEditor value={article} onChange={(e) => setarticle(e)} />
                           <div className="d-flex flex-start my-2">
@@ -828,6 +874,7 @@ const Curriculum = ({code}) => {
                               onClick={() => {
                                 setshowDescRes(true)
                                 setcurriculumvisiblitymc("mc")
+                                handleFillQuiz(item)
                               }}
                               className="d-flex justify-content-center align-items-center text-center"
                             >
