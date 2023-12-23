@@ -587,9 +587,9 @@ console.log(item)
                     <div className="p-2">
                         <h6><b>Downloadable Files</b></h6>
                         <ListGroup>
-                            {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype === "Downloadable Items") ? (
+                            {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype == "Downloadable Items") ? (
                                 item.curriculumItemFiles
-                                    .filter(downloaditem => downloaditem.filetype === "Downloadable Items")
+                                    .filter(downloaditem => downloaditem.filetype == "Downloadable Items")
                                     .map((downloaditem, index) => (
                                         <ListGroup.Item key={index}>{downloaditem.url}</ListGroup.Item>
                                     ))
@@ -609,7 +609,7 @@ console.log(item)
                               .filter(link => link.filetype === "External Resourses")
                               .map((link, index) => (
                                   <ListGroup.Item key={index}>
-                                      <a target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a>
+                                      <a  target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a>
                                   </ListGroup.Item>
                               ))}
                       </ListGroup>

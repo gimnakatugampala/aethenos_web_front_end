@@ -2722,6 +2722,27 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
     .catch(error => console.log('error', error));
  }
 
+ export const GetInstructorProfileDetails = async() =>{
+
+  var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+var raw = "{\r\n  \"headline\": \"Sample Headline\",\r\n  \"website\": \"https://example.com\",\r\n  \"biography\": \"Sample biography\",\r\n  \"twitter\": \"https://twitter.com/sample\",\r\n  \"facebook\": \"https://facebook.com/sample\",\r\n  \"linkedin\": \"https://linkedin.com/sample\",\r\n  \"youtube\": \"https://youtube.com/sample\",\r\n  \"generalUserProfile\": {\r\n    \"id\": 1\r\n  },\r\n  \"isProfileCompleted\": 1\r\n}\r\n";
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstructorProfileDetails", requestOptions)
+  .then(response => response.json())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
+ }
+
  export const VerifyTheInstructor = async(code) =>{
 
   var requestOptions = {

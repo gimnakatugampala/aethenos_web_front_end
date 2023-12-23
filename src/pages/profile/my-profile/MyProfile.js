@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from '@mui/material/Button';
-
+import {GetInstructorProfileDetails} from '../../../api'
 
 const MyProfile = () => {
+
+    useEffect(() => {
+        GetInstructorProfileDetails()
+    }, [])
+    
+
   return (
     <div className='container mb-5'>
         <h3>Profile & settings</h3>
