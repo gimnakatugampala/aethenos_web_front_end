@@ -31,6 +31,10 @@ import RadioGroup from '@mui/material/RadioGroup';
 import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
+import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
+import ListGroup from 'react-bootstrap/ListGroup';
+import LaunchIcon from '@mui/icons-material/Launch';
+
 
 
 const Curriculum = ({code}) => {
@@ -327,7 +331,7 @@ const Curriculum = ({code}) => {
       ErrorAlert("Empty Field","Please Enter Answer Five Explanation");
       return
     }else{
-      AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption)
+      AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain)
     }
 
 
@@ -529,6 +533,64 @@ const Curriculum = ({code}) => {
                   ) : (
                       <></>
                   )}
+
+                  <p>{item.description != "N/A" && removeHtmlTags(item.description)}</p>
+
+                  <div className="my-3">
+                  {item.curriculumItemFiles.length > 0 && (
+                    <div className="p-2">
+                        <h6><b>Downloadable Files</b></h6>
+                        <ListGroup>
+                            {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype === "Downloadable Items") ? (
+                                item.curriculumItemFiles
+                                    .filter(downloaditem => downloaditem.filetype === "Downloadable Items")
+                                    .map((downloaditem, index) => (
+                                        <ListGroup.Item key={index}>{downloaditem.url}</ListGroup.Item>
+                                    ))
+                            ) : (
+                                <p>No Downloadable Items</p>
+                            )}
+                        </ListGroup>
+                    </div>
+                )}
+
+
+              {item.curriculumItemFiles.some(link => link.filetype === "External Resourses") && (
+                  <div className="p-2">
+                      <h6><b>External Resources</b></h6>
+                      <ListGroup>
+                          {item.curriculumItemFiles
+                              .filter(link => link.filetype === "External Resourses")
+                              .map((link, index) => (
+                                  <ListGroup.Item key={index}>
+                                      <a target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a>
+                                  </ListGroup.Item>
+                              ))}
+                      </ListGroup>
+                  </div>
+              )}
+
+
+              {item.curriculumItemFiles.length > 0 && (
+                  <div className="p-2">
+                      <h6><b>Source Code</b></h6>
+                      <ListGroup>
+                          {item.curriculumItemFiles.some(source => source.filetype === "Source Code") ? (
+                              item.curriculumItemFiles
+                                  .filter(source => source.filetype === "Source Code")
+                                  .map((source, index) => (
+                                      <ListGroup.Item key={index}>{source.url}</ListGroup.Item>
+                                  ))
+                          ) : (
+                              <p>No Source Code</p>
+                          )}
+                      </ListGroup>
+                  </div>
+              )}
+
+
+
+                  </div>
                  
 
                      {/* Always There  : Description */}

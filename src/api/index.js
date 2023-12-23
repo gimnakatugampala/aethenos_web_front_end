@@ -2608,7 +2608,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
- export const AddCurriculumQnAQuiz = async(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption) =>{
+ export const AddCurriculumQnAQuiz = async(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2655,6 +2655,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
 
     if(result.variable == "200"){
       SuccessAlert("Added",result.message)
+      setcurriculumvisiblitymc("")
+      setshowMain(null)
       return
     }
 
