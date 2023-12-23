@@ -331,10 +331,10 @@ const Curriculum = ({code}) => {
       ErrorAlert("Empty Field","Please Enter Answer Five Explanation");
       return
     }else{
-      AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain)
+      AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData)
     }
-
-
+    
+    
   }
 
 
@@ -347,7 +347,7 @@ const Curriculum = ({code}) => {
   // Get Quiz Data
   const handleFillQuiz = (item) => {
    
-
+console.log(item)
     setquestion(item.getQuizs.length == 0 ? "" : item.getQuizs[0].question)
 
     setanswerOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].name)
