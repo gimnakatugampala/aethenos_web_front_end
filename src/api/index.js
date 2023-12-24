@@ -2722,21 +2722,82 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
     .catch(error => console.log('error', error));
  }
 
- export const GetInstructorProfileDetails = async() =>{
+ export const GetInstructorProfileDetails = async(setfirst_Name,
+  setlast_name,
+  setheadline,
+  setbiography,
+  setwebsite,
+  settwitter,
+  setfacebook,
+  setlinkedin,
+  setyoutube,
+  setprofile_img) =>{
 
   var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
-var raw = "{\r\n  \"headline\": \"Sample Headline\",\r\n  \"website\": \"https://example.com\",\r\n  \"biography\": \"Sample biography\",\r\n  \"twitter\": \"https://twitter.com/sample\",\r\n  \"facebook\": \"https://facebook.com/sample\",\r\n  \"linkedin\": \"https://linkedin.com/sample\",\r\n  \"youtube\": \"https://youtube.com/sample\",\r\n  \"generalUserProfile\": {\r\n    \"id\": 1\r\n  },\r\n  \"isProfileCompleted\": 1\r\n}\r\n";
 
 var requestOptions = {
   method: 'GET',
   headers: myHeaders,
-  body: raw,
   redirect: 'follow'
 };
 
 fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstructorProfileDetails", requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    console.log(result)
+    Unauthorized(result.status,`profile`)
+    setfirst_Name(result.first_name == null ? "" : result.first_name)
+    setlast_name(result.last_name == null ? "" : result.last_name)
+    setheadline(result.headline == null ? "" : result.headline)
+    setbiography(result.biography == null ? "" : result.biography)
+    setwebsite(result.website == null ? "" : result.website)
+    settwitter(result.twitter == null ? "" : result.twitter)
+    setfacebook(result.facebook == null ? "" : result.facebook)
+    setlinkedin(result.linkedin == null ? "" : result.linkedin)
+    setyoutube(result.youtube == null ? "" : result.youtube)
+    setprofile_img(result.profile_img == null ? "" : result.profile_img)
+  })
+  .catch(error => console.log('error', error));
+
+ }
+
+ export const UpdateProfileDetails = async(
+  uploadImage,
+  first_Name,
+  last_name,
+  headline,
+  biography,
+  website,
+  twitter,
+  facebook,
+  linkedin,
+  youtube) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var formdata = new FormData();
+formdata.append("headline", `${headline}`);
+formdata.append("website", `${website}`);
+formdata.append("biography", `${biography}`);
+formdata.append("twitter", `${twitter}`);
+formdata.append("facebook", `${facebook}`);
+formdata.append("linkedin", `${linkedin}`);
+formdata.append("youtube", `${youtube}`);
+formdata.append("firstName", `${first_Name}`);
+formdata.append("lastName", `${last_name}`);
+formdata.append("profileImage", uploadImage);
+
+var requestOptions = {
+  method: 'PUT',
+  body: formdata,
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateInstructorProfile", requestOptions)
   .then(response => response.json())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
