@@ -44,15 +44,8 @@ import { VerifyTheInstructor } from "./api";
 
 function App() {
 
-  const [UserVerify, setUserVerify] = useState(false)
 
 
-  // useEffect(() => {
-  //   if (Cookies.get('aethenos') != null) {
-  //       VerifyTheInstructor()
-  //   }
-
-  // }, []);
 
   
 

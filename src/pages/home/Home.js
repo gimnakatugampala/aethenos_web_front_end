@@ -17,12 +17,7 @@ const Home = () => {
 
         }else{
           VerifyTheInstructor()
-          // console.log(Cookies.get('aethenos'))
-
-          // window.location.href = "/courses";
         }
-
-        // Check Id the User is Instructor Or NOT
       
       }, [])
       
