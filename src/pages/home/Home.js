@@ -4,7 +4,7 @@ import Colors from '../../commonFunctions/Colors';
 import './Home.css'
 import { Alert, Space, Spin } from 'antd';
 import { InfinitySpin } from  'react-loader-spinner'
-import { getUserStatus } from '../../api';
+import { VerifyTheInstructor, getUserStatus } from '../../api';
 import Cookies from 'js-cookie'
 
 
@@ -12,13 +12,14 @@ const Home = () => {
 
     useEffect(() => {
 
-    
-
         if(Cookies.get('aethenos') == null){
           window.location.href = `/login?sessionTimeout=true&rediect-url=courses`
 
         }else{
-          window.location.href = "/courses";
+          VerifyTheInstructor()
+          // console.log(Cookies.get('aethenos'))
+
+          // window.location.href = "/courses";
         }
 
         // Check Id the User is Instructor Or NOT

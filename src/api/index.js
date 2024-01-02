@@ -2804,15 +2804,29 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
 
  }
 
- export const VerifyTheInstructor = async(code) =>{
+ export const VerifyTheInstructor = async() =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
   var requestOptions = {
     method: 'GET',
+    headers: myHeaders,
     redirect: 'follow'
   };
   
-  fetch("http://localhost:8080/instructor/verifyInstructorProfile", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/switchToInstructor", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      Unauthorized(result.status,"courses") 
+
+      if(result.message == "Success"){
+        console.log(result)
+        window.location.href = "/courses"
+      }else{
+        window.history.back()
+      }
+
+    })
     .catch(error => console.log('error', error));
  }

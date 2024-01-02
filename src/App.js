@@ -38,8 +38,24 @@ import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 
 import { ThemeProvider } from "@mui/material";
+import { useEffect, useState } from "react";
+import Cookies from 'js-cookie'
+import { VerifyTheInstructor } from "./api";
 
 function App() {
+
+  const [UserVerify, setUserVerify] = useState(false)
+
+
+  // useEffect(() => {
+  //   if (Cookies.get('aethenos') != null) {
+  //       VerifyTheInstructor()
+  //   }
+
+  // }, []);
+
+  
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
