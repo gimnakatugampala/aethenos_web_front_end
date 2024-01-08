@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { GetAllCourses } from '../../../api';
 import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
+import Spinner from 'react-bootstrap/Spinner';
 import './AllCourses.css'
 const { Search } = Input;
 
@@ -85,7 +86,7 @@ const AllCourses = () => {
 courses.map((course,key) => (
 <CourseItem key={key} course={course}  filledPercent={course.progress}  />
 ))
-: "No Courses Available"}
+: <Spinner size='lg' animation="border" variant="danger" />}
 
 
     
