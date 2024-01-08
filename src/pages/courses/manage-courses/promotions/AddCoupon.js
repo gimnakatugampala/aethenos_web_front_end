@@ -3282,17 +3282,7 @@ const AddCoupon = ({code}) => {
 
         <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
 
-
-        <div className='my-2'>
-            <Button variant='contained'>Create Coupon</Button>
-        </div>
-
-        </div>
-        )}
-   
-
-   {/* ------------- */}
-   <div className="pricing-container">
+        <div className="pricing-container my-3">
           <div className="price-range-container p-3">
             <p>The Global List Price will be used for all countries unless individual country prices are specified below.</p>
 
@@ -4704,6 +4694,18 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
           </table>
 
         </div>
+
+
+        <div className='my-2'>
+            <Button variant='contained'>Create Coupon</Button>
+        </div>
+
+        </div>
+        )}
+   
+
+   {/* ------------- */}
+  
  
     
   
