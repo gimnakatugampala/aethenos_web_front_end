@@ -38,6 +38,7 @@ import Pricing from './pricing/Pricing';
 import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
+import AddCoupon from './promotions/AddCoupon';
 import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckContentOwnership} from '../../../api'
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 
@@ -385,7 +386,8 @@ const ManageCourses = () => {
      selectTab == "pricing" ? <Pricing  code={code}  /> : 
      selectTab == "course-messages" ? <CourseMessages  code={code}  /> :
      selectTab == "promotions" ? <Promotion  code={code}  />  : 
-     selectTab == "settings" ? <Settings  code={code}  /> 
+     selectTab == "settings" ? <Settings  code={code}  /> :
+     selectTab == "add-coupon" ? <AddCoupon  code={code}  /> 
     : ""}
 
 
