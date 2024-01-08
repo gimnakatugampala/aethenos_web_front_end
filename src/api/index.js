@@ -36,6 +36,7 @@ export const LoginInstructor = async(email, password,url,setloading) =>{
     .then(result => {
       console.log(result)
 
+
       if(result.message == "incorrect password."){
         setloading(false)
         ErrorAlert(result.message, result.variable)
@@ -46,15 +47,6 @@ export const LoginInstructor = async(email, password,url,setloading) =>{
 
         Cookies.set('aethenos', result.token, { expires: 7, path: '' })
 
-        // const user = {
-        //   token:result.token,
-        //   email:result.email,
-        //   firstname:result.fname,
-        //   lastname:result.lname,
-        //   status:"Instructor"
-        // }
-
-        // window.localStorage.setItem("aethenos", JSON.stringify(user));
 
 
 
