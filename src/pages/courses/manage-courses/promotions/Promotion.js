@@ -38,12 +38,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import Snackbar from '@mui/material/Snackbar';
+import { GetReferralLink } from '../../../../api';
 
 
 
 const Promotion = ({code}) => {
 
-  const [referalCode, setreferalCode] = useState(`https://www.aethenos.com/course/draft/${code}/?referralCode=3727A03E63454FD43574`)
+  const [referalCode, setreferalCode] = useState(``)
   var currentDate = new Date();
   var monthName = currentDate.toLocaleString('default', { month: 'long' });
   
@@ -56,13 +57,17 @@ const Promotion = ({code}) => {
 
   const handleClick = (newState) => () => {
     setState({ ...newState, open: true });
-    // navigator.clipboard.writeText(this.state.textToCopy)
     navigator.clipboard.writeText(referalCode)
   };
 
   const handleClose = () => {
     setState({ ...state, open: false });
   };
+
+  useEffect(() => {
+    GetReferralLink(code,setreferalCode)
+  }, [code])
+  
 
  
 
@@ -85,7 +90,7 @@ const Promotion = ({code}) => {
 
         <InputGroup className="mb-3">
         <Form.Control
-          style={{fontSize:'12px'}}
+          style={{fontSize:'13px'}}
           value={referalCode}
           placeholder="Referral Code"
           aria-label="Referral Code"

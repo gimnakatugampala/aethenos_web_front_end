@@ -63,6 +63,8 @@ const AddCoupon = ({code}) => {
     const [startDate, setStartDate] = useState(currentDate);
     const [endDate, setEndDate] = useState("");
     const [couponCodeFree, setcouponCodeFree] = useState("")
+
+
   
     const handleStartDateChange = (event) => {
       const newStartDate = event.target.value;
@@ -88,20 +90,50 @@ const AddCoupon = ({code}) => {
       setEndDate(calculateEndDate(currentDate));
     }, [])
 
+    //  -------------- DISCOUNT COUPONS ----------
+    const currentDateDiscount = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+    const [startDateDiscount, setStartDateDiscount] = useState(currentDateDiscount);
+    const [endDateDiscount, setEndDateDiscount] = useState("");
+    const [couponCodeDiscount, setcouponCodeDiscount] = useState("")
+
+      
+    const handleStartDateChangeDiscount = (event) => {
+      const newStartDate = event.target.value;
+  
+      // Check if the new start date is not before the current date
+      if (new Date(newStartDate) >= new Date(currentDateDiscount)) {
+        setStartDateDiscount(newStartDate);
+        setEndDateDiscount(calculateEndDate(newStartDate));
+      }
+
+      calculateEndDateDiscount(startDateDiscount)
+    };
+  
+    const calculateEndDateDiscount = (start) => {
+      const startDate = new Date(start);
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 7);
+      return endDate.toISOString().split('T')[0];
+    };
+
+
+    useEffect(() => {
+      setEndDateDiscount(calculateEndDateDiscount(currentDateDiscount));
+    }, [])
+
 
     const handleFreeCouponCreate = (e) =>{
         e.preventDefault();
 
-        // console.log(new Date(startDate))
-        // console.log(new Date(endDate))
-        // console.log(couponCodeFree)
-
-        const isValid = /^[A-Z0-9]+$/.test(couponCodeFree.trim());
+    
+        const isValid = /^[A-Z0-9]+$/.test(couponCodeFree);
         
-        if (isValid) {
-          console.log("Valid string!");
+        if (isValid || couponCodeFree == "") {
+          console.log(new Date(startDate))
+          console.log(new Date(endDate))
+          console.log(couponCodeFree)
         } else {
-          console.log("Invalid string. Please follow the specified rules.");
+          ErrorAlert("Error","Please Enter a Valid Coupon Code")
         }
         
 
@@ -3336,17 +3368,31 @@ const AddCoupon = ({code}) => {
 
     {selectedValue == "discount-coupon" && (
         <div className='container'>
-        <div className='my-5'>
-            <h6><b>Start date:</b> <DateTimePicker onChange={setstart_date} value={start_date} /></h6>
-            <h6><b>End date:</b> <DateTimePicker onChange={setstart_date} value={start_date} /></h6>
-        </div>
+
+           <div className='row my-5'>
+            <div className='mb-3'>
+              <h6><b>Start date:</b></h6>
+              <input
+              className='form-control'
+              type="date"
+              id="startDate"
+              value={startDateDiscount}
+              onChange={handleStartDateChangeDiscount}
+            />
+            </div>
+            
+            <div className='mb-3'>
+            
+              <h6><b>End date:</b> <input class="form-control" type="text" value={endDateDiscount} aria-label="readonly input example" readonly /></h6>
+            </div>
+          </div>
 
         
         <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
             <Form.Label><b>Enter coupon code (Optional):</b></Form.Label>
-            <Form.Control type="text" placeholder="Enter Coupon" />
+            <Form.Control value={couponCodeDiscount} onChange={(e) => setcouponCodeDiscount(e.target.value)} type="text" placeholder="Enter Coupon" />
         </Form.Group>
-
+        couponCodeDiscount, 
         <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
 
         <div className="pricing-container my-3">
@@ -3431,7 +3477,7 @@ const AddCoupon = ({code}) => {
       
 
           {/* Table */}
-          <p className='my-3'><b>Enter Global Discount Price (required):</b></p>
+          <p className='my-3'><b>Enter Country Specific Discount Prices (optional):</b></p>
           <table className="table table-striped text-center">
             <thead>
               <tr>

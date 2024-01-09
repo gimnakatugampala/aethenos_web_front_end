@@ -254,7 +254,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
     }
     Unauthorized(result.status,"courses")
 
-    setcourses(result.sort((a, b) => new Date(b.course.created_date) - new Date(a.course.created_date)))
+    setcourses(result.sort((a, b) => new Date(b.course.createdDate) - new Date(a.course.createdDate)))
 
 
   })
@@ -2819,6 +2819,30 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
         window.history.back()
       }
 
+    })
+    .catch(error => console.log('error', error));
+ }
+
+ export const GetReferralLink = async(code,setreferalCode) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getReferralCodeByCourseCode/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+      console.log(result)
+
+      if(result.variable == "200"){
+        setreferalCode(`https://www.aethenos.com/course/draft/${code}/?referralCode=${result.message}`)
+      }
     })
     .catch(error => console.log('error', error));
  }
