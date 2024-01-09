@@ -6,10 +6,12 @@ import Radio from '@mui/material/Radio';
 import Form from 'react-bootstrap/Form';
 import Button from '@mui/material/Button';
 import DateTimePicker from 'react-datetime-picker';
-import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing} from "../../../../api";
+import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing , AddFreeCouponAPI} from "../../../../api";
 import getSymbolFromCurrency from 'currency-symbol-map'
 import InputGroup from 'react-bootstrap/InputGroup';
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
+import formatNumber from '../../../../commonFunctions/NumberFormat';
+import moment from 'moment';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
@@ -127,11 +129,17 @@ const AddCoupon = ({code}) => {
 
     
         const isValid = /^[A-Z0-9]+$/.test(couponCodeFree);
+
+        let SD = moment(new Date(startDate)).format('yyyy-MM-DD HH:mm:ss')
+        let ED = moment(new Date(endDate)).format('yyyy-MM-DD HH:mm:ss')
         
         if (isValid || couponCodeFree == "") {
-          console.log(new Date(startDate))
-          console.log(new Date(endDate))
+          console.log(moment(new Date(startDate)).format('yyyy-MM-DD HH:mm:ss'))
+          console.log(moment(new Date(endDate)).format('yyyy-MM-DD HH:mm:ss'))
           console.log(couponCodeFree)
+
+          AddFreeCouponAPI(code,SD,ED,couponCodeFree)
+          
         } else {
           ErrorAlert("Error","Please Enter a Valid Coupon Code")
         }
@@ -176,243 +184,308 @@ const AddCoupon = ({code}) => {
     // Get The Default Pricing
     GetPriceDefault(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice)
 
-
-    // Get the Countries List WITH THE PRICES
-    // GetCountriesListPricing(code,setcountriesData,
-    //   setUSADisPercent,
-    //   setDDisAmt,
-    //   setUSADisType,
-    //   setshowInputDisAmtUSA,
-    //   setshowInputPercentUSA,
-    //   setUSAListPrice,
-    //   setUSANetPrice,
-    //   // -----
-    //   setAusDisPercent,
-    //   setAusDisAmt,
-    //   setAusDisType,
-    //   setshowInputDisAmtAus,
-    //   setshowInputPercentAus,
-    //   setAusListPrice,
-    //   setAusNetPrice,
-    //   // -----
-    //   setBrazilDisPercent,
-    //   setBrazilDisAmt,
-    //   setBrazilDisType,
-    //   setshowInputDisAmtBrzail,
-    //   setshowInputPercentBrzail,
-    //   setBrazilListPrice,
-    //   setBrazilNetPrice,
-    //   // ---------
-    //   setCanadaDisPercent,
-    //   setCanadaDisAmt,
-    //   setCanadaDisType,
-    //   setshowInputDisAmtCanada,
-    //   setshowInputPercentCanada,
-    //   setCanadaListPrice,
-    //   setCanadaNetPrice,
-    //   //  -------------
-    //   setChileDisPercent,
-    //   setChileDisAmt,
-    //   setChileDisType,
-    //   setshowInputDisAmtChile,
-    //   setshowInputPercentChile,
-    //   setChileListPrice,
-    //   setChileNetPrice,
-    //   // -----------
-    //   setColumbiaDisPercent,
-    //   setColumbiaDisAmt,
-    //   setColumbiaDisType,
-    //   setshowInputDisAmtColumbia,
-    //   setshowInputPercentColumbia,
-    //   setColumbiaListPrice,
-    //   setColumbiaNetPrice,
-    //   // --------------
-    //   setEgyptDisPercent,
-    //   setEgyptDisAmt,
-    //   setEgyptDisType,
-    //   setshowInputDisAmtEgypt,
-    //   setshowInputPercentEgypt,
-    //   setEgyptListPrice,
-    //   setEgyptNetPrice,
-    //   // ---------
-    //   setEUDisPercent,
-    //   setEUDisAmt,
-    //   setEUDisType,
-    //   setshowInputDisAmtEU,
-    //   setshowInputPercentEU,
-    //   setEUListPrice,
-    //   setEUNetPrice,
-    //   // ----
-    //   setGBPDisPercent,
-    //   setGBPDisAmt,
-    //   setGBPDisType,
-    //   setshowInputDisAmtGBP,
-    //   setshowInputPercentGBP,
-    //   setGBPListPrice,
-    //   setGBPNetPrice,
-    //   // ------------
-    //   setIndonesiaDisPercent,
-    //   setIndonesiaDisAmt,
-    //   setIndonesiaDisType,
-    //   setshowInputDisAmtIndonesia,
-    //   setshowInputPercentIndonesia,
-    //   setIndonesiaListPrice,
-    //   setIndonesiaNetPrice,
-    //   // ---------------
-    //   setIsrealDisPercent,
-    //   setIsrealDisAmt,
-    //   setIsrealDisType,
-    //   setshowInputDisAmtIsreal,
-    //   setshowInputPercentIsreal,
-    //   setIsrealListPrice,
-    //   setIsrealNetPrice,
-    //   // -------
-    //   setIndiaDisPercent,
-    //   setIndiaDisAmt,
-    //   setIndiaDisType,
-    //   setshowInputDisAmtIndia,
-    //   setshowInputPercentIndia,
-    //   setIndiaListPrice,
-    //   setIndiaNetPrice,
-    //   // -------------
-    //   setJapanDisPercent,
-    //   setJapanDisAmt,
-    //   setJapanDisType,
-    //   setshowInputDisAmtJapan,
-    //   setshowInputPercentJapan,
-    //   setJapanListPrice,
-    //   setJapanNetPrice,
-    //   // ---------------
-    //   setSKDisPercent,
-    //   setSKDisAmt,
-    //   setSKDisType,
-    //   setshowInputDisAmtSK,
-    //   setshowInputPercentSK,
-    //   setSKListPrice,
-    //   setSKNetPrice,
-    //   // -------------
-    //   setMexicoDisPercent,
-    //   setMexicoDisAmt,
-    //   setMexicoDisType,
-    //   setshowInputDisAmtMexico,
-    //   setshowInputPercentMexico,
-    //   setMexicoListPrice,
-    //   setMexicoNetPrice,
-    //   // --------------
-    //   setMalaysiaDisPercent,
-    //   setMalaysiaDisAmt,
-    //   setMalaysiaDisType,
-    //   setshowInputDisAmtMalaysia,
-    //   setshowInputPercentMalaysia,
-    //   setMalaysiaListPrice,
-    //   setMalaysiaNetPrice,
-    //   // -------------
-    //   setNigeriaDisPercent,
-    //   setNigeriaDisAmt,
-    //   setNigeriaDisType,
-    //   setshowInputDisAmtNigeria,
-    //   setshowInputPercentNigeria,
-    //   setNigeriaListPrice,
-    //   setNIgeriaNetPrice,
-    //   // -----------
-    //   setNorwayDisPercent,
-    //   setNorwayDisAmt,
-    //   setNorwayDisType,
-    //   setshowInputDisAmtNorway,
-    //   setshowInputPercentNorway,
-    //   setNorwayListPrice,
-    //   setNorwayNetPrice,
-    //   // ----------
-    //   setPeruDisPercent,
-    //   setPeruDisAmt,
-    //   setPeruDisType,
-    //   setshowInputDisAmtPeru,
-    //   setshowInputPercentPeru,
-    //   setPeruListPrice,
-    //   setPeruNetPrice,
-    //   // -----------
-    //   setPhilipinesDisPercent,
-    //   setPhiliphinesDisAmt,
-    //   setPhilipinesDisType,
-    //   setshowInputDisAmtPhilipines,
-    //   setshowInputPercentPhilipines,
-    //   setPhilipinesListPrice,
-    //   setPhilipinesNetPrice,
-    //   // ----------
-    //   setPolandDisPercent,
-    //   setPolandDisAmt,
-    //   setPolandDisType,
-    //   setshowInputDisAmtPoland,
-    //   setshowInputPercentPoland,
-    //   setPolandListPrice,
-    //   setPolandNetPrice,
-    //   // --------------
-    //   setRomaniaDisPercent,
-    //   setRomaniaDisAmt,
-    //   setRomaniaDisType,
-    //   setshowInputDisAmtRomania,
-    //   setshowInputPercentRomania,
-    //   setRomaniaListPrice,
-    //   setRomaniaNetPrice,
-    //   // --------------
-    //   setRussiaDisDisPercent,
-    //   setRussiaDisAmt,
-    //   setRussiaDisType,
-    //   setshowInputDisAmtRussia,
-    //   setshowInputPercentRussia,
-    //   setRussiaListPrice,
-    //   setRussiaNetPrice,
-    //   // ------------------
-    //   setSingaporeDisPercent,
-    //   setSingaporeDisAmt,
-    //   setSingaporeDisType,
-    //   setshowInputDisAmtSingapore,
-    //   setshowInputPercentSingapore,
-    //   setSingaporeListPrice,
-    //   setSingaporeNetPrice,
-    //   // -------------
-    //   setThailandDisPercent,
-    //   setThailandDisAmt,
-    //   setThailandDisType,
-    //   setshowInputDisAmtThailand,
-    //   setshowInputPercentThailand,
-    //   setThailandListPrice,
-    //   setThailandNetPrice,
-    //   // ---------------
-    //   setTurkeyDisPercent,
-    //   setTurkeyDisAmt,
-    //   setTurkeyDisType,
-    //   setshowInputDisAmtTurkey,
-    //   setshowInputPercentTurkey,
-    //   setTurkeyListPrice,
-    //   setTurkeyNetPrice,
-    //   // -------------
-    //   setTaiwanDisPercent,
-    //   setTaiwanDisAmt,
-    //   setTaiwanDisType,
-    //   setshowInputDisAmtTaiwan,
-    //   setshowInputPercentTaiwan,
-    //   setTaiwanListPrice,
-    //   setTaiwanNetPrice,
-    //   // ----------
-    //   setVietnamDisPercent,
-    //   setVietnamDisAmt,
-    //   setVietmanDisType,
-    //   setshowInputDisAmtVietnam,
-    //   setshowInputPercentVietnam,
-    //   setVietnamListPrice,
-    //   setVietnamNetPrice,
-    //   // ------------
-    //   setSADisPercent,
-    //   setSADisAmt,
-    //   setSADisType,
-    //   setshowInputDisAmtSA,
-    //   setshowInputPercentSA,
-    //   setSAListPrice,
-    //   setSANetPrice
-    //   )
+    // 
+       // Get the Countries List WITH THE PRICES
+       GetCountriesListPricing(code,setcountriesData,
+        setUSADisPercent,
+        setDDisAmt,
+        setUSADisType,
+        setshowInputDisAmtUSA,
+        setshowInputPercentUSA,
+        setUSAListPrice,
+        setUSANetPrice,
+        // -----
+        setAusDisPercent,
+        setAusDisAmt,
+        setAusDisType,
+        setshowInputDisAmtAus,
+        setshowInputPercentAus,
+        setAusListPrice,
+        setAusNetPrice,
+        // -----
+        setBrazilDisPercent,
+        setBrazilDisAmt,
+        setBrazilDisType,
+        setshowInputDisAmtBrzail,
+        setshowInputPercentBrzail,
+        setBrazilListPrice,
+        setBrazilNetPrice,
+        // ---------
+        setCanadaDisPercent,
+        setCanadaDisAmt,
+        setCanadaDisType,
+        setshowInputDisAmtCanada,
+        setshowInputPercentCanada,
+        setCanadaListPrice,
+        setCanadaNetPrice,
+        //  -------------
+        setChileDisPercent,
+        setChileDisAmt,
+        setChileDisType,
+        setshowInputDisAmtChile,
+        setshowInputPercentChile,
+        setChileListPrice,
+        setChileNetPrice,
+        // -----------
+        setColumbiaDisPercent,
+        setColumbiaDisAmt,
+        setColumbiaDisType,
+        setshowInputDisAmtColumbia,
+        setshowInputPercentColumbia,
+        setColumbiaListPrice,
+        setColumbiaNetPrice,
+        // --------------
+        setEgyptDisPercent,
+        setEgyptDisAmt,
+        setEgyptDisType,
+        setshowInputDisAmtEgypt,
+        setshowInputPercentEgypt,
+        setEgyptListPrice,
+        setEgyptNetPrice,
+        // ---------
+        setEUDisPercent,
+        setEUDisAmt,
+        setEUDisType,
+        setshowInputDisAmtEU,
+        setshowInputPercentEU,
+        setEUListPrice,
+        setEUNetPrice,
+        // ----
+        setGBPDisPercent,
+        setGBPDisAmt,
+        setGBPDisType,
+        setshowInputDisAmtGBP,
+        setshowInputPercentGBP,
+        setGBPListPrice,
+        setGBPNetPrice,
+        // ------------
+        setIndonesiaDisPercent,
+        setIndonesiaDisAmt,
+        setIndonesiaDisType,
+        setshowInputDisAmtIndonesia,
+        setshowInputPercentIndonesia,
+        setIndonesiaListPrice,
+        setIndonesiaNetPrice,
+        // ---------------
+        setIsrealDisPercent,
+        setIsrealDisAmt,
+        setIsrealDisType,
+        setshowInputDisAmtIsreal,
+        setshowInputPercentIsreal,
+        setIsrealListPrice,
+        setIsrealNetPrice,
+        // -------
+        setIndiaDisPercent,
+        setIndiaDisAmt,
+        setIndiaDisType,
+        setshowInputDisAmtIndia,
+        setshowInputPercentIndia,
+        setIndiaListPrice,
+        setIndiaNetPrice,
+        // -------------
+        setJapanDisPercent,
+        setJapanDisAmt,
+        setJapanDisType,
+        setshowInputDisAmtJapan,
+        setshowInputPercentJapan,
+        setJapanListPrice,
+        setJapanNetPrice,
+        // ---------------
+        setSKDisPercent,
+        setSKDisAmt,
+        setSKDisType,
+        setshowInputDisAmtSK,
+        setshowInputPercentSK,
+        setSKListPrice,
+        setSKNetPrice,
+        // -------------
+        setMexicoDisPercent,
+        setMexicoDisAmt,
+        setMexicoDisType,
+        setshowInputDisAmtMexico,
+        setshowInputPercentMexico,
+        setMexicoListPrice,
+        setMexicoNetPrice,
+        // --------------
+        setMalaysiaDisPercent,
+        setMalaysiaDisAmt,
+        setMalaysiaDisType,
+        setshowInputDisAmtMalaysia,
+        setshowInputPercentMalaysia,
+        setMalaysiaListPrice,
+        setMalaysiaNetPrice,
+        // -------------
+        setNigeriaDisPercent,
+        setNigeriaDisAmt,
+        setNigeriaDisType,
+        setshowInputDisAmtNigeria,
+        setshowInputPercentNigeria,
+        setNigeriaListPrice,
+        setNIgeriaNetPrice,
+        // -----------
+        setNorwayDisPercent,
+        setNorwayDisAmt,
+        setNorwayDisType,
+        setshowInputDisAmtNorway,
+        setshowInputPercentNorway,
+        setNorwayListPrice,
+        setNorwayNetPrice,
+        // ----------
+        setPeruDisPercent,
+        setPeruDisAmt,
+        setPeruDisType,
+        setshowInputDisAmtPeru,
+        setshowInputPercentPeru,
+        setPeruListPrice,
+        setPeruNetPrice,
+        // -----------
+        setPhilipinesDisPercent,
+        setPhiliphinesDisAmt,
+        setPhilipinesDisType,
+        setshowInputDisAmtPhilipines,
+        setshowInputPercentPhilipines,
+        setPhilipinesListPrice,
+        setPhilipinesNetPrice,
+        // ----------
+        setPolandDisPercent,
+        setPolandDisAmt,
+        setPolandDisType,
+        setshowInputDisAmtPoland,
+        setshowInputPercentPoland,
+        setPolandListPrice,
+        setPolandNetPrice,
+        // --------------
+        setRomaniaDisPercent,
+        setRomaniaDisAmt,
+        setRomaniaDisType,
+        setshowInputDisAmtRomania,
+        setshowInputPercentRomania,
+        setRomaniaListPrice,
+        setRomaniaNetPrice,
+        // --------------
+        setRussiaDisDisPercent,
+        setRussiaDisAmt,
+        setRussiaDisType,
+        setshowInputDisAmtRussia,
+        setshowInputPercentRussia,
+        setRussiaListPrice,
+        setRussiaNetPrice,
+        // ------------------
+        setSingaporeDisPercent,
+        setSingaporeDisAmt,
+        setSingaporeDisType,
+        setshowInputDisAmtSingapore,
+        setshowInputPercentSingapore,
+        setSingaporeListPrice,
+        setSingaporeNetPrice,
+        // -------------
+        setThailandDisPercent,
+        setThailandDisAmt,
+        setThailandDisType,
+        setshowInputDisAmtThailand,
+        setshowInputPercentThailand,
+        setThailandListPrice,
+        setThailandNetPrice,
+        // ---------------
+        setTurkeyDisPercent,
+        setTurkeyDisAmt,
+        setTurkeyDisType,
+        setshowInputDisAmtTurkey,
+        setshowInputPercentTurkey,
+        setTurkeyListPrice,
+        setTurkeyNetPrice,
+        // -------------
+        setTaiwanDisPercent,
+        setTaiwanDisAmt,
+        setTaiwanDisType,
+        setshowInputDisAmtTaiwan,
+        setshowInputPercentTaiwan,
+        setTaiwanListPrice,
+        setTaiwanNetPrice,
+        // ----------
+        setVietnamDisPercent,
+        setVietnamDisAmt,
+        setVietmanDisType,
+        setshowInputDisAmtVietnam,
+        setshowInputPercentVietnam,
+        setVietnamListPrice,
+        setVietnamNetPrice,
+        // ------------
+        setSADisPercent,
+        setSADisAmt,
+        setSADisType,
+        setshowInputDisAmtSA,
+        setshowInputPercentSA,
+        setSAListPrice,
+        setSANetPrice,
+        // ------
+        //  ---------
+        setUSATip,
+        setUSAMinValue,
+        setAusTip,
+        setAusminValue,
+        setBrazilTip,
+        setBrazilminValue,
+        setCanadaTip,
+        setCanadaminValue,
+        setChileTip,
+        setChileminValue,
+        setColumbiaTip,
+        setColumbiaminValue,
+        setEgyptTip,
+        setEgyptminValue,
+        setEUTip,
+        setEUminValue,
+        setGBPTip,
+        setGBPminValue,
+        setIndonesiaTip,
+        setIndonesiaminValue,
+        setIsrealTip,
+        setIsrealminValue,
+        setIndiaTip,
+        setIndiaminValue,
+        setJapanTip,
+        setJapanminValue,
+        setSKTip,
+        setSKminValue,
+        setMexicoTip,
+        setMexicominValue,
+        setMalaysiaTip,
+        setMalaysiaminValue,
+        setNigeriaTip,
+        setNigeriaminValue,
+        setNorwayTip,
+        setNorwayminValue,
+        setPeruTip,
+        setPeruminvalue,
+        setPhilipinesTip,
+        setPhilipinesminValue,
+        setPolandTip,
+        setPolandminValue,
+        setRomaniaTip,
+        setRomaniaminvalue,
+        setRussiaTip,
+        setRussiaminValue,
+        setSingaporeTip,
+        setSingaporeminValue,
+        setThailandTip,
+        setThailandminValue,
+        setTurkeyTip,
+        setTurkeyminValue,
+        setTaiwanTip,
+        setTaiwanminValue,
+        setVietnamTip,
+        setVietnamminValue,
+        setSATip,
+        setSAminValue
+        )
  
   }, [code])
+
+  useEffect(() => {
+    console.log(countriesData)
+  }, [countriesData])
+  
 
 
   // Select Free Or Paid Course
@@ -552,6 +625,9 @@ const AddCoupon = ({code}) => {
   const [USADisAmt, setUSADisAmt] = useState("")
   const [USANetPrice, setUSANetPrice] = useState("")
 
+  const [USATip, setUSATip] = useState("")
+  const [USAMinValue, setUSAMinValue] = useState("")
+
   const [showInputDisAmtUSA, setshowInputDisAmtUSA] = useState(false)
   const [showInputPercentUSA, setshowInputPercentUSA] = useState(false)
 
@@ -643,6 +719,8 @@ const AddCoupon = ({code}) => {
   const [AusDisPercent, setAusDisPercent] = useState("")
   const [AusDisAmt, setAusDisAmt] = useState("")
   const [AusNetPrice, setAusNetPrice] = useState("")
+  const [AusTip, setAusTip] = useState("")
+  const [AusminValue, setAusminValue] = useState("")
 
   const [showInputDisAmtAus, setshowInputDisAmtAus] = useState(false)
   const [showInputPercentAus, setshowInputPercentAus] = useState(false)
@@ -741,6 +819,10 @@ const AddCoupon = ({code}) => {
   const [BrazilDisAmt, setBrazilDisAmt] = useState("")
   const [BrazilNetPrice, setBrazilNetPrice] = useState("")
 
+  const [BrazilTip, setBrazilTip] = useState("")
+  const [BrazilminValue, setBrazilminValue] = useState("")
+
+
   const [showInputDisAmtBrzail, setshowInputDisAmtBrzail] = useState(false)
   const [showInputPercentBrzail, setshowInputPercentBrzail] = useState(false)
 
@@ -836,6 +918,9 @@ const AddCoupon = ({code}) => {
   const [CanadaDisAmt, setCanadaDisAmt] = useState("")
   const [CanadaNetPrice, setCanadaNetPrice] = useState("")
 
+  const [CanadaTip, setCanadaTip] = useState("")
+  const [CanadaminValue, setCanadaminValue] = useState("")
+
   const [showInputDisAmtCanada, setshowInputDisAmtCanada] = useState(false)
   const [showInputPercentCanada, setshowInputPercentCanada] = useState(false)
 
@@ -930,6 +1015,9 @@ const AddCoupon = ({code}) => {
   const [ChileDisAmt, setChileDisAmt] = useState("")
   const [ChileNetPrice, setChileNetPrice] = useState("")
 
+  const [ChileTip, setChileTip] = useState("")
+  const [ChileminValue, setChileminValue] = useState("")
+
   const [showInputDisAmtChile, setshowInputDisAmtChile] = useState(false)
   const [showInputPercentChile, setshowInputPercentChile] = useState(false)
 
@@ -1023,6 +1111,9 @@ const AddCoupon = ({code}) => {
   const [ColumbiaDisAmt, setColumbiaDisAmt] = useState("")
   const [ColumbiaNetPrice, setColumbiaNetPrice] = useState("")
 
+  const [ColumbiaTip, setColumbiaTip] = useState("")
+  const [ColumbiaminValue, setColumbiaminValue] = useState("")
+
   const [showInputDisAmtColumbia, setshowInputDisAmtColumbia] = useState(false)
   const [showInputPercentColumbia, setshowInputPercentColumbia] = useState(false)
 
@@ -1114,6 +1205,9 @@ const AddCoupon = ({code}) => {
   const [EgyptDisPercent, setEgyptDisPercent] = useState("")
   const [EgyptDisAmt, setEgyptDisAmt] = useState("")
   const [EgyptNetPrice, setEgyptNetPrice] = useState("")
+
+  const [EgyptTip, setEgyptTip] = useState("")
+  const [EgyptminValue, setEgyptminValue] = useState("")
 
   const [showInputDisAmtEgypt, setshowInputDisAmtEgypt] = useState(false)
   const [showInputPercentEgypt, setshowInputPercentEgypt] = useState(false)
@@ -1207,6 +1301,9 @@ const AddCoupon = ({code}) => {
   const [EUDisPercent, setEUDisPercent] = useState("")
   const [EUDisAmt, setEUDisAmt] = useState("")
   const [EUNetPrice, setEUNetPrice] = useState("")
+
+  const [EUTip, setEUTip] = useState("")
+  const [EUminValue, setEUminValue] = useState("")
 
   const [showInputDisAmtEU, setshowInputDisAmtEU] = useState(false)
   const [showInputPercentEU, setshowInputPercentEU] = useState(false)
@@ -1303,6 +1400,9 @@ const AddCoupon = ({code}) => {
   const [GBPDisAmt, setGBPDisAmt] = useState("")
   const [GBPNetPrice, setGBPNetPrice] = useState("")
 
+  const [GBPTip, setGBPTip] = useState("")
+  const [GBPminValue, setGBPminValue] = useState("")
+
   const [showInputDisAmtGBP, setshowInputDisAmtGBP] = useState(false)
   const [showInputPercentGBP, setshowInputPercentGBP] = useState(false)
 
@@ -1396,6 +1496,9 @@ const AddCoupon = ({code}) => {
   const [IndonesiaDisPercent, setIndonesiaDisPercent] = useState("")
   const [IndonesiaDisAmt, setIndonesiaDisAmt] = useState("")
   const [IndonesiaNetPrice, setIndonesiaNetPrice] = useState("")
+
+  const [IndonesiaTip, setIndonesiaTip] = useState("")
+  const [IndonesiaminValue, setIndonesiaminValue] = useState("")
 
   const [showInputDisAmtIndonesia, setshowInputDisAmtIndonesia] = useState(false)
   const [showInputPercentIndonesia, setshowInputPercentIndonesia] = useState(false)
@@ -1491,6 +1594,9 @@ const AddCoupon = ({code}) => {
   const [IsrealDisAmt, setIsrealDisAmt] = useState("")
   const [IsrealNetPrice, setIsrealNetPrice] = useState("")
 
+  const [IsrealTip, setIsrealTip] = useState("")
+  const [IsrealminValue, setIsrealminValue] = useState("")
+
   const [showInputDisAmtIsreal, setshowInputDisAmtIsreal] = useState(false)
   const [showInputPercentIsreal, setshowInputPercentIsreal] = useState(false)
 
@@ -1585,6 +1691,9 @@ const AddCoupon = ({code}) => {
   const [IndiaDisAmt, setIndiaDisAmt] = useState("")
   const [IndiaNetPrice, setIndiaNetPrice] = useState("")
 
+  const [IndiaTip, setIndiaTip] = useState("")
+  const [IndiaminValue, setIndiaminValue] = useState("")
+
   const [showInputDisAmtIndia, setshowInputDisAmtIndia] = useState(false)
   const [showInputPercentIndia, setshowInputPercentIndia] = useState(false)
 
@@ -1678,6 +1787,9 @@ const AddCoupon = ({code}) => {
   const [JapanDisAmt, setJapanDisAmt] = useState("")
   const [JapanNetPrice, setJapanNetPrice] = useState("")
 
+  const [JapanTip, setJapanTip] = useState("")
+  const [JapanminValue, setJapanminValue] = useState("")
+
   const [showInputDisAmtJapan, setshowInputDisAmtJapan] = useState(false)
   const [showInputPercentJapan, setshowInputPercentJapan] = useState(false)
 
@@ -1768,6 +1880,9 @@ const AddCoupon = ({code}) => {
   const [SKDisPercent, setSKDisPercent] = useState("")
   const [SKDisAmt, setSKDisAmt] = useState("")
   const [SKNetPrice, setSKNetPrice] = useState("")
+
+  const [SKTip, setSKTip] = useState("")
+  const [SKminValue, setSKminValue] = useState("")
 
   const [showInputDisAmtSK, setshowInputDisAmtSK] = useState(false)
   const [showInputPercentSK, setshowInputPercentSK] = useState(false)
@@ -1861,6 +1976,9 @@ const AddCoupon = ({code}) => {
   const [MexicoDisPercent, setMexicoDisPercent] = useState("")
   const [MexicoDisAmt, setMexicoDisAmt] = useState("")
   const [MexicoNetPrice, setMexicoNetPrice] = useState("")
+
+  const [MexicoTip, setMexicoTip] = useState("")
+  const [MexicominValue, setMexicominValue] = useState("")
 
   const [showInputDisAmtMexico, setshowInputDisAmtMexico] = useState(false)
   const [showInputPercentMexico, setshowInputPercentMexico] = useState(false)
@@ -1958,6 +2076,9 @@ const AddCoupon = ({code}) => {
   const [MalaysiaDisAmt, setMalaysiaDisAmt] = useState("")
   const [MalaysiaNetPrice, setMalaysiaNetPrice] = useState("")
 
+  const [MalaysiaTip, setMalaysiaTip] = useState("")
+  const [MalaysiaminValue, setMalaysiaminValue] = useState("")
+
   const [showInputDisAmtMalaysia, setshowInputDisAmtMalaysia] = useState(false)
 
   const [showInputPercentMalaysia, setshowInputPercentMalaysia] = useState(false)
@@ -2051,6 +2172,9 @@ const AddCoupon = ({code}) => {
   const [NigeriaDisPercent, setNigeriaDisPercent] = useState("")
   const [NigeriaDisAmt, setNigeriaDisAmt] = useState("")
   const [NIgeriaNetPrice, setNIgeriaNetPrice] = useState("")
+
+  const [NigeriaTip, setNigeriaTip] = useState("")
+  const [NigeriaminValue, setNigeriaminValue] = useState("")
   
   const [showInputDisAmtNigeria, setshowInputDisAmtNigeria] = useState(false)
 
@@ -2144,6 +2268,9 @@ const AddCoupon = ({code}) => {
   const [NorwayDisPercent, setNorwayDisPercent] = useState("")
   const [NorwayDisAmt, setNorwayDisAmt] = useState("")
   const [NorwayNetPrice, setNorwayNetPrice] = useState("")
+
+  const [NorwayTip, setNorwayTip] = useState("")
+  const [NorwayminValue, setNorwayminValue] = useState("")
 
   const [showInputDisAmtNorway, setshowInputDisAmtNorway] = useState(false)
 
@@ -2241,6 +2368,9 @@ const AddCoupon = ({code}) => {
   const [PeruDisAmt, setPeruDisAmt] = useState("")
   const [PeruNetPrice, setPeruNetPrice] = useState("")
 
+  const [PeruTip, setPeruTip] = useState("")
+  const [Peruminvalue, setPeruminvalue] = useState("")
+
   const [showInputDisAmtPeru, setshowInputDisAmtPeru] = useState(false)
 
   const [showInputPercentPeru, setshowInputPercentPeru] = useState(false)
@@ -2336,6 +2466,9 @@ const AddCoupon = ({code}) => {
   const [PhiliphinesDisAmt, setPhiliphinesDisAmt] = useState("")
   const [PhilipinesNetPrice, setPhilipinesNetPrice] = useState("")
 
+  const [PhilipinesTip, setPhilipinesTip] = useState("")
+  const [PhilipinesminValue, setPhilipinesminValue] = useState("")
+
   const [showInputDisAmtPhilipines, setshowInputDisAmtPhilipines] = useState(false)
 
   const [showInputPercentPhilipines, setshowInputPercentPhilipines] = useState(false)
@@ -2430,6 +2563,9 @@ const AddCoupon = ({code}) => {
   const [PolandDisPercent, setPolandDisPercent] = useState("")
   const [PolandDisAmt, setPolandDisAmt] = useState("")
   const [PolandNetPrice, setPolandNetPrice] = useState("")
+
+  const [PolandTip, setPolandTip] = useState("")
+  const [PolandminValue, setPolandminValue] = useState("")
 
   const [showInputDisAmtPoland, setshowInputDisAmtPoland] = useState(false)
 
@@ -2528,6 +2664,9 @@ const AddCoupon = ({code}) => {
   const [RomaniaDisAmt, setRomaniaDisAmt] = useState("")
   const [RomaniaNetPrice, setRomaniaNetPrice] = useState("")
 
+  const [RomaniaTip, setRomaniaTip] = useState("")
+  const [Romaniaminvalue, setRomaniaminvalue] = useState("")
+
   const [showInputDisAmtRomania, setshowInputDisAmtRomania] = useState(false)
 
   const [showInputPercentRomania, setshowInputPercentRomania] = useState(false)
@@ -2623,6 +2762,9 @@ const AddCoupon = ({code}) => {
   const [RussiaDisAmt, setRussiaDisAmt] = useState("")
   const [RussiaNetPrice, setRussiaNetPrice] = useState("")
 
+  const [RussiaTip, setRussiaTip] = useState("")
+  const [RussiaminValue, setRussiaminValue] = useState("")
+
   const [showInputDisAmtRussia, setshowInputDisAmtRussia] = useState(false)
 
   const [showInputPercentRussia, setshowInputPercentRussia] = useState(false)
@@ -2717,6 +2859,9 @@ const AddCoupon = ({code}) => {
   const [SingaporeDisAmt, setSingaporeDisAmt] = useState("")
   const [SingaporeNetPrice, setSingaporeNetPrice] = useState("")
 
+  const [SingaporeTip, setSingaporeTip] = useState("")
+  const [SingaporeminValue, setSingaporeminValue] = useState("")
+
   const [showInputDisAmtSingapore, setshowInputDisAmtSingapore] = useState(false)
 
   const [showInputPercentSingapore, setshowInputPercentSingapore] = useState(false)
@@ -2810,6 +2955,9 @@ const AddCoupon = ({code}) => {
   const [ThailandDisAmt, setThailandDisAmt] = useState("")
   const [ThailandNetPrice, setThailandNetPrice] = useState("")
 
+  const [ThailandTip, setThailandTip] = useState("")
+  const [ThailandminValue, setThailandminValue] = useState("")
+
   const [showInputDisAmtThailand, setshowInputDisAmtThailand] = useState(false)
 
   const [showInputPercentThailand, setshowInputPercentThailand] = useState(false)
@@ -2902,6 +3050,9 @@ const AddCoupon = ({code}) => {
   const [TurkeyDisPercent, setTurkeyDisPercent] = useState("")
   const [TurkeyDisAmt, setTurkeyDisAmt] = useState("")
   const [TurkeyNetPrice, setTurkeyNetPrice] = useState("")
+
+  const [TurkeyTip, setTurkeyTip] = useState("")
+  const [TurkeyminValue, setTurkeyminValue] = useState("")
 
   const [showInputDisAmtTurkey, setshowInputDisAmtTurkey] = useState(false)
 
@@ -2999,6 +3150,9 @@ const AddCoupon = ({code}) => {
   const [TaiwanDisAmt, setTaiwanDisAmt] = useState("")
   const [TaiwanNetPrice, setTaiwanNetPrice] = useState("")
 
+  const [TaiwanTip, setTaiwanTip] = useState("")
+  const [TaiwanminValue, setTaiwanminValue] = useState("")
+
   const [showInputDisAmtTaiwan, setshowInputDisAmtTaiwan] = useState(false)
 
   const [showInputPercentTaiwan, setshowInputPercentTaiwan] = useState(false)
@@ -3090,6 +3244,9 @@ const AddCoupon = ({code}) => {
   const [VietnamDisPercent, setVietnamDisPercent] = useState("")
   const [VietnamDisAmt, setVietnamDisAmt] = useState("")
   const [VietnamNetPrice, setVietnamNetPrice] = useState("")
+
+  const [VietnamTip, setVietnamTip] = useState("")
+  const [VietnamminValue, setVietnamminValue] = useState("")
 
 
   const [showInputDisAmtVietnam, setshowInputDisAmtVietnam] = useState(false)
@@ -3187,6 +3344,9 @@ const AddCoupon = ({code}) => {
   const [SADisAmt, setSADisAmt] = useState("")
   const [SANetPrice, setSANetPrice] = useState("")
 
+  const [SATip, setSATip] = useState("")
+  const [SAminValue, setSAminValue] = useState("")
+
   const [showInputDisAmtSA, setshowInputDisAmtSA] = useState(false)
 
   const [showInputPercentSA, setshowInputPercentSA] = useState(false)
@@ -3274,7 +3434,6 @@ const AddCoupon = ({code}) => {
       }
 
     // -------------------
-
 
 
 
@@ -3413,7 +3572,7 @@ const AddCoupon = ({code}) => {
             <div className="row">
                 <p className='my-3'><b>Enter Global Discount Price (required):</b></p>
 
-              <div className="price-range col-md-4">
+              <div className="price-range col-md-3">
                 <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
                   <InputGroup className="mb-3">
                     <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
@@ -3428,7 +3587,7 @@ const AddCoupon = ({code}) => {
                   <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: ${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</i></Form.Label>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
               <select value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
                 <option value="0" selected>Open this select menu</option>
@@ -3441,7 +3600,7 @@ const AddCoupon = ({code}) => {
               {showDefaultDiscountInput && (
                 <>
                 {showDefaultPercentDiscountInput && (
-                <div className="col-md-4">
+                <div className="col-md-3">
                 <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
                 <Form.Control value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
                 </div>
@@ -3449,7 +3608,7 @@ const AddCoupon = ({code}) => {
 
                 {showDefaultValueDiscountInput && (
 
-              <div className="col-md-4">
+              <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
               <Form.Control value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
               </div>
@@ -3494,1314 +3653,1314 @@ const AddCoupon = ({code}) => {
               </tr>
             </thead>
             <tbody>
-            
-                <tr>
-                  <td >America
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>USD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${45} - ${getSymbolFromCurrency(("USD"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                    // 
-                      value={USADisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeUSA}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentUSA && (
-                  <Form.Control value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
-                    )}
-                  </td>
-                  <td>
-                  {showInputDisAmtUSA && (
-                  <Form.Control value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
-                  )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{USANetPrice == "" ? "0.00" : USANetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Australia
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>AUD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${45} - ${getSymbolFromCurrency(("AUD"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={AusDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeAus}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                  {showInputPercentAus && (
-                  <Form.Control value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
-                    )}
-                  
-                  </td>
-                  <td>
-                  {showInputDisAmtAus && (
-                  <Form.Control value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{AusNetPrice == "" ? "0.00" : AusNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                
-                <tr>
-                  <td>Brazil
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>BRL</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${45} - ${getSymbolFromCurrency(("BRL"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={BrazilDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeBrazil}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentBrzail && (
-                        <Form.Control value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
-                      )}
-                  </td>
-                  <td>
-                    {showInputDisAmtBrzail && (
-
-                  <Form.Control value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{BrazilNetPrice == "" ? "0.00" : BrazilNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Canada
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>CAD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${45} - ${getSymbolFromCurrency(("CAD"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={CanadaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeCanada}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentCanada && (
-                  <Form.Control value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
-                    )}
-                  </td>
-                  <td>
                     
-                    {showInputDisAmtCanada && (
-                  <Form.Control value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{CanadaNetPrice == "" ? "0.00" : CanadaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-
-                <tr>
-                  <td>Chile
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>CLP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${45} - ${getSymbolFromCurrency(("CLP"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={ChileDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeChile}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentChile && (
-                       <Form.Control value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtChile && (
-                     <Form.Control value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{ChileNetPrice == "" ? "0.00" : ChileNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Columbia
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>COP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${45} - ${getSymbolFromCurrency(("COP"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={ColumbiaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeColumbia}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentColumbia && (
-                        <Form.Control value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
-                      )}
-                  </td>
-                  <td>
-                    {showInputDisAmtColumbia && (
-                  <Form.Control value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{ColumbiaNetPrice == "" ? "0.00" : ColumbiaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Egypt
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>EGP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${45} - ${getSymbolFromCurrency(("EGP"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={EgyptDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeEgypt}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentEgypt && (
-                  <Form.Control value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtEgypt && (
-                  <Form.Control value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{EgyptNetPrice == "" ? "0.00" : EgyptNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>European Union
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>EUR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${45}  - ${getSymbolFromCurrency(("EUR"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={EUDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeEU}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentEU && (
-                  <Form.Control value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtEU && (
-                    <Form.Control value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{EUNetPrice == "" ? "0.00" : EUNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-                
-                <tr>
-                  <td>Great Britain
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>GBP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${45} - ${getSymbolFromCurrency(("GBP"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={GBPDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeGBP}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentGBP && (
-                  <Form.Control value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtGBP && (
-                      <Form.Control value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{GBPNetPrice == "" ? "0.00" : GBPNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Indonesia
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>IDR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${45} - ${getSymbolFromCurrency(("IDR"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={IndonesiaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeIndo}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentIndonesia && (
-                  <Form.Control value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtIndonesia && (
-                  <Form.Control value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{IndonesiaNetPrice == "" ? "0.00" : IndonesiaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Israel
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>ILS</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${45} - ${getSymbolFromCurrency(("ILS"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={IsrealDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeIsreal}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentIsreal && (
-
-                    <Form.Control value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtIsreal && (
-
-                  <Form.Control value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{IsrealNetPrice == "" ? "0.00" : IsrealNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>India
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>INR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${45} - ${getSymbolFromCurrency(("INR"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={IndiaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeIndia}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentIndia && (
-                  <Form.Control value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtIndia && (
-
-                  <Form.Control value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{IndiaNetPrice == "" ? "0.00" : IndiaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Japan
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>JPY</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${45} - ${getSymbolFromCurrency(("JPY"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={JapanDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeJapan}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentJapan && (
-
-                  <Form.Control value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {
-                      showInputDisAmtJapan && (
-
-                <Form.Control value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
-                      )
-                    }
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{JapanNetPrice == "" ? "0.00" : JapanNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>South Korea
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>KRW</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${45} - ${getSymbolFromCurrency(("KRW"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={SKDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeSK}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                      {showInputPercentSK && (
-
-                  <Form.Control value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
-                      )}
-                  </td>
-                  <td>
-                    {showInputDisAmtSK && (
-                      <Form.Control value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
-
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{SKNetPrice == "" ? "0.00" : SKNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Mexico
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>MXN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${45} - ${getSymbolFromCurrency(("MXN"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={MexicoDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeMexico}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentMexico && (
-                  <Form.Control value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtMexico && (
-
-                    <Form.Control value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{MexicoNetPrice == "" ? "0.00" : MexicoNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Malaysia
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>MYR</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${45} - ${getSymbolFromCurrency(("MYR"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={MalaysiaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeMalaysia}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentMalaysia && (
-                  <Form.Control value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtMalaysia && (
-                      <Form.Control 
-                      value={MalaysiaDisAmt} onChange={handleDefaultDiscountAmtMalaysia} type="text" />
-
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{MalaysiaNetPrice == "" ? "0.00" : MalaysiaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-                
-                <tr>
-                  <td>Nigeria
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>NGN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${45} - ${getSymbolFromCurrency(("NGN"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={NigeriaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeNigeria}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentNigeria && (
-                  <Form.Control value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtNigeria && (
-                      <Form.Control value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{NIgeriaNetPrice == "" ? "0.00" : NIgeriaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-                <tr>
-                  <td>Norway
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>NOK</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${45} - ${getSymbolFromCurrency(("NOK"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={NorwayDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeNorway}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentNorway && (
-                  <Form.Control value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtNorway && (
-                  <Form.Control value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{NorwayNetPrice == "" ? "0.00" : NorwayNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                 <tr>
-                  <td>Peru
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>PEN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${45} - ${getSymbolFromCurrency(("PEN"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={PeruDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypePeru}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentPeru && (
-
-                  <Form.Control value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
-                    )}
-                  </td>
-                  <td>
-                   
-                    {showInputDisAmtPeru && (
-                <Form.Control value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PeruNetPrice == "" ? "0.00" : PeruNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-                  
-
-                  <tr>
-                  <td>Philippines
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>PHP</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${45} - ${getSymbolFromCurrency(("PHP"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={PhilipinesDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypePhilipines}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentPhilipines && (
-                      <Form.Control value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
-
-                    )}
-                  </td>
-                  <td>
-                  {showInputDisAmtPhilipines && (
-                  <Form.Control value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
-                  )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PhilipinesNetPrice == "" ? "0.00" : PhilipinesNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-                <tr>
-                  <td>Poland
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>PLN</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${45} - ${getSymbolFromCurrency(("PLN"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={PolandDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypePoland}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentPoland && (
-
-                  <Form.Control value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtPoland && (
-
-                <Form.Control value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{PolandNetPrice == "" ? "0.00" : PolandNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-                <tr>
-                  <td>Romania
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>RON</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${45} - ${getSymbolFromCurrency(("RON"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={RomaniaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeRomania}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentRomania && (
-                  <Form.Control value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtRomania && (
-                  <Form.Control value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{RomaniaNetPrice == "" ? "0.00" : RomaniaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-                <tr>
-                  <td>Russia
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>RUB</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${45} - ${getSymbolFromCurrency(("RUB"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={RussiaDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeRussia}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentRussia && (
-                      
-                  <Form.Control value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtRussia && (
-                  <Form.Control value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{RussiaNetPrice == "" ? "0.00" : RussiaNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                <tr>
-                  <td>Singapore
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>SGD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${45} - ${getSymbolFromCurrency(("SGD"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={SingaporeDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeSingapore}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentSingapore && (
-                  <Form.Control value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtSingapore && (
-
-                  <Form.Control value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{SingaporeNetPrice == "" ? "0.00" : SingaporeNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-                <tr>
-                  <td>Thailand
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>THB</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${45} - ${getSymbolFromCurrency(("THB"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={ThailandDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeThailand}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentThailand && (
-                  <Form.Control value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtThailand && (
-                  <Form.Control value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{ThailandNetPrice == "" ? "0.00" : ThailandNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-                <tr>
-                  <td>Turkey
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>TRY</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${45} - ${getSymbolFromCurrency(("TRY"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={TurkeyDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeTurkey}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentTurkey && (
-                  <Form.Control value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtTurkey && (
-                  <Form.Control value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{TurkeyNetPrice == "" ? "0.00" : TurkeyNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                   <tr>
-                  <td>Taiwan
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>TWD</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${45} - ${getSymbolFromCurrency(("TWD"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={TaiwanDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeTaiwan}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentTaiwan && (
-                  <Form.Control value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtTaiwan && (
-
-                  <Form.Control value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{TaiwanNetPrice == "" ? "0.00" : TaiwanNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr>
-
-                  <tr>
-                  <td>Vietnam
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>VND</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${45} - ${getSymbolFromCurrency(("VND"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={VietmanDisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeVietnam}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentVietnam && (
-
-                  <Form.Control value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtVietnam && (
-
-                  <Form.Control value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{VietnamNetPrice == "" ? "0.00" : VietnamNetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-
-
-                <tr>
-                  <td>South Africa
-                 <td className="col-12 font-italic mt-5">  
-                  <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around $10 may optimize sales.</Form.Label></td>
-                 </td>
-
-                  <td>KRW</td>
-                  <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${45}  - ${getSymbolFromCurrency(("KRW"))} ${45}`}</td>
-                  <td>
-                    <Form.Control value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
-                  </td>
-                  <td>
-                    <Select
-                      value={SADisType}
-                      style={{ width: "100%" }}
-                      onChange={handleDefaultDiscountTypeSA}
-                    >
-                      {dis_types.map((type)=>(
-                      <Select.Option key={type.id} value={type.id}>
-                        {type.name}
-                      </Select.Option>
-                      ))}
-                    </Select>
-                  </td>
-                  <td>
-                    {showInputPercentSA && (
-                  <Form.Control value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
-                    )}
-                  </td>
-                  <td>
-                    {showInputDisAmtSA && (
-                  <Form.Control value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
-                    )}
-                  </td>
-                  <td style={{whiteSpace:'nowrap'}}>
-                      <h6>{SANetPrice == "" ? "0.00" : SANetPrice}</h6>
-                 <tr>
-                 <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:$10</Form.Label>
-
-                 </tr>
-                  </td>
-                
-                </tr> 
-                  
-            </tbody>
+                        <tr>
+                          <td >America
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {USATip}</Form.Label></td>
+                        </td>
+
+                          <td>USD</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                            // 
+                              value={USADisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeUSA}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentUSA && (
+                          <Form.Control value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
+                            )}
+                          </td>
+                          <td>
+                          {showInputDisAmtUSA && (
+                          <Form.Control value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
+                          )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Australia
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {AusTip}</Form.Label></td>
+                        </td>
+
+                          <td>AUD</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData[1].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={AusDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeAus}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                          {showInputPercentAus && (
+                          <Form.Control value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
+                            )}
+                          
+                          </td>
+                          <td>
+                          {showInputDisAmtAus && (
+                          <Form.Control value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        
+                        <tr>
+                          <td>Brazil
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {BrazilTip}</Form.Label></td>
+                        </td>
+
+                          <td>BRL</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData[2].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={BrazilDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeBrazil}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentBrzail && (
+                                <Form.Control value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
+                              )}
+                          </td>
+                          <td>
+                            {showInputDisAmtBrzail && (
+
+                          <Form.Control value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Canada
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {CanadaTip}</Form.Label></td>
+                        </td>
+
+                          <td>CAD</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData[3].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={CanadaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeCanada}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentCanada && (
+                          <Form.Control value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            
+                            {showInputDisAmtCanada && (
+                          <Form.Control value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+
+                        <tr>
+                          <td>Chile
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {ChileTip}</Form.Label></td>
+                        </td>
+
+                          <td>CLP</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData[4].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={ChileDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeChile}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentChile && (
+                              <Form.Control value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtChile && (
+                            <Form.Control value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Columbia
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {ColumbiaTip}</Form.Label></td>
+                        </td>
+
+                          <td>COP</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData[5].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={ColumbiaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeColumbia}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentColumbia && (
+                                <Form.Control value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
+                              )}
+                          </td>
+                          <td>
+                            {showInputDisAmtColumbia && (
+                          <Form.Control value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Egypt
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {EgyptTip}</Form.Label></td>
+                        </td>
+
+                          <td>EGP</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData[6].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={EgyptDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeEgypt}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentEgypt && (
+                          <Form.Control value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtEgypt && (
+                          <Form.Control value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>European Union
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {EUTip}</Form.Label></td>
+                        </td>
+
+                          <td>EUR</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData[7].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={EUDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeEU}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentEU && (
+                          <Form.Control value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtEU && (
+                            <Form.Control value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+                        
+                        <tr>
+                          <td>Great Britain
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {GBPTip}</Form.Label></td>
+                        </td>
+
+                          <td>GBP</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData[8].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={GBPDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeGBP}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentGBP && (
+                          <Form.Control value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtGBP && (
+                              <Form.Control value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Indonesia
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {IndonesiaTip}</Form.Label></td>
+                        </td>
+
+                          <td>IDR</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData[9].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={IndonesiaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeIndo}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentIndonesia && (
+                          <Form.Control value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtIndonesia && (
+                          <Form.Control value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Israel
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {IsrealTip}</Form.Label></td>
+                        </td>
+
+                          <td>ILS</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData[10].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={IsrealDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeIsreal}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentIsreal && (
+
+                            <Form.Control value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtIsreal && (
+
+                          <Form.Control value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>India
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {IndiaTip}</Form.Label></td>
+                        </td>
+
+                          <td>INR</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData[11].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={IndiaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeIndia}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentIndia && (
+                          <Form.Control value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtIndia && (
+
+                          <Form.Control value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Japan
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {JapanTip}</Form.Label></td>
+                        </td>
+
+                          <td>JPY</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData[12].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={JapanDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeJapan}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentJapan && (
+
+                          <Form.Control value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {
+                              showInputDisAmtJapan && (
+
+                        <Form.Control value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
+                              )
+                            }
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("JPY"))} {JapanminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>South Korea
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {SKTip}</Form.Label></td>
+                        </td>
+
+                          <td>KRW</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData[13].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={SKDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeSK}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                              {showInputPercentSK && (
+
+                          <Form.Control value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
+                              )}
+                          </td>
+                          <td>
+                            {showInputDisAmtSK && (
+                              <Form.Control value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
+
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Mexico
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {MexicoTip}</Form.Label></td>
+                        </td>
+
+                          <td>MXN</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData[14].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={MexicoDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeMexico}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentMexico && (
+                          <Form.Control value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtMexico && (
+
+                            <Form.Control value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Malaysia
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {MalaysiaTip}</Form.Label></td>
+                        </td>
+
+                          <td>MYR</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData[15].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={MalaysiaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeMalaysia}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentMalaysia && (
+                          <Form.Control value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtMalaysia && (
+                              <Form.Control 
+                              value={MalaysiaDisAmt} onChange={handleDefaultDiscountAmtMalaysia} type="text" />
+
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+                        
+                        <tr>
+                          <td>Nigeria
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {NigeriaTip}</Form.Label></td>
+                        </td>
+
+                          <td>NGN</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData[16].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={NigeriaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeNigeria}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentNigeria && (
+                          <Form.Control value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtNigeria && (
+                              <Form.Control value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+                        <tr>
+                          <td>Norway
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {NorwayTip}</Form.Label></td>
+                        </td>
+
+                          <td>NOK</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData[17].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={NorwayDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeNorway}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentNorway && (
+                          <Form.Control value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtNorway && (
+                          <Form.Control value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Peru
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {PeruTip}</Form.Label></td>
+                        </td>
+
+                          <td>PEN</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData[18].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={PeruDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypePeru}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentPeru && (
+
+                          <Form.Control value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
+                            )}
+                          </td>
+                          <td>
+                          
+                            {showInputDisAmtPeru && (
+                        <Form.Control value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+                          
+
+                          <tr>
+                          <td>Philippines
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {PhilipinesTip}</Form.Label></td>
+                        </td>
+
+                          <td>PHP</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData[19].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={PhilipinesDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypePhilipines}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentPhilipines && (
+                              <Form.Control value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
+
+                            )}
+                          </td>
+                          <td>
+                          {showInputDisAmtPhilipines && (
+                          <Form.Control value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
+                          )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+                        <tr>
+                          <td>Poland
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {PolandTip}</Form.Label></td>
+                        </td>
+
+                          <td>PLN</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData[20].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={PolandDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypePoland}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentPoland && (
+
+                          <Form.Control value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtPoland && (
+
+                        <Form.Control value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PLN"))} {PolandminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+                        <tr>
+                          <td>Romania
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {RomaniaTip}</Form.Label></td>
+                        </td>
+
+                          <td>RON</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData[21].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={RomaniaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeRomania}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentRomania && (
+                          <Form.Control value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtRomania && (
+                          <Form.Control value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+                        <tr>
+                          <td>Russia
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {RussiaTip}</Form.Label></td>
+                        </td>
+
+                          <td>RUB</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData[22].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={RussiaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeRussia}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentRussia && (
+                              
+                          <Form.Control value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtRussia && (
+                          <Form.Control value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                        <tr>
+                          <td>Singapore
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {SingaporeTip}</Form.Label></td>
+                        </td>
+
+                          <td>SGD</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData[23].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={SingaporeDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeSingapore}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentSingapore && (
+                          <Form.Control value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtSingapore && (
+
+                          <Form.Control value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+                        <tr>
+                          <td>Thailand
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {ThailandTip}</Form.Label></td>
+                        </td>
+
+                          <td>THB</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData[24].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={ThailandDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeThailand}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentThailand && (
+                          <Form.Control value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtThailand && (
+                          <Form.Control value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+                        <tr>
+                          <td>Turkey
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {TurkeyTip}</Form.Label></td>
+                        </td>
+
+                          <td>TRY</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData[25].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={TurkeyDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeTurkey}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentTurkey && (
+                          <Form.Control value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtTurkey && (
+                          <Form.Control value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                          <tr>
+                          <td>Taiwan
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {TaiwanTip}</Form.Label></td>
+                        </td>
+
+                          <td>TWD</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData[26].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={TaiwanDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeTaiwan}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentTaiwan && (
+                          <Form.Control value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtTaiwan && (
+
+                          <Form.Control value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                          <tr>
+                          <td>Vietnam
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {VietnamTip}</Form.Label></td>
+                        </td>
+
+                          <td>VND</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData[27].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={VietmanDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeVietnam}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentVietnam && (
+
+                          <Form.Control value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtVietnam && (
+
+                          <Form.Control value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+
+
+                        <tr>
+                          <td>South Africa
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {SATip}</Form.Label></td>
+                        </td>
+
+                          <td>KRW</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData[28].maxPrice}`}</td>
+                          <td>
+                            <Form.Control value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
+                          </td>
+                          <td>
+                            <Select
+                              value={SADisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeSA}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {showInputPercentSA && (
+                          <Form.Control value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
+                            )}
+                          </td>
+                          <td>
+                            {showInputDisAmtSA && (
+                          <Form.Control value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
+                            )}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                              <h6>{SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}</h6>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr> 
+                          
+              </tbody>
           </table>
 
         </div>

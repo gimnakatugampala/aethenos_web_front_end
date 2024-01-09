@@ -2846,3 +2846,46 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
     })
     .catch(error => console.log('error', error));
  }
+
+ export const AddFreeCouponAPI = async(code,SD,ED,couponCodeFree) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+      var formdata = new FormData();
+    formdata.append("code", `${couponCodeFree}`);
+    formdata.append("start_date", `${SD}`);
+    formdata.append("end_date", `${ED}`);
+    formdata.append("course_code", `${code}`);
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/addFreeCoupon", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+
+        Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+
+        if(result.variable == "200"){
+          SuccessAlert("Success",result.message)
+          setTimeout(() => {
+          
+            window.location.href = `/courses/manage/${code}/#promotions`
+            window.location.reload()
+          }, 1500);
+        }
+
+        if(result.message == "Error"){
+          ErrorAlert("Error",result.variable)
+        }
+
+      })
+      .catch(error => console.log('error', error));
+
+ }
