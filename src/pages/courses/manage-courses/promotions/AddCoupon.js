@@ -56,14 +56,13 @@ const AddCoupon = ({code}) => {
       setSelectedValue(event.target.value);
     };
 
-    const onChange = (e) =>{
-        console.log(e)
-    }
+   
 
     //  ------------------------ Start Date ---------------------
     const currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
     const [startDate, setStartDate] = useState(currentDate);
     const [endDate, setEndDate] = useState("");
+    const [couponCodeFree, setcouponCodeFree] = useState("")
   
     const handleStartDateChange = (event) => {
       const newStartDate = event.target.value;
@@ -88,6 +87,25 @@ const AddCoupon = ({code}) => {
     useEffect(() => {
       setEndDate(calculateEndDate(currentDate));
     }, [])
+
+
+    const handleFreeCouponCreate = (e) =>{
+        e.preventDefault();
+
+        // console.log(new Date(startDate))
+        // console.log(new Date(endDate))
+        // console.log(couponCodeFree)
+
+        const isValid = /^[A-Z0-9]+$/.test(couponCodeFree.trim());
+        
+        if (isValid) {
+          console.log("Valid string!");
+        } else {
+          console.log("Invalid string. Please follow the specified rules.");
+        }
+        
+
+    }
     
     
 
@@ -3295,21 +3313,21 @@ const AddCoupon = ({code}) => {
       
       <div className='mb-3'>
       
-        <p><b>End date:</b> <input class="form-control" type="text" value={endDate} aria-label="readonly input example" readonly /></p>
+        <h6><b>End date:</b> <input class="form-control" type="text" value={endDate} aria-label="readonly input example" readonly /></h6>
       </div>
     </div>
 
     
       <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
         <Form.Label><b>Enter coupon code (optional)</b></Form.Label>
-        <Form.Control type="text" placeholder="Enter Coupon" />
+        <Form.Control value={couponCodeFree} onChange={(e) => setcouponCodeFree(e.target.value.toUpperCase())} type="text" placeholder="Enter Coupon" />
       </Form.Group>
 
       <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
 
 
       <div className='my-2'>
-        <Button variant='contained'>Create Coupon</Button>
+        <Button onClick={handleFreeCouponCreate} variant='contained'>Create Coupon</Button>
      </div>
 
     </div>
