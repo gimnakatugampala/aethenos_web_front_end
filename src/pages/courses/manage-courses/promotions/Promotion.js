@@ -105,7 +105,7 @@ const Promotion = ({code}) => {
             <div className='d-flex justify-content-between align-items-center'>
                 <p>You can create 2 more coupons this month</p>
 
-                <Button onClick={() => window.history.pushState("add-coupon", "Manage Course", `#add-coupon`)} variant="contained">Create new Coupons</Button>
+                <Button onClick={() => window.location.href = `/courses/manage/${code}/#add-coupon`} variant="contained">Create new Coupons</Button>
             </div>
           </div>
     </div>

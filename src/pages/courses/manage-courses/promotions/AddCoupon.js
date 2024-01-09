@@ -60,6 +60,37 @@ const AddCoupon = ({code}) => {
         console.log(e)
     }
 
+    //  ------------------------ Start Date ---------------------
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+    const [startDate, setStartDate] = useState(currentDate);
+    const [endDate, setEndDate] = useState("");
+  
+    const handleStartDateChange = (event) => {
+      const newStartDate = event.target.value;
+  
+      // Check if the new start date is not before the current date
+      if (new Date(newStartDate) >= new Date(currentDate)) {
+        setStartDate(newStartDate);
+        setEndDate(calculateEndDate(newStartDate));
+      }
+
+      calculateEndDate(startDate)
+    };
+  
+    const calculateEndDate = (start) => {
+      const startDate = new Date(start);
+      const endDate = new Date(startDate);
+      endDate.setDate(startDate.getDate() + 7);
+      return endDate.toISOString().split('T')[0];
+    };
+
+
+    useEffect(() => {
+      setEndDate(calculateEndDate(currentDate));
+    }, [])
+    
+    
+
 
     // ------------------ Discount ------------------
 
@@ -83,6 +114,8 @@ const AddCoupon = ({code}) => {
   
 
   useEffect(() => {
+
+   
 
     // Get Paid Type
     // GetCoursePricingType(code)
@@ -3193,6 +3226,9 @@ const AddCoupon = ({code}) => {
     // -------------------
 
 
+
+
+
   return (
     <div className='col-md-8'>
     <Card className="py-2 my-2"> 
@@ -3245,9 +3281,22 @@ const AddCoupon = ({code}) => {
 
     {selectedValue == "free-coupon" && (
     <div className='container'>
-    <div className='my-5'>
-        <h6><b>Start date:</b> <DateTimePicker onChange={setstart_date} value={start_date} /></h6>
-        <h6><b>End date:</b> <DateTimePicker onChange={setstart_date} value={start_date} /></h6>
+    <div className='row my-5'>
+      <div className='mb-3'>
+        <h6><b>Start date:</b></h6>
+        <input
+        className='form-control'
+        type="date"
+        id="startDate"
+        value={startDate}
+        onChange={handleStartDateChange}
+      />
+      </div>
+      
+      <div className='mb-3'>
+      
+        <p><b>End date:</b> <input class="form-control" type="text" value={endDate} aria-label="readonly input example" readonly /></p>
+      </div>
     </div>
 
     
@@ -3276,7 +3325,7 @@ const AddCoupon = ({code}) => {
 
         
         <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
-            <Form.Label><b>Enter coupon code</b></Form.Label>
+            <Form.Label><b>Enter coupon code (Optional):</b></Form.Label>
             <Form.Control type="text" placeholder="Enter Coupon" />
         </Form.Group>
 
@@ -3284,20 +3333,23 @@ const AddCoupon = ({code}) => {
 
         <div className="pricing-container my-3">
           <div className="price-range-container p-3">
-            <p>The Global List Price will be used for all countries unless individual country prices are specified below.</p>
+            <p><b>Enter discount price(s) for coupon:</b></p>
 
-            <p>You have 2 options for Pricing:</p>
+            <p>You have options to either:</p>
             <ol>
-              <li>Provide a <b>Global List Price</b> only.</li>
+              <li>Only enter a Global discount price which will be applicable to all countries.</li>
               <p className="my-2">OR</p>
-              <li>Provide a <b>Global List Price </b>and individual country prices for select countries below.</li>
+              <li>Enter specific discount prices for countries. The Global discount price will be applied for countries 
+          not in the country list below. The Global discount price will also be applied for any country for 
+          which you do not enter a discount price.
+          </li>
             </ol>
-            <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List 
-Prices include VAT. 
-For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
+
 
             <div className="row">
-              <div className="price-range col-md-3">
+                <p className='my-3'><b>Enter Global Discount Price (required):</b></p>
+
+              <div className="price-range col-md-4">
                 <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
                   <InputGroup className="mb-3">
                     <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
@@ -3312,7 +3364,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                   <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: ${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</i></Form.Label>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-md-4">
               <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
               <select value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
                 <option value="0" selected>Open this select menu</option>
@@ -3325,7 +3377,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
               {showDefaultDiscountInput && (
                 <>
                 {showDefaultPercentDiscountInput && (
-                <div className="col-md-2">
+                <div className="col-md-4">
                 <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
                 <Form.Control value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
                 </div>
@@ -3333,7 +3385,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
 
                 {showDefaultValueDiscountInput && (
 
-              <div className="col-md-2">
+              <div className="col-md-4">
               <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
               <Form.Control value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
               </div>
@@ -3350,10 +3402,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
 
               </div>
 
-              <div className='col-md-1 d-flex align-items-center mb-3'>
-                <Button onClick={handleSaveDefaultPricing} className='mx-1' variant="contained">Submit</Button>
-                </div>
-
+          
 
               <div className="col-6"></div>
 
@@ -3364,7 +3413,7 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
       
 
           {/* Table */}
-
+          <p className='my-3'><b>Enter Global Discount Price (required):</b></p>
           <table className="table table-striped text-center">
             <thead>
               <tr>
@@ -3378,8 +3427,6 @@ For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (�
                 <th scope="col">Discount Amount</th>
                 <th scope="col">Net Price</th>
                
-
-
               </tr>
             </thead>
             <tbody>
