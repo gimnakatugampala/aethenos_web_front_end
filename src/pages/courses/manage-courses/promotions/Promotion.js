@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import AddIcon from "@mui/icons-material/Add";
 import { Card  } from 'antd';
 import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
+import Table from 'react-bootstrap/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -39,7 +39,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import Snackbar from '@mui/material/Snackbar';
 import { GetReferralLink } from '../../../../api';
-
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 const Promotion = ({code}) => {
@@ -108,14 +109,46 @@ const Promotion = ({code}) => {
             <h6><b>{monthName} Coupons</b></h6>
 
             <div className='d-flex justify-content-between align-items-center'>
-                <p>You can create 2 more coupons this month</p>
+                <p>You can create 3 more coupons this month</p>
 
                 <Button onClick={() => {
                   window.location.href = `/courses/manage/${code}/#add-coupon`
                   window.location.reload()
                 }} variant="contained">Create new Coupons</Button>
             </div>
+
+            <Table className='my-2' striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Global Price</th>
+                  <th>Created date</th>
+                  <th>Expiry date</th>
+                  <th>Redemptions</th>
+                  <th>Status</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ERGHBHD98898</td>
+                  <td>$9.99</td>
+                  <td>10/1/2024</td>
+                  <td>10/8/2024</td>
+                  <td>5/Unlimited</td>
+                  <td><FormControlLabel control={<Switch defaultChecked />} label="Active" /></td>
+                  <td>Active</td>
+                </tr>
+        
+              </tbody>
+            </Table>
+    
+
           </div>
+
+
+   
+
     </div>
 
 
@@ -133,5 +166,6 @@ const Promotion = ({code}) => {
     </div>
       )
 }
+
 
 export default Promotion
