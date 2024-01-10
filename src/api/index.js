@@ -2889,3 +2889,50 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
       .catch(error => console.log('error', error));
 
  }
+
+ export const GetCouponsAPI = async(code,setall_coupons) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCouponsFromCourseCode/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+      setall_coupons(result)
+    })
+    .catch(error => console.log('error', error));
+ }
+
+ export const StatusChangeAPI = async(code,CouponCode) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/activeDeactiveCoupon/${CouponCode}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Success",result.message)
+      }
+    })
+    .catch(error => console.log('error', error));
+
+ }

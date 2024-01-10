@@ -29,7 +29,7 @@ import TextField from '@mui/material/TextField';
 import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment';
 import ButtonBootstrap from 'react-bootstrap/Button';
-import { GetPromotions , AddPromotions } from '../../../../api';
+import { GetPromotions , AddPromotions, GetCouponsAPI, StatusChangeAPI } from '../../../../api';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { ActivatePromotions , DeactivatedPromotions , UpdatePromotions , GetPromotionsTypes } from '../../../../api';
@@ -43,9 +43,11 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
+
 const Promotion = ({code}) => {
 
   const [referalCode, setreferalCode] = useState(``)
+  const [all_coupons, setall_coupons] = useState([])
   var currentDate = new Date();
   var monthName = currentDate.toLocaleString('default', { month: 'long' });
   
@@ -67,7 +69,26 @@ const Promotion = ({code}) => {
 
   useEffect(() => {
     GetReferralLink(code,setreferalCode)
+    GetCouponsAPI(code,setall_coupons)
   }, [code])
+
+
+  const handleCouponStatus = (e,couponCode) => {
+
+
+    if(e.target.checked){
+      // console.log("Actived")
+      // console.log(couponCode)
+      StatusChangeAPI(code,couponCode)
+
+    }else{
+      // console.log("Deactivated")
+      // console.log(couponCode)
+      StatusChangeAPI(code,couponCode)
+
+
+    }
+  }
   
 
  
@@ -130,15 +151,17 @@ const Promotion = ({code}) => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>ERGHBHD98898</td>
-                  <td>$9.99</td>
-                  <td>10/1/2024</td>
-                  <td>10/8/2024</td>
+                {all_coupons.map((coupon,key) => (
+                <tr key={key}>
+                  <td>{coupon.couponCode}</td>
+                  <td>{coupon.couponType.id == 1 ? "Free" : ''}</td>
+                  <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
+                  <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
                   <td>5/Unlimited</td>
-                  <td><FormControlLabel control={<Switch defaultChecked />} label="Active" /></td>
+                  <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
                   <td>Active</td>
                 </tr>
+                ))}
         
               </tbody>
             </Table>
