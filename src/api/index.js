@@ -790,8 +790,13 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     .then(result => {
       console.log(result)
       Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      
+      if(result.message == "Error"){
+        setsectionData(null)
+        return
+      }
+      
       setsectionData(result)
-
 
     })
     .catch(error => console.log('error', error));
