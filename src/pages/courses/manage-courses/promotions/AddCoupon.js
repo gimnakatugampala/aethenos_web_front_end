@@ -146,6 +146,246 @@ const AddCoupon = ({code}) => {
         
 
     }
+
+    const handleDiscountCouponCreate = (e) =>{
+      var raw = [
+        {
+            "courseCode": `${code}`,
+            "netPrice": `${USANetPrice}`,
+            "listPrice": `${USAListPrice}`,
+            "discountType": `${USADisType}`,
+            "country": "America",
+            "discountValue": `${USADisType == "1" ? 0.00 : USADisType == "2" ? USADisPercent : USADisAmt}`
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice": `${AusNetPrice}`,
+            "listPrice": `${AusListPrice}`,
+            "discountType":`${AusDisType}`,
+            "country": "Australia",
+            "discountValue": `${AusDisType == "1" ? 0.00 : AusDisType == "2" ? AusDisPercent : AusDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${BrazilNetPrice}`,
+            "listPrice": `${BrazilListPrice}`,
+            "discountType": `${BrazilDisType}`,
+            "country": "Brazil",
+            "discountValue": `${BrazilDisType == "1" ? 0.00 : BrazilDisType == "2" ? BrazilDisPercent : BrazilDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${CanadaNetPrice}`,
+            "listPrice": `${CanadaListPrice}`,
+            "discountType": `${CanadaDisType}`,
+            "country": "Canada",
+            "discountValue": `${CanadaDisType == "1" ? 0.00 : CanadaDisType == "2" ? CanadaDisPercent : CanadaDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${ChileNetPrice}`,
+            "listPrice": `${ChileListPrice}`,
+            "discountType": `${ChileDisType}`,
+            "country": "Chile",
+            "discountValue": `${ChileDisType == "1" ? 0.00 : ChileDisType == "2" ? ChileDisPercent : ChileDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${ColumbiaNetPrice}`,
+            "listPrice": `${ColumbiaListPrice}`,
+            "discountType": `${ColumbiaDisType}`,
+            "country": "Columbia",
+            "discountValue": `${ColumbiaDisType == "1" ? 0.00 : ColumbiaDisType == "2" ? ColumbiaDisPercent : ColumbiaDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${EgyptNetPrice}`,
+            "listPrice": `${EgyptListPrice}`,
+            "discountType": `${EgyptDisType}`,
+            "country": "Egypt",
+            "discountValue": `${EgyptDisType == "1" ? 0.00 : EgyptDisType == "2" ? EgyptDisPercent : EgyptDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${EUNetPrice}`,
+            "listPrice": `${EUListPrice}`,
+            "discountType": `${EUDisType}`,
+            "country": "European Union",
+            "discountValue": `${EUDisType == "1" ? 0.00 : EUDisType == "2" ? EUDisPercent : EUDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${GBPNetPrice}`,
+            "listPrice": `${GBPListPrice}`,
+            "discountType":`${GBPDisType}`,
+            "country": "Great Britain",
+            "discountValue": `${GBPDisType == "1" ? 0.00 : GBPDisType == "2" ? GBPDisPercent : GBPDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${IndonesiaNetPrice}`,
+            "listPrice": `${IndonesiaListPrice}`,
+            "discountType": `${IndonesiaDisType}`,
+            "country": "Indonesia",
+            "discountValue": `${IndonesiaDisType == "1" ? 0.00 : IndonesiaDisType == "2" ? IndonesiaDisPercent : IndonesiaDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${IsrealNetPrice}`,
+            "listPrice": `${IsrealListPrice}`,
+            "discountType": `${IsrealDisType}`,
+            "country": "Israel",
+            "discountValue": `${IsrealDisType == "1" ? 0.00 : IsrealDisType == "2" ? IsrealDisPercent : IsrealDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${IndiaNetPrice}`,
+            "listPrice": `${IndiaListPrice}`,
+            "discountType": `${IndiaDisType}`,
+            "country": "India",
+            "discountValue": `${IndiaDisType == "1" ? 0.00 : IndiaDisType == "2" ? IndiaDisPercent : IndiaDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${JapanNetPrice}`,
+            "listPrice": `${JapanListPrice}`,
+            "discountType": `${JapanDisType}`,
+            "country": "Japan",
+            "discountValue": `${JapanDisType == "1" ? 0.00 : JapanDisType == "2" ? JapanDisPercent : JapanDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${SKNetPrice}`,
+            "listPrice": `${SKListPrice}`,
+            "discountType": `${SKDisType}`,
+            "country": "South Korea",
+            "discountValue": `${SKDisType == "1" ? 0.00 : SKDisType == "2" ? SKDisPercent : SKDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${MexicoNetPrice}`,
+            "listPrice": `${MexicoListPrice}`,
+            "discountType": `${MexicoDisType}`,
+            "country": "Mexico",
+            "discountValue": `${MexicoDisType == "1" ? 0.00 : MexicoDisType == "2" ? MexicoDisPercent : MexicoDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${MalaysiaNetPrice}`,
+            "listPrice": `${MalaysiaListPrice}`,
+            "discountType": `${MalaysiaDisType}`,
+            "country": "Malaysia",
+            "discountValue": `${MalaysiaDisType == "1" ? 0.00 : MalaysiaDisType == "2" ? MalaysiaDisPercent : MalaysiaDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${NIgeriaNetPrice}`,
+            "listPrice": `${NigeriaListPrice}`,
+            "discountType": `${NigeriaDisType}`,
+            "country": "Nigeria",
+            "discountValue": `${NigeriaDisType == "1" ? 0.00 : NigeriaDisType == "2" ? NigeriaDisPercent : NigeriaDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${NorwayNetPrice}`,
+            "listPrice": `${NorwayListPrice}`,
+            "discountType": `${NorwayDisType}`,
+            "country": "Norway",
+            "discountValue": `${NorwayDisType == "1" ? 0.00 : NorwayDisType == "2" ? NorwayDisPercent : NorwayDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${PeruNetPrice}`,
+            "listPrice": `${PeruListPrice}`,
+            "discountType": `${PeruDisType}`,
+            "country": "Peru",
+            "discountValue": `${PeruDisType == "1" ? 0.00 : PeruDisType == "2" ? PeruDisPercent : PeruDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${PhilipinesNetPrice}`,
+            "listPrice": `${PhilipinesListPrice}`,
+            "discountType": `${PhilipinesDisType}`,
+            "country": "Philippines",
+            "discountValue": `${PhilipinesDisType == "1" ? 0.00 : PhilipinesDisType == "2" ? PhilipinesDisPercent : PhiliphinesDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${PolandNetPrice}`,
+            "listPrice": `${PolandListPrice}`,
+            "discountType": `${PolandDisType}`,
+            "country": "Poland",
+            "discountValue": `${PolandDisType == "1" ? 0.00 : PolandDisType == "2" ? PolandDisPercent : PolandDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${RomaniaNetPrice}`,
+            "listPrice": `${RomaniaListPrice}`,
+            "discountType": `${RomaniaDisType}`,
+            "country": "Romania",
+            "discountValue": `${RomaniaDisType == "1" ? 0.00 : RomaniaDisType == "2" ? RomaniaDisPercent : RomaniaDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${RussiaNetPrice}`,
+            "listPrice": `${RussiaListPrice}`,
+            "discountType":`${RussiaDisType}`,
+            "country": "Russia",
+            "discountValue": `${RussiaDisType == "1" ? 0.00 : RussiaDisType == "2" ? RussiaDisDisPercent : RussiaDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${SingaporeNetPrice}`,
+            "listPrice": `${SingaporeListPrice}`,
+            "discountType": `${SingaporeDisType}`,
+            "country": "Singapore",
+            "discountValue": `${SingaporeDisType == "1" ? 0.00 : SingaporeDisType == "2" ? SingaporeDisPercent : SingaporeDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${ThailandNetPrice}`,
+            "listPrice": `${ThailandListPrice}`,
+            "discountType": `${ThailandDisType}`,
+            "country": "Thailand",
+            "discountValue": `${ThailandDisType == "1" ? 0.00 : ThailandDisType == "2" ? ThailandDisPercent : ThailandDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${TurkeyNetPrice}`,
+            "listPrice": `${TurkeyListPrice}`,
+            "discountType": `${TurkeyDisType}`,
+            "country": "Turkey",
+            "discountValue": `${TurkeyDisType == "1" ? 0.00 : TurkeyDisType == "2" ? TurkeyDisPercent : TurkeyDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${TaiwanNetPrice}`,
+            "listPrice": `${TaiwanListPrice}`,
+            "discountType": `${TaiwanDisType}`,
+            "country": "Taiwan",
+            "discountValue":  `${TaiwanDisType == "1" ? 0.00 : TaiwanDisType == "2" ? TaiwanDisPercent : TaiwanDisAmt}`,
+        },
+        {
+            "courseCode": `${code}`,
+            "netPrice":`${VietnamNetPrice}`,
+            "listPrice": `${VietnamListPrice}`,
+            "discountType": `${VietmanDisType}`,
+            "country": "Vietnam",
+            "discountValue": `${VietmanDisType == "1" ? 0.00 : VietmanDisType == "2" ? VietnamDisPercent : VietnamDisAmt}`,
+        },
+           {
+            "courseCode": `${code}`,
+            "netPrice":`${SANetPrice}`,
+            "listPrice": `${SAListPrice}`,
+            "discountType": `${SADisType}`,
+            "country": "South Africa",
+            "discountValue": `${SADisType == "1" ? 0.00 : SADisType == "2" ? SADisPercent : SADisAmt}`,
+        }
+      ]
+
+
+      console.log(raw)
+    }
     
     
 
@@ -4967,7 +5207,7 @@ const AddCoupon = ({code}) => {
 
 
         <div className='my-2'>
-            <Button variant='contained'>Create Coupon</Button>
+            <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>
         </div>
 
         </div>

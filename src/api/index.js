@@ -2840,8 +2840,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
       Unauthorized(result.status,`courses/manage/${code}/#promotions`)
       console.log(result)
 
-      if(result.variable == "200"){
+      if(result.variable == "200" && result.message != null){
         setreferalCode(`https://www.aethenos.com/course/draft/${code}/?referralCode=${result.message}`)
+      }else{
+        setreferalCode(``)
       }
     })
     .catch(error => console.log('error', error));
@@ -2906,6 +2908,14 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
     .then(result => {
       console.log(result)
       Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+      if(result.message == null){
+        setall_coupons([])
+      }
+
+      if(result.message == "Error"){
+        setall_coupons(null)
+        return
+      }
       setall_coupons(result)
     })
     .catch(error => console.log('error', error));

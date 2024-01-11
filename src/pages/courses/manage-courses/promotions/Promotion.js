@@ -47,7 +47,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 const Promotion = ({code}) => {
 
   const [referalCode, setreferalCode] = useState(``)
-  const [all_coupons, setall_coupons] = useState([])
+  const [all_coupons, setall_coupons] = useState(null)
   var currentDate = new Date();
   var monthName = currentDate.toLocaleString('default', { month: 'long' });
   
@@ -151,7 +151,7 @@ const Promotion = ({code}) => {
                 </tr>
               </thead>
               <tbody>
-                {all_coupons.map((coupon,key) => (
+                {all_coupons != null ? all_coupons.map((coupon,key) => (
                 <tr key={key}>
                   <td>{coupon.couponCode}</td>
                   <td>{coupon.couponType.id == 1 ? "Free" : ''}</td>
@@ -161,7 +161,7 @@ const Promotion = ({code}) => {
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
                   <td>Active</td>
                 </tr>
-                ))}
+                )) : "No Coupons Available"}
         
               </tbody>
             </Table>
