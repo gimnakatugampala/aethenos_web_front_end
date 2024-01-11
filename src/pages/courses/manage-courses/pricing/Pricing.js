@@ -14,6 +14,7 @@ import getSymbolFromCurrency from 'currency-symbol-map'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import formatNumber from "../../../../commonFunctions/NumberFormat";
 import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingSpinner";
+import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
 
 
 
@@ -31,6 +32,7 @@ const Pricing = ({code}) => {
   const [dis_types, setdis_types] = useState([])
 
   const [loading_btn, setloading_btn] = useState(true)
+  const [loading_button, setloading_button] = useState()
 
   const [countriesData, setcountriesData] = useState([])
 
@@ -470,7 +472,6 @@ const Pricing = ({code}) => {
 
   //  ---------------------
   
-
 
 
 
@@ -3306,6 +3307,7 @@ const Pricing = ({code}) => {
     // console.log(selectDiscountTypeList)
     console.log(Paid_Type)
 
+   
     if(Paid_Type == 1){
 
       PricingConvertToFree(code)
@@ -3548,8 +3550,8 @@ const Pricing = ({code}) => {
     ]
 
     console.log(raw)
-
-    SavePriceCountries(code,raw)
+    setloading_button(true)
+    SavePriceCountries(code,raw,setloading_button)
 
     }
 
@@ -3565,7 +3567,9 @@ const Pricing = ({code}) => {
           Pricing
         </Typography>
 
-        <Button onClick={handleSubmitAllPrices} variant="contained"><AddIcon /> SAVE</Button>
+      {loading_button ?  <Button variant="contained"><ButtonSpinner /></Button> : <Button onClick={handleSubmitAllPrices} variant="contained"><AddIcon /> SAVE</Button>}
+        
+       
 
         </div>
 

@@ -2133,7 +2133,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     .catch(error => console.log('error', error));
  }
 
- export const SavePriceCountries = async(code,raw) =>{
+ export const SavePriceCountries = async(code,raw,setloading_button) =>{
 
 
 var myHeaders = new Headers();
@@ -2156,11 +2156,13 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
     if(result.message == "Error"){
       ErrorAlert("Error",result.variable)
+      setloading_button(false)
       return
     }
 
     if(result.variable == "200"){
       SuccessAlert("Added!",result.message)
+      setloading_button(false)
       UpdateCourseProgress(code)
     }
 
