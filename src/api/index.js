@@ -484,6 +484,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang) =>{
 
+
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
@@ -511,6 +512,8 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
       setpreview_img(`${result.courseImage}`)
       seVideoSrc(`${result.promotionalVideo}`)
 
+
+
     })
     .catch(error => console.log('error', error));
 
@@ -527,7 +530,8 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
   course_sub_cat,
   keywords,
   promo_vid,
-  course_image) =>{
+  course_image,
+  setloading_btn) =>{
 
     var myHeaders = new Headers();
     myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -557,10 +561,12 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
     .then(result => {
       
       if(result.variable == "200"){
+        setloading_btn(false)
         SuccessAlert("Saved",result.message)
         UpdateCourseProgress(code)
       }else{
         ErrorAlert("Error",result.message)
+        setloading_btn(false)
       }
 
       Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)

@@ -17,6 +17,9 @@ import ReactPlayer from 'react-player'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import { AddCourseLandingPage } from "../../../../api";
 import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
+import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingSpinner";
+import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
+
 
 
 const { TextArea } = Input;
@@ -54,6 +57,8 @@ const Basics = ({code}) => {
   const [levelData, setlevelData] = useState([])
   const [cat, setcat] = useState([])
   const [subcatData, setsubcatData] = useState([])
+
+  const [loading_btn, setloading_btn] = useState(false)
 
 
 
@@ -102,7 +107,7 @@ const Basics = ({code}) => {
       return
     }
 
-    
+    setloading_btn(true)
 
     AddCourseLandingPage(
       code,
@@ -115,7 +120,8 @@ const Basics = ({code}) => {
       course_sub_cat,
       keywords,
       promo_vid,
-      course_image
+      course_image,
+      setloading_btn
       )
 
     
@@ -212,7 +218,9 @@ const handleFileChange = (event) => {
           Course Landing Page
         </Typography>
 
-        <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>
+        {loading_btn ? <ButtonMaterial variant="contained"><ButtonSpinner /></ButtonMaterial> : <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>}
+        
+        
         </div>
 
         <hr />
@@ -226,7 +234,8 @@ const handleFileChange = (event) => {
           landing page and course title standards.
         </p>
 
-        <div className="basics-container">
+      
+      <div className="basics-container">
           <div className="my-3">
             <h6>Course title</h6>
             <div class="input-group mb-3">
@@ -377,6 +386,8 @@ const handleFileChange = (event) => {
             </div>
           </div>
         </div>
+        
+
       </Card>
     </div>
   );
