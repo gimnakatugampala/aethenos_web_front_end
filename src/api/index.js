@@ -333,7 +333,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
- export const AddIntendedLeaners = async(item,code) =>{
+ export const AddIntendedLeaners = async(item,code,setloadingBtn) =>{
+
+  setloadingBtn(true)
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -357,9 +359,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
       if(result.variable == "200"){
         SuccessAlert("Saved!",result.message)
+        setloadingBtn(false)
         UpdateCourseProgress(code)
       }else{
         ErrorAlert("Error!",result.message)
+        setloadingBtn(false)
       }
     })
     .catch(error => console.log('error', error));

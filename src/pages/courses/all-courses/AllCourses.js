@@ -14,6 +14,7 @@ import { GetAllCourses } from '../../../api';
 import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 import Spinner from 'react-bootstrap/Spinner';
 import './AllCourses.css'
+import LoadingSpinner from '../../../commonFunctions/loaders/Spinner/LoadingSpinner';
 const { Search } = Input;
 
 const AllCourses = () => {
@@ -21,7 +22,11 @@ const AllCourses = () => {
   const [courses, setcourses] = useState([])
 
   useEffect(() => {
-    GetAllCourses(setcourses)
+
+    
+      
+      GetAllCourses(setcourses)
+    
   }, [])
   
 
@@ -86,7 +91,7 @@ const AllCourses = () => {
 courses.map((course,key) => (
 <CourseItem key={key} course={course}  filledPercent={course.progress}  />
 ))
-: <Spinner size='lg' animation="border" variant="danger" />}
+: <LoadingSpinner w={"40%"} h={"100%"} wpclass={"m-5"} />}
 
 
     
