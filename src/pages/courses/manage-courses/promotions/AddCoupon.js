@@ -105,7 +105,7 @@ const AddCoupon = ({code}) => {
       // Check if the new start date is not before the current date
       if (new Date(newStartDate) >= new Date(currentDateDiscount)) {
         setStartDateDiscount(newStartDate);
-        setEndDateDiscount(calculateEndDate(newStartDate));
+        setEndDateDiscount(calculateEndDateDiscount(newStartDate));
       }
 
       calculateEndDateDiscount(startDateDiscount)
@@ -114,7 +114,7 @@ const AddCoupon = ({code}) => {
     const calculateEndDateDiscount = (start) => {
       const startDate = new Date(start);
       const endDate = new Date(startDate);
-      endDate.setDate(startDate.getDate() + 7);
+      endDate.setDate(startDate.getDate() + 30);
       return endDate.toISOString().split('T')[0];
     };
 
