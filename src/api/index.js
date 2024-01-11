@@ -816,7 +816,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  }
 
- export const GetPriceDefault = async(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice) =>{
+ export const GetPriceDefault = async(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice,setMinDefaultValue) =>{
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
@@ -837,6 +837,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     setDDisType(result.discountTypeId)
     setPriceRangeMinDefault(result.minPrice)
     setPriceRangeMaxDefault(result.maxPrice)
+    setMinDefaultValue(result.minimumPrice)
 
 
     if(result.discountTypeId == 2){

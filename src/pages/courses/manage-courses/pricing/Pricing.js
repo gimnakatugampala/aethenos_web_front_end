@@ -69,6 +69,8 @@ const Pricing = ({code}) => {
   const [DDisAmt, setDDisAmt] = useState("")
   const [DGlobalNetPrice, setDGlobalNetPrice] = useState("")
 
+  const [MinDefaultValue, setMinDefaultValue] = useState("")
+
   const [PriceRangeMinDefault, setPriceRangeMinDefault] = useState("")
   const [PriceRangeMaxDefault, setPriceRangeMaxDefault] = useState("")
 
@@ -87,7 +89,7 @@ const Pricing = ({code}) => {
     GetDiscountTypes(setdis_types)
 
     // Get The Default Pricing
-    GetPriceDefault(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice)
+    GetPriceDefault(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice,setMinDefaultValue)
 
 
     // Get the Countries List WITH THE PRICES
@@ -3677,7 +3679,7 @@ const Pricing = ({code}) => {
                       <div className="col-md-3">
                       <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
                       <h5 className="p-1">{DGlobalNetPrice == "" ? 0 : formatNumber(DGlobalNetPrice)}</h5>
-                      <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : $10</i></Form.Label>
+                      <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
 
                       </div>
 
