@@ -371,9 +371,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
  }
 
 
- export const AddCourseMessages = async(code,congratsmsg,welcomemsg) =>{
+ export const AddCourseMessages = async(code,congratsmsg,welcomemsg,setloading_btn) =>{
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  setloading_btn(true)
 
   var formdata = new FormData();
   formdata.append("course_code", `${code}`);
@@ -396,9 +398,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
       if(result.variable == "200"){
         SuccessAlert("Saved!",result.message)
+        setloading_btn(false)
         UpdateCourseProgress(code)
       }else{
         ErrorAlert("Error!",result.message)
+        setloading_btn(false)
       }
 
       Unauthorized(result.status,`courses/manage/${code}/#course-messages`)

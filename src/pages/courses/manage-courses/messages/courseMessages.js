@@ -13,6 +13,7 @@ import ButtonMaterial from '@mui/material/Button';
 import JoditEditor from "jodit-react";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import { AddCourseMessages , GetCourseMessages } from "../../../../api";
+import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
 
 
 const { TextArea } = Input;
@@ -34,6 +35,7 @@ const CourseMessages = ({code}) => {
 
   const [welcomemsg, setwelcomemsg] = useState("")
   const [congratsmsg, setcongratsmsg] = useState("")
+  const [loading_btn, setloading_btn] = useState(false)
 
   const handleClick = () =>{
 
@@ -45,7 +47,7 @@ const CourseMessages = ({code}) => {
       return
     }
 
-    AddCourseMessages(code,congratsmsg,welcomemsg)
+    AddCourseMessages(code,congratsmsg,welcomemsg,setloading_btn)
 
   }
 
@@ -62,8 +64,8 @@ const CourseMessages = ({code}) => {
         <Typography className="p-3" variant="h4">
           Course Messages
         </Typography>
-
-        <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>
+        {loading_btn ? <ButtonMaterial  variant="contained"> <ButtonSpinner /> </ButtonMaterial> : <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>}
+        
         </div>
         <hr />
 
