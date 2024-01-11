@@ -812,7 +812,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  export const GetCoursePricingType = async(code,setPaid_Type,setloading_btn) =>{
 
-  setloading_btn(true)
+
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);

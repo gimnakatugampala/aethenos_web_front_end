@@ -30,7 +30,7 @@ const Pricing = ({code}) => {
 
   const [dis_types, setdis_types] = useState([])
 
-  const [loading_btn, setloading_btn] = useState(false)
+  const [loading_btn, setloading_btn] = useState(true)
 
   const [countriesData, setcountriesData] = useState([])
 
@@ -51,7 +51,6 @@ const Pricing = ({code}) => {
   
 
   useEffect(() => {
-
 
 
     // Get Paid Type
@@ -359,7 +358,7 @@ const Pricing = ({code}) => {
       setSAminValue
       )
  
-  }, [code,Paid_Type])
+  }, [code])
 
 
 
