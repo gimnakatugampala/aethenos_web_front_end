@@ -810,7 +810,9 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
 
 
- export const GetCoursePricingType = async(code,setPaid_Type) =>{
+ export const GetCoursePricingType = async(code,setPaid_Type,setloading_btn) =>{
+
+  setloading_btn(true)
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -825,6 +827,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     .then(response => response.json())
     .then(result => {
       setPaid_Type(parseInt(result.message))
+      setloading_btn(false)
       console.log(result)
     })
     .catch(error => console.log('error', error));

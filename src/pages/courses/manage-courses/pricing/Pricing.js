@@ -13,53 +13,24 @@ import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricin
 import getSymbolFromCurrency from 'currency-symbol-map'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import formatNumber from "../../../../commonFunctions/NumberFormat";
+import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 
-const countries = [
-  { country: "America", currency: "USD" },
-  { country: "Australia", currency: "AUD" },
-  { country: "Brazil", currency: "BRL" },
-  { country: "Canada", currency: "CAD" },
-  { country: "Chile", currency: "CLP" },
-  { country: "Colombia", currency: "COP" },
-  { country: "Egypt", currency: "EGP" },
-  { country: "Great Britain", currency: "GBP" },
-  { country: "India", currency: "INR" },
-  { country: "Indonesia", currency: "IDR" },
-  { country: "Israel", currency: "ILS" },
-  { country: "Japan", currency: "JPY" },
-  { country: "Malaysia", currency: "MYR" },
-  { country: "Mexico", currency: "MXN" },
-  { country: "Nigeria", currency: "NGN" },
-  { country: "Norway", currency: "NOK" },
-  { country: "Peru", currency: "PEN" },
-  { country: "Philippines", currency: "PHP" },
-  { country: "Poland", currency: "PLN" },
-  { country: "Romania", currency: "RON" },
-  { country: "Russia", currency: "RUB" },
-  { country: "Singapore", currency: "SGD" },
-  { country: "South Africa", currency: "ZAR" },
-  { country: "South Korea", currency: "KRW" },
-  { country: "Taiwan", currency: "TWD" },
-  { country: "Thailand", currency: "THB" },
-  { country: "Turkey", currency: "TRY" },
-  { country: "Vietnam", currency: "VND" },
-  { country: "European Union", currency: "EUR" }
-];
+
 
 const Pricing = ({code}) => {
 
     // Select Free Or Paid Course
-    
     const [Paid_Type, setPaid_Type] = useState("")
 
     const onChangePaidType = (e) => {
-      console.log('radio checked', e.target.value);
       setPaid_Type(e.target.value);
     };
   
 
 
   const [dis_types, setdis_types] = useState([])
+
+  const [loading_btn, setloading_btn] = useState(false)
 
   const [countriesData, setcountriesData] = useState([])
 
@@ -82,8 +53,9 @@ const Pricing = ({code}) => {
   useEffect(() => {
 
 
+
     // Get Paid Type
-    GetCoursePricingType(code,setPaid_Type)
+    GetCoursePricingType(code,setPaid_Type,setloading_btn)
 
     // Get the Discount Types for the Cmb Items
     GetDiscountTypes(setdis_types)
@@ -387,7 +359,7 @@ const Pricing = ({code}) => {
       setSAminValue
       )
  
-  }, [code])
+  }, [code,Paid_Type])
 
 
 
@@ -506,8 +478,6 @@ const Pricing = ({code}) => {
 
   // LIST COUNTRIES FUNCTIONS
   // LIST PRICE
-  const [inputValuesListPrice, setinputValuesListPrice] = useState([])
-  const [selectDiscountTypeList, setselectDiscountTypeList] = useState([])
 
   // USA
   const [USAListPrice, setUSAListPrice] = useState("")
@@ -3603,7 +3573,8 @@ const Pricing = ({code}) => {
         <hr />
       
         {/* Paid Type */}
-        {/* {Paid_Type != "" && ( */}
+        {loading_btn ?  <LoadingSpinner w={"40%"} h={"100%"} wpclass={"m-4"} /> :      
+        <>
         <div className="container m-2">
         <h6>What is the Paid Type of this Course ?</h6>
           <Radio.Group onChange={onChangePaidType} value={Paid_Type}>
@@ -3611,7 +3582,7 @@ const Pricing = ({code}) => {
           <Radio value={2}>Paid Course</Radio>
         </Radio.Group>
         </div>
-        {/* )} */}
+       
 
         {countriesData.length > 0 && countriesData != null && (
               Paid_Type == 2 && (
@@ -5026,6 +4997,8 @@ const Pricing = ({code}) => {
                 </div>
                 )
         )}
+        </>}
+   
  
 
       </Card>
