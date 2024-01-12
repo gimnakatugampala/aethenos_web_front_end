@@ -2874,7 +2874,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
     .catch(error => console.log('error', error));
  }
 
- export const AddFreeCouponAPI = async(code,SD,ED,couponCodeFree) =>{
+ export const AddFreeCouponAPI = async(code,SD,ED,couponCodeFree,setloading_btn) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -2901,6 +2901,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
 
         if(result.variable == "200"){
           SuccessAlert("Success",result.message)
+          setloading_btn(false)
           setTimeout(() => {
           
             window.location.href = `/courses/manage/${code}/#promotions`
@@ -2910,6 +2911,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
 
         if(result.message == "Error"){
           ErrorAlert("Error",result.variable)
+          setloading_btn(false)
         }
 
       })

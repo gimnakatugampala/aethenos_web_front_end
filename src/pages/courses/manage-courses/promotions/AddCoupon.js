@@ -15,6 +15,7 @@ import moment from 'moment';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import ButtonSpinner from '../../../../commonFunctions/loaders/Spinner/ButtonSpinner';
 
 
 const countries = [
@@ -53,6 +54,8 @@ const AddCoupon = ({code}) => {
 
     const [selectedValue, setSelectedValue] = React.useState('free-coupon');
     const [start_date, setstart_date] = useState(new Date())
+
+    const [loading_btn, setloading_btn] = useState(false)
 
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
@@ -138,7 +141,9 @@ const AddCoupon = ({code}) => {
           console.log(moment(new Date(endDate)).format('yyyy-MM-DD HH:mm:ss'))
           console.log(couponCodeFree)
 
-          AddFreeCouponAPI(code,SD,ED,couponCodeFree)
+          setloading_btn(true)
+
+          AddFreeCouponAPI(code,SD,ED,couponCodeFree,setloading_btn)
           
         } else {
           ErrorAlert("Error","Please Enter a Valid Coupon Code")
@@ -148,7 +153,7 @@ const AddCoupon = ({code}) => {
     }
 
     const handleDiscountCouponCreate = (e) =>{
-      
+      setloading_btn(true)
 
       var raw = {
         "code":`${couponCodeDiscount}`,
@@ -215,10 +220,7 @@ const AddCoupon = ({code}) => {
 
   useEffect(() => {
 
-   
-
-    // Get Paid Type
-    // GetCoursePricingType(code)
+  
 
     // Get the Discount Types for the Cmb Items
     GetDiscountTypes(setdis_types)
@@ -524,18 +526,12 @@ const AddCoupon = ({code}) => {
  
   }, [code])
 
-  useEffect(() => {
-    console.log(countriesData)
-  }, [countriesData])
+  // useEffect(() => {
+  //   console.log(countriesData)
+  // }, [countriesData])
   
 
 
-  // Select Free Or Paid Course
-  const [paidType, setpaidType] = useState(1)
-  const onChangePaidType = (e) => {
-    console.log('radio checked', e.target.value);
-    setpaidType(e.target.value);
-  };
 
   //  ---------------------
 
@@ -3224,7 +3220,7 @@ const AddCoupon = ({code}) => {
 
 
       }else if(value == '3'){
-
+        
 
         setshowInputPercentTaiwan(false)
         setshowInputDisAmtTaiwan(true)
@@ -3557,10 +3553,13 @@ const AddCoupon = ({code}) => {
       </Form.Group>
 
       <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
-
+      
+      
 
       <div className='my-2'>
-        <Button onClick={handleFreeCouponCreate} variant='contained'>Create Coupon</Button>
+        {loading_btn ? <Button variant='contained'><ButtonSpinner /></Button> : <Button onClick={handleFreeCouponCreate} variant='contained'>Create Coupon</Button>}
+        
+        
      </div>
 
     </div>
@@ -5010,7 +5009,8 @@ const AddCoupon = ({code}) => {
 
 
         <div className='my-2'>
-            <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>
+          {loading_btn ? <Button variant='contained'><ButtonSpinner /></Button> : <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>}
+            
         </div>
 
         </div>

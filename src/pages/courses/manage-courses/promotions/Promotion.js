@@ -48,6 +48,8 @@ const Promotion = ({code}) => {
 
   const [referalCode, setreferalCode] = useState(``)
   const [all_coupons, setall_coupons] = useState(null)
+  const [loading_btn, setloading_btn] = useState(false)
+
   var currentDate = new Date();
   var monthName = currentDate.toLocaleString('default', { month: 'long' });
   
@@ -136,6 +138,7 @@ const Promotion = ({code}) => {
                   window.location.href = `/courses/manage/${code}/#add-coupon`
                   window.location.reload()
                 }} variant="contained">Create new Coupons</Button>
+                
             </div>
 
             <Table className='my-2' striped bordered hover responsive>
