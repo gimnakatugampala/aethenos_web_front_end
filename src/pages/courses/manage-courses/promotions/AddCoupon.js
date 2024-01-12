@@ -3615,7 +3615,7 @@ const AddCoupon = ({code}) => {
 
               <div className="price-range col-md-3">
                 <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
-                  <InputGroup className="mb-3">
+                  <InputGroup>
                     <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                     <Form.Control
                     value={DGlobalPricing}
@@ -3630,44 +3630,28 @@ const AddCoupon = ({code}) => {
               </div>
 
               <div className="col-md-3">
-              <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
-              <select value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
-                <option value="0" selected>Open this select menu</option>
-                {dis_types.map((type,index) => (
-                  <option key={index} value={type.id}>{type.name}</option>
-                ))}
-              </select>
+              <Form.Label className="pricing-label"><b>Global Discount Price (USD)</b></Form.Label>
+              <Form.Control type="text" />
+              <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Tip : Pricing around $10 may optimise sales</i></Form.Label>
               </div>
 
-              {showDefaultDiscountInput && (
-                <>
-                {showDefaultPercentDiscountInput && (
-                <div className="col-md-3">
+              
+               
+                <div className="col-md-2">
                 <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
-                <Form.Control value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
+                <Form.Control disabled readOnly value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
                 </div>
-                )}
+               
 
-                {showDefaultValueDiscountInput && (
-
+             
               <div className="col-md-3">
-              <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
-              <Form.Control value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
-              </div>
-                )}
-
-                </>
-              )}
-
-
-              <div className="col-md-3">
-              <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
-              <h5 className="p-1">{DGlobalNetPrice == "" ? 0 : DGlobalNetPrice}</h5>
+              <Form.Label className="pricing-label"><b>Discount (USD)</b></Form.Label>
+              <Form.Control disabled readOnly value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
               <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
-
               </div>
+               
 
-          
+              
 
               <div className="col-6"></div>
 
@@ -3687,59 +3671,44 @@ const AddCoupon = ({code}) => {
                 <th scope="col">Price Range</th>
                 <th scope="col">List Price</th>
 
-                <th scope="col">Discount Type</th>
+                <th scope="col">Discount Price</th>
                 <th scope="col">Discount %</th>
                 <th scope="col">Discount Amount</th>
-                <th scope="col">Net Price</th>
+              
                
               </tr>
             </thead>
             <tbody>
                     
-                        <tr>
-                          <td >America
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {USATip}</Form.Label></td>
-                        </td>
+                       <tr>
+                    <td >America
+                  <td className="col-12 font-italic mt-5">  
+                    <Form.Label  className="mt-3 tit fst-italic"> Tip: {USATip}</Form.Label></td>
+                  </td>
 
-                          <td>USD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0].maxPrice}`}</td>
-                          <td>
-                            <Form.Control style={{width:'80px'}} disabled readOnly value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
-                          </td>
-                          <td>
-                            <Select
-                            // 
-                              value={USADisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeUSA}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {showInputPercentUSA && (
-                          <Form.Control value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
-                            )}
-                          </td>
-                          <td>
-                          {showInputDisAmtUSA && (
-                          <Form.Control value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
-                          )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                    <td>USD</td>
+                    <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0].maxPrice}`}</td>
+                    <td>
+                      <Form.Control style={{width:'80px'}} disabled readOnly value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
+                    </td>
+                    <td>
+                    <Form.Control type="text" />
+                    </td>
+                    <td>
+                    
+                    <Form.Control disabled readOnly value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
+                      
+                    </td>
+                    <td>
+                    
+                    <Form.Control disabled readOnly value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
+                    <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
+                    
+                    </td>
+                
                         
                         </tr>
+
 
                         <tr>
                           <td>Australia
@@ -3753,36 +3722,19 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={AusDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeAus}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                          {showInputPercentAus && (
-                          <Form.Control value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
-                            )}
-                          
+                       
+                          <Form.Control disabled readOnly value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
                           </td>
                           <td>
-                          {showInputDisAmtAus && (
-                          <Form.Control value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
-                            )}
+                     
+                          <Form.Control disabled readOnly value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
+                            
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                      
                         
                         </tr>
 
@@ -3799,36 +3751,17 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={BrazilDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeBrazil}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentBrzail && (
-                                <Form.Control value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
-                              )}
+                              <Form.Control disabled readOnly value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
+                             
                           </td>
                           <td>
-                            {showInputDisAmtBrzail && (
-
-                          <Form.Control value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
-                            )}
+                          <Form.Control disabled readOnly value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                       
                         
                         </tr>
 
@@ -3844,36 +3777,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={CanadaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeCanada}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentCanada && (
-                          <Form.Control value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
-                            )}
+                        
+                          <Form.Control disabled readOnly value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
+                           
                           </td>
-                          <td>
-                            
-                            {showInputDisAmtCanada && (
-                          <Form.Control value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
 
-                        </tr>
+                          <td>
+                          <Form.Control disabled readOnly value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
+                            
                           </td>
+                        
                         
                         </tr>
 
@@ -3890,35 +3807,19 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={ChileDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeChile}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentChile && (
-                              <Form.Control value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
-                            )}
+                              <Form.Control disabled readOnly value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
                           </td>
                           <td>
-                            {showInputDisAmtChile && (
-                            <Form.Control value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
+                           
+                            <Form.Control disabled readOnly value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
 
-                        </tr>
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
+                           
                           </td>
+                         
                         
                         </tr>
 
@@ -3934,35 +3835,18 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={ColumbiaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeColumbia}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentColumbia && (
-                                <Form.Control value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
-                              )}
+                              <Form.Control disabled readOnly value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
                           </td>
                           <td>
-                            {showInputDisAmtColumbia && (
-                          <Form.Control value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
-                            )}
+                           
+                          <Form.Control disabled readOnly value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
+                           
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                     
                         
                         </tr>
 
@@ -3978,35 +3862,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={EgyptDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeEgypt}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentEgypt && (
-                          <Form.Control value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
+                            
                           </td>
                           <td>
-                            {showInputDisAmtEgypt && (
-                          <Form.Control value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
+                            
+                          <Form.Control disabled readOnly value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
 
-                        </tr>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
+                           
                           </td>
+                      
                         
                         </tr>
 
@@ -4022,35 +3892,19 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={EUDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeEU}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentEU && (
-                          <Form.Control value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
-                            )}
+                           
+                          <Form.Control disabled readOnly value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
+                            
                           </td>
                           <td>
-                            {showInputDisAmtEU && (
-                            <Form.Control value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
-                            )}
+                            
+                            <Form.Control disabled readOnly value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                       
                         
                         </tr>
                         
@@ -4066,35 +3920,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={GBPDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeGBP}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentGBP && (
-                          <Form.Control value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
-                            )}
+                        
+                          <Form.Control disabled readOnly value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtGBP && (
-                              <Form.Control value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
-                            )}
+                            
+                              <Form.Control disabled readOnly value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
+                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
+                            
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                         
                         
                         </tr>
 
@@ -4110,35 +3949,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={IndonesiaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeIndo}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentIndonesia && (
-                          <Form.Control value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
-                            )}
+                           
+                          <Form.Control disabled readOnly value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
+                            
                           </td>
                           <td>
-                            {showInputDisAmtIndonesia && (
-                          <Form.Control value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
+                           
+                          <Form.Control disabled readOnly value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
 
-                        </tr>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
+                          
                           </td>
+                      
                         
                         </tr>
 
@@ -4154,37 +3979,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={IsrealDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeIsreal}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentIsreal && (
-
-                            <Form.Control value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
-                            )}
+                            <Form.Control disabled readOnly value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                          
                           </td>
                           <td>
-                            {showInputDisAmtIsreal && (
+                         
 
-                          <Form.Control value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
+                          <Form.Control disabled readOnly value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
 
-                        </tr>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
+                          
                           </td>
+                     
                         
                         </tr>
 
@@ -4200,36 +4009,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={IndiaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeIndia}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentIndia && (
-                          <Form.Control value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
-                            )}
+                          
+                          <Form.Control disabled readOnly value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtIndia && (
+                          <Form.Control disabled readOnly value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
 
-                          <Form.Control value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
-                            )}
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
+                            
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                    
                         
                         </tr>
 
@@ -4245,39 +4038,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={JapanDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeJapan}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentJapan && (
-
-                          <Form.Control value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
-                            )}
+                          <Form.Control disabled readOnly value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
+                            
                           </td>
                           <td>
-                            {
-                              showInputDisAmtJapan && (
+                           
 
-                        <Form.Control value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
-                              )
-                            }
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}</h6>
-                        <tr>
+                        <Form.Control disabled readOnly value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
+
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("JPY"))} {JapanminValue}</Form.Label>
-
-                        </tr>
+                             
                           </td>
+                     
                         
                         </tr>
 
@@ -4293,37 +4068,19 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={SKDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeSK}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                              {showInputPercentSK && (
-
-                          <Form.Control value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
-                              )}
+                          <Form.Control disabled readOnly value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
+                              
                           </td>
                           <td>
-                            {showInputDisAmtSK && (
-                              <Form.Control value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
-
-                            )}
+                           
+                          <Form.Control disabled readOnly value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
+                            
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                       
                         
                         </tr>
 
@@ -4339,36 +4096,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={MexicoDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeMexico}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentMexico && (
-                          <Form.Control value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
+                          
                           </td>
                           <td>
-                            {showInputDisAmtMexico && (
+                            <Form.Control disabled readOnly value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
+                           
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
 
-                            <Form.Control value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
-                            )}
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                        
                         
                         </tr>
 
@@ -4384,37 +4125,22 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={MalaysiaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeMalaysia}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentMalaysia && (
-                          <Form.Control value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
-                            )}
+                          
+                          <Form.Control disabled readOnly value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
+                          
                           </td>
                           <td>
-                            {showInputDisAmtMalaysia && (
-                              <Form.Control 
-                              value={MalaysiaDisAmt} onChange={handleDefaultDiscountAmtMalaysia} type="text" />
-
-                            )}
+                            
+                          <Form.Control 
+                          disabled readOnly
+                          value={MalaysiaDisAmt} onChange={handleDefaultDiscountAmtMalaysia} type="text" />
+                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
+                            
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                      
                         
                         </tr> 
                         
@@ -4430,35 +4156,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={NigeriaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeNigeria}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentNigeria && (
-                          <Form.Control value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
-                            )}
+                          
+                          <Form.Control disabled readOnly value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
+                          
                           </td>
                           <td>
-                            {showInputDisAmtNigeria && (
-                              <Form.Control value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
+                              <Form.Control disabled readOnly value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
 
-                        </tr>
+                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
+                           
                           </td>
+                        
                         
                         </tr> 
 
@@ -4474,35 +4185,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={NorwayDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeNorway}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentNorway && (
-                          <Form.Control value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
-                            )}
+                           
+                          <Form.Control disabled readOnly value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
+                            
                           </td>
                           <td>
-                            {showInputDisAmtNorway && (
-                          <Form.Control value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
+                           
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                      
                         
                         </tr>
 
@@ -4518,37 +4214,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={PeruDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypePeru}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {showInputPercentPeru && (
-
-                          <Form.Control value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
-                            )}
+                          <Form.Control type="text" />
                           </td>
                           <td>
                           
-                            {showInputDisAmtPeru && (
-                        <Form.Control value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
 
-                        </tr>
+                          <Form.Control disabled readOnly value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
+                          
                           </td>
+                          <td>
+                          
+                            
+                        <Form.Control disabled readOnly value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
+                          </td>
+                     
                         
                         </tr> 
                           
@@ -4565,36 +4245,19 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={PhilipinesDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypePhilipines}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
+                          </td>
+                          <td>                       
+                            <Form.Control disabled readOnly value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
+
                           </td>
                           <td>
-                            {showInputPercentPhilipines && (
-                              <Form.Control value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
-
-                            )}
+                         
+                          <Form.Control disabled readOnly value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
+                          
                           </td>
-                          <td>
-                          {showInputDisAmtPhilipines && (
-                          <Form.Control value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
-                          )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                       
                         
                         </tr> 
 
@@ -4610,37 +4273,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={PolandDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypePoland}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentPoland && (
 
-                          <Form.Control value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
-                            )}
+                          <Form.Control disabled readOnly value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
+                            
                           </td>
                           <td>
-                            {showInputDisAmtPoland && (
+                       
 
-                        <Form.Control value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}</h6>
-                        <tr>
+                        <Form.Control disabled readOnly value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PLN"))} {PolandminValue}</Form.Label>
-
-                        </tr>
+                          
                           </td>
+                         
                         
                         </tr> 
 
@@ -4656,35 +4303,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={RomaniaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeRomania}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentRomania && (
-                          <Form.Control value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtRomania && (
-                          <Form.Control value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
-                            )}
+                          
+                          <Form.Control disabled readOnly value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
+                           
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
-
-                        </tr>
-                          </td>
+                      
                         
                         </tr> 
 
@@ -4700,36 +4332,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={RussiaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeRussia}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentRussia && (
-                              
-                          <Form.Control value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
-                            )}
-                          </td>
-                          <td>
-                            {showInputDisAmtRussia && (
-                          <Form.Control value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
 
-                        </tr>
+                          <Form.Control disabled readOnly value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
+                            
                           </td>
+                          <td>
+                          
+                          <Form.Control disabled readOnly value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
+                           
+                          </td>
+                        
                         
                         </tr>
 
@@ -4745,36 +4361,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={SingaporeDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeSingapore}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentSingapore && (
-                          <Form.Control value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtSingapore && (
-
-                          <Form.Control value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
-                            )}
+                           
+                          <Form.Control disabled readOnly value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
+                            
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                        
                         
                         </tr> 
 
@@ -4790,35 +4390,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={ThailandDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeThailand}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentThailand && (
-                          <Form.Control value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
-                            )}
+                           
+                          <Form.Control disabled readOnly value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                            
                           </td>
                           <td>
-                            {showInputDisAmtThailand && (
-                          <Form.Control value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
+                           
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                        
                         
                         </tr> 
 
@@ -4834,35 +4419,21 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={TurkeyDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeTurkey}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentTurkey && (
-                          <Form.Control value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
-                            )}
+                     
+                          <Form.Control disabled readOnly value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtTurkey && (
-                          <Form.Control value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
+                            
+                          <Form.Control disabled readOnly value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
 
-                        </tr>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
+                           
                           </td>
+                        
                         
                         </tr>
 
@@ -4878,36 +4449,22 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={TaiwanDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeTaiwan}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentTaiwan && (
-                          <Form.Control value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtTaiwan && (
+                         
 
-                          <Form.Control value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
-                            )}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
+                          <Form.Control disabled readOnly value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
 
-                        </tr>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
+                          
                           </td>
+                        
                         
                         </tr>
 
@@ -4923,37 +4480,20 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={VietmanDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeVietnam}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentVietnam && (
-
-                          <Form.Control value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
-                            )}
+                          
+                          <Form.Control disabled readOnly value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
+                           
                           </td>
                           <td>
-                            {showInputDisAmtVietnam && (
-
-                          <Form.Control value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
+                           
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                       
                         
                         </tr> 
 
@@ -4970,35 +4510,19 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
                           </td>
                           <td>
-                            <Select
-                              value={SADisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeSA}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
+                          <Form.Control type="text" />
                           </td>
                           <td>
-                            {showInputPercentSA && (
-                          <Form.Control value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
-                            )}
+                            
+                          <Form.Control disabled readOnly value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
+                        
                           </td>
                           <td>
-                            {showInputDisAmtSA && (
-                          <Form.Control value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
-                            )}
+                          
+                          <Form.Control disabled readOnly value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}</h6>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
-
-                        </tr>
-                          </td>
+                       
                         
                         </tr> 
                           
