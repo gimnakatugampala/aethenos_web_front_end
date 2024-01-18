@@ -6,7 +6,7 @@ import Radio from '@mui/material/Radio';
 import Form from 'react-bootstrap/Form';
 import Button from '@mui/material/Button';
 import DateTimePicker from 'react-datetime-picker';
-import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing , AddFreeCouponAPI, GetCountriesDiscountCoupons} from "../../../../api";
+import { GetDiscountTypes , SavePriceDefault , GetPriceDefaultCoupon , GetCoursePricingType , GetCountriesListPricing , AddFreeCouponAPI, GetCountriesDiscountCoupons} from "../../../../api";
 import getSymbolFromCurrency from 'currency-symbol-map'
 import InputGroup from 'react-bootstrap/InputGroup';
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -153,43 +153,226 @@ const AddCoupon = ({code}) => {
     }
 
     const handleDiscountCouponCreate = (e) =>{
-      setloading_btn(true)
+      // setloading_btn(true)
 
       var raw = {
         "code":`${couponCodeDiscount}`,
         "start_date":`${startDateDiscount}`,
         "end_date":`${endDateDiscount}`,
         "course_code":`${code}`,
+        "global_list_price":"463256",
+        "global_discount_price":"314646",
+        "global_discount_percentage":"56",
+        "global_discount":"45646",
         "prices":[
             {
              "discount":"123",
              "discount_amount":"562",
              "discount_price":"5678",
              "list_price":"9856",
-             "country_id":"1",
-             "currency_id":"1"
+             "country_name":"America"
+            },
+            {
+             "discount":"123",
+             "discount_amount":"562",
+             "discount_price":"5678",
+             "list_price":"9856",
+             "country_name":"Australia"
             },
             {
              "discount":"12334",
              "discount_amount":"562345",
              "discount_price":"567348",
              "list_price":"985634",
-             "country_id":"2",
-             "currency_id":"2"
+             "country_name":"Brazil"
             },
             {
-             "discount":"1686385",
-             "discount_amount":"56745",
+             "discount":"12334",
+             "discount_amount":"562345",
              "discount_price":"567348",
              "list_price":"985634",
-             "country_id":"2",
-             "currency_id":"2"
+             "country_name":"Canada"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Chile"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Columbia"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Egypt"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"European Union"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Great Britain"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Indonesia"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Israel"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"India"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Japan"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"South Korea"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Mexico"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Malaysia"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Nigeria"
+            },
+            {
+             "discount":"12334",
+             "discount_amount":"562345",
+             "discount_price":"567348",
+             "list_price":"985634",
+             "country_name":"Norway"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Peru"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Philippines"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Poland"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Romania"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Russia"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Singapore"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Thailand"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Turkey"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Taiwan"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"Vietnam"
+            },
+            {
+             "discount":"0",
+             "discount_amount":"0",
+             "discount_price":"0",
+             "list_price":"0",
+             "country_name":"South Africa"
             }
         ]
         }
 
-
-      console.log(raw)
+        console.log(raw)
+ 
     }
     
     
@@ -198,34 +381,31 @@ const AddCoupon = ({code}) => {
     // ------------------ Discount ------------------
 
     
-  const [dis_types, setdis_types] = useState([])
 
   const [countriesData, setcountriesData] = useState([])
 
   const [DGlobalPricing, setDGlobalPricing] = useState("")
-  const [DDisType, setDDisType] = useState("")
-  const [DDisPercent, setDDisPercent] = useState("")
-  const [DDisAmt, setDDisAmt] = useState("")
-  const [DGlobalNetPrice, setDGlobalNetPrice] = useState("")
+  const [DTip, setDTip] = useState("")
+
+  const [DDiscountValue, setDDiscountValue] = useState("")
+  const [DDiscountPercent, setDDiscountPercent] = useState("")
+  const [DDiscountAmount, setDDiscountAmount] = useState("")
 
   const [MinDefaultValue, setMinDefaultValue] = useState("")
 
   const [PriceRangeMinDefault, setPriceRangeMinDefault] = useState("")
   const [PriceRangeMaxDefault, setPriceRangeMaxDefault] = useState("")
 
-  const [showDefaultDiscountInput, setshowDefaultDiscountInput] = useState(true)
-  const [showDefaultPercentDiscountInput, setshowDefaultPercentDiscountInput] = useState(false)
-  const [showDefaultValueDiscountInput, setshowDefaultValueDiscountInput] = useState(false)
+
   
 
   useEffect(() => {
 
 
-    // Get the Discount Types for the Cmb Items
-    GetDiscountTypes(setdis_types)
+ 
 
     // Get The Default Pricing
-    GetPriceDefault(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice,setMinDefaultValue)
+    GetPriceDefaultCoupon(code,setDGlobalPricing,setPriceRangeMinDefault,setPriceRangeMaxDefault,setMinDefaultValue,setDTip)
 
     
 
@@ -360,35 +540,26 @@ const AddCoupon = ({code}) => {
 // Enter Global Price
   const handleChangeGlobalPrice = (e) => {
 
-    if(DDisType == '1'){
-      console.log(e.target.value)
-      setDGlobalNetPrice(e.target.value)
-    }else if(DDisType == '2'){
-      setDGlobalNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(DDisPercent)/100).toFixed(2))
-    }else if(DDisType == '3'){
-      setDGlobalNetPrice((parseFloat(e.target.value) - parseFloat(DDisAmt)).toFixed(2))
-    }else{
-      setDGlobalNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const numberOnlyRegex = /^[0-9]+$/;
+
+    if(Number.parseFloat(DGlobalPricing) < Number.parseFloat(e.target.value)){
+      return
     }
 
-    setDGlobalPricing(e.target.value)
+
+    if(numberOnlyRegex.test(e.target.value)){
+      setDDiscountValue(e.target.value)
+      setDDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(DGlobalPricing).toFixed(2)) * 100).toFixed(2))
+      setDDiscountAmount((Number.parseFloat(DGlobalPricing) - Number.parseFloat(e.target.value)))
+    }else if(e.target.value == ""){
+      setDDiscountValue("")
+      setDDiscountPercent(0)
+      setDDiscountAmount(0)
+    }
 
   }
 
-  // Discount Amount
-  const handleDefaultDiscountAmt = (e) =>{
-    setDDisAmt(e.target.value)
-    setDGlobalNetPrice((parseFloat(DGlobalPricing) - parseFloat(e.target.value == "" ? 0 : e.target.value)).toFixed(2))
-  }
-  
-// Percentage Discount
-  const handleDefaultPercentageDiscount = (e) =>{
 
-    setDDisPercent(e.target.value)
-
-    setDGlobalNetPrice((parseFloat(DGlobalPricing) - parseFloat(DGlobalPricing) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-  }
 
   //  ---------------------
 
@@ -1791,7 +1962,6 @@ const AddCoupon = ({code}) => {
                     <Form.Control
                     value={DGlobalPricing}
                     disabled readOnly
-                      onChange={handleChangeGlobalPrice}
                       placeholder="USD"
                       aria-label="USD"
                       aria-describedby="basic-addon1"
@@ -1802,22 +1972,22 @@ const AddCoupon = ({code}) => {
 
               <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Global Discount Price (USD)</b></Form.Label>
-              <Form.Control type="text" />
-              <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Tip : Pricing around $10 may optimise sales</i></Form.Label>
+              <Form.Control onChange={handleChangeGlobalPrice} value={DDiscountValue} type="text" />
+              <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Tip : Pricing around ${DTip} may optimise sales</i></Form.Label>
               </div>
 
               
                
                 <div className="col-md-2">
                 <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
-                <Form.Control disabled readOnly value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
+                <Form.Control disabled readOnly value={DDiscountPercent}  type="text" />
                 </div>
                
 
              
               <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Discount (USD)</b></Form.Label>
-              <Form.Control disabled readOnly value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
+              <Form.Control disabled readOnly value={DDiscountAmount}  type="text" />
               <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
               </div>
                

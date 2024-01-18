@@ -3235,5 +3235,33 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
 
  }
 
+ export const GetPriceDefaultCoupon = async(code,setDGlobalPricing,setPriceRangeMinDefault,setPriceRangeMaxDefault,setMinDefaultValue,setDTip) =>{
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
+  var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefaultCoursePricing/${code}`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+
+    Unauthorized(result.status,`courses/manage/${code}/#pricing`)
+
+    console.log(result)
+    setDGlobalPricing(result.value)
+    setPriceRangeMinDefault(result.minPrice)
+    setPriceRangeMaxDefault(result.maxPrice)
+    setMinDefaultValue(result.minimumPrice)
+    setDTip(result.tip)
+
+
+    
+  })
+  .catch(error => console.log('error', error));
+
+ }
 
