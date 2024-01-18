@@ -2973,3 +2973,267 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
     .catch(error => console.log('error', error));
 
  }
+
+
+ export const GetCountriesDiscountCoupons = async(code,setcountriesData,
+  setUSATip,
+  setUSAMinValue,
+  setUSAListPrice,
+  // -------------
+  setAusTip,
+  setAusminValue,
+  setAusListPrice,
+  //  ---------
+  setBrazilTip,
+  setBrazilminValue,
+  setBrazilListPrice,
+  // ---------
+  setCanadaTip,
+  setCanadaminValue,
+  setCanadaListPrice,
+  // ---------
+  setChileTip,
+  setChileminValue,
+  setChileListPrice,
+  // ------------
+  setColumbiaTip,
+  setColumbiaminValue,
+  setColumbiaListPrice,
+  // --------
+  setEgyptTip,
+  setEgyptminValue,
+  setEgyptListPrice,
+  // ---------
+  setEUTip,
+  setEUminValue,
+  setEUListPrice,
+  // ----------
+  setGBPTip,
+  setGBPminValue,
+  setGBPListPrice,
+  // -----
+  setIndonesiaTip,
+  setIndonesiaminValue,
+  setIndonesiaListPrice,
+  // -------
+  setIsrealTip,
+  setIsrealminValue,
+  setIsrealListPrice,
+  // ----------
+  setIndiaTip,
+  setIndiaminValue,
+  setIndiaListPrice,
+  // -------
+  setJapanTip,
+  setJapanminValue,
+  setJapanListPrice,
+  // --------
+  setSKTip,
+  setSKminValue,
+  setSKListPrice,
+  // -------
+  setMexicoTip,
+  setMexicominValue,
+  setMexicoListPrice,
+  // ----------
+  setMalaysiaTip,
+  setMalaysiaminValue,
+  setMalaysiaListPrice,
+  // ----------
+  setNigeriaTip,
+  setNigeriaminValue,
+  setNigeriaListPrice,
+  // ---------
+  setNorwayTip,
+  setNorwayminValue,
+  setNorwayListPrice,
+  // ----------
+  setPeruTip,
+  setPeruminvalue,
+  setPeruListPrice,
+  // ----------
+  setPhilipinesTip,
+  setPhilipinesminValue,
+  setPhilipinesListPrice,
+  // ------------
+  setPolandTip,
+  setPolandminValue,
+  setPolandListPrice,
+  // ---------
+  setRomaniaTip,
+  setRomaniaminvalue,
+  setRomaniaListPrice,
+  // ----------
+  setRussiaTip,
+  setRussiaminValue,
+  setRussiaListPrice,
+  // -------
+  setSingaporeTip,
+  setSingaporeminValue,
+  setSingaporeListPrice,
+  // ---------
+  setThailandTip,
+  setThailandminValue,
+  setThailandListPrice,
+  // -----------
+  setTurkeyTip,
+  setTurkeyminValue,
+  setTurkeyListPrice,
+  // ---------
+  setTaiwanTip,
+  setTaiwanminValue,
+  setTaiwanListPrice,
+  // -----------
+  setVietnamTip,
+  setVietnamminValue,
+  setVietnamListPrice,
+  // --------------
+  setSATip,
+  setSAminValue,
+  setSAListPrice) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getCoursePricing/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      setcountriesData(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#promotions`)
+
+
+       // ---------------
+       setUSATip(result[0].tip)
+       setUSAMinValue(result[0].minimumPrice)
+       setUSAListPrice(result[0].value)
+   
+       setAusTip(result[1].tip)
+       setAusminValue(result[1].minimumPrice)
+       setAusListPrice(result[1].value)
+   
+       setBrazilTip(result[2].tip)
+       setBrazilminValue(result[2].minimumPrice)
+       setBrazilListPrice(result[2].value)
+   
+       setCanadaTip(result[3].tip)
+       setCanadaminValue(result[3].minimumPrice)
+       setCanadaListPrice(result[3].value)
+   
+       setChileTip(result[4].tip)
+       setChileminValue(result[4].minimumPrice)
+       setChileListPrice(result[4].value)
+   
+       setColumbiaTip(result[5].tip)
+       setColumbiaminValue(result[5].minimumPrice)
+       setColumbiaListPrice(result[5].value)
+   
+       setEgyptTip(result[6].tip)
+       setEgyptminValue(result[6].minimumPrice)
+       setEgyptListPrice(result[6].value)
+   
+       setEUTip(result[7].tip)
+       setEUminValue(result[7].minimumPrice)
+       setEUListPrice(result[7].value)
+   
+       setGBPTip(result[8].tip)
+       setGBPminValue(result[8].minimumPrice)
+       setGBPListPrice(result[8].value)
+   
+       setIndonesiaTip(result[9].tip)
+       setIndonesiaminValue(result[9].minimumPrice)
+       setIndonesiaListPrice(result[9].value)
+   // -
+       setIsrealTip(result[10].tip)
+       setIsrealminValue(result[10].minimumPrice)
+       setIsrealListPrice(result[10].value)
+   
+       setIndiaTip(result[11].tip)
+       setIndiaminValue(result[11].minimumPrice)
+       setIndiaListPrice(result[11].value)
+   
+       setJapanTip(result[12].tip)
+       setJapanminValue(result[12].minimumPrice)
+       setJapanListPrice(result[12].value)
+   
+       setSKTip(result[13].tip)
+       setSKminValue(result[13].minimumPrice)
+       setSKListPrice(result[13].value)
+   
+       setMexicoTip(result[14].tip)
+       setMexicominValue(result[14].minimumPrice)
+       setMexicoListPrice(result[14].value)
+   
+       setMalaysiaTip(result[15].tip)
+       setMalaysiaminValue(result[15].minimumPrice)
+       setMalaysiaListPrice(result[15].value)
+   
+       setNigeriaTip(result[16].tip)
+       setNigeriaminValue(result[16].minimumPrice)
+       setNigeriaListPrice(result[16].value)
+   
+       setNorwayTip(result[17].tip)
+       setNorwayminValue(result[17].minimumPrice)
+       setNorwayListPrice(result[17].value)
+   
+       setPeruTip(result[18].tip)
+       setPeruminvalue(result[18].minimumPrice)
+       setPeruListPrice(result[18].value)
+   
+       setPhilipinesTip(result[19].tip)
+       setPhilipinesminValue(result[19].minimumPrice)
+       setPhilipinesListPrice(result[19].value)
+   
+       setPolandTip(result[20].tip)
+       setPolandminValue(result[20].minimumPrice)
+       setPolandListPrice(result[20].value)
+   
+   
+       setRomaniaTip(result[21].tip)
+       setRomaniaminvalue(result[21].minimumPrice)
+       setRomaniaListPrice(result[21].value)
+   
+       setRussiaTip(result[22].tip)
+       setRussiaminValue(result[22].minimumPrice)
+       setRussiaListPrice(result[22].value)
+   
+       setSingaporeTip(result[23].tip)
+       setSingaporeminValue(result[23].minimumPrice)
+       setSingaporeListPrice(result[23].value)
+   
+       setThailandTip(result[24].tip)
+       setThailandminValue(result[24].minimumPrice)
+       setThailandListPrice(result[24].value)
+   
+       setTurkeyTip(result[25].tip)
+       setTurkeyminValue(result[25].minimumPrice)
+       setTurkeyListPrice(result[25].value)
+   
+       setTaiwanTip(result[26].tip)
+       setTaiwanminValue(result[26].minimumPrice)
+       setTaiwanListPrice(result[26].value)
+   
+       setVietnamTip(result[27].tip)
+       setVietnamminValue(result[27].minimumPrice)
+       setVietnamListPrice(result[27].value)
+   
+       setSATip(result[28].tip)
+       setSAminValue(result[28].minimumPrice)
+       setSAListPrice(result[28].value)
+
+
+
+    })
+    .catch(error => console.log('error', error));
+
+ }
+
+
+
