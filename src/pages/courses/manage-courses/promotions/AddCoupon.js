@@ -6,7 +6,7 @@ import Radio from '@mui/material/Radio';
 import Form from 'react-bootstrap/Form';
 import Button from '@mui/material/Button';
 import DateTimePicker from 'react-datetime-picker';
-import { GetDiscountTypes , SavePriceDefault , GetPriceDefaultCoupon , GetCoursePricingType , GetCountriesListPricing , AddFreeCouponAPI, GetCountriesDiscountCoupons} from "../../../../api";
+import { GetDiscountTypes , SavePriceDefault , GetPriceDefaultCoupon , GetCoursePricingType , GetCountriesListPricing , AddFreeCouponAPI, GetCountriesDiscountCoupons, SaveDiscountDouponsAPI} from "../../../../api";
 import getSymbolFromCurrency from 'currency-symbol-map'
 import InputGroup from 'react-bootstrap/InputGroup';
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -153,225 +153,236 @@ const AddCoupon = ({code}) => {
     }
 
     const handleDiscountCouponCreate = (e) =>{
-      // setloading_btn(true)
+      setloading_btn(true)
+
+      if(DDiscountValue == "" || DDiscountPercent == "" || DDiscountPercent == 0 || DDiscountAmount == "" || DDiscountAmount == 0){
+          ErrorAlert("Error","Global Proce cannot be empty")
+          setloading_btn(false)
+          return
+      }
+
+
 
       var raw = {
         "code":`${couponCodeDiscount}`,
-        "start_date":`${startDateDiscount}`,
-        "end_date":`${endDateDiscount}`,
+        "start_date":`${moment(startDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
+        "end_date":`${moment(endDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
         "course_code":`${code}`,
-        "global_list_price":"463256",
-        "global_discount_price":"314646",
-        "global_discount_percentage":"56",
-        "global_discount":"45646",
+        "global_list_price":`${DGlobalPricing == "" ? 0 : DGlobalPricing}`,
+        "global_discount_price":`${DDiscountValue == "" ? 0 : DDiscountValue}`,
+        "global_discount_percentage":`${DDiscountPercent == "" ? 0 : DDiscountPercent}`,
+        "global_discount":`${DDiscountAmount == "" ? 0 : DDiscountAmount}`,
         "prices":[
             {
-             "discount":"123",
-             "discount_amount":"562",
-             "discount_price":"5678",
-             "list_price":"9856",
+             "discount":`${USADiscountPercent == "" ? 0 : USADiscountPercent}`,
+             "discount_amount":`${USADiscountAmount == "" ? 0 : USADiscountAmount}`,
+             "discount_price":`${USADiscountValue == "" ? 0 : USADiscountValue}`,
+             "list_price":`${USAListPrice == "" ? 0 : USAListPrice}`,
              "country_name":"America"
             },
             {
-             "discount":"123",
-             "discount_amount":"562",
-             "discount_price":"5678",
-             "list_price":"9856",
+             "discount":`${AusDiscountPercent == "" ? 0 : AusDiscountPercent}`,
+             "discount_amount":`${AusDiscountAmount == "" ? 0 : AusDiscountAmount}`,
+             "discount_price":`${AusDiscountValue == "" ? 0 : AusDiscountValue}`,
+             "list_price":`${AusListPrice == "" ? 0 : AusListPrice}`,
              "country_name":"Australia"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${BrazilDiscountPercent == "" ? 0 : BrazilDiscountPercent}`,
+             "discount_amount":`${BrazilDiscountAmount == "" ? 0 : BrazilDiscountAmount}`,
+             "discount_price":`${BrazilDiscountValue == "" ? 0 : BrazilDiscountValue}`,
+             "list_price":`${BrazilListPrice == "" ? 0 : BrazilListPrice}`,
              "country_name":"Brazil"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${CanadaDiscountPercent == "" ? 0 : CanadaDiscountPercent}`,
+             "discount_amount":`${CanadaDiscountAmount == "" ? 0 : CanadaDiscountAmount}`,
+             "discount_price":`${CanadaDiscountValue == "" ? 0 : CanadaDiscountValue}`,
+             "list_price":`${CanadaListPrice == "" ? 0 : CanadaListPrice}`,
              "country_name":"Canada"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${ChileDiscountPercent == "" ? 0 : ChileDiscountPercent}`,
+             "discount_amount":`${ChileDiscountAmount == "" ? 0 : ChileDiscountAmount}`,
+             "discount_price":`${ChileDiscountValue == "" ? 0 : ChileDiscountValue}`,
+             "list_price":`${ChileListPrice == "" ? 0 : ChileListPrice}`,
              "country_name":"Chile"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${ColumbiaDiscountPercent == "" ? 0 : ColumbiaDiscountPercent}`,
+             "discount_amount":`${ColumbiaDiscountAmount == "" ? 0 : ColumbiaDiscountAmount}`,
+             "discount_price":`${ColumbiaDiscountValue == "" ? 0 : ColumbiaDiscountValue}`,
+             "list_price":`${ColumbiaListPrice == "" ? 0 : ColumbiaListPrice}`,
              "country_name":"Columbia"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${EgyptDiscountPercent == "" ? 0 : EgyptDiscountPercent}`,
+             "discount_amount":`${EgyptDiscountAmount == "" ? 0 : EgyptDiscountAmount}`,
+             "discount_price":`${EgyptDiscountValue == "" ? 0 : EgyptDiscountValue}`,
+             "list_price":`${EgyptListPrice == "" ? 0 : EgyptListPrice}`,
              "country_name":"Egypt"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${EUDiscountPercent == "" ? 0 : EUDiscountPercent}`,
+             "discount_amount":`${EUDiscountAmount == "" ? 0 : EUDiscountAmount}`,
+             "discount_price":`${EUDiscountValue == "" ? 0 : EUDiscountValue}`,
+             "list_price":`${EUListPrice == "" ? 0 : EUListPrice}`,
              "country_name":"European Union"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${GBPDiscountPercent == "" ? 0 : GBPDiscountPercent}`,
+             "discount_amount":`${GBPDiscountAmount == "" ? 0 : GBPDiscountAmount}`,
+             "discount_price":`${GBPDiscountValue == "" ? 0 : GBPDiscountValue}`,
+             "list_price":`${GBPListPrice == ""? 0 : GBPListPrice}`,
              "country_name":"Great Britain"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${IndonesiaDiscountPercent == "" ? 0 : IndonesiaDiscountPercent}`,
+             "discount_amount":`${IndonesiaDiscountAmount == "" ? 0 : IndonesiaDiscountAmount}`,
+             "discount_price":`${IndonesiaDiscountValue == "" ? 0 : IndonesiaDiscountValue}`,
+             "list_price":`${IndonesiaListPrice == "" ? 0 : IndonesiaListPrice}`,
              "country_name":"Indonesia"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${IsrealDiscountPercent == "" ? 0 : IsrealDiscountPercent}`,
+             "discount_amount":`${IsrealDiscountAmount == "" ? 0 : IsrealDiscountAmount}`,
+             "discount_price":`${IsrealDiscountValue == "" ? 0 : IsrealDiscountValue}`,
+             "list_price":`${IsrealListPrice == "" ? 0 : IsrealListPrice}`,
              "country_name":"Israel"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${IndiaDiscountPercent == "" ? 0 : IndiaDiscountPercent}`,
+             "discount_amount":`${IndiaDiscountAmount == "" ? 0 : IndiaDiscountAmount}`,
+             "discount_price":`${IndiaDiscountValue == "" ? 0 : IndiaDiscountValue}`,
+             "list_price":`${IndiaListPrice == "" ? 0 : IndiaListPrice}`,
              "country_name":"India"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${JapanDiscountPercent == "" ? 0 : JapanDiscountPercent}`,
+             "discount_amount":`${JapanDiscountAmount == "" ? 0 : JapanDiscountAmount}`,
+             "discount_price":`${JapanDiscountValue == "" ? 0 : JapanDiscountValue}`,
+             "list_price":`${JapanListPrice == "" ? 0 : JapanListPrice}`,
              "country_name":"Japan"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${SKDiscountPercent == "" ? 0 : SKDiscountPercent}`,
+             "discount_amount":`${SKDiscountAmount == "" ? 0 : SKDiscountAmount}`,
+             "discount_price":`${SKDiscountValue == "" ? 0 : SKDiscountValue}`,
+             "list_price":`${SKListPrice == "" ? 0 : SKListPrice}`,
              "country_name":"South Korea"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${MexicoDicountPercent == "" ? 0 : MexicoDicountPercent}`,
+             "discount_amount":`${MexicoDisountAmount == "" ? 0: MexicoDisountAmount}`,
+             "discount_price":`${MexicoDiscountValue == "" ? 0 : MexicoDiscountValue}`,
+             "list_price":`${MexicoListPrice == "" ? 0 : MexicoListPrice}`,
              "country_name":"Mexico"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${MalaysiaDiscountPercent == "" ? 0 : MalaysiaDiscountPercent}`,
+             "discount_amount":`${MalaysiaDiscountAmount == "" ? 0: MalaysiaDiscountAmount}`,
+             "discount_price":`${MalaysiaDiscountValue == "" ? 0 : MalaysiaDiscountValue}`,
+             "list_price":`${MalaysiaListPrice == "" ? 0 : MalaysiaListPrice}`,
              "country_name":"Malaysia"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${NigeriaDiscountPercent == "" ? 0 : NigeriaDiscountPercent}`,
+             "discount_amount":`${NigeriaDiscountAmount == "" ? 0 : NigeriaDiscountAmount}`,
+             "discount_price":`${NigeriaDiscountValue == "" ? 0 : NigeriaDiscountValue}`,
+             "list_price":`${NigeriaListPrice == "" ? 0 : NigeriaListPrice}`,
              "country_name":"Nigeria"
             },
             {
-             "discount":"12334",
-             "discount_amount":"562345",
-             "discount_price":"567348",
-             "list_price":"985634",
+             "discount":`${NorwayDiscountPercent == "" ? 0 : NorwayDiscountPercent}`,
+             "discount_amount":`${NorwayDiscountAmount == "" ? 0 : NorwayDiscountAmount}`,
+             "discount_price":`${NorwayDiscountValue == "" ? 0 : NorwayDiscountValue}`,
+             "list_price":`${NorwayListPrice == "" ? 0 : NorwayListPrice}`,
              "country_name":"Norway"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${PeruDiscountPercent == "" ? 0 : PeruDiscountPercent}`,
+             "discount_amount":`${PeruDiscountAmount == "" ? 0 : PeruDiscountAmount}`,
+             "discount_price":`${PeruDiscountValue == "" ? 0 : PeruDiscountValue}`,
+             "list_price":`${PeruListPrice == "" ? 0 : PeruListPrice}`,
              "country_name":"Peru"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${PhilipinesDiscountPercent == "" ? 0 : PhilipinesDiscountPercent}`,
+             "discount_amount":`${PhilipinesAmount == "" ? 0 : PhilipinesAmount}`,
+             "discount_price":`${PhiliphinesDiscountValue == "" ? 0 : PhiliphinesDiscountValue}`,
+             "list_price":`${PhilipinesListPrice == "" ? 0 : PhilipinesListPrice}`,
              "country_name":"Philippines"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${PolandDiscountPercent == "" ? 0 : PolandDiscountPercent}`,
+             "discount_amount":`${PolandDiscountAmount == "" ? 0 : PolandDiscountAmount}`,
+             "discount_price":`${PolandDiscountValue == "" ? 0 : PolandDiscountValue}`,
+             "list_price":`${PolandListPrice == "" ? 0 : PolandListPrice}`,
              "country_name":"Poland"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${RomaniaDiscountPercent == "" ? 0 : RomaniaDiscountPercent}`,
+             "discount_amount":`${RomaniaDiscountAmount == "" ? 0 : RomaniaDiscountAmount}`,
+             "discount_price":`${RomaniaDiscountValue == "" ? 0 : RomaniaDiscountValue}`,
+             "list_price":`${RomaniaListPrice == "" ? 0 : RomaniaListPrice}`,
              "country_name":"Romania"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${RussiaDiscountPercent == "" ? 0 : RussiaDiscountPercent}`,
+             "discount_amount":`${RussiaDiscountAmount == "" ? 0 : RussiaDiscountAmount}`,
+             "discount_price":`${RussiaDiscountValue == "" ? 0 : RussiaDiscountValue}`,
+             "list_price":`${RussiaListPrice == "" ? 0 : RussiaListPrice}`,
              "country_name":"Russia"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${SingaporeDiscountPercent == "" ? 0 : SingaporeDiscountPercent}`,
+             "discount_amount":`${SingaporeDiscountAmount == "" ? 0 : SingaporeDiscountAmount}`,
+             "discount_price":`${SingaporeDiscountValue == "" ? 0 : SingaporeDiscountValue}`,
+             "list_price":`${SingaporeListPrice == "" ? 0 : SingaporeListPrice}`,
              "country_name":"Singapore"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${ThailandDiscountPercent == "" ? 0 : ThailandDiscountPercent}`,
+             "discount_amount":`${ThailandDiscountAmount == "" ? 0 : ThailandDiscountAmount}`,
+             "discount_price":`${ThailandDiscountValue == "" ? 0 : ThailandDiscountValue}`,
+             "list_price":`${ThailandListPrice == "" ? 0 : ThailandListPrice}`,
              "country_name":"Thailand"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${TurkeyDiscountPercent == "" ? 0 : TurkeyDiscountPercent}`,
+             "discount_amount":`${TurkeyDiscountAmount == "" ? 0 : TurkeyDiscountAmount}`,
+             "discount_price":`${TurkeyDiscountValue == "" ? 0 : TurkeyDiscountValue}`,
+             "list_price":`${TurkeyListPrice == "" ? 0 : TurkeyListPrice}`,
              "country_name":"Turkey"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${TaiwanDiscountPercent == "" ? 0 : TaiwanDiscountPercent}`,
+             "discount_amount":`${TaiwanDiscountAmount == "" ? 0 : TaiwanDiscountAmount}`,
+             "discount_price":`${TaiwanDiscountValue == "" ? 0 : TaiwanDiscountValue}`,
+             "list_price":`${TaiwanListPrice == "" ? 0 : TaiwanListPrice}`,
              "country_name":"Taiwan"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${VietnamDiscountPercent == "" ? 0 : VietnamDiscountPercent}`,
+             "discount_amount":`${VietnamDisocuntAmount == "" ? 0 : VietnamDisocuntAmount}`,
+             "discount_price":`${VietnamDiscountValue == "" ? 0 : VietnamDiscountValue}`,
+             "list_price":`${VietnamListPrice == "" ? 0 : VietnamListPrice}`,
              "country_name":"Vietnam"
             },
             {
-             "discount":"0",
-             "discount_amount":"0",
-             "discount_price":"0",
-             "list_price":"0",
+             "discount":`${SADiscountPercent == "" ? 0 : SADiscountPercent}`,
+             "discount_amount":`${SADiscountAmount == "" ? 0 : SADiscountAmount}`,
+             "discount_price":`${SADiscountValue == "" ? 0 : SADiscountValue}`,
+             "list_price":`${SAListPrice == "" ? 0 : SAListPrice}`,
              "country_name":"South Africa"
             }
         ]
         }
 
+        
+
         console.log(raw)
+        SaveDiscountDouponsAPI(code,raw,setloading_btn)
  
     }
     
@@ -702,10 +713,7 @@ const AddCoupon = ({code}) => {
   // ---------------------
 
   const [CanadaListPrice, setCanadaListPrice] = useState("")
-  const [CanadaDisType, setCanadaDisType] = useState("")
-  const [CanadaDisPercent, setCanadaDisPercent] = useState("")
-  const [CanadaDisAmt, setCanadaDisAmt] = useState("")
-  const [CanadaNetPrice, setCanadaNetPrice] = useState("")
+ 
 
   const [CanadaDiscountValue, setCanadaDiscountValue] = useState("")
   const [CanadaDiscountPercent, setCanadaDiscountPercent] = useState("")
@@ -750,10 +758,7 @@ const AddCoupon = ({code}) => {
   // ---------------------
 
   const [ChileListPrice, setChileListPrice] = useState("")
-  const [ChileDisType, setChileDisType] = useState("")
-  const [ChileDisPercent, setChileDisPercent] = useState("")
-  const [ChileDisAmt, setChileDisAmt] = useState("")
-  const [ChileNetPrice, setChileNetPrice] = useState("")
+ 
 
   const [ChileDiscountValue, setChileDiscountValue] = useState("")
   const [ChileDiscountPercent, setChileDiscountPercent] = useState("")
@@ -887,10 +892,7 @@ const AddCoupon = ({code}) => {
   // ---------------------
 
   const [EUListPrice, setEUListPrice] = useState("")
-  const [EUDisType, setEUDisType] = useState("")
-  const [EUDisPercent, setEUDisPercent] = useState("")
-  const [EUDisAmt, setEUDisAmt] = useState("")
-  const [EUNetPrice, setEUNetPrice] = useState("")
+  
 
   const [EUDiscountValue, setEUDiscountValue] = useState("")
   const [EUDiscountPercent, setEUDiscountPercent] = useState("")
@@ -933,10 +935,7 @@ const AddCoupon = ({code}) => {
   // ---------------------
 
   const [GBPListPrice, setGBPListPrice] = useState("")
-  const [GBPDisType, setGBPDisType] = useState("")
-  const [GBPDisPercent, setGBPDisPercent] = useState("")
-  const [GBPDisAmt, setGBPDisAmt] = useState("")
-  const [GBPNetPrice, setGBPNetPrice] = useState("")
+ 
 
   const [GBPDiscountValue, setGBPDiscountValue] = useState("")
   const [GBPDiscountPercent, setGBPDiscountPercent] = useState("")
@@ -979,10 +978,7 @@ const AddCoupon = ({code}) => {
   // ---------------------
 
   const [IndonesiaListPrice, setIndonesiaListPrice] = useState("")
-  const [IndonesiaDisType, setIndonesiaDisType] = useState("")
-  const [IndonesiaDisPercent, setIndonesiaDisPercent] = useState("")
-  const [IndonesiaDisAmt, setIndonesiaDisAmt] = useState("")
-  const [IndonesiaNetPrice, setIndonesiaNetPrice] = useState("")
+
 
   const [IndonesiaDiscountValue, setIndonesiaDiscountValue] = useState("")
   const [IndonesiaDiscountPercent, setIndonesiaDiscountPercent] = useState("")

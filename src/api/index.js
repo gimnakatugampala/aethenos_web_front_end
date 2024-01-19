@@ -3265,3 +3265,48 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
 
  }
 
+
+ export const SaveDiscountDouponsAPI = async(code,raw,setloading_btn) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+  myHeaders.append( 'Content-Type','application/json');
+
+  
+
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify(raw),
+    redirect: 'follow'
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/addDiscountCoupon", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+
+      Unauthorized(result.status,`courses/manage/${code}/#add-coupon`)
+
+      if(result.variable == "200"){
+        SuccessAlert("Added",result.message)
+        setloading_btn(false)
+        setTimeout(() => {
+          
+          window.location.href = `/courses/manage/${code}/#promotions`
+          window.location.reload()
+        }, 1500);
+        return
+      }
+
+      if(result.message == "Error"){
+        ErrorAlert("Error",result.variable)
+        setloading_btn(false)
+        return
+      }
+
+    })
+    .catch(error => console.log('error', error));
+
+ }

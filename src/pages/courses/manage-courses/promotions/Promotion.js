@@ -41,6 +41,8 @@ import Snackbar from '@mui/material/Snackbar';
 import { GetReferralLink } from '../../../../api';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import InfoToast from '../../../../commonFunctions/Toasts/InfoToast';
+
 
 
 
@@ -48,7 +50,7 @@ const Promotion = ({code}) => {
 
   const [referalCode, setreferalCode] = useState(``)
   const [all_coupons, setall_coupons] = useState(null)
-  const [loading_btn, setloading_btn] = useState(false)
+
 
   var currentDate = new Date();
   var monthName = currentDate.toLocaleString('default', { month: 'long' });
@@ -79,13 +81,8 @@ const Promotion = ({code}) => {
 
 
     if(e.target.checked){
-      // console.log("Actived")
-      // console.log(couponCode)
       StatusChangeAPI(code,couponCode)
-
     }else{
-      // console.log("Deactivated")
-      // console.log(couponCode)
       StatusChangeAPI(code,couponCode)
 
 
@@ -93,7 +90,14 @@ const Promotion = ({code}) => {
   }
   
 
- 
+ const copyLinkToClipboard = (couponCode) =>{
+  console.log(couponCode)
+    navigator.clipboard.writeText(`https://aethenos.com/${couponCode}`)
+
+    InfoToast("Link Copied")
+
+
+ }
 
 
   return ( 
@@ -157,12 +161,12 @@ const Promotion = ({code}) => {
                 {all_coupons != null ? all_coupons.map((coupon,key) => (
                 <tr key={key}>
                   <td>{coupon.couponCode}</td>
-                  <td>{coupon.couponType.id == 1 ? "Free" : ''}</td>
+                  <td>{coupon.couponType.id == 1 ? "Free" : 'Discount'}</td>
                   <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
                   <td>5/Unlimited</td>
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
-                  <td>Active</td>
+                  <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td>
                 </tr>
                 )) : "No Coupons Available"}
         
