@@ -408,6 +408,9 @@ const Pricing = ({code}) => {
       setshowDefaultValueDiscountInput(false)
       setDGlobalNetPrice(DGlobalPricing)
 
+      setDDisPercent(0)
+      setDDisAmt(0)
+
     }else if(e.target.value == '2'){
 
       setshowDefaultDiscountInput(true)
@@ -440,6 +443,8 @@ const Pricing = ({code}) => {
 // Enter Global Price
   const handleChangeGlobalPrice = (e) => {
 
+
+
     if(DDisType == '1'){
       console.log(e.target.value)
       setDGlobalNetPrice(e.target.value)
@@ -451,7 +456,13 @@ const Pricing = ({code}) => {
       setDGlobalNetPrice(e.target.value == "" ? 0 : e.target.value)
     }
 
+    if(e.target.value == ""){
+      setDGlobalPricing(0)
+    }
+
     setDGlobalPricing(e.target.value)
+
+
 
   }
 
@@ -3604,7 +3615,7 @@ const Pricing = ({code}) => {
               For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
 
                     <div className="row">
-                      <div className="price-range col-md-3">
+                      <div className="price-range col-md-2">
                         <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
                           <InputGroup className="mb-3">
                             <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
@@ -3616,6 +3627,7 @@ const Pricing = ({code}) => {
                               aria-describedby="basic-addon1"
                             />
                           </InputGroup>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}> Tip : Pricing around $10 may optimize sales.</Form.Label>
                           <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: ${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</i></Form.Label>
                       </div>
 
@@ -3629,25 +3641,28 @@ const Pricing = ({code}) => {
                       </select>
                       </div>
 
-                      {showDefaultDiscountInput && (
+                      {/* {showDefaultDiscountInput && ( */}
                         <>
-                        {showDefaultPercentDiscountInput && (
+                        {/* {showDefaultPercentDiscountInput && ( */}
                         <div className="col-md-2">
                         <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
-                        <Form.Control value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
-                        </div>
-                        )}
+                        <Form.Control disabled={DDisType == 3 || DDisType == 1} value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
 
-                        {showDefaultValueDiscountInput && (
+                      
+                        </div>
+                        {/* // )} */}
+
+                        {/* // {showDefaultValueDiscountInput && ( */}
 
                       <div className="col-md-2">
                       <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
-                      <Form.Control value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
+                      <Form.Control disabled={DDisType == 2 || DDisType == 1} value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
+                      
                       </div>
-                        )}
+                        {/* // )} */}
 
                         </>
-                      )}
+                      {/* // )} */}
 
 
                       <div className="col-md-3">
@@ -3657,9 +3672,9 @@ const Pricing = ({code}) => {
 
                       </div>
 
-                      <div className='col-md-1 d-flex align-items-center mb-3'>
+                      {/* <div className='col-md-1 d-flex align-items-center mb-3'>
                         <Button onClick={handleSaveDefaultPricing} className='mx-1' variant="contained">Submit</Button>
-                        </div>
+                        </div> */}
 
 
                       <div className="col-6"></div>
@@ -3692,7 +3707,8 @@ const Pricing = ({code}) => {
                         <tr>
                           <td >America
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {USATip}</Form.Label></td>
+                      
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("USD"))}{USATip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>USD</td>
@@ -3715,14 +3731,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentUSA && (
-                          <Form.Control value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
-                            )}
+                            {/* {showInputPercentUSA && ( */}
+                          <Form.Control disabled={USADisType == 3 || USADisType == 1}  value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                          {showInputDisAmtUSA && (
-                          <Form.Control value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
-                          )}
+                          {/* {showInputDisAmtUSA && ( */}
+                          <Form.Control disabled={USADisType == 2 || USADisType == 1} value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
+                          {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}</h6>
@@ -3737,7 +3753,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Australia
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {AusTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("AUD"))}{AusTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>AUD</td>
@@ -3759,15 +3775,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                          {showInputPercentAus && (
-                          <Form.Control value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
-                            )}
+                          {/* {showInputPercentAus && ( */}
+                          <Form.Control disabled={AusDisType == 3 || AusDisType == 1} value={AusDisPercent} onChange={handleDefaultPercentageDiscountAus} type="text" />
+                            {/* )} */}
                           
                           </td>
                           <td>
-                          {showInputDisAmtAus && (
-                          <Form.Control value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
-                            )}
+                          {/* {showInputDisAmtAus && ( */}
+                          <Form.Control disabled={AusDisType == 2 || AusDisType == 1} value={AusDisAmt} onChange={handleDefaultDiscountAmtAus} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}</h6>
@@ -3783,7 +3799,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Brazil
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {BrazilTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("BRL"))}{BrazilTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>BRL</td>
@@ -3805,15 +3821,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentBrzail && (
-                                <Form.Control value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
-                              )}
+                            {/* {showInputPercentBrzail && ( */}
+                                <Form.Control disabled={BrazilDisType == 3 || BrazilDisType == 1} value={BrazilDisPercent} onChange={handleDefaultPercentageDiscountBrazil} type="text" />
+                              {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtBrzail && (
+                            {/* {showInputDisAmtBrzail && ( */}
 
-                          <Form.Control value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
-                            )}
+                          <Form.Control disabled={BrazilDisType == 2 || BrazilDisType == 1} value={BrazilDisAmt} onChange={handleDefaultDiscountAmtBrazil} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}</h6>
@@ -3828,7 +3844,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Canada
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {CanadaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("CAD"))}{CanadaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>CAD</td>
@@ -3850,15 +3866,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentCanada && (
-                          <Form.Control value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
-                            )}
+                            {/* {showInputPercentCanada && ( */}
+                          <Form.Control  disabled={CanadaDisType == 3 || CanadaDisType == 1}  value={CanadaDisPercent} onChange={handleDefaultPercentageDiscountCanada} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
                             
-                            {showInputDisAmtCanada && (
-                          <Form.Control value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
-                            )}
+                            {/* {showInputDisAmtCanada && ( */}
+                          <Form.Control disabled={CanadaDisType == 2 || CanadaDisType == 1} value={CanadaDisAmt} onChange={handleDefaultDiscountAmtCanada} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}</h6>
@@ -3874,7 +3890,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Chile
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {ChileTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("CLP"))}{ChileTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>CLP</td>
@@ -3896,14 +3912,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentChile && (
-                              <Form.Control value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
-                            )}
+                            {/* {showInputPercentChile && ( */}
+                              <Form.Control disabled={ChileDisType == 3 || ChileDisType == 1} value={ChileDisPercent} onChange={handleDefaultPercentageDiscountChile} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtChile && (
-                            <Form.Control value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
-                            )}
+                            {/* {showInputDisAmtChile && ( */}
+                            <Form.Control disabled={ChileDisType == 2 || ChileDisType == 1} value={ChileDisAmt}  onChange={handleDefaultDiscountAmtChile} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}</h6>
@@ -3918,7 +3934,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Columbia
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {ColumbiaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("COP"))}{ColumbiaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>COP</td>
@@ -3940,14 +3956,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentColumbia && (
-                                <Form.Control value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
-                              )}
+                            {/* {showInputPercentColumbia && ( */}
+                                <Form.Control 
+                                disabled={ColumbiaDisType == 3 || ColumbiaDisType == 1} value={ColumbiaDisPercent} onChange={handleDefaultPercentageDiscountColumbia} type="text" />
+                              {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtColumbia && (
-                          <Form.Control value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
-                            )}
+                            {/* {showInputDisAmtColumbia && ( */}
+                          <Form.Control disabled={ColumbiaDisType == 2 || ColumbiaDisType == 1} value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
+                            {/* // )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}</h6>
@@ -3962,7 +3979,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Egypt
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {EgyptTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("EGP"))}{EgyptTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>EGP</td>
@@ -3984,14 +4001,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentEgypt && (
-                          <Form.Control value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
-                            )}
+                            {/* {showInputPercentEgypt && ( */}
+                          <Form.Control disabled={EgyptDisType == 3 || EgyptDisType == 1} value={EgyptDisPercent} onChange={handleDefaultPercentageDiscountEgypt} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtEgypt && (
-                          <Form.Control value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
-                            )}
+                            {/* {showInputDisAmtEgypt && ( */}
+                          <Form.Control disabled={EgyptDisType == 2 || EgyptDisType == 1} value={EgyptDisAmt} onChange={handleDefaultDiscountAmtEgypt} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}</h6>
@@ -4006,7 +4023,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>European Union
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {EUTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("EUR"))}{EUTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>EUR</td>
@@ -4028,14 +4045,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentEU && (
-                          <Form.Control value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
-                            )}
+                            {/* {showInputPercentEU && ( */}
+                          <Form.Control  disabled={EUDisType == 3 || EUDisType == 1}  value={EUDisPercent} onChange={handleDefaultPercentageDiscountEU} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtEU && (
-                            <Form.Control value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
-                            )}
+                            {/* {showInputDisAmtEU && ( */}
+                            <Form.Control disabled={EUDisType == 2 || EUDisType == 1} value={EUDisAmt} onChange={handleDefaultDiscountAmtEU} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}</h6>
@@ -4050,7 +4067,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Great Britain
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {GBPTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("GBP"))}{GBPTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>GBP</td>
@@ -4072,14 +4089,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentGBP && (
-                          <Form.Control value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
-                            )}
+                            {/* {showInputPercentGBP && ( */}
+                          <Form.Control disabled={GBPDisType == 3 || GBPDisType == 1} value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtGBP && (
-                              <Form.Control value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
-                            )}
+                            {/* {showInputDisAmtGBP && ( */}
+                              <Form.Control disabled={GBPDisType == 2 || GBPDisType == 1}  value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}</h6>
@@ -4094,7 +4111,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Indonesia
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {IndonesiaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("IDR"))}{IndonesiaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>IDR</td>
@@ -4116,14 +4133,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentIndonesia && (
-                          <Form.Control value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
-                            )}
+                            {/* {showInputPercentIndonesia && ( */}
+                          <Form.Control disabled={IndonesiaDisType == 3 || IndonesiaDisType == 1} value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtIndonesia && (
-                          <Form.Control value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
-                            )}
+                            {/* {showInputDisAmtIndonesia && ( */}
+                          <Form.Control disabled={IndonesiaDisType == 2 || IndonesiaDisType == 1} value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}</h6>
@@ -4138,7 +4155,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Israel
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {IsrealTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("ILS"))}{IsrealTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>ILS</td>
@@ -4160,16 +4177,16 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentIsreal && (
+                            {/* {showInputPercentIsreal && ( */}
 
-                            <Form.Control value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
-                            )}
+                            <Form.Control disabled={IsrealDisType == 3 || IsrealDisType == 1} value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtIsreal && (
+                            {/* {showInputDisAmtIsreal && ( */}
 
-                          <Form.Control value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
-                            )}
+                          <Form.Control disabled={IsrealDisType == 2 || IsrealDisType == 1} value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}</h6>
@@ -4184,7 +4201,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>India
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {IndiaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("INR"))}{IndiaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>INR</td>
@@ -4206,15 +4223,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentIndia && (
-                          <Form.Control value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
-                            )}
+                            {/* {showInputPercentIndia && ( */}
+                          <Form.Control disabled={IndiaDisType == 3 || IndiaDisType == 1} value={IndiaDisPercent} onChange={handleDefaultPercentageDiscountIndia} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtIndia && (
+                            {/* {showInputDisAmtIndia && ( */}
 
-                          <Form.Control value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
-                            )}
+                          <Form.Control disabled={IndiaDisType == 2 || IndiaDisType == 1} value={IndiaDisAmt} onChange={handleDefaultDiscountAmtIndia} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}</h6>
@@ -4229,7 +4246,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Japan
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {JapanTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("JPY"))}{JapanTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>JPY</td>
@@ -4251,18 +4268,16 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentJapan && (
+                            {/* {showInputPercentJapan && ( */}
 
-                          <Form.Control value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
-                            )}
+                          <Form.Control disabled={JapanDisType == 3 || JapanDisType == 1} value={JapanDisPercent} onChange={handleDefaultPercentageDiscountJapan} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {
-                              showInputDisAmtJapan && (
+                            {/* {showInputDisAmtJapan && ( */}
 
-                        <Form.Control value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
-                              )
-                            }
+                        <Form.Control disabled={JapanDisType == 2 || JapanDisType == 1} value={JapanDisAmt} onChange={handleDefaultDiscountAmtJapan} type="text" />
+                              {/* // )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}</h6>
@@ -4277,7 +4292,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>South Korea
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {SKTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("KRW"))}{SKTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>KRW</td>
@@ -4299,16 +4314,16 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                              {showInputPercentSK && (
+                              {/* {showInputPercentSK && ( */}
 
-                          <Form.Control value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
-                              )}
+                          <Form.Control disabled={SKDisType == 3 || SKDisType == 1} value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
+                              {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtSK && (
-                              <Form.Control value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
+                            {/* {showInputDisAmtSK && ( */}
+                              <Form.Control disabled={SKDisType == 2 || SKDisType == 1} value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
 
-                            )}
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}</h6>
@@ -4323,7 +4338,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Mexico
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {MexicoTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("MXN"))}{MexicoTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>MXN</td>
@@ -4345,15 +4360,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentMexico && (
-                          <Form.Control value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
-                            )}
+                            {/* {showInputPercentMexico && ( */}
+                          <Form.Control disabled={MexicoDisType == 3 || MexicoDisType == 1} value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtMexico && (
+                            {/* {showInputDisAmtMexico && ( */}
 
-                            <Form.Control value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
-                            )}
+                            <Form.Control  disabled={MexicoDisType == 2 || MexicoDisType == 1} value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}</h6>
@@ -4368,7 +4383,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Malaysia
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {MalaysiaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("MYR"))}{MalaysiaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>MYR</td>
@@ -4390,16 +4405,18 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentMalaysia && (
-                          <Form.Control value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
-                            )}
+                            {/* {showInputPercentMalaysia && ( */}
+                          <Form.Control 
+                          disabled={MalaysiaDisType == 3 || MalaysiaDisType == 1} value={MalaysiaDisPercent} onChange={handleDefaultPercentageDiscountMalaysia} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtMalaysia && (
+                            {/* {showInputDisAmtMalaysia && ( */}
                               <Form.Control 
+                              disabled={MalaysiaDisType == 2 || MalaysiaDisType == 1}
                               value={MalaysiaDisAmt} onChange={handleDefaultDiscountAmtMalaysia} type="text" />
 
-                            )}
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}</h6>
@@ -4414,7 +4431,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Nigeria
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {NigeriaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("NGN"))}{NigeriaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>NGN</td>
@@ -4436,14 +4453,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentNigeria && (
-                          <Form.Control value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
-                            )}
+                            {/* {showInputPercentNigeria && ( */}
+                          <Form.Control 
+                          disabled={NigeriaDisType == 3 || NigeriaDisType == 1} value={NigeriaDisPercent} onChange={handleDefaultPercentageDiscountNigeria} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtNigeria && (
-                              <Form.Control value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
-                            )}
+                            {/* {showInputDisAmtNigeria && ( */}
+                              <Form.Control disabled={NigeriaDisType == 2 || NigeriaDisType == 1} value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}</h6>
@@ -4458,7 +4476,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Norway
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {NorwayTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("NOK"))}{NorwayTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>NOK</td>
@@ -4480,14 +4498,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentNorway && (
-                          <Form.Control value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
-                            )}
+                            {/* {showInputPercentNorway && ( */}
+                          <Form.Control disabled={NorwayDisType == 3 || NorwayDisType == 1} value={NorwayDisPercent} onChange={handleDefaultPercentageDiscountNorway} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtNorway && (
-                          <Form.Control value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
-                            )}
+                            {/* {showInputDisAmtNorway && ( */}
+                          <Form.Control disabled={NorwayDisType == 2 || NorwayDisType == 1} value={NorwayDisAmt} onChange={handleDefaultDiscountAmtNorway} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}</h6>
@@ -4502,7 +4520,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Peru
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {PeruTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("PEN"))}{PeruTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>PEN</td>
@@ -4524,16 +4542,16 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentPeru && (
+                            {/* {showInputPercentPeru && ( */}
 
-                          <Form.Control value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
-                            )}
+                          <Form.Control disabled={PeruDisType == 3 || PeruDisType == 1} value={PeruDisPercent} onChange={handleDefaultPercentageDiscountPeru} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
                           
-                            {showInputDisAmtPeru && (
-                        <Form.Control value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
-                            )}
+                            {/* {showInputDisAmtPeru && ( */}
+                        <Form.Control disabled={PeruDisType == 2 || PeruDisType == 1} value={PeruDisAmt} onChange={handleDefaultDiscountAmtPeru} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}</h6>
@@ -4549,7 +4567,7 @@ const Pricing = ({code}) => {
                           <tr>
                           <td>Philippines
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {PhilipinesTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("PHP"))}{PhilipinesTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>PHP</td>
@@ -4571,15 +4589,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentPhilipines && (
-                              <Form.Control value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
+                            {/* {showInputPercentPhilipines && ( */}
+                              <Form.Control disabled={PhilipinesDisType == 3 || PhilipinesDisType == 1} value={PhilipinesDisPercent} onChange={handleDefaultPercentageDiscountPhilipines} type="text" />
 
-                            )}
+                            {/* )} */}
                           </td>
                           <td>
-                          {showInputDisAmtPhilipines && (
-                          <Form.Control value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
-                          )}
+                          {/* {showInputDisAmtPhilipines && ( */}
+                          <Form.Control disabled={PhilipinesDisType == 2 || PhilipinesDisType == 1} value={PhiliphinesDisAmt} onChange={handleDefaultDiscountAmtPhilipines} type="text" />
+                          {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}</h6>
@@ -4594,7 +4612,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Poland
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {PolandTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("PLN"))}{PolandTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>PLN</td>
@@ -4616,16 +4634,16 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentPoland && (
+                            {/* {showInputPercentPoland && ( */}
 
-                          <Form.Control value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
-                            )}
+                          <Form.Control disabled={PolandDisType == 3 || PolandDisType == 1} value={PolandDisPercent} onChange={handleDefaultPercentageDiscountPoland} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtPoland && (
+                            {/* {showInputDisAmtPoland && ( */}
 
-                        <Form.Control value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
-                            )}
+                        <Form.Control disabled={PolandDisType == 2 || PolandDisType == 1} value={PolandDisAmt} onChange={handleDefaultDiscountAmtPoland} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}</h6>
@@ -4640,7 +4658,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Romania
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {RomaniaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("RON"))}{RomaniaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>RON</td>
@@ -4662,14 +4680,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentRomania && (
-                          <Form.Control value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
-                            )}
+                            {/* {showInputPercentRomania && ( */}
+                          <Form.Control disabled={RomaniaDisType == 3 || RomaniaDisType == 1} value={RomaniaDisPercent} onChange={handleDefaultPercentageDiscountRomania} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtRomania && (
-                          <Form.Control value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
-                            )}
+                            {/* {showInputDisAmtRomania && ( */}
+                          <Form.Control disabled={RomaniaDisType == 2 || RomaniaDisType == 1} value={RomaniaDisAmt} onChange={handleDefaultDiscountAmtRomania} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}</h6>
@@ -4684,7 +4702,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Russia
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {RussiaTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("RUB"))}{RussiaTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>RUB</td>
@@ -4706,15 +4724,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentRussia && (
+                            {/* {showInputPercentRussia && ( */}
                               
-                          <Form.Control value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
-                            )}
+                          <Form.Control disabled={RussiaDisType == 3 || RussiaDisType == 1} value={RussiaDisDisPercent} onChange={handleDefaultPercentageDiscountRussia} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtRussia && (
-                          <Form.Control value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
-                            )}
+                            {/* {showInputDisAmtRussia && ( */}
+                          <Form.Control disabled={RussiaDisType == 2 || RussiaDisType == 1} value={RussiaDisAmt} onChange={handleDefaultDiscountAmtRussia}  type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}</h6>
@@ -4729,7 +4747,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Singapore
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {SingaporeTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("SGD"))}{SingaporeTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>SGD</td>
@@ -4751,15 +4769,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentSingapore && (
-                          <Form.Control value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
-                            )}
+                            {/* {showInputPercentSingapore && ( */}
+                          <Form.Control disabled={SingaporeDisType == 3 || SingaporeDisType == 1} value={SingaporeDisPercent} onChange={handleDefaultPercentageDiscountSingapore} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtSingapore && (
+                            {/* {showInputDisAmtSingapore && ( */}
 
-                          <Form.Control value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
-                            )}
+                          <Form.Control disabled={SingaporeDisType == 2 || SingaporeDisType == 1} value={SingaporeDisAmt} onChange={handleDefaultDiscountAmtSingapore} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}</h6>
@@ -4774,7 +4792,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Thailand
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {ThailandTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("THB"))}{ThailandTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>THB</td>
@@ -4796,14 +4814,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentThailand && (
-                          <Form.Control value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
-                            )}
+                            {/* {showInputPercentThailand && ( */}
+                          <Form.Control disabled={ThailandDisType == 3 || ThailandDisType == 1} value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtThailand && (
-                          <Form.Control value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
-                            )}
+                            {/* {showInputDisAmtThailand && ( */}
+                          <Form.Control disabled={ThailandDisType == 2 || ThailandDisType == 1} value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}</h6>
@@ -4818,13 +4836,13 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>Turkey
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {TurkeyTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("TRY"))}{TurkeyTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>TRY</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData[25].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
+                            <Form.Control  value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
                           </td>
                           <td>
                             <Select
@@ -4840,14 +4858,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentTurkey && (
-                          <Form.Control value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
-                            )}
+                            {/* {showInputPercentTurkey && ( */}
+                          <Form.Control disabled={TurkeyDisType == 3 || TurkeyDisType == 1} value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtTurkey && (
-                          <Form.Control value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
-                            )}
+                            {/* {showInputDisAmtTurkey && ( */}
+                          <Form.Control disabled={TurkeyDisType == 2 || TurkeyDisType == 1} value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}</h6>
@@ -4862,7 +4880,7 @@ const Pricing = ({code}) => {
                           <tr>
                           <td>Taiwan
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {TaiwanTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("TWD"))}{TaiwanTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>TWD</td>
@@ -4884,15 +4902,15 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentTaiwan && (
-                          <Form.Control value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
-                            )}
+                            {/* {showInputPercentTaiwan && ( */}
+                          <Form.Control  disabled={TaiwanDisType == 3 || TaiwanDisType == 1} value={TaiwanDisPercent} onChange={handleDefaultPercentageDiscountTaiwan} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtTaiwan && (
+                            {/* {showInputDisAmtTaiwan && ( */}
 
-                          <Form.Control value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
-                            )}
+                          <Form.Control disabled={TaiwanDisType == 2 || TaiwanDisType == 1} value={TaiwanDisAmt} onChange={handleDefaultDiscountAmtTaiwan} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}</h6>
@@ -4907,7 +4925,7 @@ const Pricing = ({code}) => {
                           <tr>
                           <td>Vietnam
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {VietnamTip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("VND"))}{VietnamTip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>VND</td>
@@ -4929,16 +4947,16 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentVietnam && (
+                            {/* {showInputPercentVietnam && ( */}
 
-                          <Form.Control value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
-                            )}
+                          <Form.Control disabled={VietmanDisType == 3 || VietmanDisType == 1} value={VietnamDisPercent} onChange={handleDefaultPercentageDiscountVietnam} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtVietnam && (
+                            {/* {showInputDisAmtVietnam && ( */}
 
-                          <Form.Control value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
-                            )}
+                          <Form.Control disabled={VietmanDisType == 2 || VietmanDisType == 1} value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}</h6>
@@ -4954,7 +4972,7 @@ const Pricing = ({code}) => {
                         <tr>
                           <td>South Africa
                         <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: {SATip}</Form.Label></td>
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("KRW"))}{SATip} may optimize sales.</Form.Label></td>
                         </td>
 
                           <td>KRW</td>
@@ -4976,14 +4994,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {showInputPercentSA && (
-                          <Form.Control value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
-                            )}
+                            {/* {showInputPercentSA && ( */}
+                          <Form.Control disabled={SADisType == 3 || SADisType == 1} value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
+                            {/* )} */}
                           </td>
                           <td>
-                            {showInputDisAmtSA && (
-                          <Form.Control value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
-                            )}
+                            {/* {showInputDisAmtSA && ( */}
+                          <Form.Control disabled={SADisType == 2 || SADisType == 1} value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
+                            {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                               <h6>{SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}</h6>
