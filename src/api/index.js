@@ -474,16 +474,47 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
- export const GetSubCategories = async(setsubcatData) =>{
+ export const GetSubCategories = async(setsubcatData,course_cat,code) =>{
+console.log(course_cat)
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
   var requestOptions = {
     method: 'GET',
+    headers: myHeaders,
     redirect: 'follow'
   };
   
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getAllCourseSubCategory", requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getAllCourseSubCategory/${course_cat}`, requestOptions)
     .then(response => response.json())
-    .then(result => setsubcatData(result))
+    .then(result => {
+      setsubcatData(result)
+      Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
+      console.log(result)
+    })
     .catch(error => console.log('error', error));
+ }
+
+ export const GetTopics = async(settopicsData,code,course_sub_cat) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getTopicsBySubCategory/${course_sub_cat}`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
+      settopicsData(result)
+      console.log(result)
+    })
+    .catch(error => console.log('error', error));
+
  }
 
  export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang) =>{

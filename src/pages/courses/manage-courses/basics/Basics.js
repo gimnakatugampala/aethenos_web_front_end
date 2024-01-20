@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import ButtonMaterial from '@mui/material/Button';
 import { TagsInput } from "react-tag-input-component";
-import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress } from "../../../../api";
+import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress, GetTopics } from "../../../../api";
 import ImageUploader from 'react-images-upload';
 import ReactPlayer from 'react-player'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -45,6 +45,7 @@ const Basics = ({code}) => {
   const [level, setlevel] = useState("")
   const [course_cat, setcourse_cat] = useState("")
   const [course_sub_cat, setcourse_sub_cat] = useState("")
+  const [course_topic, setcourse_topic] = useState("")
   const [keywords, setkeywords] = useState([])
   const [course_image, setcourse_image] = useState("")
   const [promo_vid, setpromo_vid] = useState("")
@@ -57,6 +58,7 @@ const Basics = ({code}) => {
   const [levelData, setlevelData] = useState([])
   const [cat, setcat] = useState([])
   const [subcatData, setsubcatData] = useState([])
+  const [topicsData, settopicsData] = useState([])
 
   const [loading_btn, setloading_btn] = useState(false)
 
@@ -179,12 +181,23 @@ const handleFileChange = (event) => {
 
     GetCategories(setcat)
 
-    GetSubCategories(setsubcatData)
-
-
-  
+ 
+ 
 
   }, [code])
+
+  useEffect(() => {
+    GetSubCategories(setsubcatData,course_cat,code)
+  }, [course_cat])
+  
+  useEffect(() => {
+    GetTopics(settopicsData,code,course_sub_cat)
+
+    
+  }, [course_sub_cat])
+  
+  
+  
 
  
   const  isDataURI = (dataURI) => {
@@ -276,9 +289,8 @@ const handleFileChange = (event) => {
           </div>
 
           <div className="row my-3">
-            <h6>Basic Info</h6>
-
-            <div className="col-md-3">
+            <div className="col-md-6">
+            <Form.Label>Language</Form.Label>
             <Form.Select value={lang} onChange={(e) => setlang(e.target.value)} aria-label="Default select example">
             <option value="">Select Course Language</option>
             {langData.map((lang,index) => (
@@ -288,8 +300,8 @@ const handleFileChange = (event) => {
           </Form.Select>
             </div>
 
-            <div className="col-md-3">
-
+            <div className="col-md-6">
+            <Form.Label>Course Level</Form.Label>
             <Form.Select value={level} onChange={(e) => setlevel(e.target.value)} aria-label="Default select example">
             <option value="">Select Course Level</option>
             {levelData.map((level,index) => (
@@ -298,24 +310,34 @@ const handleFileChange = (event) => {
           </Form.Select>
             </div>
             
-            <div className="col-md-3">
-
+            <div className="col-md-4 mt-3">
+            <Form.Label>Course Category</Form.Label>
             <Form.Select value={course_cat} onChange={(e) => setcourse_cat(e.target.value)} aria-label="Default select example">
             <option value="">Select Course Category</option>
-            {cat.map((category,index) => (
+            {cat != null && cat.map((category,index) => (
             <option key={index} value={category.id}>{category.name}</option>
             ))}
           </Form.Select>
             </div>
 
-            <div className="col-md-3">
+            <div className="col-md-5 mt-3">
+            <Form.Label>Course Sub Category</Form.Label>
               <Form.Select value={course_sub_cat} onChange={(e) => setcourse_sub_cat(e.target.value)} aria-label="Default select example">
               <option value="">Select Course Sub Category</option>
-              {subcatData.map((subcategory,index) => (
+              {subcatData != null && subcatData.map((subcategory,index) => (
               <option key={index} value={subcategory.id}>{subcategory.name}</option>
               ))}
             </Form.Select>
-
+            </div>
+          
+            <div className="col-md-3 mt-3">
+            <Form.Label>Course Topic</Form.Label>
+              <Form.Select value={course_topic} onChange={(e) => setcourse_topic(e.target.value)} aria-label="Default select example">
+              <option value="">Select Course Sub Category</option>
+              {topicsData != null &&  topicsData.map((topic,index) => (
+              <option key={index} value={topic.id}>{topic.topic}</option>
+              ))}
+            </Form.Select>
             </div>
 
             <div className="col-md-12 my-3">
