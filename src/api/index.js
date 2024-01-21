@@ -563,6 +563,7 @@ console.log(course_cat)
   level,
   course_cat,
   course_sub_cat,
+  course_topic,
   keywords,
   promo_vid,
   course_image,
@@ -583,6 +584,7 @@ console.log(course_cat)
   formdata.append("keywords", `${keywords}`);
   formdata.append("course_image", course_image);
   formdata.append("promotional_video", promo_vid);
+  formdata.append("topic", `${course_topic}`);
   
   var requestOptions = {
     method: 'POST',

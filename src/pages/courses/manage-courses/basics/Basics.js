@@ -74,17 +74,17 @@ const Basics = ({code}) => {
 
   const handleClick = (e) => {
     
-    console.log(course_title)
-    console.log(course_subtitle)
-    console.log(course_desc)
-    console.log(lang)
-    console.log(level)
-    console.log(course_cat)
-    console.log(course_sub_cat)
-    console.log(keywords)
-    console.log(course_image)
-    console.log(promo_vid) 
-    console.log(videoSrc)
+    // console.log(course_title)
+    // console.log(course_subtitle)
+    // console.log(course_desc)
+    // console.log(lang)
+    // console.log(level)
+    // console.log(course_cat)
+    // console.log(course_sub_cat)
+    // console.log(keywords)
+    // console.log(course_image)
+    // console.log(promo_vid) 
+    // console.log(videoSrc)
 
     if(course_title == ""){
       ErrorAlert("Empty Field","Please Enter Course Title")
@@ -120,11 +120,14 @@ const Basics = ({code}) => {
       level,
       course_cat,
       course_sub_cat,
+      course_topic,
       keywords,
       promo_vid,
       course_image,
       setloading_btn
       )
+
+    console.log(course_topic)
 
     
   };

@@ -40,8 +40,8 @@ const Pricing = ({code}) => {
 
   const [DGlobalPricing, setDGlobalPricing] = useState("")
   const [DDisType, setDDisType] = useState("")
-  const [DDisPercent, setDDisPercent] = useState("")
-  const [DDisAmt, setDDisAmt] = useState("")
+  const [DDisPercent, setDDisPercent] = useState(0)
+  const [DDisAmt, setDDisAmt] = useState(0)
   const [DGlobalNetPrice, setDGlobalNetPrice] = useState("")
 
   const [MinDefaultValue, setMinDefaultValue] = useState("")
@@ -3667,21 +3667,25 @@ const Pricing = ({code}) => {
     const handleChangeGlobalPriceTaiwan = (e) => {
 
       console.log(e.target.value)
+      if(numberOnlyRegex.test(e.target.value)){
 
-      if(TaiwanDisType == '1'){
-        console.log(e.target.value)
-        setTaiwanNetPrice(e.target.value)
-      }else if(TaiwanDisType == '2'){
-        setTaiwanNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(TaiwanDisPercent)/100).toFixed(2))
-      }else if(TaiwanDisType == '3'){
-        setTaiwanNetPrice((parseFloat(e.target.value) - parseFloat(TaiwanDisAmt)).toFixed(2))
-      }else{
-        setTaiwanNetPrice(e.target.value == "" ? 0 : e.target.value)
-      }
+        if(TaiwanDisType == '1'){
+          console.log(e.target.value)
+          setTaiwanNetPrice(e.target.value)
+        }else if(TaiwanDisType == '2'){
+          setTaiwanNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(TaiwanDisPercent)/100).toFixed(2))
+        }else if(TaiwanDisType == '3'){
+          setTaiwanNetPrice((parseFloat(e.target.value) - parseFloat(TaiwanDisAmt)).toFixed(2))
+        }else{
+          setTaiwanNetPrice(e.target.value == "" ? 0 : e.target.value)
+        }
+  
+        if(e.target.value == ""){
+          setTaiwanListPrice(0)
+        }
 
-      if(e.target.value == ""){
-        setTaiwanListPrice(0)
       }
+    
 
       setTaiwanListPrice(e.target.value)
 
@@ -3689,19 +3693,36 @@ const Pricing = ({code}) => {
 
       // Discount Amount Taiwan
       const handleDefaultDiscountAmtTaiwan = (e) =>{
+
+        if(e.target.value == ""){
+          setTaiwanDisAmt(0)
+        }
+
         setTaiwanDisAmt(e.target.value)
         setTaiwanNetPrice((parseFloat(TaiwanListPrice) - parseFloat(e.target.value == "" ? 0 : e.target.value)).toFixed(2))
         console.log(e.target.value)
+
+         // Calculate Discount %
+         setTaiwanDisPercent(((parseFloat(TaiwanListPrice) - parseFloat(e.target.value))/parseFloat(TaiwanListPrice) * 100).toFixed(2))
+
       }
       
     // Percentage Discount Taiwan
       const handleDefaultPercentageDiscountTaiwan = (e) =>{
+
+        if(e.target.value == ""){
+          setTaiwanDisPercent(0)
+        }
+    
     
         setTaiwanDisPercent(e.target.value)
     
         setTaiwanNetPrice((parseFloat(TaiwanListPrice) - parseFloat(TaiwanListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
 
         console.log(e.target.value)
+
+         // Calculate Discount Amount
+         setTaiwanDisAmt((Number.parseFloat(TaiwanListPrice) - ((parseFloat(TaiwanListPrice) - parseFloat(TaiwanListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
     
       }
 
@@ -3964,242 +3985,282 @@ const Pricing = ({code}) => {
 
     }else if(Paid_Type == 2){
 
-        var raw = [
-      {
-          "courseCode": `${code}`,
-          "netPrice": `${USANetPrice}`,
-          "listPrice": `${USAListPrice}`,
-          "discountType": `${USADisType}`,
-          "country": "America",
-          "discountValue": `${USADisType == "1" ? 0.00 : USADisType == "2" ? USADisPercent : USADisAmt}`
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice": `${AusNetPrice}`,
-          "listPrice": `${AusListPrice}`,
-          "discountType":`${AusDisType}`,
-          "country": "Australia",
-          "discountValue": `${AusDisType == "1" ? 0.00 : AusDisType == "2" ? AusDisPercent : AusDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${BrazilNetPrice}`,
-          "listPrice": `${BrazilListPrice}`,
-          "discountType": `${BrazilDisType}`,
-          "country": "Brazil",
-          "discountValue": `${BrazilDisType == "1" ? 0.00 : BrazilDisType == "2" ? BrazilDisPercent : BrazilDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${CanadaNetPrice}`,
-          "listPrice": `${CanadaListPrice}`,
-          "discountType": `${CanadaDisType}`,
-          "country": "Canada",
-          "discountValue": `${CanadaDisType == "1" ? 0.00 : CanadaDisType == "2" ? CanadaDisPercent : CanadaDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${ChileNetPrice}`,
-          "listPrice": `${ChileListPrice}`,
-          "discountType": `${ChileDisType}`,
-          "country": "Chile",
-          "discountValue": `${ChileDisType == "1" ? 0.00 : ChileDisType == "2" ? ChileDisPercent : ChileDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${ColumbiaNetPrice}`,
-          "listPrice": `${ColumbiaListPrice}`,
-          "discountType": `${ColumbiaDisType}`,
-          "country": "Columbia",
-          "discountValue": `${ColumbiaDisType == "1" ? 0.00 : ColumbiaDisType == "2" ? ColumbiaDisPercent : ColumbiaDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${EgyptNetPrice}`,
-          "listPrice": `${EgyptListPrice}`,
-          "discountType": `${EgyptDisType}`,
-          "country": "Egypt",
-          "discountValue": `${EgyptDisType == "1" ? 0.00 : EgyptDisType == "2" ? EgyptDisPercent : EgyptDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${EUNetPrice}`,
-          "listPrice": `${EUListPrice}`,
-          "discountType": `${EUDisType}`,
-          "country": "European Union",
-          "discountValue": `${EUDisType == "1" ? 0.00 : EUDisType == "2" ? EUDisPercent : EUDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${GBPNetPrice}`,
-          "listPrice": `${GBPListPrice}`,
-          "discountType":`${GBPDisType}`,
-          "country": "Great Britain",
-          "discountValue": `${GBPDisType == "1" ? 0.00 : GBPDisType == "2" ? GBPDisPercent : GBPDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${IndonesiaNetPrice}`,
-          "listPrice": `${IndonesiaListPrice}`,
-          "discountType": `${IndonesiaDisType}`,
-          "country": "Indonesia",
-          "discountValue": `${IndonesiaDisType == "1" ? 0.00 : IndonesiaDisType == "2" ? IndonesiaDisPercent : IndonesiaDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${IsrealNetPrice}`,
-          "listPrice": `${IsrealListPrice}`,
-          "discountType": `${IsrealDisType}`,
-          "country": "Israel",
-          "discountValue": `${IsrealDisType == "1" ? 0.00 : IsrealDisType == "2" ? IsrealDisPercent : IsrealDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${IndiaNetPrice}`,
-          "listPrice": `${IndiaListPrice}`,
-          "discountType": `${IndiaDisType}`,
-          "country": "India",
-          "discountValue": `${IndiaDisType == "1" ? 0.00 : IndiaDisType == "2" ? IndiaDisPercent : IndiaDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${JapanNetPrice}`,
-          "listPrice": `${JapanListPrice}`,
-          "discountType": `${JapanDisType}`,
-          "country": "Japan",
-          "discountValue": `${JapanDisType == "1" ? 0.00 : JapanDisType == "2" ? JapanDisPercent : JapanDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${SKNetPrice}`,
-          "listPrice": `${SKListPrice}`,
-          "discountType": `${SKDisType}`,
-          "country": "South Korea",
-          "discountValue": `${SKDisType == "1" ? 0.00 : SKDisType == "2" ? SKDisPercent : SKDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${MexicoNetPrice}`,
-          "listPrice": `${MexicoListPrice}`,
-          "discountType": `${MexicoDisType}`,
-          "country": "Mexico",
-          "discountValue": `${MexicoDisType == "1" ? 0.00 : MexicoDisType == "2" ? MexicoDisPercent : MexicoDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${MalaysiaNetPrice}`,
-          "listPrice": `${MalaysiaListPrice}`,
-          "discountType": `${MalaysiaDisType}`,
-          "country": "Malaysia",
-          "discountValue": `${MalaysiaDisType == "1" ? 0.00 : MalaysiaDisType == "2" ? MalaysiaDisPercent : MalaysiaDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${NIgeriaNetPrice}`,
-          "listPrice": `${NigeriaListPrice}`,
-          "discountType": `${NigeriaDisType}`,
-          "country": "Nigeria",
-          "discountValue": `${NigeriaDisType == "1" ? 0.00 : NigeriaDisType == "2" ? NigeriaDisPercent : NigeriaDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${NorwayNetPrice}`,
-          "listPrice": `${NorwayListPrice}`,
-          "discountType": `${NorwayDisType}`,
-          "country": "Norway",
-          "discountValue": `${NorwayDisType == "1" ? 0.00 : NorwayDisType == "2" ? NorwayDisPercent : NorwayDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${PeruNetPrice}`,
-          "listPrice": `${PeruListPrice}`,
-          "discountType": `${PeruDisType}`,
-          "country": "Peru",
-          "discountValue": `${PeruDisType == "1" ? 0.00 : PeruDisType == "2" ? PeruDisPercent : PeruDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${PhilipinesNetPrice}`,
-          "listPrice": `${PhilipinesListPrice}`,
-          "discountType": `${PhilipinesDisType}`,
-          "country": "Philippines",
-          "discountValue": `${PhilipinesDisType == "1" ? 0.00 : PhilipinesDisType == "2" ? PhilipinesDisPercent : PhiliphinesDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${PolandNetPrice}`,
-          "listPrice": `${PolandListPrice}`,
-          "discountType": `${PolandDisType}`,
-          "country": "Poland",
-          "discountValue": `${PolandDisType == "1" ? 0.00 : PolandDisType == "2" ? PolandDisPercent : PolandDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${RomaniaNetPrice}`,
-          "listPrice": `${RomaniaListPrice}`,
-          "discountType": `${RomaniaDisType}`,
-          "country": "Romania",
-          "discountValue": `${RomaniaDisType == "1" ? 0.00 : RomaniaDisType == "2" ? RomaniaDisPercent : RomaniaDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${RussiaNetPrice}`,
-          "listPrice": `${RussiaListPrice}`,
-          "discountType":`${RussiaDisType}`,
-          "country": "Russia",
-          "discountValue": `${RussiaDisType == "1" ? 0.00 : RussiaDisType == "2" ? RussiaDisDisPercent : RussiaDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${SingaporeNetPrice}`,
-          "listPrice": `${SingaporeListPrice}`,
-          "discountType": `${SingaporeDisType}`,
-          "country": "Singapore",
-          "discountValue": `${SingaporeDisType == "1" ? 0.00 : SingaporeDisType == "2" ? SingaporeDisPercent : SingaporeDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${ThailandNetPrice}`,
-          "listPrice": `${ThailandListPrice}`,
-          "discountType": `${ThailandDisType}`,
-          "country": "Thailand",
-          "discountValue": `${ThailandDisType == "1" ? 0.00 : ThailandDisType == "2" ? ThailandDisPercent : ThailandDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${TurkeyNetPrice}`,
-          "listPrice": `${TurkeyListPrice}`,
-          "discountType": `${TurkeyDisType}`,
-          "country": "Turkey",
-          "discountValue": `${TurkeyDisType == "1" ? 0.00 : TurkeyDisType == "2" ? TurkeyDisPercent : TurkeyDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${TaiwanNetPrice}`,
-          "listPrice": `${TaiwanListPrice}`,
-          "discountType": `${TaiwanDisType}`,
-          "country": "Taiwan",
-          "discountValue":  `${TaiwanDisType == "1" ? 0.00 : TaiwanDisType == "2" ? TaiwanDisPercent : TaiwanDisAmt}`,
-      },
-      {
-          "courseCode": `${code}`,
-          "netPrice":`${VietnamNetPrice}`,
-          "listPrice": `${VietnamListPrice}`,
-          "discountType": `${VietmanDisType}`,
-          "country": "Vietnam",
-          "discountValue": `${VietmanDisType == "1" ? 0.00 : VietmanDisType == "2" ? VietnamDisPercent : VietnamDisAmt}`,
-      },
-         {
-          "courseCode": `${code}`,
-          "netPrice":`${SANetPrice}`,
-          "listPrice": `${SAListPrice}`,
-          "discountType": `${SADisType}`,
-          "country": "South Africa",
-          "discountValue": `${SADisType == "1" ? 0.00 : SADisType == "2" ? SADisPercent : SADisAmt}`,
-      }
-    ]
+      var raw = {
+        "courseCode":`${code}`,
+        "globalListPrice":`${Number.parseFloat(DGlobalPricing).toFixed(2)}`,
+        "discountType":`${DDisType}`,
+        "discountAmount":`${Number.parseFloat(DDisAmt).toFixed(2)}`,
+        "discount":`${Number.parseFloat(SADisPercent).toFixed(2)}`,
+        "globalNetPrice":`${Number.parseFloat(DGlobalNetPrice).toFixed(2)}`,
+        "prices":[
+          {
+            
+            "netPrice": `${Number.parseFloat(USANetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(USAListPrice).toFixed(2)}`,
+            "discountType": `${USADisType}`,
+            "country": "America",
+            "discount": `${Number.parseFloat(USADisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(USADisAmt).toFixed(2)}`
+        },
+        {
+            
+            "netPrice": `${Number.parseFloat(AusNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(AusListPrice).toFixed(2)}`,
+            "discountType":`${AusDisType}`,
+            "country": "Australia",
+            "discount": `${Number.parseFloat(AusDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(AusDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(BrazilNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(BrazilListPrice).toFixed(2)}`,
+            "discountType": `${BrazilDisType}`,
+            "country": "Brazil",
+            "discount": `${Number.parseFloat(BrazilDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(BrazilDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(CanadaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(CanadaListPrice).toFixed(2)}`,
+            "discountType": `${CanadaDisType}`,
+            "country": "Canada",
+            "discount": `${Number.parseFloat(CanadaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(CanadaDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(ChileNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(ChileListPrice).toFixed(2)}`,
+            "discountType": `${ChileDisType}`,
+            "country": "Chile",
+            "discount": `${Number.parseFloat(ChileDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(ChileDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(ColumbiaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(ColumbiaListPrice).toFixed(2)}`,
+            "discountType": `${ColumbiaDisType}`,
+            "country": "Columbia",
+            "discount": `${Number.parseFloat(ColumbiaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(ColumbiaDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(EgyptNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(EgyptListPrice).toFixed(2)}`,
+            "discountType": `${EgyptDisType}`,
+            "country": "Egypt",
+            "discount": `${Number.parseFloat(EgyptDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(EgyptDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(EUNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(EUListPrice).toFixed(2)}`,
+            "discountType": `${EUDisType}`,
+            "country": "European Union",
+            "discount": `${Number.parseFloat(EUDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(EUDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(GBPNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(GBPListPrice).toFixed(2)}`,
+            "discountType":`${GBPDisType}`,
+            "country": "Great Britain",
+            "discount": `${Number.parseFloat(GBPDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(GBPDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(IndonesiaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(IndonesiaListPrice).toFixed(2)}`,
+            "discountType": `${IndonesiaDisType}`,
+            "country": "Indonesia",
+            "discount": `${Number.parseFloat(IndonesiaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(IndonesiaDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(IsrealNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(IsrealListPrice).toFixed(2)}`,
+            "discountType": `${IsrealDisType}`,
+            "country": "Israel",
+            "discount": `${Number.parseFloat(IsrealDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(IsrealDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(IndiaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(IndiaListPrice).toFixed(2)}`,
+            "discountType": `${IndiaDisType}`,
+            "country": "India",
+            "discount": `${Number.parseFloat(IndiaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(IndiaDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(JapanNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(JapanListPrice).toFixed(2)}`,
+            "discountType": `${JapanDisType}`,
+            "country": "Japan",
+            "discount": `${Number.parseFloat(JapanDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(JapanDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(SKNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(SKListPrice).toFixed(2)}`,
+            "discountType": `${SKDisType}`,
+            "country": "South Korea",
+            "discount": `${Number.parseFloat(SKDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(SKDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(MexicoNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(MexicoListPrice).toFixed(2)}`,
+            "discountType": `${MexicoDisType}`,
+            "country": "Mexico",
+            "discount": `${Number.parseFloat(MexicoDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(MexicoDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(MalaysiaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(MalaysiaListPrice).toFixed(2)}`,
+            "discountType": `${MalaysiaDisType}`,
+            "country": "Malaysia",
+            "discount": `${Number.parseFloat(MalaysiaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(MalaysiaDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(NIgeriaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(NigeriaListPrice).toFixed(2)}`,
+            "discountType": `${NigeriaDisType}`,
+            "country": "Nigeria",
+            "discount": `${Number.parseFloat(NigeriaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(NigeriaDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(NorwayNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(NorwayListPrice).toFixed(2)}`,
+            "discountType": `${NorwayDisType}`,
+            "country": "Norway",
+            "discount": `${Number.parseFloat(NorwayDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(NorwayDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(PeruNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(PeruListPrice).toFixed(2)}`,
+            "discountType": `${PeruDisType}`,
+            "country": "Peru",
+            "discount": `${Number.parseFloat(PeruDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(PeruDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(PhilipinesNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(PhilipinesListPrice).toFixed(2)}`,
+            "discountType": `${PhilipinesDisType}`,
+            "country": "Philippines",
+            "discount": `${Number.parseFloat(PhilipinesDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(PhiliphinesDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(PolandNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(PolandListPrice).toFixed(2)}`,
+            "discountType": `${PolandDisType}`,
+            "country": "Poland",
+            "discount": `${Number.parseFloat(PolandDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(PolandDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(RomaniaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(RomaniaListPrice).toFixed(2)}`,
+            "discountType": `${RomaniaDisType}`,
+            "country": "Romania",
+            "discount": `${Number.parseFloat(RomaniaDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(RomaniaDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(RussiaNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(RussiaListPrice).toFixed(2)}`,
+            "discountType":`${RussiaDisType}`,
+            "country": "Russia",
+            "discount": `${Number.parseFloat(RussiaDisDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(RussiaDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(SingaporeNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(SingaporeListPrice).toFixed(2)}`,
+            "discountType": `${SingaporeDisType}`,
+            "country": "Singapore",
+            "discount": `${Number.parseFloat(SingaporeDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(SingaporeDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(ThailandNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(ThailandListPrice).toFixed(2)}`,
+            "discountType": `${ThailandDisType}`,
+            "country": "Thailand",
+            "discount": `${Number.parseFloat(ThailandDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(ThailandDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(TurkeyNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(TurkeyListPrice).toFixed(2)}`,
+            "discountType": `${TurkeyDisType}`,
+            "country": "Turkey",
+            "discount": `${Number.parseFloat(TurkeyDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(TurkeyDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(TaiwanNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(TaiwanListPrice).toFixed(2)}`,
+            "discountType": `${TaiwanDisType}`,
+            "country": "Taiwan",
+            "discount": `${Number.parseFloat(TaiwanDisPercent).toFixed(2)}`,
+            "discountAmount":  `${Number.parseFloat(TaiwanDisAmt).toFixed(2)}`,
+        },
+        {
+            
+            "netPrice":`${Number.parseFloat(VietnamNetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(VietnamListPrice).toFixed(2)}`,
+            "discountType": `${VietmanDisType}`,
+            "country": "Vietnam",
+            "discount": `${Number.parseFloat(VietnamDisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(VietnamDisAmt).toFixed(2)}`,
+        },
+           {
+            
+            "netPrice":`${Number.parseFloat(SANetPrice).toFixed(2)}`,
+            "listPrice": `${Number.parseFloat(SAListPrice).toFixed(2)}`,
+            "discountType": `${SADisType}`,
+            "country": "South Africa",
+            "discount": `${Number.parseFloat(SADisPercent).toFixed(2)}`,
+            "discountAmount": `${Number.parseFloat(SADisAmt).toFixed(2)}`,
+        }
+        ]
+        }
 
-    console.log(raw)
+      // ----------------------
+
+      //  console.log(raw)
+    
     setloading_button(true)
     SavePriceCountries(code,raw,setloading_button)
 
