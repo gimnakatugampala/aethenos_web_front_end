@@ -124,10 +124,14 @@ const Basics = ({code}) => {
       keywords,
       promo_vid,
       course_image,
+      videoSrc,
       setloading_btn
       )
 
-    console.log(course_topic)
+    console.log(course_image)
+    console.log(preview_img)
+    console.log(promo_vid)
+    console.log(videoSrc)
 
     
   };

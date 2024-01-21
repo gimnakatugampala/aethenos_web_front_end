@@ -567,6 +567,7 @@ console.log(course_cat)
   keywords,
   promo_vid,
   course_image,
+  videoSrc,
   setloading_btn) =>{
 
     var myHeaders = new Headers();
@@ -582,8 +583,12 @@ console.log(course_cat)
   formdata.append("category", `${course_cat}`);
   formdata.append("subcategory", `${course_sub_cat}`);
   formdata.append("keywords", `${keywords}`);
-  formdata.append("course_image", course_image);
-  formdata.append("promotional_video", promo_vid);
+  // if(course_image != ""){
+    formdata.append("course_image", course_image);
+  // }
+  // if(videoSrc != ""){
+    formdata.append("promotional_video", promo_vid);
+  // }
   formdata.append("topic", `${course_topic}`);
   
   var requestOptions = {

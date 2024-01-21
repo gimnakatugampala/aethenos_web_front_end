@@ -3985,6 +3985,11 @@ const Pricing = ({code}) => {
 
     }else if(Paid_Type == 2){
 
+      if(DGlobalPricing == 0){
+        ErrorAlert("Error","Please Enter a Global List Price")
+        return
+      }
+
       var raw = {
         "courseCode":`${code}`,
         "globalListPrice":`${Number.parseFloat(DGlobalPricing).toFixed(2)}`,
