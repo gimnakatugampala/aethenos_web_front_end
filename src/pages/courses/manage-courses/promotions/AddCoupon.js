@@ -1950,7 +1950,7 @@ const AddCoupon = ({code}) => {
 
             <div className="row">
                 <p className='my-3'><b>Enter Global Discount Price (required):</b></p>
-
+              
               <div className="price-range col-md-3">
                 <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
                   <InputGroup>
