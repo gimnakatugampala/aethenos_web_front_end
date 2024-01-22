@@ -69,6 +69,7 @@ const Pricing = ({code}) => {
 
     // Get the Countries List WITH THE PRICES
     GetCountriesListPricing(code,setcountriesData,
+      setloading_btn,
       setGlobalTip,
       setPriceRangeMaxDefault,
       setPriceRangeMinDefault,
@@ -321,33 +322,7 @@ const Pricing = ({code}) => {
 
   //  ---------------------
 
-// Submit Default Prices
-  const handleSaveDefaultPricing = () =>{
 
-    // Validate
-    if(DDisType == 0){
-      ErrorAlert("Empty Fields","Please Select Discount Type")
-      return
-    }else if(DGlobalPricing == 0 || DGlobalNetPrice == 0){
-      ErrorAlert("Empty Fields","Global Price or Global Net Price Zero")
-      return
-    }else if(DDisType == 2 && DDisPercent == 0){
-      ErrorAlert("Empty Fields","Please Enter Discount Percentage")
-      return
-    }else if(DDisType == 3 && DDisAmt == 0){
-      ErrorAlert("Empty Fields","Please Enter Discount Amount")
-      return
-    }
-
-
-    SavePriceDefault(code,DGlobalPricing,DDisType,DDisPercent,DDisAmt,DGlobalNetPrice)
-    console.log(code)
-    console.log(DGlobalPricing)
-    console.log(DDisType)
-    console.log(DDisPercent)
-    console.log(DDisAmt)
-    console.log(DGlobalNetPrice)
-  }
 
   // Select Discount Type
   const handleDefaultDiscountType = (e) =>{

@@ -107,6 +107,9 @@ const Basics = ({code}) => {
     }else if(course_sub_cat == ""){
       ErrorAlert("Empty Field","Please Select a Course Sub Category")
       return
+    }else if(course_topic == ""){
+      ErrorAlert("Empty Field","Please Select a Topic")
+      return
     }
 
     setloading_btn(true)
@@ -128,12 +131,8 @@ const Basics = ({code}) => {
       setloading_btn
       )
 
-    console.log(course_image)
-    console.log(preview_img)
-    console.log(promo_vid)
-    console.log(videoSrc)
+  
 
-    
   };
 
 
@@ -180,7 +179,7 @@ const handleFileChange = (event) => {
 
 
   useEffect(() => {
-    GetCourseLandingPage(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setpromo_vid)
+    GetCourseLandingPage(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setpromo_vid,setcourse_topic)
 
     GetLanguages(setlangData)
 
@@ -332,7 +331,7 @@ const handleFileChange = (event) => {
               <Form.Select value={course_sub_cat} onChange={(e) => setcourse_sub_cat(e.target.value)} aria-label="Default select example">
               <option value="">Select Course Sub Category</option>
               {subcatData != null && subcatData.map((subcategory,index) => (
-              <option key={index} value={subcategory.id}>{subcategory.name}</option>
+              <option key={index} value={subcategory.id} selected={course_sub_cat == subcategory.id}>{subcategory.name}</option>
               ))}
             </Form.Select>
             </div>
@@ -364,13 +363,13 @@ const handleFileChange = (event) => {
               <h6>
                 <b>Course image</b>
               </h6>
-              {preview_img == "" ? <img height={200} width={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img height={200} width={200} src={preview_img} /> : <img height={200} width={200} src={`${FILE_PATH}${preview_img}`} /> }
+              {preview_img == "" ? <img style={{objectFit:'cover'}} height={200} width={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img style={{objectFit:'cover'}} height={200} width={200} src={preview_img} /> : <img style={{objectFit:'cover'}} height={200} width={200} src={`${FILE_PATH}${preview_img}`} /> }
             
 
      
             </div>
 
-            <div className="col-md-8 d-flex align-items-center">
+            <div className="col-md-7 d-flex align-items-center">
               <div>
                 <p>
                   Upload your course image here. It must meet our course image
@@ -380,7 +379,6 @@ const handleFileChange = (event) => {
                 </p>
 
                 <div className="mb-3">
-                  <label for="formFile" className="form-label">Default file input example</label>
                   <input className="form-control" type="file" accept="image/*" onChange={handleFileChange} />
                 </div>
               
@@ -399,7 +397,7 @@ const handleFileChange = (event) => {
               
             </div>
 
-            <div className="col-md-8 d-flex align-items-center">
+            <div className="col-md-7 d-flex align-items-center">
               <div>
                 <p>
                   Upload your course image here. It must meet our course image
@@ -408,7 +406,6 @@ const handleFileChange = (event) => {
                   image.
                 </p>
                 <div className="mb-3">
-                  <label for="formFile" className="form-label">Default file input example</label>
                   <input className="form-control" type="file" accept="video/*" onChange={handleVideo} />
                 </div>
               </div>

@@ -518,7 +518,7 @@ console.log(course_cat)
 
  }
 
- export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang) =>{
+ export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setcourse_topic) =>{
 
 
   var myHeaders = new Headers();
@@ -545,6 +545,7 @@ console.log(course_cat)
       setcourse_sub_cat(result.subCategoryId)
       setlevel(result.levelId)
       setlang(result.languageId)
+      // setcourse_topic()
       setpreview_img(`${result.courseImage}`)
       seVideoSrc(`${result.promotionalVideo}`)
 
@@ -571,8 +572,11 @@ console.log(course_cat)
   videoSrc,
   setloading_btn) =>{
 
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+ 
 
   var formdata = new FormData();
   formdata.append("courseCode", `${code}`);
@@ -584,14 +588,11 @@ console.log(course_cat)
   formdata.append("category", `${course_cat}`);
   formdata.append("subcategory", `${course_sub_cat}`);
   formdata.append("keywords", `${keywords}`);
-  // if(course_image != ""){
-    formdata.append("course_image", course_image);
-  // }
-  // if(videoSrc != ""){
-    formdata.append("promotional_video", promo_vid);
-  // }
   formdata.append("topic", `${course_topic}`);
-  
+  typeof course_image == "object" && formdata.append("course_image",  course_image) 
+  typeof promo_vid == "object" &&  formdata.append("promotional_video", promo_vid) 
+
+ 
   var requestOptions = {
     method: 'POST',
     body: formdata,
@@ -975,7 +976,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
 
  }
 
+ 
  export const GetCountriesListPricing = async(code, setcountriesData,
+  setloading_btn,
   setGlobalTip,
   setPriceRangeMaxDefault,
   setPriceRangeMinDefault,
@@ -1608,7 +1611,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     setPriceRangeMaxDefault(result.priceRange[29].maxPrice)
     setPriceRangeMinDefault(result.priceRange[29].minPrice)
     setMinDefaultValue(result.priceRange[29].minimumValue)
-
+    setloading_btn(false)
 
 
     //  -----------------
@@ -2707,6 +2710,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
        setSATip(result[28].tip)
        setSAminValue(result[28].minimumPrice)
        setSAListPrice(result[28].value)
+
 
 
 
