@@ -41,6 +41,7 @@ import Settings from './settings/Settings'
 import AddCoupon from './promotions/AddCoupon';
 import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckContentOwnership} from '../../../api'
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
+import Spinner from 'react-bootstrap/Spinner';
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -69,6 +70,8 @@ const ManageCourses = () => {
 
   const [show, setShow] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
+
+  const [title_loading, settitle_loading] = useState(true)
 
   const [course_title, setcourse_title] = useState("")
   const [status_type, setstatus_type] = useState("")
@@ -257,7 +260,7 @@ const ManageCourses = () => {
 
   // console.log(code)
 
-  GetCourseTitle(code,setcourse_title,setstatus_type)
+  GetCourseTitle(code,setcourse_title,setstatus_type,settitle_loading)
 
   },[window.history.state]);
 
@@ -274,8 +277,14 @@ const ManageCourses = () => {
 
      <Space size={30}>
           <a className='link-back' href='/courses'><ArrowBackIosIcon fontSize="small" /> Back to Courses</a>
-          <span className='course-title'>{course_title}</span>
-          <span className='course-title-status'>{status_type}</span>
+          {title_loading ? <Spinner size="sm" animation="border" variant="light" /> : (
+            <>
+            <span className='course-title'>{course_title}</span>
+            <span className='course-title-status'>{status_type}</span>
+            
+            </>
+          ) }
+          
       </Space>
 
 

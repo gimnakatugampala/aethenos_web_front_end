@@ -262,7 +262,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
 
  }
 
- export const GetCourseTitle = async(code,setcourse_title,setstatus_type) =>{
+ export const GetCourseTitle = async(code,setcourse_title,setstatus_type,settitle_loading) =>{
 
   var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -282,6 +282,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
     setcourse_title(result.title)
     setstatus_type(result.approveType)
+    settitle_loading(false)
   })
   .catch(error => console.log('error', error));
 
