@@ -415,6 +415,12 @@ console.log(item)
                 item.type == "Lecture" ? 
                 (<Accordion key={index} className="my-3">
                   <AccordionSummary
+                  onClick={(e) => {
+                    setshowDescRes(false)
+                          setshowMain(showMain == index ? null : index)
+                          console.log(index)
+                          setshowContentAdd(showContentAdd == index ? null : index)
+                  }}
                     className="accordian-header d-flex justify-content-between align-items-center"
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -643,7 +649,7 @@ console.log(item)
                       {showDescription == index && (
                         <>
                         <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                        <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                        {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> */}
                         <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
 
                         <div className="d-flex my-2">
@@ -657,15 +663,19 @@ console.log(item)
                         
                         {showMain == null && (
                         <>
+                      
+                        
                         <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
                         <Button onClick={() => setshowResources(showResources == index ? null : index)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                        
+                     
                         </>
                         )}
 
                         {showResources == index && (
                           <div>
                             <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                            <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                            {/* <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button> */}
                             
                             {/* Tabs */}
                             <Tabs
