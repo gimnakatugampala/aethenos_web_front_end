@@ -36,7 +36,7 @@ const Pricing = ({code}) => {
   const [loading_btn, setloading_btn] = useState(true)
   const [loading_button, setloading_button] = useState()
 
-  const [countriesData, setcountriesData] = useState([])
+  const [countriesData, setcountriesData] = useState(null)
 
   const [DGlobalPricing, setDGlobalPricing] = useState("")
   const [DDisType, setDDisType] = useState("")
@@ -49,9 +49,9 @@ const Pricing = ({code}) => {
   const [PriceRangeMinDefault, setPriceRangeMinDefault] = useState("")
   const [PriceRangeMaxDefault, setPriceRangeMaxDefault] = useState("")
 
-  const [showDefaultDiscountInput, setshowDefaultDiscountInput] = useState(true)
-  const [showDefaultPercentDiscountInput, setshowDefaultPercentDiscountInput] = useState(false)
-  const [showDefaultValueDiscountInput, setshowDefaultValueDiscountInput] = useState(false)
+  const [GlobalTip, setGlobalTip] = useState("")
+
+ 
   
 
   useEffect(() => {
@@ -64,240 +64,193 @@ const Pricing = ({code}) => {
     GetDiscountTypes(setdis_types)
 
     // Get The Default Pricing
-    GetPriceDefault(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice,setMinDefaultValue)
+    // GetPriceDefault(code,setDGlobalPricing,setDDisType,setDDisPercent,setDDisAmt,setPriceRangeMinDefault,setPriceRangeMaxDefault,setshowDefaultValueDiscountInput,setshowDefaultPercentDiscountInput,setDGlobalNetPrice,setMinDefaultValue)
 
 
     // Get the Countries List WITH THE PRICES
     GetCountriesListPricing(code,setcountriesData,
-      setUSADisPercent,
+      setGlobalTip,
+      setPriceRangeMaxDefault,
+      setPriceRangeMinDefault,
+      setMinDefaultValue,
+      // ------
+      setDGlobalPricing,
+      setDDisType,
+      setDDisPercent,
       setDDisAmt,
+      setDGlobalNetPrice,
+      // -----------
+      setUSADisPercent,
+      setUSADisAmt,
       setUSADisType,
-      setshowInputDisAmtUSA,
-      setshowInputPercentUSA,
       setUSAListPrice,
       setUSANetPrice,
       // -----
       setAusDisPercent,
       setAusDisAmt,
       setAusDisType,
-      setshowInputDisAmtAus,
-      setshowInputPercentAus,
       setAusListPrice,
       setAusNetPrice,
       // -----
       setBrazilDisPercent,
       setBrazilDisAmt,
       setBrazilDisType,
-      setshowInputDisAmtBrzail,
-      setshowInputPercentBrzail,
       setBrazilListPrice,
       setBrazilNetPrice,
       // ---------
       setCanadaDisPercent,
       setCanadaDisAmt,
       setCanadaDisType,
-      setshowInputDisAmtCanada,
-      setshowInputPercentCanada,
       setCanadaListPrice,
       setCanadaNetPrice,
       //  -------------
       setChileDisPercent,
       setChileDisAmt,
       setChileDisType,
-      setshowInputDisAmtChile,
-      setshowInputPercentChile,
       setChileListPrice,
       setChileNetPrice,
       // -----------
       setColumbiaDisPercent,
       setColumbiaDisAmt,
       setColumbiaDisType,
-      setshowInputDisAmtColumbia,
-      setshowInputPercentColumbia,
       setColumbiaListPrice,
       setColumbiaNetPrice,
       // --------------
       setEgyptDisPercent,
       setEgyptDisAmt,
       setEgyptDisType,
-      setshowInputDisAmtEgypt,
-      setshowInputPercentEgypt,
       setEgyptListPrice,
       setEgyptNetPrice,
       // ---------
       setEUDisPercent,
       setEUDisAmt,
       setEUDisType,
-      setshowInputDisAmtEU,
-      setshowInputPercentEU,
       setEUListPrice,
       setEUNetPrice,
       // ----
       setGBPDisPercent,
       setGBPDisAmt,
       setGBPDisType,
-      setshowInputDisAmtGBP,
-      setshowInputPercentGBP,
       setGBPListPrice,
       setGBPNetPrice,
       // ------------
       setIndonesiaDisPercent,
       setIndonesiaDisAmt,
       setIndonesiaDisType,
-      setshowInputDisAmtIndonesia,
-      setshowInputPercentIndonesia,
       setIndonesiaListPrice,
       setIndonesiaNetPrice,
       // ---------------
       setIsrealDisPercent,
       setIsrealDisAmt,
       setIsrealDisType,
-      setshowInputDisAmtIsreal,
-      setshowInputPercentIsreal,
       setIsrealListPrice,
       setIsrealNetPrice,
       // -------
       setIndiaDisPercent,
       setIndiaDisAmt,
       setIndiaDisType,
-      setshowInputDisAmtIndia,
-      setshowInputPercentIndia,
       setIndiaListPrice,
       setIndiaNetPrice,
       // -------------
       setJapanDisPercent,
       setJapanDisAmt,
       setJapanDisType,
-      setshowInputDisAmtJapan,
-      setshowInputPercentJapan,
       setJapanListPrice,
       setJapanNetPrice,
       // ---------------
       setSKDisPercent,
       setSKDisAmt,
       setSKDisType,
-      setshowInputDisAmtSK,
-      setshowInputPercentSK,
       setSKListPrice,
       setSKNetPrice,
       // -------------
       setMexicoDisPercent,
       setMexicoDisAmt,
       setMexicoDisType,
-      setshowInputDisAmtMexico,
-      setshowInputPercentMexico,
       setMexicoListPrice,
       setMexicoNetPrice,
       // --------------
       setMalaysiaDisPercent,
       setMalaysiaDisAmt,
       setMalaysiaDisType,
-      setshowInputDisAmtMalaysia,
-      setshowInputPercentMalaysia,
       setMalaysiaListPrice,
       setMalaysiaNetPrice,
       // -------------
       setNigeriaDisPercent,
       setNigeriaDisAmt,
       setNigeriaDisType,
-      setshowInputDisAmtNigeria,
-      setshowInputPercentNigeria,
       setNigeriaListPrice,
       setNIgeriaNetPrice,
       // -----------
       setNorwayDisPercent,
       setNorwayDisAmt,
       setNorwayDisType,
-      setshowInputDisAmtNorway,
-      setshowInputPercentNorway,
       setNorwayListPrice,
       setNorwayNetPrice,
       // ----------
       setPeruDisPercent,
       setPeruDisAmt,
       setPeruDisType,
-      setshowInputDisAmtPeru,
-      setshowInputPercentPeru,
       setPeruListPrice,
       setPeruNetPrice,
       // -----------
       setPhilipinesDisPercent,
       setPhiliphinesDisAmt,
       setPhilipinesDisType,
-      setshowInputDisAmtPhilipines,
-      setshowInputPercentPhilipines,
       setPhilipinesListPrice,
       setPhilipinesNetPrice,
       // ----------
       setPolandDisPercent,
       setPolandDisAmt,
       setPolandDisType,
-      setshowInputDisAmtPoland,
-      setshowInputPercentPoland,
       setPolandListPrice,
       setPolandNetPrice,
       // --------------
       setRomaniaDisPercent,
       setRomaniaDisAmt,
       setRomaniaDisType,
-      setshowInputDisAmtRomania,
-      setshowInputPercentRomania,
       setRomaniaListPrice,
       setRomaniaNetPrice,
       // --------------
       setRussiaDisDisPercent,
       setRussiaDisAmt,
       setRussiaDisType,
-      setshowInputDisAmtRussia,
-      setshowInputPercentRussia,
       setRussiaListPrice,
       setRussiaNetPrice,
       // ------------------
       setSingaporeDisPercent,
       setSingaporeDisAmt,
       setSingaporeDisType,
-      setshowInputDisAmtSingapore,
-      setshowInputPercentSingapore,
       setSingaporeListPrice,
       setSingaporeNetPrice,
       // -------------
       setThailandDisPercent,
       setThailandDisAmt,
       setThailandDisType,
-      setshowInputDisAmtThailand,
-      setshowInputPercentThailand,
       setThailandListPrice,
       setThailandNetPrice,
       // ---------------
       setTurkeyDisPercent,
       setTurkeyDisAmt,
       setTurkeyDisType,
-      setshowInputDisAmtTurkey,
-      setshowInputPercentTurkey,
       setTurkeyListPrice,
       setTurkeyNetPrice,
       // -------------
       setTaiwanDisPercent,
       setTaiwanDisAmt,
       setTaiwanDisType,
-      setshowInputDisAmtTaiwan,
-      setshowInputPercentTaiwan,
       setTaiwanListPrice,
       setTaiwanNetPrice,
       // ----------
       setVietnamDisPercent,
       setVietnamDisAmt,
       setVietmanDisType,
-      setshowInputDisAmtVietnam,
-      setshowInputPercentVietnam,
       setVietnamListPrice,
       setVietnamNetPrice,
       // ------------
       setSADisPercent,
       setSADisAmt,
       setSADisType,
-      setshowInputDisAmtSA,
-      setshowInputPercentSA,
       setSAListPrice,
       setSANetPrice,
       // ------
@@ -405,9 +358,7 @@ const Pricing = ({code}) => {
 
     if(e.target.value == '1'){
 
-      setshowDefaultDiscountInput(false)
-      setshowDefaultPercentDiscountInput(false)
-      setshowDefaultValueDiscountInput(false)
+
       setDGlobalNetPrice(DGlobalPricing)
 
       setDDisPercent(0)
@@ -415,9 +366,6 @@ const Pricing = ({code}) => {
 
     }else if(e.target.value == '2'){
 
-      setshowDefaultDiscountInput(true)
-      setshowDefaultPercentDiscountInput(true)
-      setshowDefaultValueDiscountInput(false)
       console.log(DDisPercent)
       console.log(DGlobalPricing)
 
@@ -425,16 +373,12 @@ const Pricing = ({code}) => {
 
 
     }else if(e.target.value == '3'){
-      setshowDefaultDiscountInput(true)
-      setshowDefaultPercentDiscountInput(false)
-      setshowDefaultValueDiscountInput(true)
+  
 
       setDGlobalNetPrice(parseFloat(DGlobalPricing) - parseFloat(DDisAmt == "" ? 0 : DDisAmt))
 
     }else{
-      setshowDefaultDiscountInput(false)
-      setshowDefaultPercentDiscountInput(false)
-      setshowDefaultValueDiscountInput(false)
+    
       setDGlobalNetPrice(DGlobalPricing)
 
     }
@@ -524,8 +468,7 @@ const Pricing = ({code}) => {
   const [USATip, setUSATip] = useState("")
   const [USAMinValue, setUSAMinValue] = useState("")
 
-  const [showInputDisAmtUSA, setshowInputDisAmtUSA] = useState(false)
-  const [showInputPercentUSA, setshowInputPercentUSA] = useState(false)
+
 
   // ---------------------
   // Discount Type USA
@@ -536,15 +479,11 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputDisAmtUSA(false)
-      setshowInputPercentUSA(false)
 
       setUSANetPrice(USAListPrice)
 
     }else if(value == '2'){
 
-      setshowInputPercentUSA(true)
-      setshowInputDisAmtUSA(false)
       console.log(USADisPercent)
       console.log(USAListPrice)
 
@@ -553,14 +492,11 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
 
-      setshowInputPercentUSA(false)
-      setshowInputDisAmtUSA(true)
 
       setUSANetPrice(parseFloat(USAListPrice) - parseFloat(USADisAmt == "" ? 0 : USADisAmt))
 
     }else{
-      setshowInputDisAmtUSA(false)
-      setshowInputPercentUSA(false)
+
       setUSANetPrice(USAListPrice)
 
     }
@@ -641,8 +577,6 @@ const Pricing = ({code}) => {
   const [AusTip, setAusTip] = useState("")
   const [AusminValue, setAusminValue] = useState("")
 
-  const [showInputDisAmtAus, setshowInputDisAmtAus] = useState(false)
-  const [showInputPercentAus, setshowInputPercentAus] = useState(false)
 
     // ---------------------
   // Discount Type Aus
@@ -653,15 +587,10 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputDisAmtAus(false)
-      setshowInputPercentAus(false)
 
       setAusNetPrice(AusListPrice)
 
     }else if(value == '2'){
-
-      setshowInputPercentAus(true)
-      setshowInputDisAmtAus(false)
 
       console.log(AusDisPercent)
       console.log(AusListPrice)
@@ -671,16 +600,13 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
 
-      setshowInputPercentAus(false)
-      setshowInputDisAmtAus(true)
 
 
 
       setAusNetPrice(parseFloat(AusListPrice) - parseFloat(AusDisAmt == "" ? 0 : AusDisAmt))
 
     }else{
-      setshowInputDisAmtAus(false)
-      setshowInputPercentAus(false)
+      
 
       setAusNetPrice(AusListPrice)
 
@@ -766,8 +692,6 @@ const Pricing = ({code}) => {
   const [BrazilminValue, setBrazilminValue] = useState("")
 
 
-  const [showInputDisAmtBrzail, setshowInputDisAmtBrzail] = useState(false)
-  const [showInputPercentBrzail, setshowInputPercentBrzail] = useState(false)
 
       // ---------------------
   // Discount Type Brazil
@@ -778,15 +702,12 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputDisAmtBrzail(false)
-      setshowInputPercentBrzail(false)
 
       setBrazilNetPrice(BrazilListPrice)
 
     }else if(value == '2'){
 
-      setshowInputPercentBrzail(true)
-      setshowInputDisAmtBrzail(false)
+
 
 
       console.log(BrazilDisPercent)
@@ -797,15 +718,13 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
 
-      setshowInputPercentBrzail(false)
-      setshowInputDisAmtBrzail(true)
+  
 
 
       setBrazilNetPrice(parseFloat(BrazilListPrice) - parseFloat(BrazilDisAmt == "" ? 0 : BrazilDisAmt))
 
     }else{
-      setshowInputPercentBrzail(false)
-      setshowInputDisAmtBrzail(false)
+
       setBrazilNetPrice(BrazilListPrice)
 
     }
@@ -889,8 +808,6 @@ const Pricing = ({code}) => {
   const [CanadaTip, setCanadaTip] = useState("")
   const [CanadaminValue, setCanadaminValue] = useState("")
 
-  const [showInputDisAmtCanada, setshowInputDisAmtCanada] = useState(false)
-  const [showInputPercentCanada, setshowInputPercentCanada] = useState(false)
 
       // ---------------------
   // Discount Type Canada
@@ -901,15 +818,13 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentCanada(false)
-      setshowInputDisAmtCanada(false)
+   
 
       setCanadaNetPrice(CanadaListPrice)
 
     }else if(value == '2'){
 
-      setshowInputPercentCanada(true)
-      setshowInputDisAmtCanada(false)
+
 
       console.log(CanadaDisPercent)
       console.log(CanadaListPrice)
@@ -919,15 +834,13 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
 
-      setshowInputPercentCanada(false)
-      setshowInputDisAmtCanada(true)
+    
 
 
       setCanadaNetPrice(parseFloat(CanadaListPrice) - parseFloat(CanadaDisAmt == "" ? 0 : CanadaDisAmt))
 
     }else{
-      setshowInputPercentCanada(false)
-      setshowInputDisAmtCanada(false)
+   
       setCanadaNetPrice(CanadaListPrice)
 
     }
@@ -1009,8 +922,6 @@ const Pricing = ({code}) => {
   const [ChileTip, setChileTip] = useState("")
   const [ChileminValue, setChileminValue] = useState("")
 
-  const [showInputDisAmtChile, setshowInputDisAmtChile] = useState(false)
-  const [showInputPercentChile, setshowInputPercentChile] = useState(false)
 
    // ---------------------
   // Discount Type Chile
@@ -1021,15 +932,13 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentChile(false)
-      setshowInputDisAmtChile(false)
+
       setChileNetPrice(ChileListPrice)
 
     }else if(value == '2'){
 
 
-      setshowInputPercentChile(true)
-      setshowInputDisAmtChile(false)
+
 
       console.log(ChileDisPercent)
       console.log(ChileListPrice)
@@ -1040,14 +949,12 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
     
 
-      setshowInputPercentChile(false)
-      setshowInputDisAmtChile(true)
+
 
       setChileNetPrice(parseFloat(ChileListPrice) - parseFloat(ChileDisAmt == "" ? 0 : ChileDisAmt))
 
     }else{
-      setshowInputPercentChile(false)
-      setshowInputDisAmtChile(false)
+ 
       setChileNetPrice(ChileListPrice)
 
     }
@@ -1127,8 +1034,6 @@ const Pricing = ({code}) => {
   const [ColumbiaTip, setColumbiaTip] = useState("")
   const [ColumbiaminValue, setColumbiaminValue] = useState("")
 
-  const [showInputDisAmtColumbia, setshowInputDisAmtColumbia] = useState(false)
-  const [showInputPercentColumbia, setshowInputPercentColumbia] = useState(false)
 
 
   // ---------------------
@@ -1140,14 +1045,12 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentColumbia(false)
-      setshowInputDisAmtColumbia(false)
+   
       setColumbiaNetPrice(ColumbiaListPrice)
 
     }else if(value == '2'){
 
-      setshowInputPercentColumbia(true)
-      setshowInputDisAmtColumbia(false)
+     
 
       console.log(ColumbiaDisPercent)
       console.log(ColumbiaListPrice)
@@ -1157,14 +1060,12 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
    
-      setshowInputPercentColumbia(false)
-      setshowInputDisAmtColumbia(true)
+    
 
       setColumbiaNetPrice(parseFloat(ColumbiaListPrice) - parseFloat(ColumbiaDisAmt == "" ? 0 : ColumbiaDisAmt))
 
     }else{
-      setshowInputPercentColumbia(false)
-      setshowInputDisAmtColumbia(false)
+    
       setColumbiaNetPrice(ColumbiaListPrice)
 
     }
@@ -1245,8 +1146,6 @@ const Pricing = ({code}) => {
   const [EgyptTip, setEgyptTip] = useState("")
   const [EgyptminValue, setEgyptminValue] = useState("")
 
-  const [showInputDisAmtEgypt, setshowInputDisAmtEgypt] = useState(false)
-  const [showInputPercentEgypt, setshowInputPercentEgypt] = useState(false)
 
 
     // ---------------------
@@ -1258,15 +1157,12 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentEgypt(false)
-      setshowInputDisAmtEgypt(false)
+  
       setEgyptNetPrice(EgyptListPrice)
 
     }else if(value == '2'){
 
 
-      setshowInputPercentEgypt(true)
-      setshowInputDisAmtEgypt(false)
       console.log(EgyptDisPercent)
       console.log(EgyptListPrice)
 
@@ -1276,14 +1172,12 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
  
 
-      setshowInputPercentEgypt(false)
-      setshowInputDisAmtEgypt(true)
+    
 
       setEgyptNetPrice(parseFloat(EgyptListPrice) - parseFloat(EgyptDisAmt == "" ? 0 : EgyptDisAmt))
 
     }else{
-      setshowInputPercentEgypt(false)
-      setshowInputDisAmtEgypt(false)
+     
       setEgyptNetPrice(EgyptListPrice)
 
     }
@@ -1364,8 +1258,6 @@ const Pricing = ({code}) => {
   const [EUTip, setEUTip] = useState("")
   const [EUminValue, setEUminValue] = useState("")
 
-  const [showInputDisAmtEU, setshowInputDisAmtEU] = useState(false)
-  const [showInputPercentEU, setshowInputPercentEU] = useState(false)
 
       // ---------------------
   // Discount Type EU
@@ -1377,15 +1269,13 @@ const Pricing = ({code}) => {
     if(value == '1'){
 
 
-      setshowInputDisAmtEU(false)
-      setshowInputPercentEU(false)
+     
       setEUNetPrice(EUListPrice)
 
     }else if(value == '2'){
 
 
-      setshowInputPercentEU(true)
-      setshowInputDisAmtEU(false)
+ 
       console.log(EUDisPercent)
       console.log(EUListPrice)
 
@@ -1396,15 +1286,13 @@ const Pricing = ({code}) => {
   
 
       
-      setshowInputPercentEU(false)
-      setshowInputDisAmtEU(true)
+
 
       setEUNetPrice(parseFloat(EUListPrice) - parseFloat(EUDisAmt == "" ? 0 : EUDisAmt))
 
     }else{
     
-      setshowInputPercentEU(false)
-      setshowInputDisAmtEU(false)
+
       setEUNetPrice(EUListPrice)
 
     }
@@ -1484,8 +1372,6 @@ const Pricing = ({code}) => {
   const [GBPTip, setGBPTip] = useState("")
   const [GBPminValue, setGBPminValue] = useState("")
 
-  const [showInputDisAmtGBP, setshowInputDisAmtGBP] = useState(false)
-  const [showInputPercentGBP, setshowInputPercentGBP] = useState(false)
 
   // ---------------------
   // Discount Type GBP
@@ -1496,16 +1382,12 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentGBP(false)
-      setshowInputDisAmtGBP(false)
-
+ 
       setGBPNetPrice(GBPListPrice)
 
     }else if(value == '2'){
 
- 
-      setshowInputPercentGBP(true)
-      setshowInputDisAmtGBP(false)
+
 
       console.log(GBPDisPercent)
       console.log(GBPListPrice)
@@ -1516,14 +1398,12 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
 
        
-      setshowInputPercentGBP(false)
-      setshowInputDisAmtGBP(true)
+   
 
       setGBPNetPrice(parseFloat(GBPListPrice) - parseFloat(GBPDisAmt == "" ? 0 : GBPDisAmt))
 
     }else{
-      setshowInputPercentGBP(false)
-      setshowInputDisAmtGBP(false)
+ 
       setGBPNetPrice(GBPListPrice)
 
     }
@@ -1603,8 +1483,6 @@ const Pricing = ({code}) => {
   const [IndonesiaTip, setIndonesiaTip] = useState("")
   const [IndonesiaminValue, setIndonesiaminValue] = useState("")
 
-  const [showInputDisAmtIndonesia, setshowInputDisAmtIndonesia] = useState(false)
-  const [showInputPercentIndonesia, setshowInputPercentIndonesia] = useState(false)
 
     // ---------------------
   // Discount Type Indo
@@ -1615,15 +1493,12 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentIndonesia(false)
-      setshowInputDisAmtIndonesia(false)
 
       setIndonesiaNetPrice(IndonesiaListPrice)
 
     }else if(value == '2'){
 
-      setshowInputPercentIndonesia(true)
-      setshowInputDisAmtIndonesia(false)
+    
 
   
       console.log(IndonesiaDisPercent)
@@ -1635,14 +1510,11 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
  
 
-      setshowInputPercentIndonesia(false)
-      setshowInputDisAmtIndonesia(true)
 
       setIndonesiaNetPrice(parseFloat(IndonesiaListPrice) - parseFloat(IndonesiaDisAmt == "" ? 0 : IndonesiaDisAmt))
 
     }else{
-      setshowInputPercentIndonesia(false)
-      setshowInputDisAmtIndonesia(false)
+     
       setIndonesiaNetPrice(IndonesiaListPrice)
 
     }
@@ -1721,8 +1593,6 @@ const Pricing = ({code}) => {
   const [IsrealTip, setIsrealTip] = useState("")
   const [IsrealminValue, setIsrealminValue] = useState("")
 
-  const [showInputDisAmtIsreal, setshowInputDisAmtIsreal] = useState(false)
-  const [showInputPercentIsreal, setshowInputPercentIsreal] = useState(false)
 
       // ---------------------
   // Discount Type Isreal
@@ -1734,14 +1604,12 @@ const Pricing = ({code}) => {
     if(value == '1'){
 
 
-      setshowInputDisAmtIsreal(false)
-      setshowInputPercentIsreal(false)
+ 
       setIsrealNetPrice(IsrealListPrice)
 
     }else if(value == '2'){
 
-      setshowInputDisAmtIsreal(false)
-      setshowInputPercentIsreal(true)
+  
 
       console.log(IsrealDisPercent)
       console.log(IsrealListPrice)
@@ -1751,16 +1619,14 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
 
-      setshowInputDisAmtIsreal(true)
-      setshowInputPercentIsreal(false)
+  
 
       setIsrealNetPrice(parseFloat(IsrealListPrice) - parseFloat(IsrealDisAmt == "" ? 0 : IsrealDisAmt))
 
     }else{
     
 
-      setshowInputDisAmtIsreal(false)
-      setshowInputPercentIsreal(false)
+
       setIsrealNetPrice(IsrealListPrice)
 
     }
@@ -1839,8 +1705,6 @@ const Pricing = ({code}) => {
   const [IndiaTip, setIndiaTip] = useState("")
   const [IndiaminValue, setIndiaminValue] = useState("")
 
-  const [showInputDisAmtIndia, setshowInputDisAmtIndia] = useState(false)
-  const [showInputPercentIndia, setshowInputPercentIndia] = useState(false)
 
         // ---------------------
   // Discount Type India
@@ -1850,16 +1714,14 @@ const Pricing = ({code}) => {
     // 3 - By Value
 
     if(value == '1'){
-      setshowInputPercentIndia(false)
-      setshowInputDisAmtIndia(false)
+ 
       setIndiaNetPrice(IndiaListPrice)
 
     }else if(value == '2'){
 
   
 
-      setshowInputPercentIndia(true)
-      setshowInputDisAmtIndia(false)
+   
       console.log(IndiaDisPercent)
       console.log(IndiaListPrice)
 
@@ -1869,16 +1731,13 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
 
 
-      setshowInputPercentIndia(false)
-      setshowInputDisAmtIndia(true)
+  
 
       setIndiaNetPrice(parseFloat(IndiaListPrice) - parseFloat(IndiaDisAmt == "" ? 0 : IndiaDisAmt))
 
     }else{
 
 
-      setshowInputPercentIndia(false)
-      setshowInputDisAmtIndia(false)
       setIndiaNetPrice(IndiaListPrice)
 
     }
@@ -1955,8 +1814,7 @@ const Pricing = ({code}) => {
   const [JapanTip, setJapanTip] = useState("")
   const [JapanminValue, setJapanminValue] = useState("")
 
-  const [showInputDisAmtJapan, setshowInputDisAmtJapan] = useState(false)
-  const [showInputPercentJapan, setshowInputPercentJapan] = useState(false)
+
 
           // ---------------------
   // Discount Type Japan
@@ -1967,15 +1825,13 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentJapan(false)
-      setshowInputDisAmtJapan(false)
+
       setJapanNetPrice(JapanListPrice)
 
     }else if(value == '2'){
 
     
-      setshowInputPercentJapan(true)
-      setshowInputDisAmtJapan(false)
+      
       console.log(JapanDisPercent)
       console.log(JapanListPrice)
 
@@ -1985,14 +1841,12 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
 
 
-      setshowInputPercentJapan(false)
-      setshowInputDisAmtJapan(true)
+     
       setJapanNetPrice(parseFloat(JapanListPrice) - parseFloat(JapanDisAmt == "" ? 0 : JapanDisAmt))
 
     }else{
 
-      setshowInputPercentJapan(false)
-      setshowInputDisAmtJapan(false)
+      
       setJapanNetPrice(JapanListPrice)
 
     }
@@ -2072,8 +1926,6 @@ const Pricing = ({code}) => {
   const [SKTip, setSKTip] = useState("")
   const [SKminValue, setSKminValue] = useState("")
 
-  const [showInputDisAmtSK, setshowInputDisAmtSK] = useState(false)
-  const [showInputPercentSK, setshowInputPercentSK] = useState(false)
 
            // ---------------------
   // Discount Type SK
@@ -2085,15 +1937,13 @@ const Pricing = ({code}) => {
     if(value == '1'){
 
     
-      setshowInputPercentSK(false)
-      setshowInputDisAmtSK(false)
+
       setSKNetPrice(SKListPrice)
 
     }else if(value == '2'){
 
 
-      setshowInputPercentSK(true)
-      setshowInputDisAmtSK(false)
+      
       console.log(SKDisPercent)
       console.log(SKListPrice)
 
@@ -2103,15 +1953,13 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
   
 
-      setshowInputPercentSK(false)
-      setshowInputDisAmtSK(true)
+     
 
       setSKNetPrice(parseFloat(SKListPrice) - parseFloat(SKDisAmt == "" ? 0 : SKDisAmt))
 
     }else{
 
-      setshowInputPercentSK(false)
-      setshowInputDisAmtSK(false)
+   
       setSKNetPrice(SKListPrice)
 
     }
@@ -2188,8 +2036,6 @@ const Pricing = ({code}) => {
   const [MexicoTip, setMexicoTip] = useState("")
   const [MexicominValue, setMexicominValue] = useState("")
 
-  const [showInputDisAmtMexico, setshowInputDisAmtMexico] = useState(false)
-  const [showInputPercentMexico, setshowInputPercentMexico] = useState(false)
 
 
              // ---------------------
@@ -2202,15 +2048,12 @@ const Pricing = ({code}) => {
     if(value == '1'){
 
 
-      setshowInputPercentMexico(false)
-      setshowInputDisAmtMexico(false)
+
       setMexicoNetPrice(MexicoListPrice)
 
     }else if(value == '2'){
 
-     
-      setshowInputPercentMexico(true)
-      setshowInputDisAmtMexico(false)
+
       console.log(MexicoDisPercent)
       console.log(MexicoListPrice)
 
@@ -2220,16 +2063,14 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
    
 
-      setshowInputPercentMexico(false)
-      setshowInputDisAmtMexico(true)
+   
 
       setMexicoNetPrice(parseFloat(MexicoListPrice) - parseFloat(MexicoDisAmt == "" ? 0 : MexicoDisAmt))
 
     }else{
 
 
-      setshowInputPercentMexico(false)
-      setshowInputDisAmtMexico(false)
+
 
       setMexicoNetPrice(MexicoListPrice)
 
@@ -2311,9 +2152,7 @@ const Pricing = ({code}) => {
   const [MalaysiaTip, setMalaysiaTip] = useState("")
   const [MalaysiaminValue, setMalaysiaminValue] = useState("")
 
-  const [showInputDisAmtMalaysia, setshowInputDisAmtMalaysia] = useState(false)
 
-  const [showInputPercentMalaysia, setshowInputPercentMalaysia] = useState(false)
 
                // ---------------------
   // Discount Type Malaysia
@@ -2325,15 +2164,13 @@ const Pricing = ({code}) => {
     if(value == '1'){
 
 
-      setshowInputPercentMalaysia(false)
-      setshowInputDisAmtMalaysia(false)
+  
       setMalaysiaNetPrice(MalaysiaListPrice)
 
     }else if(value == '2'){
 
 
-      setshowInputPercentMalaysia(true)
-      setshowInputDisAmtMalaysia(false)
+
 
       console.log(MalaysiaDisPercent)
       console.log(MalaysiaListPrice)
@@ -2344,14 +2181,12 @@ const Pricing = ({code}) => {
     }else if(value == '3'){
 
 
-      setshowInputPercentMalaysia(false)
-      setshowInputDisAmtMalaysia(true)
+  
 
       setMalaysiaNetPrice(parseFloat(MalaysiaListPrice) - parseFloat(MalaysiaDisAmt == "" ? 0 : MalaysiaDisAmt))
 
     }else{
-      setshowInputPercentMalaysia(false)
-      setshowInputDisAmtMalaysia(false)
+    
       setMalaysiaNetPrice(MalaysiaListPrice)
 
     }
@@ -2430,9 +2265,6 @@ const Pricing = ({code}) => {
   const [NigeriaTip, setNigeriaTip] = useState("")
   const [NigeriaminValue, setNigeriaminValue] = useState("")
   
-  const [showInputDisAmtNigeria, setshowInputDisAmtNigeria] = useState(false)
-
-  const [showInputPercentNigeria, setshowInputPercentNigeria] = useState(false)
 
         // ---------------------
   // Discount Type Nigeria
@@ -2443,15 +2275,13 @@ const Pricing = ({code}) => {
 
     if(value == '1'){
 
-      setshowInputPercentNigeria(false)
-      setshowInputDisAmtNigeria(false)
+      
       setNIgeriaNetPrice(NigeriaListPrice)
 
     }else if(value == '2'){
 
       
-      setshowInputPercentNigeria(true)
-      setshowInputDisAmtNigeria(false)
+    
 
       console.log(NigeriaDisPercent)
       console.log(NigeriaListPrice)
@@ -2461,15 +2291,13 @@ const Pricing = ({code}) => {
 
     }else if(value == '3'){
 
-      setshowInputPercentNigeria(false)
-      setshowInputDisAmtNigeria(true)
+   
 
       setNIgeriaNetPrice(parseFloat(NigeriaListPrice) - parseFloat(NigeriaDisAmt == "" ? 0 : NigeriaDisAmt))
 
     }else{
      
-      setshowInputPercentNigeria(false)
-      setshowInputDisAmtNigeria(false)
+  
       setNIgeriaNetPrice(NigeriaListPrice)
 
     }
@@ -2549,9 +2377,6 @@ const Pricing = ({code}) => {
   const [NorwayTip, setNorwayTip] = useState("")
   const [NorwayminValue, setNorwayminValue] = useState("")
 
-  const [showInputDisAmtNorway, setshowInputDisAmtNorway] = useState(false)
-
-  const [showInputPercentNorway, setshowInputPercentNorway] = useState(false)
 
 
           // ---------------------
@@ -2564,15 +2389,12 @@ const Pricing = ({code}) => {
     if(value == '1'){
 
 
-      setshowInputPercentNorway(false)
-      setshowInputDisAmtNorway(false)
+     
       setNorwayNetPrice(NorwayListPrice)
 
     }else if(value == '2'){
 
 
-      setshowInputPercentNorway(true)
-      setshowInputDisAmtNorway(false)
       console.log(NorwayDisPercent)
       console.log(NorwayListPrice)
 
@@ -2583,15 +2405,13 @@ const Pricing = ({code}) => {
   
 
       
-      setshowInputPercentNorway(false)
-      setshowInputDisAmtNorway(true)
+     
 
       setNorwayNetPrice(parseFloat(NorwayListPrice) - parseFloat(NorwayDisAmt == "" ? 0 : NorwayDisAmt))
 
     }else{
 
-      setshowInputPercentNorway(false)
-      setshowInputDisAmtNorway(false)
+      
       setNorwayNetPrice(NorwayListPrice)
 
     }
@@ -2668,9 +2488,6 @@ const Pricing = ({code}) => {
   const [PeruTip, setPeruTip] = useState("")
   const [Peruminvalue, setPeruminvalue] = useState("")
 
-  const [showInputDisAmtPeru, setshowInputDisAmtPeru] = useState(false)
-
-  const [showInputPercentPeru, setshowInputPercentPeru] = useState(false)
   
          // ---------------------
     // Discount Type Peru
@@ -2682,15 +2499,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
 
-        setshowInputPercentPeru(false)
-        setshowInputDisAmtPeru(false)
+  
         setPeruNetPrice(PeruListPrice)
 
       }else if(value == '2'){
 
        
-        setshowInputPercentPeru(true)
-        setshowInputDisAmtPeru(false)
+       
         console.log(PeruDisPercent)
         console.log(PeruListPrice)
 
@@ -2700,16 +2515,14 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
 
 
-        setshowInputPercentPeru(false)
-        setshowInputDisAmtPeru(true)
+   
 
         setPeruNetPrice(parseFloat(PeruListPrice) - parseFloat(PeruDisAmt == "" ? 0 : PeruDisAmt))
 
       }else{
 
 
-        setshowInputPercentPeru(false)
-        setshowInputDisAmtPeru(false)
+        
         setPeruNetPrice(PeruListPrice)
 
       }
@@ -2785,9 +2598,7 @@ const Pricing = ({code}) => {
   const [PhilipinesTip, setPhilipinesTip] = useState("")
   const [PhilipinesminValue, setPhilipinesminValue] = useState("")
 
-  const [showInputDisAmtPhilipines, setshowInputDisAmtPhilipines] = useState(false)
 
-  const [showInputPercentPhilipines, setshowInputPercentPhilipines] = useState(false)
 
 
           // ---------------------
@@ -2800,15 +2611,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
        
-        setshowInputPercentPhilipines(false)
-        setshowInputDisAmtPhilipines(false)
+
         setPhilipinesNetPrice(PhilipinesListPrice)
 
       }else if(value == '2'){
 
  
-        setshowInputPercentPhilipines(true)
-        setshowInputDisAmtPhilipines(false)
+       
         console.log(PhilipinesDisPercent)
         console.log(PhilipinesListPrice)
 
@@ -2818,15 +2627,12 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
 
 
-        setshowInputPercentPhilipines(false)
-        setshowInputDisAmtPhilipines(true)
-
+      
         setPhilipinesNetPrice(parseFloat(PhilipinesListPrice) - parseFloat(PhiliphinesDisAmt == "" ? 0 : PhiliphinesDisAmt))
 
       }else{
    
-        setshowInputPercentPhilipines(false)
-        setshowInputDisAmtPhilipines(false)
+  
         setPhilipinesNetPrice(PhilipinesListPrice)
 
       }
@@ -2903,9 +2709,7 @@ const Pricing = ({code}) => {
   const [PolandTip, setPolandTip] = useState("")
   const [PolandminValue, setPolandminValue] = useState("")
 
-  const [showInputDisAmtPoland, setshowInputDisAmtPoland] = useState(false)
 
-  const [showInputPercentPoland, setshowInputPercentPoland] = useState(false)
 
 
           // ---------------------
@@ -2918,15 +2722,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
     
-        setshowInputPercentPoland(false)
-        setshowInputDisAmtPoland(false)
+    
         setPolandNetPrice(PolandListPrice)
 
       }else if(value == '2'){
 
 
-        setshowInputPercentPoland(true)
-        setshowInputDisAmtPoland(false)
+       
 
         console.log(PolandDisPercent)
         console.log(PolandListPrice)
@@ -2937,15 +2739,13 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
 
 
-        setshowInputPercentPoland(false)
-        setshowInputDisAmtPoland(true)
+       
 
         setPolandNetPrice(parseFloat(PolandListPrice) - parseFloat(PolandDisAmt == "" ? 0 : PolandDisAmt))
 
       }else{
      
-        setshowInputPercentPoland(false)
-        setshowInputDisAmtPoland(false)
+      
         setPolandNetPrice(PolandListPrice)
 
       }
@@ -3023,9 +2823,7 @@ const Pricing = ({code}) => {
   const [RomaniaTip, setRomaniaTip] = useState("")
   const [Romaniaminvalue, setRomaniaminvalue] = useState("")
 
-  const [showInputDisAmtRomania, setshowInputDisAmtRomania] = useState(false)
 
-  const [showInputPercentRomania, setshowInputPercentRomania] = useState(false)
 
             // ---------------------
     // Discount Type Romania
@@ -3037,15 +2835,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
 
-        setshowInputPercentRomania(false)
-        setshowInputDisAmtRomania(false)
+      
         setRomaniaNetPrice(RomaniaListPrice)
 
       }else if(value == '2'){
 
  
-        setshowInputPercentRomania(true)
-        setshowInputDisAmtRomania(false)
+       
         console.log(RomaniaDisPercent)
         console.log(RomaniaListPrice)
 
@@ -3055,16 +2851,13 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
 
 
-        setshowInputPercentRomania(false)
-        setshowInputDisAmtRomania(true)
+       
 
         setRomaniaNetPrice(parseFloat(RomaniaListPrice) - parseFloat(RomaniaDisAmt == "" ? 0 : RomaniaDisAmt))
 
       }else{
 
 
-        setshowInputPercentRomania(false)
-        setshowInputDisAmtRomania(false)
         setRomaniaNetPrice(RomaniaListPrice)
 
       }
@@ -3142,9 +2935,7 @@ const Pricing = ({code}) => {
   const [RussiaTip, setRussiaTip] = useState("")
   const [RussiaminValue, setRussiaminValue] = useState("")
 
-  const [showInputDisAmtRussia, setshowInputDisAmtRussia] = useState(false)
 
-  const [showInputPercentRussia, setshowInputPercentRussia] = useState(false)
 
           // ---------------------
     // Discount Type Russia
@@ -3155,15 +2946,13 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        setshowInputPercentRussia(false)
-        setshowInputDisAmtRussia(false)
+    
         setRussiaNetPrice(RussiaListPrice)
 
       }else if(value == '2'){
 
 
-        setshowInputPercentRussia(true)
-        setshowInputDisAmtRussia(false)
+
         console.log(RussiaDisDisPercent)
         console.log(RussiaListPrice)
 
@@ -3174,15 +2963,12 @@ const Pricing = ({code}) => {
      
 
         
-        setshowInputPercentRussia(false)
-        setshowInputDisAmtRussia(true)
 
         setRussiaNetPrice(parseFloat(RussiaListPrice) - parseFloat(RussiaDisAmt == "" ? 0 : RussiaDisAmt))
 
       }else{
        
-        setshowInputPercentRussia(false)
-        setshowInputDisAmtRussia(false)
+      
         setRussiaNetPrice(RussiaListPrice)
 
       }
@@ -3262,9 +3048,6 @@ const Pricing = ({code}) => {
   const [SingaporeTip, setSingaporeTip] = useState("")
   const [SingaporeminValue, setSingaporeminValue] = useState("")
 
-  const [showInputDisAmtSingapore, setshowInputDisAmtSingapore] = useState(false)
-
-  const [showInputPercentSingapore, setshowInputPercentSingapore] = useState(false)
 
           // ---------------------
     // Discount Type Singapore
@@ -3276,15 +3059,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
  
-        setshowInputPercentSingapore(false)
-        setshowInputDisAmtSingapore(false)
+
         setSingaporeNetPrice(SingaporeListPrice)
 
       }else if(value == '2'){
 
          
-        setshowInputPercentSingapore(true)
-        setshowInputDisAmtSingapore(false)
+        
         console.log(SingaporeDisPercent)
         console.log(SingaporeListPrice)
 
@@ -3294,14 +3075,12 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
   
 
-        setshowInputPercentSingapore(false)
-        setshowInputDisAmtSingapore(true)
+    
 
         setSingaporeNetPrice(parseFloat(SingaporeListPrice) - parseFloat(SingaporeDisAmt == "" ? 0 : SingaporeDisAmt))
 
       }else{
-        setshowInputPercentSingapore(false)
-        setshowInputDisAmtSingapore(false)
+      
         setSingaporeNetPrice(SingaporeListPrice)
 
       }
@@ -3380,9 +3159,7 @@ const Pricing = ({code}) => {
   const [ThailandTip, setThailandTip] = useState("")
   const [ThailandminValue, setThailandminValue] = useState("")
 
-  const [showInputDisAmtThailand, setshowInputDisAmtThailand] = useState(false)
 
-  const [showInputPercentThailand, setshowInputPercentThailand] = useState(false)
 
         // ---------------------
     // Discount Type Thailand
@@ -3393,14 +3170,12 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        setshowInputPercentThailand(false)
-        setshowInputDisAmtThailand(false)
+        
         setThailandNetPrice(ThailandListPrice)
 
       }else if(value == '2'){
 
-        setshowInputPercentThailand(true)
-        setshowInputDisAmtThailand(false)
+     
 
 
         console.log(ThailandDisPercent)
@@ -3412,14 +3187,12 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
    
 
-        setshowInputPercentThailand(false)
-        setshowInputDisAmtThailand(true)
+        
 
         setThailandNetPrice(parseFloat(ThailandListPrice) - parseFloat(ThailandDisAmt == "" ? 0 : ThailandDisAmt))
 
       }else{
-        setshowInputPercentThailand(false)
-        setshowInputDisAmtThailand(false)
+        
         setThailandNetPrice(ThailandListPrice)
 
       }
@@ -3497,9 +3270,7 @@ const Pricing = ({code}) => {
   const [TurkeyTip, setTurkeyTip] = useState("")
   const [TurkeyminValue, setTurkeyminValue] = useState("")
 
-  const [showInputDisAmtTurkey, setshowInputDisAmtTurkey] = useState(false)
-
-  const [showInputPercentTurkey, setshowInputPercentTurkey] = useState(false)
+ 
 
           // ---------------------
     // Discount Type Turkey
@@ -3511,15 +3282,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
      
-        setshowInputPercentTurkey(false)
-        setshowInputDisAmtTurkey(false)
+   
         setTurkeyNetPrice(TurkeyListPrice)
 
       }else if(value == '2'){
 
 
-        setshowInputPercentTurkey(true)
-        setshowInputDisAmtTurkey(false)
+      
         console.log(TurkeyDisPercent)
         console.log(TurkeyListPrice)
 
@@ -3529,8 +3298,7 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
 
 
-        setshowInputPercentTurkey(false)
-        setshowInputDisAmtTurkey(true)
+        
 
         setTurkeyNetPrice(parseFloat(TurkeyListPrice) - parseFloat(TurkeyDisAmt == "" ? 0 : TurkeyDisAmt))
 
@@ -3538,8 +3306,7 @@ const Pricing = ({code}) => {
     
 
         
-        setshowInputPercentTurkey(false)
-        setshowInputDisAmtTurkey(false)
+      
         setTurkeyNetPrice(TurkeyListPrice)
 
       }
@@ -3617,9 +3384,7 @@ const Pricing = ({code}) => {
   const [TaiwanTip, setTaiwanTip] = useState("")
   const [TaiwanminValue, setTaiwanminValue] = useState("")
 
-  const [showInputDisAmtTaiwan, setshowInputDisAmtTaiwan] = useState(false)
 
-  const [showInputPercentTaiwan, setshowInputPercentTaiwan] = useState(false)
 
            // ---------------------
     // Discount Type Taiwan
@@ -3630,15 +3395,12 @@ const Pricing = ({code}) => {
 
       if(value == '1'){
 
-        setshowInputPercentTaiwan(false)
-        setshowInputDisAmtTaiwan(false)
         setTaiwanNetPrice(TaiwanListPrice)
 
       }else if(value == '2'){
 
     
-        setshowInputPercentTaiwan(true)
-        setshowInputDisAmtTaiwan(false)
+        
         console.log(TaiwanDisType)
         console.log(TaiwanListPrice)
 
@@ -3648,14 +3410,11 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
 
 
-        setshowInputPercentTaiwan(false)
-        setshowInputDisAmtTaiwan(true)
 
         setTaiwanNetPrice(parseFloat(TaiwanListPrice) - parseFloat(TaiwanDisAmt == "" ? 0 : TaiwanDisAmt))
 
       }else{
-        setshowInputPercentTaiwan(false)
-        setshowInputDisAmtTaiwan(false)
+    
         setTaiwanNetPrice(TaiwanListPrice)
 
       }
@@ -3738,10 +3497,6 @@ const Pricing = ({code}) => {
   const [VietnamminValue, setVietnamminValue] = useState("")
 
 
-  const [showInputDisAmtVietnam, setshowInputDisAmtVietnam] = useState(false)
-
-  const [showInputPercentVietnam, setshowInputPercentVietnam] = useState(false)
-
 
         // ---------------------
     // Discount Type Vietnam
@@ -3753,15 +3508,13 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
       
-        setshowInputPercentVietnam(false)
-        setshowInputDisAmtVietnam(false)
+        
         setVietnamNetPrice(VietnamListPrice)
 
       }else if(value == '2'){
 
   
-        setshowInputPercentVietnam(true)
-        setshowInputDisAmtVietnam(false)
+       
         console.log(VietmanDisType)
         console.log(VietnamListPrice)
 
@@ -3771,15 +3524,12 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
    
 
-        setshowInputPercentVietnam(false)
-        setshowInputDisAmtVietnam(true)
 
         setVietnamNetPrice(parseFloat(VietnamListPrice) - parseFloat(VietnamDisAmt == "" ? 0 : VietnamDisAmt))
 
       }else{
       
-        setshowInputPercentVietnam(false)
-        setshowInputDisAmtVietnam(false)
+        
         setVietnamNetPrice(VietnamListPrice)
 
       }
@@ -3856,9 +3606,7 @@ const Pricing = ({code}) => {
   const [SATip, setSATip] = useState("")
   const [SAminValue, setSAminValue] = useState("")
 
-  const [showInputDisAmtSA, setshowInputDisAmtSA] = useState(false)
 
-  const [showInputPercentSA, setshowInputPercentSA] = useState(false)
 
       // ---------------------
     // Discount Type SA
@@ -3870,15 +3618,12 @@ const Pricing = ({code}) => {
       if(value == '1'){
 
 
-        setshowInputPercentSA(false)
-        setshowInputDisAmtSA(false)
+  
         setSANetPrice(SAListPrice)
 
       }else if(value == '2'){
 
- 
-        setshowInputPercentSA(true)
-        setshowInputDisAmtSA(false)
+
         console.log(SADisType)
         console.log(SAListPrice)
 
@@ -3888,15 +3633,12 @@ const Pricing = ({code}) => {
       }else if(value == '3'){
     
 
-        
-        setshowInputPercentSA(false)
-        setshowInputDisAmtSA(true)
+
 
         setSANetPrice(parseFloat(SAListPrice) - parseFloat(SADisAmt == "" ? 0 : SADisAmt))
 
       }else{
-        setshowInputPercentSA(false)
-        setshowInputDisAmtSA(false)
+   
         setSANetPrice(SAListPrice)
 
       }
@@ -3995,7 +3737,7 @@ const Pricing = ({code}) => {
         "globalListPrice":`${Number.parseFloat(DGlobalPricing).toFixed(2)}`,
         "discountType":`${DDisType}`,
         "discountAmount":`${Number.parseFloat(DDisAmt).toFixed(2)}`,
-        "discount":`${Number.parseFloat(SADisPercent).toFixed(2)}`,
+        "discount":`${Number.parseFloat(DDisPercent).toFixed(2)}`,
         "globalNetPrice":`${Number.parseFloat(DGlobalNetPrice).toFixed(2)}`,
         "prices":[
           {
@@ -4264,7 +4006,7 @@ const Pricing = ({code}) => {
 
       // ----------------------
 
-      //  console.log(raw)
+       console.log(raw)
     
     setloading_button(true)
     SavePriceCountries(code,raw,setloading_button)
@@ -4303,7 +4045,7 @@ const Pricing = ({code}) => {
         </div>
        
 
-        {countriesData.length > 0 && countriesData != null && (
+        {countriesData != null && (
               Paid_Type == 2 && (
                 <div className="pricing-container">
                   <div className="price-range-container p-3">
@@ -4332,7 +4074,7 @@ const Pricing = ({code}) => {
                               aria-describedby="basic-addon1"
                             />
                           </InputGroup>
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}> Tip : Pricing around $10 may optimize sales.</Form.Label>
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}> Tip : Pricing around ${GlobalTip} may optimize sales.</Form.Label>
                           <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: ${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</i></Form.Label>
                       </div>
 
@@ -4417,7 +4159,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>USD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].maxPrice}`}</td>
                           <td>
                             <Form.Control value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
                           </td>
@@ -4462,7 +4204,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>AUD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData[1].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData.priceRange[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData.priceRange[1].maxPrice}`}</td>
                           <td>
                             <Form.Control value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
                           </td>
@@ -4508,7 +4250,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>BRL</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData[2].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData.priceRange[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData.priceRange[2].maxPrice}`}</td>
                           <td>
                             <Form.Control value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
                           </td>
@@ -4553,7 +4295,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>CAD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData[3].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData.priceRange[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData.priceRange[3].maxPrice}`}</td>
                           <td>
                             <Form.Control value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
                           </td>
@@ -4599,7 +4341,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>CLP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData[4].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData.priceRange[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData.priceRange[4].maxPrice}`}</td>
                           <td>
                             <Form.Control value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
                           </td>
@@ -4643,7 +4385,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>COP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData[5].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData.priceRange[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData.priceRange[5].maxPrice}`}</td>
                           <td>
                             <Form.Control value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
                           </td>
@@ -4688,7 +4430,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>EGP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData[6].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData.priceRange[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData.priceRange[6].maxPrice}`}</td>
                           <td>
                             <Form.Control value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
                           </td>
@@ -4732,7 +4474,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>EUR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData[7].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData.priceRange[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData.priceRange[7].maxPrice}`}</td>
                           <td>
                             <Form.Control value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
                           </td>
@@ -4776,7 +4518,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>GBP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData[8].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].maxPrice}`}</td>
                           <td>
                             <Form.Control value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
                           </td>
@@ -4820,7 +4562,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>IDR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData[9].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].maxPrice}`}</td>
                           <td>
                             <Form.Control value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
                           </td>
@@ -4864,7 +4606,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>ILS</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData[10].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].maxPrice}`}</td>
                           <td>
                             <Form.Control value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
                           </td>
@@ -4910,7 +4652,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>INR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData[11].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData.priceRange[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData.priceRange[11].maxPrice}`}</td>
                           <td>
                             <Form.Control value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
                           </td>
@@ -4955,7 +4697,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>JPY</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData[12].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData.priceRange[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData.priceRange[12].maxPrice}`}</td>
                           <td>
                             <Form.Control value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
                           </td>
@@ -5001,7 +4743,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData[13].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].maxPrice}`}</td>
                           <td>
                             <Form.Control value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
                           </td>
@@ -5047,7 +4789,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>MXN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData[14].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].maxPrice}`}</td>
                           <td>
                             <Form.Control value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
                           </td>
@@ -5092,7 +4834,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>MYR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData[15].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData.priceRange[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData.priceRange[15].maxPrice}`}</td>
                           <td>
                             <Form.Control value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
                           </td>
@@ -5140,7 +4882,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>NGN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData[16].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData.priceRange[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData.priceRange[16].maxPrice}`}</td>
                           <td>
                             <Form.Control value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
                           </td>
@@ -5185,7 +4927,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>NOK</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData[17].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData.priceRange[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData.priceRange[17].maxPrice}`}</td>
                           <td>
                             <Form.Control value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
                           </td>
@@ -5229,7 +4971,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>PEN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData[18].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData.priceRange[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData.priceRange[18].maxPrice}`}</td>
                           <td>
                             <Form.Control value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
                           </td>
@@ -5276,7 +5018,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>PHP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData[19].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData.priceRange[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData.priceRange[19].maxPrice}`}</td>
                           <td>
                             <Form.Control value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
                           </td>
@@ -5321,7 +5063,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>PLN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData[20].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData.priceRange[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData.priceRange[20].maxPrice}`}</td>
                           <td>
                             <Form.Control value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
                           </td>
@@ -5367,7 +5109,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>RON</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData[21].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData.priceRange[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData.priceRange[21].maxPrice}`}</td>
                           <td>
                             <Form.Control value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
                           </td>
@@ -5411,7 +5153,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>RUB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData[22].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData.priceRange[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData.priceRange[22].maxPrice}`}</td>
                           <td>
                             <Form.Control value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
                           </td>
@@ -5456,7 +5198,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>SGD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData[23].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData.priceRange[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData.priceRange[23].maxPrice}`}</td>
                           <td>
                             <Form.Control value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
                           </td>
@@ -5501,7 +5243,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>THB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData[24].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].maxPrice}`}</td>
                           <td>
                             <Form.Control value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
                           </td>
@@ -5545,7 +5287,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>TRY</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData[25].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].maxPrice}`}</td>
                           <td>
                             <Form.Control  value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
                           </td>
@@ -5589,7 +5331,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>TWD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData[26].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData.priceRange[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData.priceRange[26].maxPrice}`}</td>
                           <td>
                             <Form.Control value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
                           </td>
@@ -5634,7 +5376,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>VND</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData[27].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData.priceRange[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData.priceRange[27].maxPrice}`}</td>
                           <td>
                             <Form.Control value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
                           </td>
@@ -5681,7 +5423,7 @@ const Pricing = ({code}) => {
                         </td>
 
                           <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData[28].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].maxPrice}`}</td>
                           <td>
                             <Form.Control value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
                           </td>

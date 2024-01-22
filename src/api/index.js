@@ -976,234 +976,187 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
  }
 
  export const GetCountriesListPricing = async(code, setcountriesData,
-  setUSADisPercent,
+  setGlobalTip,
+  setPriceRangeMaxDefault,
+  setPriceRangeMinDefault,
+  setMinDefaultValue,
+  // -----
+  setDGlobalPricing,
+  setDDisType,
+  setDDisPercent,
   setDDisAmt,
+  setDGlobalNetPrice,
+  // -----------
+  setUSADisPercent,
+  setUSADisAmt,
   setUSADisType,
-  setshowInputDisAmtUSA,
-  setshowInputPercentUSA,
   setUSAListPrice,
   setUSANetPrice,
   setAusDisPercent,
   setAusDisAmt,
   setAusDisType,
-  setshowInputDisAmtAus,
-  setshowInputPercentAus,
   setAusListPrice,
   setAusNetPrice,
    // -----
    setBrazilDisPercent,
    setBrazilDisAmt,
    setBrazilDisType,
-   setshowInputDisAmtBrzail,
-   setshowInputPercentBrzail,
    setBrazilListPrice,
    setBrazilNetPrice,
     // ---------
     setCanadaDisPercent,
     setCanadaDisAmt,
     setCanadaDisType,
-    setshowInputDisAmtCanada,
-    setshowInputPercentCanada,
     setCanadaListPrice,
     setCanadaNetPrice,
      //  -------------
      setChileDisPercent,
      setChileDisAmt,
      setChileDisType,
-     setshowInputDisAmtChile,
-     setshowInputPercentChile,
      setChileListPrice,
      setChileNetPrice,
       // -----------
       setColumbiaDisPercent,
       setColumbiaDisAmt,
       setColumbiaDisType,
-      setshowInputDisAmtColumbia,
-      setshowInputPercentColumbia,
       setColumbiaListPrice,
       setColumbiaNetPrice,
        // --------------
        setEgyptDisPercent,
        setEgyptDisAmt,
        setEgyptDisType,
-       setshowInputDisAmtEgypt,
-       setshowInputPercentEgypt,
        setEgyptListPrice,
        setEgyptNetPrice,
         // ---------
       setEUDisPercent,
       setEUDisAmt,
       setEUDisType,
-      setshowInputDisAmtEU,
-      setshowInputPercentEU,
       setEUListPrice,
       setEUNetPrice,
       // ----
       setGBPDisPercent,
       setGBPDisAmt,
       setGBPDisType,
-      setshowInputDisAmtGBP,
-      setshowInputPercentGBP,
       setGBPListPrice,
       setGBPNetPrice,
         // ------------
       setIndonesiaDisPercent,
       setIndonesiaDisAmt,
       setIndonesiaDisType,
-      setshowInputDisAmtIndonesia,
-      setshowInputPercentIndonesia,
       setIndonesiaListPrice,
       setIndonesiaNetPrice,
       // ---------------
       setIsrealDisPercent,
       setIsrealDisAmt,
       setIsrealDisType,
-      setshowInputDisAmtIsreal,
-      setshowInputPercentIsreal,
       setIsrealListPrice,
       setIsrealNetPrice,
        // -------
        setIndiaDisPercent,
        setIndiaDisAmt,
        setIndiaDisType,
-       setshowInputDisAmtIndia,
-       setshowInputPercentIndia,
        setIndiaListPrice,
        setIndiaNetPrice,
       // -------------
       setJapanDisPercent,
       setJapanDisAmt,
       setJapanDisType,
-      setshowInputDisAmtJapan,
-      setshowInputPercentJapan,
       setJapanListPrice,
       setJapanNetPrice,
        // ---------------
        setSKDisPercent,
        setSKDisAmt,
        setSKDisType,
-       setshowInputDisAmtSK,
-       setshowInputPercentSK,
        setSKListPrice,
        setSKNetPrice,
        // -------------
       setMexicoDisPercent,
       setMexicoDisAmt,
       setMexicoDisType,
-      setshowInputDisAmtMexico,
-      setshowInputPercentMexico,
       setMexicoListPrice,
       setMexicoNetPrice,
       // --------------
       setMalaysiaDisPercent,
       setMalaysiaDisAmt,
       setMalaysiaDisType,
-      setshowInputDisAmtMalaysia,
-      setshowInputPercentMalaysia,
       setMalaysiaListPrice,
       setMalaysiaNetPrice,
       // -------------
       setNigeriaDisPercent,
       setNigeriaDisAmt,
       setNigeriaDisType,
-      setshowInputDisAmtNigeria,
-      setshowInputPercentNigeria,
       setNigeriaListPrice,
       setNIgeriaNetPrice,
       // -----------
       setNorwayDisPercent,
       setNorwayDisAmt,
       setNorwayDisType,
-      setshowInputDisAmtNorway,
-      setshowInputPercentNorway,
       setNorwayListPrice,
       setNorwayNetPrice,
       // ----------
       setPeruDisPercent,
       setPeruDisAmt,
       setPeruDisType,
-      setshowInputDisAmtPeru,
-      setshowInputPercentPeru,
       setPeruListPrice,
       setPeruNetPrice,
       // -----------
       setPhilipinesDisPercent,
       setPhiliphinesDisAmt,
       setPhilipinesDisType,
-      setshowInputDisAmtPhilipines,
-      setshowInputPercentPhilipines,
       setPhilipinesListPrice,
       setPhilipinesNetPrice,
       // ----------
       setPolandDisPercent,
       setPolandDisAmt,
       setPolandDisType,
-      setshowInputDisAmtPoland,
-      setshowInputPercentPoland,
       setPolandListPrice,
       setPolandNetPrice,
       // --------------
       setRomaniaDisPercent,
       setRomaniaDisAmt,
       setRomaniaDisType,
-      setshowInputDisAmtRomania,
-      setshowInputPercentRomania,
       setRomaniaListPrice,
       setRomaniaNetPrice,
        // --------------
        setRussiaDisDisPercent,
        setRussiaDisAmt,
        setRussiaDisType,
-       setshowInputDisAmtRussia,
-       setshowInputPercentRussia,
        setRussiaListPrice,
        setRussiaNetPrice,
         // ------------------
       setSingaporeDisPercent,
       setSingaporeDisAmt,
       setSingaporeDisType,
-      setshowInputDisAmtSingapore,
-      setshowInputPercentSingapore,
       setSingaporeListPrice,
       setSingaporeNetPrice,
       // -------------
       setThailandDisPercent,
       setThailandDisAmt,
       setThailandDisType,
-      setshowInputDisAmtThailand,
-      setshowInputPercentThailand,
       setThailandListPrice,
       setThailandNetPrice,
       // ---------------
       setTurkeyDisPercent,
       setTurkeyDisAmt,
       setTurkeyDisType,
-      setshowInputDisAmtTurkey,
-      setshowInputPercentTurkey,
       setTurkeyListPrice,
       setTurkeyNetPrice,
       // -------------
       setTaiwanDisPercent,
       setTaiwanDisAmt,
       setTaiwanDisType,
-      setshowInputDisAmtTaiwan,
-      setshowInputPercentTaiwan,
       setTaiwanListPrice,
       setTaiwanNetPrice,
       // ----------
       setVietnamDisPercent,
       setVietnamDisAmt,
       setVietmanDisType,
-      setshowInputDisAmtVietnam,
-      setshowInputPercentVietnam,
       setVietnamListPrice,
       setVietnamNetPrice,
        // ------------
        setSADisPercent,
        setSADisAmt,
        setSADisType,
-       setshowInputDisAmtSA,
-       setshowInputPercentSA,
        setSAListPrice,
        setSANetPrice,
       //  ---------
@@ -1285,888 +1238,376 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
       console.log(result)
 
       // ---------- AMERICA 
-      if(result[0].discountTypeId == 2){
         
-        setUSADisType(result[0].discountTypeId)
-        setshowInputPercentUSA(true)  
-        setshowInputDisAmtUSA(false)
-        setUSADisPercent(result[0].discountValue)
-        setUSAListPrice(result[0].value)
-        setUSANetPrice((parseFloat(result[0].value) - parseFloat(result[0].value) * parseFloat(result[0].discountValue)/100).toFixed(2))
-        
-      }else if(result[0].discountTypeId == 3){
+        setUSADisType(result.prices[0].discountTypeId)
+        setUSADisPercent(result.prices[0].discount)
+        setUSAListPrice(result.prices[0].listPrice)
+        setUSANetPrice(result.prices[0].netPrice)
+        setUSADisAmt(result.prices[0].discountAmount)
 
-        setUSADisType(result[0].discountTypeId)
-        setDDisAmt(result[0].discountValue)
-        setshowInputPercentUSA(false)
-        setshowInputDisAmtUSA(true)
-        setUSANetPrice((parseFloat(result[0].value) - parseFloat(result[0].discountValue)).toFixed(2))
-      }else{
-        setUSADisType(result[0].discountTypeId)
-        setshowInputDisAmtUSA(false)
-        setshowInputPercentUSA(false)  
-        setUSAListPrice(result[0].value)
-        setUSANetPrice(result[0].value)
-      }
       // ---------- AMERICA 
 
 
        // ---------- AUSTRALIA 
-       if(result[1].discountTypeId == 2){
-        
-        setAusDisType(result[1].discountTypeId)
-        setshowInputPercentAus(true)  
-        setshowInputDisAmtAus(false)
-        setAusDisPercent(result[1].discountValue)
-        setAusListPrice(result[1].value)
-        setAusNetPrice((parseFloat(result[1].value) - parseFloat(result[1].value) * parseFloat(result[1].discountValue)/100).toFixed(2))
-        
-      }else if(result[1].discountTypeId == 3){
+       setAusDisType(result.prices[1].discountTypeId)
+       setAusDisPercent(result.prices[1].discount)
+       setAusListPrice(result.prices[1].listPrice)
+       setAusDisAmt(result.prices[1].discountAmount)
+       setAusNetPrice(result.prices[1].netPrice)
 
-        setAusDisType(result[1].discountTypeId)
-        setAusDisAmt(result[1].discountValue)
-        setshowInputPercentAus(false)
-        setshowInputDisAmtAus(true)
-        setAusNetPrice((parseFloat(result[1].value) - parseFloat(result[1].discountValue)).toFixed(2))
-      }else{
-        setAusDisType(result[1].discountTypeId)
-        setshowInputDisAmtAus(false)
-        setshowInputPercentAus(false)  
-        setAusListPrice(result[1].value)
-        setAusNetPrice(result[1].value)
-      }
+
       // ---------- AUSTRALIA 
 
 
       // ---------- BRAZIL 
-      if(result[2].discountTypeId == 2){
-    
-        setBrazilDisType(result[2].discountTypeId)
-        setshowInputPercentBrzail(true)  
-        setshowInputDisAmtBrzail(false)
-        setBrazilDisPercent(result[2].discountValue)
-        setBrazilListPrice(result[2].value)
-        setBrazilNetPrice((parseFloat(result[2].value) - parseFloat(result[2].value) * parseFloat(result[2].discountValue)/100).toFixed(2))
-        
-      }else if(result[2].discountTypeId == 3){
+      setBrazilDisType(result.prices[2].discountTypeId)
+      setBrazilDisPercent(result.prices[2].discount)
+      setBrazilListPrice(result.prices[2].listPrice)
+      setBrazilDisAmt(result.prices[2].discountAmount)
+      setBrazilNetPrice(result.prices[2].netPrice)
 
-        setBrazilDisType(result[2].discountTypeId)
-        setBrazilDisAmt(result[2].discountValue)
-        setshowInputPercentBrzail(false)
-        setshowInputDisAmtBrzail(true)
-        setBrazilNetPrice((parseFloat(result[2].value) - parseFloat(result[2].discountValue)).toFixed(2))
-      }else{
-        setBrazilDisType(result[2].discountTypeId)
-        setshowInputDisAmtBrzail(false)
-        setshowInputPercentBrzail(false)  
-        setBrazilListPrice(result[2].value)
-        setBrazilNetPrice(result[2].value)
-      }
       // ---------- BRAZIL 
 
-       // ---------- CANADA 
-       if(result[3].discountTypeId == 2){
-    
-        setCanadaDisType(result[3].discountTypeId)
-        setshowInputPercentCanada(true)  
-        setshowInputDisAmtCanada(false)
-        setCanadaDisPercent(result[3].discountValue)
-        setCanadaListPrice(result[3].value)
-        setCanadaNetPrice((parseFloat(result[3].value) - parseFloat(result[3].value) * parseFloat(result[3].discountValue)/100).toFixed(2))
-        
-      }else if(result[3].discountTypeId == 3){
-
-        setCanadaDisType(result[3].discountTypeId)
-        setCanadaDisAmt(result[3].discountValue)
-        setshowInputPercentCanada(false)
-        setshowInputDisAmtCanada(true)
-        setCanadaListPrice(result[3].value)
-        setCanadaNetPrice((parseFloat(result[3].value) - parseFloat(result[3].discountValue)).toFixed(2))
-      }else{
-        setCanadaDisType(result[3].discountTypeId)
-        setshowInputDisAmtCanada(false)
-        setshowInputPercentCanada(false)  
-        setCanadaListPrice(result[3].value)
-        setCanadaNetPrice(result[3].value)
-      }
+      // ---------- CANADA 
+      setCanadaDisType(result.prices[3].discountTypeId)
+      setCanadaDisPercent(result.prices[3].discount)
+      setCanadaListPrice(result.prices[3].listPrice)
+      setCanadaDisAmt(result.prices[3].discountAmount)
+      setCanadaNetPrice(result.prices[2].netPrice)
+ 
       // ---------- CANADA 
 
         // ---------- CHILE 
-        if(result[4].discountTypeId == 2){
-
-          setChileDisType(result[4].discountTypeId)
-          setshowInputPercentChile(true)  
-          setshowInputDisAmtChile(false)
-          setChileDisPercent(result[4].discountValue)
-          setChileListPrice(result[4].value)
-          setChileNetPrice((parseFloat(result[4].value) - parseFloat(result[4].value) * parseFloat(result[4].discountValue)/100).toFixed(2))
-          
-        }else if(result[4].discountTypeId == 3){
-  
-          setChileDisType(result[4].discountTypeId)
-          setChileDisAmt(result[4].discountValue)
-          setshowInputPercentChile(false)
-          setshowInputDisAmtChile(true)
-          setChileListPrice(result[4].value)
-          setChileNetPrice((parseFloat(result[4].value) - parseFloat(result[4].discountValue)).toFixed(2))
-        }else{
-          setChileDisType(result[4].discountTypeId)
-          setshowInputDisAmtChile(false)
-          setshowInputPercentChile(false)  
-          setChileListPrice(result[4].value)
-          setChileNetPrice(result[4].value)
-        }
+        setChileDisType(result.prices[4].discountTypeId)
+        setChileDisAmt(result.prices[4].discountAmount)
+        setChileDisPercent(result.prices[4].discount)
+        setChileListPrice(result.prices[4].listPrice)
+        setChileNetPrice(result.prices[4].netPrice)
+      
         // ---------- CHILE 
 
           // ---------- COLUMBIA 
-          if(result[5].discountTypeId == 2){
-
-            setColumbiaDisType(result[5].discountTypeId)
-            setshowInputDisAmtColumbia(false)  
-            setshowInputPercentColumbia(true)
-            setColumbiaDisPercent(result[5].discountValue)
-            setColumbiaListPrice(result[5].value)
-            setColumbiaNetPrice((parseFloat(result[5].value) - parseFloat(result[5].value) * parseFloat(result[5].discountValue)/100).toFixed(2))
-            
-          }else if(result[5].discountTypeId == 3){
-    
-            setColumbiaDisType(result[5].discountTypeId)
-            setColumbiaDisAmt(result[5].discountValue)
-            setshowInputDisAmtColumbia(true)
-            setshowInputPercentColumbia(false)
-            setColumbiaListPrice(result[5].value)
-            setColumbiaNetPrice((parseFloat(result[5].value) - parseFloat(result[5].discountValue)).toFixed(2))
-          }else{
-            setColumbiaDisType(result[5].discountTypeId)
-            setshowInputPercentColumbia(false)
-            setshowInputDisAmtColumbia(false)  
-            setColumbiaListPrice(result[5].value)
-            setColumbiaNetPrice(result[5].value)
-          }
+          setColumbiaDisType(result.prices[5].discountTypeId)
+          setColumbiaDisPercent(result.prices[5].discount)
+          setColumbiaListPrice(result.prices[5].listPrice)
+          setColumbiaDisAmt(result.prices[5].discountAmount)
+          setColumbiaNetPrice(result.prices[5].netPrice)
           // ---------- COLUMBIA 
 
             // ---------- EGYPT 
-            if(result[6].discountTypeId == 2){
-
-            setEgyptDisType(result[6].discountTypeId)
-            setshowInputDisAmtEgypt(false)  
-            setshowInputPercentEgypt(true)
-            setEgyptDisPercent(result[6].discountValue)
-            setEgyptListPrice(result[6].value)
-            setEgyptNetPrice((parseFloat(result[6].value) - parseFloat(result[6].value) * parseFloat(result[6].discountValue)/100).toFixed(2))
-            
-          }else if(result[6].discountTypeId == 3){
-    
-            setEgyptDisType(result[6].discountTypeId)
-            setEgyptDisAmt(result[6].discountValue)
-            setshowInputDisAmtEgypt(true)
-            setshowInputPercentEgypt(false)
-            setEgyptListPrice(result[6].value)
-            setEgyptNetPrice((parseFloat(result[6].value) - parseFloat(result[6].discountValue)).toFixed(2))
-          }else{
-            setEgyptDisType(result[6].discountTypeId)
-            setshowInputPercentEgypt(false)
-            setshowInputDisAmtEgypt(false)  
-            setEgyptListPrice(result[6].value)
-            setEgyptNetPrice(result[6].value)
-          }
+            setEgyptDisType(result.prices[6].discountTypeId)
+            setEgyptDisPercent(result.prices[6].discount)
+            setEgyptDisAmt(result.prices[6].discountAmount)
+            setEgyptListPrice(result.prices[6].listPrice)
+            setEgyptNetPrice(result.prices[6].netPrice)
           // ---------- EGYPT 
 
           // ---------- EU 
-          if(result[7].discountTypeId == 2){
-
-          setEUDisType(result[7].discountTypeId)
-          setshowInputDisAmtEU(false)  
-          setshowInputPercentEU(true)
-          setEUDisPercent(result[7].discountValue)
-          setEUListPrice(result[7].value)
-          setEUNetPrice((parseFloat(result[7].value) - parseFloat(result[7].value) * parseFloat(result[7].discountValue)/100).toFixed(2))
-          
-        }else if(result[7].discountTypeId == 3){
-  
-          setEUDisType(result[7].discountTypeId)
-          setEUDisAmt(result[7].discountValue)
-          setshowInputDisAmtEU(true)
-          setshowInputPercentEU(false)
-          setEUListPrice(result[7].value)
-          setEUNetPrice((parseFloat(result[7].value) - parseFloat(result[7].discountValue)).toFixed(2))
-        }else{
-          setEUDisType(result[7].discountTypeId)
-          setshowInputPercentEU(false)
-          setshowInputDisAmtEU(false)  
-          setEUListPrice(result[7].value)
-          setEUNetPrice(result[7].value)
-        }
+          setEUDisType(result.prices[7].discountTypeId)
+          setEUDisPercent(result.prices[7].discount)
+          setEUDisAmt(result.prices[7].discountAmount)
+          setEUListPrice(result.prices[7].listPrice)
+          setEUNetPrice(result.prices[7].netPrice)
+      
         // ---------- EU 
 
           // ---------- GBP 
-          if(result[8].discountTypeId == 2){
-
-            setGBPDisType(result[8].discountTypeId)
-            setshowInputDisAmtGBP(false)  
-            setshowInputPercentGBP(true)
-            setGBPDisPercent(result[8].discountValue)
-            setGBPListPrice(result[8].value)
-            setGBPNetPrice((parseFloat(result[8].value) - parseFloat(result[8].value) * parseFloat(result[8].discountValue)/100).toFixed(2))
-            
-          }else if(result[8].discountTypeId == 3){
-    
-            setGBPDisType(result[8].discountTypeId)
-            setGBPDisAmt(result[8].discountValue)
-            setshowInputDisAmtGBP(true)
-            setshowInputPercentGBP(false)
-            setGBPListPrice(result[8].value)
-            setGBPNetPrice((parseFloat(result[8].value) - parseFloat(result[8].discountValue)).toFixed(2))
-          }else{
-            setGBPDisType(result[8].discountTypeId)
-            setshowInputPercentGBP(false)
-            setshowInputDisAmtGBP(false)  
-            setGBPListPrice(result[8].value)
-            setGBPNetPrice(result[8].value)
-          }
+          setGBPDisType(result.prices[8].discountTypeId)
+          setGBPDisPercent(result.prices[8].discount)
+          setGBPListPrice(result.prices[8].listPrice)
+          setGBPDisAmt(result.prices[8].discountAmount)
+          setGBPNetPrice(result.prices[8].netPrice)
           // ---------- GBP 
 
 
         // ---------- Indonesia 
-        if(result[9].discountTypeId == 2){
+        setIndonesiaDisType(result.prices[9].discountTypeId)
+        setIndonesiaDisPercent(result.prices[9].discount)
+        setIndonesiaListPrice(result.prices[9].listPrice)
+        setIndonesiaDisAmt(result.prices[9].discountAmount)
+        setIndonesiaNetPrice(result.prices[9].netPrice)
 
-        setIndonesiaDisType(result[9].discountTypeId)
-        setshowInputDisAmtIndonesia(false)  
-        setshowInputPercentIndonesia(true)
-        setIndonesiaDisPercent(result[9].discountValue)
-        setIndonesiaListPrice(result[9].value)
-        setIndonesiaNetPrice((parseFloat(result[9].value) - parseFloat(result[9].value) * parseFloat(result[9].discountValue)/100).toFixed(2))
-        
-      }else if(result[9].discountTypeId == 3){
-
-        setIndonesiaDisType(result[9].discountTypeId)
-        setIndonesiaDisAmt(result[9].discountValue)
-        setshowInputDisAmtIndonesia(true)
-        setshowInputPercentIndonesia(false)
-        setIndonesiaListPrice(result[9].value)
-        setIndonesiaNetPrice((parseFloat(result[9].value) - parseFloat(result[9].discountValue)).toFixed(2))
-      }else{
-        setIndonesiaDisType(result[9].discountTypeId)
-        setshowInputPercentIndonesia(false)
-        setshowInputDisAmtIndonesia(false)  
-        setIndonesiaListPrice(result[9].value)
-        setIndonesiaNetPrice(result[9].value)
-      }
       // ---------- Indonesia 
 
         // ---------- Isearl 
-        if(result[10].discountTypeId == 2){
+        setIsrealDisType(result.prices[10].discountTypeId)
+        setIsrealDisPercent(result.prices[10].discount)
+        setIsrealListPrice(result.prices[10].listPrice)
+        setIsrealDisAmt(result.prices[10].discountAmount)
+        setIsrealNetPrice(result.prices[10].netPrice)
 
-        setIsrealDisType(result[10].discountTypeId)
-        setshowInputDisAmtIsreal(false)  
-        setshowInputPercentIsreal(true)
-        setIsrealDisPercent(result[10].discountValue)
-        setIsrealListPrice(result[10].value)
-        setIsrealNetPrice((parseFloat(result[10].value) - parseFloat(result[10].value) * parseFloat(result[10].discountValue)/100).toFixed(2))
-        
-      }else if(result[10].discountTypeId == 3){
-
-        setIsrealDisType(result[10].discountTypeId)
-        setIsrealDisAmt(result[10].discountValue)
-        setshowInputDisAmtIsreal(true)
-        setshowInputPercentIsreal(false)
-        setIsrealListPrice(result[10].value)
-        setIsrealNetPrice((parseFloat(result[10].value) - parseFloat(result[10].discountValue)).toFixed(2))
-      }else{
-        setIsrealDisType(result[10].discountTypeId)
-        setshowInputPercentIsreal(false)
-        setshowInputDisAmtIsreal(false)  
-        setIsrealListPrice(result[10].value)
-        setIsrealNetPrice(result[10].value)
-      }
       // ---------- Isearl 
 
       // ---------- India 
-      if(result[11].discountTypeId == 2){
+      setIndiaDisType(result.prices[11].discountTypeId)
+      setIndiaDisPercent(result.prices[11].discount)
+      setIndiaListPrice(result.prices[11].listPrice)
+      setIndiaDisAmt(result.prices[11].discountAmount)
+      setIndiaNetPrice(result.prices[11].netPrice)
 
-        setIndiaDisType(result[11].discountTypeId)
-        setshowInputDisAmtIndia(false)  
-        setshowInputPercentIndia(true)
-        setIndiaDisPercent(result[11].discountValue)
-        setIndiaListPrice(result[11].value)
-        setIndiaNetPrice((parseFloat(result[11].value) - parseFloat(result[11].value) * parseFloat(result[11].discountValue)/100).toFixed(2))
-        
-      }else if(result[11].discountTypeId == 3){
-
-        setIndiaDisType(result[11].discountTypeId)
-        setIndiaDisAmt(result[11].discountValue)
-        setshowInputDisAmtIndia(true)
-        setshowInputPercentIndia(false)
-        setIndiaListPrice(result[11].value)
-        setIndiaNetPrice((parseFloat(result[11].value) - parseFloat(result[11].discountValue)).toFixed(2))
-      }else{
-        setIndiaDisType(result[11].discountTypeId)
-        setshowInputPercentIndia(false)
-        setshowInputDisAmtIndia(false)  
-        setIndiaListPrice(result[11].value)
-        setIndiaNetPrice(result[11].value)
-      }
       // ---------- India 
 
 
       // ---------- JAPAN 
-      if(result[12].discountTypeId == 2){
+      setJapanDisType(result.prices[12].discountTypeId)
+      setJapanDisPercent(result.prices[12].discount)
+      setJapanListPrice(result.prices[12].listPrice)
+      setJapanDisAmt(result.prices[12].discountAmount)
+      setJapanNetPrice(result.prices[12].netPrice)
 
-        setJapanDisType(result[12].discountTypeId)
-        setshowInputDisAmtJapan(false)  
-        setshowInputPercentJapan(true)
-        setJapanDisPercent(result[12].discountValue)
-        setJapanListPrice(result[12].value)
-        setJapanNetPrice((parseFloat(result[12].value) - parseFloat(result[12].value) * parseFloat(result[12].discountValue)/100).toFixed(2))
-        
-      }else if(result[12].discountTypeId == 3){
-
-        setJapanDisType(result[12].discountTypeId)
-        setJapanDisAmt(result[12].discountValue)
-        setshowInputDisAmtJapan(true)
-        setshowInputPercentJapan(false)
-        setJapanListPrice(result[12].value)
-        setJapanNetPrice((parseFloat(result[12].value) - parseFloat(result[12].discountValue)).toFixed(2))
-      }else{
-        setJapanDisType(result[12].discountTypeId)
-        setshowInputPercentJapan(false)
-        setshowInputDisAmtJapan(false)  
-        setJapanListPrice(result[12].value)
-        setJapanNetPrice(result[12].value)
-      }
       // ---------- JAPAN
 
 
         // ---------- SK 
-        if(result[13].discountTypeId == 2){
+        setSKDisType(result.prices[13].discountTypeId)
+        setSKDisPercent(result.prices[13].discount)
+        setSKListPrice(result.prices[13].listPrice)
+        setSKDisAmt(result.prices[13].discountAmount)
+        setSKNetPrice(result.prices[13].netPrice)
 
-        setSKDisType(result[13].discountTypeId)
-        setshowInputDisAmtSK(false)  
-        setshowInputPercentSK(true)
-        setSKDisPercent(result[13].discountValue)
-        setSKListPrice(result[13].value)
-        setSKNetPrice((parseFloat(result[13].value) - parseFloat(result[13].value) * parseFloat(result[13].discountValue)/100).toFixed(2))
-        
-      }else if(result[13].discountTypeId == 3){
-
-        setSKDisType(result[13].discountTypeId)
-        setSKDisAmt(result[13].discountValue)
-        setshowInputDisAmtSK(true)
-        setshowInputPercentSK(false)
-        setSKListPrice(result[13].value)
-        setSKNetPrice((parseFloat(result[13].value) - parseFloat(result[13].discountValue)).toFixed(2))
-      }else{
-        setSKDisType(result[13].discountTypeId)
-        setshowInputPercentSK(false)
-        setshowInputDisAmtSK(false)  
-        setSKListPrice(result[13].value)
-        setSKNetPrice(result[13].value)
-      }
+ 
       // ---------- SK
 
 
          // ---------- Mexico 
-         if(result[14].discountTypeId == 2){
-
-          setMexicoDisType(result[14].discountTypeId)
-          setshowInputDisAmtMexico(false)  
-          setshowInputPercentMexico(true)
-          setMexicoDisPercent(result[14].discountValue)
-          setMexicoListPrice(result[14].value)
-          setMexicoNetPrice((parseFloat(result[14].value) - parseFloat(result[14].value) * parseFloat(result[14].discountValue)/100).toFixed(2))
-          
-        }else if(result[14].discountTypeId == 3){
-  
-          setMexicoDisType(result[14].discountTypeId)
-          setMexicoDisAmt(result[14].discountValue)
-          setshowInputDisAmtMexico(true)
-          setshowInputPercentMexico(false)
-          setMexicoListPrice(result[14].value)
-          setMexicoNetPrice((parseFloat(result[14].value) - parseFloat(result[14].discountValue)).toFixed(2))
-        }else{
-          setMexicoDisType(result[14].discountTypeId)
-          setshowInputPercentMexico(false)
-          setshowInputDisAmtMexico(false)  
-          setMexicoListPrice(result[14].value)
-          setMexicoNetPrice(result[14].value)
-        }
+         setMexicoDisType(result.prices[14].discountTypeId)
+         setMexicoDisPercent(result.prices[14].discount)
+         setMexicoListPrice(result.prices[14].listPrice)
+         setMexicoDisAmt(result.prices[14].discountAmount)
+         setMexicoNetPrice(result.prices[14].netPrice)
+      
         // ---------- Mexico
 
 
         // ---------- Malaysia 
-        if(result[15].discountTypeId == 2){
-
-          setMalaysiaDisType(result[15].discountTypeId)
-          setshowInputDisAmtMalaysia(false)  
-          setshowInputPercentMalaysia(true)
-          setMalaysiaDisPercent(result[15].discountValue)
-          setMalaysiaListPrice(result[15].value)
-          setMalaysiaNetPrice((parseFloat(result[15].value) - parseFloat(result[15].value) * parseFloat(result[15].discountValue)/100).toFixed(2))
-          
-        }else if(result[15].discountTypeId == 3){
-  
-          setMalaysiaDisType(result[15].discountTypeId)
-          setMalaysiaDisAmt(result[15].discountValue)
-          setshowInputDisAmtMalaysia(true)
-          setshowInputPercentMalaysia(false)
-          setMalaysiaListPrice(result[15].value)
-          setMalaysiaNetPrice((parseFloat(result[15].value) - parseFloat(result[15].discountValue)).toFixed(2))
-        }else{
-          setMalaysiaDisType(result[15].discountTypeId)
-          setshowInputPercentMalaysia(false)
-          setshowInputDisAmtMalaysia(false)  
-          setMalaysiaListPrice(result[15].value)
-          setMalaysiaNetPrice(result[15].value)
-        }
+        
+        setMalaysiaDisType(result.prices[15].discountTypeId)
+        setMalaysiaDisPercent(result.prices[15].discount)
+        setMalaysiaListPrice(result.prices[15].listPrice)
+        setMalaysiaDisAmt(result.prices[15].discountAmount)
+        setMalaysiaNetPrice(result.prices[15].netPrice)
+   
         // ---------- Malaysia
 
 
         // ---------- Nigeria 
-        if(result[16].discountTypeId == 2){
-
-        setNigeriaDisType(result[16].discountTypeId)
-        setshowInputDisAmtNigeria(false)  
-        setshowInputPercentNigeria(true)
-        setNigeriaDisPercent(result[16].discountValue)
-        setNigeriaListPrice(result[16].value)
-        setNIgeriaNetPrice((parseFloat(result[16].value) - parseFloat(result[16].value) * parseFloat(result[16].discountValue)/100).toFixed(2))
-        
-      }else if(result[16].discountTypeId == 3){
-
-        setNigeriaDisType(result[16].discountTypeId)
-        setNigeriaDisAmt(result[16].discountValue)
-        setshowInputDisAmtNigeria(true)
-        setshowInputPercentNigeria(false)
-        setNigeriaListPrice(result[16].value)
-        setNIgeriaNetPrice((parseFloat(result[16].value) - parseFloat(result[16].discountValue)).toFixed(2))
-      }else{
-        setNigeriaDisType(result[16].discountTypeId)
-        setshowInputPercentNigeria(false)
-        setshowInputDisAmtNigeria(false)  
-        setNigeriaListPrice(result[16].value)
-        setNIgeriaNetPrice(result[16].value)
-      }
+        setNigeriaDisType(result.prices[16].discountTypeId)
+        setNigeriaDisPercent(result.prices[16].discount)
+        setNigeriaListPrice(result.prices[16].listPrice)
+        setNigeriaDisAmt(result.prices[16].discountAmount)
+        setNIgeriaNetPrice(result.prices[16].netPrice)
+     
       // ---------- Nigeria
 
       // ---------- Norway 
-      if(result[17].discountTypeId == 2){
-
-        setNorwayDisType(result[17].discountTypeId)
-        setshowInputDisAmtNorway(false)  
-        setshowInputPercentNorway(true)
-        setNorwayDisPercent(result[17].discountValue)
-        setNorwayListPrice(result[17].value)
-        setNorwayNetPrice((parseFloat(result[17].value) - parseFloat(result[17].value) * parseFloat(result[17].discountValue)/100).toFixed(2))
-        
-      }else if(result[17].discountTypeId == 3){
-
-        setNorwayDisType(result[17].discountTypeId)
-        setNorwayDisAmt(result[17].discountValue)
-        setshowInputDisAmtNorway(true)
-        setshowInputPercentNorway(false)
-        setNorwayListPrice(result[17].value)
-        setNorwayNetPrice((parseFloat(result[17].value) - parseFloat(result[17].discountValue)).toFixed(2))
-      }else{
-        setNorwayDisType(result[17].discountTypeId)
-        setshowInputPercentNorway(false)
-        setshowInputDisAmtNorway(false)  
-        setNorwayListPrice(result[17].value)
-        setNorwayNetPrice(result[17].value)
-      }
+      setNorwayDisType(result.prices[17].discountTypeId)
+      setNorwayDisPercent(result.prices[17].discount)
+      setNorwayListPrice(result.prices[17].listPrice)
+      setNorwayDisAmt(result.prices[17].discountAmount)
+      setNorwayNetPrice(result.prices[17].netPrice)
       // ---------- Norway
 
 
        // ---------- Peru 
-       if(result[18].discountTypeId == 2){
-
-        setPeruDisType(result[18].discountTypeId)
-        setshowInputDisAmtPeru(false)  
-        setshowInputPercentPeru(true)
-        setPeruDisPercent(result[18].discountValue)
-        setPeruListPrice(result[18].value)
-        setPeruNetPrice((parseFloat(result[18].value) - parseFloat(result[18].value) * parseFloat(result[18].discountValue)/100).toFixed(2))
-        
-      }else if(result[18].discountTypeId == 3){
-
-        setPeruDisType(result[18].discountTypeId)
-        setPeruDisAmt(result[18].discountValue)
-        setshowInputDisAmtPeru(true)
-        setshowInputPercentPeru(false)
-        setPeruListPrice(result[18].value)
-        setPeruNetPrice((parseFloat(result[18].value) - parseFloat(result[18].discountValue)).toFixed(2))
-      }else{
-        setPeruDisType(result[18].discountTypeId)
-        setshowInputPercentPeru(false)
-        setshowInputDisAmtPeru(false)  
-        setPeruListPrice(result[18].value)
-        setPeruNetPrice(result[18].value)
-      }
+       setPeruDisType(result.prices[18].discountTypeId)
+       setPeruDisPercent(result.prices[18].discount)
+       setPeruListPrice(result.prices[18].listPrice)
+       setPeruDisAmt(result.prices[18].discountAmount)
+       setPeruNetPrice(result.prices[18].netPrice)
       // ---------- Peru
 
       // ---------- Philipines 
-      if(result[19].discountTypeId == 2){
-
-      setPhilipinesDisType(result[19].discountTypeId)
-      setshowInputDisAmtPhilipines(false)  
-      setshowInputPercentPhilipines(true)
-      setPhilipinesDisPercent(result[19].discountValue)
-      setPhilipinesListPrice(result[19].value)
-      setPhilipinesNetPrice((parseFloat(result[19].value) - parseFloat(result[19].value) * parseFloat(result[19].discountValue)/100).toFixed(2))
-      
-    }else if(result[19].discountTypeId == 3){
-
-      setPhilipinesDisType(result[19].discountTypeId)
-      setPhiliphinesDisAmt(result[19].discountValue)
-      setshowInputDisAmtPhilipines(true)
-      setshowInputPercentPhilipines(false)
-      setPhilipinesListPrice(result[19].value)
-      setPhilipinesNetPrice((parseFloat(result[19].value) - parseFloat(result[19].discountValue)).toFixed(2))
-    }else{
-      setPhilipinesDisType(result[19].discountTypeId)
-      setshowInputPercentPhilipines(false)
-      setshowInputDisAmtPhilipines(false)  
-      setPhilipinesListPrice(result[19].value)
-      setPhilipinesNetPrice(result[19].value)
-    }
+      setPhilipinesDisType(result.prices[19].discountTypeId)
+      setPhilipinesDisPercent(result.prices[19].discount)
+      setPhilipinesListPrice(result.prices[19].listPrice)
+      setPhiliphinesDisAmt(result.prices[19].discountAmount)
+      setPhilipinesNetPrice(result.prices[19].netPrice)
     // ---------- Philipines
 
     // ---------- Poland 
-    if(result[20].discountTypeId == 2){
-
-      setPolandDisType(result[20].discountTypeId)
-      setshowInputDisAmtPoland(false)  
-      setshowInputPercentPoland(true)
-      setPolandDisPercent(result[20].discountValue)
-      setPolandListPrice(result[20].value)
-      setPolandNetPrice((parseFloat(result[20].value) - parseFloat(result[20].value) * parseFloat(result[20].discountValue)/100).toFixed(2))
-      
-    }else if(result[20].discountTypeId == 3){
-
-      setPolandDisType(result[20].discountTypeId)
-      setPolandDisAmt(result[20].discountValue)
-      setshowInputDisAmtPoland(true)
-      setshowInputPercentPoland(false)
-      setPolandListPrice(result[20].value)
-      setPolandNetPrice((parseFloat(result[20].value) - parseFloat(result[20].discountValue)).toFixed(2))
-    }else{
-      setPolandDisType(result[20].discountTypeId)
-      setshowInputPercentPoland(false)
-      setshowInputDisAmtPoland(false)  
-      setPolandListPrice(result[20].value)
-      setPolandNetPrice(result[20].value)
-    }
+    setPolandDisType(result.prices[20].discountTypeId)
+    setPolandDisPercent(result.prices[20].discount)
+    setPolandListPrice(result.prices[20].listPrice)
+    setPolandDisAmt(result.prices[20].discountAmount)
+    setPolandNetPrice(result.prices[20].netPrice)
     // ---------- Poland
 
 
     // ---------- Romania 
-    if(result[21].discountTypeId == 2){
-
-      setRomaniaDisType(result[21].discountTypeId)
-      setshowInputDisAmtRomania(false)  
-      setshowInputPercentRomania(true)
-      setRomaniaDisPercent(result[21].discountValue)
-      setRomaniaListPrice(result[21].value)
-      setRomaniaNetPrice((parseFloat(result[21].value) - parseFloat(result[21].value) * parseFloat(result[21].discountValue)/100).toFixed(2))
-      
-    }else if(result[21].discountTypeId == 3){
-
-      setRomaniaDisType(result[21].discountTypeId)
-      setRomaniaDisAmt(result[21].discountValue)
-      setshowInputDisAmtRomania(true)
-      setshowInputPercentRomania(false)
-      setRomaniaListPrice(result[21].value)
-      setRomaniaNetPrice((parseFloat(result[21].value) - parseFloat(result[21].discountValue)).toFixed(2))
-    }else{
-      setRomaniaDisType(result[21].discountTypeId)
-      setshowInputPercentRomania(false)
-      setshowInputDisAmtRomania(false)  
-      setRomaniaListPrice(result[21].value)
-      setRomaniaNetPrice(result[21].value)
-    }
+    setRomaniaDisType(result.prices[21].discountTypeId)
+    setRomaniaDisPercent(result.prices[21].discount)
+    setRomaniaListPrice(result.prices[21].listPrice)
+    setRomaniaDisAmt(result.prices[21].discountAmount)
+    setRomaniaNetPrice(result.prices[21].netPrice)
     // ---------- Romania
 
     // ---------- Russian 
-    if(result[22].discountTypeId == 2){
+    setRussiaDisType(result.prices[22].discountTypeId)
+    setRussiaDisDisPercent(result.prices[22].discount)
+    setRussiaListPrice(result.prices[22].listPrice)
+    setRussiaDisAmt(result.prices[22].discountAmount)
+    setRussiaNetPrice(result.prices[22].netPrice)
 
-      setRussiaDisType(result[22].discountTypeId)
-      setshowInputDisAmtRussia(false)  
-      setshowInputPercentRussia(true)
-      setRussiaDisDisPercent(result[22].discountValue)
-      setRussiaListPrice(result[22].value)
-      setRussiaNetPrice((parseFloat(result[22].value) - parseFloat(result[22].value) * parseFloat(result[22].discountValue)/100).toFixed(2))
-      
-    }else if(result[22].discountTypeId == 3){
-
-      setRussiaDisType(result[22].discountTypeId)
-      setRussiaDisAmt(result[22].discountValue)
-      setshowInputDisAmtRussia(true)
-      setshowInputPercentRussia(false)
-      setRussiaListPrice(result[22].value)
-      setRussiaNetPrice((parseFloat(result[22].value) - parseFloat(result[22].discountValue)).toFixed(2))
-    }else{
-      setRussiaDisType(result[22].discountTypeId)
-      setshowInputPercentRussia(false)
-      setshowInputDisAmtRussia(false)  
-      setRussiaListPrice(result[22].value)
-      setRussiaNetPrice(result[22].value)
-    }
     // ---------- Russian
 
     // ---------- singapore 
-    if(result[23].discountTypeId == 2){
+    setSingaporeDisType(result.prices[23].discountTypeId)
+    setSingaporeDisPercent(result.prices[23].discount)
+    setSingaporeListPrice(result.prices[23].listPrice)
+    setSingaporeDisAmt(result.prices[23].discountAmount)
+    setSingaporeNetPrice(result.prices[23].netPrice)
 
-      setSingaporeDisType(result[23].discountTypeId)
-      setshowInputDisAmtSingapore(false)  
-      setshowInputPercentSingapore(true)
-      setSingaporeDisPercent(result[23].discountValue)
-      setSingaporeListPrice(result[23].value)
-      setSingaporeNetPrice((parseFloat(result[23].value) - parseFloat(result[23].value) * parseFloat(result[23].discountValue)/100).toFixed(2))
-      
-    }else if(result[23].discountTypeId == 3){
-
-      setSingaporeDisType(result[23].discountTypeId)
-      setSingaporeDisAmt(result[23].discountValue)
-      setshowInputDisAmtSingapore(true)
-      setshowInputPercentSingapore(false)
-      setSingaporeListPrice(result[23].value)
-      setSingaporeNetPrice((parseFloat(result[23].value) - parseFloat(result[23].discountValue)).toFixed(2))
-    }else{
-      setSingaporeDisType(result[23].discountTypeId)
-      setshowInputPercentSingapore(false)
-      setshowInputDisAmtSingapore(false)  
-      setSingaporeListPrice(result[23].value)
-      setSingaporeNetPrice(result[23].value)
-    }
     // ---------- singapore
 
     // ---------- Thailand 
-    if(result[24].discountTypeId == 2){
-
-    setThailandDisType(result[24].discountTypeId)
-    setshowInputDisAmtThailand(false)  
-    setshowInputPercentThailand(true)
-    setThailandDisPercent(result[24].discountValue)
-    setThailandListPrice(result[24].value)
-    setThailandNetPrice((parseFloat(result[24].value) - parseFloat(result[24].value) * parseFloat(result[24].discountValue)/100).toFixed(2))
-    
-  }else if(result[24].discountTypeId == 3){
-
-    setThailandDisType(result[24].discountTypeId)
-    setThailandDisAmt(result[24].discountValue)
-    setshowInputDisAmtThailand(true)
-    setshowInputPercentThailand(false)
-    setThailandListPrice(result[24].value)
-    setThailandNetPrice((parseFloat(result[24].value) - parseFloat(result[24].discountValue)).toFixed(2))
-  }else{
-    setThailandDisType(result[24].discountTypeId)
-    setshowInputPercentThailand(false)
-    setshowInputDisAmtThailand(false)  
-    setThailandListPrice(result[24].value)
-    setThailandNetPrice(result[24].value)
-  }
+    setThailandDisType(result.prices[24].discountTypeId)
+    setThailandDisPercent(result.prices[24].discount)
+    setThailandListPrice(result.prices[24].listPrice)
+    setThailandDisAmt(result.prices[24].discountAmount)
+    setThailandNetPrice(result.prices[24].netPrice)
+   
   // ---------- Thailand
 
 
     // ---------- Turkey 
-    if(result[25].discountTypeId == 2){
+    setTurkeyDisType(result.prices[25].discountTypeId)
+    setTurkeyDisPercent(result.prices[25].discount)
+    setTurkeyListPrice(result.prices[25].listPrice)
+    setTurkeyDisAmt(result.prices[25].discountAmount)
+    setTurkeyNetPrice(result.prices[25].netPrice)
 
-      setTurkeyDisType(result[25].discountTypeId)
-      setshowInputDisAmtTurkey(false)  
-      setshowInputPercentTurkey(true)
-      setTurkeyDisPercent(result[25].discountValue)
-      setTurkeyListPrice(result[25].value)
-      setTurkeyNetPrice((parseFloat(result[25].value) - parseFloat(result[25].value) * parseFloat(result[25].discountValue)/100).toFixed(2))
-      
-    }else if(result[25].discountTypeId == 3){
-  
-      setTurkeyDisType(result[25].discountTypeId)
-      setTurkeyDisAmt(result[25].discountValue)
-      setshowInputDisAmtTurkey(true)
-      setshowInputPercentTurkey(false)
-      setTurkeyListPrice(result[25].value)
-      setTurkeyNetPrice((parseFloat(result[25].value) - parseFloat(result[25].discountValue)).toFixed(2))
-    }else{
-      setTurkeyDisType(result[25].discountTypeId)
-      setshowInputPercentTurkey(false)
-      setshowInputDisAmtTurkey(false)  
-      setTurkeyListPrice(result[25].value)
-      setTurkeyNetPrice(result[25].value)
-    }
     // ---------- Turkey
 
     // ---------- Taiwan 
-    if(result[26].discountTypeId == 2){
-
-      setTaiwanDisType(result[26].discountTypeId)
-      setshowInputDisAmtTaiwan(false)  
-      setshowInputPercentTaiwan(true)
-      setTaiwanDisPercent(result[26].discountValue)
-      setTaiwanListPrice(result[26].value)
-      setTaiwanNetPrice((parseFloat(result[26].value) - parseFloat(result[26].value) * parseFloat(result[26].discountValue)/100).toFixed(2))
-      
-    }else if(result[26].discountTypeId == 3){
-  
-      setTaiwanDisType(result[26].discountTypeId)
-      setTaiwanDisAmt(result[26].discountValue)
-      setshowInputDisAmtTaiwan(true)
-      setshowInputPercentTaiwan(false)
-      setTaiwanListPrice(result[26].value)
-      setTaiwanNetPrice((parseFloat(result[26].value) - parseFloat(result[26].discountValue)).toFixed(2))
-    }else{
-      setTaiwanDisType(result[26].discountTypeId)
-      setshowInputPercentTaiwan(false)
-      setshowInputDisAmtTaiwan(false)  
-      setTaiwanListPrice(result[26].value)
-      setTaiwanNetPrice(result[26].value)
-    }
+    setTaiwanDisType(result.prices[26].discountTypeId)
+    setTaiwanDisPercent(result.prices[26].discount)
+    setTaiwanListPrice(result.prices[26].listPrice)
+    setTaiwanDisAmt(result.prices[26].discountAmount)
+    setTaiwanNetPrice(result.prices[26].netPrice)
+ 
     // ---------- Taiwan
 
     // ---------- Vietnam 
-    if(result[27].discountTypeId == 2){
-
-      setVietmanDisType(result[27].discountTypeId)
-      setshowInputDisAmtVietnam(false)  
-      setshowInputPercentVietnam(true)
-      setVietnamDisPercent(result[27].discountValue)
-      setVietnamListPrice(result[27].value)
-      setVietnamNetPrice((parseFloat(result[27].value) - parseFloat(result[27].value) * parseFloat(result[27].discountValue)/100).toFixed(2))
-      
-    }else if(result[27].discountTypeId == 3){
+    setVietmanDisType(result.prices[27].discountTypeId)
+    setVietnamDisPercent(result.prices[27].discount)
+    setVietnamListPrice(result.prices[27].listPrice)
+    setVietnamDisAmt(result.prices[27].discountAmount)
+    setVietnamNetPrice(result.prices[27].netPrice)
   
-      setVietmanDisType(result[27].discountTypeId)
-      setVietnamDisAmt(result[27].discountValue)
-      setshowInputDisAmtVietnam(true)
-      setshowInputPercentVietnam(false)
-      setVietnamListPrice(result[27].value)
-      setVietnamNetPrice((parseFloat(result[27].value) - parseFloat(result[27].discountValue)).toFixed(2))
-    }else{
-      setVietmanDisType(result[27].discountTypeId)
-      setshowInputPercentVietnam(false)
-      setshowInputDisAmtVietnam(false)  
-      setVietnamListPrice(result[27].value)
-      setVietnamNetPrice(result[27].value)
-    }
     // ---------- Vietnam
 
     // ---------- SA 
-    if(result[28].discountTypeId == 2){
+    setSADisType(result.prices[28].discountTypeId)
+    setSADisPercent(result.prices[28].discount)
+    setSAListPrice(result.prices[28].listPrice)
+    setSADisAmt(result.prices[28].discountAmount)
+    setSANetPrice(result.prices[28].netPrice)
 
-      setSADisType(result[28].discountTypeId)
-      setshowInputDisAmtSA(false)  
-      setshowInputPercentSA(true)
-      setSADisPercent(result[28].discountValue)
-      setSAListPrice(result[28].value)
-      setSANetPrice((parseFloat(result[28].value) - parseFloat(result[28].value) * parseFloat(result[28].discountValue)/100).toFixed(2))
-      
-    }else if(result[28].discountTypeId == 3){
-  
-      setSADisType(result[28].discountTypeId)
-      setSADisAmt(result[28].discountValue)
-      setshowInputDisAmtSA(true)
-      setshowInputPercentSA(false)
-      setSAListPrice(result[28].value)
-      setSANetPrice((parseFloat(result[28].value) - parseFloat(result[28].discountValue)).toFixed(2))
-    }else{
-      setSADisType(result[28].discountTypeId)
-      setshowInputPercentSA(false)
-      setshowInputDisAmtSA(false)  
-      setSAListPrice(result[28].value)
-      setSANetPrice(result[28].value)
-    }
     // ---------- SA
 
 
+    // ------ Default Price
+    setDGlobalPricing(result.globalListPrice)
+    setDDisType(result.discountTypeId)
+    setDDisPercent(result.discount)
+    setDDisAmt(result.discountAmount)
+    setDGlobalNetPrice(result.globalNetPrice)
+
+
     // ---------------
-    setUSATip(result[0].tip)
-    setUSAMinValue(result[0].minimumPrice)
+    setUSATip(result.priceRange[0].tip)
+    setUSAMinValue(result.priceRange[0].minimumValue)
 
-    setAusTip(result[1].tip)
-    setAusminValue(result[1].minimumPrice)
+    setAusTip(result.priceRange[1].tip)
+    setAusminValue(result.priceRange[1].minimumValue)
 
-    setBrazilTip(result[2].tip)
-    setBrazilminValue(result[2].minimumPrice)
+    setBrazilTip(result.priceRange[2].tip)
+    setBrazilminValue(result.priceRange[2].minimumValue)
 
-    setCanadaTip(result[3].tip)
-    setCanadaminValue(result[3].minimumPrice)
+    setCanadaTip(result.priceRange[3].tip)
+    setCanadaminValue(result.priceRange[3].minimumValue)
 
-    setChileTip(result[4].tip)
-    setChileminValue(result[4].minimumPrice)
+    setChileTip(result.priceRange[4].tip)
+    setChileminValue(result.priceRange[4].minimumValue)
 
-    setColumbiaTip(result[5].tip)
-    setColumbiaminValue(result[5].minimumPrice)
+    setColumbiaTip(result.priceRange[5].tip)
+    setColumbiaminValue(result.priceRange[5].minimumValue)
 
-    setEgyptTip(result[6].tip)
-    setEgyptminValue(result[6].minimumPrice)
+    setEgyptTip(result.priceRange[6].tip)
+    setEgyptminValue(result.priceRange[6].minimumValue)
 
-    setEUTip(result[7].tip)
-    setEUminValue(result[7].minimumPrice)
+    setEUTip(result.priceRange[7].tip)
+    setEUminValue(result.priceRange[7].minimumValue)
 
-    setGBPTip(result[8].tip)
-    setGBPminValue(result[8].minimumPrice)
+    setGBPTip(result.priceRange[8].tip)
+    setGBPminValue(result.priceRange[8].minimumValue)
 
-    setIndonesiaTip(result[9].tip)
-    setIndonesiaminValue(result[9].minimumPrice)
+    setIndonesiaTip(result.priceRange[9].tip)
+    setIndonesiaminValue(result.priceRange[9].minimumValue)
 // -
-    setIsrealTip(result[10].tip)
-    setIsrealminValue(result[10].minimumPrice)
+    setIsrealTip(result.priceRange[10].tip)
+    setIsrealminValue(result.priceRange[10].minimumValue)
 
-    setIndiaTip(result[11].tip)
-    setIndiaminValue(result[11].minimumPrice)
+    setIndiaTip(result.priceRange[11].tip)
+    setIndiaminValue(result.priceRange[11].minimumValue)
 
-    setJapanTip(result[12].tip)
-    setJapanminValue(result[12].minimumPrice)
+    setJapanTip(result.priceRange[12].tip)
+    setJapanminValue(result.priceRange[12].minimumValue)
 
-    setSKTip(result[13].tip)
-    setSKminValue(result[13].minimumPrice)
+    setSKTip(result.priceRange[13].tip)
+    setSKminValue(result.priceRange[13].minimumValue)
 
-    setMexicoTip(result[14].tip)
-    setMexicominValue(result[14].minimumPrice)
+    setMexicoTip(result.priceRange[14].tip)
+    setMexicominValue(result.priceRange[14].minimumValue)
 
-    setMalaysiaTip(result[15].tip)
-    setMalaysiaminValue(result[15].minimumPrice)
+    setMalaysiaTip(result.priceRange[15].tip)
+    setMalaysiaminValue(result.priceRange[15].minimumValue)
 
-    setNigeriaTip(result[16].tip)
-    setNigeriaminValue(result[16].minimumPrice)
+    setNigeriaTip(result.priceRange[16].tip)
+    setNigeriaminValue(result.priceRange[16].minimumValue)
 
-    setNorwayTip(result[17].tip)
-    setNorwayminValue(result[17].minimumPrice)
+    setNorwayTip(result.priceRange[17].tip)
+    setNorwayminValue(result.priceRange[17].minimumValue)
 
-    setPeruTip(result[18].tip)
-    setPeruminvalue(result[18].minimumPrice)
+    setPeruTip(result.priceRange[18].tip)
+    setPeruminvalue(result.priceRange[18].minimumValue)
 
-    setPhilipinesTip(result[19].tip)
-    setPhilipinesminValue(result[19].minimumPrice)
+    setPhilipinesTip(result.priceRange[19].tip)
+    setPhilipinesminValue(result.priceRange[19].minimumValue)
 
-    setPolandTip(result[20].tip)
-    setPolandminValue(result[20].minimumPrice)
-
-
-    setRomaniaTip(result[21].tip)
-    setRomaniaminvalue(result[21].minimumPrice)
-
-    setRussiaTip(result[22].tip)
-    setRussiaminValue(result[22].minimumPrice)
-
-    setSingaporeTip(result[23].tip)
-    setSingaporeminValue(result[23].minimumPrice)
-
-    setThailandTip(result[24].tip)
-    setThailandminValue(result[24].minimumPrice)
-
-    setTurkeyTip(result[25].tip)
-    setTurkeyminValue(result[25].minimumPrice)
-
-    setTaiwanTip(result[26].tip)
-    setTaiwanminValue(result[26].minimumPrice)
-
-    setVietnamTip(result[27].tip)
-    setVietnamminValue(result[27].minimumPrice)
-
-    setSATip(result[28].tip)
-    setSAminValue(result[28].minimumPrice)
+    setPolandTip(result.priceRange[20].tip)
+    setPolandminValue(result.priceRange[20].minimumValue)
 
 
+    setRomaniaTip(result.priceRange[21].tip)
+    setRomaniaminvalue(result.priceRange[21].minimumValue)
 
+    setRussiaTip(result.priceRange[22].tip)
+    setRussiaminValue(result.priceRange[22].minimumValue)
+
+    setSingaporeTip(result.priceRange[23].tip)
+    setSingaporeminValue(result.priceRange[23].minimumValue)
+
+    setThailandTip(result.priceRange[24].tip)
+    setThailandminValue(result.priceRange[24].minimumValue)
+
+    setTurkeyTip(result.priceRange[25].tip)
+    setTurkeyminValue(result.priceRange[25].minimumValue)
+
+    setTaiwanTip(result.priceRange[26].tip)
+    setTaiwanminValue(result.priceRange[26].minimumValue)
+
+    setVietnamTip(result.priceRange[27].tip)
+    setVietnamminValue(result.priceRange[27].minimumValue)
+
+    setSATip(result.priceRange[28].tip)
+    setSAminValue(result.priceRange[28].minimumValue)
+
+
+    setGlobalTip(result.priceRange[29].tip)
+    setPriceRangeMaxDefault(result.priceRange[29].maxPrice)
+    setPriceRangeMinDefault(result.priceRange[29].minPrice)
+    setMinDefaultValue(result.priceRange[29].minimumValue)
 
 
 
