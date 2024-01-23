@@ -2322,7 +2322,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstru
   twitter,
   facebook,
   linkedin,
-  youtube) =>{
+  youtube,
+  setbtn_loading) =>{
+
+    setbtn_loading(true)
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -2337,7 +2340,8 @@ formdata.append("linkedin", `${linkedin}`);
 formdata.append("youtube", `${youtube}`);
 formdata.append("firstName", `${first_Name}`);
 formdata.append("lastName", `${last_name}`);
-formdata.append("profileImage", uploadImage);
+typeof uploadImage == "object" && formdata.append("profileImage", uploadImage);
+
 
 var requestOptions = {
   method: 'PUT',
@@ -2348,7 +2352,14 @@ var requestOptions = {
 
 fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateInstructorProfile", requestOptions)
   .then(response => response.json())
-  .then(result => console.log(result))
+  .then(result => {
+    Unauthorized(result.status,"profile") 
+    console.log(result)
+    if(result.variable == "200"){
+      SuccessAlert("Success","Instructor Profile Update Successfully")
+      setbtn_loading(false)
+    }
+  })
   .catch(error => console.log('error', error));
 
  }

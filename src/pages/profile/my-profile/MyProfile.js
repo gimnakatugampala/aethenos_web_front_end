@@ -3,6 +3,10 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from '@mui/material/Button';
 import {GetInstructorProfileDetails, UpdateProfileDetails} from '../../../api'
+import Spinner from 'react-bootstrap/Spinner';
+import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
+import { FILE_PATH } from '../../../commonFunctions/FilePaths';
+
 
 const MyProfile = () => {
 
@@ -17,6 +21,8 @@ const MyProfile = () => {
     const [youtube, setyoutube] = useState("")
     const [profile_img, setprofile_img] = useState("")
     const [uploadImage, setuploadImage] = useState("")
+
+    const [btn_loading, setbtn_loading] = useState(false)
 
     useEffect(() => {
         GetInstructorProfileDetails(setfirst_Name,
@@ -33,7 +39,7 @@ const MyProfile = () => {
     
     // Save Profile Data
     const handleProfileData = () =>{
-        console.log(uploadImage)
+        console.log(typeof uploadImage)
         console.log(first_Name)
         console.log(last_name)
         console.log(headline)
@@ -44,6 +50,14 @@ const MyProfile = () => {
         console.log(linkedin)
         console.log(youtube)
 
+        if(first_Name == ""){
+            ErrorAlert("Error","Please Enter First Name")
+            return
+        }else if(last_name == ""){
+            ErrorAlert("Error","Please Enter Last Name")
+            return
+        }
+
         UpdateProfileDetails(uploadImage,
             first_Name,
             last_name,
@@ -53,7 +67,8 @@ const MyProfile = () => {
             twitter,
             facebook,
             linkedin,
-            youtube)
+            youtube,
+            setbtn_loading)
 
     }
 
@@ -106,8 +121,8 @@ const MyProfile = () => {
 
             <label class="form-label">Headline</label>
             <div class="input-group mb-3">
-                <input value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Udemy" />
-                <span class="input-group-text" >60</span>
+                <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Udemy" />
+                <span class="input-group-text" >{60 - headline.length}</span>
             </div>
 
             <div class="mb-3">
@@ -152,7 +167,9 @@ const MyProfile = () => {
             </div>
         </div>
 
-        <Button  onClick={handleProfileData} variant="contained">Save</Button>
+        {btn_loading ? <Button  variant="contained"><Spinner size="sm" animation="border" variant="light" /></Button> : <Button  onClick={handleProfileData} variant="contained">Save</Button>}
+
+        
 
         
     
@@ -170,7 +187,7 @@ const MyProfile = () => {
             <label>Minimum 200x200 pixels, Maximum 6000x6000 pixels</label>
 
             <div className='my-4 bg-light border p-3 text-center'>
-               {profile_img == "" ? <img src='https://img-c.udemycdn.com/user/200_H/anonymous_3.png' /> : <img id='previewImage' src={profile_img} />  } 
+               {profile_img == "" ? <img src='https://img-c.udemycdn.com/user/200_H/anonymous_3.png' /> : <img style={{height:'300px'}} id='previewImage' src={`${FILE_PATH}/${profile_img}`} />  } 
             </div>
 
             <div class="mb-3">
@@ -182,7 +199,7 @@ const MyProfile = () => {
 
         </div>
 
-            <Button onClick={handleProfileData} variant="contained">Save</Button>
+        {btn_loading ? <Button  variant="contained"><Spinner size="sm" animation="border" variant="light" /></Button> : <Button  onClick={handleProfileData} variant="contained">Save</Button>}
      
 
 
