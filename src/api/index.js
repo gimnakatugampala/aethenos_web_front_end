@@ -1798,7 +1798,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const CheckContentOwnership = async(code,setcourseOwnership) =>{
+ export const CheckOwnershipOfContent = async(code,setcourseOwnership) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -1809,14 +1809,62 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     redirect: 'follow'
   };
   
-  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseIsOwned/${code}`, requestOptions)
-    .then(response => response.text())
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/CheckOwnCourse/${code}`, requestOptions)
+    .then(response => response.json())
     .then(result => {
+      // console.log(result)
       Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
       setcourseOwnership(result)
-      console.log(result)
     })
     .catch(error => console.log('error', error));
+
+ }
+
+ export const CheckInstructorVerify = async(code,setcheckInstructorVerification) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstructorVerify", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+
+        Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+        setcheckInstructorVerification(result.isVerify)
+        
+      })
+      .catch(error => console.log('error', error));
+
+ }
+
+ export const ChangeInstructorVerify = async(code) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/verifyInstructorProfile", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        Unauthorized(result.status,`courses/manage/${code}`)
+      })
+      .catch(error => console.log('error', error));
 
  }
 

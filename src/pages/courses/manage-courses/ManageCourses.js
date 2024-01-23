@@ -23,7 +23,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
+import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -39,7 +39,7 @@ import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
 import AddCoupon from './promotions/AddCoupon';
-import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckContentOwnership} from '../../../api'
+import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckInstructorVerify, ChangeInstructorVerify, CheckOwnershipOfContent } from '../../../api'
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -76,81 +76,104 @@ const ManageCourses = () => {
   const [course_title, setcourse_title] = useState("")
   const [status_type, setstatus_type] = useState("")
 
-  const [courseOwnership, setcourseOwnership] = useState("")
-  const [checkOnwership, setcheckOnwership] = useState("")
+  const [checkInstructorVerification, setcheckInstructorVerification] = useState(null)
+  const [btn_loading, setbtn_loading] = useState(false)
+
+  const [courseOwnership, setcourseOwnership] = useState(0)
+  const [checkOnwership, setcheckOnwership] = useState(false)
   // -------- PERSONA ---------------
   const [options, setOptions] = useState({
-    templateId: "tmpl_JAZjHuAT738Q63BdgCuEJQre"
+    templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk"
   });
+
+  // tmpl_JAZjHuAT738Q63BdgCuEJQre
 
   const [flowType, setFlowType] = useState("embedded");
 
   const embeddedClientRef = useRef(null);
 
   const handleClose = () => setShow(false);
+
+
   const handleShow = () => {
 
-    // Get Content Ownership
-    if(courseOwnership == 0){
-      setShow(true)
-      return
-    }
+
+    setbtn_loading(true)
+
 
     // Check Personal ID
 
     // Send to Request
     // RequestSubmitReview(code)
 
-    // PERSONA
-    const client = new Persona.Client({
-      ...options,
-      environment: "sandbox",
-      onLoad: (error) => {
-        if (error) {
-          console.error(
-            `Failed with code: ${error.code} and message ${error.message}`
-          );
-        }
-
-        client.open();
-      },
-      onStart: (inquiryId) => {
-        console.log(`Started inquiry ${inquiryId}`);
-      },
-      onComplete: (inquiryId) => {
-        console.log(`Sending finished inquiry ${inquiryId} to backend`);
-        fetch(`/server-handler?inquiry-id=${inquiryId}`);
-      },
-      onEvent: (name, meta) => {
-        switch (name) {
-          case "start":
-            console.log(`Received event: start`);
-            break;
-          default:
-            console.log(
-              `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+    if(checkInstructorVerification == 0){
+      // PERSONA
+      const client = new Persona.Client({
+        ...options,
+        environment: "sandbox",
+        onLoad: (error) => {
+          if (error) {
+            setbtn_loading(false)
+            console.error(
+              `Failed with code: ${error.code} and message ${error.message}`
             );
-        }
-      }
-    });
-    embeddedClientRef.current = client;
-
-    window.exit = (force) =>
-      client ? client.exit(force) : alert("Initialize client first");
-
-
-    
-
-    
-
+          }
   
+          client.open();
+        },
+        onStart: (inquiryId) => {
+          console.log(`Started inquiry ${inquiryId}`);
+        },
+        onComplete: (inquiryId) => {
+          console.log(`Sending finished inquiry ${inquiryId} to backend`);
+          setbtn_loading(false)
+
+          // Verify Instructor
+          ChangeInstructorVerify(code)
+
+          if(courseOwnership == 0 || courseOwnership == false){
+            setShow(true)
+            return
+          }
+
+          fetch(`/server-handler?inquiry-id=${inquiryId}`);
+        },
+        onEvent: (name, meta) => {
+          switch (name) {
+            case "start":
+              console.log(`Received event: start`);
+              break;
+            default:
+              console.log(
+                `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+              );
+              setbtn_loading(false)
+          }
+        }
+      });
+      embeddedClientRef.current = client;
+  
+      window.exit = (force) =>
+        client ? client.exit(force) : alert("Initialize client first");
+
+      return
+    }
+
+     // Get Content Ownership
+    if(courseOwnership == 0){
+      setShow(true)
+      setbtn_loading(false)
+      return
+    }
+
   
   };
 
 
+  // Content Ownership - Accept
   const handleShowVerification = () => {
 
-    if(checkOnwership == "" || checkOnwership == false){
+    if(checkOnwership == 0 || checkOnwership == false){
       ErrorAlert("Unchecked Ownership","Please Accept the Content Ownership")
       return
     }
@@ -265,8 +288,11 @@ const ManageCourses = () => {
   },[window.history.state]);
 
   useEffect(() => {
-    CheckContentOwnership(code,setcourseOwnership)
-  }, [courseOwnership])
+    CheckInstructorVerify(code,setcheckInstructorVerification)
+    CheckOwnershipOfContent(code,setcourseOwnership)
+    console.log(checkInstructorVerification)
+    console.log(courseOwnership)
+  }, [code,checkInstructorVerification,options,courseOwnership])
   
 
 
@@ -378,7 +404,8 @@ const ManageCourses = () => {
         </ListItemButton>
 
         <ListItemText>
-           <Button onClick={handleShow} className='mx-4 w-75 my-3' variant="contained">Submit For Review</Button>
+          {btn_loading ? <Button className='mx-4 w-75 my-3 py-2' variant="contained"><Spinner  size="sm" animation="border" variant="light" /> </Button> : <Button onClick={handleShow} className='mx-4 w-75 my-3' variant="contained">Submit For Review</Button>}
+           
         </ListItemText>
         
 
@@ -414,14 +441,12 @@ const ManageCourses = () => {
         <Modal.Body>
           <h6 className='my-4'><b>Identify your ownership rights to the courses content</b></h6>
 
-          <p className='m-0 p-0'>Please select one of the options below</p>
-
+      
           <div className="form-check my-3">
-          <input onChange={(e) => setcheckOnwership(e.target.checked)} className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-          <label className="form-check-label" for="flexCheckDefault"> 
-        
+          <Checkbox checked={checkOnwership} onChange={(e) => setcheckOnwership(e.target.checked)} className="form-check-input"  defaultChecked size="small" />
+          <label className="form-check-label mx-1"> 
          <p><b>I created most or all of the contest of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos.</b></p> 
-           </label>
+          </label>
         </div>
 
       
