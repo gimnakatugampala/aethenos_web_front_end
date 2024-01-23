@@ -649,7 +649,7 @@ console.log(item)
                       {showDescription == index && (
                         <>
                         <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                        {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> */}
+                         <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
                         <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
 
                         <div className="d-flex my-2">
@@ -675,7 +675,7 @@ console.log(item)
                         {showResources == index && (
                           <div>
                             <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                            {/* <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button> */}
+                             <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button> 
                             
                             {/* Tabs */}
                             <Tabs

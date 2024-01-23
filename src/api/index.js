@@ -256,6 +256,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
 
     setcourses(result.sort((a, b) => new Date(b.course.createdDate) - new Date(a.course.createdDate)))
 
+    if(result.length == 0){
+      setcourses(null)
+    }
+
 
   })
   .catch(error => console.log('error', error));
