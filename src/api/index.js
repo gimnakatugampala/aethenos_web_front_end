@@ -1846,6 +1846,29 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
+ export const CheckInstructorVerification = async(setcheckInstructorVerification) =>{
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstructorVerify", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+
+        setcheckInstructorVerification(result.isVerify)
+        
+      })
+      .catch(error => console.log('error', error));
+
+ }
+
  export const ChangeInstructorVerify = async(code) =>{
 
   var myHeaders = new Headers();
@@ -1863,6 +1886,28 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
       .then(result => {
         console.log(result)
         Unauthorized(result.status,`courses/manage/${code}`)
+      })
+      .catch(error => console.log('error', error));
+
+ }
+
+ export const ChangeInstructorVerification = async() =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/verifyInstructorProfile", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        Unauthorized(result.status,`verification`)
       })
       .catch(error => console.log('error', error));
 

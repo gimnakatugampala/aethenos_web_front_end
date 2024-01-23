@@ -138,14 +138,14 @@ function Header({
 
         <Divider />
         
-        {/* <a href="/verification">
+        <a href="/verification">
         <MenuItem onClick={handleClose}>
         <ListItemIcon>
           <CheckCircleIcon fontSize="medium" />
         </ListItemIcon>
            Verification
         </MenuItem>
-        </a> */}
+        </a>
 
         <Divider />
 

@@ -96,8 +96,6 @@ const ManageCourses = () => {
 
 
   const handleShow = () => {
-
-
     setbtn_loading(true)
 
 
