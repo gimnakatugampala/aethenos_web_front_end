@@ -178,8 +178,8 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/editcourse/getCourse
     setcourse_title(result.course_title)
     setcourse_cat(result.course_category_id)
     setkeywords(result.keywordArray)
-    setpreview_img(`http://185.209.223.202:8080/aethenos-assert/${result.img}`)
-    setpreview_video(`http://185.209.223.202:8080/aethenos-assert/${result.test_video}`)
+    setpreview_img(`https://aethenosinstructor.exon.lk:2053/aethenos-assert/${result.img}`)
+    setpreview_video(`https://aethenosinstructor.exon.lk:2053/aethenos-assert/${result.test_video}`)
 
 
   })
