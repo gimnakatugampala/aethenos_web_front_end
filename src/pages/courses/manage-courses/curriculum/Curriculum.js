@@ -415,12 +415,7 @@ console.log(item)
                 item.type == "Lecture" ? 
                 (<Accordion key={index} className="my-3">
                   <AccordionSummary
-                  onClick={(e) => {
-                    setshowDescRes(false)
-                          setshowMain(showMain == index ? null : index)
-                          console.log(index)
-                          setshowContentAdd(showContentAdd == index ? null : index)
-                  }}
+               
                     className="accordian-header d-flex justify-content-between align-items-center"
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -1062,7 +1057,11 @@ console.log(item)
             </CardContent>
           </div> 
       )) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
-      ) : "No Courses"}
+      ) : 
+      <div className="d-flex justify-content-center">
+        <h4>No Curriculums Found</h4>
+      </div>
+      }
 
 
         <div className="m-2">
