@@ -518,7 +518,7 @@ console.log(course_cat)
 
  }
 
- export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setcourse_topic) =>{
+ export const GetCourseLandingPage = async(code,setcourse_title,setcourse_subtitle,setcourse_desc,setcourse_topic,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang) =>{
 
 
   var myHeaders = new Headers();
@@ -545,7 +545,7 @@ console.log(course_cat)
       setcourse_sub_cat(result.subCategoryId)
       setlevel(result.levelId)
       setlang(result.languageId)
-      // setcourse_topic()
+      setcourse_topic(result.topicId)
       setpreview_img(`${result.courseImage}`)
       seVideoSrc(`${result.promotionalVideo}`)
 
@@ -1814,6 +1814,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(result => {
       Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
       setcourseOwnership(result)
+      console.log(result)
     })
     .catch(error => console.log('error', error));
 

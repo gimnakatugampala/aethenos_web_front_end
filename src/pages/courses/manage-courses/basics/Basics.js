@@ -85,6 +85,7 @@ const Basics = ({code}) => {
     // console.log(course_image)
     // console.log(promo_vid) 
     // console.log(videoSrc)
+    // console.log(course_topic)
 
     if(course_title == ""){
       ErrorAlert("Empty Field","Please Enter Course Title")
@@ -179,7 +180,7 @@ const handleFileChange = (event) => {
 
 
   useEffect(() => {
-    GetCourseLandingPage(code,setcourse_title,setcourse_subtitle,setcourse_desc,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setpromo_vid,setcourse_topic)
+    GetCourseLandingPage(code,setcourse_title,setcourse_subtitle,setcourse_desc,setcourse_topic,setpreview_img,seVideoSrc,setkeywords,setcourse_cat,setcourse_sub_cat,setlevel,setlang,setpromo_vid)
 
     GetLanguages(setlangData)
 
@@ -187,8 +188,7 @@ const handleFileChange = (event) => {
 
     GetCategories(setcat)
 
- 
- 
+  
 
   }, [code])
 
@@ -201,6 +201,13 @@ const handleFileChange = (event) => {
 
     
   }, [course_sub_cat])
+
+  useEffect(() => {
+    console.log("Topic " + course_topic)
+    console.log("Cat " + course_cat)
+    console.log("Sub Cat " + course_sub_cat)
+  })
+  
   
   
   
@@ -295,6 +302,7 @@ const handleFileChange = (event) => {
           </div>
 
           <div className="row my-3">
+
             <div className="col-md-6">
             <Form.Label>Language</Form.Label>
             <Form.Select value={lang} onChange={(e) => setlang(e.target.value)} aria-label="Default select example">
@@ -318,7 +326,7 @@ const handleFileChange = (event) => {
             
             <div className="col-md-4 mt-3">
             <Form.Label>Course Category</Form.Label>
-            <Form.Select value={course_cat} onChange={(e) => setcourse_cat(e.target.value)} aria-label="Default select example">
+            <Form.Select value={course_cat} onChange={(e) => setcourse_cat(e.target.value)} >
             <option value="">Select Course Category</option>
             {cat != null && cat.map((category,index) => (
             <option key={index} value={category.id}>{category.name}</option>
@@ -328,18 +336,18 @@ const handleFileChange = (event) => {
 
             <div className="col-md-5 mt-3">
             <Form.Label>Course Sub Category</Form.Label>
-              <Form.Select value={course_sub_cat} onChange={(e) => setcourse_sub_cat(e.target.value)} aria-label="Default select example">
+              <Form.Select value={course_sub_cat} onChange={(e) =>  setcourse_sub_cat(e.target.value)} >
               <option value="">Select Course Sub Category</option>
               {subcatData != null && subcatData.map((subcategory,index) => (
-              <option key={index} value={subcategory.id} selected={course_sub_cat == subcategory.id}>{subcategory.name}</option>
+              <option key={index} value={subcategory.id}>{subcategory.name}</option>
               ))}
             </Form.Select>
             </div>
           
             <div className="col-md-3 mt-3">
             <Form.Label>Course Topic</Form.Label>
-              <Form.Select value={course_topic} onChange={(e) => setcourse_topic(e.target.value)} aria-label="Default select example">
-              <option value="">Select Course Sub Category</option>
+              <Form.Select value={course_topic} onChange={(e) => setcourse_topic(e.target.value)} >
+              <option value="">Select Topic</option>
               {topicsData != null &&  topicsData.map((topic,index) => (
               <option key={index} value={topic.id}>{topic.topic}</option>
               ))}
