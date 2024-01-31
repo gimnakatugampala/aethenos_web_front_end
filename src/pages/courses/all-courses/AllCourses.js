@@ -86,16 +86,14 @@ const AllCourses = () => {
 
 
 {/* List One */}
-{courses != null ? courses.length > 0 ? 
+{courses != null ?  courses.length > 0 ? 
 courses.map((course,key) => (
 <CourseItem key={key} course={course}  filledPercent={course.progress}  />
 ))
 : <LoadingSpinner w={"40%"} h={"100%"} wpclass={"m-5"} /> : 
 <div className='d-flex justify-content-center align-items-center mt-5'>
-    <h4>No Courses Found</h4>
-</div>
-
-}
+  <h4>No Courses Found</h4>
+</div>  }
 
 
     
