@@ -248,10 +248,17 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
   .then(response => response.json())
   .then(result => {
     console.log(result)
+
+    
     
     if(result.variable == "This is not an instructor"){
       Unauthorized(401,"courses")
     }
+
+    if(result.message == "Error"){
+      setcourses(null)
+    }
+
     Unauthorized(result.status,"courses")
 
     setcourses(result.sort((a, b) => new Date(b.course.createdDate) - new Date(a.course.createdDate)))
@@ -2901,5 +2908,120 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
 
     })
     .catch(error => console.log('error', error));
+
+ }
+
+//  Students  - Analtics
+ export const GetCousesOfInstructror = async(setcmbCourses) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/analytics/getCoursesByInstructor", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      Unauthorized(result.status,`performance/students`)
+      setcmbCourses(result)
+    })
+    .catch((error) => console.error(error));
+
+ }
+
+ export const GetAllAnnoucement = async(code,setannoucements) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+
+  const formdata = new FormData();
+  formdata.append("courseCode", `${code}`);
+
+  const requestOptions = {
+    method: "POST",
+    body: formdata,
+    headers: myHeaders,
+    redirect: "follow"
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/getAnnouncements", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      Unauthorized(result.status,`performance/announcements`)
+      setannoucements(result)
+
+      if(result.message == "Error"){
+        setannoucements([])
+      }
+    })
+    .catch((error) => console.error(error));
+ }
+
+ function stripHTML(html) {
+  var tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+  return tempDiv.textContent || tempDiv.innerText || "";
+}
+
+ export const AddAnnoucement = async(courseCode,announcementTitle,AnnoucementDesc,setComposeVisible,setannouncementTitle,setAnnoucementDesc,setannoucements) =>{
+
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  const formdata = new FormData();
+formdata.append("courseCode", `${courseCode}`);
+formdata.append("title", `${announcementTitle}`);
+formdata.append("content", `${stripHTML(AnnoucementDesc)}`);
+
+const requestOptions = {
+  method: "POST",
+  body: formdata,
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAnnouncements", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`communications/announcements`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+      setComposeVisible(false)
+      setAnnoucementDesc("")
+      setannouncementTitle("")
+      GetAllAnnoucement(courseCode,setannoucements)
+      return
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+ }
+
+
+ export const GetStudentsOfInstructor = async() =>{
+
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/analytics/getStudentsEnrollByCourse/123456", requestOptions)
+    .then((response) => response.json())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+
 
  }

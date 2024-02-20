@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -14,6 +14,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import Map from "./Map";
+import { GetCousesOfInstructror, GetStudentsOfInstructor } from "../../../api";
 
 const Students = () => {
   const headerCellStyle = {
@@ -23,6 +24,16 @@ const Students = () => {
     window.location.href = "/communications/messages"
     console.log("Button clicked for row with data:", rowData);
   };
+
+  const [cmbCourses, setcmbCourses] = useState([])
+
+  // Get Courses
+  useEffect(() => {
+    GetCousesOfInstructror(setcmbCourses)
+    // GetStudentsOfInstructor()
+  }, [cmbCourses])
+  
+
   return (
     <div>
       <div className="d-flex justify-content-between p-2">
@@ -37,15 +48,16 @@ const Students = () => {
 
         <FormControl fullWidth>
         <NativeSelect
-          defaultValue={10}
+          defaultValue={""}
           inputProps={{
             name: 'age',
             id: 'uncontrolled-native',
           }}
         >
-          <option value={10}>All Courses</option>
-          <option value={20}>Learn Photoshop</option>
-          <option value={30}>Software Development</option>
+          <option value={""}>All Courses</option>
+          {cmbCourses.length > 0 && cmbCourses.map((course) => (
+            <option value={course.code}>{course.title}</option>
+          ))}
         </NativeSelect>
       </FormControl>
 
