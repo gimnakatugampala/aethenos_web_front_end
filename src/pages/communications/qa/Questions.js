@@ -20,6 +20,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from '@mui/material/Button';
+import { Badge } from "@mui/material";
 
 
 
@@ -84,7 +85,7 @@ const StyledFab = styled(Fab)({
   margin: "0 auto",
 });
 
-export default function Questions({questions}) {
+export default function Questions({setanswerContent, questions, setquestionItemContent , setquestionItemCode}) {
   const [searchKeyword, setSearchKeyword] = React.useState("");
   const [filteredMessages, setFilteredMessages] = React.useState(questions);
 
@@ -108,6 +109,19 @@ export default function Questions({questions}) {
     filterMessages();
   }, [searchKeyword]);
 
+
+
+  // ------------------- Select Question Item  ----------------
+  const handleSelectQuestionItem = (questionCode,question,answer) =>{
+    console.log(questionCode)
+    console.log(question)
+
+    setquestionItemCode(questionCode)
+    setquestionItemContent(question)
+    setanswerContent(answer)
+
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -130,13 +144,14 @@ export default function Questions({questions}) {
       </div>
       <Paper square sx={{ height: "505px", overflow: "auto", pb: "50px" }}>
         <List sx={{ mb: 2 }}>
-          {filteredMessages.map(({ questionCode, userName, question }) => (
+          {filteredMessages.map(({ questionCode, userName, question , isRead , answer }) => (
             <React.Fragment key={questionCode}>
-              <ListItem button>
+              <ListItem onClick={() => handleSelectQuestionItem(questionCode,question,answer)} button>
                 <ListItemAvatar>
                   <Avatar alt={userName} src={"/static/images/avatar/1.jpg"} />
                 </ListItemAvatar>
                 <ListItemText primary={userName} secondary={question} />
+                 {isRead == "0" && <Badge invisible={false} variant="dot" color="primary"></Badge>} 
               </ListItem>
             </React.Fragment>
           ))}

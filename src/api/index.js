@@ -3050,3 +3050,33 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/getAll
   .catch((error) => console.error(error));
 
  }
+
+ export const AddAnswer = async(questionItemCode,answer,setanswer) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  const formdata = new FormData();
+formdata.append("QuestionCode", `${questionItemCode}`);
+formdata.append("answer", `${answer}`);
+
+const requestOptions = {
+  method: "PUT",
+  body: formdata,
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAnswer", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+      setanswer("")
+      return
+    }
+  })
+  .catch((error) => console.error(error));
+
+ }

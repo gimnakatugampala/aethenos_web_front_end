@@ -13,27 +13,54 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
-import { GetAllQuestions, GetCousesOfInstructror } from "../../../api";
+import { AddAnswer, GetAllQuestions, GetCousesOfInstructror } from "../../../api";
+import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
 
 
 const QA = () => {
-
-  
 
   const [courseCode, setcourseCode] = useState("")
   const [cmbCourses, setcmbCourses] = useState([])
 
   const [questions, setquestions] = useState([])
 
+  //  ---------------- Select Question Room -------------
+  const [questionItemCode, setquestionItemCode] = useState("")
+  const [questionItemContent, setquestionItemContent] = useState("")
+  const [answerContent, setanswerContent] = useState(null)
+  //  ---------------- Select Question Room -------------
+
+
+  // ---------- Submit Answer -------------------
+  const [answer, setanswer] = useState("")
+  // ---------- Submit Answer -------------------
+
   useEffect(() => {
     GetCousesOfInstructror(setcmbCourses)
     GetAllQuestions(courseCode,setquestions)
   }, [courseCode])
   
+  // ---------- Select QA --------------
   const handleSelectQA = (e) =>{
     console.log(e.target.value)
     setcourseCode(e.target.value)
+    setquestionItemCode("")
+    setquestionItemContent("")
 
+  }
+
+
+  // -------------- Submit Answer
+  const handlePublishAnswer = () =>{
+    console.log(questionItemCode)
+    console.log(answer)
+    if(answer == ""){
+      ErrorAlert("Error","Please Enter An Answer")
+      return
+    }
+
+    AddAnswer(questionItemCode,answer,setanswer)
+    GetAllQuestions(courseCode,setquestions)
   }
 
   return (
@@ -129,19 +156,22 @@ const QA = () => {
         <div className="row">
           <div className="col-md-4">
             {questions.length > 0 && (
-              <Questions questions={questions} />
+              <Questions setanswerContent={setanswerContent} questions={questions} setquestionItemContent={setquestionItemContent} setquestionItemCode={setquestionItemCode} />
             )}
           </div>
           <div className="col-md-8">
-            <ScrollBarPage />
+           {questionItemContent != "" && <ScrollBarPage answerContent={answerContent} questionItemContent={questionItemContent} />} 
+            {questionItemCode != "" && (
             <InputGroup className="mb-3">
               <Form.Control
+              onChange={(e) => setanswer(e.target.value)}
                 placeholder="Post a public answer"
                 aria-label="Post a public answer"
                 aria-describedby="basic-addon2"
               />
               <div className="col-2">
                 <Button
+                  onClick={handlePublishAnswer}
                   variant="contained"
                   className="w-90"
                 >
@@ -149,6 +179,7 @@ const QA = () => {
                 </Button>
               </div>
             </InputGroup>
+            )}
           </div>
         </div>
       </Card>
