@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ScrollBarPage from "./ScrollBarPage";
 import "./QA.css";
 import FormGroup from "@mui/material/FormGroup";
@@ -13,9 +13,29 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+import { GetAllQuestions, GetCousesOfInstructror } from "../../../api";
 
 
 const QA = () => {
+
+  
+
+  const [courseCode, setcourseCode] = useState("")
+  const [cmbCourses, setcmbCourses] = useState([])
+
+  const [questions, setquestions] = useState([])
+
+  useEffect(() => {
+    GetCousesOfInstructror(setcmbCourses)
+    GetAllQuestions(courseCode,setquestions)
+  }, [courseCode])
+  
+  const handleSelectQA = (e) =>{
+    console.log(e.target.value)
+    setcourseCode(e.target.value)
+
+  }
+
   return (
     <div className="container">
       <div className="row">
@@ -29,15 +49,17 @@ const QA = () => {
 
         <FormControl fullWidth>
         <NativeSelect
-          defaultValue={10}
+          onChange={handleSelectQA}
+          defaultValue={""}
           inputProps={{
             name: 'age',
             id: 'uncontrolled-native',
           }}
         >
-          <option value={10}>All Courses</option>
-          <option value={20}>Learn Photshop</option>
-          <option value={30}>Software Evelopment</option>
+           <option value={""}>All Courses</option>
+          {cmbCourses.length > 0 && cmbCourses.map((course,index) => (
+            <option key={index} value={course.code}>{course.title}</option>
+          ))}
         </NativeSelect>
       </FormControl>
 
@@ -106,7 +128,9 @@ const QA = () => {
       <Card>
         <div className="row">
           <div className="col-md-4">
-            <Questions />
+            {questions.length > 0 && (
+              <Questions questions={questions} />
+            )}
           </div>
           <div className="col-md-8">
             <ScrollBarPage />

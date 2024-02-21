@@ -3025,3 +3025,28 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAnn
 
 
  }
+
+ export const GetAllQuestions = async(courseCode,setquestions) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  const formdata = new FormData();
+formdata.append("courseCode", `${courseCode}`);
+
+const requestOptions = {
+  method: "POST",
+  body: formdata,
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/getAllQuestions", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    setquestions(result)
+  })
+  .catch((error) => console.error(error));
+
+ }

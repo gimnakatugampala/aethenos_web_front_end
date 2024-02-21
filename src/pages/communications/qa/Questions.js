@@ -84,16 +84,16 @@ const StyledFab = styled(Fab)({
   margin: "0 auto",
 });
 
-export default function Questions() {
+export default function Questions({questions}) {
   const [searchKeyword, setSearchKeyword] = React.useState("");
-  const [filteredMessages, setFilteredMessages] = React.useState(messages);
+  const [filteredMessages, setFilteredMessages] = React.useState(questions);
 
   // Function to filter messages based on the search keyword
   const filterMessages = () => {
-    const filtered = messages.filter(
+    const filtered = questions.filter(
       (message) =>
-        message.primary.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-        message.secondary.toLowerCase().includes(searchKeyword.toLowerCase())
+        message.userName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        message.question.toLowerCase().includes(searchKeyword.toLowerCase())
     );
     setFilteredMessages(filtered);
   };
@@ -130,13 +130,13 @@ export default function Questions() {
       </div>
       <Paper square sx={{ height: "505px", overflow: "auto", pb: "50px" }}>
         <List sx={{ mb: 2 }}>
-          {filteredMessages.map(({ id, primary, secondary, person }) => (
-            <React.Fragment key={id}>
+          {filteredMessages.map(({ questionCode, userName, question }) => (
+            <React.Fragment key={questionCode}>
               <ListItem button>
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src={person} />
+                  <Avatar alt={userName} src={"/static/images/avatar/1.jpg"} />
                 </ListItemAvatar>
-                <ListItemText primary={primary} secondary={secondary} />
+                <ListItemText primary={userName} secondary={question} />
               </ListItem>
             </React.Fragment>
           ))}
