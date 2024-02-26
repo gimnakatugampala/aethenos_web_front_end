@@ -16,12 +16,18 @@ import {
   Form,
 } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
+import { AddReplyToReview } from "../../../api";
+import moment from "moment";
+import { FILE_PATH } from "../../../commonFunctions/FilePaths";
 
 // import Button from '@mui/material/Button';
 // import "react-comments-section/dist/index.css";
 
-const CommentBox = () => {
-  const [isExpanded, setIsExpanded] = useState(false); // State to track the expansion
+const CommentBox = ({reviewCode, replies , setcmbCourses}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [comment, setcomment] = useState("")
+  const [btnLoading, setbtnLoading] = useState(false)
 
   const data = [
     {
@@ -50,9 +56,25 @@ const CommentBox = () => {
     },
   ];
 
+ 
   const handleButtonClick = () => {
     setIsExpanded(!isExpanded); // Toggle the expansion state
   };
+
+  // ----------- Add Reply ------------------
+  const hanldeReply = (e) => {
+    e.preventDefault()
+
+    if(comment == ""){
+      ErrorAlert("Empty Field","Please Add A Reply")
+      return
+    }
+
+    AddReplyToReview(comment,reviewCode,setbtnLoading,setcomment,setcmbCourses)
+
+    console.log(comment)
+    console.log(reviewCode)
+  }
 
   return (
     <div>
@@ -72,43 +94,39 @@ const CommentBox = () => {
         </Header>
 
 
-        <Form reply>
-            <FormTextArea />
+        <Form onSubmit={hanldeReply} reply>
+            <FormTextArea onChange={(e) => setcomment(e.target.value)} />
+            {btnLoading ? (
+            <Button loading primary>
+              Loading
+            </Button>) : (
             <Button
               content='Add Reply'
               labelPosition='left'
               icon='edit'
               primary
             />
+              )}
         </Form>
 
-       <Comment>
-         <CommentAvatar as='a' src='https://react.semantic-ui.com/images/avatar/small/steve.jpg' />
-         <CommentContent>
-           <CommentAuthor as='a'>Steve Jobes</CommentAuthor>
-           <CommentMetadata>
-             <div>2 days ago</div>
-           </CommentMetadata>
-           <CommentText>Revolutionary!</CommentText>
-           <CommentActions>
-             <CommentAction active>Reply</CommentAction>
-           </CommentActions>
-         </CommentContent>
-       </Comment>
+        {replies.length > 0 &&  replies
+        .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate)) // Sort comments by createdDate
+        .map((reply,index) => (
+          <Comment key={index}>
+            <CommentAvatar as='a' src={reply.profileImg == "" ? "../images/user-profile.png" : `${FILE_PATH}${reply.profileImg}`} />
+            <CommentContent>
+              <CommentAuthor as='a'>{reply.name}</CommentAuthor>
+              <CommentMetadata>
+                <div>{moment(reply.createdDate, "YYYYMMDD").fromNow()}</div>
+              </CommentMetadata>
+              <CommentText>{reply.comment}</CommentText>
+              <CommentActions>
+                <CommentAction active>Reply</CommentAction>
+              </CommentActions>
+            </CommentContent>
+          </Comment>
+        ))}
 
-       <Comment>
-         <CommentAvatar as='a' src='https://react.semantic-ui.com/images/avatar/small/steve.jpg' />
-         <CommentContent>
-           <CommentAuthor as='a'>Steve Jobes</CommentAuthor>
-           <CommentMetadata>
-             <div>2 days ago</div>
-           </CommentMetadata>
-           <CommentText>Revolutionary!</CommentText>
-           <CommentActions>
-             <CommentAction active>Reply</CommentAction>
-           </CommentActions>
-         </CommentContent>
-       </Comment>
 
 
        

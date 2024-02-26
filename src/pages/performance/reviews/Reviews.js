@@ -19,16 +19,22 @@ import PaginationItem from "@mui/material/PaginationItem";
 import CommentBox from "./CommentBox";
 import { GetCousesOfInstructror, GetReviewByCourse } from "../../../api";
 import { FILE_PATH } from "../../../commonFunctions/FilePaths";
+import { Rating } from 'react-simple-star-rating'
+import moment from 'moment'
 
 
 
 const Reviews = () => {
+
   const handleRate = (rating) => {
     // Handle rating logic here (e.g., send it to the server).
     console.log(`Rated with ${rating} stars`);
   };
+
   const location = useLocation();
   const query = new URLSearchParams(location.search);
+  const [rating, setRating] = useState(0)
+
   const page = parseInt(query.get("page") || "1", 10);
 
   const [courseCode, setcourseCode] = useState("")
@@ -134,28 +140,74 @@ const Reviews = () => {
           <div className="col-md-9">
             {/* 1st card */}
               {SelectedCourse != null && (
-            <Card className="p-2">
-            <CardContent>
-              <div className="row p-1 ml-5 mr-5">
-                <div className="col-3">
-                  <img
-                    src={`${FILE_PATH}${SelectedCourse.courseImg}`}
-                    className="card-img"
-                    alt="Sample"
-                  />
-                </div>
-                <div className="col-md-9">
-                  <div className="card-body">
-                    <h6 className="card-title m-0 p-0">{SelectedCourse.courseTitle}</h6>
-                    <p style={{fontSize:'13px'}} className="my-2 p-0">{SelectedCourse.rating} Course Rating</p>
+              <>
+              <Card>
+              <CardContent>
+                <div className="row p-1 ml-5 mr-5">
+                  <div className="col-3">
+                    <img
+                      src={`${FILE_PATH}${SelectedCourse.courseImg}`}
+                      className="card-img"
+                      alt="Sample"
+                    />
+                  </div>
+                  <div className="col-md-9">
+                    <div className="card-body">
+                      <h6 className="card-title m-0 p-0">{SelectedCourse.courseTitle}</h6>
+                      <p style={{fontSize:'13px'}} className="my-2 p-0">{SelectedCourse.rating} Course Rating</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+                </CardContent>
+              </Card>
+
+              {SelectedCourse.reviewResponses.length > 0 ? (
+                SelectedCourse.reviewResponses.map((review,index) =>(
+                <Card key={index} className="p-1 my-1 mb-3">
+                <CardContent>
+                  <div className="row mr-5">
+                    <div className="col-9 d-flex justify-content-start">
+                      <img
+                        src={review.userProfile == null ? "../images/user-profile.png" : `${FILE_PATH}${SelectedCourse.courseImg}`}
+                        style={{ width: "70px" ,borderRadius:50,height:'70px',marginRight:20}}
+                        alt="Sample"
+                      />
+                    <div>
+                        <h6 className="text-primary m-0 p-0">
+                          {review.fullName}
+                        </h6>
+                        <p className="m-0 p-0">{moment(review.date, "YYYYMMDD").fromNow()}</p>
+                      <Rating size={20} iconsCount={5} readonly initialValue={review.rating} />
+                    </div>
+                    </div>
+                  </div>
+                  <div className="row  ml-5 mr-5">
+                
+                  
+                <div className="col-md-12 p-2">
+                  {review.comment}
+                </div>
+            
+                  </div>
+                  <div className="pl-5">
+                    <CommentBox setcmbCourses={setcmbCourses} replies={review.replies} reviewCode={review.reviewCode} />
+                  </div>
+                </CardContent>
+              </Card>
+                ))
+              ) : 
+              <Card className="p-2">
+              <CardContent>
+                <h3>No Reviews Found</h3>
               </CardContent>
-            </Card>
+              </Card>}
+              </>
               )}
 
-            <Card className="p-5 my-1 mb-3">
+           
+
+            
+            {/* <Card className="p-5 my-1 mb-3">
               <CardContent>
                 <div className="row mr-5">
                   <div className="col-9 d-flex justify-content-start">
@@ -202,7 +254,7 @@ const Reviews = () => {
                   <CommentBox />
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
 
             {/* <div className="container">
               <div className="row">
