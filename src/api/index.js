@@ -3080,3 +3080,24 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAns
   .catch((error) => console.error(error));
 
  }
+ 
+ export const GetReviewByCourse = async(courseCode,setSelectedCourse) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/payment/getCourseWithReviewsByCourseCode/${courseCode}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      setSelectedCourse(result)
+    })
+    .catch((error) => console.error(error));
+
+ }

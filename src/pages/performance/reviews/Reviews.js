@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -17,6 +17,9 @@ import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import CommentBox from "./CommentBox";
+import { GetCousesOfInstructror, GetReviewByCourse } from "../../../api";
+import { FILE_PATH } from "../../../commonFunctions/FilePaths";
+
 
 
 const Reviews = () => {
@@ -27,6 +30,23 @@ const Reviews = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get("page") || "1", 10);
+
+  const [courseCode, setcourseCode] = useState("")
+  const [cmbCourses, setcmbCourses] = useState([])
+
+  const [SelectedCourse, setSelectedCourse] = useState(null)
+
+
+
+  useEffect(() => {
+    GetCousesOfInstructror(setcmbCourses)
+  }, [courseCode])
+
+  const handleSelectReviews = (e) =>{
+    console.log(e.target.value)
+    setcourseCode(e.target.value)
+    GetReviewByCourse(e.target.value,setSelectedCourse)
+  }
 
   return (
     <div>
@@ -40,12 +60,11 @@ const Reviews = () => {
             style={{ height: "1000vh" }}
           >
             <div className="combo-box mb-4">
-              <select className="form-select">
-                <option value="option1">All Courses</option>
-                <option value="option2">Course 1</option>
-                <option value="option3">Course 2</option>
-                <option value="option4">Course 3</option>
-                <option value="option5">Course 4</option>
+              <select onChange={handleSelectReviews} className="form-select">
+              <option value={""}>All Courses</option>
+              {cmbCourses.length > 0 && cmbCourses.map((course,index) => (
+            <option key={index} value={course.code}>{course.title}</option>
+          ))}
               </select>
             </div>
             <div>
@@ -114,28 +133,27 @@ const Reviews = () => {
           {/* second column */}
           <div className="col-md-9">
             {/* 1st card */}
+              {SelectedCourse != null && (
             <Card className="p-2">
             <CardContent>
               <div className="row p-1 ml-5 mr-5">
                 <div className="col-3">
                   <img
-                    src="https://media.istockphoto.com/id/1366428092/photo/webinar-e-learning-skills-business-internet-technology-concepts-training-webinar-e-learning.webp?b=1&s=170667a&w=0&k=20&c=qjK4h0qt4W_NNG8TmboGw8RDRv8TNzEoFM_JEDZ1Ah0="
+                    src={`${FILE_PATH}${SelectedCourse.courseImg}`}
                     className="card-img"
                     alt="Sample"
                   />
                 </div>
                 <div className="col-md-9">
                   <div className="card-body">
-                    <h6 className="card-title m-0 p-0">Automate the Boring Stuff with Python Programming</h6>
-                    <p style={{fontSize:'13px'}} className="my-2 p-0">4.55 Course Rating</p>
+                    <h6 className="card-title m-0 p-0">{SelectedCourse.courseTitle}</h6>
+                    <p style={{fontSize:'13px'}} className="my-2 p-0">{SelectedCourse.rating} Course Rating</p>
                   </div>
                 </div>
-                {/* <div className="col-md-4 mt-3">
-                  <Button variant="contained"><i class="fa-solid fa-eye mx-1"></i> View Summery</Button>
-                </div> */}
               </div>
               </CardContent>
             </Card>
+              )}
 
             <Card className="p-5 my-1 mb-3">
               <CardContent>
@@ -186,7 +204,7 @@ const Reviews = () => {
               </CardContent>
             </Card>
 
-            <div className="container">
+            {/* <div className="container">
               <div className="row">
                 <div className="col-12 d-flex justify-content-center">
                   <Pagination
@@ -204,7 +222,7 @@ const Reviews = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
