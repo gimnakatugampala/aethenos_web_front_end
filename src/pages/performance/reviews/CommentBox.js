@@ -72,8 +72,6 @@ const CommentBox = ({reviewCode, replies , setcmbCourses}) => {
 
     AddReplyToReview(comment,reviewCode,setbtnLoading,setcomment,setcmbCourses)
 
-    console.log(comment)
-    console.log(reviewCode)
   }
 
   return (

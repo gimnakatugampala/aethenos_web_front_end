@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -7,7 +7,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import Button from '@mui/material/Button';
-
+import Form from 'react-bootstrap/Form';
 import {
   Paper,
   List,
@@ -29,6 +29,8 @@ import { MessageBox } from 'react-chat-elements'
 
 import 'react-chat-elements/dist/main.css'
 import './Messages.css'
+import { AddSendMessage, GetAllChatRoomMessages, GetAllChatRooms, GetAllInstructorsofThePurchaseMsg } from "../../../api";
+import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
 
 function Messages() {
   const initialMessages = {
@@ -65,9 +67,20 @@ function Messages() {
   };
 
   const [selectedUser, setSelectedUser] = useState("User1");
+  const [showAddMessage, setshowAddMessage] = useState(true)
   const [messages, setMessages] = useState(initialMessages[selectedUser]);
   const [messageText, setMessageText] = useState("");
   const [userFilter, setUserFilter] = useState("");
+
+  const [instructors, setinstructors] = useState([])
+  const [selectedInstructor, setselectedInstructor] = useState("")
+  const [selectedCourse, setselectedCourse] = useState("")
+  const [messageTextAdd, setmessageTextAdd] = useState("")
+
+  const [roomMessages, setroomMessages] = useState([])
+
+  const [selectedChatCode, setselectedChatCode] = useState("")
+  const [chatRooms, setchatRooms] = useState([])
 
   const handleMessageSend = () => {
     if (messageText.trim() === "") return;
@@ -82,13 +95,58 @@ function Messages() {
   };
 
   const handleUserClick = (user) => {
-    setSelectedUser(user);
-    setMessages(initialMessages[user]);
+    setSelectedUser(user.to);
+    // setMessages(initialMessages[user]);
+    console.log(user)
+    setselectedCourse(user.courseCode)
+    setselectedChatCode(user.chatCode)
+    setselectedInstructor(user.toUserCode)
+    GetAllChatRoomMessages(user.chatCode,setroomMessages)
   };
 
-  const filteredUsers = Object.keys(initialMessages).filter((user) =>
-    user.toLowerCase().includes(userFilter.toLowerCase())
-  );
+  
+
+  useEffect(() => {
+    GetAllInstructorsofThePurchaseMsg(setinstructors)
+    GetAllChatRooms(setchatRooms)
+  }, [])
+
+  useEffect(() => {
+    console.log(selectedChatCode)
+    GetAllChatRoomMessages(selectedChatCode,setroomMessages)
+  }, [chatRooms,selectedChatCode])
+  
+
+
+  // Compose Message
+  const handleComposeMessage = (e) =>{
+    e.preventDefault();
+    console.log(selectedInstructor)
+    console.log(messageTextAdd)
+
+    if(selectedInstructor == ""){
+      ErrorAlert("Empty Field","Please Select Instructor")
+      return
+    }
+
+    if(messageTextAdd == ""){
+      ErrorAlert("Empty Field","Please Enter Message")
+      return
+    }
+
+    AddSendMessage(selectedInstructor,messageTextAdd,selectedCourse,selectedChatCode,setmessageTextAdd,GetAllChatRooms,setchatRooms)
+    
+  }
+
+
+  // Send Message
+  const handleSelectedMessageSend = (e) =>{
+    e.preventDefault();
+    AddSendMessage(selectedInstructor,messageTextAdd,selectedCourse,selectedChatCode,setmessageTextAdd,GetAllChatRooms,setchatRooms)
+   
+  }
+  
+  
 
   return (
     
@@ -148,15 +206,16 @@ function Messages() {
 
         <Card className="p-3">
           <Container fluid>
-            <Row className="vh-100">
+            <Row  className="vh-130">
 
               <Col sm={5} md={5} lg={4} className="bg-light border-right">
 
-                 <Typography className="p-3" variant="h5" gutterBottom>
-                 Chat Users
+                <Typography className="p-3 d-flex justify-content-between" variant="h5" gutterBottom>
+                 Chat Users  <Button onClick={() => setshowAddMessage(true)} className="mx-1" variant="contained"><i className="fas fa-plus"></i></Button>
                </Typography>
 
-                {/* <h3 className="p-3">Chat Users</h3> */}
+
+             
                 <div className="input-group mb-3">
                   <input
                     type="text"
@@ -169,16 +228,22 @@ function Messages() {
                   <Button variant="contained"><SearchIcon /></Button>
                 </div>
 
-                <List sx={{ width: '100%'}}>
-                {filteredUsers.map((user) => (
-                  <>
-                      <ListItem onClick={() => handleUserClick(user)} key={user} alignItems="flex-start">
-                        <ListItemButton selected={selectedUser === user ? true : false}>
+                <List sx={{ width: '100%' }}>
+                {chatRooms.map((user, index) => (
+                  <React.Fragment key={index}>
+                    <ListItem
+                      onClick={() => {
+                        setshowAddMessage(false);
+                        console.log(user);
+                        handleUserClick(user)
+                      }}
+                      alignItems="flex-start"
+                    >
+                      <ListItemButton selected={selectedUser == user ? true : false}>
                         <ListItemAvatar>
-                          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                          <Avatar alt={user.to} src="/static/images/avatar/1.jpg" />
                         </ListItemAvatar>
                         <ListItemText
-                          primary={user}
                           secondary={
                             <React.Fragment>
                               <Typography
@@ -187,109 +252,110 @@ function Messages() {
                                 variant="body2"
                                 color="text.primary"
                               >
-                                Ali Connors
+                                <b>{user.to}</b> ({user.courseTitle})
                               </Typography>
-                              {" — I'll be in your neighborhood doing errands this…"}
+                              {user.lastMessage.length > 15 ? (
+                                <span>{user.lastMessage.substring(0, 15)}...</span>
+                              ) : (
+                                user.lastMessage
+                              )}
                             </React.Fragment>
                           }
                         />
-                        </ListItemButton>
-                      </ListItem>
-                    <Divider variant="inset" component="li" /> 
-                    </>
+                      </ListItemButton>
+                    </ListItem>
+                    <Divider variant="inset" component="li" />
+                  </React.Fragment>
                 ))}
-
-
-
-              
-                    </List>
-
-                {/*  List Group Now */}
-                {/* <ul className="list-group">
-                  {filteredUsers.map((user) => (
-                    <li
-                      key={user}
-                      className={`list-group-item ${
-                        selectedUser === user ? "active" : ""
-                      }`}
-                      onClick={() => handleUserClick(user)}
-                    >
-                      {user}
-                    </li>
-                  ))}
-                </ul> */}
+              </List>
 
               </Col>
 
+         
+    
+              {/* New Messages */}
+              {showAddMessage ? (
               <Col sm={7} md={7} lg={8}>
                 <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
-                <Typography variant="h5" gutterBottom>
-                Chat with <b>{selectedUser}</b>
+                <Typography variant="h5" className="p-3" gutterBottom>
+                  New Messages
                </Typography>
-
                 </div>
+
                 <Paper
                   elevation={3}
                   className="p-3"
                   style={{ minHeight: "70vh", overflowY: "auto",background:'#D5D8DC' }}
                 >
-                  <List>
-                  
-                  {/* {messages.map((message, index) => (
-                    <div>{message.sender == "You" ? "Sender" : "Reciever"}</div>
-                   ))} */}
 
-<MessageBox
-styles={{width:300,color:'#000',fontWeight:'bold'}}
+                <Form onSubmit={handleComposeMessage}>
+                  <Form.Select onChange={(e) => {
+                    console.log(e.target.value.split(':'))
 
-  onReplyMessageClick={() => console.log('reply clicked!')}
-  position={'left'}
-  type={'text'}
-  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
-/>
-<MessageBox
-styles={{width:300,color:'#000',fontWeight:'bold'}}
+                    setselectedInstructor(e.target.value.split(':')[0])
+                    setselectedCourse(e.target.value.split(':')[1])
 
-  onReplyMessageClick={() => console.log('reply clicked!')}
-  position={'left'}
-  type={'text'}
-  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
-/>
+                  }} className="my-3" size="md" aria-label="Default select example">
+                    <option selected disabled value="">Select Instructor</option>
+                    {instructors.length > 0 && instructors.map((instructor,index) => (
+                      <option key={index} value={`${instructor.userCode}:${instructor.coursesDetails[0].courseCode}`}>{instructor.name} - {instructor.coursesDetails[0].courseName}</option>
+                    ))}
+                  </Form.Select>
 
-<MessageBox
-styles={{width:300,background:'#e01D20',color:'#fff',fontWeight:'bold'}}
-  onReplyMessageClick={() => console.log('reply clicked!')}
-  position={'right'}
-  type={'text'}
-  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
-/>
-<MessageBox
-styles={{width:300,background:'#e01D20',color:'#fff',fontWeight:'bold'}}
-  onReplyMessageClick={() => console.log('reply clicked!')}
-  position={'right'}
-  type={'text'}
-  text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
-/>
-                   
-                   
-                  </List>
+                 
+                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                  <Form.Label><b>Messages</b></Form.Label>
+                  <Form.Control value={messageTextAdd} onChange={(e) => setmessageTextAdd(e.target.value)} as="textarea" rows={5} />
+                </Form.Group>
+
+                  <Button type="submit"  className="mx-1" variant="contained">Send</Button>
+
+                  </Form>
+
                 </Paper>
-                <InputGroup className="p-3">
-                  <FormControl
-                    placeholder="Type a message..."
-                    value={messageText}
-                    onChange={(e) => setMessageText(e.target.value)}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") handleMessageSend();
-                    }}
-                  />
-                    <Button variant="contained" onClick={handleMessageSend}>
-                    <SendIcon />
-                  </Button>
-                </InputGroup>
+
+                
+  
+
               </Col>
+              ) : (
+              <Col sm={7} md={7} lg={8}>
+                  <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
+                  <Typography variant="h5" className="p-3" gutterBottom>
+                  Chat with <b>{selectedUser}</b>
+                </Typography>
+
+                  </div>
+
+                 <Paper elevation={3} className="p-3" style={{ minHeight: "70vh", overflowY: "auto", background:'#D5D8DC' }}>
+                    <List>
+                      {roomMessages.map((message, index) => (
+                        <MessageBox
+                          key={index}
+                          styles={{ width: 300, color: '#000', fontWeight: 'bold', background: message.from == selectedUser ? '#fff' : '#e01D20' }}
+                          onReplyMessageClick={() => console.log('reply clicked!')}
+                          position={message.from == selectedUser ? 'left' : 'right'}
+                          type={'text'}
+                          text={message.message}
+                        />
+                      ))}
+                    </List>
+                  </Paper>
+
+
+                  
+                  <form onSubmit={handleSelectedMessageSend} className="input-group p-2">
+                    <textarea value={messageTextAdd} onChange={(e) => setmessageTextAdd(e.target.value)} placeholder="Type a Message" className="form-control" aria-label="With textarea"></textarea>
+                      <Button type="submit" variant="contained"><SendIcon /></Button>
+                  </form>
+    
+
+                </Col>
+              )}
 
             </Row>
+           
+
           </Container>
         </Card>
       </div>
