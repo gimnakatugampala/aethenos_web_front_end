@@ -35,6 +35,9 @@ import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
 import ListGroup from 'react-bootstrap/ListGroup';
 import LaunchIcon from '@mui/icons-material/Launch';
 import LargeSpinner from '../../../../commonFunctions/loaders/Spinner/LoadingSpinner'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 
 
@@ -236,7 +239,9 @@ const Curriculum = ({code}) => {
    const handleSaveVideo = (video,ID) =>{
       console.log(video)
       console.log(ID)
-      // AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
+
+
+      AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
    }
 
   //  Save Quiz > First Step

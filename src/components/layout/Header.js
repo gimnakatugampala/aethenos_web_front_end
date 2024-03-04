@@ -37,6 +37,7 @@ import Popover from '@mui/material/Popover';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Cookies from "js-cookie";
 
 
 function Header({
@@ -58,6 +59,13 @@ function Header({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+
+  // Logout
+  const handleLogout = () => {
+    Cookies.remove('aethenos', { path: '' })
+    window.location.reload()
+  }
 
   return (
     <>
@@ -160,7 +168,7 @@ function Header({
 
         <Divider />
         
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="medium" />
           </ListItemIcon>

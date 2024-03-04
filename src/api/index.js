@@ -1,6 +1,8 @@
 import SuccessAlert from "../commonFunctions/Alerts/SuccessAlert";
 import ErrorAlert from "../commonFunctions/Alerts/ErrorAlert";
 import Cookies from 'js-cookie'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const CURRENT_USER = Cookies.get('aethenos');
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
@@ -2151,22 +2153,34 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
     redirect: 'follow'
   };
 
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addVideo", requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      console.log(result)
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+  let timerInterval;
+  Swal.fire({
+    title: "Uploading ...",
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading();
 
-      if(result.variable == "200"){
-        SuccessAlert("Uploaded",result.message)
-        GetCurriculum(code,setsectionData)
-        UpdateCourseProgress(code)
-        setshowMain(null)
-        return
-      }
+      fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addVideo", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+  
+        if(result.variable == "200"){
+          SuccessAlert("Uploaded",result.message)
+          GetCurriculum(code,setsectionData)
+          UpdateCourseProgress(code)
+          setshowMain(null)
+          return
+        }
+  
+      })
+      .catch(error => console.log('error', error));
+      
+    }
+  })
 
-    })
-    .catch(error => console.log('error', error));
+  
 
  }
 
@@ -3185,7 +3199,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,"messages") 
+    Unauthorized(result.status,"communications/messages") 
 
     if(result.variable == "200"){
       setmessageTextAdd("")
@@ -3215,7 +3229,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
   fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/getChatRoomDetailsByInstructor", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      Unauthorized(result.status,"messages") 
+      Unauthorized(result.status,"communications/messages") 
       setchatRooms(result.chatRoomDetails)
       console.log(result)
     })
@@ -3237,7 +3251,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
   fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/getChatRoomDetailsByInstructorUsingChatRoomCode/${chatCode}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      Unauthorized(result.status,"messages") 
+      Unauthorized(result.status,"communications/messages") 
       console.log(result)
       setroomMessages(result)
     })
