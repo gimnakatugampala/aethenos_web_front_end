@@ -234,9 +234,9 @@ const Curriculum = ({code}) => {
 
 // Save Video > Video
    const handleSaveVideo = (video,ID) =>{
-      // console.log(video)
-      // console.log(ID)
-      AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
+      console.log(video)
+      console.log(ID)
+      // AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
    }
 
   //  Save Quiz > First Step

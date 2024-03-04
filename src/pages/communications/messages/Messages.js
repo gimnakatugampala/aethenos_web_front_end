@@ -66,7 +66,7 @@ function Messages() {
     ],
   };
 
-  const [selectedUser, setSelectedUser] = useState("User1");
+  const [selectedUser, setSelectedUser] = useState("");
   const [showAddMessage, setshowAddMessage] = useState(true)
   const [messages, setMessages] = useState(initialMessages[selectedUser]);
   const [messageText, setMessageText] = useState("");
@@ -82,26 +82,18 @@ function Messages() {
   const [selectedChatCode, setselectedChatCode] = useState("")
   const [chatRooms, setchatRooms] = useState([])
 
-  const handleMessageSend = () => {
-    if (messageText.trim() === "") return;
+  const [selectedStudentCode, setselectedStudentCode] = useState("")
 
-    const newMessage = {
-      text: messageText,
-      sender: "You",
-    };
-
-    setMessages([...messages, newMessage]);
-    setMessageText("");
-  };
 
   const handleUserClick = (user) => {
-    setSelectedUser(user.to);
+    setSelectedUser(user.student);
     // setMessages(initialMessages[user]);
     console.log(user)
     setselectedCourse(user.courseCode)
-    setselectedChatCode(user.chatCode)
-    setselectedInstructor(user.toUserCode)
-    GetAllChatRoomMessages(user.chatCode,setroomMessages)
+    setselectedChatCode(user.chatRoomCode)
+    setselectedInstructor(user.student)
+    setselectedStudentCode(user.studentUserCode)
+    GetAllChatRoomMessages(user.chatRoomCode,setroomMessages)
   };
 
   
@@ -109,12 +101,13 @@ function Messages() {
   useEffect(() => {
     GetAllInstructorsofThePurchaseMsg(setinstructors)
     GetAllChatRooms(setchatRooms)
-  }, [])
+    console.log(chatRooms)
+  }, [chatRooms])
 
   useEffect(() => {
-    console.log(selectedChatCode)
     GetAllChatRoomMessages(selectedChatCode,setroomMessages)
-  }, [chatRooms,selectedChatCode])
+  }, [selectedChatCode,messageTextAdd])
+
   
 
 
@@ -142,7 +135,20 @@ function Messages() {
   // Send Message
   const handleSelectedMessageSend = (e) =>{
     e.preventDefault();
-    AddSendMessage(selectedInstructor,messageTextAdd,selectedCourse,selectedChatCode,setmessageTextAdd,GetAllChatRooms,setchatRooms)
+
+    if(selectedStudentCode == ""){
+      ErrorAlert("Empty Field","Please Select Student")
+      return
+    }
+
+    if(messageTextAdd == ""){
+      ErrorAlert("Empty Field","Please Enter Message")
+      return
+    }
+
+
+    AddSendMessage(selectedStudentCode,messageTextAdd,selectedCourse,selectedChatCode,setmessageTextAdd,GetAllChatRooms,setchatRooms)
+
    
   }
   
@@ -153,13 +159,13 @@ function Messages() {
       <div className="container">
         <div className="row">
 
-        {/* <div className="col-md-2"> */}
+        
              <Typography variant="h4" gutterBottom>
              Messages
             </Typography>
-        {/* </div> */}
+ 
 
-          <div className="col-3">
+          {/* <div className="col-3">
             <FormGroup>
               <FormControlLabel
                 control={<Checkbox defaultChecked />}
@@ -189,7 +195,7 @@ function Messages() {
                 control={<Checkbox />}
                 label={<span className="fs-8">No instructor answer</span>}
               />
-              <Button className="my-2" variant="contained">Compose</Button>
+              <Button onClick={() => setshowAddMessage(true)}  className="my-2" variant="contained">Compose</Button>
             </FormGroup>
           </div>
           <div className="col-3 mb-4">
@@ -200,7 +206,7 @@ function Messages() {
               <option value="priceHighToLow">Price: High to Low</option>
               <option value="ratingHighToLow">Rating: High to Low</option>
             </select>
-          </div>
+          </div> */}
         </div>
         
 
@@ -211,7 +217,7 @@ function Messages() {
               <Col sm={5} md={5} lg={4} className="bg-light border-right">
 
                 <Typography className="p-3 d-flex justify-content-between" variant="h5" gutterBottom>
-                 Chat Users  <Button onClick={() => setshowAddMessage(true)} className="mx-1" variant="contained"><i className="fas fa-plus"></i></Button>
+                 Chat Users  
                </Typography>
 
 
@@ -239,9 +245,9 @@ function Messages() {
                       }}
                       alignItems="flex-start"
                     >
-                      <ListItemButton selected={selectedUser == user ? true : false}>
+                      <ListItemButton selected={selectedUser == user.student ? true : false}>
                         <ListItemAvatar>
-                          <Avatar alt={user.to} src="/static/images/avatar/1.jpg" />
+                          <Avatar alt={user.student} src="/static/images/avatar/1.jpg" />
                         </ListItemAvatar>
                         <ListItemText
                           secondary={
@@ -252,7 +258,7 @@ function Messages() {
                                 variant="body2"
                                 color="text.primary"
                               >
-                                <b>{user.to}</b> ({user.courseTitle})
+                                <b>{user.student}</b> ({user.courseTitle})
                               </Typography>
                               {user.lastMessage.length > 15 ? (
                                 <span>{user.lastMessage.substring(0, 15)}...</span>
@@ -274,7 +280,7 @@ function Messages() {
          
     
               {/* New Messages */}
-              {showAddMessage ? (
+              {/* {showAddMessage ? (
               <Col sm={7} md={7} lg={8}>
                 <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
                 <Typography variant="h5" className="p-3" gutterBottom>
@@ -318,7 +324,7 @@ function Messages() {
   
 
               </Col>
-              ) : (
+              ) : ( */}
               <Col sm={7} md={7} lg={8}>
                   <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
                   <Typography variant="h5" className="p-3" gutterBottom>
@@ -351,7 +357,7 @@ function Messages() {
     
 
                 </Col>
-              )}
+              {/* // )} */}
 
             </Row>
            

@@ -3171,8 +3171,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAns
   const formdata = new FormData();
   formdata.append("message", `${messageTextAdd}`);
   formdata.append("courseCode", `${selectedCourse}`);
-  formdata.append("to_user_code", `${selectedInstructor}`);
-  formdata.append("chatRoomCode", `${selectedChatCode}`);
+  formdata.append("toUserCode", `${selectedInstructor}`);
 
   const requestOptions = {
     method: "POST",
@@ -3193,6 +3192,9 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
       GetAllChatRooms(setchatRooms)
   
     }
+
+    GetAllChatRooms(setchatRooms)
+
   })
   .catch((error) => console.error(error));
 
@@ -3210,11 +3212,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
     redirect: "follow"
   };
   
-  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/loadMessagesInfo", requestOptions)
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/getChatRoomDetailsByInstructor", requestOptions)
     .then((response) => response.json())
     .then((result) => {
       Unauthorized(result.status,"messages") 
-      setchatRooms(result)
+      setchatRooms(result.chatRoomDetails)
       console.log(result)
     })
     .catch((error) => console.error(error));
@@ -3232,7 +3234,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
     redirect: "follow"
   };
   
-  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/getMessagesByStudentUsingChatRoomCode/${chatCode}`, requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/getChatRoomDetailsByInstructorUsingChatRoomCode/${chatCode}`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
       Unauthorized(result.status,"messages") 
