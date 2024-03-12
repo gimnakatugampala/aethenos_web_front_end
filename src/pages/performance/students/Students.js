@@ -14,7 +14,7 @@ import ForumIcon from '@mui/icons-material/Forum';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import Map from "./Map";
-import { GetCousesOfInstructror, GetStudentsOfInstructor } from "../../../api";
+import { GetCousesOfInstructror, GetStudentsOfInstructor, StudentsEnrolled } from "../../../api";
 
 const Students = () => {
   const headerCellStyle = {
@@ -26,12 +26,26 @@ const Students = () => {
   };
 
   const [cmbCourses, setcmbCourses] = useState([])
+  const [students, setstudents] = useState([])
+  const [courseCode, setcourseCode] = useState("all")
+
+
+    // ---------- Select QA --------------
+    const handleSelectQA = (e) =>{
+      console.log(e.target.value)
+      setcourseCode(e.target.value)  
+    }
 
   // Get Courses
   useEffect(() => {
     GetCousesOfInstructror(setcmbCourses)
-    // GetStudentsOfInstructor()
+    console.log(cmbCourses)
   }, [cmbCourses])
+
+  useEffect(() => {
+    StudentsEnrolled(setstudents,courseCode)
+  }, [courseCode])
+  
   
 
   return (
@@ -48,13 +62,14 @@ const Students = () => {
 
         <FormControl fullWidth>
         <NativeSelect
-          defaultValue={""}
+        onChange={handleSelectQA}
+          defaultValue={"all"}
           inputProps={{
             name: 'age',
             id: 'uncontrolled-native',
           }}
         >
-          <option value={""}>All Courses</option>
+          <option value={"all"}>All Courses</option>
           {cmbCourses.length > 0 && cmbCourses.map((course) => (
             <option value={course.code}>{course.title}</option>
           ))}
@@ -73,13 +88,13 @@ const Students = () => {
         title="Student List"
         columns={[
           {
-            title: "Name",
-            field: "name",
+            title: "Student Name",
+            field: "studentName",
             headerStyle: headerCellStyle,
           },
           {
             title: "Enrolled",
-            field: "enrolled",
+            field: "enrolledDate",
             headerStyle: headerCellStyle,
           },
           {
@@ -88,27 +103,32 @@ const Students = () => {
             headerStyle: headerCellStyle,
           },
           {
-            title: "Progress",
+            title: "Progress (%)",
             field: "progress",
             headerStyle: headerCellStyle,
           },
           {
             title: "Questions Asked",
-            field: "questionsAsked",
+            field: "questionAskedCount",
             headerStyle: headerCellStyle,
           },
           {
             title: "Questions Answered",
-            field: "questionsAnswered",
+            field: "questionsAnsweredCount",
             headerStyle: headerCellStyle,
-          },
+          }
+          ,
           {
             title: "Message",
             field: "messageButton",
             render: (rowData) => (
               <button
                 className="btn btn-success"
-                onClick={() => handleButtonClick(rowData)}
+                onClick={() => {
+                  // handleButtonClick(rowData)
+
+                  window.location.href = "/communications/messages"
+                }}
               >
                 <ForumIcon />
               </button>
@@ -116,130 +136,17 @@ const Students = () => {
             headerStyle: headerCellStyle,
           },
         ]}
-        data={[
-          {
-            name: "John Doe",
-            enrolled: "2023-01-15",
-            lastVisited: "2023-03-05",
-            progress: "75%",
-            questionsAsked: 5,
-            questionsAnswered: 10,
-          },
-          {
-            name: "Jane Smith",
-            enrolled: "2023-02-10",
-            lastVisited: "2023-03-07",
-            progress: "90%",
-            questionsAsked: 8,
-            questionsAnswered: 15,
-          },
-          {
-            name: "Mike Johnson",
-            enrolled: "2023-01-20",
-            lastVisited: "2023-03-01",
-            progress: "50%",
-            questionsAsked: 3,
-            questionsAnswered: 7,
-          },
-          {
-            name: "Emily Brown",
-            enrolled: "2023-02-05",
-            lastVisited: "2023-03-08",
-            progress: "85%",
-            questionsAsked: 7,
-            questionsAnswered: 12,
-          },
-          {
-            name: "David Wilson",
-            enrolled: "2023-02-15",
-            lastVisited: "2023-03-06",
-            progress: "70%",
-            questionsAsked: 6,
-            questionsAnswered: 11,
-          },
-          {
-            name: "Sarah Davis",
-            enrolled: "2023-01-10",
-            lastVisited: "2023-03-03",
-            progress: "60%",
-            questionsAsked: 4,
-            questionsAnswered: 9,
-          },
-          {
-            name: "Michael Lee",
-            enrolled: "2023-02-20",
-            lastVisited: "2023-03-09",
-            progress: "95%",
-            questionsAsked: 9,
-            questionsAnswered: 16,
-          },
-          {
-            name: "Linda Harris",
-            enrolled: "2023-01-25",
-            lastVisited: "2023-03-02",
-            progress: "80%",
-            questionsAsked: 6,
-            questionsAnswered: 13,
-          },
-          {
-            name: "William Clark",
-            enrolled: "2023-02-10",
-            lastVisited: "2023-03-04",
-            progress: "70%",
-            questionsAsked: 5,
-            questionsAnswered: 10,
-          },
-          {
-            name: "Olivia Martinez",
-            enrolled: "2023-01-15",
-            lastVisited: "2023-03-10",
-            progress: "85%",
-            questionsAsked: 8,
-            questionsAnswered: 14,
-          },
-          {
-            timePeriod: "Apr 2023",
-            amount: "$150",
-            expectedPaymentDate: "2023-04-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 2",
-          },
-          {
-            timePeriod: "May 2023",
-            amount: "$200",
-            expectedPaymentDate: "2023-05-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 3",
-          },
-          {
-            timePeriod: "Jun 2023",
-            amount: "$250",
-            expectedPaymentDate: "2023-06-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 4",
-          },
-          {
-            timePeriod: "Jul 2023",
-            amount: "$300",
-            expectedPaymentDate: "2023-07-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 5",
-          },
-        ]}
+        data={students}
         options={{
           sorting: true,
           exportButton: true,
         }}
       />
 
-      <Card className="mt-5">
+      {/* <Card className="mt-5">
         <Map />
-      </Card>
-      <div className="container">
+      </Card> */}
+      {/* <div className="container">
         <div className="row">
           <div className="col-6">
             <Card className="mt-5">
@@ -308,7 +215,7 @@ const Students = () => {
             </Card>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

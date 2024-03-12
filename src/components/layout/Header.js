@@ -4,10 +4,11 @@ import {
   Row,
   Col,
   Breadcrumb,
-  Dropdown,
   Button,
   List,
 } from "antd";
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 import {
   SearchOutlined,
@@ -38,6 +39,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookies from "js-cookie";
+import { GetNotifications } from "../../api";
 
 
 function Header({
@@ -50,6 +52,22 @@ function Header({
   handleFixedNavbar,
 }) {
 
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    GetNotifications(setNotifications)
+  }, [])
+  
+
+  const handleNotification = () => {
+    // Add your notification logic here
+    // For example, add a new notification to the list
+    const newNotification = {
+      id: Date.now(),
+      message: 'New notification message',
+    };
+    setNotifications([...notifications, newNotification]);
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -80,11 +98,25 @@ function Header({
 
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <a href="/" style={{ minWidth: 100 }}>Student</a>
-        <Typography sx={{ minWidth: 50 }}>
-        <Badge badgeContent={4} color="primary">
+
+        <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-basic">
+        Notifications ({notifications.length})
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {notifications.map((notification,index) => (
+          <Dropdown.Item key={index}>{notification.notification}</Dropdown.Item>
+        ))}
+        {notifications.length === 0 && <Dropdown.Item>No notifications</Dropdown.Item>}
+      </Dropdown.Menu>
+    </Dropdown>
+
+        {/* <Typography sx={{ minWidth: 50 }}>
+        <Badge badgeContent={notifications.length}} color="primary">
             <NotificationsIcon color="action" />
           </Badge>
-          </Typography>
+        </Typography> */}
 
 
         <Tooltip title="Account settings">

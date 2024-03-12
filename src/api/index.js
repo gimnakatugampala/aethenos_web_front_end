@@ -3258,3 +3258,51 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
     .catch((error) => console.error(error));
   
  }
+
+
+ export const StudentsEnrolled = async(setstudents,courseCode) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+  
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/analytics/getStudentsEnrollByCourse/${courseCode}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      Unauthorized(result.status,"performance/students") 
+      if(result.message == "Error"){
+      setstudents([])
+      }
+      setstudents(result)
+    })
+    .catch((error) => console.error(error));
+
+ }
+
+ export const GetNotifications = async(setNotifications) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/notification/getOwnNotifications", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      Unauthorized(result.status,"courses")
+      setNotifications(result)
+    })
+    .catch((error) => console.error(error));
+
+ }
