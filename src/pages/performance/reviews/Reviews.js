@@ -21,6 +21,7 @@ import { GetCousesOfInstructror, GetReviewByCourse } from "../../../api";
 import { FILE_PATH } from "../../../commonFunctions/FilePaths";
 import { Rating } from 'react-simple-star-rating'
 import moment from 'moment'
+import { Paper } from "@mui/material";
 
 
 
@@ -63,7 +64,7 @@ const Reviews = () => {
         </Typography>
           <div
             className="col-3 bg-white pt-4 mt-0"
-            style={{ height: "1000vh" }}
+            // style={{ height: "1000vh" }}
           >
             <div className="combo-box mb-4">
               <select onChange={handleSelectReviews} className="form-select">
@@ -73,7 +74,8 @@ const Reviews = () => {
           ))}
               </select>
             </div>
-            <div>
+
+            {/* <div>
               <Form>
                 <Form.Check
                   type="checkbox"
@@ -132,14 +134,14 @@ const Reviews = () => {
             
             <Button variant="contained" color="success">
             <i class="fa-solid fa-download mx-3"></i>    Export to CSV...
-            </Button>
+            </Button> */}
 
           </div>
 
           {/* second column */}
           <div className="col-md-9">
             {/* 1st card */}
-              {SelectedCourse != null && (
+              {SelectedCourse != null ? (
               <>
               <Card>
               <CardContent>
@@ -202,10 +204,20 @@ const Reviews = () => {
               </CardContent>
               </Card>}
               </>
+              ) : (
+              <Paper elevation={1} className="p-3 d-flex justify-content-center align-items-center" style={{ minHeight: "70vh", overflowY: "auto" }}>
+                  <div className="text-center">
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <h3 className="m-0">No Reviews Yet</h3>
+                  </div>
+              </Paper>
               )}
 
            
-
             
             {/* <Card className="p-5 my-1 mb-3">
               <CardContent>
