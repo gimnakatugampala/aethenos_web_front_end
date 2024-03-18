@@ -40,6 +40,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookies from "js-cookie";
 import { GetNotifications } from "../../api";
+import { ENV_STATUS } from "../../commonFunctions/env";
 
 
 function Header({
@@ -81,8 +82,17 @@ function Header({
 
   // Logout
   const handleLogout = () => {
-    Cookies.remove('aethenos', { path: '' })
-    window.location.reload()
+
+    if(ENV_STATUS == "dev"){
+      Cookies.remove('aethenos', { path: '' })
+      window.location.reload()
+    }else{
+      Cookies.remove('aethenos', { domain: '.aethenos.com' })
+      window.location.href = "aethenos.com"
+    }
+
+   
+    
   }
 
   return (

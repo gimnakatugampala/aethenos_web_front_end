@@ -3,6 +3,7 @@ import ErrorAlert from "../commonFunctions/Alerts/ErrorAlert";
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import { ENV_STATUS } from "../commonFunctions/env";
 
 const CURRENT_USER = Cookies.get('aethenos');
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
@@ -13,7 +14,13 @@ const Unauthorized = (result,rediect_url) =>{
 
   if(result == 401){
     // window.localStorage.removeItem("aethenos")
-    Cookies.remove('aethenos', { path: '' })
+
+    if(ENV_STATUS == "dev"){
+      Cookies.remove('aethenos', { path: '' })
+    }else{
+      Cookies.remove('aethenos', { domain: '.aethenos.com' })
+    }
+
     window.location.href = `/login?sessionTimeout=true&rediect-url=${rediect_url}`
   }
 
@@ -47,7 +54,13 @@ export const LoginInstructor = async(email, password,url,setloading) =>{
 
         SuccessAlert("Login Successful!","Successfully Login as an Instructor")
 
-        Cookies.set('aethenos', result.token, { expires: 7, path: '' })
+        if(ENV_STATUS == "dev"){
+          Cookies.set('aethenos', result.token, { expires: 7, path: '' })
+        }else{
+          Cookies.set('aethenos', result.token, { expires: 7, path: '', domain: '.aethenos.com' });
+
+        }
+
 
 
 
