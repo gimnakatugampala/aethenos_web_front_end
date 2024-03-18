@@ -160,8 +160,8 @@ function Messages() {
         <div className="row">
 
         
-             <Typography variant="h4" gutterBottom>
-             Messages
+             <Typography className="mb-4" variant="h4" gutterBottom>
+               Messages
             </Typography>
  
 
@@ -235,7 +235,7 @@ function Messages() {
                 </div>
 
                 <List sx={{ width: '100%' }}>
-                {chatRooms.map((user, index) => (
+                {chatRooms.length > 0 ? chatRooms.map((user, index) => (
                   <React.Fragment key={index}>
                     <ListItem
                       onClick={() => {
@@ -272,68 +272,28 @@ function Messages() {
                     </ListItem>
                     <Divider variant="inset" component="li" />
                   </React.Fragment>
-                ))}
+                )) : 
+                <div className="d-flex justify-content-center align-items-center text-center">
+                    <h5 className="d-flex justify-content-center align-items-center text-center">No Chats Found</h5>
+                </div>}
               </List>
 
               </Col>
 
          
     
-              {/* New Messages */}
-              {/* {showAddMessage ? (
+           
               <Col sm={7} md={7} lg={8}>
-                <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
-                <Typography variant="h5" className="p-3" gutterBottom>
-                  New Messages
-               </Typography>
-                </div>
-
-                <Paper
-                  elevation={3}
-                  className="p-3"
-                  style={{ minHeight: "70vh", overflowY: "auto",background:'#D5D8DC' }}
-                >
-
-                <Form onSubmit={handleComposeMessage}>
-                  <Form.Select onChange={(e) => {
-                    console.log(e.target.value.split(':'))
-
-                    setselectedInstructor(e.target.value.split(':')[0])
-                    setselectedCourse(e.target.value.split(':')[1])
-
-                  }} className="my-3" size="md" aria-label="Default select example">
-                    <option selected disabled value="">Select Instructor</option>
-                    {instructors.length > 0 && instructors.map((instructor,index) => (
-                      <option key={index} value={`${instructor.userCode}:${instructor.coursesDetails[0].courseCode}`}>{instructor.name} - {instructor.coursesDetails[0].courseName}</option>
-                    ))}
-                  </Form.Select>
-
-                 
-                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label><b>Messages</b></Form.Label>
-                  <Form.Control value={messageTextAdd} onChange={(e) => setmessageTextAdd(e.target.value)} as="textarea" rows={5} />
-                </Form.Group>
-
-                  <Button type="submit"  className="mx-1" variant="contained">Send</Button>
-
-                  </Form>
-
-                </Paper>
-
-                
-  
-
-              </Col>
-              ) : ( */}
-              <Col sm={7} md={7} lg={8}>
+                {selectedUser != "" ? (
+                  <>
                   <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
                   <Typography variant="h5" className="p-3" gutterBottom>
                   Chat with <b>{selectedUser}</b>
-                </Typography>
+                  </Typography>
 
                   </div>
 
-                 <Paper elevation={3} className="p-3" style={{ minHeight: "70vh", overflowY: "auto", background:'#D5D8DC' }}>
+                  <Paper elevation={3} className="p-3" style={{ minHeight: "70vh", overflowY: "auto", background:'#D5D8DC' }}>
                     <List>
                       {roomMessages.map((message, index) => (
                         <MessageBox
@@ -349,15 +309,27 @@ function Messages() {
                   </Paper>
 
 
-                  
+
                   <form onSubmit={handleSelectedMessageSend} className="input-group p-2">
                     <textarea value={messageTextAdd} onChange={(e) => setmessageTextAdd(e.target.value)} placeholder="Type a Message" className="form-control" aria-label="With textarea"></textarea>
                       <Button type="submit" variant="contained"><SendIcon /></Button>
                   </form>
-    
+
+                  </>
+                ) : 
+                (
+                  <Paper elevation={3} className="p-3 d-flex justify-content-center align-items-center" style={{ minHeight: "70vh", overflowY: "auto", background:'#D5D8DC' }}>
+                  
+                    <div className="text-center">
+                      <i className="fas fa-search fa-2x p-3"></i>
+                      <h3 className="m-0">Chat With Students</h3>
+                    </div>
+                  
+                </Paper>
+                )}
 
                 </Col>
-              {/* // )} */}
+             
 
             </Row>
            

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Alert from 'react-bootstrap/Alert';
 import InfoIcon from '@mui/icons-material/Info';
 import Card from '@mui/material/Card';
@@ -6,8 +6,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { GetPaypalProfileDetails } from '../../../api';
 
 const Payouts = () => {
+
+  // useEffect(() => {
+  //   GetPaypalProfileDetails()
+  // }, [])
+  
+
   return (
     <div className='container'>
         <h3>Payment Method</h3>

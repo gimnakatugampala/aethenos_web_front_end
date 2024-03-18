@@ -3306,3 +3306,64 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
     .catch((error) => console.error(error));
 
  }
+
+ export const getToken = async () => {
+
+  const clientId = 'AbhfyGv-hhPIo4dZ_Wia7_0sevNZC3B871Ndw8aDEIm8h6O59L1sV0TzgFXyCpwx-_GC93sKwsU_GtEF';
+  const secret = 'ELvI0eNofma6wegK2amivZ2GvpokEgURE8fOIpKg98D7o5iFxhk3nEUD90mT7aXmK7tImyV94aBCaVvT';
+  const auth = btoa(`${clientId}:${secret}`);
+
+  const url = 'https://api-m.sandbox.paypal.com/v1/oauth2/token';
+  const data = new URLSearchParams();
+  data.append('grant_type', 'authorization_code');
+  // data.append('code', auth);
+  
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Basic ${auth}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: data
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Access Token:', data.access_token);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  
+};
+
+// const accessToken = await getToken();
+// console.log(accessToken);
+
+
+ export const GetPaypalProfileDetails = async() =>{
+
+  // try {
+  //   const response = await fetch(
+  //     'https://api.paypal.com/v1/oauth2/token/userinfo?schema=paypalv1.1',
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer AbhfyGv-hhPIo4dZ_Wia7_0sevNZC3B871Ndw8aDEIm8h6O59L1sV0TzgFXyCpwx-_GC93sKwsU_GtEF`, // Replace with your actual access token
+  //       },
+  //     }
+  //   );
+
+  //   if (!response.ok) {
+  //     throw new Error('Failed to fetch account details');
+  //   }
+
+  //   const data = await response.json();
+
+  //   // Set the account details state with the response data
+  //   console.log(data);
+  // } catch (error) {
+  //   console.error('Error fetching PayPal account details:', error);
+  // }
+
+  const accessToken = await getToken();
+console.log(accessToken);
+ }

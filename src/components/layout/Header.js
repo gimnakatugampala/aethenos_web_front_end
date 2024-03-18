@@ -97,10 +97,10 @@ function Header({
       <React.Fragment>
 
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <a href="/" style={{ minWidth: 100 }}>Student</a>
+        <a href="https://aethenos.com" style={{ minWidth: 100 }}>Student</a>
 
         <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+      <Dropdown.Toggle variant="danger" id="dropdown-basic">
         Notifications ({notifications.length})
       </Dropdown.Toggle>
 
