@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import { AddAnswer, GetAllQuestions, GetCousesOfInstructror } from "../../../api";
 import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
+import { Paper } from "@mui/material";
 
 
 const QA = () => {
@@ -155,9 +156,14 @@ const QA = () => {
       <Card>
         <div className="row">
           <div className="col-md-4">
-            {questions.length > 0 && (
+            {questions.length > 0 ? (
               <Questions setanswerContent={setanswerContent} questions={questions} setquestionItemContent={setquestionItemContent} setquestionItemCode={setquestionItemCode} />
-            )}
+            ) : 
+            <Paper square sx={{ height: "505px", overflow: "auto", pb: "50px" }}>
+            <div className="d-flex justify-content-center align-items-center h-100" style={{height:'100vh'}}>
+                 <h4>No Questions Found</h4>
+            </div>
+            </Paper>}
           </div>
           <div className="col-md-8">
            {questionItemContent != "" && <ScrollBarPage answerContent={answerContent} questionItemContent={questionItemContent} />} 

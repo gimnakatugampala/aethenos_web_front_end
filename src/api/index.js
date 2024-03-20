@@ -3072,6 +3072,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/getAll
   .then((response) => response.json())
   .then((result) => {
     console.log(result)
+    Unauthorized(result.status,`communications/qa`)
+
     setquestions(result)
   })
   .catch((error) => console.error(error));
