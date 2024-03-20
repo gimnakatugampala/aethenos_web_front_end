@@ -34,7 +34,19 @@ const AllCourses = () => {
     console.log(`selected ${value}`);
   };
 
-  const onSearch = (value) => console.log(value);
+  const onSearch = (value) => {
+    console.log(value)
+
+    if(value == ""){
+      GetAllCourses(setcourses)
+    }
+
+    setcourses(courses.filter(courseData => {
+      const courseTitle = courseData.course.courseTitle.toLowerCase();
+      return courseTitle.includes(value.toLowerCase());
+  }))
+
+  };
   
   
 
@@ -42,16 +54,16 @@ const AllCourses = () => {
     <div className='all-courses-container'>
     <div className='all-coueses-control-items'>
 
-    <Space size="middle">
-    <Radio.Group  defaultValue="a" buttonStyle="solid">
+    {/* <Space size="middle"> */}
+    {/* <Radio.Group  defaultValue="a" buttonStyle="solid">
       <Radio.Button value="a">All</Radio.Button>
       <Radio.Button value="b">Draft</Radio.Button>
       <Radio.Button value="c">Requested</Radio.Button>
       <Radio.Button value="d">Approved</Radio.Button>
-    </Radio.Group>
+    </Radio.Group> */}
 
-    <Space size={90}>
-    <Select
+    {/* <Space size={90}> */}
+    {/* <Select
       className='select-items'
       size="large"
       defaultValue="newest"
@@ -64,20 +76,23 @@ const AllCourses = () => {
         { value: 'a-z', label: 'A-Z' },
         { value: 'z-a', label: 'Z-A' }
       ]}
-    />
+    /> */}
 
-    <Search placeholder="Search Courses" onSearch={onSearch} enterButton />
 
-    <Button type="primary" danger>
-      <a className='icon-container' href="/add-courses">
-        <PlusOutlined className='icon' />
-        Add Course
-      </a>
-  </Button>
+    <Search className='w-75 mx-4' placeholder="Search Courses" onSearch={onSearch} enterButton />
 
-    </Space>
+      <Button type="primary" danger>
+        <a className='icon-container' href="/add-courses">
+          <PlusOutlined className='icon' />
+          Add Course
+        </a>
+    </Button>
+    
 
-    </Space>
+
+    {/* </Space> */}
+
+    {/* </Space> */}
       
 </div>
 
