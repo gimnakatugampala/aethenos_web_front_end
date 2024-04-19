@@ -394,7 +394,7 @@ console.log(item)
 
       <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
-          Curriculum
+        Syllabus
         </Typography>
         
         </div>
@@ -427,7 +427,7 @@ console.log(item)
                     id="panel1a-header"
                   >
                     <Typography>
-                      <CheckCircleIcon fontSize="small" /> Lecture {index + 1}:{" "}
+                      <CheckCircleIcon fontSize="small" /> Lesson {index + 1}:{" "}
                       <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
                     </Typography>
 
@@ -532,9 +532,11 @@ console.log(item)
                             Article
                           </Typography> */}
 
+                          {removeHtmlTags(item.article) != "N/A" && (
                           <ListGroup className="my-3">
                             <ListGroup.Item>{removeHtmlTags(item.article)}</ListGroup.Item>
                           </ListGroup>
+                          )}
 
                             <JoditEditor value={article} onChange={(e) => setarticle(e)} />
                             <div className="d-flex flex-start my-2">
@@ -597,7 +599,7 @@ console.log(item)
                                   item.curriculumItemFiles
                                       .filter(downloaditem => downloaditem.filetype == "Downloadable Items")
                                       .map((downloaditem, index) => (
-                                          <ListGroup.Item key={index}>{downloaditem.url}</ListGroup.Item>
+                                          <ListGroup.Item key={index}>{downloaditem.title}</ListGroup.Item>
                                       ))
                               ) : (
                                   <p>No Downloadable Items</p>
@@ -631,7 +633,7 @@ console.log(item)
                                 item.curriculumItemFiles
                                     .filter(source => source.filetype === "Source Code")
                                     .map((source, index) => (
-                                        <ListGroup.Item key={index}>{source.url}</ListGroup.Item>
+                                        <ListGroup.Item key={index}>{source.title}</ListGroup.Item>
                                     ))
                             ) : (
                                 <p>No Source Code</p>
@@ -661,7 +663,7 @@ console.log(item)
 
                         {/* Add Description & Resourses */}
                         
-                        {showMain == null && (
+                        {showMain == null && showDescription != index &&  (
                         <>
                       
                         
@@ -675,7 +677,8 @@ console.log(item)
                         {showResources == index && (
                           <div>
                             <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                             <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button> 
+
+                             {/* <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>  */}
                             
                             {/* Tabs */}
                             <Tabs
@@ -688,7 +691,7 @@ console.log(item)
                             <Form.Group controlId="formFile" className="mb-3">
                             {/* (e) =>  */}
                               <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
-                              <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lecture. This file is going to be seen as a lecture extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                              <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
                             </Form.Group>
                               
                             </Tab>
@@ -921,7 +924,7 @@ console.log(item)
                             <Form.Group controlId="formFile" className="mb-3">
                             {/* (e) =>  */}
                               <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
-                              <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lecture. This file is going to be seen as a lecture extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                              <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
                             </Form.Group>
                               
                             </Tab>
@@ -983,7 +986,7 @@ console.log(item)
 
                       <Button onClick={() => setshowLecInput(showLecInput == index ? null : index)} variant="text">
                         <AddIcon />
-                        Lecture
+                        Lesson
                       </Button>
                       {/* const [showQuizInput, setshowQuizInput] = useState(false) */}
                       {/* handleShowQuizInput */}
@@ -996,7 +999,7 @@ console.log(item)
 
                   {showCurriculumItem != index && (
                   <Button onClick={() => setshowCurriculumItem(showCurriculumItem == index ? null : index)} variant="contained">
-                    <AddIcon /> Curriculum Item
+                    <AddIcon /> Syllabus Item
                   </Button>
 
                   )}
@@ -1013,8 +1016,8 @@ console.log(item)
               {showLecInput == index && (
                 <>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Add Lecture</Form.Label>
-                      <Form.Control onChange={(e) => setlecturetitle(e.target.value)} type="text" placeholder="Type Lecture Name" />
+                      <Form.Label>Add Lesson</Form.Label>
+                      <Form.Control onChange={(e) => setlecturetitle(e.target.value)} type="text" placeholder="Type Lesson Name" />
               </Form.Group>
 
                 <Button onClick={() => handleSaveLecture(section.courseSection.sectionId)} className="mx-1" variant="outlined">
@@ -1026,9 +1029,9 @@ console.log(item)
                   </Button>
                 </>
               )}
-              {/* Curriculum Item > Lectures */}
+              {/* Syllabus Item > Lectures */}
 
-              {/* Curriculum Item > Quiz */}
+              {/* Syllabus Item > Quiz */}
 
               {showQuizInput == index && (
 
@@ -1057,14 +1060,14 @@ console.log(item)
 
 
 
-              {/* Curriculum Item > Quiz */}
+              {/* Syllabus Item > Quiz */}
 
             </CardContent>
           </div> 
       )) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
       ) : 
       <div className="d-flex justify-content-center">
-        <h4>No Curriculums Found</h4>
+        <h4>No Syllabus Found</h4>
       </div>
       }
 

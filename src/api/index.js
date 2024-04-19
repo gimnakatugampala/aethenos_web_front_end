@@ -3100,6 +3100,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAns
   .then((response) => response.json())
   .then((result) => {
     console.log(result)
+    Unauthorized(result.status,`communications/qa`)
     if(result.variable == "200"){
       SuccessAlert("Success",result.message)
       setanswer("")
@@ -3125,6 +3126,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAns
     .then((response) => response.json())
     .then((result) => {
       console.log(result)
+      Unauthorized(result.status,`performance/reviews`)
       setSelectedCourse(result)
     })
     .catch((error) => console.error(error));

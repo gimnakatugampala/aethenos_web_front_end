@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Input, Space , Badge , Image ,Col, Divider, Row } from 'antd';
 import { Card  } from 'antd';
-import { Button, Progress } from 'antd';
+import {  Progress } from 'antd';
 import { Avatar, List, Skeleton, Switch , Popover ,Tag  } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import Chip from '@mui/material/Chip';
@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import { FILE_PATH } from '../../commonFunctions/FilePaths';
+import { Button } from '@mui/material';
 
 const CourseItem = ({course,filledPercent}) => {
 
@@ -74,7 +75,7 @@ const CourseItem = ({course,filledPercent}) => {
           {course.course.approvalType.id != null && course.course.approvalType.id == '1' ? (
 
             // <Chip label="Draft" color="secondary" variant="outlined" />
-            <Chip label="Draft" color="secondary" variant="outlined" />
+            <Chip label="Please Await our Feedback" color="secondary" variant="outlined" />
 
           ) : course.course.approvalType.id  == '2' ? (
 
@@ -85,7 +86,7 @@ const CourseItem = ({course,filledPercent}) => {
               label="Rejected" color="primary" variant="outlined" />
               </Popover>
           ) : course.course.approvalType.id  == '3' ? (
-            <Chip label="Pending" color="success" variant="outlined" />
+            <Chip label="Course Creation in Progress" color="success" variant="outlined" />
           ) : course.course.approvalType.id  == '4' ? (
             <Chip label="Disapproved" color="primary" variant="outlined" />
           ) : course.course.approvalType.id  == '5' ? (
@@ -106,19 +107,19 @@ const CourseItem = ({course,filledPercent}) => {
    
         {course.course.approvalType.id != null && course.course.approvalType.id == 3 && (
             <div className='d-flex justify-content-center'> 
-              <a className='card-item-link' href={`/courses/manage/${course.course.code}/`}>Manage Course</a>
+              <Button variant="outlined"><a  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
             </div> 
          )}
 
           {course.course.approvalType.id != null && course.course.approvalType.id == 4 && (
               <div className='d-flex justify-content-center'> 
-              <a className='card-item-link' href={`/courses/manage/${course.course.code}/`}>Manage Course</a>
+             <Button variant="outlined"><a  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
             </div> 
           )}
 
           {course.course.approvalType.id != null && course.course.approvalType.id == 5 && (
               <div className='d-flex justify-content-center'> 
-              <a className='card-item-link' href={`/courses/manage/${course.course.code}/`}>Manage Course</a>
+              <Button variant="outlined"><a  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
             </div> 
           )}
 

@@ -240,9 +240,9 @@ const saveIntendedLeaners = (e) =>{
 
 
       <div className='section-1'>
-          <div className='mt-4'>
-          <Typography variant="h6" >What will students learn in your course?</Typography>
-          <p>You must enter at least 4 learning objectives or outcomes that learners can expect to achieve after completing your course.</p>
+          <div className='mt-4 mb-2'>
+          <Typography variant="h6" >What will be taught in your course?</Typography>
+          <p>Enter at least 3 learning objectives/outcomes.</p>
           </div>
 
       </div>
@@ -346,10 +346,9 @@ const saveIntendedLeaners = (e) =>{
 
     {/* Section 2 */}
     <div className='section-2'>
-    <div className='mt-4'>
-    <Typography variant="h6" >What are the requirements or prerequisites for taking your course?</Typography>
-      <p>List the required skills, experience, tools or equipment learners should have prior to taking your course.
-    If there are no requirements, use this space as an opportunity to lower the barrier for beginners.</p>
+    <div className='mt-4 mb-2'>
+    <Typography variant="h6" >What are the requirements/prerequisites for this course?</Typography>
+      <p>Give details of any required experience, skills, equipment/tools that students should have prior to taking this course.</p>
       </div>
 
     </div>
@@ -447,12 +446,11 @@ const saveIntendedLeaners = (e) =>{
 
     {/* Section 3 */}
     <div className='section-3'>
-    <div className='mt-4'>
+    <div className='mt-4 mb-2'>
     <Typography variant="h6" >Who is this course for?</Typography>
-    <Typography variant="body2" gutterBottom>
-    Write a clear description of the intended learners for your course who will find your course content valuable.
-    This will help you attract the right learners to your course.
-    </Typography>
+    <p>
+    Describe the target audience for the course to help students decide if this course is suitable for them.
+    </p>
       </div>
     </div>
 

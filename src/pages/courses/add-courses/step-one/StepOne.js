@@ -33,7 +33,7 @@ const StepOne = ({setcourse_title , setcourse_category}) => {
       <div className='my-5'>
       <Typography.Title
         level={3}>
-        How about a working title?
+        Please Enter Course Title
       </Typography.Title>
 
       <p>It's ok if you can't think of a good title now. You can change it later.</p>
