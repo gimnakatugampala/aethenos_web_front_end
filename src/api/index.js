@@ -3353,13 +3353,24 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
   
 };
 
-export const PracticeTestSave = async(PracticeTestTitle,PracticeTestDesc,PracticeTestDuration,PracticeTestMinPassMark,PracticeTestInstructions,PracticeTestExLink,PracticeTestQuestionFile,PracticeTestQuestionExLink,PracticeTestSolutionsFile,PraticeTestSolutionsExLink) =>{
+export const PracticeTestSave = async(mainSectionID,PracticeTestTitle,PracticeTestDesc,PracticeTestDuration,PracticeTestMinPassMark,PracticeTestInstructions,PracticeTestExLink,PracticeTestQuestionFile,PracticeTestQuestionExLink,PracticeTestSolutionsFile,PraticeTestSolutionsExLink,setshowPracticeTestInput,setshowCurriculumItem,setbtnLoadingPracticeTest,setPracticeTestTitle,
+  setPracticeTestDesc,
+  setPracticeTestDuration,
+  setPracticeTestInstructions,
+  setPracticeTestMinPassMark,
+  setPracticeTestExLink,
+  setPracticeTestQuestionFile,
+  setPracticeTestQuestionExLink,
+  setPracticeTestSolutionsFile,
+  setPraticeTestSolutionsExLink) =>{
+
+  setbtnLoadingPracticeTest(true)
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
 const formdata = new FormData();
-formdata.append("courseSectionId", "153");
+formdata.append("courseSectionId", `${mainSectionID}`);
 formdata.append("practiceTestCode", "");
 formdata.append("title", `${PracticeTestTitle}`);
 formdata.append("description", `${PracticeTestDesc}`);
@@ -3367,13 +3378,13 @@ formdata.append("duration", `${PracticeTestDuration}`);
 formdata.append("minimumPassMark", `${PracticeTestMinPassMark}`);
 formdata.append("instructions", `${PracticeTestInstructions}`);
 formdata.append("link", `${PracticeTestExLink}`);
-formdata.append("questionSheet", PracticeTestQuestionFile);
+PracticeTestQuestionFile !=null && formdata.append("questionSheet", PracticeTestQuestionFile);
 formdata.append("questionLink", `${PracticeTestQuestionExLink}`);
-formdata.append("solutionSheet", PracticeTestSolutionsFile);
+PracticeTestSolutionsFile != null && formdata.append("solutionSheet", PracticeTestSolutionsFile);
 formdata.append("solutionLink", `${PraticeTestSolutionsExLink}`);
 
 const requestOptions = {
-  method: "PUT",
+  method: "POST",
   headers: myHeaders,
   body: formdata,
   redirect: "follow"
@@ -3381,35 +3392,80 @@ const requestOptions = {
 
 fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addPracticeTest", requestOptions)
   .then((response) => response.json())
-  .then((result) => console.log(result))
+  .then((result) => {
+    console.log(result)
+
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+
+      setPracticeTestTitle("")
+      setPracticeTestDesc("")
+      setPracticeTestDuration("")
+      setPracticeTestInstructions("")
+      setPracticeTestMinPassMark("")
+      setPracticeTestExLink("")
+
+      setPracticeTestQuestionFile(null)
+      setPracticeTestQuestionExLink("")
+
+      setPracticeTestSolutionsFile(null)
+      setPraticeTestSolutionsExLink("")
+
+
+      setbtnLoadingPracticeTest(false)
+
+      setshowPracticeTestInput(null)
+      setshowCurriculumItem(null)
+
+
+      return
+    }
+
+  })
   .catch((error) => console.error(error));
 
 
 }
 
-export const CodingExerciseSave = async(CodingExerciseTitle,CodingExerciseDesc,CodingExerciseInstructions,CodingExerciseVideo,CodingExerciseDResourses,CodingExerciseExLink,CodingExerciseUploadEx,CodingExerciseExternalLink,CodingExerciseQVideo,CodingExercisesSolutionsFile,CodingExercisesExLinkSolutions,CodingExercisesSolutionsVideo) =>{
+export const CodingExerciseSave = async(mainSectionID,CodingExerciseTitle,CodingExerciseDesc,CodingExerciseInstructions,CodingExerciseVideo,CodingExerciseDResourses,CodingExerciseExLink,CodingExerciseUploadEx,CodingExerciseExternalLink,CodingExerciseQVideo,CodingExercisesSolutionsFile,CodingExercisesExLinkSolutions,CodingExercisesSolutionsVideo,setCodingExerciseTitle,
+  setCodingExerciseDesc,
+  setCodingExerciseInstructions,
+  setCodingExerciseVideo,
+  setCodingExerciseDResourses,
+  setCodingExerciseExLink,
+  setCodingExerciseUploadEx,
+  setCodingExerciseExternalLink,
+  setCodingExerciseQVideo,
+  setCodingExercisesSolutionsFile,
+  setCodingExercisesExLinkSolutions,
+  setCodingExercisesSolutionsVideo,
+  setbtnLoadingCodingExcercise,
+  setshowCodingExecInput,
+  setshowCurriculumItem) =>{
+
+    setbtnLoadingCodingExcercise(true)
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
 const formdata = new FormData();
-formdata.append("courseSectionId", "152");
+formdata.append("courseSectionId", `${mainSectionID}`);
 formdata.append("codingExerciseCode", "");
 formdata.append("title", `${CodingExerciseTitle}`);
 formdata.append("description", `${CodingExerciseDesc}`);
 formdata.append("instructions", `${CodingExerciseInstructions}`);
-formdata.append("video", CodingExerciseVideo);
-formdata.append("resource", CodingExerciseDResourses);
+CodingExerciseVideo !=null && formdata.append("video", CodingExerciseVideo);
+CodingExerciseDResourses !=null && formdata.append("resource", CodingExerciseDResourses);
 formdata.append("link", `${CodingExerciseExLink}`);
-formdata.append("codingVideo", CodingExerciseQVideo);
-formdata.append("codingFiles", CodingExerciseUploadEx);
+CodingExerciseQVideo !=null && formdata.append("codingVideo", CodingExerciseQVideo);
+CodingExerciseUploadEx !=null && formdata.append("codingFiles", CodingExerciseUploadEx);
 formdata.append("codingLink", `${CodingExerciseExternalLink}`);
-formdata.append("solutionVideo", CodingExercisesSolutionsVideo);
-formdata.append("solutionSheet", CodingExercisesSolutionsFile);
+CodingExercisesSolutionsVideo !=null && formdata.append("solutionVideo", CodingExercisesSolutionsVideo);
+CodingExercisesSolutionsFile !=null && formdata.append("solutionSheet", CodingExercisesSolutionsFile);
 formdata.append("solutionLink", `${CodingExercisesExLinkSolutions}`);
 
 const requestOptions = {
-  method: "PUT",
+  method: "POST",
   headers: myHeaders,
   body: formdata,
   redirect: "follow"
@@ -3417,7 +3473,38 @@ const requestOptions = {
 
 fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCodingExercise", requestOptions)
   .then((response) => response.json())
-  .then((result) => console.log(result))
+  .then((result) => {
+    console.log(result)
+
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+
+      setCodingExerciseTitle("")
+      setCodingExerciseDesc("")
+      setCodingExerciseInstructions("")
+
+      setCodingExerciseVideo(null)
+      setCodingExerciseDResourses(null)
+      setCodingExerciseExLink(null)
+
+      setCodingExerciseUploadEx(null)
+      setCodingExerciseExternalLink("")
+
+      setCodingExerciseQVideo(null)
+
+      setCodingExercisesSolutionsFile(null)
+      setCodingExercisesExLinkSolutions("")
+      setCodingExercisesSolutionsVideo(null)
+
+      setbtnLoadingCodingExcercise(false)
+
+      setshowCodingExecInput(null)
+      setshowCurriculumItem(null)
+
+      return
+    }
+
+  })
   .catch((error) => console.error(error));
 
 
@@ -3496,6 +3583,8 @@ export const AssignmentSave = async(mainSectionID,AssignmentTitle,AssignmentDesc
         setAssignmentSolutionsFile(null)
         setAssignmentSolutionsExLink("")
         setbtnLoadingAssignment(false)
+
+       
         return
       }
 

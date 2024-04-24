@@ -126,6 +126,8 @@ const Curriculum = ({code}) => {
   const [PracticeTestSolutionsFile, setPracticeTestSolutionsFile] = useState(null)
   const [PraticeTestSolutionsExLink, setPraticeTestSolutionsExLink] = useState("")
 
+  const [btnLoadingPracticeTest, setbtnLoadingPracticeTest] = useState(false)
+
   // ======== PRACTICE TEST ==================
 
 
@@ -145,6 +147,8 @@ const Curriculum = ({code}) => {
   const [CodingExercisesSolutionsFile, setCodingExercisesSolutionsFile] = useState(null)
   const [CodingExercisesExLinkSolutions, setCodingExercisesExLinkSolutions] = useState("")
   const [CodingExercisesSolutionsVideo, setCodingExercisesSolutionsVideo] = useState(null)
+
+  const [btnLoadingCodingExcercise, setbtnLoadingCodingExcercise] = useState(false)
   // ======== CODING EXEC ==================
 
 
@@ -230,8 +234,8 @@ const Curriculum = ({code}) => {
 
 
     // ====== SUBMIT PRACTICE TEST ======
-    const handlePracticetestSave = (sectionId) =>{
-      console.log(sectionId)
+    const handlePracticetestSave = () =>{
+      console.log(mainSectionID)
       console.log(PracticeTestTitle)
       console.log(PracticeTestDesc)
       console.log(PracticeTestDuration)
@@ -243,7 +247,34 @@ const Curriculum = ({code}) => {
       console.log(PracticeTestSolutionsFile)
       console.log(PraticeTestSolutionsExLink)
 
+      if(PracticeTestTitle == ""){
+        ErrorAlert("Empty Field","Please Fill The Title")
+        return
+      }
+
+      if(PracticeTestDesc == ""){
+        ErrorAlert("Empty Field","Please Fill The Description")
+        return
+      }
+
+      if(PracticeTestDuration == ""){
+        ErrorAlert("Empty Field","Please Fill The Duration")
+        return
+      }
+
+      if(PracticeTestMinPassMark == ""){
+        ErrorAlert("Empty Field","Please Fill The Min Pass Mark")
+        return
+      }
+
+      if(PracticeTestInstructions == ""){
+        ErrorAlert("Empty Field","Please Fill The Instructors")
+        return
+      }
+
+
       PracticeTestSave(
+        mainSectionID,
         PracticeTestTitle,
         PracticeTestDesc,
         PracticeTestDuration,
@@ -253,7 +284,20 @@ const Curriculum = ({code}) => {
         PracticeTestQuestionFile,
         PracticeTestQuestionExLink,
         PracticeTestSolutionsFile,
-        PraticeTestSolutionsExLink
+        PraticeTestSolutionsExLink,
+        setshowPracticeTestInput,
+        setshowCurriculumItem,
+        setbtnLoadingPracticeTest,
+        setPracticeTestTitle,
+        setPracticeTestDesc,
+        setPracticeTestDuration,
+        setPracticeTestInstructions,
+        setPracticeTestMinPassMark,
+        setPracticeTestExLink,
+        setPracticeTestQuestionFile,
+        setPracticeTestQuestionExLink,
+        setPracticeTestSolutionsFile,
+        setPraticeTestSolutionsExLink
       )
 
     }
@@ -276,7 +320,24 @@ const Curriculum = ({code}) => {
       console.log(CodingExercisesExLinkSolutions)
       console.log(CodingExercisesSolutionsVideo)
 
+      if(CodingExerciseTitle == ""){
+        ErrorAlert("Empty Field","Please Fill the Title")
+        return
+      }
+
+      if(CodingExerciseDesc == ""){
+        ErrorAlert("Empty Field","Please Fill the Description")
+        return
+      }
+
+      if(CodingExerciseInstructions == ""){
+        ErrorAlert("Empty Field","Please Fill the Instructors")
+        return
+      }
+
+
       CodingExerciseSave(
+        mainSectionID,
         CodingExerciseTitle,
         CodingExerciseDesc,
         CodingExerciseInstructions,
@@ -288,7 +349,22 @@ const Curriculum = ({code}) => {
         CodingExerciseQVideo,
         CodingExercisesSolutionsFile,
         CodingExercisesExLinkSolutions,
-        CodingExercisesSolutionsVideo
+        CodingExercisesSolutionsVideo,
+        setCodingExerciseTitle,
+        setCodingExerciseDesc,
+        setCodingExerciseInstructions,
+        setCodingExerciseVideo,
+        setCodingExerciseDResourses,
+        setCodingExerciseExLink,
+        setCodingExerciseUploadEx,
+        setCodingExerciseExternalLink,
+        setCodingExerciseQVideo,
+        setCodingExercisesSolutionsFile,
+        setCodingExercisesExLinkSolutions,
+        setCodingExercisesSolutionsVideo,
+        setbtnLoadingCodingExcercise,
+        setshowCodingExecInput,
+        setshowCurriculumItem
       )
 
     }
@@ -1375,7 +1451,7 @@ console.log(item)
                 <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Upload Question</Form.Label>
-                <Form.Control value={PracticeTestQuestionFile} onChange={(e) => setPracticeTestQuestionFile(e.target.files[0])} type="file" />
+                <Form.Control  onChange={(e) => setPracticeTestQuestionFile(e.target.files[0])} type="file" />
               </Form.Group>
 
 
@@ -1390,7 +1466,7 @@ console.log(item)
                 <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Upload Solutions</Form.Label>
-                <Form.Control value={PracticeTestSolutionsFile} onChange={(e) => setPracticeTestSolutionsFile(e.target.files[0])} type="file" />
+                <Form.Control  onChange={(e) => setPracticeTestSolutionsFile(e.target.files[0])} type="file" />
               </Form.Group>
 
 
@@ -1400,7 +1476,11 @@ console.log(item)
               </Form.Group>
 
               <Button onClick={() => setshowPracticeTestInput(null)} className="mx-1"  variant="outlined">Cancel</Button>
-              <Button onClick={handlePracticetestSave} variant="contained">Save Practice Test</Button>
+              {btnLoadingPracticeTest ? (
+                <Button variant="contained">Loading..</Button>
+              ) :(
+                <Button onClick={handlePracticetestSave} variant="contained">Save Practice Test</Button>
+              )}
 
               </Form>
                 </Tab>
@@ -1439,12 +1519,12 @@ console.log(item)
   
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control value={CodingExerciseVideo} onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
+                      <Form.Control  onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                       <Form.Label>Downloadable Resourses</Form.Label>
-                      <Form.Control value={CodingExerciseDResourses} onChange={(e) => setCodingExerciseDResourses(e.target.files[0])} type="file" multiple />
+                      <Form.Control onChange={(e) => setCodingExerciseDResourses(e.target.files[0])} type="file" multiple />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -1459,7 +1539,7 @@ console.log(item)
                   <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Upload coding exercises</Form.Label>
-                  <Form.Control value={CodingExerciseUploadEx} onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
+                  <Form.Control  onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
                 </Form.Group>
   
   
@@ -1470,7 +1550,7 @@ console.log(item)
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control value={CodingExerciseQVideo} onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
+                      <Form.Control  onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
                     </Form.Group>
                 </Form>
   
@@ -1479,7 +1559,7 @@ console.log(item)
                   <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Upload Solutions</Form.Label>
-                  <Form.Control value={CodingExercisesSolutionsFile} onChange={(e) => (e.target.files[0])} type="file" multiple />
+                  <Form.Control  onChange={(e) => setCodingExercisesSolutionsFile(e.target.files[0])} type="file" multiple />
                 </Form.Group>
   
   
@@ -1490,10 +1570,14 @@ console.log(item)
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control value={CodingExercisesSolutionsVideo} onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
+                      <Form.Control  onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
                     </Form.Group>
                 <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel</Button>
+                {btnLoadingCodingExcercise ? (
+                <Button  className="mx-1" variant="contained">Loading..</Button>
+                ) :(
                 <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
+                )}
   
                 </Form>
                   </Tab>
