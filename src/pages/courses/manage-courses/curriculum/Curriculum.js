@@ -28,7 +28,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, GetCurriculum} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentSave, CodingExerciseSave, GetCurriculum, PracticeTestSave} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -80,6 +80,9 @@ const Curriculum = ({code}) => {
 
   const [section, setsection] = useState("")
   const [lecturetitle, setlecturetitle] = useState("")
+
+  // Section ID
+  const [mainSectionID, setmainSectionID] = useState(null)
 
 
   // Get Section data
@@ -163,6 +166,8 @@ const Curriculum = ({code}) => {
   const [AssignmentSolutionsVideo, setAssignmentSolutionsVideo] = useState(null)
   const [AssignmentSolutionsFile, setAssignmentSolutionsFile] = useState(null)
   const [AssignmentSolutionsExLink, setAssignmentSolutionsExLink] = useState("")
+
+  const [btnLoadingAssignment, setbtnLoadingAssignment] = useState(false)
   // ============ ASSIGNMENT =============
 
 
@@ -225,7 +230,8 @@ const Curriculum = ({code}) => {
 
 
     // ====== SUBMIT PRACTICE TEST ======
-    const handlePracticetestSave = () =>{
+    const handlePracticetestSave = (sectionId) =>{
+      console.log(sectionId)
       console.log(PracticeTestTitle)
       console.log(PracticeTestDesc)
       console.log(PracticeTestDuration)
@@ -236,6 +242,20 @@ const Curriculum = ({code}) => {
       console.log(PracticeTestQuestionExLink)
       console.log(PracticeTestSolutionsFile)
       console.log(PraticeTestSolutionsExLink)
+
+      PracticeTestSave(
+        PracticeTestTitle,
+        PracticeTestDesc,
+        PracticeTestDuration,
+        PracticeTestMinPassMark,
+        PracticeTestInstructions,
+        PracticeTestExLink,
+        PracticeTestQuestionFile,
+        PracticeTestQuestionExLink,
+        PracticeTestSolutionsFile,
+        PraticeTestSolutionsExLink
+      )
+
     }
 
 
@@ -255,11 +275,28 @@ const Curriculum = ({code}) => {
       console.log(CodingExercisesSolutionsFile)
       console.log(CodingExercisesExLinkSolutions)
       console.log(CodingExercisesSolutionsVideo)
+
+      CodingExerciseSave(
+        CodingExerciseTitle,
+        CodingExerciseDesc,
+        CodingExerciseInstructions,
+        CodingExerciseVideo,
+        CodingExerciseDResourses,
+        CodingExerciseExLink,
+        CodingExerciseUploadEx,
+        CodingExerciseExternalLink,
+        CodingExerciseQVideo,
+        CodingExercisesSolutionsFile,
+        CodingExercisesExLinkSolutions,
+        CodingExercisesSolutionsVideo
+      )
+
     }
 
 
     // ======== SUBMIT ASSIGNMENT =======
     const handleAssignmentSave = () => {
+      console.log(mainSectionID)
       console.log(AssignmentTitle)
       console.log(AssignmentDesc)
       console.log(AssignmentDuration)
@@ -274,7 +311,63 @@ const Curriculum = ({code}) => {
       console.log(AssignmentSolutionsVideo)
       console.log(AssignmentSolutionsFile)
       console.log(AssignmentSolutionsExLink)
-      console.log(AssignmentSolutionsExLink)
+
+      if(AssignmentTitle == ""){
+        ErrorAlert("Empty Field","Please Fill Title")
+        return
+      }
+
+      if(AssignmentDesc == ""){
+        ErrorAlert("Empty Field","Please Fill Description")
+        return
+      }
+
+      if(AssignmentDuration == ""){
+        ErrorAlert("Empty Field","Please Fill Duration")
+        return
+      }
+
+      if(AssignmentInstructors == ""){
+        ErrorAlert("Empty Field","Please Fill Instructions")
+        return
+      }
+
+
+
+      AssignmentSave(
+        mainSectionID,
+        AssignmentTitle,
+        AssignmentDesc,
+        AssignmentDuration,
+        AssignmentInstructors,
+        AssignmentVideo,
+        AssignmentDResourses,
+        AssignmentExLink,
+        AssignmentQuestion,
+        AssignmentQuestionFile,
+        AssignmentQuestionLink,
+        AssignmentSolutions,
+        AssignmentSolutionsVideo,
+        AssignmentSolutionsFile,
+        AssignmentSolutionsExLink,
+        setshowAssignmentInput,
+        setshowCurriculumItem,
+        setAssignmentTitle,
+        setAssignmentDesc,
+        setAssignmentDuration,
+        setAssignmentInstructors,
+        setAssignmentVideo,
+        setAssignmentDResourses,
+        setAssignmentExLink,
+        setAssignmentQuestion,
+        setAssignmentQuestionFile,
+        setAssignmentQuestionLink,
+        setAssignmentSolutions,
+        setAssignmentSolutionsVideo,
+        setAssignmentSolutionsFile,
+        setAssignmentSolutionsExLink,
+        setbtnLoadingAssignment
+      )
     }
 
 
@@ -623,9 +716,7 @@ console.log(item)
                             </tbody>
                           </Table>
 
-                  
 
-                        
                           <p><b>Note:</b> This video is still being processed. We will send you an email when it is ready.</p>
                           
                         </div>
@@ -1172,7 +1263,9 @@ console.log(item)
                 )}
 
                   {showCurriculumItem != index && (
-                  <Button onClick={() => setshowCurriculumItem(showCurriculumItem == index ? null : index)} variant="contained">
+                  <Button onClick={() => {
+                    setmainSectionID(section.courseSection.sectionId) 
+                    setshowCurriculumItem(showCurriculumItem == index ? null : index)}} variant="contained">
                     <AddIcon /> Syllabus Item
                   </Button>
 
@@ -1442,12 +1535,14 @@ console.log(item)
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control value={AssignmentVideo} onChange={(e) => setAssignmentVideo(e.target.files[0])} type="file" />
+                      <Form.Control onChange={(e) => {
+                        setAssignmentVideo(e.target.files[0])
+                      }} type="file" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                       <Form.Label>Downloadable Resourses</Form.Label>
-                      <Form.Control value={AssignmentDResourses} onChange={(e) => setAssignmentDResourses(e.target.files[0])} type="file" multiple />
+                      <Form.Control  onChange={(e) => setAssignmentDResourses(e.target.files[0])} type="file" multiple />
                     </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -1468,7 +1563,7 @@ console.log(item)
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Upload Question</Form.Label>
-                <Form.Control value={AssignmentQuestionFile} onChange={(e) => setAssignmentQuestionFile(e.target.value)} type="file" />
+                <Form.Control  onChange={(e) => setAssignmentQuestionFile(e.target.files[0])} type="file" />
               </Form.Group>
 
 
@@ -1489,12 +1584,12 @@ console.log(item)
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control value={AssignmentSolutionsVideo} onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
+                      <Form.Control  onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
                     </Form.Group>
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>Upload Solutions</Form.Label>
-                <Form.Control value={AssignmentSolutionsFile} onChange={(e) => setAssignmentSolutionsFile(e.target.files[0])} type="file" />
+                <Form.Control  onChange={(e) => setAssignmentSolutionsFile(e.target.files[0])} type="file" />
               </Form.Group>
 
 
@@ -1504,7 +1599,11 @@ console.log(item)
               </Form.Group>
 
               <Button onClick={() => setshowAssignmentInput(null)} variant="outlined">Cancel</Button>
+              {btnLoadingAssignment ? (
+                <Button  className="mx-1" variant="contained">Loading..</Button>
+              ) : (
               <Button onClick={handleAssignmentSave} className="mx-1" variant="contained">Save Assignment</Button>
+              )}
 
               </Form>
                 </Tab>
