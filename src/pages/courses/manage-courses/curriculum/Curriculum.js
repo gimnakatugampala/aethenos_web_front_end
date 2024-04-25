@@ -469,6 +469,27 @@ const Curriculum = ({code}) => {
     }
 
 
+    // ============= DELETE ==============
+    const handleLectureDelete = () =>{
+      console.log("Lecture")
+    }
+
+    const handleQuizDelete = () =>{
+      console.log("Quiz")
+    }
+
+    const handleAssignmentDelete = () =>{
+      console.log("Assignment")
+    }
+
+    const handlePracticeTestDelete = () =>{
+      console.log("Practice Test")
+
+    }
+
+    const handleCodingExercisesDelete = () =>{
+      console.log("Coding Test")
+    }
   
 
   useEffect(() => {
@@ -732,7 +753,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Lesson {index + 1}:{" "}
                       <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
-                     <DeleteIcon />
+                     <DeleteIcon onClick={() => handleLectureDelete()} />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1045,7 +1066,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Quiz {index + 1}:{" "}
                       <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => handleQuizDelete()} />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1283,7 +1304,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Assignment {index + 1}:{" "}
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => handleAssignmentDelete()}  />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1468,7 +1489,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Practice Test {index + 1}:{" "}
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => handlePracticeTestDelete()} />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1627,7 +1648,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Coding Exercise {index + 1}:{" "}
                       <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon />
+                      <DeleteIcon onClick={() => handleCodingExercisesDelete()} />
                     </Typography>
 
                     {showContentAdd == index ? (

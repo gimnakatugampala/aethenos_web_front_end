@@ -17,6 +17,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ForumIcon from '@mui/icons-material/Forum';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
 import List from '@mui/material/List';
@@ -39,7 +40,7 @@ import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
 import AddCoupon from './promotions/AddCoupon';
-import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckInstructorVerify, ChangeInstructorVerify, CheckOwnershipOfContent } from '../../../api'
+import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckInstructorVerify, ChangeInstructorVerify, CheckOwnershipOfContent, checkCourseCompletionStatus } from '../../../api'
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -78,6 +79,17 @@ const ManageCourses = () => {
 
   const [checkInstructorVerification, setcheckInstructorVerification] = useState(null)
   const [btn_loading, setbtn_loading] = useState(false)
+
+  // ================= STATUS ==========================
+
+  const [IntendedLearnersCheck, setIntendedLearnersCheck] = useState(false)
+  const [SyllabusCheck, setSyllabusCheck] = useState(false)
+  const [PricingCheck, setPricingCheck] = useState(false)
+  const [CourseMessagesCheck, setCourseMessagesCheck] = useState(false)
+  const [PromotionsCheck, setPromotionsCheck] = useState(false)
+  const [CourseLandingPageCheck, setCourseLandingPageCheck] = useState(false)
+
+  // ================= STATUS ==========================
 
   const [courseOwnership, setcourseOwnership] = useState(0)
   const [checkOnwership, setcheckOnwership] = useState(false)
@@ -288,8 +300,10 @@ const ManageCourses = () => {
   useEffect(() => {
     CheckInstructorVerify(code,setcheckInstructorVerification)
     CheckOwnershipOfContent(code,setcourseOwnership)
-    console.log(checkInstructorVerification)
-    console.log(courseOwnership)
+    // console.log(checkInstructorVerification)
+    // console.log(courseOwnership)
+
+    checkCourseCompletionStatus(code,setIntendedLearnersCheck,setSyllabusCheck,setPricingCheck,setCourseMessagesCheck,setPromotionsCheck,setCourseLandingPageCheck)
   }, [code,checkInstructorVerification,options,courseOwnership])
   
 
@@ -334,6 +348,11 @@ const ManageCourses = () => {
             <LocalLibraryIcon />
           </ListItemIcon>
           <ListItemText primary="Intended Learners" />
+
+          {IntendedLearnersCheck && <CheckCircleOutlineIcon />}
+
+          
+
         </ListItemButton>
        
 
@@ -345,7 +364,13 @@ const ManageCourses = () => {
           <ListItemIcon>
             <LibraryBooksIcon />
           </ListItemIcon>
-          <ListItemText primary="Curriculum" />
+          <ListItemText primary="Syllabus" />
+
+          {SyllabusCheck && <CheckCircleOutlineIcon />}
+
+
+          
+
         </ListItemButton>
           
 
@@ -359,6 +384,11 @@ const ManageCourses = () => {
             <LayersIcon />
           </ListItemIcon>
           <ListItemText primary="Course Landing Page" />
+
+          {CourseLandingPageCheck && <CheckCircleOutlineIcon />}
+
+          
+
         </ListItemButton>
        
       
@@ -370,6 +400,11 @@ const ManageCourses = () => {
             <MonetizationOnIcon />
           </ListItemIcon>
           <ListItemText primary="Pricing" />
+
+          {PricingCheck && <CheckCircleOutlineIcon />}
+
+          
+
         </ListItemButton>
         
 
@@ -381,6 +416,11 @@ const ManageCourses = () => {
             <ForumIcon />
           </ListItemIcon>
           <ListItemText primary="Courses Messages" />
+
+          {CourseMessagesCheck && <CheckCircleOutlineIcon />}
+
+          
+
         </ListItemButton>
 
         <ListItemButton
@@ -390,6 +430,11 @@ const ManageCourses = () => {
             <TrendingUpIcon />
           </ListItemIcon>
           <ListItemText primary="Promotions" />
+
+          {PromotionsCheck && <CheckCircleOutlineIcon />}
+
+          
+
         </ListItemButton>
 
         <ListItemButton
@@ -399,6 +444,9 @@ const ManageCourses = () => {
             <SettingsIcon />
           </ListItemIcon>
           <ListItemText primary="Settings" />
+
+
+
         </ListItemButton>
 
         <ListItemText>

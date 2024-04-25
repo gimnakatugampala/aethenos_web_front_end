@@ -3641,8 +3641,32 @@ export const AssignmentSave = async(mainSectionID,AssignmentCode,AssignmentTitle
   
 }
 
-// const accessToken = await getToken();
-// console.log(accessToken);
+
+export const checkCourseCompletionStatus = async(code,setIntendedLearnersCheck,setSyllabusCheck,setPricingCheck,setCourseMessagesCheck,setPromotionsCheck,setCourseLandingPageCheck) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/checkCourseCompleteDetails/${code}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    setIntendedLearnersCheck(result.intendedLearners)
+    setSyllabusCheck(result.curriculum)
+    setPricingCheck(result.pricing)
+    setCourseMessagesCheck(result.courseMessages)
+    setPromotionsCheck(result.promotions)
+    setCourseLandingPageCheck(result.courseLandingPage)
+  })
+  .catch((error) => console.error(error));
+
+}
 
 
  export const GetPaypalProfileDetails = async() =>{
