@@ -37,6 +37,10 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import LargeSpinner from '../../../../commonFunctions/loaders/Spinner/LoadingSpinner'
 import InputGroup from 'react-bootstrap/InputGroup';
 import CreateIcon from '@mui/icons-material/Create';
+import QuizIcon from '@mui/icons-material/Quiz';
+import BugReportIcon from '@mui/icons-material/BugReport';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import CodeIcon from '@mui/icons-material/Code';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -728,6 +732,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Lesson {index + 1}:{" "}
                       <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                     <DeleteIcon />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1039,7 +1044,8 @@ console.log(item)
                   >
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Quiz {index + 1}:{" "}
-                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <DeleteIcon />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1276,7 +1282,8 @@ console.log(item)
                   >
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Assignment {index + 1}:{" "}
-                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <DeleteIcon />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1460,7 +1467,8 @@ console.log(item)
                   >
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Practice Test {index + 1}:{" "}
-                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <DeleteIcon />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1618,7 +1626,8 @@ console.log(item)
                   >
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Coding Exercise {index + 1}:{" "}
-                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <DeleteIcon />
                     </Typography>
 
                     {showContentAdd == index ? (
