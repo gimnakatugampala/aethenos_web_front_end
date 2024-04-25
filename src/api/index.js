@@ -3353,7 +3353,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
   
 };
 
-export const PracticeTestSave = async(mainSectionID,PracticeTestTitle,PracticeTestDesc,PracticeTestDuration,PracticeTestMinPassMark,PracticeTestInstructions,PracticeTestExLink,PracticeTestQuestionFile,PracticeTestQuestionExLink,PracticeTestSolutionsFile,PraticeTestSolutionsExLink,setshowPracticeTestInput,setshowCurriculumItem,setbtnLoadingPracticeTest,setPracticeTestTitle,
+export const PracticeTestSave = async(mainSectionID,PraticeTestCode,PracticeTestTitle,PracticeTestDesc,PracticeTestDuration,PracticeTestMinPassMark,PracticeTestInstructions,PracticeTestExLink,PracticeTestQuestionFile,PracticeTestQuestionExLink,PracticeTestSolutionsFile,PraticeTestSolutionsExLink,setshowPracticeTestInput,setshowCurriculumItem,setbtnLoadingPracticeTest,setPracticeTestTitle,
   setPracticeTestDesc,
   setPracticeTestDuration,
   setPracticeTestInstructions,
@@ -3362,7 +3362,10 @@ export const PracticeTestSave = async(mainSectionID,PracticeTestTitle,PracticeTe
   setPracticeTestQuestionFile,
   setPracticeTestQuestionExLink,
   setPracticeTestSolutionsFile,
-  setPraticeTestSolutionsExLink) =>{
+  setPraticeTestSolutionsExLink,
+  setPraticeTestCode,
+  setshowContentAdd,
+  setshowMain) =>{
 
   setbtnLoadingPracticeTest(true)
 
@@ -3371,7 +3374,7 @@ export const PracticeTestSave = async(mainSectionID,PracticeTestTitle,PracticeTe
 
 const formdata = new FormData();
 formdata.append("courseSectionId", `${mainSectionID}`);
-formdata.append("practiceTestCode", "");
+formdata.append("practiceTestCode", `${PraticeTestCode}`);
 formdata.append("title", `${PracticeTestTitle}`);
 formdata.append("description", `${PracticeTestDesc}`);
 formdata.append("duration", `${PracticeTestDuration}`);
@@ -3396,7 +3399,18 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addPrac
     console.log(result)
 
     if(result.variable == "200"){
-      SuccessAlert("Success",result.message)
+
+      if(PraticeTestCode == ""){
+        SuccessAlert("Success",result.message)
+      }else{
+        SuccessAlert("Success","Practice Test Updated")
+      }
+
+      setshowContentAdd(null)
+      setshowMain(null)
+
+
+      setPraticeTestCode("")
 
       setPracticeTestTitle("")
       setPracticeTestDesc("")
@@ -3427,7 +3441,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addPrac
 
 }
 
-export const CodingExerciseSave = async(mainSectionID,CodingExerciseTitle,CodingExerciseDesc,CodingExerciseInstructions,CodingExerciseVideo,CodingExerciseDResourses,CodingExerciseExLink,CodingExerciseUploadEx,CodingExerciseExternalLink,CodingExerciseQVideo,CodingExercisesSolutionsFile,CodingExercisesExLinkSolutions,CodingExercisesSolutionsVideo,setCodingExerciseTitle,
+export const CodingExerciseSave = async(mainSectionID,CodingExerciseCode,CodingExerciseTitle,CodingExerciseDesc,CodingExerciseInstructions,CodingExerciseVideo,CodingExerciseDResourses,CodingExerciseExLink,CodingExerciseUploadEx,CodingExerciseExternalLink,CodingExerciseQVideo,CodingExercisesSolutionsFile,CodingExercisesExLinkSolutions,CodingExercisesSolutionsVideo,setCodingExerciseTitle,
   setCodingExerciseDesc,
   setCodingExerciseInstructions,
   setCodingExerciseVideo,
@@ -3441,7 +3455,10 @@ export const CodingExerciseSave = async(mainSectionID,CodingExerciseTitle,Coding
   setCodingExercisesSolutionsVideo,
   setbtnLoadingCodingExcercise,
   setshowCodingExecInput,
-  setshowCurriculumItem) =>{
+  setshowCurriculumItem,
+  setCodingExerciseCode,
+ setshowContentAdd,
+  setshowMain) =>{
 
     setbtnLoadingCodingExcercise(true)
 
@@ -3450,7 +3467,7 @@ export const CodingExerciseSave = async(mainSectionID,CodingExerciseTitle,Coding
 
 const formdata = new FormData();
 formdata.append("courseSectionId", `${mainSectionID}`);
-formdata.append("codingExerciseCode", "");
+formdata.append("codingExerciseCode", `${CodingExerciseCode}`);
 formdata.append("title", `${CodingExerciseTitle}`);
 formdata.append("description", `${CodingExerciseDesc}`);
 formdata.append("instructions", `${CodingExerciseInstructions}`);
@@ -3477,7 +3494,18 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCodi
     console.log(result)
 
     if(result.variable == "200"){
-      SuccessAlert("Success",result.message)
+
+      if(CodingExerciseCode == ""){
+        SuccessAlert("Success",result.message)
+      }else{
+        SuccessAlert("Success","Coding Exercise Updated")
+
+      }
+
+      setshowContentAdd(null)
+      setshowMain(null)
+
+      setCodingExerciseCode("")
 
       setCodingExerciseTitle("")
       setCodingExerciseDesc("")
@@ -3510,7 +3538,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCodi
 
 }
 
-export const AssignmentSave = async(mainSectionID,AssignmentTitle,AssignmentDesc,AssignmentDuration,AssignmentInstructors,AssignmentVideo,AssignmentDResourses,AssignmentExLink,AssignmentQuestion,AssignmentQuestionFile,AssignmentQuestionLink,AssignmentSolutions,AssignmentSolutionsVideo,AssignmentSolutionsFile,AssignmentSolutionsExLink,setshowAssignmentInput,setshowCurriculumItem,setAssignmentTitle,
+export const AssignmentSave = async(mainSectionID,AssignmentCode,AssignmentTitle,AssignmentDesc,AssignmentDuration,AssignmentInstructors,AssignmentVideo,AssignmentDResourses,AssignmentExLink,AssignmentQuestion,AssignmentQuestionFile,AssignmentQuestionLink,AssignmentSolutions,AssignmentSolutionsVideo,AssignmentSolutionsFile,AssignmentSolutionsExLink,setshowAssignmentInput,setshowCurriculumItem,setAssignmentTitle,
   setAssignmentDesc,
   setAssignmentDuration,
   setAssignmentInstructors,
@@ -3524,7 +3552,10 @@ export const AssignmentSave = async(mainSectionID,AssignmentTitle,AssignmentDesc
   setAssignmentSolutionsVideo,
   setAssignmentSolutionsFile,
   setAssignmentSolutionsExLink,
-  setbtnLoadingAssignment) =>{
+  setbtnLoadingAssignment,
+  setAssignmentCode,
+  setshowContentAdd,
+  setshowMain) =>{
 
     setbtnLoadingAssignment(true)
 
@@ -3533,7 +3564,7 @@ export const AssignmentSave = async(mainSectionID,AssignmentTitle,AssignmentDesc
   
   const formdata = new FormData();
   formdata.append("courseSectionId", `${mainSectionID}`);
-  formdata.append("assignmentCode", "");
+  formdata.append("assignmentCode", `${AssignmentCode}`);
   formdata.append("title", `${AssignmentTitle}`);
   formdata.append("description", `${AssignmentDesc}`);
   formdata.append("duration", `${AssignmentDuration}`);
@@ -3562,9 +3593,23 @@ export const AssignmentSave = async(mainSectionID,AssignmentTitle,AssignmentDesc
       console.log(result)
 
       if(result.variable == "200"){
-        SuccessAlert("Success",result.message)
+
+        setshowContentAdd(null)
+        setshowMain(null)
+
+        
+        if(AssignmentCode == ""){
+          SuccessAlert("Success",result.message)
+        }else{
+          SuccessAlert("Success","Assignment Updated")
+        }
+
+        
+
         setshowAssignmentInput(null)
         setshowCurriculumItem(null)
+
+        setAssignmentCode("")
         
         setAssignmentTitle("")
         setAssignmentDesc("")
@@ -3583,6 +3628,8 @@ export const AssignmentSave = async(mainSectionID,AssignmentTitle,AssignmentDesc
         setAssignmentSolutionsFile(null)
         setAssignmentSolutionsExLink("")
         setbtnLoadingAssignment(false)
+
+       
 
        
         return

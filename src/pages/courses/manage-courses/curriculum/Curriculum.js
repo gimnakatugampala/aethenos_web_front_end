@@ -36,7 +36,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import LaunchIcon from '@mui/icons-material/Launch';
 import LargeSpinner from '../../../../commonFunctions/loaders/Spinner/LoadingSpinner'
 import InputGroup from 'react-bootstrap/InputGroup';
-
+import CreateIcon from '@mui/icons-material/Create';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -111,6 +111,7 @@ const Curriculum = ({code}) => {
 
 
   // ======== PRACTICE TEST ==================
+  const [PraticeTestCode, setPraticeTestCode] = useState("")
   const [PracticeTestTitle, setPracticeTestTitle] = useState("")
   const [PracticeTestDesc, setPracticeTestDesc] = useState("")
   const [PracticeTestDuration, setPracticeTestDuration] = useState("")
@@ -132,6 +133,7 @@ const Curriculum = ({code}) => {
 
 
   // ======== CODING EXEC ==================
+  const [CodingExerciseCode, setCodingExerciseCode] = useState("")
   const [CodingExerciseTitle, setCodingExerciseTitle] = useState("")
   const [CodingExerciseDesc, setCodingExerciseDesc] = useState("")
   const [CodingExerciseInstructions, setCodingExerciseInstructions] = useState("")
@@ -153,6 +155,7 @@ const Curriculum = ({code}) => {
 
 
   // ============ ASSIGNMENT =============
+  const [AssignmentCode, setAssignmentCode] = useState("")
   const [AssignmentTitle, setAssignmentTitle] = useState("")
   const [AssignmentDesc, setAssignmentDesc] = useState("")
   const [AssignmentDuration, setAssignmentDuration] = useState("")
@@ -236,6 +239,7 @@ const Curriculum = ({code}) => {
     // ====== SUBMIT PRACTICE TEST ======
     const handlePracticetestSave = () =>{
       console.log(mainSectionID)
+      console.log(PraticeTestCode)
       console.log(PracticeTestTitle)
       console.log(PracticeTestDesc)
       console.log(PracticeTestDuration)
@@ -275,6 +279,7 @@ const Curriculum = ({code}) => {
 
       PracticeTestSave(
         mainSectionID,
+        PraticeTestCode,
         PracticeTestTitle,
         PracticeTestDesc,
         PracticeTestDuration,
@@ -297,7 +302,10 @@ const Curriculum = ({code}) => {
         setPracticeTestQuestionFile,
         setPracticeTestQuestionExLink,
         setPracticeTestSolutionsFile,
-        setPraticeTestSolutionsExLink
+        setPraticeTestSolutionsExLink,
+        setPraticeTestCode,
+        setshowContentAdd,
+        setshowMain
       )
 
     }
@@ -306,6 +314,7 @@ const Curriculum = ({code}) => {
     // ======= SUBMIT CODING EXEC =======
     const handleCodingExecSave = () => {
       console.log(CodingExerciseTitle)
+      console.log(CodingExerciseCode)
       console.log(CodingExerciseDesc)
       console.log(CodingExerciseInstructions)
       console.log(CodingExerciseVideo)
@@ -338,6 +347,7 @@ const Curriculum = ({code}) => {
 
       CodingExerciseSave(
         mainSectionID,
+        CodingExerciseCode,
         CodingExerciseTitle,
         CodingExerciseDesc,
         CodingExerciseInstructions,
@@ -364,7 +374,10 @@ const Curriculum = ({code}) => {
         setCodingExercisesSolutionsVideo,
         setbtnLoadingCodingExcercise,
         setshowCodingExecInput,
-        setshowCurriculumItem
+        setshowCurriculumItem,
+        setCodingExerciseCode,
+        setshowContentAdd,
+        setshowMain
       )
 
     }
@@ -373,6 +386,7 @@ const Curriculum = ({code}) => {
     // ======== SUBMIT ASSIGNMENT =======
     const handleAssignmentSave = () => {
       console.log(mainSectionID)
+      console.log(AssignmentCode)
       console.log(AssignmentTitle)
       console.log(AssignmentDesc)
       console.log(AssignmentDuration)
@@ -412,6 +426,7 @@ const Curriculum = ({code}) => {
 
       AssignmentSave(
         mainSectionID,
+        AssignmentCode,
         AssignmentTitle,
         AssignmentDesc,
         AssignmentDuration,
@@ -442,7 +457,10 @@ const Curriculum = ({code}) => {
         setAssignmentSolutionsVideo,
         setAssignmentSolutionsFile,
         setAssignmentSolutionsExLink,
-        setbtnLoadingAssignment
+        setbtnLoadingAssignment,
+        setAssignmentCode,
+        setshowContentAdd,
+        setshowMain
       )
     }
 
@@ -1246,8 +1264,509 @@ console.log(item)
                 )}
 
                 {/* Assignment */}
+                {item.type == "Assignment" && 
+                 (
+                  // Assignment
+                <Accordion key={index} className="my-3">
+                  <AccordionSummary
+                    className="accordian-header d-flex justify-content-between align-items-center"
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>
+                      <CheckCircleIcon fontSize="small" /> Assignment {index + 1}:{" "}
+                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                    </Typography>
+
+                    {showContentAdd == index ? (
+                      <Button
+                        onClick={() => {
+                          setshowDescRes(true)
+                          setshowMain(null)
+                          console.log(index)
+                          setshowContentAdd(null)
+                          setcurriculumvisiblitymc("")
+                          // handleContentshow()
+                        }}
+                        className="mx-2"
+                        size="small"
+                        variant="contained"
+                      >
+                        <CloseIcon /> Cancel
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setshowMain(showMain == index ? null : index)
+                          setshowContentAdd(showContentAdd == index ? null : index)
+
+                          console.log(item)
+                          setmainSectionID(section.courseSection.sectionId)
+
+                          // Fill Data
+                          setAssignmentCode(item.getAssignment[0].assignmentCode)
+                          setAssignmentTitle(item.title)
+                          setAssignmentDesc(item.description)
+                          setAssignmentDuration(item.getAssignment[0].duration)
+                          setAssignmentInstructors(item.getAssignment[0].instructions)
+                          setAssignmentExLink(item.getAssignment[0].solutionsExternalLink)
+
+
+                          setAssignmentQuestion(item.getAssignment[0].question)
+                          setAssignmentQuestionLink(item.getAssignment[0].questionExternalLink)
+
+                          setAssignmentSolutions(item.getAssignment[0].solutions)
+                          setAssignmentSolutionsExLink(item.getAssignment[0].solutionsExternalLink)
+
+
+
+
+                        }}
+                        className="mx-2"
+                        size="small"
+                        variant="outlined"
+                      >
+                        <CreateIcon /> Edit
+                      </Button>
+                    )}
+                  </AccordionSummary>
+
+                  <AccordionDetails>
+
+                  {showMain == index && (
+
+                          <Tabs
+                          defaultActiveKey="assignment"
+                          id="uncontrolled-tab-example"
+                          className="mb-3"
+                          >
+
+                          <Tab eventKey="assignment" title="Assignment information and Instructions">
+                          <Form>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>Title</Form.Label>
+                              <Form.Control value={AssignmentTitle} onChange={(e) => setAssignmentTitle(e.target.value)} type="text" placeholder="Assignment Title" />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>Description</Form.Label>
+                              <Form.Control value={AssignmentDesc} onChange={(e) => setAssignmentDesc(e.target.value)}  as="textarea" rows={2} />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>Duration</Form.Label>
+                              <Form.Control value={AssignmentDuration} onChange={(e) => setAssignmentDuration(e.target.value)} type="text" placeholder="00:00" />
+                            </Form.Group>
+
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>Instructions</Form.Label>
+                              <Form.Control value={AssignmentInstructors} onChange={(e) => setAssignmentInstructors(e.target.value)} as="textarea" rows={3} />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Upload Video</Form.Label>
+                                <Form.Control onChange={(e) => {
+                                  setAssignmentVideo(e.target.files[0])
+                                }} type="file" />
+                              </Form.Group>
+
+                              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Downloadable Resourses</Form.Label>
+                                <Form.Control  onChange={(e) => setAssignmentDResourses(e.target.files[0])} type="file" multiple />
+                              </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                              <Form.Label>External Link</Form.Label>
+                              <Form.Control value={AssignmentExLink} onChange={(e) => setAssignmentExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                            </Form.Group>
+                          </Form>
+                          </Tab>
+
+                          <Tab eventKey="questions" title="Questions">
+
+                          <Form>
+
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>Questions</Form.Label>
+                              <Form.Control value={AssignmentQuestion} onChange={(e) => setAssignmentQuestion(e.target.value)} as="textarea" rows={2} />
+                            </Form.Group>
+
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Upload Question</Form.Label>
+                          <Form.Control  onChange={(e) => setAssignmentQuestionFile(e.target.files[0])} type="file" />
+                          </Form.Group>
+
+
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>External Link</Form.Label>
+                          <Form.Control value={AssignmentQuestionLink} onChange={(e) => setAssignmentQuestionLink(e.target.value)} type="text" placeholder="https://example.com" />
+                          </Form.Group>
+                          </Form>
+
+                          </Tab>
+                          <Tab eventKey="solutions" title="Solutions">
+                          <Form>
+
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                              <Form.Label>Solutions</Form.Label>
+                              <Form.Control value={AssignmentSolutions} onChange={(e) => setAssignmentSolutions(e.target.value)} as="textarea" rows={2} />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Upload Video</Form.Label>
+                                <Form.Control  onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
+                              </Form.Group>
+
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Upload Solutions</Form.Label>
+                          <Form.Control  onChange={(e) => setAssignmentSolutionsFile(e.target.files[0])} type="file" />
+                          </Form.Group>
+
+
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>External Link</Form.Label>
+                          <Form.Control value={AssignmentSolutionsExLink} onChange={(e) => setAssignmentSolutionsExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                          </Form.Group>
+
+                          <Button onClick={() => setshowAssignmentInput(null)} variant="outlined">Cancel</Button>
+                          {btnLoadingAssignment ? (
+                          <Button  className="mx-1" variant="contained">Loading..</Button>
+                          ) : (
+                          <Button onClick={handleAssignmentSave} className="mx-1" variant="contained">Save Assignment</Button>
+                          )}
+
+                          </Form>
+                          </Tab>
+                          </Tabs>
+                  )}
+
+                  </AccordionDetails>
+                </Accordion>
+                )}
 
                 {/* Practice test */}
+                {item.type == "Practice Test" && 
+                 (
+                  // Assignment
+                <Accordion key={index} className="my-3">
+                  <AccordionSummary
+                    className="accordian-header d-flex justify-content-between align-items-center"
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>
+                      <CheckCircleIcon fontSize="small" /> Practice Test {index + 1}:{" "}
+                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                    </Typography>
+
+                    {showContentAdd == index ? (
+                      <Button
+                        onClick={() => {
+                          setshowDescRes(true)
+                          setshowMain(null)
+                          console.log(index)
+                          setshowContentAdd(null)
+                          setcurriculumvisiblitymc("")
+                          // handleContentshow()
+                        }}
+                        className="mx-2"
+                        size="small"
+                        variant="contained"
+                      >
+                        <CloseIcon /> Cancel
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setshowMain(showMain == index ? null : index)
+                          setshowContentAdd(showContentAdd == index ? null : index)
+
+                          console.log(item)
+                          setmainSectionID(section.courseSection.sectionId)
+
+                          // Fill Data
+                          setPraticeTestCode(item.getPracticeTests[0].practiceTestCode)
+                          setPracticeTestTitle(item.title)
+                          setPracticeTestDesc(item.description)
+                          setPracticeTestDuration(item.getPracticeTests[0].duration)
+                          setPracticeTestInstructions(item.getPracticeTests[0].instructions)
+                          setPracticeTestMinPassMark(item.getPracticeTests[0].minimumuPassMark)
+
+
+                          setPracticeTestExLink(item.getPracticeTests[0].externalLink)
+                          setPracticeTestQuestionExLink(item.getPracticeTests[0].questionLink)
+
+                          setPraticeTestSolutionsExLink(item.getPracticeTests[0].solutionLink)
+
+
+                        }}
+                        className="mx-2"
+                        size="small"
+                        variant="outlined"
+                      >
+                        <CreateIcon /> Edit
+                      </Button>
+                    )}
+                  </AccordionSummary>
+
+                  <AccordionDetails>
+
+                  {showMain == index && (
+
+                      <Tabs
+                      defaultActiveKey="practice"
+                      id="uncontrolled-tab-example"
+                      className="mb-3"
+                      >
+
+                      <Tab eventKey="practice" title="Practice Test information and Instructions">
+                      <Form>
+
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Title</Form.Label>
+                          <Form.Control value={PracticeTestTitle} onChange={(e) => setPracticeTestTitle(e.target.value)} type="text" placeholder="Practice Test Title" />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                          <Form.Label>Description</Form.Label>
+                          <Form.Control value={PracticeTestDesc} onChange={(e) => setPracticeTestDesc(e.target.value)} as="textarea" rows={2} />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Duration</Form.Label>
+                          <Form.Control value={PracticeTestDuration} onChange={(e) => setPracticeTestDuration(e.target.value)} type="text" placeholder="00:00" />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Minimum pass mark</Form.Label>
+                          <Form.Control value={PracticeTestMinPassMark} onChange={(e) => setPracticeTestMinPassMark(e.target.value)} type="number" />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                          <Form.Label>Instructions</Form.Label>
+                          <Form.Control value={PracticeTestInstructions} onChange={(e) => setPracticeTestInstructions(e.target.value)} as="textarea" rows={3} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>External Link</Form.Label>
+                          <Form.Control value={PracticeTestExLink} onChange={(e) => setPracticeTestExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                        </Form.Group>
+                      </Form>
+                      </Tab>
+
+                      <Tab eventKey="questions" title="Questions">
+
+                      <Form>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>Upload Question</Form.Label>
+                      <Form.Control  onChange={(e) => setPracticeTestQuestionFile(e.target.files[0])} type="file" />
+                      </Form.Group>
+
+
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>External Link</Form.Label>
+                      <Form.Control value={PracticeTestQuestionExLink} onChange={(e) => setPracticeTestQuestionExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                      </Form.Group>
+                      </Form>
+
+                      </Tab>
+                      <Tab eventKey="solutions" title="Solutions">
+                      <Form>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>Upload Solutions</Form.Label>
+                      <Form.Control  onChange={(e) => setPracticeTestSolutionsFile(e.target.files[0])} type="file" />
+                      </Form.Group>
+
+
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>External Link</Form.Label>
+                      <Form.Control value={PraticeTestSolutionsExLink} onChange={(e) => setPraticeTestSolutionsExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                      </Form.Group>
+
+                      <Button onClick={() => setshowPracticeTestInput(null)} className="mx-1"  variant="outlined">Cancel</Button>
+                      {btnLoadingPracticeTest ? (
+                      <Button variant="contained">Loading..</Button>
+                      ) :(
+                      <Button onClick={handlePracticetestSave} variant="contained">Save Practice Test</Button>
+                      )}
+
+                      </Form>
+                      </Tab>
+                      </Tabs>
+
+                        
+                  )}
+
+                  </AccordionDetails>
+                </Accordion>
+                )}
+
+
+                {/* Coding Exercise */}
+                {item.type == "Coding Exercise" && 
+                 (
+                  // Assignment
+                <Accordion key={index} className="my-3">
+                  <AccordionSummary
+                    className="accordian-header d-flex justify-content-between align-items-center"
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>
+                      <CheckCircleIcon fontSize="small" /> Coding Exercise {index + 1}:{" "}
+                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                    </Typography>
+
+                    {showContentAdd == index ? (
+                      <Button
+                        onClick={() => {
+                          setshowDescRes(true)
+                          setshowMain(null)
+                          console.log(index)
+                          setshowContentAdd(null)
+                          setcurriculumvisiblitymc("")
+                          // handleContentshow()
+                        }}
+                        className="mx-2"
+                        size="small"
+                        variant="contained"
+                      >
+                        <CloseIcon /> Cancel
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setshowMain(showMain == index ? null : index)
+                          setshowContentAdd(showContentAdd == index ? null : index)
+
+                          console.log(item)
+                          setmainSectionID(section.courseSection.sectionId)
+
+                          // Fill Data
+                          setCodingExerciseCode(item.getCodingExercises[0].codingExerciseCode)
+                          setCodingExerciseTitle(item.title)
+                          setCodingExerciseDesc(item.description)
+                          setCodingExerciseInstructions(item.getCodingExercises[0].instructions)
+                          setCodingExerciseExLink(item.getCodingExercises[0].externalLink == null ? "" : item.getCodingExercises[0].externalLink)
+
+                          setCodingExerciseExternalLink(item.getCodingExercises[0].codingExternalLink)
+                          setCodingExercisesExLinkSolutions(item.getCodingExercises[0].solutionsExternalLink)
+                          
+
+
+                        }}
+                        className="mx-2"
+                        size="small"
+                        variant="outlined"
+                      >
+                        <CreateIcon /> Edit
+                      </Button>
+                    )}
+                  </AccordionSummary>
+
+                  <AccordionDetails>
+
+                  {showMain == index && (
+                     <Tabs
+                     defaultActiveKey="coding"
+                     id="uncontrolled-tab-example"
+                     className="mb-3"
+                   >
+     
+                     <Tab eventKey="coding" title="Coding Exercise information and Instructions">
+                     <Form>
+     
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                         <Form.Label>Title</Form.Label>
+                         <Form.Control value={CodingExerciseTitle} onChange={(e) => setCodingExerciseTitle(e.target.value)} type="text" placeholder="Coding Excercise" />
+                       </Form.Group>
+     
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Label>Description</Form.Label>
+                         <Form.Control value={CodingExerciseDesc} onChange={(e) => setCodingExerciseDesc(e.target.value)} as="textarea" rows={2} />
+                       </Form.Group>
+   
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Label>Instructions</Form.Label>
+                         <Form.Control value={CodingExerciseInstructions} onChange={(e) => setCodingExerciseInstructions(e.target.value)} as="textarea" rows={2} />
+                       </Form.Group>
+     
+     
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                         <Form.Label>Upload Video</Form.Label>
+                         <Form.Control  onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
+                       </Form.Group>
+   
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Label>Downloadable Resourses</Form.Label>
+                         <Form.Control onChange={(e) => setCodingExerciseDResourses(e.target.files[0])} type="file" multiple />
+                       </Form.Group>
+   
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                         <Form.Label>External Link</Form.Label>
+                         <Form.Control value={CodingExerciseExLink} onChange={(e) => setCodingExerciseExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                       </Form.Group>
+                     </Form>
+                     </Tab>
+     
+                     <Tab eventKey="coding-exercises" title="Coding exercises">
+     
+                     <Form>
+                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                     <Form.Label>Upload coding exercises</Form.Label>
+                     <Form.Control  onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
+                   </Form.Group>
+     
+     
+                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                     <Form.Label>External Link</Form.Label>
+                     <Form.Control value={CodingExerciseExternalLink} onChange={(e) => setCodingExerciseExternalLink(e.target.value)} type="text" placeholder="https://example.com" />
+                   </Form.Group>
+   
+                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                         <Form.Label>Upload Video</Form.Label>
+                         <Form.Control  onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
+                       </Form.Group>
+                   </Form>
+     
+                     </Tab>
+                     <Tab eventKey="solutions" title="Solutions">
+                     <Form>
+                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                     <Form.Label>Upload Solutions</Form.Label>
+                     <Form.Control  onChange={(e) => setCodingExercisesSolutionsFile(e.target.files[0])} type="file" multiple />
+                   </Form.Group>
+     
+     
+                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                     <Form.Label>External Link</Form.Label>
+                     <Form.Control value={CodingExercisesExLinkSolutions} onChange={(e) => setCodingExercisesExLinkSolutions(e.target.value)} type="text" placeholder="https://example.com" />
+                   </Form.Group>
+   
+                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                         <Form.Label>Upload Video</Form.Label>
+                         <Form.Control  onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
+                       </Form.Group>
+                   <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel</Button>
+                   {btnLoadingCodingExcercise ? (
+                   <Button  className="mx-1" variant="contained">Loading..</Button>
+                   ) :(
+                   <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
+                   )}
+     
+                   </Form>
+                     </Tab>
+                   </Tabs>
+                        
+                  )}
+
+                  </AccordionDetails>
+                </Accordion>
+                )}
 
                 </>
               ))}
