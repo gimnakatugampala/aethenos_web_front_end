@@ -3657,6 +3657,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/checkCourseCo
   .then((response) => response.json())
   .then((result) => {
     console.log(result)
+
+    Unauthorized(result.status,"courses") 
+
     setIntendedLearnersCheck(result.intendedLearners)
     setSyllabusCheck(result.curriculum)
     setPricingCheck(result.pricing)
@@ -3668,6 +3671,170 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/checkCourseCo
 
 }
 
+export const AssignmentDelete = async(code) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteAssignment/${code}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      return
+    }
+  })
+  .catch((error) => console.error(error));
+
+
+}
+
+export const PracticeTestDelete = async(code) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletePracticeTest/${code}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      return
+    }
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const CodingExerciseDelete = async(code) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteCodingExercise/${code}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      return
+    }
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const LectureDelete = async(id) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletelecture/${id}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      return
+    }
+  })
+  .catch((error) => console.error(error));
+
+
+}
+
+
+export const QuizDelete = async(id) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletequiz/${id}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+
+}
+
+export const SectionDelete = async(id) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletecourseSection/${id}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+
+}
 
  export const GetPaypalProfileDetails = async() =>{
 

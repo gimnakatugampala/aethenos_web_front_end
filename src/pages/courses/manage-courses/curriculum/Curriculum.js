@@ -28,7 +28,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentSave, CodingExerciseSave, GetCurriculum, PracticeTestSave} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -470,25 +470,120 @@ const Curriculum = ({code}) => {
 
 
     // ============= DELETE ==============
-    const handleLectureDelete = () =>{
-      console.log("Lecture")
+
+    const handleSectionDelete = (section) =>{
+      // console.log(section.courseSection.sectionId)
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          SectionDelete(section.courseSection.sectionId)
+        }
+      });
+
     }
 
-    const handleQuizDelete = () =>{
-      console.log("Quiz")
+    const handleLectureDelete = (item) =>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          LectureDelete(item.id)
+        }
+      });
+
+      // console.log(item.id)
+
     }
 
-    const handleAssignmentDelete = () =>{
-      console.log("Assignment")
+    const handleQuizDelete = (item) =>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          QuizDelete(item.id)
+        }
+      });
+
+      console.log(item)
     }
 
-    const handlePracticeTestDelete = () =>{
-      console.log("Practice Test")
+    const handleAssignmentDelete = (item) =>{
+      // console.log(item.getAssignment[0].assignmentCode)
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          AssignmentDelete(item.getAssignment[0].assignmentCode)
+        }
+      });
 
     }
 
-    const handleCodingExercisesDelete = () =>{
-      console.log("Coding Test")
+    const handlePracticeTestDelete = (item) =>{
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          PracticeTestDelete(item.getPracticeTests[0].practiceTestCode)
+        }
+      });
+
+      // console.log(item.getPracticeTests[0].practiceTestCode)
+
+
+    }
+
+    const handleCodingExercisesDelete = (item) =>{
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // PracticeTestDelete(item.getPracticeTests[0].practiceTestCode)
+          CodingExerciseDelete(item.getCodingExercises[0].codingExerciseCode)
+        }
+      });
+
+      // console.log(item.getCodingExercises[0].codingExerciseCode)
     }
   
 
@@ -729,6 +824,7 @@ console.log(item)
                 <Typography variant="subtitle1">
                   <b> Section {index + 1}:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
                   {section.courseSection.sectionName}
+                  <DeleteIcon onClick={() => handleSectionDelete(section)}  />
                 </Typography>
               </div>
 
@@ -753,7 +849,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Lesson {index + 1}:{" "}
                       <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
-                     <DeleteIcon onClick={() => handleLectureDelete()} />
+                     <DeleteIcon onClick={() => handleLectureDelete(item)} />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1066,7 +1162,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Quiz {index + 1}:{" "}
                       <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handleQuizDelete()} />
+                      <DeleteIcon onClick={() => handleQuizDelete(item)} />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1304,7 +1400,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Assignment {index + 1}:{" "}
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handleAssignmentDelete()}  />
+                      <DeleteIcon onClick={() => handleAssignmentDelete(item)}  />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1489,7 +1585,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Practice Test {index + 1}:{" "}
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handlePracticeTestDelete()} />
+                      <DeleteIcon onClick={() => handlePracticeTestDelete(item)} />
                     </Typography>
 
                     {showContentAdd == index ? (
@@ -1648,7 +1744,7 @@ console.log(item)
                     <Typography>
                       <CheckCircleIcon fontSize="small" /> Coding Exercise {index + 1}:{" "}
                       <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handleCodingExercisesDelete()} />
+                      <DeleteIcon onClick={() => handleCodingExercisesDelete(item)} />
                     </Typography>
 
                     {showContentAdd == index ? (

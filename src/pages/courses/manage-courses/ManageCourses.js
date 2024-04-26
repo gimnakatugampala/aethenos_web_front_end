@@ -18,6 +18,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ForumIcon from '@mui/icons-material/Forum';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 
 import List from '@mui/material/List';
@@ -349,7 +350,7 @@ const ManageCourses = () => {
           </ListItemIcon>
           <ListItemText primary="Intended Learners" />
 
-          {IntendedLearnersCheck && <CheckCircleOutlineIcon />}
+          {IntendedLearnersCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 
           
 
@@ -366,7 +367,7 @@ const ManageCourses = () => {
           </ListItemIcon>
           <ListItemText primary="Syllabus" />
 
-          {SyllabusCheck && <CheckCircleOutlineIcon />}
+          {SyllabusCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 
 
           
@@ -385,7 +386,7 @@ const ManageCourses = () => {
           </ListItemIcon>
           <ListItemText primary="Course Landing Page" />
 
-          {CourseLandingPageCheck && <CheckCircleOutlineIcon />}
+          {CourseLandingPageCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 
           
 
@@ -401,7 +402,7 @@ const ManageCourses = () => {
           </ListItemIcon>
           <ListItemText primary="Pricing" />
 
-          {PricingCheck && <CheckCircleOutlineIcon />}
+          {PricingCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 
           
 
@@ -417,7 +418,7 @@ const ManageCourses = () => {
           </ListItemIcon>
           <ListItemText primary="Courses Messages" />
 
-          {CourseMessagesCheck && <CheckCircleOutlineIcon />}
+          {CourseMessagesCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 
           
 
@@ -431,7 +432,7 @@ const ManageCourses = () => {
           </ListItemIcon>
           <ListItemText primary="Promotions" />
 
-          {PromotionsCheck && <CheckCircleOutlineIcon />}
+          {PromotionsCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 
           
 
