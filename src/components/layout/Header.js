@@ -39,7 +39,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookies from "js-cookie";
-import { GetNotifications } from "../../api";
+import { GetInstructorProfileDetails, GetNotifications } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 
 
@@ -54,6 +54,18 @@ function Header({
 }) {
 
   const [notifications, setNotifications] = useState([]);
+
+  const [first_Name, setfirst_Name] = useState("")
+    const [last_name, setlast_name] = useState("")
+    const [headline, setheadline] = useState("")
+    const [biography, setbiography] = useState("")
+    const [website, setwebsite] = useState("")
+    const [twitter, settwitter] = useState("")
+    const [facebook, setfacebook] = useState("")
+    const [linkedin, setlinkedin] = useState("")
+    const [youtube, setyoutube] = useState("")
+    const [profile_img, setprofile_img] = useState("")
+    const [uploadImage, setuploadImage] = useState("")
 
   useEffect(() => {
     GetNotifications(setNotifications)
@@ -78,6 +90,22 @@ function Header({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+
+  useEffect(() => {
+    GetInstructorProfileDetails(setfirst_Name,
+        setlast_name,
+        setheadline,
+        setbiography,
+        setwebsite,
+        settwitter,
+        setfacebook,
+        setlinkedin,
+        setyoutube,
+        setprofile_img)
+}, [])
+
+  
 
 
   // Logout
@@ -138,7 +166,7 @@ function Header({
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 35, height: 35 }}>GK</Avatar>
+            <Avatar src="/static/images/avatar/1.jpg" alt={`${first_Name} ${last_name}`} sx={{ width: 35, height: 35 }}>{`${first_Name[0]}${last_name[0]}`}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>

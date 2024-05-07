@@ -6,7 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { GetPaypalProfileDetails } from '../../../api';
+import { AddWalletDetails, GetPaypalProfileDetails, GetWalletDetails } from '../../../api';
 import Form from 'react-bootstrap/Form';
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 
@@ -32,6 +32,8 @@ const Payouts = () => {
       return
     }
 
+    AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername)
+
     console.log(paypalEmail)
     console.log(paypalUsername)
   }
@@ -49,10 +51,17 @@ const Payouts = () => {
       return
     }
 
+    AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername)
+
     console.log(payoneerEmail)
     console.log(payoneerUsername)
 
   }
+
+  useEffect(() => {
+    GetWalletDetails(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername)
+  }, [])
+  
   
 
   return (

@@ -3836,27 +3836,61 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletec
 
 }
 
-export const AddWalletDetails = async() =>{
+export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+  
+  const formdata = new FormData();
+  formdata.append("paypalUserName", `${paypalUsername}`);
+  formdata.append("paypalEmail", `${paypalEmail}`);
+  formdata.append("payoneerUserName", `${payoneerUsername}`);
+  formdata.append("payoneerEmail", `${payoneerEmail}`);
+  
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/addInstructorPaymentDetails", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      Unauthorized(result.status,"payouts") 
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Success",result.message)
+        return
+      }
+
+    })
+    .catch((error) => console.error(error));
 
 
-const formdata = new FormData();
-formdata.append("userName", "jEFFnILE");
-formdata.append("email", "JeffNeel@gmail.com");
+}
+
+export const GetWalletDetails = async(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername) =>{
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
 const requestOptions = {
-  method: "POST",
+  method: "GET",
   headers: myHeaders,
-  body: formdata,
   redirect: "follow"
 };
 
-fetch("http://localhost:8080/instructorPayment/addInstructorPaymentDetails", requestOptions)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/getInstructorPaymentDetails", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    Unauthorized(result.status,"payouts") 
 
+    setpaypalEmail(result.paypalEmail)
+    setpaypalUsername(result.paypalUserName)
+    setpayoneerEmail(result.payoneerEmail)
+    setpayoneerUsername(result.payoneerUserName)
+  })
+  .catch((error) => console.error(error));
 
 }
