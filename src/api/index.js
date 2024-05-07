@@ -3836,30 +3836,27 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletec
 
 }
 
- export const GetPaypalProfileDetails = async() =>{
+export const AddWalletDetails = async() =>{
 
-  // try {
-  //   const response = await fetch(
-  //     'https://api.paypal.com/v1/oauth2/token/userinfo?schema=paypalv1.1',
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer AbhfyGv-hhPIo4dZ_Wia7_0sevNZC3B871Ndw8aDEIm8h6O59L1sV0TzgFXyCpwx-_GC93sKwsU_GtEF`, // Replace with your actual access token
-  //       },
-  //     }
-  //   );
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
-  //   if (!response.ok) {
-  //     throw new Error('Failed to fetch account details');
-  //   }
 
-  //   const data = await response.json();
+const formdata = new FormData();
+formdata.append("userName", "jEFFnILE");
+formdata.append("email", "JeffNeel@gmail.com");
 
-  //   // Set the account details state with the response data
-  //   console.log(data);
-  // } catch (error) {
-  //   console.error('Error fetching PayPal account details:', error);
-  // }
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
 
-  const accessToken = await getToken();
-console.log(accessToken);
- }
+fetch("http://localhost:8080/instructorPayment/addInstructorPaymentDetails", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+
+
+}
