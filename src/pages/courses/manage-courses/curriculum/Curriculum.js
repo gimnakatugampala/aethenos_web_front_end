@@ -674,9 +674,27 @@ const Curriculum = ({code}) => {
    const handleSaveVideo = (video,ID) =>{
       console.log(video)
       console.log(ID)
+      // console.log(e.target.files)
+
+      const reader = new FileReader();
+
+        reader.onload = function(event) {
+          const video1 = document.createElement('video');
+          
+          video1.onloadedmetadata = function() {
+            // Get the duration of the video in seconds
+            const duration = Math.round(video1.duration);
+            console.log('Video duration:', duration, 'seconds');
+            
+            AddCurriculumVideo(code,ID,video,duration,setsectionData,setshowMain)
+          };
+          
+          video1.src = event.target.result;
+        };
+
+        reader.readAsDataURL(video);
 
 
-      AddCurriculumVideo(code,ID,video,setsectionData,setshowMain)
    }
 
   //  Save Quiz > First Step

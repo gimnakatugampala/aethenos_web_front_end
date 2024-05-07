@@ -2150,7 +2150,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
- export const AddCurriculumVideo = async(code,ID,video,setsectionData,setshowMain) =>{
+ export const AddCurriculumVideo = async(code,ID,video,duration,setsectionData,setshowMain) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2158,6 +2158,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
   var formdata = new FormData();
   formdata.append("CurriculumItemId", `${ID}`);
   formdata.append("Video", video);
+  formdata.append("videoLength", `${duration}`);
 
   var requestOptions = {
     method: 'PUT',
