@@ -309,7 +309,9 @@ const Curriculum = ({code}) => {
         setPraticeTestSolutionsExLink,
         setPraticeTestCode,
         setshowContentAdd,
-        setshowMain
+        setshowMain,
+        code,
+      setsectionData
       )
 
     }
@@ -381,7 +383,9 @@ const Curriculum = ({code}) => {
         setshowCurriculumItem,
         setCodingExerciseCode,
         setshowContentAdd,
-        setshowMain
+        setshowMain,
+        code,
+      setsectionData
       )
 
     }
@@ -464,7 +468,9 @@ const Curriculum = ({code}) => {
         setbtnLoadingAssignment,
         setAssignmentCode,
         setshowContentAdd,
-        setshowMain
+        setshowMain,
+        code,
+      setsectionData
       )
     }
 

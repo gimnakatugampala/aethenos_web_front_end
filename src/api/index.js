@@ -3365,7 +3365,9 @@ export const PracticeTestSave = async(mainSectionID,PraticeTestCode,PracticeTest
   setPraticeTestSolutionsExLink,
   setPraticeTestCode,
   setshowContentAdd,
-  setshowMain) =>{
+  setshowMain,
+  code,
+setsectionData) =>{
 
   setbtnLoadingPracticeTest(true)
 
@@ -3431,6 +3433,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addPrac
       setshowPracticeTestInput(null)
       setshowCurriculumItem(null)
 
+      GetCurriculum(code,setsectionData)
+
 
       return
     }
@@ -3458,7 +3462,9 @@ export const CodingExerciseSave = async(mainSectionID,CodingExerciseCode,CodingE
   setshowCurriculumItem,
   setCodingExerciseCode,
  setshowContentAdd,
-  setshowMain) =>{
+  setshowMain,
+  code,
+  setsectionData) =>{
 
     setbtnLoadingCodingExcercise(true)
 
@@ -3529,6 +3535,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCodi
       setshowCodingExecInput(null)
       setshowCurriculumItem(null)
 
+      GetCurriculum(code,setsectionData)
+
       return
     }
 
@@ -3555,7 +3563,9 @@ export const AssignmentSave = async(mainSectionID,AssignmentCode,AssignmentTitle
   setbtnLoadingAssignment,
   setAssignmentCode,
   setshowContentAdd,
-  setshowMain) =>{
+  setshowMain,
+  code,
+  setsectionData) =>{
 
     setbtnLoadingAssignment(true)
 
@@ -3630,7 +3640,7 @@ export const AssignmentSave = async(mainSectionID,AssignmentCode,AssignmentTitle
         setbtnLoadingAssignment(false)
 
        
-
+        GetCurriculum(code,setsectionData)
        
         return
       }
@@ -3691,6 +3701,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteA
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
+      setTimeout(() => {
+        window.location.reload()
+    },2000)
       return
     }
   })
@@ -3719,6 +3732,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteP
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
+
+      setTimeout(() => {
+        window.location.reload()
+    },2000)
+
       return
     }
   })
@@ -3744,6 +3762,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
+      setTimeout(() => {
+        window.location.reload()
+    },2000)
       return
     }
   })
@@ -3769,6 +3790,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletel
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
+      setTimeout(() => {
+        window.location.reload()
+    },2000)
       return
     }
   })
@@ -3798,6 +3822,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteq
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
+
+      setTimeout(() => {
+        window.location.reload()
+    },2000)
+
       return
     }
 
@@ -3827,6 +3856,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletec
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
+      setTimeout(() => {
+          window.location.reload()
+      },2000)
       return
     }
 
