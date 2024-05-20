@@ -28,7 +28,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, VideoDelete} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -235,6 +235,32 @@ const Curriculum = ({code}) => {
     const handleCancelLectureInput = () =>{
       setshowLecInput(false)
       setshowCurriculumItem(true)
+    }
+
+    const handleVideoDelete = (video) => {
+        console.log(video)
+
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+          if (result.isConfirmed) {
+            // Swal.fire({
+            //   title: "Deleted!",
+            //   text: "Your file has been deleted.",
+            //   icon: "success"
+            // });
+            VideoDelete(video.url,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowContentAdd)
+          }
+
+        });
+
     }
 
     // ----------------
@@ -935,6 +961,7 @@ console.log(item)
                               <tr>
                                 <th>Filename</th>
                                 <th>Type</th>
+                                <th>Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -946,6 +973,9 @@ console.log(item)
                                           <tr key={index}>
                                             <td>{video.url}</td>
                                             <td>Video</td>
+                                            <td><Button onClick={() => {
+                                              handleVideoDelete(video)
+                                            }} variant="contained"><DeleteIcon /></Button></td>
                                           </tr>
                                       ))
                               ) : (
@@ -1001,7 +1031,7 @@ console.log(item)
                                 <CardContent>
                                   <PlayCircleIcon fontSize="large" />
 
-                                  <p className="my-2">Video</p>
+                                  <p className="my-2">Video Lecture</p>
                                 </CardContent>
                               </CardActionArea>
                             </Card>
@@ -1020,7 +1050,7 @@ console.log(item)
                                 <CardContent>
                                   <ArticleIcon fontSize="large" />
 
-                                  <p className="my-2">Articles</p>
+                                  <p className="my-2">Text-based Lecture</p>
                                 </CardContent>
                               </CardActionArea>
                             </Card>

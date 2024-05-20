@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
+import Alert from '@mui/material/Alert';
 import { Select, Radio } from "antd";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "react-bootstrap/Form";
@@ -4007,17 +4008,25 @@ const Pricing = ({code}) => {
         </div>
 
         <hr />
+
+        {Paid_Type == 2 &&  (
+          <Alert severity="success" color="warning">
+            This is a success Alert with warning colors.
+          </Alert>
+        )}
       
         {/* Paid Type */}
         {loading_btn ?  <LoadingSpinner w={"40%"} h={"100%"} wpclass={"m-4"} /> :      
         <>
         <div className="container m-2">
-        <h6>What is the Paid Type of this Course ?</h6>
+        <h6>Please Select the Type of Your Course ?</h6>
           <Radio.Group onChange={onChangePaidType} value={Paid_Type}>
           <Radio value={1} >Free Course</Radio>
           <Radio value={2}>Paid Course</Radio>
         </Radio.Group>
         </div>
+
+       
        
 
         {countriesData != null && (
@@ -4056,7 +4065,7 @@ const Pricing = ({code}) => {
                       <div className="col-md-3">
                       <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
                       <select value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
-                        <option value="0" selected>Open this select menu</option>
+                        <option value="0" disabled selected>Select an Option</option>
                         {dis_types.map((type,index) => (
                           <option key={index} value={type.id}>{type.name}</option>
                         ))}
@@ -4094,10 +4103,7 @@ const Pricing = ({code}) => {
 
                       </div>
 
-                      {/* <div className='col-md-1 d-flex align-items-center mb-3'>
-                        <Button onClick={handleSaveDefaultPricing} className='mx-1' variant="contained">Submit</Button>
-                        </div> */}
-
+          
 
                       <div className="col-6"></div>
 

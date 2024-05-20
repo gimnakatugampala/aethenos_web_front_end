@@ -198,10 +198,10 @@ const handleFileChange = (event) => {
   
   useEffect(() => {
     GetTopics(settopicsData,code,course_sub_cat)
-
+    
     
   }, [course_sub_cat])
-
+  
   useEffect(() => {
     console.log("Topic " + course_topic)
     console.log("Cat " + course_cat)
@@ -327,7 +327,7 @@ const handleFileChange = (event) => {
             <div className="col-md-4 mt-3">
             <Form.Label>Course Category</Form.Label>
             <Form.Select value={course_cat} onChange={(e) => setcourse_cat(e.target.value)} >
-            <option value="">Select Course Category</option>
+            <option disabled value="">Select Course Category</option>
             {cat != null && cat.map((category,index) => (
             <option key={index} value={category.id}>{category.name}</option>
             ))}
@@ -339,7 +339,7 @@ const handleFileChange = (event) => {
               <Form.Select value={course_sub_cat} onChange={(e) =>  setcourse_sub_cat(e.target.value)} >
               <option value="">Select Course Sub Category</option>
               {subcatData != null && subcatData.map((subcategory,index) => (
-              <option key={index} value={subcategory.id}>{subcategory.name}</option>
+              <option key={index}  value={subcategory.id}>{subcategory.name}</option>
               ))}
             </Form.Select>
             </div>
@@ -355,7 +355,7 @@ const handleFileChange = (event) => {
             </div>
 
             <div className="col-md-12 my-3">
-              <h6>What is primarily taught in your course?</h6>
+              <h6>What are the keywords that can help students find your course?</h6>
               <TagsInput
               className="select-keywords"
               value={keywords}
@@ -380,10 +380,10 @@ const handleFileChange = (event) => {
             <div className="col-md-7 d-flex align-items-center">
               <div>
                 <p>
-                  Upload your course image here. It must meet our course image
-                  quality standards to be accepted. Important guidelines:
-                  750x422 pixels; .jpg, .jpeg,. gif, or .png. no text on the
-                  image.
+                Upload your course image here. 
+                Image file format: The file format must be .bmp, .gif, .jpg, .jpeg, or .png
+                Minimum required dimensions: 750 x 422 pixels
+                Maximum required dimensions: 6000 x 6000 pixels.
                 </p>
 
                 <div className="mb-3">
@@ -394,7 +394,7 @@ const handleFileChange = (event) => {
             </div>
           </div>
 
-          <div className="row my-3">
+          <div className="row my-2">
             <div className="col-md-4">
               <h6>
                 <b>Promotional video</b>
@@ -408,10 +408,9 @@ const handleFileChange = (event) => {
             <div className="col-md-7 d-flex align-items-center">
               <div>
                 <p>
-                  Upload your course image here. It must meet our course image
-                  quality standards to be accepted. Important guidelines:
-                  750x422 pixels; .jpg, .jpeg,. gif, or .png. no text on the
-                  image.
+                Upload your promotional video here. 
+                The promotional video will be a creative solution to capture potential students’ attention and show what your course has in store. Videos are one of the most impactful and quickest forms of communication to generate results. Focus on sending one clear and persuasive message to your audience.
+
                 </p>
                 <div className="mb-3">
                   <input className="form-control" type="file" accept="video/*" onChange={handleVideo} />

@@ -515,8 +515,8 @@ console.log(course_cat)
   fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getAllCourseSubCategory/${course_cat}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-      setsubcatData(result)
       Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
+      setsubcatData(result)
       console.log(result)
     })
     .catch(error => console.log('error', error));
@@ -2738,8 +2738,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
 
 
        // ---------------
-       setUSATip(result[0].tip)
-       setUSAMinValue(result[0].minimumPrice)
+       setUSATip(result.priceRange[0].tip)
+       setUSAMinValue(result.priceRange[0].minimumPrice)
        setUSAListPrice(result[0].value)
    
        setAusTip(result[1].tip)
@@ -3866,6 +3866,41 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletec
   })
   .catch((error) => console.error(error));
 
+
+}
+
+export const VideoDelete = async(id,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowContentAdd) =>{
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteCurriculumItemFile/${id}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    Unauthorized(result.status,"courses") 
+
+    if(result.message == "Error"){
+      ErrorAlert("Error",result.variable)
+      return
+    }
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+
+      setcurriculumvisiblitymc("video")
+      setshowMain(null)
+      // setshowContentAdd(null)
+      GetCurriculum(code,setsectionData)
+    }
+
+    console.log(result)
+  })
+  .catch((error) => console.error(error));
 
 }
 
