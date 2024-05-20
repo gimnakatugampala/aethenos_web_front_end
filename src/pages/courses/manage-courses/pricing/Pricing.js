@@ -3695,6 +3695,7 @@ const Pricing = ({code}) => {
     // console.log(inputValuesListPrice)
     // console.log(selectDiscountTypeList)
     console.log(Paid_Type)
+    setloading_button(true)
 
    
     if(Paid_Type == 1){
@@ -3705,6 +3706,7 @@ const Pricing = ({code}) => {
 
       if(DGlobalPricing == 0){
         ErrorAlert("Error","Please Enter a Global List Price")
+        setloading_button(false)
         return
       }
 
@@ -3984,7 +3986,7 @@ const Pricing = ({code}) => {
 
        console.log(raw)
     
-    setloading_button(true)
+    
     SavePriceCountries(code,raw,setloading_button)
 
     }
@@ -4010,9 +4012,11 @@ const Pricing = ({code}) => {
         <hr />
 
         {Paid_Type == 2 &&  (
-          <Alert severity="success" color="warning">
-            This is a success Alert with warning colors.
+          <div className="container">
+          <Alert severity="warning" color="warning">
+            To Procced You Need To Fill The Forms <a href="/profile">Instructor Terms</a> And The <a href="/profile">Payout Details</a>
           </Alert>
+          </div>
         )}
       
         {/* Paid Type */}
@@ -4051,15 +4055,20 @@ const Pricing = ({code}) => {
                           <InputGroup className="mb-3">
                             <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                             <Form.Control
-                            value={DGlobalPricing}
+                              isInvalid={DGlobalPricing < PriceRangeMinDefault || DGlobalPricing > PriceRangeMaxDefault ?  true : false}
+                              value={DGlobalPricing}
                               onChange={handleChangeGlobalPrice}
                               placeholder="USD"
                               aria-label="USD"
                               aria-describedby="basic-addon1"
                             />
+                              <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </InputGroup>
                           <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}> Tip : Pricing around ${GlobalTip} may optimize sales.</Form.Label>
                           <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: ${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</i></Form.Label>
+                          
                       </div>
 
                       <div className="col-md-3">
@@ -4098,7 +4107,13 @@ const Pricing = ({code}) => {
 
                       <div className="col-md-3">
                       <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
-                      <h5 className="p-1">{DGlobalNetPrice == "" ? 0 : formatNumber(DGlobalNetPrice)}</h5>
+                      <Form.Control 
+                      isInvalid={formatNumber(DGlobalNetPrice) < PriceRangeMinDefault || formatNumber(DGlobalNetPrice) > PriceRangeMaxDefault ? true : false} 
+                      readOnly disabled 
+                      value={DGlobalNetPrice == "" ? 0 : formatNumber(DGlobalNetPrice)}  />
+                       <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                      </Form.Control.Feedback>
                       <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
 
                       </div>
@@ -4142,7 +4157,12 @@ const Pricing = ({code}) => {
                           <td>USD</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
+                            <Form.Control  
+                            isInvalid={USAListPrice < countriesData.priceRange[0].minPrice || USAListPrice > countriesData.priceRange[0].maxPrice ?  true : false} 
+                            value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4169,7 +4189,15 @@ const Pricing = ({code}) => {
                           {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}</h6>
+
+                          <Form.Control 
+                            isInvalid={formatNumber(USANetPrice) < countriesData.priceRange[0].minPrice || formatNumber(USANetPrice) > countriesData.priceRange[0].maxPrice ? true : false} 
+                            readOnly disabled 
+                            value={USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}  />
+                                <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                      </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
 
@@ -4187,7 +4215,12 @@ const Pricing = ({code}) => {
                           <td>AUD</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData.priceRange[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData.priceRange[1].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
+                            <Form.Control 
+                             isInvalid={AusListPrice < countriesData.priceRange[1].minPrice || AusListPrice > countriesData.priceRange[1].maxPrice ?  true : false} 
+                            value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4214,7 +4247,13 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}</h6>
+                          <Form.Control 
+                          isInvalid={formatNumber(AusNetPrice) < countriesData.priceRange[1].minPrice || formatNumber(AusNetPrice) > countriesData.priceRange[1].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}  />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
 
@@ -4233,7 +4272,12 @@ const Pricing = ({code}) => {
                           <td>BRL</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData.priceRange[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData.priceRange[2].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
+                            <Form.Control
+                              isInvalid={BrazilListPrice < countriesData.priceRange[2].minPrice || BrazilListPrice > countriesData.priceRange[2].maxPrice ?  true : false} 
+                            value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4260,7 +4304,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}</h6>
+                          <Form.Control 
+                          isInvalid={formatNumber(BrazilNetPrice) < countriesData.priceRange[2].minPrice || formatNumber(BrazilNetPrice) > countriesData.priceRange[2].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}  />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
 
@@ -4278,7 +4329,12 @@ const Pricing = ({code}) => {
                           <td>CAD</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData.priceRange[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData.priceRange[3].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
+                            <Form.Control 
+                             isInvalid={CanadaListPrice < countriesData.priceRange[3].minPrice || CanadaListPrice > countriesData.priceRange[3].maxPrice ?  true : false} 
+                            value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4305,7 +4361,13 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}</h6>
+                          <Form.Control 
+                        isInvalid={formatNumber(CanadaNetPrice) < countriesData.priceRange[3].minPrice || formatNumber(CanadaNetPrice) > countriesData.priceRange[3].maxPrice ? true : false} 
+                        readOnly disabled 
+                        value={CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
 
@@ -4324,7 +4386,12 @@ const Pricing = ({code}) => {
                           <td>CLP</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData.priceRange[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData.priceRange[4].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
+                            <Form.Control 
+                            isInvalid={ChileListPrice < countriesData.priceRange[4].minPrice || ChileListPrice > countriesData.priceRange[4].maxPrice ?  true : false} 
+                            value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4350,7 +4417,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(ChileNetPrice) < countriesData.priceRange[4].minPrice || formatNumber(ChileNetPrice) > countriesData.priceRange[4].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+                  
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
 
@@ -4368,7 +4443,12 @@ const Pricing = ({code}) => {
                           <td>COP</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData.priceRange[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData.priceRange[5].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
+                            <Form.Control 
+                             isInvalid={ColumbiaListPrice < countriesData.priceRange[5].minPrice || ColumbiaListPrice > countriesData.priceRange[5].maxPrice ?  true : false}
+                            value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4395,7 +4475,15 @@ const Pricing = ({code}) => {
                             {/* // )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(ColumbiaNetPrice) < countriesData.priceRange[5].minPrice || formatNumber(ColumbiaNetPrice) > countriesData.priceRange[5].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
 
@@ -4413,7 +4501,12 @@ const Pricing = ({code}) => {
                           <td>EGP</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData.priceRange[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData.priceRange[6].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
+                            <Form.Control
+                            isInvalid={EgyptListPrice < countriesData.priceRange[6].minPrice || EgyptListPrice > countriesData.priceRange[6].maxPrice ?  true : false}
+                            value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
+                                <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4439,7 +4532,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(EgyptNetPrice) < countriesData.priceRange[6].minPrice || formatNumber(EgyptNetPrice) > countriesData.priceRange[6].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
 
@@ -4457,7 +4558,12 @@ const Pricing = ({code}) => {
                           <td>EUR</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData.priceRange[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData.priceRange[7].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
+                            <Form.Control
+                              isInvalid={EUListPrice < countriesData.priceRange[7].minPrice || EUListPrice > countriesData.priceRange[7].maxPrice ?  true : false}
+                            value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4483,7 +4589,16 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(EUNetPrice) < countriesData.priceRange[7].minPrice || formatNumber(EUNetPrice) > countriesData.priceRange[7].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
 
@@ -4501,7 +4616,13 @@ const Pricing = ({code}) => {
                           <td>GBP</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
+                            <Form.Control
+                            isInvalid={GBPListPrice < countriesData.priceRange[8].minPrice || GBPListPrice > countriesData.priceRange[8].maxPrice ?  true : false}
+                            value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
+
                           </td>
                           <td>
                             <Select
@@ -4527,7 +4648,16 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(GBPNetPrice) < countriesData.priceRange[8].minPrice || formatNumber(GBPNetPrice) > countriesData.priceRange[8].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
 
@@ -4545,7 +4675,12 @@ const Pricing = ({code}) => {
                           <td>IDR</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
+                            <Form.Control
+                               isInvalid={IndonesiaListPrice < countriesData.priceRange[9].minPrice || IndonesiaListPrice > countriesData.priceRange[9].maxPrice ?  true : false}
+                            value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4571,7 +4706,16 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(IndonesiaNetPrice) < countriesData.priceRange[9].minPrice || formatNumber(IndonesiaNetPrice) > countriesData.priceRange[9].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
+  
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
 
@@ -4589,7 +4733,12 @@ const Pricing = ({code}) => {
                           <td>ILS</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
+                            <Form.Control
+                               isInvalid={IsrealListPrice < countriesData.priceRange[10].minPrice || IsrealListPrice > countriesData.priceRange[10].maxPrice ?  true : false}
+                            value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4617,7 +4766,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(IsrealNetPrice) < countriesData.priceRange[10].minPrice || formatNumber(IsrealNetPrice) > countriesData.priceRange[10].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
 
@@ -4635,7 +4791,12 @@ const Pricing = ({code}) => {
                           <td>INR</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData.priceRange[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData.priceRange[11].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
+                            <Form.Control
+                             isInvalid={IndiaListPrice < countriesData.priceRange[11].minPrice || IndiaListPrice > countriesData.priceRange[11].maxPrice ?  true : false}
+                            value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4662,7 +4823,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(IndiaNetPrice) < countriesData.priceRange[11].minPrice || formatNumber(IndiaNetPrice) > countriesData.priceRange[11].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
 
@@ -4680,7 +4849,12 @@ const Pricing = ({code}) => {
                           <td>JPY</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData.priceRange[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData.priceRange[12].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
+                            <Form.Control 
+                             isInvalid={JapanListPrice < countriesData.priceRange[12].minPrice || JapanListPrice > countriesData.priceRange[12].maxPrice ?  true : false}
+                            value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4708,7 +4882,15 @@ const Pricing = ({code}) => {
                               {/* // )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(JapanNetPrice) < countriesData.priceRange[12].minPrice || formatNumber(JapanNetPrice) > countriesData.priceRange[12].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("JPY"))} {JapanminValue}</Form.Label>
 
@@ -4726,7 +4908,12 @@ const Pricing = ({code}) => {
                           <td>KRW</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
+                            <Form.Control 
+                             isInvalid={SKListPrice < countriesData.priceRange[13].minPrice || SKListPrice > countriesData.priceRange[13].maxPrice ?  true : false}
+                            value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4754,7 +4941,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(SKNetPrice) < countriesData.priceRange[13].minPrice || formatNumber(SKNetPrice) > countriesData.priceRange[13].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
 
@@ -4772,7 +4967,12 @@ const Pricing = ({code}) => {
                           <td>MXN</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
+                            <Form.Control 
+                             isInvalid={MexicoListPrice < countriesData.priceRange[14].minPrice || MexicoListPrice > countriesData.priceRange[14].maxPrice ?  true : false}
+                            value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4799,7 +4999,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(MexicoNetPrice) < countriesData.priceRange[14].minPrice || formatNumber(MexicoNetPrice) > countriesData.priceRange[14].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
 
@@ -4817,7 +5024,12 @@ const Pricing = ({code}) => {
                           <td>MYR</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData.priceRange[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData.priceRange[15].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
+                            <Form.Control 
+                            isInvalid={MalaysiaListPrice < countriesData.priceRange[15].minPrice || MalaysiaListPrice > countriesData.priceRange[15].maxPrice ?  true : false}
+                            value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4847,7 +5059,16 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(MalaysiaNetPrice) < countriesData.priceRange[15].minPrice || formatNumber(MalaysiaNetPrice) > countriesData.priceRange[15].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
+  
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
 
@@ -4865,7 +5086,12 @@ const Pricing = ({code}) => {
                           <td>NGN</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData.priceRange[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData.priceRange[16].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
+                            <Form.Control 
+                             isInvalid={NigeriaListPrice < countriesData.priceRange[16].minPrice || NigeriaListPrice > countriesData.priceRange[16].maxPrice ?  true : false}
+                            value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4892,7 +5118,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(NIgeriaNetPrice) < countriesData.priceRange[16].minPrice || formatNumber(NIgeriaNetPrice) > countriesData.priceRange[16].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
 
@@ -4910,7 +5144,12 @@ const Pricing = ({code}) => {
                           <td>NOK</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData.priceRange[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData.priceRange[17].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
+                            <Form.Control 
+                            isInvalid={NorwayListPrice < countriesData.priceRange[17].minPrice || NorwayListPrice > countriesData.priceRange[17].maxPrice ?  true : false}
+                            value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4936,7 +5175,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(NorwayNetPrice) < countriesData.priceRange[17].minPrice || formatNumber(NorwayNetPrice) > countriesData.priceRange[17].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
 
@@ -4954,7 +5200,12 @@ const Pricing = ({code}) => {
                           <td>PEN</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData.priceRange[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData.priceRange[18].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
+                            <Form.Control 
+                             isInvalid={PeruListPrice < countriesData.priceRange[18].minPrice || PeruListPrice > countriesData.priceRange[18].maxPrice ?  true : false}
+                            value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -4982,7 +5233,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}</h6>
+                          <Form.Control 
+                          isInvalid={formatNumber(PeruNetPrice) < countriesData.priceRange[18].minPrice || formatNumber(PeruNetPrice) > countriesData.priceRange[18].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+     
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
 
@@ -5001,7 +5259,12 @@ const Pricing = ({code}) => {
                           <td>PHP</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData.priceRange[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData.priceRange[19].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
+                            <Form.Control
+                              isInvalid={PhilipinesListPrice < countriesData.priceRange[19].minPrice || PhilipinesListPrice > countriesData.priceRange[19].maxPrice ?  true : false}
+                            value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5028,7 +5291,14 @@ const Pricing = ({code}) => {
                           {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(PhilipinesNetPrice) < countriesData.priceRange[19].minPrice || formatNumber(PhilipinesNetPrice) > countriesData.priceRange[19].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
 
@@ -5046,7 +5316,12 @@ const Pricing = ({code}) => {
                           <td>PLN</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData.priceRange[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData.priceRange[20].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
+                            <Form.Control
+                             isInvalid={PolandListPrice < countriesData.priceRange[20].minPrice || PolandListPrice > countriesData.priceRange[20].maxPrice ?  true : false}
+                            value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5074,7 +5349,16 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(PolandNetPrice) < countriesData.priceRange[20].minPrice || formatNumber(PolandNetPrice) > countriesData.priceRange[20].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
+    
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PLN"))} {PolandminValue}</Form.Label>
 
@@ -5092,7 +5376,12 @@ const Pricing = ({code}) => {
                           <td>RON</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData.priceRange[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData.priceRange[21].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
+                            <Form.Control 
+                            isInvalid={RomaniaListPrice < countriesData.priceRange[21].minPrice || RomaniaListPrice > countriesData.priceRange[21].maxPrice ?  true : false}
+                            value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5118,7 +5407,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(RomaniaNetPrice) < countriesData.priceRange[21].minPrice || formatNumber(RomaniaNetPrice) > countriesData.priceRange[21].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
 
@@ -5136,7 +5433,12 @@ const Pricing = ({code}) => {
                           <td>RUB</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData.priceRange[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData.priceRange[22].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
+                            <Form.Control 
+                             isInvalid={RussiaListPrice < countriesData.priceRange[22].minPrice || RussiaListPrice > countriesData.priceRange[22].maxPrice ?  true : false}
+                            value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5163,7 +5465,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}</h6>
+                          <Form.Control 
+                          isInvalid={formatNumber(RussiaNetPrice) < countriesData.priceRange[22].minPrice || formatNumber(RussiaNetPrice) > countriesData.priceRange[22].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+                            
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
 
@@ -5181,7 +5490,12 @@ const Pricing = ({code}) => {
                           <td>SGD</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData.priceRange[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData.priceRange[23].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
+                            <Form.Control 
+                             isInvalid={SingaporeListPrice < countriesData.priceRange[23].minPrice || SingaporeListPrice > countriesData.priceRange[23].maxPrice ?  true : false}
+                            value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
+                               <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5208,7 +5522,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(SingaporeNetPrice) < countriesData.priceRange[23].minPrice || formatNumber(SingaporeNetPrice) > countriesData.priceRange[23].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
 
@@ -5226,7 +5548,12 @@ const Pricing = ({code}) => {
                           <td>THB</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
+                            <Form.Control
+                            isInvalid={ThailandListPrice < countriesData.priceRange[24].minPrice || ThailandListPrice > countriesData.priceRange[24].maxPrice ?  true : false}
+                             value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5252,7 +5579,13 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}</h6>
+                          <Form.Control 
+                          isInvalid={formatNumber(ThailandNetPrice) < countriesData.priceRange[24].minPrice || formatNumber(ThailandNetPrice) > countriesData.priceRange[24].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
 
@@ -5270,7 +5603,12 @@ const Pricing = ({code}) => {
                           <td>TRY</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].maxPrice}`}</td>
                           <td>
-                            <Form.Control  value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
+                            <Form.Control
+                            isInvalid={TurkeyListPrice < countriesData.priceRange[25].minPrice || TurkeyListPrice > countriesData.priceRange[25].maxPrice ?  true : false}
+                            value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5296,7 +5634,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(TurkeyNetPrice) < countriesData.priceRange[25].minPrice || formatNumber(TurkeyNetPrice) > countriesData.priceRange[25].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
 
@@ -5314,7 +5659,12 @@ const Pricing = ({code}) => {
                           <td>TWD</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData.priceRange[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData.priceRange[26].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
+                            <Form.Control
+                            isInvalid={TaiwanListPrice < countriesData.priceRange[26].minPrice || TaiwanListPrice > countriesData.priceRange[26].maxPrice ?  true : false}
+                            value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5341,7 +5691,15 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}</h6>
+                          <Form.Control 
+                          isInvalid={formatNumber(TaiwanNetPrice) < countriesData.priceRange[26].minPrice || formatNumber(TaiwanNetPrice) > countriesData.priceRange[26].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
+
+            
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
 
@@ -5359,7 +5717,12 @@ const Pricing = ({code}) => {
                           <td>VND</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData.priceRange[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData.priceRange[27].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
+                            <Form.Control
+                             isInvalid={VietnamListPrice < countriesData.priceRange[27].minPrice || VietnamListPrice > countriesData.priceRange[27].maxPrice ?  true : false}
+                            value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
+                                 <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5387,7 +5750,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(VietnamNetPrice) < countriesData.priceRange[27].minPrice || formatNumber(VietnamNetPrice) > countriesData.priceRange[27].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
 
@@ -5406,7 +5776,12 @@ const Pricing = ({code}) => {
                           <td>KRW</td>
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].maxPrice}`}</td>
                           <td>
-                            <Form.Control value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
+                            <Form.Control 
+                              isInvalid={SAListPrice < countriesData.priceRange[28].minPrice || SAListPrice > countriesData.priceRange[28].maxPrice ?  true : false}
+                            value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                              </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
@@ -5432,7 +5807,14 @@ const Pricing = ({code}) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-                              <h6>{SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}</h6>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(SANetPrice) < countriesData.priceRange[28].minPrice || formatNumber(SANetPrice) > countriesData.priceRange[28].maxPrice ? true : false} 
+                          readOnly disabled 
+                          value={SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Within Price Range
+                            </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
 
