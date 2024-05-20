@@ -114,9 +114,9 @@ const ManageCourses = () => {
 
     // Check Personal ID
 
-    // Send to Request
-    // RequestSubmitReview(code)
+ 
 
+    // If Not Verify
     if(checkInstructorVerification == 0){
       // PERSONA
       const client = new Persona.Client({
@@ -167,15 +167,31 @@ const ManageCourses = () => {
       window.exit = (force) =>
         client ? client.exit(force) : alert("Initialize client first");
 
+       // Get Content Ownership
+        if(courseOwnership == 0){
+          setShow(true)
+          setbtn_loading(false)
+          return
+        }
+
       return
+    }else{
+      //  If Verified - Person
+
+       // Get Content Ownership
+      if(courseOwnership == 0){
+        setShow(true)
+        setbtn_loading(false)
+        return
+      }
+
+         // Send to Request
+      RequestSubmitReview(code)
+
+
     }
 
-     // Get Content Ownership
-    if(courseOwnership == 0){
-      setShow(true)
-      setbtn_loading(false)
-      return
-    }
+    
 
   
   };
