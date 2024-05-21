@@ -34,7 +34,7 @@ const StepTwo = ({course_keywords, setcourse_keywords}) => {
             name="keywords"
             placeHolder="Enter Search Keywords"
           />
-          <em>press enter search terms for students and Enter at least 5 keywords</em>
+          <em>Please enter a minimum of 5 keywords to be used as search terms for students. Press Enter after each keyword.</em>
     </div>
 
 

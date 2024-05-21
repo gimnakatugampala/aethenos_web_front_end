@@ -689,7 +689,7 @@ const Curriculum = ({code}) => {
    const handleSaveArticle = (ID) =>{
 
     if(article == ""){
-      ErrorAlert("Empty Field","Please Enter Article Text")
+      ErrorAlert("Empty Field","Please Enter Text Content")
       return
     }
 
@@ -858,12 +858,17 @@ console.log(item)
 
       <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
-        Syllabus
+        Create your Course
         </Typography>
         
         </div>
 
         <hr />
+
+        <p>You can start developing your course here.</p>
+        <p>Create separate sections for lessons and include lectures, quizzes, practice tests and assignments.</p>
+        <p>Have a clear structure to your course content by following a good course outline and clearly label your sections and lectures. </p>
+        <p>Please note that the maximum video content length on free courses is 2.5 hours.</p>
 
         {/* Section 1 */}
       {sectionData != null  ? (
@@ -951,7 +956,7 @@ console.log(item)
                           {/* Upload Input */}
                           <Form.Group controlId="formFile" className="my-3">
                           <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
-                          <Form.Label style={{fontSize:11}}><b>Note:</b> All files should be at least 720p and less than 4.0 GB.</Form.Label>
+                          <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
                         </Form.Group>
 
 
@@ -987,7 +992,7 @@ console.log(item)
                           </Table>
 
 
-                          <p><b>Note:</b> This video is still being processed. We will send you an email when it is ready.</p>
+                    
                           
                         </div>
                       ) : curriculumvisiblity == "article" ? (
@@ -2400,7 +2405,7 @@ console.log(item)
       )) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
       ) : 
       <div className="d-flex justify-content-center">
-        <h4>No Syllabus Found</h4>
+        <h4>No Content Found</h4>
       </div>
       }
 

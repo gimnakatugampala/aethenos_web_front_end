@@ -76,7 +76,7 @@ const AddCourses = () => {
       if(course_keywords.length != 5){
         Swal.fire({
           title: ' Keywords Error!',
-          text: 'Please Fill Only 5 Keywords!',
+          text: 'Please enter a minimum of 5 Keywords!',
           icon: 'error'
         })
 

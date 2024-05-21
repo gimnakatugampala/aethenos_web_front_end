@@ -48,7 +48,7 @@ const StepFour = ({setcourse_test_video}) => {
             Upload a Test Video
        </Typography.Title>
 
-       <p>Please Upload a Test Video to See Your Quality of Filming.</p>
+       <p>Please Upload a Test Video to See Your Quality of Filming (Minimum 5 Minutes).</p>
        <Input onChange={onAddVideo} accept="video/*" type='file' placeholder="Basic usage" />
 
              <video id='add-course-test-video' width={URL != "" ? "320" : "0"} height={URL != "" ? "240" : "0"} autoPlay>

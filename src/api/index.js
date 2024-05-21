@@ -158,7 +158,7 @@ export const InstructorVerify = async() =>{
 
       if(result.variable == "200"){
         setloading(false)
-        SuccessAlert("Course Added!",result.message)
+        SuccessAlert("Test Video Sent For Approval!", "Please Await our Feedback to Proceed")
   
         window.location.href = "/courses"
   
@@ -332,7 +332,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
- export const GetIntendedLeaners = async(code,setstudentsLearnData,setrequirementsData,setwhosData) =>{
+ export const GetIntendedLeaners = async(code,setstudentsLearn,setrequirements,setwhos) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -349,9 +349,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
       Unauthorized(result.status,`courses/manage/${code}/#intended-learners`)
 
-      setstudentsLearnData(result.studentsLearn)
-      setrequirementsData(result.requirements)
-      setwhosData(result.who)
+      setstudentsLearn(result.studentsLearn)
+      setrequirements(result.requirements)
+      setwhos(result.who)
 
       console.log(result)
     
@@ -1748,6 +1748,12 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
           GetCurriculum(code,setsectionData) 
           return
       }
+
+      if(result.message == "Error"){
+        ErrorAlert("Error",result.message)
+        return
+      }
+
     })
     .catch(error => console.log('error', error));
 
@@ -2137,7 +2143,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
     Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
 
     if(result.variable == "200"){
-      SuccessAlert("Added",result.message)
+      SuccessAlert("Added", "Text Content Succesfull Added")
       setarticle("")
       setshowMain(null)
       GetCurriculum(code,setsectionData)

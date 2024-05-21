@@ -320,8 +320,17 @@ const ManageCourses = () => {
     // console.log(checkInstructorVerification)
     // console.log(courseOwnership)
 
-    checkCourseCompletionStatus(code,setIntendedLearnersCheck,setSyllabusCheck,setPricingCheck,setCourseMessagesCheck,setPromotionsCheck,setCourseLandingPageCheck)
   }, [code,checkInstructorVerification,options,courseOwnership])
+  
+  useEffect(() => {
+
+    setInterval(() => {
+      checkCourseCompletionStatus(code,setIntendedLearnersCheck,setSyllabusCheck,setPricingCheck,setCourseMessagesCheck,setPromotionsCheck,setCourseLandingPageCheck)
+    }, 3000);
+
+    
+  }, [code])
+  
   
 
 
@@ -364,7 +373,7 @@ const ManageCourses = () => {
           <ListItemIcon>
             <LocalLibraryIcon />
           </ListItemIcon>
-          <ListItemText primary="Intended Learners" />
+          <ListItemText primary="Course Details" />
 
           {IntendedLearnersCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 

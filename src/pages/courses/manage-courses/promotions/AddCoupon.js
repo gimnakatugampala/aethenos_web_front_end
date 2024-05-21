@@ -2015,6 +2015,9 @@ const AddCoupon = ({code}) => {
                
               </tr>
             </thead>
+
+          
+
             <tbody>
                     
                   <tr>
@@ -2024,7 +2027,7 @@ const AddCoupon = ({code}) => {
                   </td>
                   
                     <td>USD</td>
-                    <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0].maxPrice}`}</td>
+                    <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0] != null && countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0] != null && countriesData[0].maxPrice}`}</td>
                     <td>
                       <Form.Control style={{width:'80px'}} disabled readOnly value={USAListPrice}   type="text" />
                     </td>
@@ -2054,7 +2057,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>AUD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData[1].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData[1] != null && countriesData[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData[1] != null && countriesData[1].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={AusListPrice}  type="text" />
                           </td>
@@ -2083,7 +2086,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>BRL</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData[2].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData[2] != null && countriesData[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData[2] != null && countriesData[2].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={BrazilListPrice}  type="text" />
                           </td>
@@ -2109,7 +2112,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>CAD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData[3].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData[3] != null && countriesData[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData[3] != null && countriesData[3].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={CanadaListPrice}  type="text" />
                           </td>
@@ -2139,7 +2142,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>CLP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData[4].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData[4] != null && countriesData[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData[4] != null && countriesData[4].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={ChileListPrice}  type="text" />
                           </td>
@@ -2167,7 +2170,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>COP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData[5].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData[5] != null && countriesData[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData[5] != null && countriesData[5].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={ColumbiaListPrice}  type="text" />
                           </td>
@@ -2194,7 +2197,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>EGP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData[6].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData[6] != null && countriesData[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData[6] != null && countriesData[6].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={EgyptListPrice}  type="text" />
                           </td>
@@ -2224,7 +2227,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>EUR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData[7].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData[7] != null && countriesData[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData[7] != null && countriesData[7].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={EUListPrice}  type="text" />
                           </td>
@@ -2252,7 +2255,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>GBP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData[8].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData[8] != null && countriesData[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData[8] != null && countriesData[8].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={GBPListPrice}  type="text" />
                           </td>
@@ -2281,7 +2284,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>IDR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData[9].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData[9] != null && countriesData[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData[9] != null && countriesData[9].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={IndonesiaListPrice} type="text" />
                           </td>
@@ -2311,7 +2314,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>ILS</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData[10].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData[10] != null && countriesData[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData[10] != null && countriesData[10].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={IsrealListPrice}  type="text" />
                           </td>
@@ -2341,7 +2344,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>INR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData[11].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData[11] != null && countriesData[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData[11] != null && countriesData[11].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={IndiaListPrice}  type="text" />
                           </td>
@@ -2370,7 +2373,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>JPY</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData[12].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("JPY"))} ${countriesData[12] != null && countriesData[12].minPrice} - ${getSymbolFromCurrency(("JPY"))} ${countriesData[12] != null && countriesData[12].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={JapanListPrice}  type="text" />
                           </td>
@@ -2400,7 +2403,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData[13].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[13] != null && countriesData[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData[13] != null && countriesData[13].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={SKListPrice}  type="text" />
                           </td>
@@ -2428,7 +2431,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>MXN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData[14].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData[14] != null && countriesData[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData[14] != null && countriesData[14].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={MexicoListPrice}  type="text" />
                           </td>
@@ -2457,7 +2460,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>MYR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData[15].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData[15] != null && countriesData[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData[15] != null && countriesData[15].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={MalaysiaListPrice}  type="text" />
                           </td>
@@ -2488,7 +2491,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>NGN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData[16].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData[15] != null && countriesData[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData[16] != null && countriesData[16].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={NigeriaListPrice}  type="text" />
                           </td>
@@ -2515,7 +2518,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>NOK</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData[17].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData[17] != null && countriesData[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData[17] != null && countriesData[17].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={NorwayListPrice}  type="text" />
                           </td>
@@ -2544,7 +2547,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>PEN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData[18].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData[18] != null && countriesData[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData[18] != null && countriesData[18].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={PeruListPrice}  type="text" />
                           </td>
@@ -2575,7 +2578,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>PHP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData[19].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData[19] != null && countriesData[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData[19] != null && countriesData[19].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={PhilipinesListPrice}  type="text" />
                           </td>
@@ -2603,7 +2606,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>PLN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData[20].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData[20] != null && countriesData[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData[20] != null && countriesData[20].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={PolandListPrice}  type="text" />
                           </td>
@@ -2633,7 +2636,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>RON</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData[21].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData[21] != null && countriesData[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData[21] != null && countriesData[21].maxPrice}`}</td>
                           <td>
                             <Form.Control value={RomaniaListPrice}  type="text" />
                           </td>
@@ -2662,7 +2665,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>RUB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData[22].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData[22] != null && countriesData[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData[22] != null && countriesData[22].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={RussiaListPrice}  type="text" />
                           </td>
@@ -2691,7 +2694,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>SGD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData[23].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData[23] != null && countriesData[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData[23] != null && countriesData[23].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={SingaporeListPrice}  type="text" />
                           </td>
@@ -2720,7 +2723,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>THB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData[24].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData[24] != null && countriesData[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData[24] != null && countriesData[24].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={ThailandListPrice}  type="text" />
                           </td>
@@ -2749,7 +2752,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>TRY</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData[25].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData[25] != null && countriesData[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData[25] != null && countriesData[25].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={TurkeyListPrice}  type="text" />
                           </td>
@@ -2779,7 +2782,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>TWD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData[26].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData[26] != null && countriesData[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData[26] != null && countriesData[26].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={TaiwanListPrice}  type="text" />
                           </td>
@@ -2810,7 +2813,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>VND</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData[27].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData[27] != null && countriesData[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData[27] != null && countriesData[27].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={VietnamListPrice}  type="text" />
                           </td>
@@ -2840,7 +2843,7 @@ const AddCoupon = ({code}) => {
                         </td>
 
                           <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData[28].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData[28] != null && countriesData[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData[28] != null && countriesData[28].maxPrice}`}</td>
                           <td>
                             <Form.Control disabled readOnly value={SAListPrice}  type="text" />
                           </td>
@@ -2862,6 +2865,8 @@ const AddCoupon = ({code}) => {
                         </tr> 
                           
               </tbody>
+          
+
           </table>
 
         </div>
