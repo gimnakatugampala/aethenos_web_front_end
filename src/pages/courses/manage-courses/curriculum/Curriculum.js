@@ -28,7 +28,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, VideoDelete} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteResourcesFile, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, VideoDelete} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -41,6 +41,7 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import CodeIcon from '@mui/icons-material/Code';
+import Spinner from 'react-bootstrap/Spinner';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -48,6 +49,8 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 
 const Curriculum = ({code}) => {
+
+  let counter = 1;
 
   const [showContentAdd, setshowContentAdd] = useState(null);
   const [showMain, setshowMain] = useState(null)
@@ -87,6 +90,8 @@ const Curriculum = ({code}) => {
 
   // Section ID
   const [mainSectionID, setmainSectionID] = useState(null)
+  const [btn_section_loading, setbtn_section_loading] = useState(false)
+  const [showSectionEditInput, setshowSectionEditInput] = useState(null)
 
 
   // Get Section data
@@ -106,12 +111,28 @@ const Curriculum = ({code}) => {
 
   const [showLecInput, setshowLecInput] = useState(null)
   const [showQuizInput, setshowQuizInput] = useState(null)
+
+  const [showEditQuizInput, setshowEditQuizInput] = useState(null)
+
+  const [showEditAssignmentInput, setshowEditAssignmentInput] = useState(null)
+
   const [showPracticeTestInput, setshowPracticeTestInput] = useState(null)
   const [showCodingExecInput, setshowCodingExecInput] = useState(null)
   const [showAssignmentInput, setshowAssignmentInput] = useState(null)
+  const [showEditPraticeTestInput, setshowEditPraticeTestInput] = useState(null)
+  const [showEditCodingExerciseInput, setshowEditCodingExerciseInput] = useState(null)
 
   const [showDescription, setshowDescription] = useState(null)
   const [showResources, setshowResources] = useState(null)
+
+  const [showEditTitleInput, setshowEditTitleInput] = useState(null)
+  const [updateSectionName, setupdateSectionName] = useState("")
+
+  const [updateLectureName, setupdateLectureName] = useState("")
+  const [updateQuizName, setupdateQuizName] = useState("")
+  const [updateAssignmentName, setupdateAssignmentName] = useState("")
+  const [updatePraticeTestName, setupdatePraticeTestName] = useState("")
+  const [updateCodingExerciseName, setupdateCodingExerciseName] = useState("")
 
 
   // ======== PRACTICE TEST ==================
@@ -193,12 +214,15 @@ const Curriculum = ({code}) => {
   const handleSubmitSection = () =>{
       console.log(section)
 
+      setbtn_section_loading(true)
+
       if(section == ""){
         ErrorAlert("Empty Field","Please Fill The Section Title")
+        setbtn_section_loading(false)
         return
       }
 
-      AddCurriculumSection(code,section,setshowSectionInput,setsection,setsectionData)
+      AddCurriculumSection(code,section,setshowSectionInput,setsection,setsectionData,setbtn_section_loading)
       
       // setsection("")
 
@@ -215,8 +239,64 @@ const Curriculum = ({code}) => {
       setshowLecInput(!showLecInput)
       setshowCurriculumItem(false)
     }
+
+    // Update Section
+    const handleUpdateSection = (section) =>{
+      UpdateSectionName(code,section,updateSectionName)
       
-  
+    }
+    
+    // update lecture
+    const handleUpdateLectureName = (lecture,section) =>{
+    console.log(lecture)
+    console.log(section)
+    console.log(updateLectureName)
+
+    UpdateLectureName(code,lecture,updateLectureName,section)
+
+
+  }
+    // update Quiz Name
+    const handleUpdateQuizName = (quiz,section) =>{
+ 
+    UpdateQuizName(code,quiz,updateQuizName,section)
+  }
+
+    // update Assignment Name
+    const handleUpdateAssignmentName = (assignment,section) =>{
+      UpdateAssignmentName(code,assignment,updateAssignmentName,section)
+  }
+
+  // update Pratice test Name
+  const handleUpdatePraticeTestName = (pt,section) =>{
+    UpdatePraticeTestName(code,pt,updatePraticeTestName,section)
+}
+
+ // update Coding Exercise Name
+ const handleUpdateExerciseName = (codingExercise,section) =>{
+  UpdateCodingExerciseName(code,codingExercise,updateCodingExerciseName,section)
+}
+
+  // Delete Downloable File
+  const handleDeleteDownloableFilesLecture = (item) =>{
+    console.log(item)
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        DeleteResourcesFile(code,item.url)
+      }
+    });
+
+  }
 
     // Save Lecture
     const handleSaveLecture = (courseID) =>{
@@ -760,25 +840,6 @@ const Curriculum = ({code}) => {
     console.log(ID)
     console.log(curriculumID)
 
-    
-    // console.log(answerOption)
-
-    // console.log(answerOne)
-    // console.log(answerExplainOne)
-
- 
-    // console.log(answerTwo)
-    // console.log(answerExplainTwo)
-
-    // console.log(answerThree)
-    // console.log(answerExplainThree)
-
-    // console.log(answerFour)
-    // console.log(answerExplainFour)
-
-    // console.log(answerFive)
-    // console.log(answerExplainFive)
-
     if(question == ""){
       ErrorAlert("Empty Field","Please Enter a Question");
       return
@@ -787,18 +848,6 @@ const Curriculum = ({code}) => {
       return
     }else if(answerOne == ""){
       ErrorAlert("Empty Field","Please Enter Answer One");
-      return
-    }else if(answerTwo == ""){
-      ErrorAlert("Empty Field","Please Enter Answer Two");
-      return
-    }else if(answerThree == ""){
-      ErrorAlert("Empty Field","Please Enter Answer Three");
-      return
-    }else if(answerFour == ""){
-      ErrorAlert("Empty Field","Please Enter Answer Four");
-      return
-    }else if(answerFive == ""){
-      ErrorAlert("Empty Field","Please Enter Answer Five");
       return
     }else{
       AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData)
@@ -875,599 +924,1097 @@ console.log(item)
         sectionData.length > 0  ?  sectionData.map((section,index) => (
           <div key={index} className="card p-2 my-3">
             <CardContent>
+
               <div className="d-flex justify-content-between section-container">
-                <Typography variant="subtitle1">
-                  <b> Section {index + 1}:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
-                  {section.courseSection.sectionName}
-                  <DeleteIcon onClick={() => handleSectionDelete(section)}  />
+                <Typography  variant="subtitle1">
+                  <b>{index + 1}. Section:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
+                  
+                {/* When Clicked Edit */}
+                  {showSectionEditInput == index ? (
+                    <div className="d-flex">
+                    <Form.Control 
+                      className="mx-1"
+                      value={updateSectionName} 
+                      onChange={(e) => setupdateSectionName(e.target.value)} 
+                      type="text" 
+                      placeholder="Large text" 
+                    />
+
+                    <Button onClick={(e) => {
+                        if(showSectionEditInput == index){
+                          setshowSectionEditInput(null)
+                          setupdateSectionName(section.courseSection.sectionName)
+                        }else{
+                          setshowSectionEditInput(index)
+                          setupdateSectionName(section.courseSection.sectionName)
+                        }
+                          
+                    }} className="mx-1" variant="outlined">Cancel</Button>
+                    <Button onClick={() => {
+                      handleUpdateSection(section.courseSection)
+                      }} className="mx-1" variant="contained">Save</Button>
+                    </div>
+                  ) : (
+                    <>
+                    <span>{section.courseSection.sectionName}</span> 
+                    <EditIcon onClick={(e) => {
+
+                        if(showSectionEditInput == index){
+                          setshowSectionEditInput(null)
+                          setupdateSectionName("")
+                        }else{
+                          setshowSectionEditInput(index)
+                          setupdateSectionName(section.courseSection.sectionName)
+                        }
+                          
+                    }} className="mx-1" />
+                    <DeleteIcon className="mx-1"  onClick={() => handleSectionDelete(section)}  />
+                    </>
+                  )}
+
+                 
                 </Typography>
               </div>
 
+              
 
               <div className="my-2">
 
               {/* Lecture > Quiz > Assignment */}
-              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,index) => (
+              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) => (
 
                 // Lecture
                 <>
-                {item.type == "Lecture" && 
-
-                (<Accordion key={index} className="my-3">
-                  <AccordionSummary
-               
-                    className="accordian-header d-flex justify-content-between align-items-center"
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      <CheckCircleIcon fontSize="small" /> Lesson {index + 1}:{" "}
-                      <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
-                     <DeleteIcon onClick={() => handleLectureDelete(item)} />
-                    </Typography>
-
-                    {showContentAdd == index ? (
-                      <Button
-                        onClick={() => {
-                          setshowDescRes(true)
-                          setshowMain(null)
-                          console.log(index)
-                          setshowContentAdd(null)
-                          // handleContentshow()
-                        }}
-                        className="mx-2"
-                        size="small"
-                        variant="contained"
-                      >
-                        <CloseIcon /> Cancel
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          setshowDescRes(false)
-                          setshowMain(showMain == index ? null : index)
-                          console.log(index)
-                          setshowContentAdd(showContentAdd == index ? null : index)
-                          // handleContentshow()
-                        }}
-                        className="mx-2"
-                        size="small"
-                        variant="outlined"
-                      >
-                        <AddIcon /> Content
-                      </Button>
-                    )}
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-
-                    {/* Landing Content */}
-                    {showMain == index ? (
-                        curriculumvisiblity == "video" ? (
-                        <div>
-                          <Button
-                            onClick={() => setcurriculumvisiblity("")}
-                            variant="contained"
-                          >
-                            <CloseIcon /> Cancel
-                          </Button>
-
-                          {/* Upload Input */}
-                          <Form.Group controlId="formFile" className="my-3">
-                          <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
-                          <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
-                        </Form.Group>
-
-
-                        {/* After Upload */}
-                        <Table striped bordered hover>
-                            <thead>
-                              <tr>
-                                <th>Filename</th>
-                                <th>Type</th>
-                                <th>Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            {item.curriculumItemFiles.length > 0 && (
-                              item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
-                                  item.curriculumItemFiles
-                                      .filter(video => video.filetype === "Video")
-                                      .map((video, index) => (
-                                          <tr key={index}>
-                                            <td>{video.url}</td>
-                                            <td>Video</td>
-                                            <td><Button onClick={() => {
-                                              handleVideoDelete(video)
-                                            }} variant="contained"><DeleteIcon /></Button></td>
-                                          </tr>
-                                      ))
-                              ) : (
-                                  <p>No Video</p>
-                              )
-                        )}
-
-                            </tbody>
-                          </Table>
-
-
-                    
+                {item.type == "Lecture" && (
+                  <>
+                  {/* Edit Lecture */}
+              
+                  {showEditTitleInput == index + i ? (
+                    <div className="d-flex">
+                    <Form.Control 
+                      className="mx-1"
+                      value={updateLectureName}
+                      onChange={(e) => setupdateLectureName(e.target.value)}
+                      type="text" 
+                      placeholder="Large text" 
+                    />
+                    <Button onClick={(e) => {
+                        if(showEditTitleInput == index + i){
+                          setshowEditTitleInput(null)
+                          setupdateLectureName("")
+                        }else{
+                          setshowEditTitleInput(index + i)
+                          setupdateLectureName(item.title)
+                        }
                           
-                        </div>
-                      ) : curriculumvisiblity == "article" ? (
-                        <div>
-                          <Button
-                            onClick={() => setcurriculumvisiblity("")}
-                            variant="contained"
-                          >
-                            <CloseIcon /> Cancel
-                          </Button>
+                    }} className="mx-1" variant="outlined">Cancel</Button>
+                    <Button onClick={(e) => {
+                      handleUpdateLectureName(item,section)
+                    }} className="mx-1" variant="contained">Save</Button>
+                    </div>
+                  ) : (
+                      <>
+                      {/* Get Lecture */}
+                        <Card key={index + i} className="my-3">
+                        
+                        <div className="d-flex justify-content-between align-items-center p-2">
+                          <span>
+                          <Typography>
+                            <CheckCircleIcon fontSize="small" />{i + 1}. Lesson:{" "}
+                            <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                            <span className="mx-5">
+                            <EditIcon onClick={(e) => {
+                                if(showEditTitleInput == index + i){
+                                  setshowEditTitleInput(null)
+                                  setupdateLectureName("")
+                                }else{
+                                  setshowEditTitleInput(index + i)
+                                  setupdateLectureName(item.title)
+                                }
+                                  
+                            }} />
+                            <DeleteIcon onClick={() => handleLectureDelete(item)} />
+                            </span>
+                          </Typography>
+                          </span>
 
-                          <div className="my-3">
+                          {/* + Content Action Card */}
+                          <span>
+                          {showContentAdd == index + i ? (
+                            <Button
+                              onClick={() => {
+                                setshowDescRes(true)
+                                setshowMain(null)
+                                console.log(index + i)
+                                setshowContentAdd(null)
+                                setcurriculumvisiblity("")
+                              }}
+                              className="mx-2"
+                              size="small"
+                              variant="contained"
+                            >
+                              <CloseIcon /> Cancel
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() => {
+                                setshowDescRes(false)
+                                setshowMain(showMain == index + i ? null : index + i)
+                                console.log(index + i)
+                                console.log(item)
+                                setarticle(item.article == "N/A" ? "" : item.article)
+                                setcurriculum_desc(item.description == "N/A" ? "" : item.description)
+                                setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                              }}
+                              className="mx-2"
+                              size="small"
+                              variant="outlined"
+                            >
+                              <AddIcon /> Content
+                            </Button>
+                          )}
+                          </span>
+                          {/* + Content Action Card */}
+                          </div>
+                      
+                            {/* Show the Articles If Filled */}
+                            {item.article != "N/A" && (
+                                showMain == index + i && (
+                                  <div className="p-3">
+                                    <div className="my-3">
+                                      <JoditEditor value={article} onChange={(content) => setarticle(content)} />
+                                      <div className="d-flex flex-start my-2">
+                                        <Button onClick={() => handleSaveArticle(item.id)} variant="contained">SAVE</Button>
+                                      </div>
+                                    </div>
 
-                          {/* <Typography variant="h6" component="h6">
-                            Article
-                          </Typography> */}
+                                    <div className="my-3">
 
-                          {removeHtmlTags(item.article) != "N/A" && (
-                          <ListGroup className="my-3">
-                            <ListGroup.Item>{removeHtmlTags(item.article)}</ListGroup.Item>
-                          </ListGroup>
+                                          {/* List of Resources / External Link */}
+
+                                          <>
+                                              {showDescription == index + i && (
+                                                <>
+                                                <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                                                <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
+                                                <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
+
+                                                <div className="d-flex my-2">
+                                                <Button onClick={() => setshowDescription(null)} className="mx-1" variant="outlined">Cancel</Button>
+                                                <Button onClick={() => handleSaveDescription(item.id)} className="mx-1"  variant="contained">Save</Button>
+                                                </div>
+                                                </>
+                                              )}
+
+                                              {/* Add Description & Resourses */}
+                                              {showMain == index + i && showDescription != index + i &&  (
+                                              <div className="d-flex justify-content-center p-2">
+                                              <Button onClick={() => {
+                                                setcurriculum_desc(item.description == "N/A" ? "" : item.description)
+                                                setshowDescription(showDescription == index + i ? null : index + i)
+                                              }} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                                              <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                              
+                                            
+                                              </div>
+                                              )}
+
+                                              {showResources == index + i && (
+                                                <div>
+                                                  <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+
+                                                  {/* Tabs */}
+                                                  <Tabs
+                                                  defaultActiveKey="d-file"
+                                                  id="uncontrolled-tab-example"
+                                                  className="my-3"
+                                                >
+                                                  <Tab eventKey="d-file" title="Downloadable File">
+
+                                                  <Form.Group controlId="formFile" className="mb-3">
+                                                  {/* (e) =>  */}
+                                                    <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
+                                                    <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                                                  </Form.Group>
+                                                    
+                                                  </Tab>
+                                                  <Tab eventKey="e-r" title="External Resources">
+
+                                                  <Form> 
+                                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                                      <Form.Label>Title</Form.Label>
+                                                      <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
+                                                    </Form.Group>
+
+                                                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                                      <Form.Label>URL</Form.Label>
+                                                      <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://externallink.com" />
+                                                    </Form.Group>
+                                                    <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
+                                                  </Form>
+
+                                                  </Tab>
+                                                  <Tab eventKey="source-code" title="Source Code">
+
+                                                  <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
+                                                    <Form.Control type="file" />
+                                                    <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                                                  </Form.Group>
+
+                                                  </Tab>
+                                                </Tabs>
+                                                </div>
+                                              )}
+                                              </>
+
+
+
+                                            {/* Downloadable Files */}
+                                          {item.curriculumItemFiles.length > 0 && (
+                                              <div className="p-2">
+                                                  <h6><b>Downloadable Files</b></h6>
+                                                  <ListGroup>
+                                                      {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype == "Downloadable Items") ? (
+                                                          item.curriculumItemFiles
+                                                              .filter(downloaditem => downloaditem.filetype == "Downloadable Items")
+                                                              .map((downloaditem, index) => (
+                                                                  <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                                                  <span>{downloaditem.title}</span>
+                                                                  <span><Button onClick={() => {
+                                                                    handleDeleteDownloableFilesLecture(downloaditem)
+                                                                  }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                                    </ListGroup.Item>
+                                                              ))
+                                                      ) : (
+                                                          <p>No Downloadable Items</p>
+                                                      )}
+                                                  </ListGroup>
+                                              </div>
+                                          )}
+
+                                          {/* External Resources */}
+                                          {item.curriculumItemFiles.some(link => link.filetype === "External Resourses") && (
+                                              <div className="p-2">
+                                                  <h6><b>External Resources</b></h6>
+                                                  <ListGroup>
+                                                      {item.curriculumItemFiles
+                                                          .filter(link => link.filetype === "External Resourses")
+                                                          .map((link, index) => (
+                                                              <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                                                <span><a  target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a></span> 
+                                                                <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                              </ListGroup.Item>
+                                                          ))}
+                                                  </ListGroup>
+                                              </div>
+                                          )}
+
+                                          {/* Source Code */}
+                                          {item.curriculumItemFiles.length > 0 && (
+                                              <div className="p-2">
+                                                  <h6><b>Source Code</b></h6>
+                                                  <ListGroup>
+                                                      {item.curriculumItemFiles.some(source => source.filetype === "Source Code") ? (
+                                                          item.curriculumItemFiles
+                                                              .filter(source => source.filetype === "Source Code")
+                                                              .map((source, index) => (
+                                                                  <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                                                    <span>{source.title}</span>
+                                                                    <span><Button  onClick={() => {
+                                                                    handleDeleteDownloableFilesLecture(source)
+                                                                  }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                                    </ListGroup.Item>
+                                                              ))
+                                                      ) : (
+                                                          <p>No Source Code</p>
+                                                      )}
+                                                  </ListGroup>
+                                              </div>
+                                          )}
+                                        </div>
+
+
+                                  </div>
+                                )
+                              )}
+                      
+                      
+                          {/* Main Video Card & Text Based Card */}
+                          {item.article == "N/A" && item.curriculumItemFiles.length == 0 && (
+                            showMain == index + i ? (
+                                curriculumvisiblity == "video" ? (
+                                <div className="p-3">
+                          
+                                  {/* Upload Input */}
+                                  <Form.Group controlId="formFile" className="my-3">
+                                    <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
+                                    <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
+                                  </Form.Group>
+        
+        
+                                  {/* After Upload */}
+                                  <Table striped bordered hover>
+                                      <thead>
+                                        <tr>
+                                          <th>Filename</th>
+                                          <th>Type</th>
+                                          <th>Actions</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                      {item.curriculumItemFiles.length > 0 && (
+                                        item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
+                                            item.curriculumItemFiles
+                                                .filter(video => video.filetype === "Video")
+                                                .map((video, index) => (
+                                                    <tr key={index}>
+                                                      <td>{video.url}</td>
+                                                      <td>Video</td>
+                                                      <td><Button onClick={() => {
+                                                        handleVideoDelete(video)
+                                                      }} variant="contained"><DeleteIcon /></Button></td>
+                                                    </tr>
+                                                ))
+                                        ) : (
+                                            <p>No Video</p>
+                                        )
+                                  )}
+        
+                                      </tbody>
+                                    </Table>
+
+                        {/* List of Resources / External Link */}
+                          <>
+                            {showDescription == index + i && (
+                              <>
+                              <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                                <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
+                              <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
+
+                              <div className="d-flex my-2">
+                              <Button onClick={() => setshowDescription(null)} className="mr-1" variant="outlined">Cancel</Button>
+                              <Button onClick={() => handleSaveDescription(item.id)} className="ml-1"  variant="contained">Save</Button>
+                              </div>
+                              </>
+                            )}
+
+                            {/* Add Description & Resourses */}
+                            {showMain == index + i && showDescription != index + i &&  (
+                            <div className="d-flex justify-content-center p-2">
+                            <Button onClick={() => setshowDescription(showDescription == index + i ? null : index + i)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                            <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                            
+                          
+                            </div>
+                            )}
+
+                            {showResources == index + i && (
+                              <div>
+                                <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+
+                                {/* Tabs */}
+                                <Tabs
+                                defaultActiveKey="d-file"
+                                id="uncontrolled-tab-example"
+                                className="my-3"
+                              >
+                                <Tab eventKey="d-file" title="Downloadable File">
+
+                                <Form.Group controlId="formFile" className="mb-3">
+                                {/* (e) =>  */}
+                                  <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
+                                  <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                                </Form.Group>
+                                  
+                                </Tab>
+                                <Tab eventKey="e-r" title="External Resources">
+
+                                <Form> 
+                                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                    <Form.Label>Title</Form.Label>
+                                    <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
+                                  </Form.Group>
+
+                                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                    <Form.Label>URL</Form.Label>
+                                    <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://externallink.com" />
+                                  </Form.Group>
+                                  <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
+                                </Form>
+
+                                </Tab>
+                                <Tab eventKey="source-code" title="Source Code">
+
+                                <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
+                                  <Form.Control type="file" />
+                                  <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                                </Form.Group>
+
+                                </Tab>
+                              </Tabs>
+                              </div>
+                            )}
+                                  </>
+
+                                </div>
+                              ) : curriculumvisiblity == "article" ? (
+                                <div className="p-3">
+                                  <div className="my-3">
+        
+                                    <JoditEditor value={article} onChange={(e) => setarticle(e)} />
+                                    <div className="d-flex flex-start my-2">
+                                      <Button onClick={(e) => handleSaveArticle(item.id)} variant="contained">SAVE</Button>
+                                    </div>
+
+
+
+                                  </div>
+
+                                  {/* List of Resources / External Link */}
+
+                                    <>
+                                      {showDescription == index + i && (
+                                        <>
+                                        <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                                        <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
+                                        <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
+
+                                        <div className="d-flex my-2">
+                                        <Button onClick={() => setshowDescription(null)} className="mr-1" variant="outlined">Cancel</Button>
+                                        <Button onClick={() => handleSaveDescription(item.id)} className="ml-1"  variant="contained">Save</Button>
+                                        </div>
+                                        </>
+                                      )}
+
+                                      {/* Add Description & Resourses */}
+                                      {showMain == index + i && showDescription != index + i &&  (
+                                      <div className="d-flex justify-content-center p-2">
+                                      <Button onClick={() => setshowDescription(showDescription == index + i ? null : index + i)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                                      <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                      
+                                    
+                                      </div>
+                                      )}
+
+                                      {showResources == index + i && (
+                                        <div>
+                                          <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+
+                                          {/* Tabs */}
+                                          <Tabs
+                                          defaultActiveKey="d-file"
+                                          id="uncontrolled-tab-example"
+                                          className="my-3"
+                                        >
+                                          <Tab eventKey="d-file" title="Downloadable File">
+
+                                          <Form.Group controlId="formFile" className="mb-3">
+                                          {/* (e) =>  */}
+                                            <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
+                                            <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                                          </Form.Group>
+                                            
+                                          </Tab>
+                                          <Tab eventKey="e-r" title="External Resources">
+
+                                          <Form> 
+                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                              <Form.Label>Title</Form.Label>
+                                              <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
+                                            </Form.Group>
+
+                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                              <Form.Label>URL</Form.Label>
+                                              <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://externallink.com" />
+                                            </Form.Group>
+                                            <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
+                                          </Form>
+
+                                          </Tab>
+                                          <Tab eventKey="source-code" title="Source Code">
+
+                                          <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
+                                            <Form.Control type="file" />
+                                            <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                                          </Form.Group>
+
+                                          </Tab>
+                                        </Tabs>
+                                        </div>
+                                      )}
+                                      </>
+
+                                </div>
+                              ) : (
+                                <div className="d-flex justify-content-center">
+                                  <div className="mx-2">
+                                    <Card sx={{ width: 120 }} elevation={3}>
+                                      <CardActionArea
+                                        onClick={() => {
+                                          setshowDescRes(true)
+                                          setcurriculumvisiblity("video")
+                                        }}
+                                        className="d-flex justify-content-center align-items-center text-center"
+                                      >
+                                        <CardContent>
+                                          <PlayCircleIcon fontSize="large" />
+        
+                                          <p className="my-2">Video Lecture</p>
+                                        </CardContent>
+                                      </CardActionArea>
+                                    </Card>
+                                  </div>
+        
+        
+                                  <div className="mx-2">
+                                    <Card sx={{ width: 120 }} elevation={3}>
+                                      <CardActionArea
+                                        onClick={() => {
+                                          setshowDescRes(true)
+                                          setcurriculumvisiblity("article")
+                                        }}
+                                        className="d-flex justify-content-center align-items-center text-center"
+                                      >
+                                        <CardContent>
+                                          <ArticleIcon fontSize="large" />
+        
+                                          <p className="my-2">Text-based Lecture</p>
+                                        </CardContent>
+                                      </CardActionArea>
+                                    </Card>
+                                  </div>
+                                </div>
+                              )
+                            ) : (
+                                <></>
+                            )
                           )}
 
-                            <JoditEditor value={article} onChange={(e) => setarticle(e)} />
-                            <div className="d-flex flex-start my-2">
-                              <Button onClick={(e) => handleSaveArticle(item.id)} variant="contained">SAVE</Button>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="d-flex justify-content-center">
-                          <div className="mx-2">
-                            <Card sx={{ width: 120 }} elevation={3}>
-                              <CardActionArea
-                                onClick={() => {
-                                  setshowDescRes(true)
-                                  setcurriculumvisiblity("video")
-                                }}
-                                className="d-flex justify-content-center align-items-center text-center"
-                              >
-                                <CardContent>
-                                  <PlayCircleIcon fontSize="large" />
+                          {/* Main Video Card & Text Based Card */}
+                          {item.curriculumItemFiles.length != 0 && (
+                            showMain == index + i && (
+                              <div className="my-3">
 
-                                  <p className="my-2">Video Lecture</p>
-                                </CardContent>
-                              </CardActionArea>
-                            </Card>
-                          </div>
+                                {/*  Inputs of External Links / Resouces  */}
+
+                                  {/* List of Resources / External Link */}
+
+                                  <>
+                                      {showDescription == index + i && (
+                                        <>
+                                        <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                                        <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
+                                        <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
+
+                                        <div className="d-flex my-2">
+                                        <Button onClick={() => setshowDescription(null)} className="mx-1" variant="outlined">Cancel</Button>
+                                        <Button onClick={() => handleSaveDescription(item.id)} className="mx-1"  variant="contained">Save</Button>
+                                        </div>
+                                        </>
+                                      )}
+
+                                      {/* Add Description & Resourses */}
+                                      {showMain == index + i && showDescription != index + i &&  (
+                                      <div className="d-flex justify-content-center p-2">
+                                      <Button onClick={() => {
+                                        setcurriculum_desc(item.description == "N/A" ? "" : item.description)
+                                        setshowDescription(showDescription == index + i ? null : index + i)
+                                      }} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                                      <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                      
+                                    
+                                      </div>
+                                      )}
+
+                                      {showResources == index + i && (
+                                        <div>
+                                          <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+
+                                          {/* Tabs */}
+                                          <Tabs
+                                          defaultActiveKey="d-file"
+                                          id="uncontrolled-tab-example"
+                                          className="my-3"
+                                        >
+                                          <Tab eventKey="d-file" title="Downloadable File">
+
+                                          <Form.Group controlId="formFile" className="mb-3">
+                                          {/* (e) =>  */}
+                                            <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
+                                            <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                                          </Form.Group>
+                                            
+                                          </Tab>
+                                          <Tab eventKey="e-r" title="External Resources">
+
+                                          <Form> 
+                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                              <Form.Label>Title</Form.Label>
+                                              <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
+                                            </Form.Group>
+
+                                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                              <Form.Label>URL</Form.Label>
+                                              <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://externallink.com" />
+                                            </Form.Group>
+                                            <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
+                                          </Form>
+
+                                          </Tab>
+                                          <Tab eventKey="source-code" title="Source Code">
+
+                                          <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
+                                            <Form.Control type="file" />
+                                            <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                                          </Form.Group>
+
+                                          </Tab>
+                                        </Tabs>
+                                        </div>
+                                      )}
+                                      </>
+
+                                
+
+                                    {/* Downloadable Files */}
+                                  {item.curriculumItemFiles.length > 0 && (
+                                      <div className="p-2">
+                                          <h6><b>Downloadable Files</b></h6>
+                                          <ListGroup>
+                                              {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype == "Downloadable Items") ? (
+                                                  item.curriculumItemFiles
+                                                      .filter(downloaditem => downloaditem.filetype == "Downloadable Items")
+                                                      .map((downloaditem, index) => (
+                                                          <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                                           <span>{downloaditem.title}</span>
+                                                           <span><Button onClick={() => {
+                                                            handleDeleteDownloableFilesLecture(downloaditem)
+                                                           }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                            </ListGroup.Item>
+                                                      ))
+                                              ) : (
+                                                  <p>No Downloadable Items</p>
+                                              )}
+                                          </ListGroup>
+                                      </div>
+                                  )}
+
+                                  {/* External Resources */}
+                                  {item.curriculumItemFiles.some(link => link.filetype === "External Resourses") && (
+                                      <div className="p-2">
+                                          <h6><b>External Resources</b></h6>
+                                          <ListGroup>
+                                              {item.curriculumItemFiles
+                                                  .filter(link => link.filetype === "External Resourses")
+                                                  .map((link, index) => (
+                                                      <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                                         <span><a  target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a></span> 
+                                                         <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                      </ListGroup.Item>
+                                                  ))}
+                                          </ListGroup>
+                                      </div>
+                                  )}
+
+                                  {/* Source Code */}
+                                  {item.curriculumItemFiles.length > 0 && (
+                                      <div className="p-2">
+                                          <h6><b>Source Code</b></h6>
+                                          <ListGroup>
+                                              {item.curriculumItemFiles.some(source => source.filetype === "Source Code") ? (
+                                                  item.curriculumItemFiles
+                                                      .filter(source => source.filetype === "Source Code")
+                                                      .map((source, index) => (
+                                                          <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                                            <span>{source.title}</span>
+                                                            <span><Button  onClick={() => {
+                                                            handleDeleteDownloableFilesLecture(source)
+                                                           }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                            </ListGroup.Item>
+                                                      ))
+                                              ) : (
+                                                  <p>No Source Code</p>
+                                              )}
+                                          </ListGroup>
+                                      </div>
+                                  )}
+                              </div>
+                            ))}
 
 
-                          <div className="mx-2">
-                            <Card sx={{ width: 120 }} elevation={3}>
-                              <CardActionArea
-                                onClick={() => {
-                                  setshowDescRes(true)
-                                  setcurriculumvisiblity("article")
-                                }}
-                                className="d-flex justify-content-center align-items-center text-center"
-                              >
-                                <CardContent>
-                                  <ArticleIcon fontSize="large" />
-
-                                  <p className="my-2">Text-based Lecture</p>
-                                </CardContent>
-                              </CardActionArea>
-                            </Card>
-                          </div>
-                        </div>
-                      )
-                    ) : (
-                        <></>
-                    )}
-
-                    <p>{item.description != "N/A" && removeHtmlTags(item.description)}</p>
-
-                    <div className="my-3">
-                    {item.curriculumItemFiles.length > 0 && (
-                      <div className="p-2">
-                          <h6><b>Downloadable Files</b></h6>
-                          <ListGroup>
-                              {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype == "Downloadable Items") ? (
-                                  item.curriculumItemFiles
-                                      .filter(downloaditem => downloaditem.filetype == "Downloadable Items")
-                                      .map((downloaditem, index) => (
-                                          <ListGroup.Item key={index}>{downloaditem.title}</ListGroup.Item>
-                                      ))
-                              ) : (
-                                  <p>No Downloadable Items</p>
-                              )}
-                          </ListGroup>
-                      </div>
+                      </Card>
+                      </>
                   )}
-
-
-                {item.curriculumItemFiles.some(link => link.filetype === "External Resourses") && (
-                    <div className="p-2">
-                        <h6><b>External Resources</b></h6>
-                        <ListGroup>
-                            {item.curriculumItemFiles
-                                .filter(link => link.filetype === "External Resourses")
-                                .map((link, index) => (
-                                    <ListGroup.Item key={index}>
-                                        <a  target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a>
-                                    </ListGroup.Item>
-                                ))}
-                        </ListGroup>
-                    </div>
-                )}
-
-
-                {item.curriculumItemFiles.length > 0 && (
-                    <div className="p-2">
-                        <h6><b>Source Code</b></h6>
-                        <ListGroup>
-                            {item.curriculumItemFiles.some(source => source.filetype === "Source Code") ? (
-                                item.curriculumItemFiles
-                                    .filter(source => source.filetype === "Source Code")
-                                    .map((source, index) => (
-                                        <ListGroup.Item key={index}>{source.title}</ListGroup.Item>
-                                    ))
-                            ) : (
-                                <p>No Source Code</p>
-                            )}
-                        </ListGroup>
-                    </div>
-                )}
-
-
-
-                    </div>
-                  
-
-                      {/* Always There  : Description */}
-                      {showDescription == index && (
-                        <>
-                        <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                         <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
-                        <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
-
-                        <div className="d-flex my-2">
-                        <Button onClick={() => setshowDescription(null)} className="mr-1" variant="outlined">Cancel</Button>
-                        <Button onClick={() => handleSaveDescription(item.id)} className="ml-1"  variant="contained">Save</Button>
-                        </div>
-                        </>
-                      )}
-
-                        {/* Add Description & Resourses */}
-                        
-                        {showMain == null && showDescription != index &&  (
-                        <>
-                      
-                        
-                        <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                        <Button onClick={() => setshowResources(showResources == index ? null : index)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
-                        
-                     
-                        </>
-                        )}
-
-                        {showResources == index && (
-                          <div>
-                            <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-
-                             {/* <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>  */}
-                            
-                            {/* Tabs */}
-                            <Tabs
-                            defaultActiveKey="d-file"
-                            id="uncontrolled-tab-example"
-                            className="my-3"
-                          >
-                            <Tab eventKey="d-file" title="Downloadable File">
-
-                            <Form.Group controlId="formFile" className="mb-3">
-                            {/* (e) =>  */}
-                              <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
-                              <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
-                            </Form.Group>
-                              
-                            </Tab>
-                            <Tab eventKey="e-r" title="External Resources">
-
-                            <Form> 
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
-                              </Form.Group>
-
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>URL</Form.Label>
-                                <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://example.com" />
-                              </Form.Group>
-                              <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
-                            </Form>
-
-                            </Tab>
-                            <Tab eventKey="source-code" title="Source Code">
-
-                            <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
-                              <Form.Control type="file" />
-                              <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
-                            </Form.Group>
-
-                            </Tab>
-                          </Tabs>
-                          </div>
-                        )}
-                        
-                        
-                    
-
-                  </AccordionDetails>
-                </Accordion>) }
-
+                </>
+              )}
+      
                 {/* Quiz */}
-                {item.type == "Quiz" && 
-                 (
-                  // Quiz Accordance
-                <Accordion key={index} className="my-3">
-                  <AccordionSummary
-                    className="accordian-header d-flex justify-content-between align-items-center"
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      <CheckCircleIcon fontSize="small" /> Quiz {index + 1}:{" "}
-                      <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handleQuizDelete(item)} />
-                    </Typography>
+                {item.type == "Quiz" && (
+                  showEditQuizInput == index + i ? ( 
+                    <div className="d-flex">
+                    <Form.Control 
+                      className="mx-1"
+                      value={updateQuizName} 
+                      onChange={(e) => setupdateQuizName(e.target.value)} 
+                      type="text" 
+                      placeholder="Quiz Name" 
+                    />
 
-                    {showContentAdd == index ? (
-                      <Button
-                        onClick={() => {
-                          setshowDescRes(true)
-                          setshowMain(null)
-                          console.log(index)
-                          setshowContentAdd(null)
-                          setcurriculumvisiblitymc("")
-                          // handleContentshow()
-                        }}
-                        className="mx-2"
-                        size="small"
-                        variant="contained"
-                      >
-                        <CloseIcon /> Cancel
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          setshowMain(showMain == index ? null : index)
-                          setshowContentAdd(showContentAdd == index ? null : index)
-                        }}
-                        className="mx-2"
-                        size="small"
-                        variant="outlined"
-                      >
-                        <AddIcon /> Questions
-                      </Button>
-                    )}
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-
-                    {/* Landing Content */}
-                    {showMain == index ? (
-                        curriculumvisiblitymc == "mc" ? (
-                        <div>
-
-                          <Button
-                          className="my-2"
-                            onClick={() => setcurriculumvisiblitymc("")}
-                            variant="contained"
-                          >
-                            <CloseIcon /> Cancel
-                          </Button>
+                    <Button onClick={(e) => {
+                        if(showEditQuizInput == index + i){
+                          setshowEditQuizInput(null)
+                          setupdateQuizName("")
+                        }else{
+                          setshowEditQuizInput(index + i)
+                          setupdateQuizName(section.courseSection.sectionName)
+                        }
                           
-                          {/* MCQ */}
-                        <Form>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                          <Form.Label>Question</Form.Label>
-                          <Form.Control value={question} onChange={(e) => setquestion(e.target.value)} as="textarea" rows={3} />
-                        </Form.Group>
-
-                        <Form.Label>Answers</Form.Label>
-                        <RadioGroup
-                          name="group1"
-                          onChange={(e) => setanswerOption(e.target.value)}
-                          value={answerOption}
+                    }} className="mx-1" variant="outlined">Cancel</Button>
+                    <Button onClick={(e) => {
+                      handleUpdateQuizName(item,section)
+                    }}  className="mx-1" variant="contained">Save</Button>
+                    </div>
+                  ) : (
+                    <Card key={index + i} className="my-3">
+                    <div className="d-flex justify-content-between align-items-center p-2">
+                    <span>
+      
+                      <Typography>
+                        <CheckCircleIcon fontSize="small" />{i + 1}. Quiz:{" "}
+                        <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
+                        <span className="mx-5">
+                              <EditIcon onClick={(e) => {
+                                  if(showEditQuizInput == index + i){
+                                    setshowEditQuizInput(null)
+                                    setupdateQuizName("")
+                                  }else{
+                                    setshowEditQuizInput(index + i)
+                                    setupdateQuizName(item.title)
+                                  }
+                                    
+                              }} />
+                           <DeleteIcon onClick={() => handleQuizDelete(item)} />
+                          </span>
+                      </Typography>
+  
+                      </span>
+                      <span>
+                      {showContentAdd == index + i ? (
+                        <Button
+                          onClick={() => {
+                            setshowDescRes(true)
+                            setshowMain(null)
+                            console.log(index + i)
+                            setshowContentAdd(null)
+                            setcurriculumvisiblitymc("")
+                            // handleContentshow()
+                          }}
+                          className="mx-2"
+                          size="small"
+                          variant="contained"
                         >
-                        <div className="row">
-
-                          {/* 1 */}
-                            <div className="col-md-1">
-                              <Radio value={answerOptionOne} onChange={(e) => setanswerOptionOne(e.target.value)} />
-                            </div>
-                            <div className="col-md-11 mb-3">
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                              <Form.Control value={answerOne} onChange={(e) => setanswerOne(e.target.value)} as="textarea" rows={3} />
-                            </Form.Group>
-                            <Form.Control value={answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
-                            </div>
-
-                          {/* 2 */}
-                            <div className="col-md-1">
-                              <Radio value={answerOptionTwo} onChange={(e) => setanswerOptionTwo(e.target.value)} />
-                            </div>
-                            <div className="col-md-11 mb-3">
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                              <Form.Control value={answerTwo} onChange={(e) => setanswerTwo(e.target.value)} as="textarea" rows={3} />
-                            </Form.Group>
-                            <Form.Control value={answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
-                            </div>
-
-                        {/* 3 */}
-                        <div className="col-md-1">
-                          <Radio value={answerOptionThree} onChange={(e) => setanswerOptionThree(e.target.value)} />
-                        </div>
-
-                        <div className="col-md-11 mb-3">
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                          <Form.Control value={answerThree} onChange={(e) => setanswerThree(e.target.value)} as="textarea" rows={3} />
-                        </Form.Group>
-                        <Form.Control value={answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
-                        </div>
-
-                        {/* 4 */}
-                        <div className="col-md-1">
-                          <Radio value={answerOptionFour} onChange={(e) => setanswerOptionFour(e.target.value)} />
-                        </div>
-
-                        <div className="col-md-11 mb-3">
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                          <Form.Control value={answerFour} onChange={(e) => setanswerFour(e.target.value)} as="textarea" rows={3} />
-                        </Form.Group>
-                        <Form.Control value={answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
-                        </div>
-
-
-
-                        {/* 5*/}
-                        <div className="col-md-1">
-                          <Radio value={answerOptionFive} onChange={(e) => setanswerOptionFive(e.target.value)} />
-
-                        </div>
-
-                        <div className="col-md-11 mb-3">
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                          <Form.Control value={answerFive} onChange={(e) => setanswerFive(e.target.value)} as="textarea" rows={3} />
-                        </Form.Group>
-                        <Form.Control value={answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
-                        </div>
-
-
-                        </div>
-                        </RadioGroup>
-
-                        <div className="d-flex justify-content-end">
-                        <Button onClick={() => handleQuestionsAnswer(item)}  variant="outlined">
-                          ADD
+                          <CloseIcon /> Cancel
                         </Button>
-                        </div>
-                      
-
-                      </Form>
-                          
-                          
-                        </div>
-                      )  : (
-                        <div className="d-flex justify-content-center">
-                          <div className="mx-2">
-                            <Card sx={{ width: 140 }} elevation={3}>
-                              <CardActionArea
-                                onClick={() => {
-                                  setshowDescRes(true)
-                                  setcurriculumvisiblitymc("mc")
-                                  handleFillQuiz(item)
-                                }}
-                                className="d-flex justify-content-center align-items-center text-center"
-                              >
-                                <CardContent>
-                                  <HelpIcon fontSize="large" />
-                                  <p className="my-2">Multiple Choice</p>
-                                </CardContent>
-                              </CardActionArea>
-                            </Card>
+                      ) : (
+                        <Button
+                          onClick={() => {
+                            setshowMain(showMain == index + i ? null : index + i)
+                            setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                            handleFillQuiz(item)
+                          }}
+                          className="mx-2"
+                          size="small"
+                          variant="outlined"
+                        >
+                          <AddIcon /> Questions
+                        </Button>
+                      )}
+                      </span>
+  
+                    </div>
+              
+  
+                      {/* Landing Content */}
+                    {showContentAdd == index + i && (
+                          item.getQuizs.length  != 0 ? (
+                              <div>
+                                    
+                                    {/* MCQ FORM */}
+                                  <Form className="p-2">
+                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label>Question</Form.Label>
+                                    <Form.Control value={question} onChange={(e) => setquestion(e.target.value)} as="textarea" rows={3} />
+                                  </Form.Group>
+  
+                                  <Form.Label>Answers</Form.Label>
+                                  <RadioGroup
+                                    name="group1"
+                                    onChange={(e) => setanswerOption(e.target.value)}
+                                    value={answerOption}
+                                  >
+                                  <div className="row">
+  
+                                    {/* 1 */}
+                                      <div className="col-md-1">
+                                        <Radio value={answerOptionOne} onChange={(e) => setanswerOptionOne(e.target.value)} />
+                                      </div>
+                                      <div className="col-md-11 mb-3">
+                                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Control value={answerOne} onChange={(e) => setanswerOne(e.target.value)} as="textarea" rows={3} />
+                                      </Form.Group>
+                                      <Form.Control value={answerExplainOne == "null" ? "" : answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                      </div>
+  
+                                    {/* 2 */}
+                                      <div className="col-md-1">
+                                        <Radio value={answerOptionTwo} onChange={(e) => setanswerOptionTwo(e.target.value)} />
+                                      </div>
+                                      <div className="col-md-11 mb-3">
+                                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                        <Form.Control value={answerTwo} onChange={(e) => setanswerTwo(e.target.value)} as="textarea" rows={3} />
+                                      </Form.Group>
+                                      <Form.Control value={answerExplainTwo == "null" ? "" : answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                      </div>
+  
+                                  {/* 3 */}
+                                  <div className="col-md-1">
+                                    <Radio value={answerOptionThree} onChange={(e) => setanswerOptionThree(e.target.value)} />
+                                  </div>
+  
+                                  <div className="col-md-11 mb-3">
+                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Control value={answerThree} onChange={(e) => setanswerThree(e.target.value)} as="textarea" rows={3} />
+                                  </Form.Group>
+                                  <Form.Control value={answerExplainThree == "null" ? "" : answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                  </div>
+  
+                                  {/* 4 */}
+                                  <div className="col-md-1">
+                                    <Radio value={answerOptionFour} onChange={(e) => setanswerOptionFour(e.target.value)} />
+                                  </div>
+  
+                                  <div className="col-md-11 mb-3">
+                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Control value={answerFour} onChange={(e) => setanswerFour(e.target.value)} as="textarea" rows={3} />
+                                  </Form.Group>
+                                  <Form.Control value={answerExplainFour == "null" ? "" : answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                  </div>
+  
+  
+  
+                                  {/* 5*/}
+                                  <div className="col-md-1">
+                                    <Radio value={answerOptionFive} onChange={(e) => setanswerOptionFive(e.target.value)} />
+  
+                                  </div>
+  
+                                  <div className="col-md-11 mb-3">
+                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Control value={answerFive} onChange={(e) => setanswerFive(e.target.value)} as="textarea" rows={3} />
+                                  </Form.Group>
+                                  <Form.Control value={answerExplainFive == "null" ? "" : answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                  </div>
+  
+  
+                                  </div>
+                                  </RadioGroup>
+  
+                                  <div className="d-flex justify-content-end">
+                                  <Button onClick={() => handleQuestionsAnswer(item)}  variant="outlined">
+                                    SAVE
+                                  </Button>
+                                  </div>
+                                
+  
+                                </Form>
+                              </div>
+                          ) : (
+                            curriculumvisiblitymc != "mc" &&
+                            <div className="d-flex justify-content-center">
+                            <div className="mx-2">
+                              <Card sx={{ width: 140 }} elevation={3}>
+                                <CardActionArea
+                                  onClick={() => {
+                                    setshowDescRes(true)
+                                    setcurriculumvisiblitymc("mc")
+                                    setshowMain(index + i)
+                                    setshowContentAdd(index + i)
+                                    handleFillQuiz(item)
+                                  }}
+                                  className="d-flex justify-content-center align-items-center text-center"
+                                >
+                                  <CardContent>
+                                    <HelpIcon fontSize="large" />
+                                    <p className="my-2">Multiple Choice</p>
+                                  </CardContent>
+                                </CardActionArea>
+                              </Card>
+                            </div>
+  
                           </div>
-
-                        </div>
-                      ) 
-                    ) : (
-                        <></>
+                          )
+                    )}  
+  
+  
+                    {showMain == index + i && curriculumvisiblitymc == "mc" && (
+                         <div>
+                         
+                                    
+                         {/* MCQ FORM */}
+                       <Form className="p-2">
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Label>Question</Form.Label>
+                         <Form.Control value={question} onChange={(e) => setquestion(e.target.value)} as="textarea" rows={3} />
+                       </Form.Group>
+  
+                       <Form.Label>Answers</Form.Label>
+                       <RadioGroup
+                         name="group1"
+                         onChange={(e) => setanswerOption(e.target.value)}
+                         value={answerOption}
+                       >
+                       <div className="row">
+  
+                         {/* 1 */}
+                           <div className="col-md-1">
+                             <Radio value={answerOptionOne} onChange={(e) => setanswerOptionOne(e.target.value)} />
+                           </div>
+                           <div className="col-md-11 mb-3">
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                             <Form.Control value={answerOne} onChange={(e) => setanswerOne(e.target.value)} as="textarea" rows={3} />
+                           </Form.Group>
+                           <Form.Control value={answerExplainOne == "null" ? "" :answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                           </div>
+  
+                         {/* 2 */}
+                           <div className="col-md-1">
+                             <Radio value={answerOptionTwo} onChange={(e) => setanswerOptionTwo(e.target.value)} />
+                           </div>
+                           <div className="col-md-11 mb-3">
+                           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                             <Form.Control value={answerTwo} onChange={(e) => setanswerTwo(e.target.value)} as="textarea" rows={3} />
+                           </Form.Group>
+                           <Form.Control value={answerExplainTwo == "null" ? "" : answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                           </div>
+  
+                       {/* 3 */}
+                       <div className="col-md-1">
+                         <Radio value={answerOptionThree} onChange={(e) => setanswerOptionThree(e.target.value)} />
+                       </div>
+  
+                       <div className="col-md-11 mb-3">
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Control value={answerThree} onChange={(e) => setanswerThree(e.target.value)} as="textarea" rows={3} />
+                       </Form.Group>
+                       <Form.Control value={answerExplainThree == "null" ? "" : answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                       </div>
+  
+                       {/* 4 */}
+                       <div className="col-md-1">
+                         <Radio value={answerOptionFour} onChange={(e) => setanswerOptionFour(e.target.value)} />
+                       </div>
+  
+                       <div className="col-md-11 mb-3">
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Control value={answerFour} onChange={(e) => setanswerFour(e.target.value)} as="textarea" rows={3} />
+                       </Form.Group>
+                       <Form.Control value={answerExplainFour == "null" ? "" : answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                       </div>
+  
+  
+  
+                       {/* 5*/}
+                       <div className="col-md-1">
+                         <Radio value={answerOptionFive} onChange={(e) => setanswerOptionFive(e.target.value)} />
+  
+                       </div>
+  
+                       <div className="col-md-11 mb-3">
+                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                         <Form.Control value={answerFive} onChange={(e) => setanswerFive(e.target.value)} as="textarea" rows={3} />
+                       </Form.Group>
+                       <Form.Control value={answerExplainFive == "null" ? "" : answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                       </div>
+  
+  
+                       </div>
+                       </RadioGroup>
+  
+                       <div className="d-flex justify-content-end">
+                       <Button onClick={() => handleQuestionsAnswer(item)}  variant="outlined">
+                         SAVE
+                       </Button>
+                       </div>
+                     
+  
+                     </Form>
+                     </div>
                     )}
-                  
-
-            
-
-                        {showResources == index && (
-                          <div>
-                            <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
-                            <Button onClick={() => setshowDescription(showDescription == index ? null : index)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                            
-                            {/* Tabs */}
-                            <Tabs
-                            defaultActiveKey="d-file"
-                            id="uncontrolled-tab-example"
-                            className="my-3"
-                          >
-                            <Tab eventKey="d-file" title="Downloadable File">
-
-                            <Form.Group controlId="formFile" className="mb-3">
-                            {/* (e) =>  */}
-                              <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
-                              <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
-                            </Form.Group>
-                              
-                            </Tab>
-                            <Tab eventKey="e-r" title="External Resources">
-
-                            <Form> 
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control value={curriclum_ex_res_tile} onChange={(e) => setcurriclum_ex_res_tile(e.target.value)} type="text" placeholder="A Descriptive Title" />
-                              </Form.Group>
-
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>URL</Form.Label>
-                                <Form.Control value={curriculum_ex_res_link} onChange={(e) => setcurriculum_ex_res_link(e.target.value)} type="text" placeholder="https://example.com" />
-                              </Form.Group>
-                              <Button onClick={() => handleExternalResources(item.id)} variant="contained">Add Link</Button>
-                            </Form>
-
-                            </Tab>
-                            <Tab eventKey="source-code" title="Source Code">
-
-                            <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
-                              <Form.Control type="file" />
-                              <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
-                            </Form.Group>
-
-                            </Tab>
-                          </Tabs>
-                          </div>
-                        )}
+  
                         
-                        
-                    
-
-                  </AccordionDetails>
-                </Accordion>
+                          
+  
+                  </Card>
+                  )
+               
                 )}
 
                 {/* Assignment */}
-                {item.type == "Assignment" && 
-                 (
-                  // Assignment
-                <Accordion key={index} className="my-3">
-                  <AccordionSummary
-                    className="accordian-header d-flex justify-content-between align-items-center"
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      <CheckCircleIcon fontSize="small" /> Assignment {index + 1}:{" "}
-                      <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handleAssignmentDelete(item)}  />
-                    </Typography>
+                {item.type == "Assignment" && (
+                 showEditAssignmentInput == index + i ? ( 
+                  <div className="d-flex">
+                  <Form.Control 
+                    className="mx-1"
+                    value={updateAssignmentName} 
+                    onChange={(e) => setupdateAssignmentName(e.target.value)} 
+                    type="text" 
+                    placeholder="Assignment Name" 
+                  />
 
-                    {showContentAdd == index ? (
+                  <Button onClick={(e) => {
+                      if(showEditAssignmentInput == index + i){
+                        setshowEditAssignmentInput(null)
+                        setupdateAssignmentName("")
+                      }else{
+                        setshowEditAssignmentInput(index + i)
+                        setupdateAssignmentName(item.title)
+                      }
+                        
+                  }} className="mx-1" variant="outlined">Cancel</Button>
+                  <Button onClick={(e) => {
+                    handleUpdateAssignmentName(item,section)
+                  }}  className="mx-1" variant="contained">Save</Button>
+                  </div>
+                ) :(
+                <Card key={index + i} className="my-3">
+                  <div className="d-flex justify-content-between align-items-center p-2">
+                 <span>
+                    <Typography>
+                      <CheckCircleIcon fontSize="small" />{i + 1}. Assignment:{" "}
+                      <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <span className="mx-5">
+                              <EditIcon onClick={(e) => {
+                                  if(showEditAssignmentInput == index + i){
+                                    setshowEditAssignmentInput(null)
+                                    setupdateAssignmentName("")
+                                  }else{
+                                    setshowEditAssignmentInput(index + i)
+                                    setupdateAssignmentName(item.title)
+                                  }
+                                    
+                                }} />
+                                <DeleteIcon onClick={() => handleAssignmentDelete(item)}  />
+                      </span>
+                    </Typography>
+                 </span>
+
+                  <span>
+                    {showContentAdd == index + i ? (
                       <Button
                         onClick={() => {
                           setshowDescRes(true)
                           setshowMain(null)
-                          console.log(index)
+                          console.log(index + i)
                           setshowContentAdd(null)
                           setcurriculumvisiblitymc("")
                           // handleContentshow()
@@ -1481,8 +2028,8 @@ console.log(item)
                     ) : (
                       <Button
                         onClick={() => {
-                          setshowMain(showMain == index ? null : index)
-                          setshowContentAdd(showContentAdd == index ? null : index)
+                          setshowMain(showMain == index + i ? null : index + i)
+                          setshowContentAdd(showContentAdd == index + i ? null : index + i)
 
                           console.log(item)
                           setmainSectionID(section.courseSection.sectionId)
@@ -1513,12 +2060,12 @@ console.log(item)
                         <CreateIcon /> Edit
                       </Button>
                     )}
-                  </AccordionSummary>
+              </span>
+                </div>
+            
 
-                  <AccordionDetails>
-
-                  {showMain == index && (
-
+                  {showMain == index + i && (
+                      <div className="p-3">
                           <Tabs
                           defaultActiveKey="assignment"
                           id="uncontrolled-tab-example"
@@ -1539,7 +2086,7 @@ console.log(item)
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                              <Form.Label>Duration</Form.Label>
+                              <Form.Label>Duration(HH:MM)</Form.Label>
                               <Form.Control value={AssignmentDuration} onChange={(e) => setAssignmentDuration(e.target.value)} type="text" placeholder="00:00" />
                             </Form.Group>
 
@@ -1551,19 +2098,19 @@ console.log(item)
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Upload Video</Form.Label>
-                                <Form.Control onChange={(e) => {
+                                <Form.Control  accept="video/*" onChange={(e) => {
                                   setAssignmentVideo(e.target.files[0])
                                 }} type="file" />
                               </Form.Group>
 
                               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Downloadable Resourses</Form.Label>
-                                <Form.Control  onChange={(e) => setAssignmentDResourses(e.target.files[0])} type="file" multiple />
+                                <Form.Control  onChange={(e) => setAssignmentDResourses(e.target.files[0])} type="file"  />
                               </Form.Group>
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                               <Form.Label>External Link</Form.Label>
-                              <Form.Control value={AssignmentExLink} onChange={(e) => setAssignmentExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                              <Form.Control value={AssignmentExLink} onChange={(e) => setAssignmentExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                             </Form.Group>
                           </Form>
                           </Tab>
@@ -1585,7 +2132,7 @@ console.log(item)
 
                           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>External Link</Form.Label>
-                          <Form.Control value={AssignmentQuestionLink} onChange={(e) => setAssignmentQuestionLink(e.target.value)} type="text" placeholder="https://example.com" />
+                          <Form.Control value={AssignmentQuestionLink} onChange={(e) => setAssignmentQuestionLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                           </Form.Group>
                           </Form>
 
@@ -1600,7 +2147,7 @@ console.log(item)
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Upload Video</Form.Label>
-                                <Form.Control  onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
+                                <Form.Control  accept="video/*" onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
                               </Form.Group>
 
                           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -1611,7 +2158,7 @@ console.log(item)
 
                           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>External Link</Form.Label>
-                          <Form.Control value={AssignmentSolutionsExLink} onChange={(e) => setAssignmentSolutionsExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                          <Form.Control value={AssignmentSolutionsExLink} onChange={(e) => setAssignmentSolutionsExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                           </Form.Group>
 
                           <Button onClick={() => setshowAssignmentInput(null)} variant="outlined">Cancel</Button>
@@ -1624,35 +2171,68 @@ console.log(item)
                           </Form>
                           </Tab>
                           </Tabs>
+                          </div>
                   )}
 
-                  </AccordionDetails>
-                </Accordion>
+                </Card>)
                 )}
 
-                {/* Practice test */}
-                {item.type == "Practice Test" && 
-                 (
-                  // Assignment
-                <Accordion key={index} className="my-3">
-                  <AccordionSummary
-                    className="accordian-header d-flex justify-content-between align-items-center"
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      <CheckCircleIcon fontSize="small" /> Practice Test {index + 1}:{" "}
-                      <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handlePracticeTestDelete(item)} />
-                    </Typography>
 
-                    {showContentAdd == index ? (
+                {/* Practice test */}
+                {item.type == "Practice Test" &&  (
+                showEditPraticeTestInput == index + i ? (
+                  <div className="d-flex">
+                  <Form.Control 
+                    className="mx-1"
+                    value={updatePraticeTestName} 
+                    onChange={(e) => setupdatePraticeTestName(e.target.value)} 
+                    type="text" 
+                    placeholder="Pratice test Name" 
+                  />
+
+                  <Button onClick={(e) => {
+                      if(showEditPraticeTestInput == index + i){
+                        setshowEditPraticeTestInput(null)
+                        setupdatePraticeTestName("")
+                      }else{
+                        setshowEditPraticeTestInput(index + i)
+                        setupdatePraticeTestName(item.title)
+                      }
+                        
+                  }} className="mx-1" variant="outlined">Cancel</Button>
+                  <Button onClick={(e) => {
+                    handleUpdatePraticeTestName(item,section)
+                  }}  className="mx-1" variant="contained">Save</Button>
+                  </div>
+                ) :
+                (<Card key={index + i} className="my-3">
+                <div className="d-flex justify-content-between align-items-center p-2">
+                  <span>
+                    <Typography>
+                      <CheckCircleIcon fontSize="small" />{i + 1}. Practice Test:{" "}
+                      <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
+                      <span className="mx-5">
+                          <EditIcon onClick={(e) => {
+                              if(showEditPraticeTestInput == index + i){
+                                setshowEditPraticeTestInput(null)
+                                setupdatePraticeTestName("")
+                              }else{
+                                setshowEditPraticeTestInput(index + i)
+                                setupdatePraticeTestName(item.title)
+                              }
+                                
+                            }} />
+                      <DeleteIcon onClick={() => handlePracticeTestDelete(item)} />
+                        </span>
+                    </Typography>
+                    </span>
+                    <span>
+                    {showContentAdd == index + i ? (
                       <Button
                         onClick={() => {
                           setshowDescRes(true)
                           setshowMain(null)
-                          console.log(index)
+                          console.log(index + i)
                           setshowContentAdd(null)
                           setcurriculumvisiblitymc("")
                           // handleContentshow()
@@ -1666,8 +2246,8 @@ console.log(item)
                     ) : (
                       <Button
                         onClick={() => {
-                          setshowMain(showMain == index ? null : index)
-                          setshowContentAdd(showContentAdd == index ? null : index)
+                          setshowMain(showMain == index + i ? null : index + i)
+                          setshowContentAdd(showContentAdd == index + i ? null : index + i)
 
                           console.log(item)
                           setmainSectionID(section.courseSection.sectionId)
@@ -1695,12 +2275,10 @@ console.log(item)
                         <CreateIcon /> Edit
                       </Button>
                     )}
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-
-                  {showMain == index && (
-
+                 </span>
+                 </div>
+                  {showMain == index + i && (
+                      <div className="p-3">
                       <Tabs
                       defaultActiveKey="practice"
                       id="uncontrolled-tab-example"
@@ -1736,7 +2314,7 @@ console.log(item)
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>External Link</Form.Label>
-                          <Form.Control value={PracticeTestExLink} onChange={(e) => setPracticeTestExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                          <Form.Control value={PracticeTestExLink} onChange={(e) => setPracticeTestExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                         </Form.Group>
                       </Form>
                       </Tab>
@@ -1752,7 +2330,7 @@ console.log(item)
 
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>External Link</Form.Label>
-                      <Form.Control value={PracticeTestQuestionExLink} onChange={(e) => setPracticeTestQuestionExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                      <Form.Control value={PracticeTestQuestionExLink} onChange={(e) => setPracticeTestQuestionExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                       </Form.Group>
                       </Form>
 
@@ -1767,7 +2345,7 @@ console.log(item)
 
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>External Link</Form.Label>
-                      <Form.Control value={PraticeTestSolutionsExLink} onChange={(e) => setPraticeTestSolutionsExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                      <Form.Control value={PraticeTestSolutionsExLink} onChange={(e) => setPraticeTestSolutionsExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                       </Form.Group>
 
                       <Button onClick={() => setshowPracticeTestInput(null)} className="mx-1"  variant="outlined">Cancel</Button>
@@ -1780,185 +2358,209 @@ console.log(item)
                       </Form>
                       </Tab>
                       </Tabs>
-
-                        
+                      </div>   
                   )}
-
-                  </AccordionDetails>
-                </Accordion>
+                </Card>)
                 )}
 
 
                 {/* Coding Exercise */}
-                {item.type == "Coding Exercise" && 
-                 (
-                  // Assignment
-                <Accordion key={index} className="my-3">
-                  <AccordionSummary
-                    className="accordian-header d-flex justify-content-between align-items-center"
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      <CheckCircleIcon fontSize="small" /> Coding Exercise {index + 1}:{" "}
-                      <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
-                      <DeleteIcon onClick={() => handleCodingExercisesDelete(item)} />
-                    </Typography>
+                {item.type == "Coding Exercise" && (
 
-                    {showContentAdd == index ? (
-                      <Button
-                        onClick={() => {
-                          setshowDescRes(true)
-                          setshowMain(null)
-                          console.log(index)
-                          setshowContentAdd(null)
-                          setcurriculumvisiblitymc("")
-                          // handleContentshow()
-                        }}
-                        className="mx-2"
-                        size="small"
-                        variant="contained"
-                      >
-                        <CloseIcon /> Cancel
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => {
-                          setshowMain(showMain == index ? null : index)
-                          setshowContentAdd(showContentAdd == index ? null : index)
+                    showEditCodingExerciseInput == index + i ? (
+                      <div className="d-flex">
+                      <Form.Control 
+                        className="mx-1"
+                        value={updateCodingExerciseName} 
+                        onChange={(e) => setupdateCodingExerciseName(e.target.value)} 
+                        type="text" 
+                        placeholder="Coding Excercise Name" 
+                      />
 
-                          console.log(item)
-                          setmainSectionID(section.courseSection.sectionId)
+                      <Button onClick={(e) => {
+                          if(showEditCodingExerciseInput == index + i){
+                            setshowEditCodingExerciseInput(null)
+                            setupdateCodingExerciseName("")
+                          }else{
+                            setshowEditCodingExerciseInput(index + i)
+                            setupdateCodingExerciseName(item.title)
+                          }
+                            
+                      }} className="mx-1" variant="outlined">Cancel</Button>
+                      <Button onClick={(e) => {
+                        handleUpdateExerciseName(item,section)
+                      }}  className="mx-1" variant="contained">Save</Button>
+                      </div>
+                    ): 
+                    (<Card key={index + i} className="my-3">
+                    <div className="d-flex justify-content-between align-items-center p-2">
+                      <span>
+                        <Typography>
+                          <CheckCircleIcon fontSize="small" />{i + 1}. Coding Exercise:{" "}
+                          <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
+                          <span className="mx-5">
+                              <EditIcon onClick={(e) => {
+                                  if(showEditCodingExerciseInput == index + i){
+                                    setshowEditCodingExerciseInput(null)
+                                    setupdateCodingExerciseName("")
+                                  }else{
+                                    setshowEditCodingExerciseInput(index + i)
+                                    setupdateCodingExerciseName(item.title)
+                                  }
+                                    
+                                }} />
+                          <DeleteIcon onClick={() => handleCodingExercisesDelete(item)} />
+                          </span>
+                        </Typography>
+                      </span>
+                      <span>
+                        {showContentAdd == index + i ? (
+                          <Button
+                            onClick={() => {
+                              setshowDescRes(true)
+                              setshowMain(null)
+                              console.log(index + i)
+                              setshowContentAdd(null)
+                              setcurriculumvisiblitymc("")
+                              // handleContentshow()
+                            }}
+                            className="mx-2"
+                            size="small"
+                            variant="contained"
+                          >
+                            <CloseIcon /> Cancel
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              setshowMain(showMain == index + i ? null : index + i)
+                              setshowContentAdd(showContentAdd == index + i ? null : index + i)
 
-                          // Fill Data
-                          setCodingExerciseCode(item.getCodingExercises[0].codingExerciseCode)
-                          setCodingExerciseTitle(item.title)
-                          setCodingExerciseDesc(item.description)
-                          setCodingExerciseInstructions(item.getCodingExercises[0].instructions)
-                          setCodingExerciseExLink(item.getCodingExercises[0].externalLink == null ? "" : item.getCodingExercises[0].externalLink)
+                              console.log(item)
+                              setmainSectionID(section.courseSection.sectionId)
 
-                          setCodingExerciseExternalLink(item.getCodingExercises[0].codingExternalLink)
-                          setCodingExercisesExLinkSolutions(item.getCodingExercises[0].solutionsExternalLink)
-                          
+                              // Fill Data
+                              setCodingExerciseCode(item.getCodingExercises[0].codingExerciseCode)
+                              setCodingExerciseTitle(item.title)
+                              setCodingExerciseDesc(item.description)
+                              setCodingExerciseInstructions(item.getCodingExercises[0].instructions)
+                              setCodingExerciseExLink(item.getCodingExercises[0].externalLink == null ? "" : item.getCodingExercises[0].externalLink)
+
+                              setCodingExerciseExternalLink(item.getCodingExercises[0].codingExternalLink)
+                              setCodingExercisesExLinkSolutions(item.getCodingExercises[0].solutionsExternalLink)
+                              
 
 
-                        }}
-                        className="mx-2"
-                        size="small"
-                        variant="outlined"
-                      >
-                        <CreateIcon /> Edit
-                      </Button>
+                            }}
+                            className="mx-2"
+                            size="small"
+                            variant="outlined"
+                          >
+                            <CreateIcon /> Edit
+                          </Button>
+                        )}
+                        </span>
+                      </div>
+
+                    {showMain == index + i && (
+                      <div className="p-3">
+                      <Tabs
+                      defaultActiveKey="coding"
+                      id="uncontrolled-tab-example"
+                      className="mb-3"
+                    >
+      
+                      <Tab eventKey="coding" title="Coding Exercise information and Instructions">
+                      <Form>
+      
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Title</Form.Label>
+                          <Form.Control value={CodingExerciseTitle} onChange={(e) => setCodingExerciseTitle(e.target.value)} type="text" placeholder="Coding Excercise" />
+                        </Form.Group>
+      
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                          <Form.Label>Description</Form.Label>
+                          <Form.Control value={CodingExerciseDesc} onChange={(e) => setCodingExerciseDesc(e.target.value)} as="textarea" rows={2} />
+                        </Form.Group>
+    
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                          <Form.Label>Instructions</Form.Label>
+                          <Form.Control value={CodingExerciseInstructions} onChange={(e) => setCodingExerciseInstructions(e.target.value)} as="textarea" rows={2} />
+                        </Form.Group>
+      
+      
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Upload Video</Form.Label>
+                          <Form.Control  accept="video/*" onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
+                        </Form.Group>
+    
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                          <Form.Label>Downloadable Resourses</Form.Label>
+                          <Form.Control onChange={(e) => setCodingExerciseDResourses(e.target.files[0])} type="file" multiple />
+                        </Form.Group>
+    
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>External Link</Form.Label>
+                          <Form.Control value={CodingExerciseExLink} onChange={(e) => setCodingExerciseExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
+                        </Form.Group>
+                      </Form>
+                      </Tab>
+      
+                      <Tab eventKey="coding-exercises" title="Coding exercises">
+      
+                      <Form>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>Upload coding exercises</Form.Label>
+                      <Form.Control  onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
+                    </Form.Group>
+      
+      
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>External Link</Form.Label>
+                      <Form.Control value={CodingExerciseExternalLink} onChange={(e) => setCodingExerciseExternalLink(e.target.value)} type="text" placeholder="https://externallink.com" />
+                    </Form.Group>
+    
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Upload Video</Form.Label>
+                          <Form.Control  accept="video/*" onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
+                        </Form.Group>
+                    </Form>
+      
+                      </Tab>
+                      <Tab eventKey="solutions" title="Solutions">
+                      <Form>
+                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>Upload Solutions</Form.Label>
+                      <Form.Control  onChange={(e) => setCodingExercisesSolutionsFile(e.target.files[0])} type="file" multiple />
+                    </Form.Group>
+      
+      
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>External Link</Form.Label>
+                      <Form.Control value={CodingExercisesExLinkSolutions} onChange={(e) => setCodingExercisesExLinkSolutions(e.target.value)} type="text" placeholder="https://externallink.com" />
+                    </Form.Group>
+    
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                          <Form.Label>Upload Video</Form.Label>
+                          <Form.Control  accept="video/*" onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
+                        </Form.Group>
+                    <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel Coding Exercise</Button>
+                    {btnLoadingCodingExcercise ? (
+                    <Button  className="mx-1" variant="contained">Saving..</Button>
+                    ) :(
+                    <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
                     )}
-                  </AccordionSummary>
+      
+                    </Form>
+                      </Tab>
+                    </Tabs>
+                    </div>     
+                    )}
 
-                  <AccordionDetails>
-
-                  {showMain == index && (
-                     <Tabs
-                     defaultActiveKey="coding"
-                     id="uncontrolled-tab-example"
-                     className="mb-3"
-                   >
-     
-                     <Tab eventKey="coding" title="Coding Exercise information and Instructions">
-                     <Form>
-     
-                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                         <Form.Label>Title</Form.Label>
-                         <Form.Control value={CodingExerciseTitle} onChange={(e) => setCodingExerciseTitle(e.target.value)} type="text" placeholder="Coding Excercise" />
-                       </Form.Group>
-     
-                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                         <Form.Label>Description</Form.Label>
-                         <Form.Control value={CodingExerciseDesc} onChange={(e) => setCodingExerciseDesc(e.target.value)} as="textarea" rows={2} />
-                       </Form.Group>
-   
-                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                         <Form.Label>Instructions</Form.Label>
-                         <Form.Control value={CodingExerciseInstructions} onChange={(e) => setCodingExerciseInstructions(e.target.value)} as="textarea" rows={2} />
-                       </Form.Group>
-     
-     
-                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                         <Form.Label>Upload Video</Form.Label>
-                         <Form.Control  onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
-                       </Form.Group>
-   
-                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                         <Form.Label>Downloadable Resourses</Form.Label>
-                         <Form.Control onChange={(e) => setCodingExerciseDResourses(e.target.files[0])} type="file" multiple />
-                       </Form.Group>
-   
-                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                         <Form.Label>External Link</Form.Label>
-                         <Form.Control value={CodingExerciseExLink} onChange={(e) => setCodingExerciseExLink(e.target.value)} type="text" placeholder="https://example.com" />
-                       </Form.Group>
-                     </Form>
-                     </Tab>
-     
-                     <Tab eventKey="coding-exercises" title="Coding exercises">
-     
-                     <Form>
-                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                     <Form.Label>Upload coding exercises</Form.Label>
-                     <Form.Control  onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
-                   </Form.Group>
-     
-     
-                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                     <Form.Label>External Link</Form.Label>
-                     <Form.Control value={CodingExerciseExternalLink} onChange={(e) => setCodingExerciseExternalLink(e.target.value)} type="text" placeholder="https://example.com" />
-                   </Form.Group>
-   
-                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                         <Form.Label>Upload Video</Form.Label>
-                         <Form.Control  onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
-                       </Form.Group>
-                   </Form>
-     
-                     </Tab>
-                     <Tab eventKey="solutions" title="Solutions">
-                     <Form>
-                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                     <Form.Label>Upload Solutions</Form.Label>
-                     <Form.Control  onChange={(e) => setCodingExercisesSolutionsFile(e.target.files[0])} type="file" multiple />
-                   </Form.Group>
-     
-     
-                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                     <Form.Label>External Link</Form.Label>
-                     <Form.Control value={CodingExercisesExLinkSolutions} onChange={(e) => setCodingExercisesExLinkSolutions(e.target.value)} type="text" placeholder="https://example.com" />
-                   </Form.Group>
-   
-                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                         <Form.Label>Upload Video</Form.Label>
-                         <Form.Control  onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
-                       </Form.Group>
-                   <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel</Button>
-                   {btnLoadingCodingExcercise ? (
-                   <Button  className="mx-1" variant="contained">Loading..</Button>
-                   ) :(
-                   <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
-                   )}
-     
-                   </Form>
-                     </Tab>
-                   </Tabs>
-                        
-                  )}
-
-                  </AccordionDetails>
-                </Accordion>
-                )}
+                </Card>))}
 
                 </>
               ))}
-
-
-          
-              
 
               </div>
 
@@ -2116,36 +2718,36 @@ console.log(item)
                 className="mb-3"
               >
 
-                <Tab eventKey="practice" title="Practice Test information and Instructions">
+                <Tab eventKey="practice" title="Practice Test information and instructions">
                 <Form>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label>Title <span className="text-danger">*</span></Form.Label>
                     <Form.Control value={PracticeTestTitle} onChange={(e) => setPracticeTestTitle(e.target.value)} type="text" placeholder="Practice Test Title" />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>Description<span className="text-danger">*</span></Form.Label>
                     <Form.Control value={PracticeTestDesc} onChange={(e) => setPracticeTestDesc(e.target.value)} as="textarea" rows={2} />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Duration</Form.Label>
+                    <Form.Label>Duration (HH:MM)<span className="text-danger">*</span></Form.Label>
                     <Form.Control value={PracticeTestDuration} onChange={(e) => setPracticeTestDuration(e.target.value)} type="text" placeholder="00:00" />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Minimum pass mark</Form.Label>
-                    <Form.Control value={PracticeTestMinPassMark} onChange={(e) => setPracticeTestMinPassMark(e.target.value)} type="number" />
+                    <Form.Label>Minimum pass mark (%)<span className="text-danger">*</span></Form.Label>
+                    <Form.Control value={PracticeTestMinPassMark} onChange={(e) => setPracticeTestMinPassMark(e.target.value)} type="text" />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Instructions</Form.Label>
+                    <Form.Label>Instructions<span className="text-danger">*</span></Form.Label>
                     <Form.Control value={PracticeTestInstructions} onChange={(e) => setPracticeTestInstructions(e.target.value)} as="textarea" rows={3} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>External Link</Form.Label>
-                    <Form.Control value={PracticeTestExLink} onChange={(e) => setPracticeTestExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                    <Form.Control value={PracticeTestExLink} onChange={(e) => setPracticeTestExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                   </Form.Group>
                 </Form>
                 </Tab>
@@ -2161,7 +2763,7 @@ console.log(item)
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>External Link</Form.Label>
-                <Form.Control value={PracticeTestQuestionExLink} onChange={(e) => setPracticeTestQuestionExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                <Form.Control value={PracticeTestQuestionExLink} onChange={(e) => setPracticeTestQuestionExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
               </Form.Group>
               </Form>
 
@@ -2176,12 +2778,12 @@ console.log(item)
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>External Link</Form.Label>
-                <Form.Control value={PraticeTestSolutionsExLink} onChange={(e) => setPraticeTestSolutionsExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                <Form.Control value={PraticeTestSolutionsExLink} onChange={(e) => setPraticeTestSolutionsExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
               </Form.Group>
 
-              <Button onClick={() => setshowPracticeTestInput(null)} className="mx-1"  variant="outlined">Cancel</Button>
+              <Button onClick={() => setshowPracticeTestInput(null)} className="mx-1"  variant="outlined">Cancel Practice Test</Button>
               {btnLoadingPracticeTest ? (
-                <Button variant="contained">Loading..</Button>
+                <Button variant="contained">Saving..</Button>
               ) :(
                 <Button onClick={handlePracticetestSave} variant="contained">Save Practice Test</Button>
               )}
@@ -2202,7 +2804,7 @@ console.log(item)
                   className="mb-3"
                 >
   
-                  <Tab eventKey="coding" title="Coding Exercise information and Instructions">
+                  <Tab eventKey="coding" title="Coding Exercise information and instructions">
                   <Form>
   
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -2223,7 +2825,7 @@ console.log(item)
   
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control  onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
+                      <Form.Control  accept="video/*" onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -2233,7 +2835,7 @@ console.log(item)
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>External Link</Form.Label>
-                      <Form.Control value={CodingExerciseExLink} onChange={(e) => setCodingExerciseExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                      <Form.Control value={CodingExerciseExLink} onChange={(e) => setCodingExerciseExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                     </Form.Group>
                   </Form>
                   </Tab>
@@ -2242,19 +2844,19 @@ console.log(item)
   
                   <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label>Upload coding exercises</Form.Label>
+                  <Form.Label>Upload coding Exercises</Form.Label>
                   <Form.Control  onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
                 </Form.Group>
   
   
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>External Link</Form.Label>
-                  <Form.Control value={CodingExerciseExternalLink} onChange={(e) => setCodingExerciseExternalLink(e.target.value)} type="text" placeholder="https://example.com" />
+                  <Form.Control value={CodingExerciseExternalLink} onChange={(e) => setCodingExerciseExternalLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control  onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
+                      <Form.Control  accept="video/*" onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
                     </Form.Group>
                 </Form>
   
@@ -2262,23 +2864,23 @@ console.log(item)
                   <Tab eventKey="solutions" title="Solutions">
                   <Form>
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label>Upload Solutions</Form.Label>
+                  <Form.Label>Upload solutions</Form.Label>
                   <Form.Control  onChange={(e) => setCodingExercisesSolutionsFile(e.target.files[0])} type="file" multiple />
                 </Form.Group>
   
   
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>External Link</Form.Label>
-                  <Form.Control value={CodingExercisesExLinkSolutions} onChange={(e) => setCodingExercisesExLinkSolutions(e.target.value)} type="text" placeholder="https://example.com" />
+                  <Form.Control value={CodingExercisesExLinkSolutions} onChange={(e) => setCodingExercisesExLinkSolutions(e.target.value)} type="text" placeholder="https://externallink.com" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control  onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
+                      <Form.Control  accept="video/*" onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
                     </Form.Group>
-                <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel</Button>
+                <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel Coding Exercise</Button>
                 {btnLoadingCodingExcercise ? (
-                <Button  className="mx-1" variant="contained">Loading..</Button>
+                <Button  className="mx-1" variant="contained">Saving..</Button>
                 ) :(
                 <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
                 )}
@@ -2297,33 +2899,33 @@ console.log(item)
                 className="mb-3"
               >
 
-                <Tab eventKey="assignment" title="Assignment information and Instructions">
+                <Tab eventKey="assignment" title="Assignment information and instructions">
                 <Form>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Title</Form.Label>
+                    <Form.Label>Title <span className="text-danger">*</span></Form.Label>
                     <Form.Control value={AssignmentTitle} onChange={(e) => setAssignmentTitle(e.target.value)} type="text" placeholder="Assignment Title" />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Description</Form.Label>
+                    <Form.Label>Description <span className="text-danger">*</span></Form.Label>
                     <Form.Control value={AssignmentDesc} onChange={(e) => setAssignmentDesc(e.target.value)}  as="textarea" rows={2} />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Duration</Form.Label>
+                    <Form.Label>Duration (HH:MM)<span className="text-danger">*</span></Form.Label>
                     <Form.Control value={AssignmentDuration} onChange={(e) => setAssignmentDuration(e.target.value)} type="text" placeholder="00:00" />
                   </Form.Group>
 
               
                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Instructions</Form.Label>
+                    <Form.Label>Instructions <span className="text-danger">*</span></Form.Label>
                     <Form.Control value={AssignmentInstructors} onChange={(e) => setAssignmentInstructors(e.target.value)} as="textarea" rows={3} />
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control onChange={(e) => {
+                      <Form.Control  accept="video/*" onChange={(e) => {
                         setAssignmentVideo(e.target.files[0])
                       }} type="file" />
                     </Form.Group>
@@ -2335,7 +2937,7 @@ console.log(item)
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>External Link</Form.Label>
-                    <Form.Control value={AssignmentExLink} onChange={(e) => setAssignmentExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                    <Form.Control value={AssignmentExLink} onChange={(e) => setAssignmentExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
                   </Form.Group>
                 </Form>
                 </Tab>
@@ -2350,14 +2952,14 @@ console.log(item)
                   </Form.Group>
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Upload Question</Form.Label>
+                <Form.Label>Upload Questions</Form.Label>
                 <Form.Control  onChange={(e) => setAssignmentQuestionFile(e.target.files[0])} type="file" />
               </Form.Group>
 
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>External Link</Form.Label>
-                <Form.Control value={AssignmentQuestionLink} onChange={(e) => setAssignmentQuestionLink(e.target.value)} type="text" placeholder="https://example.com" />
+                <Form.Control value={AssignmentQuestionLink} onChange={(e) => setAssignmentQuestionLink(e.target.value)} type="text" placeholder="https://externallink.com" />
               </Form.Group>
               </Form>
 
@@ -2372,7 +2974,7 @@ console.log(item)
 
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Video</Form.Label>
-                      <Form.Control  onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
+                      <Form.Control   accept="video/*" onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
                     </Form.Group>
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -2383,12 +2985,12 @@ console.log(item)
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <Form.Label>External Link</Form.Label>
-                <Form.Control value={AssignmentSolutionsExLink} onChange={(e) => setAssignmentSolutionsExLink(e.target.value)} type="text" placeholder="https://example.com" />
+                <Form.Control value={AssignmentSolutionsExLink} onChange={(e) => setAssignmentSolutionsExLink(e.target.value)} type="text" placeholder="https://externallink.com" />
               </Form.Group>
 
-              <Button onClick={() => setshowAssignmentInput(null)} variant="outlined">Cancel</Button>
+              <Button onClick={() => setshowAssignmentInput(null)} variant="outlined">Cancel Assignment</Button>
               {btnLoadingAssignment ? (
-                <Button  className="mx-1" variant="contained">Loading..</Button>
+                <Button  className="mx-1" variant="contained">Saving..</Button>
               ) : (
               <Button onClick={handleAssignmentSave} className="mx-1" variant="contained">Save Assignment</Button>
               )}
@@ -2412,15 +3014,26 @@ console.log(item)
 
         <div className="m-2">
 
+          {/*  */}
           {showSectionInput && (
             <>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Add Section</Form.Label>
               <Form.Control value={section} onChange={(e) => setsection(e.target.value)} type="text" placeholder="Type Section Name" />
             </Form.Group>
-            <Button onClick={handleSubmitSection} className="mx-1" variant="outlined">
-                ADD
+
+            {btn_section_loading ? (
+              <Button  className="mx-1 p-2" variant="outlined">
+              <Spinner size="sm" animation="border" variant="danger" />
               </Button>
+            ) : (
+              <Button onClick={handleSubmitSection} className="mx-1" variant="outlined">
+                  ADD
+                </Button>
+            )}
+
+             
+
               <Button onClick={() => {
                 showAddSectionInput()
                 setsection("")

@@ -4014,7 +4014,8 @@ const Pricing = ({code}) => {
         {Paid_Type == 2 &&  (
           <div className="container">
           <Alert severity="warning" color="warning">
-            To Procced You Need To Fill The Forms <a href="/profile">Instructor Terms</a> And The <a href="/profile">Payout Details</a>
+             
+             To procced you need to complete the paid <a href="/profile">instructor details.</a>
           </Alert>
           </div>
         )}

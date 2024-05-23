@@ -6,6 +6,8 @@ import {GetInstructorProfileDetails, UpdateProfileDetails} from '../../../api'
 import Spinner from 'react-bootstrap/Spinner';
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import { FILE_PATH } from '../../../commonFunctions/FilePaths';
+import Radio from '@mui/material/Radio';
+
 
 import Alert from 'react-bootstrap/Alert';
 import InfoIcon from '@mui/icons-material/Info';
@@ -15,6 +17,8 @@ import Typography from '@mui/material/Typography';
 import { AddWalletDetails, GetPaypalProfileDetails, GetWalletDetails } from '../../../api';
 import Form from 'react-bootstrap/Form';
 import Checkbox from '@mui/material/Checkbox';
+
+
 
 const labelCheckBox = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -34,6 +38,14 @@ const MyProfile = () => {
     const [uploadImage, setuploadImage] = useState("")
 
     const [btn_loading, setbtn_loading] = useState(false)
+
+    // ============= RADIO BUTTON / Payment Details ===========
+    const [selectedValue, setSelectedValue] = React.useState('paypal');
+    const [btn_loading_payment_details, setbtn_loading_payment_details] = useState(false)
+
+    const handleChange = (event) => {
+      setSelectedValue(event.target.value);
+    };
 
     useEffect(() => {
         GetInstructorProfileDetails(setfirst_Name,
@@ -112,55 +124,50 @@ const MyProfile = () => {
     const [payoneerEmail, setpayoneerEmail] = useState("")
     const [payoneerUsername, setpayoneerUsername] = useState("")
   
-    const handleConnectPaypal = () =>{
-      console.log("Paypal")
-  
-      if(paypalEmail == ""){
-        ErrorAlert("Empty Field","Please Fill Email")
-        return
-      }
-  
-      if(paypalUsername == ""){
-        ErrorAlert("Empty Field","Please Fill Username")
-        return
-      }
-  
-      AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername)
-  
-      console.log(paypalEmail)
-      console.log(paypalUsername)
-    }
-  
-    const handleConnectPayoneer = () =>{
-      console.log("Payoneer")
-  
-      if(payoneerEmail == ""){
-        ErrorAlert("Empty Field","Please Fill Email")
-        return
-      }
-  
-      if(payoneerUsername == ""){
-        ErrorAlert("Empty Field","Please Fill Username")
-        return
-      }
-  
-      AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername)
-  
-      console.log(payoneerEmail)
-      console.log(payoneerUsername)
-  
-    }
+
   
     useEffect(() => {
       GetWalletDetails(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername)
     }, [])
     
+
+
+    const handleConnectWallet = () =>{
+      if(selectedValue == "paypal"){
+
+        if(paypalEmail == ""){
+          ErrorAlert("Empty Field","Please Fill Email")
+          return
+        }
     
+        if(paypalUsername == ""){
+          ErrorAlert("Empty Field","Please Fill Username")
+          return
+        }
+
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details)
+
+      }else{
+
+        if(payoneerEmail == ""){
+          ErrorAlert("Empty Field","Please Fill Email")
+          return
+        }
+    
+        if(payoneerUsername == ""){
+          ErrorAlert("Empty Field","Please Fill Username")
+          return
+        }
+
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details)
+
+      }
+    }
   
 
   return (
     <div className='container mb-5'>
-        <h3>Profile & settings</h3>
+        <h3>Instructor Details</h3>
 
         <Tabs
         defaultActiveKey="up"
@@ -295,11 +302,11 @@ const MyProfile = () => {
                     <InfoIcon className='mr-2' />
                     <p className='m-0 p-0'><b>Select your payout method below.</b></p>
                 </div>
-                <br />
+                {/* <br />
                 <div>
                     <p className='m-0 p-0'>We will have radio buttons for PayPal and Pioneer for instructor to select.</p>
                     <p className='m-0 p-0'>Once an option is selected we will have 2 fields to fill out like below:</p>
-                </div>
+                </div> */}
             </Alert>
 
             <Card>
@@ -309,30 +316,34 @@ const MyProfile = () => {
 
                 <div className='col-md-12 my-3'>
                 <div className='d-flex justify-content-between'>
-                        <div>
+                    <div>
+                        <Radio
+                          checked={selectedValue === 'paypal'}
+                          onChange={handleChange}
+                          value="paypal"
+                          name="radio-buttons"
+                          inputProps={{ 'aria-label': 'A' }}
+                        />
                             <img width={100} src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png' />
                         </div>
 
                         <div className='row'>
-                        <div className='col-md-5'>
+                        <div className='col-md-6'>
                         <Form>
                             <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Control value={paypalEmail} onChange={(e) => setpaypalEmail(e.target.value)}  type="email" placeholder="Enter Paypal Email" />
+                            <Form.Control disabled={selectedValue != 'paypal'} value={paypalEmail} onChange={(e) => setpaypalEmail(e.target.value)}  type="email" placeholder="Enter Paypal Email" />
                             </Form.Group>
                         </Form>
                         </div>
-                        <div className='col-md-5'>
+                        <div className='col-md-6'>
                         <Form>
                             <Form.Group  controlId="exampleForm.ControlInput1">
-                            <Form.Control value={paypalUsername} onChange={(e) => setpaypalUsername(e.target.value)}  type="text" placeholder="Enter Paypal Username" />
+                            <Form.Control disabled={selectedValue != 'paypal'} value={paypalUsername} onChange={(e) => setpaypalUsername(e.target.value)}  type="text" placeholder="Enter Paypal Username" />
                             </Form.Group>
                         </Form>
 
                         </div>
-                        <div className='col-md-2'>
-                        <button onClick={handleConnectPaypal} type="button" className="btn btn-secondary">
-                        Connect</button>
-                        </div>
+                   
 
                         </div>
 
@@ -343,34 +354,46 @@ const MyProfile = () => {
                 <div className='col-md-12 my-3'>
                 <div className='d-flex justify-content-between'>
                         <div>
+                        <Radio
+                          checked={selectedValue === 'payoneer'}
+                          onChange={handleChange}
+                          value="payoneer"
+                          name="radio-buttons"
+                          inputProps={{ 'aria-label': 'B' }}
+                        />
                             <img width={100} src='/images/payoneer.png' />
                         </div>
 
                         <div className='row'>
-                        <div className='col-md-5'>
+                        <div className='col-md-6'>
                         <Form>
                             <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Control value={payoneerEmail} onChange={(e) => setpayoneerEmail(e.target.value)} type="email" placeholder="Enter Payoneer Email" />
+                            <Form.Control disabled={selectedValue != 'payoneer'} value={payoneerEmail} onChange={(e) => setpayoneerEmail(e.target.value)} type="email" placeholder="Enter Payoneer Email" />
                             </Form.Group>
                         </Form>
                         </div>
-                        <div className='col-md-5'>
+                        <div className='col-md-6'>
                         <Form>
                             <Form.Group  controlId="exampleForm.ControlInput1">
-                            <Form.Control value={payoneerUsername} onChange={(e) => setpayoneerUsername(e.target.value)}  type="text" placeholder="Enter Payoneer Email" />
+                            <Form.Control disabled={selectedValue != 'payoneer'} value={payoneerUsername} onChange={(e) => setpayoneerUsername(e.target.value)}  type="text" placeholder="Enter Payoneer Email" />
                             </Form.Group>
                         </Form>
 
                         </div>
-                        <div className='col-md-2'>
-                        <button onClick={handleConnectPayoneer} type="button" className="btn btn-secondary">
-                        Connect</button>
-                        </div>
+                    
 
                         </div>
 
                         </div>
 
+                </div>
+
+                <div className='col-md-12 my-3'>
+                  {btn_loading_payment_details ? (
+                    <Button variant="contained"><Spinner  size="sm" animation="border" variant="light" /></Button>
+                  ) : (
+                    <Button onClick={handleConnectWallet} variant="contained">Save</Button>
+                  )}
                 </div>
             </div>
 

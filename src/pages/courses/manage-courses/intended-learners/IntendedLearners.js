@@ -7,7 +7,7 @@ import { Form, Input } from 'antd';
 import Card from '@mui/material/Card';
 import ButtonMaterial from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import { GetIntendedLeaners } from '../../../../api';
+import { DeleteRequirements, DeleteStudentLearns, DeleteWhos, GetIntendedLeaners } from '../../../../api';
 import { AddIntendedLeaners } from '../../../../api';
 import Typography from '@mui/material/Typography';
 import ErrorAlert from '../../../../commonFunctions/Alerts/ErrorAlert';
@@ -77,10 +77,12 @@ const handleInputChangeStudentLearnExtra = (index, value) => {
 };
 
 // Remove Student Array Delete
-const handleDeleteStudentLearnExtra = (key) => {
-  console.log(studentsLearn)
-  console.log(studentLearnExtra)
-  console.log(key)
+const handleDeleteStudentLearnExtra = (item) => {
+  console.log(item)
+  console.log(code)
+
+  DeleteStudentLearns(code,item,setstudentsLearn,setrequirements,setwhos)
+
 }
 
 // Remove Data to Array
@@ -134,10 +136,10 @@ const handleRemoveInputRequirementsExtra = (index) => {
 
 
 // Delete Requirements extra
-const handleDeleteRequirementsExtra = (key) =>{
-  console.log(requirements)
-  console.log(requirementsExtra)
-  console.log(key)
+const handleDeleteRequirementsExtra = (item) =>{
+
+  // console.log(item)
+  DeleteRequirements(code,item,setstudentsLearn,setrequirements,setwhos)
 
 
 }
@@ -161,12 +163,8 @@ const handleInputChangeWhosExtra = (index, value) => {
 
 };
 
-const handleDeleteWhosExtra = (key) =>{
-  console.log(whos)
-  console.log(whosExtra)
-  console.log(key)
-
-
+const handleDeleteWhosExtra = (item) =>{
+  DeleteWhos(code,item,setstudentsLearn,setrequirements,setwhos)
 }
 
 // Remove Data to Array - WHOS
@@ -268,7 +266,7 @@ const saveIntendedLeaners = (e) =>{
     who:[...whos,...whosExtra]
   }
 
-  AddIntendedLeaners(item,code,setloadingBtn)
+  AddIntendedLeaners(item,code,setloadingBtn,setstudentsLearn,setrequirements,setwhos)
 
   console.log(studentsLearn)
   console.log(requirements)
@@ -286,7 +284,7 @@ const saveIntendedLeaners = (e) =>{
     <div className='d-flex justify-content-between'>
 
       <Typography className='my-2' variant="h4" >
-          Course Details
+          Target Audience
       </Typography>
       {loadingBtn ? <ButtonMaterial variant="contained"><ButtonSpinner /></ButtonMaterial> : <ButtonMaterial onClick={saveIntendedLeaners} variant="contained"><AddIcon /> SAVE</ButtonMaterial> }
       
@@ -350,7 +348,7 @@ const saveIntendedLeaners = (e) =>{
                         confirmButtonText: "Yes, delete it!"
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          handleDeleteStudentLearnExtra(key + 3)
+                          handleDeleteStudentLearnExtra(studentsLearn[key + 3])
                         }
                       });
                       }} className="input-group-text btn btn-danger text-white" id="res-3"> 
@@ -420,7 +418,7 @@ const saveIntendedLeaners = (e) =>{
     <div className='section-2'>
     <div className='mt-4 mb-2'>
     <Typography variant="h6" >What are the requirements/prerequisites for this course?</Typography>
-      <p>Give details of any required experience, skills, equipment/tools that students should have prior to taking this course.Enter at least 3 requirements/prerequisites.</p>
+      <p>Give details of any required experience, skills, equipment/tools that students should have prior to taking this course. Enter at least 3 requirements/prerequisites.</p>
       </div>
 
     </div>
@@ -467,7 +465,7 @@ const saveIntendedLeaners = (e) =>{
                             }).then((result) => {
                               if (result.isConfirmed) {
                             
-                                handleDeleteRequirementsExtra(key + 3)
+                                handleDeleteRequirementsExtra(requirements[key + 3])
                               }
                             });
                           }}
@@ -572,7 +570,7 @@ const saveIntendedLeaners = (e) =>{
                     confirmButtonText: "Yes, delete it!"
                   }).then((result) => {
                     if (result.isConfirmed) {
-                      handleDeleteWhosExtra(key + 1)
+                      handleDeleteWhosExtra(whos[key + 1])
                     }
                   });
                   }}

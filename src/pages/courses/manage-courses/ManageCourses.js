@@ -373,7 +373,7 @@ const ManageCourses = () => {
           <ListItemIcon>
             <LocalLibraryIcon />
           </ListItemIcon>
-          <ListItemText primary="Course Details" />
+          <ListItemText primary="Target Audience" />
 
           {IntendedLearnersCheck ? <CheckCircleOutlineIcon /> : <RadioButtonUncheckedIcon />}
 

@@ -241,7 +241,7 @@ const handleFileChange = (event) => {
 
       <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
-          Course Landing Page
+          Course landing page
         </Typography>
 
         {loading_btn ? <ButtonMaterial variant="contained"><ButtonSpinner /></ButtonMaterial> : <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>}
@@ -252,12 +252,7 @@ const handleFileChange = (event) => {
         <hr />
 
         <p>
-          Your course landing page is crucial to your success on Udemy. If it’s
-          done right, it can also help you gain visibility in search engines
-          like Google. As you complete this section, think about creating a
-          compelling Course Landing Page that demonstrates why someone would
-          want to enroll in your course. Learn more about creating your course
-          landing page and course title standards.
+          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         </p>
 
       
@@ -381,10 +376,16 @@ const handleFileChange = (event) => {
               <div>
                 <p>
                 Upload your course image here. 
+                </p>
+                <p>
                 Image file format: The file format must be .bmp, .gif, .jpg, .jpeg, or .png
-                Minimum required dimensions: 750 x 422 pixels
+                </p>
+                <p>
+                Minimum required dimensions: 750 x 422 pixels</p>
+                <p>
                 Maximum required dimensions: 6000 x 6000 pixels.
                 </p>
+                
 
                 <div className="mb-3">
                   <input className="form-control" type="file" accept="image/*" onChange={handleFileChange} />
@@ -408,10 +409,12 @@ const handleFileChange = (event) => {
             <div className="col-md-7 d-flex align-items-center">
               <div>
                 <p>
-                Upload your promotional video here. 
+                Upload your promotional video here. </p>
+                <p>
                 The promotional video will be a creative solution to capture potential students’ attention and show what your course has in store. Videos are one of the most impactful and quickest forms of communication to generate results. Focus on sending one clear and persuasive message to your audience.
-
                 </p>
+
+                
                 <div className="mb-3">
                   <input className="form-control" type="file" accept="video/*" onChange={handleVideo} />
                 </div>

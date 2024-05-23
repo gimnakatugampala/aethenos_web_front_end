@@ -360,7 +360,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
- export const AddIntendedLeaners = async(item,code,setloadingBtn) =>{
+ export const AddIntendedLeaners = async(item,code,setloadingBtn,setstudentsLearn,setrequirements,setwhos) =>{
 
   setloadingBtn(true)
 
@@ -387,7 +387,13 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
       if(result.variable == "200"){
         SuccessAlert("Saved!",result.message)
         setloadingBtn(false)
+        
         UpdateCourseProgress(code)
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500);
+
+        // window.location.reload()
       }else{
         ErrorAlert("Error!",result.message)
         setloadingBtn(false)
@@ -397,6 +403,110 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
  }
 
+ export const DeleteStudentLearns = async(code,item,setstudentsLearn,setrequirements,setwhos) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+  
+  const formdata = new FormData();
+  formdata.append("courseCode", `${code}`);
+  formdata.append("intendedLearner", `${item}`);
+  formdata.append("intendedLearnerTypeId", "1");
+  
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteIntendedLearners", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      Unauthorized(result.status,`courses/manage/${code}/#intended-learners`)
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Deleted",result.message)
+        GetIntendedLeaners(code,setstudentsLearn,setrequirements,setwhos)
+        return
+      }
+
+
+    })
+    .catch((error) => console.error(error));
+
+ }
+
+ export const DeleteRequirements = async(code,item,setstudentsLearn,setrequirements,setwhos) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+  
+  const formdata = new FormData();
+  formdata.append("courseCode", `${code}`);
+  formdata.append("intendedLearner", `${item}`);
+  formdata.append("intendedLearnerTypeId", "2");
+  
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteIntendedLearners", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      Unauthorized(result.status,`courses/manage/${code}/#intended-learners`)
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Deleted",result.message)
+        GetIntendedLeaners(code,setstudentsLearn,setrequirements,setwhos)
+        return
+      }
+
+
+    })
+    .catch((error) => console.error(error));
+
+ }
+
+ export const DeleteWhos = async(code,item,setstudentsLearn,setrequirements,setwhos) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+  
+  const formdata = new FormData();
+  formdata.append("courseCode", `${code}`);
+  formdata.append("intendedLearner", `${item}`);
+  formdata.append("intendedLearnerTypeId", "3");
+  
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteIntendedLearners", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      Unauthorized(result.status,`courses/manage/${code}/#intended-learners`)
+      console.log(result)
+
+      if(result.variable == "200"){
+        SuccessAlert("Deleted",result.message)
+        GetIntendedLeaners(code,setstudentsLearn,setrequirements,setwhos)
+        return
+      }
+
+
+    })
+    .catch((error) => console.error(error));
+
+ }
 
  export const AddCourseMessages = async(code,congratsmsg,welcomemsg,setloading_btn) =>{
   var myHeaders = new Headers();
@@ -1717,7 +1827,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
  }
  
- export const AddCurriculumSection = async(code,section,setshowSectionInput,setsection,setsectionData) =>{
+ export const AddCurriculumSection = async(code,section,setshowSectionInput,setsection,setsectionData,setbtn_section_loading) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -1745,12 +1855,14 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
           UpdateCourseProgress(code)
           setshowSectionInput(false)
           setsection("")
+          setbtn_section_loading(false)
           GetCurriculum(code,setsectionData) 
           return
       }
 
       if(result.message == "Error"){
         ErrorAlert("Error",result.message)
+        setbtn_section_loading(false)
         return
       }
 
@@ -1793,6 +1905,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
         setshowCurriculumItem(null)
         setlecturetitle("")
         GetCurriculum(code,setsectionData)
+        UpdateCourseProgress(code)
         return
       }
 
@@ -1976,6 +2089,280 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
 
  }
+ export const UpdateSectionName = async(code,section,updateSectionName) =>{
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("courseCode", `${code}`);
+formdata.append("sectionId", `${section.sectionId}`);
+formdata.append("sectionName", `${updateSectionName}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateSectionName", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated",result.message)
+
+      setTimeout(() => {
+          window.location.reload()
+      }, 1500);
+
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+ }
+
+ export const UpdateLectureName = async(code,lecture,updateLectureName,section) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("courseSectionId", `${section.courseSection.sectionId}`);
+formdata.append("sectionCurriculumItemId", `${lecture.id}`);
+formdata.append("curriculumItemTypeId", "1");
+formdata.append("name", `${updateLectureName}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateCurriculumItemName", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated",result.message)
+
+      setTimeout(() => {
+          window.location.reload()
+      }, 1000);
+
+      return
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+ }
+
+ export const UpdateQuizName = async(code,quiz,updateQuizName,section) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("courseSectionId", `${section.courseSection.sectionId}`);
+formdata.append("sectionCurriculumItemId", `${quiz.id}`);
+formdata.append("curriculumItemTypeId", "2");
+formdata.append("name", `${updateQuizName}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateCurriculumItemName", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated",result.message)
+
+      setTimeout(() => {
+          window.location.reload()
+      }, 1000);
+
+      return
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+ }
+
+ export const UpdateAssignmentName = async(code,assignment,updateAssignmentName,section) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("courseSectionId", `${section.courseSection.sectionId}`);
+formdata.append("sectionCurriculumItemId", `${assignment.id}`);
+formdata.append("curriculumItemTypeId", "3");
+formdata.append("name", `${updateAssignmentName}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateCurriculumItemName", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated",result.message)
+
+      setTimeout(() => {
+          window.location.reload()
+      }, 1000);
+
+      return
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+ }
+
+ export const UpdateCodingExerciseName = async(code,codingExercise,updateCodingExerciseName,section) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("courseSectionId", `${section.courseSection.sectionId}`);
+formdata.append("sectionCurriculumItemId", `${codingExercise.id}`);
+formdata.append("curriculumItemTypeId", "4");
+formdata.append("name", `${updateCodingExerciseName}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateCurriculumItemName", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated",result.message)
+
+      setTimeout(() => {
+          window.location.reload()
+      }, 1000);
+
+      return
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+ }
+
+ export const UpdatePraticeTestName = async(code,pt,updatePraticeTestName,section) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("courseSectionId", `${section.courseSection.sectionId}`);
+formdata.append("sectionCurriculumItemId", `${pt.id}`);
+formdata.append("curriculumItemTypeId", "5");
+formdata.append("name", `${updatePraticeTestName}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateCurriculumItemName", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+
+    if(result.variable == "200"){
+      SuccessAlert("Updated",result.message)
+
+      setTimeout(() => {
+          window.location.reload()
+      }, 1000);
+
+      return
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+ }
+
+ export const DeleteResourcesFile = async(code,file) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteCurriculumItemFile/${file}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    console.log(result)
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+
+      setTimeout(() => {
+        window.location.reload()
+        
+      }, 1000);
+
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+ }
 
  export const AddCurriculumDescription = async(code,ID,curriculum_desc,setcurriculum_desc,setshowDescription,setsectionData) =>{
 
@@ -2003,7 +2390,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
       if(result.variable == "200"){
         SuccessAlert("Added",result.message)
         setshowDescription(null)
-        setcurriculum_desc("")
+        // setcurriculum_desc("")
         GetCurriculum(code,setsectionData)
         return
       }
@@ -2012,6 +2399,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .catch(error => console.log('error', error));
 
  }
+
+
 
  export const AddCurriculumDownloadable = async(code,ID,file,setshowResources,setsectionData) =>{
 
@@ -2293,7 +2682,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
     Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
 
     if(result.variable == "200"){
-      SuccessAlert("Added",result.message)
+      SuccessAlert("Saved",result.message)
       setcurriculumvisiblitymc("")
       setshowMain(null)
       GetCurriculum(code,setsectionData)
@@ -3910,7 +4299,9 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
 
 }
 
-export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername) =>{
+export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details) =>{
+
+  setbtn_loading_payment_details(true)
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -3936,6 +4327,7 @@ export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,p
 
       if(result.variable == "200"){
         SuccessAlert("Success",result.message)
+        setbtn_loading_payment_details(false)
         return
       }
 
