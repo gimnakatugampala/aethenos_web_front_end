@@ -111,11 +111,43 @@ const ManageCourses = () => {
   const handleShow = () => {
     setbtn_loading(true)
 
+    if(IntendedLearnersCheck == false){
+      ErrorAlert("Empty section","Please Complete Intended Learners")
+      setbtn_loading(false)
+      return
+    }
 
-    // Check Personal ID
+    if(SyllabusCheck == false){
+      ErrorAlert("Empty section","Please Complete Syllabus Section")
+      setbtn_loading(false)
+      return
+    }
+
+    if(CourseLandingPageCheck == false){
+      ErrorAlert("Empty section","Please Complete Course Landing Page Section")
+      setbtn_loading(false)
+      return
+    }
+
+    if(PricingCheck == false){
+      ErrorAlert("Empty section","Please Complete Pricing Section")
+      setbtn_loading(false)
+      return
+    }
+
+    if(CourseMessagesCheck == false){
+      ErrorAlert("Empty section","Please Complete Course Message Section")
+      setbtn_loading(false)
+      return
+    }
 
  
+    
 
+   
+
+
+    // Check Personal ID
     // If Not Verify
     if(checkInstructorVerification == 0){
       // PERSONA

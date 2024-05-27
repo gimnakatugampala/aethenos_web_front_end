@@ -28,7 +28,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteResourcesFile, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, VideoDelete} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, VideoDelete} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -696,6 +696,25 @@ const Curriculum = ({code}) => {
       });
 
       // console.log(item.getCodingExercises[0].codingExerciseCode)
+    }
+
+    const handleDeleteExternalResources = (link) =>{
+      console.log(link)
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          ExternalResoucesDelete(link.id)
+        }
+      });
+
     }
   
 
@@ -1661,7 +1680,7 @@ console.log(item)
                                                   .map((link, index) => (
                                                       <ListGroup.Item className="d-flex justify-content-between" key={index}>
                                                          <span><a  target="_blank" href={link.url}><LaunchIcon fontSize="10" />{link.title}</a></span> 
-                                                         <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                                         <span onClick={() => handleDeleteExternalResources(link)}><Button  className="p-0" variant="contained"><DeleteIcon /></Button></span>
                                                       </ListGroup.Item>
                                                   ))}
                                           </ListGroup>

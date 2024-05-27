@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from '@mui/material/Button';
-import {GetInstructorProfileDetails, UpdateProfileDetails} from '../../../api'
+import {GetCheckPricingStatus, GetInstructorProfileDetails, SubmitInstructorTerms, UpdateProfileDetails} from '../../../api'
 import Spinner from 'react-bootstrap/Spinner';
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import { FILE_PATH } from '../../../commonFunctions/FilePaths';
@@ -46,6 +46,21 @@ const MyProfile = () => {
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
     };
+
+    // ===================== CHECK INTSURTCOR TERMS ===============
+    const [InstructorTermsCheck, setInstructorTermsCheck] = useState(false)
+
+    const handleSubmitInstructorTerms = (e) =>{
+      if(InstructorTermsCheck == false){
+        ErrorAlert("Please Select","Please Accept Instructor Terms")
+        return
+      }
+
+      SubmitInstructorTerms()
+
+    }
+
+    
 
     useEffect(() => {
         GetInstructorProfileDetails(setfirst_Name,
@@ -127,7 +142,10 @@ const MyProfile = () => {
 
   
     useEffect(() => {
-      GetWalletDetails(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername)
+      GetWalletDetails(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername,setSelectedValue)
+
+      GetCheckPricingStatus(setInstructorTermsCheck)
+
     }, [])
     
 
@@ -281,9 +299,9 @@ const MyProfile = () => {
             <div className='col-md-6 text-center'>
             <p >When you are signing up to become an instructor on the Aethenos platform, you are required to agree to abide by the <a href='/instructor-terms'>Instructor Terms.</a></p>
             <p>It is important to read them as they cover details about the Aethenos platform that relevant to instructors such as payments, pricing, and your obligations as an instructor. </p>
-            <p><Checkbox {...labelCheckBox} size="small" /> I have read and agree to the Aethenos Instructor Terms.</p>
+            <p><Checkbox checked={InstructorTermsCheck} onChange={(e) => setInstructorTermsCheck(e.target.checked)} size="small" /> I have read and agree to the Aethenos Instructor Terms.</p>
 
-                <Button variant="contained">Save</Button>
+                <Button onClick={handleSubmitInstructorTerms} variant="contained">Save</Button>
             </div>
         </div>
 

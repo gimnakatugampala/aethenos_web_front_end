@@ -9,13 +9,14 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import { css } from "../../manage-courses/pricing/Pricing.css";
-import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing, SavePriceCountries , PricingConvertToFree} from "../../../../api";
+import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing, SavePriceCountries , PricingConvertToFree, GetCheckPricingAllStatus} from "../../../../api";
 
 import getSymbolFromCurrency from 'currency-symbol-map'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import formatNumber from "../../../../commonFunctions/NumberFormat";
 import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
+import formatNumInt from "../../../../commonFunctions/formatNumInt";
 
 
 
@@ -51,6 +52,8 @@ const Pricing = ({code}) => {
   const [PriceRangeMaxDefault, setPriceRangeMaxDefault] = useState("")
 
   const [GlobalTip, setGlobalTip] = useState("")
+
+  const [checkPricingStatus, setcheckPricingStatus] = useState(false)
 
  
   
@@ -316,6 +319,8 @@ const Pricing = ({code}) => {
       setSATip,
       setSAminValue
       )
+
+      GetCheckPricingAllStatus(setcheckPricingStatus)
  
   }, [code])
 
@@ -1811,14 +1816,14 @@ const Pricing = ({code}) => {
       console.log(JapanDisPercent)
       console.log(JapanListPrice)
 
-      setJapanNetPrice(parseFloat(JapanListPrice) - parseFloat(JapanListPrice) * parseFloat(JapanDisPercent == "" ? 0 : JapanDisPercent)/100)
+      setJapanNetPrice(parseInt(JapanListPrice) - parseInt(JapanListPrice) * parseInt(JapanDisPercent == "" ? 0 : JapanDisPercent)/100)
 
 
     }else if(value == '3'){
 
 
      
-      setJapanNetPrice(parseFloat(JapanListPrice) - parseFloat(JapanDisAmt == "" ? 0 : JapanDisAmt))
+      setJapanNetPrice(parseInt(JapanListPrice) - parseInt(JapanDisAmt == "" ? 0 : JapanDisAmt))
 
     }else{
 
@@ -1841,9 +1846,9 @@ const Pricing = ({code}) => {
         console.log(e.target.value)
         setJapanNetPrice(e.target.value)
       }else if(JapanDisType == '2'){
-        setJapanNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(JapanDisPercent)/100).toFixed(2))
+        setJapanNetPrice((parseInt(e.target.value) - parseInt(e.target.value) * parseInt(JapanDisPercent)/100))
       }else if(JapanDisType == '3'){
-        setJapanNetPrice((parseFloat(e.target.value) - parseFloat(JapanDisAmt)).toFixed(2))
+        setJapanNetPrice((parseInt(e.target.value) - parseInt(JapanDisAmt)))
       }else{
         setJapanNetPrice(e.target.value == "" ? 0 : e.target.value)
       }
@@ -1865,11 +1870,11 @@ const Pricing = ({code}) => {
       }
 
       setJapanDisAmt(e.target.value)
-      setJapanNetPrice((parseFloat(JapanListPrice) - parseFloat(e.target.value == "" ? 0 : e.target.value)).toFixed(2))
+      setJapanNetPrice((parseInt(JapanListPrice) - parseInt(e.target.value == "" ? 0 : e.target.value)))
       console.log(e.target.value)
 
        // Calculate Discount %
-       setJapanDisPercent(((parseFloat(JapanListPrice) - parseFloat(e.target.value))/parseFloat(JapanListPrice) * 100).toFixed(2))
+       setJapanDisPercent(((parseInt(JapanListPrice) - parseInt(e.target.value))/parseInt(JapanListPrice) * 100))
     }
     
   // Percentage Discount Japan
@@ -1882,12 +1887,12 @@ const Pricing = ({code}) => {
   
       setJapanDisPercent(e.target.value)
   
-      setJapanNetPrice((parseFloat(JapanListPrice) - parseFloat(JapanListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
+      setJapanNetPrice((parseInt(JapanListPrice) - parseInt(JapanListPrice) * parseInt(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
 
       console.log(e.target.value)
 
        // Calculate Discount Amount
-       setJapanDisAmt((Number.parseFloat(JapanListPrice) - ((parseFloat(JapanListPrice) - parseFloat(JapanListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
+       setJapanDisAmt((Number.parseInt(JapanListPrice) - ((parseInt(JapanListPrice) - parseInt(JapanListPrice) * parseInt(e.target.value == "" ? 0 : e.target.value)/100))))
   
     }
 
@@ -3710,6 +3715,12 @@ const Pricing = ({code}) => {
         return
       }
 
+      if(checkPricingStatus == false){
+        ErrorAlert("Error","Please fill instructor details and payment details")
+        setloading_button(false)
+        return
+      }
+
       var raw = {
         "courseCode":`${code}`,
         "globalListPrice":`${Number.parseFloat(DGlobalPricing).toFixed(2)}`,
@@ -4003,7 +4014,7 @@ const Pricing = ({code}) => {
           Pricing
         </Typography>
 
-      {loading_button ?  <Button variant="contained"><ButtonSpinner /></Button> : <Button onClick={handleSubmitAllPrices} variant="contained"><AddIcon /> SAVE</Button>}
+      {loading_button ?  <Button variant="contained"><ButtonSpinner /></Button> : <Button onClick={handleSubmitAllPrices} variant="contained">SAVE</Button>}
         
        
 
@@ -4012,12 +4023,13 @@ const Pricing = ({code}) => {
         <hr />
 
         {Paid_Type == 2 &&  (
+          checkPricingStatus == false && (
           <div className="container">
           <Alert severity="warning" color="warning">
-             
              To procced you need to complete the paid <a href="/profile">instructor details.</a>
           </Alert>
           </div>
+          )
         )}
       
         {/* Paid Type */}
@@ -4053,13 +4065,13 @@ const Pricing = ({code}) => {
               <br />
               <br />
 
-                    <div className="row">
+                    <div className="row border border-secondary p-3">
                       <div className="price-range col-md-2">
                         <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
                           <InputGroup className="mb-3">
                             <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
                             <Form.Control
-                              isInvalid={DGlobalPricing < PriceRangeMinDefault || DGlobalPricing > PriceRangeMaxDefault ?  true : false}
+                              isInvalid={DGlobalPricing != 0 && (DGlobalPricing < PriceRangeMinDefault || DGlobalPricing > PriceRangeMaxDefault ?  true : false)}
                               value={DGlobalPricing}
                               onChange={handleChangeGlobalPrice}
                               placeholder="USD"
@@ -4138,7 +4150,7 @@ const Pricing = ({code}) => {
                         <th className="col-2" scope="col">Country</th>
                         <th scope="col">Currency</th>
                         <th scope="col">Price Range</th>
-                        <th scope="col">List Price</th>
+                        <th  scope="col">List Price</th>
 
                         <th scope="col">Discount Type</th>
                         <th scope="col">Discount %</th>
@@ -4162,6 +4174,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].maxPrice}`}</td>
                           <td>
                             <Form.Control  
+                            style={{width:100}}
                            isInvalid={USAListPrice != 0 && (USAListPrice < countriesData.priceRange[0].minPrice || USAListPrice > countriesData.priceRange[0].maxPrice)}
                             value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
                               <Form.Control.Feedback type="invalid">
@@ -4195,12 +4208,12 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                            isInvalid={formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < countriesData.priceRange[0].minPrice )? true : false} 
+                            isInvalid={formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < USAMinValue) ? true : false} 
                             readOnly disabled 
                             value={USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}  />
                                 <Form.Control.Feedback type="invalid">
                                 Not within range
-                      </Form.Control.Feedback>
+                                </Form.Control.Feedback>
 
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
@@ -4252,7 +4265,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(AusNetPrice) != "0.00" && (formatNumber(AusNetPrice) < countriesData.priceRange[1].minPrice || formatNumber(AusNetPrice) > countriesData.priceRange[1].maxPrice )? true : false} 
+                          isInvalid={formatNumber(AusNetPrice) != "0.00" && (formatNumber(AusNetPrice) < AusminValue)? true : false} 
                           readOnly disabled 
                           value={AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}  />
                              <Form.Control.Feedback type="invalid">
@@ -4309,7 +4322,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(BrazilNetPrice) != "0.00" && (formatNumber(BrazilNetPrice) < countriesData.priceRange[2].minPrice || formatNumber(BrazilNetPrice) > countriesData.priceRange[2].maxPrice )? true : false} 
+                          isInvalid={formatNumber(BrazilNetPrice) != "0.00" && (formatNumber(BrazilNetPrice) < BrazilminValue)? true : false} 
                           readOnly disabled 
                           value={BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}  />
                              <Form.Control.Feedback type="invalid">
@@ -4366,7 +4379,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                        isInvalid={formatNumber(CanadaNetPrice) != "0.00" && (formatNumber(CanadaNetPrice) < countriesData.priceRange[3].minPrice || formatNumber(CanadaNetPrice) > countriesData.priceRange[3].maxPrice) ? true : false} 
+                        isInvalid={formatNumber(CanadaNetPrice) != "0.00" && (formatNumber(CanadaNetPrice) < CanadaminValue) ? true : false} 
                         readOnly disabled 
                         value={CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4423,7 +4436,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(ChileNetPrice) != "0.00" && (formatNumber(ChileNetPrice) < countriesData.priceRange[4].minPrice || formatNumber(ChileNetPrice) > countriesData.priceRange[4].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(ChileNetPrice) != "0.00" && (formatNumber(ChileNetPrice) < ChileminValue) ? true : false} 
                           readOnly disabled 
                           value={ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4481,7 +4494,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(ColumbiaNetPrice) != "0.00" && (formatNumber(ColumbiaNetPrice) < countriesData.priceRange[5].minPrice || formatNumber(ColumbiaNetPrice) > countriesData.priceRange[5].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(ColumbiaNetPrice) != "0.00" && (formatNumber(ColumbiaNetPrice) < ColumbiaminValue) ? true : false} 
                           readOnly disabled 
                           value={ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4538,7 +4551,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(EgyptNetPrice) != "0.00" && (formatNumber(EgyptNetPrice) < countriesData.priceRange[6].minPrice || formatNumber(EgyptNetPrice) > countriesData.priceRange[6].maxPrice )? true : false} 
+                          isInvalid={formatNumber(EgyptNetPrice) != "0.00" && (formatNumber(EgyptNetPrice) < EgyptminValue)? true : false} 
                           readOnly disabled 
                           value={EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4595,7 +4608,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(EUNetPrice) != "0.00" && (formatNumber(EUNetPrice) < countriesData.priceRange[7].minPrice || formatNumber(EUNetPrice) > countriesData.priceRange[7].maxPrice )? true : false} 
+                          isInvalid={formatNumber(EUNetPrice) != "0.00" && (formatNumber(EUNetPrice) < EUminValue)? true : false} 
                           readOnly disabled 
                           value={EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4654,7 +4667,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(GBPNetPrice) != "0.00" && (formatNumber(GBPNetPrice) < countriesData.priceRange[8].minPrice || formatNumber(GBPNetPrice) > countriesData.priceRange[8].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(GBPNetPrice) != "0.00" && (formatNumber(GBPNetPrice) < GBPminValue) ? true : false} 
                           readOnly disabled 
                           value={GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4712,7 +4725,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(IndonesiaNetPrice) != "0.00" && (formatNumber(IndonesiaNetPrice) < countriesData.priceRange[9].minPrice || formatNumber(IndonesiaNetPrice) > countriesData.priceRange[9].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(IndonesiaNetPrice) != "0.00" && (formatNumber(IndonesiaNetPrice) < IndonesiaminValue) ? true : false} 
                           readOnly disabled 
                           value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4772,7 +4785,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(IsrealNetPrice) != "0.00" && (formatNumber(IsrealNetPrice) < countriesData.priceRange[10].minPrice || formatNumber(IsrealNetPrice) > countriesData.priceRange[10].maxPrice )? true : false} 
+                          isInvalid={formatNumber(IsrealNetPrice) != "0.00" && (formatNumber(IsrealNetPrice) < IsrealminValue)? true : false} 
                           readOnly disabled 
                           value={IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4829,7 +4842,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(IndiaNetPrice) != "0.00" &&  (formatNumber(IndiaNetPrice) < countriesData.priceRange[11].minPrice || formatNumber(IndiaNetPrice) > countriesData.priceRange[11].maxPrice )? true : false} 
+                          isInvalid={formatNumber(IndiaNetPrice) != "0.00" &&  (formatNumber(IndiaNetPrice) < IndiaminValue)? true : false} 
                           readOnly disabled 
                           value={IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -4888,9 +4901,9 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(JapanNetPrice) != "0.00" && (formatNumber(JapanNetPrice) < countriesData.priceRange[12].minPrice || formatNumber(JapanNetPrice) > countriesData.priceRange[12].maxPrice) ? true : false} 
+                          isInvalid={formatNumInt(JapanNetPrice) != "0" && (formatNumInt(JapanNetPrice) < JapanminValue) ? true : false} 
                           readOnly disabled 
-                          value={JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}  />
+                          value={JapanNetPrice == "" ? "0.00" : formatNumInt(JapanNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
@@ -4947,7 +4960,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(SKNetPrice) != "0.00" && (formatNumber(SKNetPrice) < countriesData.priceRange[13].minPrice || formatNumber(SKNetPrice) > countriesData.priceRange[13].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(SKNetPrice) != "0.00" && (formatNumber(SKNetPrice) < SKminValue) ? true : false} 
                           readOnly disabled 
                           value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5005,7 +5018,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(MexicoNetPrice) != "0.00" && (formatNumber(MexicoNetPrice) < countriesData.priceRange[14].minPrice || formatNumber(MexicoNetPrice) > countriesData.priceRange[14].maxPrice )? true : false} 
+                          isInvalid={formatNumber(MexicoNetPrice) != "0.00" && (formatNumber(MexicoNetPrice) < MexicominValue)? true : false} 
                           readOnly disabled 
                           value={MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5065,7 +5078,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(MalaysiaNetPrice) != "0.00" && (formatNumber(MalaysiaNetPrice) < countriesData.priceRange[15].minPrice || formatNumber(MalaysiaNetPrice) > countriesData.priceRange[15].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(MalaysiaNetPrice) != "0.00" && (formatNumber(MalaysiaNetPrice) < MalaysiaminValue) ? true : false} 
                           readOnly disabled 
                           value={MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5124,7 +5137,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(NIgeriaNetPrice) != "0.00" && (formatNumber(NIgeriaNetPrice) < countriesData.priceRange[16].minPrice || formatNumber(NIgeriaNetPrice) > countriesData.priceRange[16].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(NIgeriaNetPrice) != "0.00" && (formatNumber(NIgeriaNetPrice) < NigeriaminValue) ? true : false} 
                           readOnly disabled 
                           value={NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5181,7 +5194,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(NorwayNetPrice) != "0.00" && (formatNumber(NorwayNetPrice) < countriesData.priceRange[17].minPrice || formatNumber(NorwayNetPrice) > countriesData.priceRange[17].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(NorwayNetPrice) != "0.00" && (formatNumber(NorwayNetPrice) < NorwayminValue) ? true : false} 
                           readOnly disabled 
                           value={NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5238,7 +5251,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(PeruNetPrice) != "0.00" && (formatNumber(PeruNetPrice) < countriesData.priceRange[18].minPrice || formatNumber(PeruNetPrice) > countriesData.priceRange[18].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(PeruNetPrice) != "0.00" && (formatNumber(PeruNetPrice) < Peruminvalue) ? true : false} 
                           readOnly disabled 
                           value={PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5297,7 +5310,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(PhilipinesNetPrice) != "0.00" && (formatNumber(PhilipinesNetPrice) < countriesData.priceRange[19].minPrice || formatNumber(PhilipinesNetPrice) > countriesData.priceRange[19].maxPrice )? true : false} 
+                          isInvalid={formatNumber(PhilipinesNetPrice) != "0.00" && (formatNumber(PhilipinesNetPrice) < PhilipinesminValue)? true : false} 
                           readOnly disabled 
                           value={PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5355,7 +5368,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(PolandNetPrice) != "0.00" && (formatNumber(PolandNetPrice) < countriesData.priceRange[20].minPrice || formatNumber(PolandNetPrice) > countriesData.priceRange[20].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(PolandNetPrice) != "0.00" && (formatNumber(PolandNetPrice) < PolandminValue) ? true : false} 
                           readOnly disabled 
                           value={PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5413,7 +5426,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(RomaniaNetPrice) != "0.00" && (formatNumber(RomaniaNetPrice) < countriesData.priceRange[21].minPrice || formatNumber(RomaniaNetPrice) > countriesData.priceRange[21].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(RomaniaNetPrice) != "0.00" && (formatNumber(RomaniaNetPrice) < Romaniaminvalue) ? true : false} 
                           readOnly disabled 
                           value={RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5470,7 +5483,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(RussiaNetPrice) != "0.00" && (formatNumber(RussiaNetPrice) < countriesData.priceRange[22].minPrice || formatNumber(RussiaNetPrice) > countriesData.priceRange[22].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(RussiaNetPrice) != "0.00" && (formatNumber(RussiaNetPrice) < RussiaminValue) ? true : false} 
                           readOnly disabled 
                           value={RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5528,7 +5541,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(SingaporeNetPrice) != "0.00" && (formatNumber(SingaporeNetPrice) < countriesData.priceRange[23].minPrice || formatNumber(SingaporeNetPrice) > countriesData.priceRange[23].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(SingaporeNetPrice) != "0.00" && (formatNumber(SingaporeNetPrice) < SingaporeminValue) ? true : false} 
                           readOnly disabled 
                           value={SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5584,7 +5597,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(ThailandNetPrice) != "0.00" && (formatNumber(ThailandNetPrice) < countriesData.priceRange[24].minPrice || formatNumber(ThailandNetPrice) > countriesData.priceRange[24].maxPrice )? true : false} 
+                          isInvalid={formatNumber(ThailandNetPrice) != "0.00" && (formatNumber(ThailandNetPrice) < ThailandminValue)? true : false} 
                           readOnly disabled 
                           value={ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5640,7 +5653,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(TurkeyNetPrice) != "0.00" && (formatNumber(TurkeyNetPrice) < countriesData.priceRange[25].minPrice || formatNumber(TurkeyNetPrice) > countriesData.priceRange[25].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(TurkeyNetPrice) != "0.00" && (formatNumber(TurkeyNetPrice) < TurkeyminValue) ? true : false} 
                           readOnly disabled 
                           value={TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5696,7 +5709,7 @@ const Pricing = ({code}) => {
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(TaiwanNetPrice) != "0.00" && (formatNumber(TaiwanNetPrice) < countriesData.priceRange[26].minPrice || formatNumber(TaiwanNetPrice) > countriesData.priceRange[26].maxPrice )? true : false} 
+                          isInvalid={formatNumber(TaiwanNetPrice) != "0.00" && (formatNumber(TaiwanNetPrice) < TaiwanminValue)? true : false} 
                           readOnly disabled 
                           value={TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5756,7 +5769,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(VietnamNetPrice) != "0.00" && (formatNumber(VietnamNetPrice) < countriesData.priceRange[27].minPrice || formatNumber(VietnamNetPrice) > countriesData.priceRange[27].maxPrice )? true : false} 
+                          isInvalid={formatNumber(VietnamNetPrice) != "0.00" && (formatNumber(VietnamNetPrice) < VietnamminValue)? true : false} 
                           readOnly disabled 
                           value={VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
@@ -5813,7 +5826,7 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(SANetPrice) != "0.00" && (formatNumber(SANetPrice) < countriesData.priceRange[28].minPrice || formatNumber(SANetPrice) > countriesData.priceRange[28].maxPrice) ? true : false} 
+                          isInvalid={formatNumber(SANetPrice) != "0.00" && (formatNumber(SANetPrice) < SAminValue) ? true : false} 
                           readOnly disabled 
                           value={SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}  />
                           <Form.Control.Feedback type="invalid">

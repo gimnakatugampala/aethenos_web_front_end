@@ -1412,7 +1412,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
       setCanadaDisPercent(result.prices[3].discount)
       setCanadaListPrice(result.prices[3].listPrice)
       setCanadaDisAmt(result.prices[3].discountAmount)
-      setCanadaNetPrice(result.prices[2].netPrice)
+      setCanadaNetPrice(result.prices[3].netPrice)
  
       // ---------- CANADA 
 
@@ -4309,6 +4309,37 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
 
 }
 
+export const ExternalResoucesDelete = async(id) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteExternalResources/${id}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"courses") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Deleted",result.message)
+      setTimeout(() => {
+          window.location.reload()
+      },2000)
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+}
+
 export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue) =>{
 
   setbtn_loading_payment_details(true)
@@ -4348,7 +4379,7 @@ export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,p
 
 }
 
-export const GetWalletDetails = async(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername) =>{
+export const GetWalletDetails = async(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername,setSelectedValue) =>{
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -4369,6 +4400,99 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/ge
     setpaypalUsername(result.paypalUserName)
     setpayoneerEmail(result.payoneerEmail)
     setpayoneerUsername(result.payoneerUserName)
+
+    if(result.selected == ""){
+      setSelectedValue('paypal')
+
+    }else{
+      setSelectedValue(result.selected.toLowerCase())
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const SubmitInstructorTerms = async() =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/updateInstructorTermsAgree", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"profile") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+      return
+    }
+
+    if(result.message == "Error"){
+      ErrorAlert("Error",result.variable)
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const GetCheckPricingStatus = async(setInstructorTermsCheck) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/checkInstructorPaymentDetails", requestOptions)
+  .then((response) => response.text())
+  .then((result) => {
+    console.log(result)
+    Unauthorized(result.status,"profile") 
+    if(result == 'true'){
+      setInstructorTermsCheck(true)
+    }else{
+      setInstructorTermsCheck(false)
+    }
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const GetCheckPricingAllStatus = async(setcheckPricingStatus) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/checkAllInstructorPaymentDetailsComplete", requestOptions)
+  .then((response) => response.text())
+  .then((result) => {
+    console.log(result)
+    Unauthorized(result.status,"courses") 
+    if(result == 'true'){
+      setcheckPricingStatus(true)
+    }else{
+      setcheckPricingStatus(false)
+    }
   })
   .catch((error) => console.error(error));
 
