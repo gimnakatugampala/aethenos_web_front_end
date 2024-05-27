@@ -4309,7 +4309,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
 
 }
 
-export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details) =>{
+export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue) =>{
 
   setbtn_loading_payment_details(true)
 
@@ -4321,6 +4321,7 @@ export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,p
   formdata.append("paypalEmail", `${paypalEmail}`);
   formdata.append("payoneerUserName", `${payoneerUsername}`);
   formdata.append("payoneerEmail", `${payoneerEmail}`);
+  selectedValue == "paypal" ? formdata.append("paymentMethodId", "2") : formdata.append("paymentMethodId", "4");
   
   const requestOptions = {
     method: "POST",
@@ -4361,6 +4362,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/ge
   .then((response) => response.json())
   .then((result) => {
     Unauthorized(result.status,"payouts") 
+
+    console.log(result)
 
     setpaypalEmail(result.paypalEmail)
     setpaypalUsername(result.paypalUserName)

@@ -145,7 +145,7 @@ const MyProfile = () => {
           return
         }
 
-        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details)
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue)
 
       }else{
 
@@ -159,7 +159,7 @@ const MyProfile = () => {
           return
         }
 
-        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details)
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue)
 
       }
     }

@@ -1191,7 +1191,8 @@ console.log(item)
                                                                     </ListGroup.Item>
                                                               ))
                                                       ) : (
-                                                          <p>No Downloadable Items</p>
+                                                          // <p>No Downloadable Items</p>
+                                                          <></>
                                                       )}
                                                   </ListGroup>
                                               </div>
@@ -1231,7 +1232,8 @@ console.log(item)
                                                                     </ListGroup.Item>
                                                               ))
                                                       ) : (
-                                                          <p>No Source Code</p>
+                                                          // <p>No Source Code</p>
+                                                          <></>
                                                       )}
                                                   </ListGroup>
                                               </div>
@@ -1669,7 +1671,7 @@ console.log(item)
                                   {/* Source Code */}
                                   {item.curriculumItemFiles.length > 0 && (
                                       <div className="p-2">
-                                          <h6><b>Source Code</b></h6>
+                                            <h6><b>Source Code</b></h6>
                                           <ListGroup>
                                               {item.curriculumItemFiles.some(source => source.filetype === "Source Code") ? (
                                                   item.curriculumItemFiles
@@ -1683,7 +1685,8 @@ console.log(item)
                                                             </ListGroup.Item>
                                                       ))
                                               ) : (
-                                                  <p>No Source Code</p>
+                                                  // <p>No Source Code</p>
+                                                  <></>
                                               )}
                                           </ListGroup>
                                       </div>
