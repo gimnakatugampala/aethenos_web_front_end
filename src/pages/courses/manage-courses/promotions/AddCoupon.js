@@ -1930,7 +1930,7 @@ const AddCoupon = ({code}) => {
             <Form.Label><b>Enter coupon code (Optional):</b></Form.Label>
             <Form.Control value={couponCodeDiscount} onChange={(e) => setcouponCodeDiscount(e.target.value)} type="text" placeholder="Enter Coupon" />
         </Form.Group>
-        couponCodeDiscount, 
+  
         <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
 
         <div className="pricing-container my-3">

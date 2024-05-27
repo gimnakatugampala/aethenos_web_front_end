@@ -3700,7 +3700,7 @@ const Pricing = ({code}) => {
    
     if(Paid_Type == 1){
 
-      PricingConvertToFree(code)
+      PricingConvertToFree(code,setloading_button)
 
     }else if(Paid_Type == 2){
 
@@ -4050,6 +4050,9 @@ const Pricing = ({code}) => {
               Prices include VAT. 
               For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
 
+              <br />
+              <br />
+
                     <div className="row">
                       <div className="price-range col-md-2">
                         <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
@@ -4064,7 +4067,7 @@ const Pricing = ({code}) => {
                               aria-describedby="basic-addon1"
                             />
                               <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </InputGroup>
                           <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}> Tip : Pricing around ${GlobalTip} may optimize sales.</Form.Label>
@@ -4109,11 +4112,11 @@ const Pricing = ({code}) => {
                       <div className="col-md-3">
                       <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
                       <Form.Control 
-                      isInvalid={formatNumber(DGlobalNetPrice) < PriceRangeMinDefault || formatNumber(DGlobalNetPrice) > PriceRangeMaxDefault ? true : false} 
+                      isInvalid={formatNumber(DGlobalNetPrice) < MinDefaultValue ? true : false} 
                       readOnly disabled 
                       value={DGlobalNetPrice == "" ? 0 : formatNumber(DGlobalNetPrice)}  />
                        <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                       </Form.Control.Feedback>
                       <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
 
@@ -4162,7 +4165,7 @@ const Pricing = ({code}) => {
                            isInvalid={USAListPrice != 0 && (USAListPrice < countriesData.priceRange[0].minPrice || USAListPrice > countriesData.priceRange[0].maxPrice)}
                             value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
                               <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4192,11 +4195,11 @@ const Pricing = ({code}) => {
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                            isInvalid={formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < countriesData.priceRange[0].minPrice || formatNumber(USANetPrice) > countriesData.priceRange[0].maxPrice )? true : false} 
+                            isInvalid={formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < countriesData.priceRange[0].minPrice )? true : false} 
                             readOnly disabled 
                             value={USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}  />
                                 <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                       </Form.Control.Feedback>
 
                         <tr>
@@ -4220,7 +4223,7 @@ const Pricing = ({code}) => {
                              isInvalid={AusListPrice != 0 && (AusListPrice < countriesData.priceRange[1].minPrice || AusListPrice > countriesData.priceRange[1].maxPrice) ?  true : false} 
                             value={AusListPrice} onChange={handleChangeGlobalPriceAus} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4253,7 +4256,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={AusNetPrice == "" ? "0.00" : formatNumber(AusNetPrice)}  />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
@@ -4277,7 +4280,7 @@ const Pricing = ({code}) => {
                               isInvalid={BrazilListPrice != 0 && (BrazilListPrice < countriesData.priceRange[2].minPrice || BrazilListPrice > countriesData.priceRange[2].maxPrice) ?  true : false} 
                             value={BrazilListPrice} onChange={handleChangeGlobalPriceBrazil} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4310,7 +4313,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={BrazilNetPrice == "" ? "0.00" : formatNumber(BrazilNetPrice)}  />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
 
                         <tr>
@@ -4334,7 +4337,7 @@ const Pricing = ({code}) => {
                              isInvalid={CanadaListPrice != 0 &&  (CanadaListPrice < countriesData.priceRange[3].minPrice || CanadaListPrice > countriesData.priceRange[3].maxPrice) ?  true : false} 
                             value={CanadaListPrice} onChange={handleChangeGlobalPriceCanada} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4367,7 +4370,7 @@ const Pricing = ({code}) => {
                         readOnly disabled 
                         value={CanadaNetPrice == "" ? "0.00" : formatNumber(CanadaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
@@ -4391,7 +4394,7 @@ const Pricing = ({code}) => {
                             isInvalid={ChileListPrice != 0 &&  (ChileListPrice < countriesData.priceRange[4].minPrice || ChileListPrice > countriesData.priceRange[4].maxPrice) ?  true : false} 
                             value={ChileListPrice} onChange={handleChangeGlobalPriceChile} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4424,7 +4427,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                   
                         <tr>
@@ -4448,7 +4451,7 @@ const Pricing = ({code}) => {
                              isInvalid={ColumbiaListPrice != 0 && (ColumbiaListPrice < countriesData.priceRange[5].minPrice || ColumbiaListPrice > countriesData.priceRange[5].maxPrice )?  true : false}
                             value={ColumbiaListPrice} onChange={handleChangeGlobalPriceColumbia} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4482,7 +4485,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -4506,7 +4509,7 @@ const Pricing = ({code}) => {
                             isInvalid={EgyptListPrice != 0 &&  (EgyptListPrice < countriesData.priceRange[6].minPrice || EgyptListPrice > countriesData.priceRange[6].maxPrice) ?  true : false}
                             value={EgyptListPrice} onChange={handleChangeGlobalPriceEgypt} type="text" />
                                 <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4539,7 +4542,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={EgyptNetPrice == "" ? "0.00" : formatNumber(EgyptNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -4563,7 +4566,7 @@ const Pricing = ({code}) => {
                               isInvalid={EUListPrice != 0 && (EUListPrice < countriesData.priceRange[7].minPrice || EUListPrice > countriesData.priceRange[7].maxPrice) ?  true : false}
                             value={EUListPrice} onChange={handleChangeGlobalPriceEU} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4596,7 +4599,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={EUNetPrice == "" ? "0.00" : formatNumber(EUNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
 
@@ -4621,7 +4624,7 @@ const Pricing = ({code}) => {
                             isInvalid={GBPListPrice != 0 &&  (GBPListPrice < countriesData.priceRange[8].minPrice || GBPListPrice > countriesData.priceRange[8].maxPrice) ?  true : false}
                             value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
 
                           </td>
@@ -4655,7 +4658,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
 
@@ -4680,7 +4683,7 @@ const Pricing = ({code}) => {
                                isInvalid={IndonesiaListPrice != 0 && (IndonesiaListPrice < countriesData.priceRange[9].minPrice || IndonesiaListPrice > countriesData.priceRange[9].maxPrice) ?  true : false}
                             value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
                               <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4713,7 +4716,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
   
@@ -4738,7 +4741,7 @@ const Pricing = ({code}) => {
                                isInvalid={IsrealListPrice != 0 && (IsrealListPrice < countriesData.priceRange[10].minPrice || IsrealListPrice > countriesData.priceRange[10].maxPrice) ?  true : false}
                             value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4773,7 +4776,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
@@ -4796,7 +4799,7 @@ const Pricing = ({code}) => {
                              isInvalid={IndiaListPrice != 0 && (IndiaListPrice < countriesData.priceRange[11].minPrice || IndiaListPrice > countriesData.priceRange[11].maxPrice) ?  true : false}
                             value={IndiaListPrice} onChange={handleChangeGlobalPriceIndia} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4830,7 +4833,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={IndiaNetPrice == "" ? "0.00" : formatNumber(IndiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -4854,7 +4857,7 @@ const Pricing = ({code}) => {
                              isInvalid={JapanListPrice != 0 && (JapanListPrice < countriesData.priceRange[12].minPrice || JapanListPrice > countriesData.priceRange[12].maxPrice) ?  true : false}
                             value={JapanListPrice} onChange={handleChangeGlobalPriceJapan} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4889,7 +4892,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={JapanNetPrice == "" ? "0.00" : formatNumber(JapanNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -4913,7 +4916,7 @@ const Pricing = ({code}) => {
                              isInvalid={SKListPrice != 0 && (SKListPrice < countriesData.priceRange[13].minPrice || SKListPrice > countriesData.priceRange[13].maxPrice) ?  true : false}
                             value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -4948,7 +4951,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -4972,7 +4975,7 @@ const Pricing = ({code}) => {
                              isInvalid={MexicoListPrice != 0 && (MexicoListPrice < countriesData.priceRange[14].minPrice || MexicoListPrice > countriesData.priceRange[14].maxPrice) ?  true : false}
                             value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5006,7 +5009,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
@@ -5029,7 +5032,7 @@ const Pricing = ({code}) => {
                             isInvalid={MalaysiaListPrice != 0 && (MalaysiaListPrice < countriesData.priceRange[15].minPrice || MalaysiaListPrice > countriesData.priceRange[15].maxPrice) ?  true : false}
                             value={MalaysiaListPrice} onChange={handleChangeGlobalPriceMalaysia} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5066,7 +5069,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={MalaysiaNetPrice == "" ? "0.00" : formatNumber(MalaysiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
   
@@ -5091,7 +5094,7 @@ const Pricing = ({code}) => {
                              isInvalid={NigeriaListPrice != 0 && (NigeriaListPrice < countriesData.priceRange[16].minPrice || NigeriaListPrice > countriesData.priceRange[16].maxPrice) ?  true : false}
                             value={NigeriaListPrice} onChange={handleChangeGlobalPriceNigeria} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5125,7 +5128,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -5149,7 +5152,7 @@ const Pricing = ({code}) => {
                             isInvalid={NorwayListPrice != 0 &&  (NorwayListPrice < countriesData.priceRange[17].minPrice || NorwayListPrice > countriesData.priceRange[17].maxPrice) ?  true : false}
                             value={NorwayListPrice} onChange={handleChangeGlobalPriceNorway} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5182,7 +5185,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={NorwayNetPrice == "" ? "0.00" : formatNumber(NorwayNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
@@ -5205,7 +5208,7 @@ const Pricing = ({code}) => {
                              isInvalid={PeruListPrice != 0 &&  (PeruListPrice < countriesData.priceRange[18].minPrice || PeruListPrice > countriesData.priceRange[18].maxPrice) ?  true : false}
                             value={PeruListPrice} onChange={handleChangeGlobalPricePeru} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5239,7 +5242,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={PeruNetPrice == "" ? "0.00" : formatNumber(PeruNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
      
                         <tr>
@@ -5264,7 +5267,7 @@ const Pricing = ({code}) => {
                               isInvalid={PhilipinesListPrice != 0 && (PhilipinesListPrice < countriesData.priceRange[19].minPrice || PhilipinesListPrice > countriesData.priceRange[19].maxPrice) ?  true : false}
                             value={PhilipinesListPrice} onChange={handleChangeGlobalPricePhilipines} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5298,7 +5301,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={PhilipinesNetPrice == "" ? "0.00" : formatNumber(PhilipinesNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
@@ -5321,7 +5324,7 @@ const Pricing = ({code}) => {
                              isInvalid={PolandListPrice != 0 && (PolandListPrice < countriesData.priceRange[20].minPrice || PolandListPrice > countriesData.priceRange[20].maxPrice) ?  true : false}
                             value={PolandListPrice} onChange={handleChangeGlobalPricePoland} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5356,7 +5359,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={PolandNetPrice == "" ? "0.00" : formatNumber(PolandNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
     
@@ -5381,7 +5384,7 @@ const Pricing = ({code}) => {
                             isInvalid={RomaniaListPrice != 0 && (RomaniaListPrice < countriesData.priceRange[21].minPrice || RomaniaListPrice > countriesData.priceRange[21].maxPrice) ?  true : false}
                             value={RomaniaListPrice} onChange={handleChangeGlobalPriceRomania} type="text" />
                              <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5414,7 +5417,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={RomaniaNetPrice == "" ? "0.00" : formatNumber(RomaniaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -5438,7 +5441,7 @@ const Pricing = ({code}) => {
                              isInvalid={RussiaListPrice != 0 &&  (RussiaListPrice < countriesData.priceRange[22].minPrice || RussiaListPrice > countriesData.priceRange[22].maxPrice) ?  true : false}
                             value={RussiaListPrice} onChange={handleChangeGlobalPriceRussia} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5471,7 +5474,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={RussiaNetPrice == "" ? "0.00" : formatNumber(RussiaNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                             
                         <tr>
@@ -5495,7 +5498,7 @@ const Pricing = ({code}) => {
                              isInvalid={SingaporeListPrice != 0 &&  (SingaporeListPrice < countriesData.priceRange[23].minPrice || SingaporeListPrice > countriesData.priceRange[23].maxPrice) ?  true : false}
                             value={SingaporeListPrice} onChange={handleChangeGlobalPriceSingapore} type="text" />
                                <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5529,7 +5532,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={SingaporeNetPrice == "" ? "0.00" : formatNumber(SingaporeNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
                         <tr>
@@ -5553,7 +5556,7 @@ const Pricing = ({code}) => {
                             isInvalid={ThailandListPrice != 0 && (ThailandListPrice < countriesData.priceRange[24].minPrice || ThailandListPrice > countriesData.priceRange[24].maxPrice) ?  true : false}
                              value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
                               <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5585,7 +5588,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
@@ -5608,7 +5611,7 @@ const Pricing = ({code}) => {
                             isInvalid={TurkeyListPrice != 0 && (TurkeyListPrice < countriesData.priceRange[25].minPrice || TurkeyListPrice > countriesData.priceRange[25].maxPrice )?  true : false}
                             value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5641,7 +5644,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
@@ -5664,7 +5667,7 @@ const Pricing = ({code}) => {
                             isInvalid={TaiwanListPrice != 0 && (TaiwanListPrice < countriesData.priceRange[26].minPrice || TaiwanListPrice > countriesData.priceRange[26].maxPrice )?  true : false}
                             value={TaiwanListPrice} onChange={handleChangeGlobalPriceTaiwan} type="text" />
                             <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5697,7 +5700,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={TaiwanNetPrice == "" ? "0.00" : formatNumber(TaiwanNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
 
             
@@ -5722,7 +5725,7 @@ const Pricing = ({code}) => {
                              isInvalid={VietnamListPrice != 0 && (VietnamListPrice < countriesData.priceRange[27].minPrice || VietnamListPrice > countriesData.priceRange[27].maxPrice) ?  true : false}
                             value={VietnamListPrice} onChange={handleChangeGlobalPriceVietnam} type="text" />
                                  <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5757,7 +5760,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
@@ -5781,7 +5784,7 @@ const Pricing = ({code}) => {
                               isInvalid={SAListPrice != 0 &&  (SAListPrice < countriesData.priceRange[28].minPrice || SAListPrice > countriesData.priceRange[28].maxPrice )?  true : false}
                             value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
                               <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
@@ -5814,7 +5817,7 @@ const Pricing = ({code}) => {
                           readOnly disabled 
                           value={SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}  />
                           <Form.Control.Feedback type="invalid">
-                                Within Price Range
+                                Not within range
                             </Form.Control.Feedback>
                         <tr>
                         <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>

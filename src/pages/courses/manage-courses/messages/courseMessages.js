@@ -79,6 +79,10 @@ const CourseMessages = ({code}) => {
             </p>
           </div>
 
+
+          <br />
+          <br />
+
           <Space direction="vertical" size="middle">
             <Typography variant="h6">Welcome Message</Typography>
             <JoditEditor value={welcomemsg} onChange={(value) => setwelcomemsg(value)} />

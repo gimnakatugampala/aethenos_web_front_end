@@ -174,7 +174,7 @@ const MyProfile = () => {
         id="uncontrolled-tab-example"
         className="my-3"
         >
-      <Tab eventKey="up" title="Udemy Profile">
+      <Tab eventKey="up" title="Aethenos Profile">
 
         <div className='row'>
             <div className='col-md-6'>

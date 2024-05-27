@@ -792,7 +792,7 @@ const Curriculum = ({code}) => {
             const duration = Math.round(video1.duration);
             console.log('Video duration:', duration, 'seconds');
             
-            AddCurriculumVideo(code,ID,video,duration,setsectionData,setshowMain)
+            AddCurriculumVideo(code,ID,video,duration,setsectionData,setshowMain,setshowDescRes,setshowContentAdd,setcurriculumvisiblity)
           };
           
           video1.src = event.target.result;
@@ -981,7 +981,11 @@ console.log(item)
               <div className="my-2">
 
               {/* Lecture > Quiz > Assignment */}
-              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) => (
+              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  { 
+
+// let randomNumber = Math.floor(Math.random() * 900) + 100;
+
+                return (
 
                 // Lecture
                 <>
@@ -989,7 +993,7 @@ console.log(item)
                   <>
                   {/* Edit Lecture */}
               
-                  {showEditTitleInput == index + i ? (
+                  {showEditTitleInput == index + i + item.id ? (
                     <div className="d-flex">
                     <Form.Control 
                       className="mx-1"
@@ -999,11 +1003,11 @@ console.log(item)
                       placeholder="Large text" 
                     />
                     <Button onClick={(e) => {
-                        if(showEditTitleInput == index + i){
+                        if(showEditTitleInput == index + i + item.id){
                           setshowEditTitleInput(null)
                           setupdateLectureName("")
                         }else{
-                          setshowEditTitleInput(index + i)
+                          setshowEditTitleInput(index + i + item.id)
                           setupdateLectureName(item.title)
                         }
                           
@@ -1015,7 +1019,7 @@ console.log(item)
                   ) : (
                       <>
                       {/* Get Lecture */}
-                        <Card key={index + i} className="my-3">
+                        <Card key={index + i + item.id} className="my-3">
                         
                         <div className="d-flex justify-content-between align-items-center p-2">
                           <span>
@@ -1024,11 +1028,11 @@ console.log(item)
                             <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
                             <span className="mx-5">
                             <EditIcon onClick={(e) => {
-                                if(showEditTitleInput == index + i){
+                                if(showEditTitleInput == index + i + item.id){
                                   setshowEditTitleInput(null)
                                   setupdateLectureName("")
                                 }else{
-                                  setshowEditTitleInput(index + i)
+                                  setshowEditTitleInput(index + i + item.id)
                                   setupdateLectureName(item.title)
                                 }
                                   
@@ -1040,12 +1044,12 @@ console.log(item)
 
                           {/* + Content Action Card */}
                           <span>
-                          {showContentAdd == index + i ? (
+                          {showContentAdd == index + i + item.id ? (
                             <Button
                               onClick={() => {
                                 setshowDescRes(true)
                                 setshowMain(null)
-                                console.log(index + i)
+                                console.log(index + i + item.id)
                                 setshowContentAdd(null)
                                 setcurriculumvisiblity("")
                               }}
@@ -1059,12 +1063,12 @@ console.log(item)
                             <Button
                               onClick={() => {
                                 setshowDescRes(false)
-                                setshowMain(showMain == index + i ? null : index + i)
-                                console.log(index + i)
+                                setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
+                                console.log(index + i + item.id)
                                 console.log(item)
                                 setarticle(item.article == "N/A" ? "" : item.article)
                                 setcurriculum_desc(item.description == "N/A" ? "" : item.description)
-                                setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                                setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
                               }}
                               className="mx-2"
                               size="small"
@@ -1079,7 +1083,7 @@ console.log(item)
                       
                             {/* Show the Articles If Filled */}
                             {item.article != "N/A" && (
-                                showMain == index + i && (
+                                showMain == index + i + item.id && (
                                   <div className="p-3">
                                     <div className="my-3">
                                       <JoditEditor value={article} onChange={(content) => setarticle(content)} />
@@ -1093,7 +1097,7 @@ console.log(item)
                                           {/* List of Resources / External Link */}
 
                                           <>
-                                              {showDescription == index + i && (
+                                              {showDescription == index + i + item.id && (
                                                 <>
                                                 <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
                                                 <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
@@ -1107,19 +1111,19 @@ console.log(item)
                                               )}
 
                                               {/* Add Description & Resourses */}
-                                              {showMain == index + i && showDescription != index + i &&  (
+                                              {showMain == index + i + item.id && showDescription != index + i + item.id &&  (
                                               <div className="d-flex justify-content-center p-2">
                                               <Button onClick={() => {
                                                 setcurriculum_desc(item.description == "N/A" ? "" : item.description)
-                                                setshowDescription(showDescription == index + i ? null : index + i)
+                                                setshowDescription(showDescription == index + i + item.id ? null : index + i + item.id)
                                               }} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                                              <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                              <Button onClick={() => setshowResources(showResources == index + i + item.id ? null : index + i + item.id)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
                                               
                                             
                                               </div>
                                               )}
 
-                                              {showResources == index + i && (
+                                              {showResources == index + i + item.id && (
                                                 <div>
                                                   <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
 
@@ -1134,7 +1138,7 @@ console.log(item)
                                                   <Form.Group controlId="formFile" className="mb-3">
                                                   {/* (e) =>  */}
                                                     <Form.Control  onChange={(e) => handleDownloadbaleFile(e,item.id)} type="file" />
-                                                    <Form.Label style={{fontSize:11}}><b>Note:</b>  A resource is for any type of document that can be used to help students in the lesson. This file is going to be seen as a lesson extra. Make sure everything is legible and the file size is less than 1 GiB.</Form.Label>
+                                                    <Form.Label style={{fontSize:11}}><b>Note:</b> Resource files can be any file type that will help students with their learning.</Form.Label>
                                                   </Form.Group>
                                                     
                                                   </Tab>
@@ -1158,7 +1162,7 @@ console.log(item)
 
                                                   <Form.Group onChange={(e) => handleSaveSourceCode(item.id,e)} controlId="formFile" className="mb-3">
                                                     <Form.Control type="file" />
-                                                    <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label>
+                                                    {/* <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label> */}
                                                   </Form.Group>
 
                                                   </Tab>
@@ -1241,7 +1245,7 @@ console.log(item)
                       
                           {/* Main Video Card & Text Based Card */}
                           {item.article == "N/A" && item.curriculumItemFiles.length == 0 && (
-                            showMain == index + i ? (
+                            showMain == index + i + item.id ? (
                                 curriculumvisiblity == "video" ? (
                                 <div className="p-3">
                           
@@ -1285,7 +1289,7 @@ console.log(item)
 
                         {/* List of Resources / External Link */}
                           <>
-                            {showDescription == index + i && (
+                            {showDescription == index + i + item.id && (
                               <>
                               <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
                                 <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
@@ -1299,16 +1303,16 @@ console.log(item)
                             )}
 
                             {/* Add Description & Resourses */}
-                            {showMain == index + i && showDescription != index + i &&  (
+                            {showMain == index + i + item.id && showDescription != index + i + item.id &&  (
                             <div className="d-flex justify-content-center p-2">
-                            <Button onClick={() => setshowDescription(showDescription == index + i ? null : index + i)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                            <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                            <Button onClick={() => setshowDescription(showDescription == index + i + item.id ? null : index + i + item.id)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                            <Button onClick={() => setshowResources(showResources == index + i + item.id ? null : index + i + item.id)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
                             
                           
                             </div>
                             )}
 
-                            {showResources == index + i && (
+                            {showResources == index + i + item.id && (
                               <div>
                                 <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
 
@@ -1373,7 +1377,7 @@ console.log(item)
                                   {/* List of Resources / External Link */}
 
                                     <>
-                                      {showDescription == index + i && (
+                                      {showDescription == index + i + item.id && (
                                         <>
                                         <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
                                         <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
@@ -1387,16 +1391,16 @@ console.log(item)
                                       )}
 
                                       {/* Add Description & Resourses */}
-                                      {showMain == index + i && showDescription != index + i &&  (
+                                      {showMain == index + i + item.id && showDescription != index + i + item.id &&  (
                                       <div className="d-flex justify-content-center p-2">
-                                      <Button onClick={() => setshowDescription(showDescription == index + i ? null : index + i)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                                      <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                      <Button onClick={() => setshowDescription(showDescription == index + i + item.id ? null : index + i + item.id)} className="m-2" variant="outlined"><AddIcon /> Description</Button>
+                                      <Button onClick={() => setshowResources(showResources == index + i + item.id ? null : index + i + item.id)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
                                       
                                     
                                       </div>
                                       )}
 
-                                      {showResources == index + i && (
+                                      {showResources == index + i + item.id && (
                                         <div>
                                           <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
 
@@ -1492,7 +1496,7 @@ console.log(item)
 
                           {/* Main Video Card & Text Based Card */}
                           {item.curriculumItemFiles.length != 0 && (
-                            showMain == index + i && (
+                            showMain == index + i + item.id && (
                               <div className="my-3">
 
                                 {/*  Inputs of External Links / Resouces  */}
@@ -1500,7 +1504,7 @@ console.log(item)
                                   {/* List of Resources / External Link */}
 
                                   <>
-                                      {showDescription == index + i && (
+                                      {showDescription == index + i + item.id && (
                                         <>
                                         <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
                                         <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
@@ -1514,19 +1518,19 @@ console.log(item)
                                       )}
 
                                       {/* Add Description & Resourses */}
-                                      {showMain == index + i && showDescription != index + i &&  (
+                                      {showMain == index + i + item.id && showDescription != index + i + item.id &&  (
                                       <div className="d-flex justify-content-center p-2">
                                       <Button onClick={() => {
                                         setcurriculum_desc(item.description == "N/A" ? "" : item.description)
-                                        setshowDescription(showDescription == index + i ? null : index + i)
+                                        setshowDescription(showDescription == index + i + item.id ? null : index + i + item.id)
                                       }} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                                      <Button onClick={() => setshowResources(showResources == index + i ? null : index + i)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                      <Button onClick={() => setshowResources(showResources == index + i + item.id ? null : index + i + item.id)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
                                       
                                     
                                       </div>
                                       )}
 
-                                      {showResources == index + i && (
+                                      {showResources == index + i + item.id && (
                                         <div>
                                           <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
 
@@ -1650,7 +1654,7 @@ console.log(item)
       
                 {/* Quiz */}
                 {item.type == "Quiz" && (
-                  showEditQuizInput == index + i ? ( 
+                  showEditQuizInput == index + i + item.id ? ( 
                     <div className="d-flex">
                     <Form.Control 
                       className="mx-1"
@@ -1661,11 +1665,11 @@ console.log(item)
                     />
 
                     <Button onClick={(e) => {
-                        if(showEditQuizInput == index + i){
+                        if(showEditQuizInput == index + i + item.id){
                           setshowEditQuizInput(null)
                           setupdateQuizName("")
                         }else{
-                          setshowEditQuizInput(index + i)
+                          setshowEditQuizInput(index + i + item.id)
                           setupdateQuizName(section.courseSection.sectionName)
                         }
                           
@@ -1675,7 +1679,7 @@ console.log(item)
                     }}  className="mx-1" variant="contained">Save</Button>
                     </div>
                   ) : (
-                    <Card key={index + i} className="my-3">
+                    <Card key={index + i + item.id} className="my-3">
                     <div className="d-flex justify-content-between align-items-center p-2">
                     <span>
       
@@ -1684,11 +1688,11 @@ console.log(item)
                         <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
                         <span className="mx-5">
                               <EditIcon onClick={(e) => {
-                                  if(showEditQuizInput == index + i){
+                                  if(showEditQuizInput == index + i + item.id){
                                     setshowEditQuizInput(null)
                                     setupdateQuizName("")
                                   }else{
-                                    setshowEditQuizInput(index + i)
+                                    setshowEditQuizInput(index + i + item.id)
                                     setupdateQuizName(item.title)
                                   }
                                     
@@ -1699,12 +1703,12 @@ console.log(item)
   
                       </span>
                       <span>
-                      {showContentAdd == index + i ? (
+                      {showContentAdd == index + i + item.id ? (
                         <Button
                           onClick={() => {
                             setshowDescRes(true)
                             setshowMain(null)
-                            console.log(index + i)
+                            console.log(index + i + item.id)
                             setshowContentAdd(null)
                             setcurriculumvisiblitymc("")
                             // handleContentshow()
@@ -1718,8 +1722,8 @@ console.log(item)
                       ) : (
                         <Button
                           onClick={() => {
-                            setshowMain(showMain == index + i ? null : index + i)
-                            setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                            setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
+                            setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
                             handleFillQuiz(item)
                           }}
                           className="mx-2"
@@ -1735,7 +1739,7 @@ console.log(item)
               
   
                       {/* Landing Content */}
-                    {showContentAdd == index + i && (
+                    {showContentAdd == index + i + item.id && (
                           item.getQuizs.length  != 0 ? (
                               <div>
                                     
@@ -1837,8 +1841,8 @@ console.log(item)
                                   onClick={() => {
                                     setshowDescRes(true)
                                     setcurriculumvisiblitymc("mc")
-                                    setshowMain(index + i)
-                                    setshowContentAdd(index + i)
+                                    setshowMain(index + i + item.id)
+                                    setshowContentAdd(index + i + item.id)
                                     handleFillQuiz(item)
                                   }}
                                   className="d-flex justify-content-center align-items-center text-center"
@@ -1856,7 +1860,7 @@ console.log(item)
                     )}  
   
   
-                    {showMain == index + i && curriculumvisiblitymc == "mc" && (
+                    {showMain == index + i + item.id && curriculumvisiblitymc == "mc" && (
                          <div>
                          
                                     
@@ -1961,7 +1965,7 @@ console.log(item)
 
                 {/* Assignment */}
                 {item.type == "Assignment" && (
-                 showEditAssignmentInput == index + i ? ( 
+                 showEditAssignmentInput == index + i + item.id ? ( 
                   <div className="d-flex">
                   <Form.Control 
                     className="mx-1"
@@ -1972,11 +1976,11 @@ console.log(item)
                   />
 
                   <Button onClick={(e) => {
-                      if(showEditAssignmentInput == index + i){
+                      if(showEditAssignmentInput == index + i + item.id){
                         setshowEditAssignmentInput(null)
                         setupdateAssignmentName("")
                       }else{
-                        setshowEditAssignmentInput(index + i)
+                        setshowEditAssignmentInput(index + i + item.id)
                         setupdateAssignmentName(item.title)
                       }
                         
@@ -1986,7 +1990,7 @@ console.log(item)
                   }}  className="mx-1" variant="contained">Save</Button>
                   </div>
                 ) :(
-                <Card key={index + i} className="my-3">
+                <Card key={index + i + item.id} className="my-3">
                   <div className="d-flex justify-content-between align-items-center p-2">
                  <span>
                     <Typography>
@@ -1994,11 +1998,11 @@ console.log(item)
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                               <EditIcon onClick={(e) => {
-                                  if(showEditAssignmentInput == index + i){
+                                  if(showEditAssignmentInput == index + i + item.id ){
                                     setshowEditAssignmentInput(null)
                                     setupdateAssignmentName("")
                                   }else{
-                                    setshowEditAssignmentInput(index + i)
+                                    setshowEditAssignmentInput(index + i + item.id )
                                     setupdateAssignmentName(item.title)
                                   }
                                     
@@ -2009,12 +2013,12 @@ console.log(item)
                  </span>
 
                   <span>
-                    {showContentAdd == index + i ? (
+                    {showContentAdd == index + i + item.id  ? (
                       <Button
                         onClick={() => {
                           setshowDescRes(true)
                           setshowMain(null)
-                          console.log(index + i)
+                          console.log(index + i + item.id )
                           setshowContentAdd(null)
                           setcurriculumvisiblitymc("")
                           // handleContentshow()
@@ -2028,8 +2032,8 @@ console.log(item)
                     ) : (
                       <Button
                         onClick={() => {
-                          setshowMain(showMain == index + i ? null : index + i)
-                          setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                          setshowMain(showMain == index + i + item.id  ? null : index + i + item.id )
+                          setshowContentAdd(showContentAdd == index + i + item.id  ? null : index + i + item.id )
 
                           console.log(item)
                           setmainSectionID(section.courseSection.sectionId)
@@ -2064,7 +2068,7 @@ console.log(item)
                 </div>
             
 
-                  {showMain == index + i && (
+                  {showMain == index + i + item.id  && (
                       <div className="p-3">
                           <Tabs
                           defaultActiveKey="assignment"
@@ -2180,7 +2184,7 @@ console.log(item)
 
                 {/* Practice test */}
                 {item.type == "Practice Test" &&  (
-                showEditPraticeTestInput == index + i ? (
+                showEditPraticeTestInput == index + i + item.id  ? (
                   <div className="d-flex">
                   <Form.Control 
                     className="mx-1"
@@ -2191,11 +2195,11 @@ console.log(item)
                   />
 
                   <Button onClick={(e) => {
-                      if(showEditPraticeTestInput == index + i){
+                      if(showEditPraticeTestInput == index + i + item.id){
                         setshowEditPraticeTestInput(null)
                         setupdatePraticeTestName("")
                       }else{
-                        setshowEditPraticeTestInput(index + i)
+                        setshowEditPraticeTestInput(index + i + item.id)
                         setupdatePraticeTestName(item.title)
                       }
                         
@@ -2205,7 +2209,7 @@ console.log(item)
                   }}  className="mx-1" variant="contained">Save</Button>
                   </div>
                 ) :
-                (<Card key={index + i} className="my-3">
+                (<Card key={index + i + item.id} className="my-3">
                 <div className="d-flex justify-content-between align-items-center p-2">
                   <span>
                     <Typography>
@@ -2213,11 +2217,11 @@ console.log(item)
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                           <EditIcon onClick={(e) => {
-                              if(showEditPraticeTestInput == index + i){
+                              if(showEditPraticeTestInput == index + i + item.id){
                                 setshowEditPraticeTestInput(null)
                                 setupdatePraticeTestName("")
                               }else{
-                                setshowEditPraticeTestInput(index + i)
+                                setshowEditPraticeTestInput(index + i + item.id)
                                 setupdatePraticeTestName(item.title)
                               }
                                 
@@ -2227,12 +2231,12 @@ console.log(item)
                     </Typography>
                     </span>
                     <span>
-                    {showContentAdd == index + i ? (
+                    {showContentAdd == index + i + item.id ? (
                       <Button
                         onClick={() => {
                           setshowDescRes(true)
                           setshowMain(null)
-                          console.log(index + i)
+                          console.log(index + i + item.id)
                           setshowContentAdd(null)
                           setcurriculumvisiblitymc("")
                           // handleContentshow()
@@ -2246,8 +2250,8 @@ console.log(item)
                     ) : (
                       <Button
                         onClick={() => {
-                          setshowMain(showMain == index + i ? null : index + i)
-                          setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                          setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
+                          setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
 
                           console.log(item)
                           setmainSectionID(section.courseSection.sectionId)
@@ -2277,7 +2281,7 @@ console.log(item)
                     )}
                  </span>
                  </div>
-                  {showMain == index + i && (
+                  {showMain == index + i + item.id && (
                       <div className="p-3">
                       <Tabs
                       defaultActiveKey="practice"
@@ -2367,7 +2371,7 @@ console.log(item)
                 {/* Coding Exercise */}
                 {item.type == "Coding Exercise" && (
 
-                    showEditCodingExerciseInput == index + i ? (
+                    showEditCodingExerciseInput == index + i + item.id ? (
                       <div className="d-flex">
                       <Form.Control 
                         className="mx-1"
@@ -2378,11 +2382,11 @@ console.log(item)
                       />
 
                       <Button onClick={(e) => {
-                          if(showEditCodingExerciseInput == index + i){
+                          if(showEditCodingExerciseInput == index + i + item.id){
                             setshowEditCodingExerciseInput(null)
                             setupdateCodingExerciseName("")
                           }else{
-                            setshowEditCodingExerciseInput(index + i)
+                            setshowEditCodingExerciseInput(index + i + item.id)
                             setupdateCodingExerciseName(item.title)
                           }
                             
@@ -2392,7 +2396,7 @@ console.log(item)
                       }}  className="mx-1" variant="contained">Save</Button>
                       </div>
                     ): 
-                    (<Card key={index + i} className="my-3">
+                    (<Card key={index + i + item.id} className="my-3">
                     <div className="d-flex justify-content-between align-items-center p-2">
                       <span>
                         <Typography>
@@ -2400,11 +2404,11 @@ console.log(item)
                           <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
                           <span className="mx-5">
                               <EditIcon onClick={(e) => {
-                                  if(showEditCodingExerciseInput == index + i){
+                                  if(showEditCodingExerciseInput == index + i + item.id){
                                     setshowEditCodingExerciseInput(null)
                                     setupdateCodingExerciseName("")
                                   }else{
-                                    setshowEditCodingExerciseInput(index + i)
+                                    setshowEditCodingExerciseInput(index + i + item.id)
                                     setupdateCodingExerciseName(item.title)
                                   }
                                     
@@ -2414,12 +2418,12 @@ console.log(item)
                         </Typography>
                       </span>
                       <span>
-                        {showContentAdd == index + i ? (
+                        {showContentAdd == index + i + item.id ? (
                           <Button
                             onClick={() => {
                               setshowDescRes(true)
                               setshowMain(null)
-                              console.log(index + i)
+                              console.log(index + i + item.id)
                               setshowContentAdd(null)
                               setcurriculumvisiblitymc("")
                               // handleContentshow()
@@ -2433,8 +2437,8 @@ console.log(item)
                         ) : (
                           <Button
                             onClick={() => {
-                              setshowMain(showMain == index + i ? null : index + i)
-                              setshowContentAdd(showContentAdd == index + i ? null : index + i)
+                              setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
+                              setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
 
                               console.log(item)
                               setmainSectionID(section.courseSection.sectionId)
@@ -2462,7 +2466,7 @@ console.log(item)
                         </span>
                       </div>
 
-                    {showMain == index + i && (
+                    {showMain == index + i + item.id && (
                       <div className="p-3">
                       <Tabs
                       defaultActiveKey="coding"
@@ -2560,7 +2564,7 @@ console.log(item)
                 </Card>))}
 
                 </>
-              ))}
+                )})}
 
               </div>
 

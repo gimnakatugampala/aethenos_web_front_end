@@ -1794,7 +1794,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const PricingConvertToFree = async(code) =>{
+ export const PricingConvertToFree = async(code,setloading_button) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -1814,11 +1814,13 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
       if(result.message == "Error"){
         ErrorAlert("Error",result.variable)
+        setloading_button(false)
         return
       }
 
       if(result.variable == "200"){
         SuccessAlert("Updated",result.message)
+        setloading_button(false)
         UpdateCourseProgress(code)
         return
       }
@@ -2545,7 +2547,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  }
 
- export const AddCurriculumVideo = async(code,ID,video,duration,setsectionData,setshowMain) =>{
+ export const AddCurriculumVideo = async(code,ID,video,duration,setsectionData,setshowMain,setshowDescRes,setshowContentAdd,setcurriculumvisiblity) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2580,6 +2582,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
           GetCurriculum(code,setsectionData)
           UpdateCourseProgress(code)
           setshowMain(null)
+          setshowDescRes(true)
+          setshowContentAdd(null)
+          setcurriculumvisiblity("")
+
           return
         }
   
