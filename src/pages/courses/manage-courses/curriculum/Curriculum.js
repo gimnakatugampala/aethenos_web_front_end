@@ -336,7 +336,7 @@ const Curriculum = ({code}) => {
             //   text: "Your file has been deleted.",
             //   icon: "success"
             // });
-            VideoDelete(video.url,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowContentAdd)
+            VideoDelete(video.url,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowDescRes,setshowContentAdd,setcurriculumvisiblity)
           }
 
         });
@@ -773,7 +773,7 @@ const Curriculum = ({code}) => {
       return
     }
 
-    AddCurriculumArticle(code,ID,article,setsectionData,setarticle,setshowMain)
+    AddCurriculumArticle(code,ID,article,setsectionData,setarticle,setshowMain,setshowDescRes,setshowContentAdd)
    }
 
 // Save Video > Video
@@ -1093,8 +1093,9 @@ console.log(item)
                                     </div>
 
                                     <div className="my-3">
-
                                           {/* List of Resources / External Link */}
+                                         {item.description != "N/A" && <p className="m-0 p-0"><b>Description</b></p> } 
+                                          <p>{item.description != "N/A" && removeHtmlTags(item.description)}</p>
 
                                           <>
                                               {showDescription == index + i + item.id && (
@@ -1498,6 +1499,51 @@ console.log(item)
                           {item.curriculumItemFiles.length != 0 && (
                             showMain == index + i + item.id && (
                               <div className="my-3">
+
+                                {/* Display Video After Upaed Video */}
+
+                                <div className="p-3">
+                                    {/* Upload Input */}
+                                    <Form.Group controlId="formFile" className="my-3">
+                                    <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
+                                    <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
+                                  </Form.Group>
+        
+        
+                                  {/* After Upload */}
+                                  <Table striped bordered hover>
+                                      <thead>
+                                        <tr>
+                                          <th>Filename</th>
+                                          <th>Type</th>
+                                          <th>Actions</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                      {item.curriculumItemFiles.length > 0 && (
+                                        item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
+                                            item.curriculumItemFiles
+                                                .filter(video => video.filetype === "Video")
+                                                .map((video, index) => (
+                                                    <tr key={index}>
+                                                      <td>{video.url}</td>
+                                                      <td>Video</td>
+                                                      <td><Button onClick={() => {
+                                                        handleVideoDelete(video)
+                                                      }} variant="contained"><DeleteIcon /></Button></td>
+                                                    </tr>
+                                                ))
+                                        ) : (
+                                            <p>No Video</p>
+                                        )
+                                  )}
+        
+                                      </tbody>
+                                    </Table>
+
+                                </div>
+
+                                {/* <h3>video</h3> */}
 
                                 {/*  Inputs of External Links / Resouces  */}
 

@@ -2511,7 +2511,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSour
 
  }
 
- export const AddCurriculumArticle = async(code,ID,article,setsectionData,setarticle,setshowMain) =>{
+ export const AddCurriculumArticle = async(code,ID,article,setsectionData,setarticle,setshowMain,setshowDescRes,setshowContentAdd) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2537,6 +2537,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
       SuccessAlert("Added", "Text Content Succesfull Added")
       setarticle("")
       setshowMain(null)
+      setshowDescRes(true)
+      setshowContentAdd(null)
       GetCurriculum(code,setsectionData)
 
       return
@@ -4270,7 +4272,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deletec
 
 }
 
-export const VideoDelete = async(id,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowContentAdd) =>{
+export const VideoDelete = async(id,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowDescRes,setshowContentAdd,setcurriculumvisiblity) =>{
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -4293,9 +4295,11 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
 
-      setcurriculumvisiblitymc("video")
       setshowMain(null)
-      // setshowContentAdd(null)
+      setshowDescRes(true)
+      setshowContentAdd(null)
+      setcurriculumvisiblity("")
+
       GetCurriculum(code,setsectionData)
     }
 
