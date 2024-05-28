@@ -49,15 +49,15 @@ function App({code}) {
           <Box my={4}>
             <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
               <Typography variant="h6" gutterBottom>
-                Do you want to publish this Course?
+              Do you want to unpublish this course?
               </Typography>
               <Typography variant="body1">
-                By unpublishing, your students won't be able to buy your course.
+              By unpublishing, new students won't be able to view or buy your course. Existing students will still have access to the course.
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <Grid container justifyContent="flex-end">
-                    <Button onClick={handleunpublish} variant="contained" color="secondary">
+                    <Button onClick={handleunpublish} variant="contained" color="primary">
                       Unpublish
                     </Button>
                   </Grid>

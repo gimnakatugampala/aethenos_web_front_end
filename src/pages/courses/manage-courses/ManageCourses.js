@@ -543,13 +543,13 @@ const ManageCourses = () => {
           <Modal.Title>Content Ownership</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h6 className='my-4'><b>Identify your ownership rights to the courses content</b></h6>
+          <h6 className='my-4'><b>Identify your ownership rights to the course content</b></h6>
 
       
           <div className="form-check my-3">
           <Checkbox checked={checkOnwership} onChange={(e) => setcheckOnwership(e.target.checked)} className="form-check-input"  defaultChecked size="small" />
           <label className="form-check-label mx-1"> 
-         <p><b>I created most or all of the contest of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos.</b></p> 
+         <p><b>I created most or all of the content of this course, and I have properly secured all of the rights necessary to publish all of the content of this course on Aethenos.</b></p> 
           </label>
         </div>
 

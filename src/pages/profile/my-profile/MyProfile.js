@@ -36,6 +36,7 @@ const MyProfile = () => {
     const [youtube, setyoutube] = useState("")
     const [profile_img, setprofile_img] = useState("")
     const [uploadImage, setuploadImage] = useState("")
+    const [preview_img, setpreview_img] = useState("")
 
     const [btn_loading, setbtn_loading] = useState(false)
 
@@ -94,7 +95,13 @@ const MyProfile = () => {
         }else if(last_name == ""){
             ErrorAlert("Error","Please Enter Last Name")
             return
-        }
+        }else if(headline == ""){
+          ErrorAlert("Error","Please Enter Headline")
+          return
+        }else if(biography == ""){
+          ErrorAlert("Error","Please Enter Biography")
+          return
+      }
 
         UpdateProfileDetails(uploadImage,
             first_Name,
@@ -110,6 +117,7 @@ const MyProfile = () => {
 
     }
 
+    // const [preview_img, setpreview_img] = useState("")
     // Image Upload
     const handleImageUpload = (event) =>{
         const input =  event.target;
@@ -122,7 +130,7 @@ const MyProfile = () => {
 
         reader.onload = function (e) {
           console.log(e.target.result)
-          setprofile_img(e.target.result)
+          setpreview_img(e.target.result)
           // The e.target.result contains the temporary link to the image
         //   console.log('Temporary Link:', e.target.result);
         };
@@ -195,26 +203,52 @@ const MyProfile = () => {
       <Tab eventKey="up" title="Aethenos Profile">
 
         <div className='row'>
+
+        <div className='col-md-5'>
+
+            <p className='m-0 p-0'><b>Image preview</b></p>
+            <label>Minimum 200x200 pixels, Maximum 6000x6000 pixels</label>
+
+            {preview_img == "" ? (
+              <div className='my-4 bg-light border p-3 text-center'>
+                {profile_img == "" ? <img src='https://img-c.udemycdn.com/user/200_H/anonymous_3.png' /> : <img style={{height:'100px',objectFit:'cover'}} id='previewImage' src={`${FILE_PATH}/${profile_img}`} />  } 
+              </div>
+          ) : (
+            <div className='my-4 bg-light border p-3 text-center'>
+                { <img style={{height:'100px',objectFit:'cover'}} id='previewImage' src={`${preview_img}`} />  } 
+            </div>
+          )}
+
+            </div>
+
+            <div className='col-md-4'>
+            <div className='mt-5'>
+                <label for="formFile" class="form-label">Upload Image</label>
+                <input onChange={(e) => handleImageUpload(e)} accept='image/*' class="form-control" type="file" id="formFile" />
+            </div>
+
+            </div>
+
             <div className='col-md-6'>
 
             <div class="mb-3">
-                <label class="form-label">First Name</label>
+                <label class="form-label">First Name <span className='text-danger'>*</span></label>
                 <input value={first_Name} onChange={(e) => setfirst_Name(e.target.value)} type="text" class="form-control" placeholder="First Name" />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Last Name</label>
+                <label class="form-label">Last Name <span className='text-danger'>*</span></label>
                 <input value={last_name} onChange={(e) => setlast_name(e.target.value)} type="text" class="form-control" placeholder="Last Name" />
             </div>
 
-            <label class="form-label">Headline</label>
+            <label class="form-label">Headline<span className='text-danger'>*</span></label>
             <div class="input-group mb-3">
-                <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Udemy" />
+                <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Aethenos" />
                 <span class="input-group-text" >{60 - headline.length}</span>
             </div>
 
             <div class="mb-3">
-                <label  class="form-label">Biography</label>
+                <label  class="form-label">Biography<span className='text-danger'>*</span></label>
                 <textarea value={biography} onChange={(e) => setbiography(e.target.value)} class="form-control"  rows="3"></textarea>
             </div>
 
@@ -265,33 +299,7 @@ const MyProfile = () => {
 
       </Tab>
 
-      
-      <Tab eventKey="profile" title="Profile Picture">
-
-        <div className='row'>
-            <div className='col-md-6'>
-
-            <p className='m-0 p-0'><b>Image preview</b></p>
-            <label>Minimum 200x200 pixels, Maximum 6000x6000 pixels</label>
-
-            <div className='my-4 bg-light border p-3 text-center'>
-               {profile_img == "" ? <img src='https://img-c.udemycdn.com/user/200_H/anonymous_3.png' /> : <img style={{height:'300px'}} id='previewImage' src={`${FILE_PATH}/${profile_img}`} />  } 
-            </div>
-
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Image</label>
-                <input onChange={(e) => handleImageUpload(e)} accept='image/*' class="form-control" type="file" id="formFile" />
-            </div>
-
-            </div>
-
-        </div>
-
-        {btn_loading ? <Button  variant="contained"><Spinner size="sm" animation="border" variant="light" /></Button> : <Button  onClick={handleProfileData} variant="contained">Save</Button>}
-     
-
-
-      </Tab>
+   
 
       <Tab eventKey="instructor-terms" title="Instructor Terms">
 

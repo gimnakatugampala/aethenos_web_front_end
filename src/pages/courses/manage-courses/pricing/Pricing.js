@@ -4066,79 +4066,84 @@ const Pricing = ({code}) => {
               <br />
 
                     <div className="row border border-secondary p-3">
-                      <div className="price-range col-md-2">
-                        <Form.Label className="pricing-label"><b>Global List Price (USD)</b></Form.Label>
-                          <InputGroup className="mb-3">
-                            <InputGroup.Text id="basic-addon1">$</InputGroup.Text>
-                            <Form.Control
-                              isInvalid={DGlobalPricing != 0 && (DGlobalPricing < PriceRangeMinDefault || DGlobalPricing > PriceRangeMaxDefault ?  true : false)}
-                              value={DGlobalPricing}
-                              onChange={handleChangeGlobalPrice}
-                              placeholder="USD"
-                              aria-label="USD"
-                              aria-describedby="basic-addon1"
-                            />
+
+
+                    <table className="table table-striped text-center">
+                    <thead>
+                      <tr>
+                        <th className="col-2" scope="col">Country</th>
+                        <th scope="col">Currency</th>
+                        <th scope="col">Price Range</th>
+                        <th  scope="col">List Price</th>
+
+                        <th scope="col">Discount Type</th>
+                        <th scope="col">Discount %</th>
+                        <th scope="col">Discount Amount</th>
+                        <th scope="col">Net Price</th>
+                      
+
+
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>Worldwide
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("USD"))}{GlobalTip} may optimize sales.</Form.Label></td>
+                        </td>
+
+                          <td>USD</td>
+                          <td style={{whiteSpace:'nowrap'}}>${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</td>
+                          <td>
+                          <Form.Control  
+                            style={{width:100}}
+                            isInvalid={DGlobalPricing != 0 && (DGlobalPricing < PriceRangeMinDefault || DGlobalPricing > PriceRangeMaxDefault ?  true : false)}
+                            value={DGlobalPricing}
+                            onChange={handleChangeGlobalPrice}
+                            type="text" />
                               <Form.Control.Feedback type="invalid">
                                 Not within range
                               </Form.Control.Feedback>
-                          </InputGroup>
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}> Tip : Pricing around ${GlobalTip} may optimize sales.</Form.Label>
-                          <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Price range: ${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</i></Form.Label>
-                          
-                      </div>
-
-                      <div className="col-md-3">
-                      <Form.Label className="pricing-label"><b>Discount Type</b></Form.Label>
-                      <select value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
-                        <option value="0" disabled selected>Select an Option</option>
-                        {dis_types.map((type,index) => (
-                          <option key={index} value={type.id}>{type.name}</option>
-                        ))}
-                      </select>
-                      </div>
-
-                      {/* {showDefaultDiscountInput && ( */}
-                        <>
-                        {/* {showDefaultPercentDiscountInput && ( */}
-                        <div className="col-md-2">
-                        <Form.Label className="pricing-label"><b>Discount %</b></Form.Label>
-                        <Form.Control disabled={DDisType == 3 || DDisType == 1} value={DDisPercent} onChange={handleDefaultPercentageDiscount} type="text" />
-
-                      
-                        </div>
-                        {/* // )} */}
-
-                        {/* // {showDefaultValueDiscountInput && ( */}
-
-                      <div className="col-md-2">
-                      <Form.Label className="pricing-label"><b>Discount Amt (USD)</b></Form.Label>
-                      <Form.Control disabled={DDisType == 2 || DDisType == 1} value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
-                      
-                      </div>
-                        {/* // )} */}
-
-                        </>
-                      {/* // )} */}
-
-
-                      <div className="col-md-3">
-                      <Form.Label className="pricing-label"><b>Global Net Price (USD)</b></Form.Label>
-                      <Form.Control 
-                      isInvalid={formatNumber(DGlobalNetPrice) < MinDefaultValue ? true : false} 
-                      readOnly disabled 
-                      value={DGlobalNetPrice == "" ? 0 : formatNumber(DGlobalNetPrice)}  />
-                       <Form.Control.Feedback type="invalid">
-                                Not within range
-                      </Form.Control.Feedback>
-                      <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
-
-                      </div>
-
-          
-
-                      <div className="col-6"></div>
-
+                          </td>
+                          <td>
+                          <select style={{width:130}} value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
+                            <option value="0" disabled selected>Select an Option</option>
+                            {dis_types.map((type,index) => (
+                              <option key={index} value={type.id}>{type.name}</option>
+                            ))}
+                          </select>
+                          </td>
+                          <td>
+                        
+                          <Form.Control disabled={DDisType == 3 || DDisType == 1} value={DDisPercent} onChange={handleDefaultPercentageDiscount}  type="text" />
                   
+                          </td>
+                          <td>
+                       
+                          <Form.Control  disabled={DDisType == 2 || DDisType == 1} value={DDisAmt} onChange={handleDefaultDiscountAmt} type="text" />
+                    
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                          <Form.Control 
+                            isInvalid={formatNumber(DGlobalNetPrice) != "0.00" && (formatNumber(DGlobalNetPrice) < MinDefaultValue) ? true : false} 
+                            readOnly disabled 
+                            value={DGlobalNetPrice == "" ? "0.00" : formatNumber(DGlobalNetPrice)}  />
+                                <Form.Control.Feedback type="invalid">
+                                Not within range
+                                </Form.Control.Feedback>
+
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{MinDefaultValue}</Form.Label>
+
+                        </tr>
+                          </td>
+                        
+                        </tr>
+
+                      </tbody>
+                    </table>
+
                     </div>
                   </div>
 
@@ -4164,7 +4169,7 @@ const Pricing = ({code}) => {
                     <tbody>
                     
                         <tr>
-                          <td >America
+                          <td >United States + other USD countries*
                         <td className="col-12 font-italic mt-5">  
                       
                           <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("USD"))}{USATip} may optimize sales.</Form.Label></td>
@@ -4567,7 +4572,7 @@ const Pricing = ({code}) => {
                         </tr>
 
                         <tr>
-                          <td>European Union
+                          <td>European Union (EU) + other EUR conuntries*
                         <td className="col-12 font-italic mt-5">  
                           <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("EUR"))}{EUTip} may optimize sales.</Form.Label></td>
                         </td>
@@ -5610,7 +5615,7 @@ const Pricing = ({code}) => {
                           </td>
                         
                         </tr> 
-
+{/* 
                         <tr>
                           <td>Turkey
                         <td className="col-12 font-italic mt-5">  
@@ -5641,14 +5646,14 @@ const Pricing = ({code}) => {
                             </Select>
                           </td>
                           <td>
-                            {/* {showInputPercentTurkey && ( */}
+                          
                           <Form.Control disabled={TurkeyDisType == 3 || TurkeyDisType == 1} value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
-                            {/* )} */}
+                          
                           </td>
                           <td>
-                            {/* {showInputDisAmtTurkey && ( */}
+                            
                           <Form.Control disabled={TurkeyDisType == 2 || TurkeyDisType == 1} value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
-                            {/* )} */}
+                            
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
 
@@ -5665,7 +5670,7 @@ const Pricing = ({code}) => {
                         </tr>
                           </td>
                         
-                        </tr>
+                        </tr> */}
 
                           <tr>
                           <td>Taiwan

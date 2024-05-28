@@ -252,7 +252,7 @@ const handleFileChange = (event) => {
         <hr />
 
         <p>
-          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        Please give details below to construct an attractive course landing page that will compel students to sign up to your course.
         </p>
 
       

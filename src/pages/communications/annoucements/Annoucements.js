@@ -166,9 +166,7 @@ const Annoucements = () => {
 
           {!isComposeVisible && (
                 <p>
-                Support your students' learning by sending up to four educational announcements a
-                      month. <br/> Your students get these announcements both by email and within their
-                      Aethenos accounts.
+                You can send educational announcements to your students here. Students will get these announcements via their Aethenos account dashboard.
                 </p>
           )}
 

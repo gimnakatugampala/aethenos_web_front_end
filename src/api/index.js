@@ -4364,7 +4364,7 @@ export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,p
   fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/addInstructorPaymentDetails", requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      Unauthorized(result.status,"payouts") 
+      Unauthorized(result.status,"profile") 
       console.log(result)
 
       if(result.variable == "200"){
@@ -4392,7 +4392,7 @@ const requestOptions = {
 fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/getInstructorPaymentDetails", requestOptions)
   .then((response) => response.json())
   .then((result) => {
-    Unauthorized(result.status,"payouts") 
+    Unauthorized(result.status,"profile") 
 
     console.log(result)
 

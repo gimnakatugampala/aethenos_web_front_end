@@ -210,7 +210,7 @@ function Header({
         <ListItemIcon>
          <AccountCircleIcon fontSize="medium" /> 
          </ListItemIcon>
-         Profile
+         Profile Details
         </MenuItem>
         </a>
 
@@ -221,20 +221,20 @@ function Header({
         <ListItemIcon>
           <CheckCircleIcon fontSize="medium" />
         </ListItemIcon>
-           Verification
+         Instructor  Verification
         </MenuItem>
         </a>
 
         <Divider />
 
-        <a href="/payouts">
+        {/* <a href="/payouts">
         <MenuItem onClick={handleClose}>
         <ListItemIcon>
             <PaidIcon fontSize="medium"  />
           </ListItemIcon>
-          Payouts & Tax Details
+          Payouts Details
         </MenuItem>
-        </a>
+        </a> */}
 
         <Divider />
         
