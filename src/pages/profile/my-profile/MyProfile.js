@@ -17,11 +17,16 @@ import Typography from '@mui/material/Typography';
 import { AddWalletDetails, GetPaypalProfileDetails, GetWalletDetails } from '../../../api';
 import Form from 'react-bootstrap/Form';
 import Checkbox from '@mui/material/Checkbox';
+import { useLocation } from 'react-router-dom';
 
 
 
 const labelCheckBox = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const MyProfile = () => {
 
@@ -60,6 +65,10 @@ const MyProfile = () => {
       SubmitInstructorTerms()
 
     }
+
+    // ============== GET THE QUERY ========
+    const query = useQuery();
+    const code = query.get('code');
 
     
 
@@ -200,240 +209,242 @@ const MyProfile = () => {
         id="uncontrolled-tab-example"
         className="my-3"
         >
-      <Tab eventKey="up" title="Aethenos Profile">
-
-        <div className='row'>
-
-        <div className='col-md-5'>
-
-            <p className='m-0 p-0'><b>Image preview</b></p>
-            <label>Minimum 200x200 pixels, Maximum 6000x6000 pixels</label>
-
-            {preview_img == "" ? (
-              <div className='my-4 bg-light border p-3 text-center'>
-                {profile_img == "" ? <img src='https://img-c.udemycdn.com/user/200_H/anonymous_3.png' /> : <img style={{height:'100px',objectFit:'cover'}} id='previewImage' src={`${FILE_PATH}/${profile_img}`} />  } 
-              </div>
-          ) : (
-            <div className='my-4 bg-light border p-3 text-center'>
-                { <img style={{height:'100px',objectFit:'cover'}} id='previewImage' src={`${preview_img}`} />  } 
-            </div>
-          )}
-
-            </div>
-
-            <div className='col-md-4'>
-            <div className='mt-5'>
-                <label for="formFile" class="form-label">Upload Image</label>
-                <input onChange={(e) => handleImageUpload(e)} accept='image/*' class="form-control" type="file" id="formFile" />
-            </div>
-
-            </div>
-
-            <div className='col-md-6'>
-
-            <div class="mb-3">
-                <label class="form-label">First Name <span className='text-danger'>*</span></label>
-                <input value={first_Name} onChange={(e) => setfirst_Name(e.target.value)} type="text" class="form-control" placeholder="First Name" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Last Name <span className='text-danger'>*</span></label>
-                <input value={last_name} onChange={(e) => setlast_name(e.target.value)} type="text" class="form-control" placeholder="Last Name" />
-            </div>
-
-            <label class="form-label">Headline<span className='text-danger'>*</span></label>
-            <div class="input-group mb-3">
-                <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Aethenos" />
-                <span class="input-group-text" >{60 - headline.length}</span>
-            </div>
-
-            <div class="mb-3">
-                <label  class="form-label">Biography<span className='text-danger'>*</span></label>
-                <textarea value={biography} onChange={(e) => setbiography(e.target.value)} class="form-control"  rows="3"></textarea>
-            </div>
-
-            </div>
-
-
-            <div className='col-md-6'>
-
-            <div class="mb-3">
-                <label class="form-label">Website</label>
-                <input value={website} onChange={(e) => setwebsite(e.target.value)} type="text" class="form-control" placeholder="URL" />
-            </div>
-
-            <label class="form-label">Twitter</label>
-                <div class="input-group mb-3">
-                <span class="input-group-text" >http://www.twitter.com/</span>
-                <input value={twitter} onChange={(e) => settwitter(e.target.value)} type="text" class="form-control"  />
-            </div>
-
-            <label class="form-label">Facebook</label>
-                <div class="input-group mb-3">
-                <span class="input-group-text" >http://www.facebook.com/</span>
-                <input value={facebook} onChange={(e) => setfacebook(e.target.value)} type="text" class="form-control"  />
-            </div>
-
-            <label class="form-label">LinkedIn</label>
-                <div class="input-group mb-3">
-                <span class="input-group-text" >http://www.linkedin.com/</span>
-                <input value={linkedin} onChange={(e) => setlinkedin(e.target.value)} type="text" class="form-control"  />
-            </div>
-
-            <label class="form-label">Youtube</label>
-                <div class="input-group mb-3">
-                <span class="input-group-text" >http://www.youtube.com/</span>
-                <input value={youtube} onChange={(e) => setyoutube(e.target.value)} type="text" class="form-control"  />
-            </div>
-
-            </div>
-        </div>
-
-        {btn_loading ? <Button  variant="contained"><Spinner size="sm" animation="border" variant="light" /></Button> : <Button  onClick={handleProfileData} variant="contained">Save</Button>}
-
-        
-
-        
-    
-        
-
-      </Tab>
-
-   
-
-      <Tab eventKey="instructor-terms" title="Instructor Terms">
-
-        <div className='row mt-5 mx-auto '>
-            <div className='col-md-6 text-center'>
-            <p >When you are signing up to become an instructor on the Aethenos platform, you are required to agree to abide by the <a href='/instructor-terms'>Instructor Terms.</a></p>
-            <p>It is important to read them as they cover details about the Aethenos platform that relevant to instructors such as payments, pricing, and your obligations as an instructor. </p>
-            <p><Checkbox checked={InstructorTermsCheck} onChange={(e) => setInstructorTermsCheck(e.target.checked)} size="small" /> I have read and agree to the Aethenos Instructor Terms.</p>
-
-                <Button onClick={handleSubmitInstructorTerms} variant="contained">Save</Button>
-            </div>
-        </div>
-
-     
-
-
-      </Tab>
-
-      <Tab eventKey="payout-tax-details" title="Payment Details">
-
-        <div className='container'>
-            <h3>Payment Method</h3>
-
-            <Alert variant="secondary">
-                <div className='d-flex justify-content-start align-items-start'>
-                    <InfoIcon className='mr-2' />
-                    <p className='m-0 p-0'><b>Select your payout method below.</b></p>
-                </div>
-                {/* <br />
-                <div>
-                    <p className='m-0 p-0'>We will have radio buttons for PayPal and Pioneer for instructor to select.</p>
-                    <p className='m-0 p-0'>Once an option is selected we will have 2 fields to fill out like below:</p>
-                </div> */}
-            </Alert>
-
-            <Card>
-            <CardContent>
+          <Tab eventKey="up" title="Aethenos Profile">
 
             <div className='row'>
 
-                <div className='col-md-12 my-3'>
-                <div className='d-flex justify-content-between'>
-                    <div>
-                        <Radio
-                          checked={selectedValue === 'paypal'}
-                          onChange={handleChange}
-                          value="paypal"
-                          name="radio-buttons"
-                          inputProps={{ 'aria-label': 'A' }}
-                        />
-                            <img width={100} src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png' />
-                        </div>
+            <div className='col-md-5'>
 
-                        <div className='row'>
-                        <div className='col-md-6'>
-                        <Form>
-                            <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Control disabled={selectedValue != 'paypal'} value={paypalEmail} onChange={(e) => setpaypalEmail(e.target.value)}  type="email" placeholder="Enter Paypal Email" />
-                            </Form.Group>
-                        </Form>
-                        </div>
-                        <div className='col-md-6'>
-                        <Form>
-                            <Form.Group  controlId="exampleForm.ControlInput1">
-                            <Form.Control disabled={selectedValue != 'paypal'} value={paypalUsername} onChange={(e) => setpaypalUsername(e.target.value)}  type="text" placeholder="Enter Paypal Username" />
-                            </Form.Group>
-                        </Form>
+                <p className='m-0 p-0'><b>Image preview</b></p>
+                <label>Minimum 200x200 pixels, Maximum 6000x6000 pixels</label>
 
-                        </div>
-                   
-
-                        </div>
-
-                        </div>
+                {preview_img == "" ? (
+                  <div className='my-4 bg-light border p-3 text-center'>
+                    {profile_img == "" ? <img src='https://img-c.udemycdn.com/user/200_H/anonymous_3.png' /> : <img style={{height:'100px',objectFit:'cover'}} id='previewImage' src={`${FILE_PATH}/${profile_img}`} />  } 
+                  </div>
+              ) : (
+                <div className='my-4 bg-light border p-3 text-center'>
+                    { <img style={{height:'100px',objectFit:'cover'}} id='previewImage' src={`${preview_img}`} />  } 
+                </div>
+              )}
 
                 </div>
 
-                <div className='col-md-12 my-3'>
-                <div className='d-flex justify-content-between'>
-                        <div>
-                        <Radio
-                          checked={selectedValue === 'payoneer'}
-                          onChange={handleChange}
-                          value="payoneer"
-                          name="radio-buttons"
-                          inputProps={{ 'aria-label': 'B' }}
-                        />
-                            <img width={100} src='/images/payoneer.png' />
-                        </div>
-
-                        <div className='row'>
-                        <div className='col-md-6'>
-                        <Form>
-                            <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Control disabled={selectedValue != 'payoneer'} value={payoneerEmail} onChange={(e) => setpayoneerEmail(e.target.value)} type="email" placeholder="Enter Payoneer Email" />
-                            </Form.Group>
-                        </Form>
-                        </div>
-                        <div className='col-md-6'>
-                        <Form>
-                            <Form.Group  controlId="exampleForm.ControlInput1">
-                            <Form.Control disabled={selectedValue != 'payoneer'} value={payoneerUsername} onChange={(e) => setpayoneerUsername(e.target.value)}  type="text" placeholder="Enter Payoneer Email" />
-                            </Form.Group>
-                        </Form>
-
-                        </div>
-                    
-
-                        </div>
-
-                        </div>
+                <div className='col-md-4'>
+                <div className='mt-5'>
+                    <label for="formFile" class="form-label">Upload Image</label>
+                    <input onChange={(e) => handleImageUpload(e)} accept='image/*' class="form-control" type="file" id="formFile" />
+                </div>
 
                 </div>
 
-                <div className='col-md-12 my-3'>
-                  {btn_loading_payment_details ? (
-                    <Button variant="contained"><Spinner  size="sm" animation="border" variant="light" /></Button>
-                  ) : (
-                    <Button onClick={handleConnectWallet} variant="contained">Save</Button>
-                  )}
+                <div className='col-md-6'>
+
+                <div class="mb-3">
+                    <label class="form-label">First Name <span className='text-danger'>*</span></label>
+                    <input value={first_Name} onChange={(e) => setfirst_Name(e.target.value)} type="text" class="form-control" placeholder="First Name" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Last Name <span className='text-danger'>*</span></label>
+                    <input value={last_name} onChange={(e) => setlast_name(e.target.value)} type="text" class="form-control" placeholder="Last Name" />
+                </div>
+
+                <label class="form-label">Headline<span className='text-danger'>*</span></label>
+                <div class="input-group mb-3">
+                    <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Aethenos" />
+                    <span class="input-group-text" >{60 - headline.length}</span>
+                </div>
+
+                <div class="mb-3">
+                    <label  class="form-label">Biography<span className='text-danger'>*</span></label>
+                    <textarea value={biography} onChange={(e) => setbiography(e.target.value)} class="form-control"  rows="3"></textarea>
+                </div>
+
+                </div>
+
+
+                <div className='col-md-6'>
+
+                <div class="mb-3">
+                    <label class="form-label">Website</label>
+                    <input value={website} onChange={(e) => setwebsite(e.target.value)} type="text" class="form-control" placeholder="URL" />
+                </div>
+
+                <label class="form-label">Twitter</label>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text" >http://www.twitter.com/</span>
+                    <input value={twitter} onChange={(e) => settwitter(e.target.value)} type="text" class="form-control"  />
+                </div>
+
+                <label class="form-label">Facebook</label>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text" >http://www.facebook.com/</span>
+                    <input value={facebook} onChange={(e) => setfacebook(e.target.value)} type="text" class="form-control"  />
+                </div>
+
+                <label class="form-label">LinkedIn</label>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text" >http://www.linkedin.com/</span>
+                    <input value={linkedin} onChange={(e) => setlinkedin(e.target.value)} type="text" class="form-control"  />
+                </div>
+
+                <label class="form-label">Youtube</label>
+                    <div class="input-group mb-3">
+                    <span class="input-group-text" >http://www.youtube.com/</span>
+                    <input value={youtube} onChange={(e) => setyoutube(e.target.value)} type="text" class="form-control"  />
+                </div>
+
+                </div>
+            </div>
+
+            {btn_loading ? <Button  variant="contained"><Spinner size="sm" animation="border" variant="light" /></Button> : <Button  onClick={handleProfileData} variant="contained">Save</Button>}
+
+            
+
+            
+        
+            
+
+          </Tab>
+
+      
+
+          <Tab eventKey="instructor-terms" title="Instructor Terms">
+
+            <div className='row mt-5 mx-auto '>
+                <div className='col-md-6 text-center'>
+                <p >When you are signing up to become an instructor on the Aethenos platform, you are required to agree to abide by the <a href='/instructor-terms'>Instructor Terms.</a></p>
+                <p>It is important to read them as they cover details about the Aethenos platform that relevant to instructors such as payments, pricing, and your obligations as an instructor. </p>
+                <p><Checkbox checked={InstructorTermsCheck} onChange={(e) => setInstructorTermsCheck(e.target.checked)} size="small" /> I have read and agree to the Aethenos Instructor Terms.</p>
+
+                    <Button onClick={handleSubmitInstructorTerms} variant="contained">Save</Button>
                 </div>
             </div>
 
         
+
+
+          </Tab>
+
+          <Tab eventKey="payout-tax-details" title="Payment Details">
+
+            <div className='container'>
+                <h3>Payment Method</h3>
+
+                <Alert variant="secondary">
+                    <div className='d-flex justify-content-start align-items-start'>
+                        <InfoIcon className='mr-2' />
+                        <p className='m-0 p-0'><b>Select your payout method below.</b></p>
+                    </div>
+                   
+                </Alert>
+
+                <Card>
+                <CardContent>
+
+                <div className='row'>
+
+                    <div className='col-md-12 my-3'>
+                    <div className='d-flex justify-content-between'>
+                        <div>
+                            <Radio
+                              checked={selectedValue === 'paypal'}
+                              onChange={handleChange}
+                              value="paypal"
+                              name="radio-buttons"
+                              inputProps={{ 'aria-label': 'A' }}
+                            />
+                                <img width={100} src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png' />
+                            </div>
+
+                            <div className='row'>
+                            <div className='col-md-6'>
+                            <Form>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                <Form.Control disabled={selectedValue != 'paypal'} value={paypalEmail} onChange={(e) => setpaypalEmail(e.target.value)}  type="email" placeholder="Enter Paypal Email" />
+                                </Form.Group>
+                            </Form>
+                            </div>
+                            <div className='col-md-6'>
+                            <Form>
+                                <Form.Group  controlId="exampleForm.ControlInput1">
+                                <Form.Control disabled={selectedValue != 'paypal'} value={paypalUsername} onChange={(e) => setpaypalUsername(e.target.value)}  type="text" placeholder="Enter Paypal Username" />
+                                </Form.Group>
+                            </Form>
+
+                            </div>
+                      
+
+                            </div>
+
+                            </div>
+
+                    </div>
+
+                    <div className='col-md-12 my-3'>
+                    <div className='d-flex justify-content-between'>
+                            <div>
+                            <Radio
+                              checked={selectedValue === 'payoneer'}
+                              onChange={handleChange}
+                              value="payoneer"
+                              name="radio-buttons"
+                              inputProps={{ 'aria-label': 'B' }}
+                            />
+                                <img width={100} src='/images/payoneer.png' />
+                            </div>
+
+                            <div className='row'>
+                            <div className='col-md-6'>
+                            <Form>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                <Form.Control disabled={selectedValue != 'payoneer'} value={payoneerEmail} onChange={(e) => setpayoneerEmail(e.target.value)} type="email" placeholder="Enter Payoneer Email" />
+                                </Form.Group>
+                            </Form>
+                            </div>
+                            <div className='col-md-6'>
+                            <Form>
+                                <Form.Group  controlId="exampleForm.ControlInput1">
+                                <Form.Control disabled={selectedValue != 'payoneer'} value={payoneerUsername} onChange={(e) => setpayoneerUsername(e.target.value)}  type="text" placeholder="Enter Payoneer Email" />
+                                </Form.Group>
+                            </Form>
+
+                            </div>
+                        
+
+                            </div>
+
+                            </div>
+
+                    </div>
+
+                    <div className='col-md-12 my-3'>
+                      {btn_loading_payment_details ? (
+                        <Button variant="contained"><Spinner  size="sm" animation="border" variant="light" /></Button>
+                      ) : (
+                        <Button onClick={handleConnectWallet} variant="contained">Save</Button>
+                      )}
+                    </div>
+                </div>
+
+                  
+
+            
+                {code != null && (
+                <div className='mx-auto text-center'>
+                <Button className='mx-auto ' variant="contained"><a className='text-white' href={`/courses/manage/${code}/`}>Go back to course</a></Button>
+                </div>
+                )}
+
+                </CardContent>
+        
+            </Card>
+            </div>
             
 
-            </CardContent>
-    
-        </Card>
-        </div>
-        
 
-
-      </Tab>
+          </Tab>
 
     </Tabs>
 

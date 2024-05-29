@@ -459,8 +459,8 @@ const Curriculum = ({code}) => {
 
       CodingExerciseSave(
         mainSectionID,
-        CodingExerciseCode,
         CodingExerciseTitle,
+        CodingExerciseCode,
         CodingExerciseDesc,
         CodingExerciseInstructions,
         CodingExerciseVideo,
@@ -937,6 +937,11 @@ console.log(item)
         <p>Create separate sections for lessons and include lectures, quizzes, practice tests and assignments.</p>
         <p>Have a clear structure to your course content by following a good course outline and clearly label your sections and lectures. </p>
         <p>Please note that the maximum video content length on free courses is 2.5 hours.</p>
+        <p>For a paid course the minimum video content length should be 45 minutes and minimum number of lectures should be 5.</p>
+        <p>The maximum video content length on free courses is 2.5 hours. Please reduce your total video length to comply.</p>
+        <p>The minimum video content length on a paid courses is 45 minutes. Please reduce your total video length to comply.</p>
+        <p>The minimum number of lectures on a paid course should be 5 Please increase your number of lectures to comply.</p>
+        <p>The minimum video content length on a paid courses is 45 minutes. Please increase your total video length to comply.</p>
 
         {/* Section 1 */}
       {sectionData != null  ? (
@@ -1002,7 +1007,6 @@ console.log(item)
               {/* Lecture > Quiz > Assignment */}
               {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  { 
 
-// let randomNumber = Math.floor(Math.random() * 900) + 100;
 
                 return (
 

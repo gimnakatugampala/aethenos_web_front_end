@@ -1916,7 +1916,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const OwnThisContent = async(code,setShow) =>{
+ export const OwnThisContent = async(code,setbtn_loading,setcheckOnwership,setShow) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -1933,12 +1933,18 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
       console.log(result)
 
       if(result.variable == "200"){
-        // return "Owned"
+        
         setShow(false)
+        setcheckOnwership(true)
+
+          // Send to Request
+          RequestSubmitReview(code,setbtn_loading)
+
+
       }else{
         // return "AlreadyOwned"
 
-        ErrorAlert("Error","Something Went Wrong")
+        ErrorAlert("Error",result.variable)
       }
     })
     .catch(error => console.log('error', error));
@@ -2060,7 +2066,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const RequestSubmitReview = async(code) =>{
+ export const RequestSubmitReview = async(code,setbtn_loading) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2079,6 +2085,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
       if(result.variable == "200"){
         SuccessAlert("Success",result.message);
+        setbtn_loading(false)
 
         setTimeout(() => {
           window.location.href = "/courses"
@@ -3786,7 +3793,7 @@ formdata.append("description", `${PracticeTestDesc}`);
 formdata.append("duration", `${PracticeTestDuration}`);
 formdata.append("minimumPassMark", `${PracticeTestMinPassMark}`);
 formdata.append("instructions", `${PracticeTestInstructions}`);
-formdata.append("link", `${PracticeTestExLink}`);
+formdata.append("externalLink", `${PracticeTestExLink}`);
 PracticeTestQuestionFile !=null && formdata.append("questionSheet", PracticeTestQuestionFile);
 formdata.append("questionLink", `${PracticeTestQuestionExLink}`);
 PracticeTestSolutionsFile != null && formdata.append("solutionSheet", PracticeTestSolutionsFile);
@@ -3843,13 +3850,14 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addPrac
       return
     }
 
+
   })
   .catch((error) => console.error(error));
 
 
 }
 
-export const CodingExerciseSave = async(mainSectionID,CodingExerciseCode,CodingExerciseTitle,CodingExerciseDesc,CodingExerciseInstructions,CodingExerciseVideo,CodingExerciseDResourses,CodingExerciseExLink,CodingExerciseUploadEx,CodingExerciseExternalLink,CodingExerciseQVideo,CodingExercisesSolutionsFile,CodingExercisesExLinkSolutions,CodingExercisesSolutionsVideo,setCodingExerciseTitle,
+export const CodingExerciseSave = async(mainSectionID,CodingExerciseTitle,CodingExerciseCode,CodingExerciseDesc,CodingExerciseInstructions,CodingExerciseVideo,CodingExerciseDResourses,CodingExerciseExLink,CodingExerciseUploadEx,CodingExerciseExternalLink,CodingExerciseQVideo,CodingExercisesSolutionsFile,CodingExercisesExLinkSolutions,CodingExercisesSolutionsVideo,setCodingExerciseTitle,
   setCodingExerciseDesc,
   setCodingExerciseInstructions,
   setCodingExerciseVideo,
@@ -3883,7 +3891,7 @@ formdata.append("description", `${CodingExerciseDesc}`);
 formdata.append("instructions", `${CodingExerciseInstructions}`);
 CodingExerciseVideo !=null && formdata.append("video", CodingExerciseVideo);
 CodingExerciseDResourses !=null && formdata.append("resource", CodingExerciseDResourses);
-formdata.append("link", `${CodingExerciseExLink}`);
+formdata.append("externalLink", `${CodingExerciseExLink}`);
 CodingExerciseQVideo !=null && formdata.append("codingVideo", CodingExerciseQVideo);
 CodingExerciseUploadEx !=null && formdata.append("codingFiles", CodingExerciseUploadEx);
 formdata.append("codingLink", `${CodingExerciseExternalLink}`);

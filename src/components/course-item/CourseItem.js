@@ -83,16 +83,16 @@ const CourseItem = ({course,filledPercent}) => {
             <Chip 
               aria-owns={open ? 'mouse-over-popover' : undefined}
               icon={<MoreVertIcon />}
-              label="Rejected" color="primary" variant="outlined" />
+              label="Course approval rejected" color="primary" variant="outlined" />
               </Popover>
           ) : course.course.approvalType.id  == '3' ? (
-            <Chip label="Course Creation in Progress" color="success" variant="outlined" />
+            <Chip label="Course creation in progress" color="success" variant="outlined" />
           ) : course.course.approvalType.id  == '4' ? (
             <Chip label="Disapproved" color="primary" variant="outlined" />
           ) : course.course.approvalType.id  == '5' ? (
             <Chip label="Approved" color="success" variant="outlined" />
           ): course.course.approvalType.id  == '7' && (
-            <Chip label="Requested" color="warning" variant="outlined" />
+            <Chip label="Course approval requested" color="warning" variant="outlined" />
           ) }
 
             

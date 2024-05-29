@@ -53,7 +53,7 @@ const Pricing = ({code}) => {
 
   const [GlobalTip, setGlobalTip] = useState("")
 
-  const [checkPricingStatus, setcheckPricingStatus] = useState(false)
+  // const [checkPricingStatus, setcheckPricingStatus] = useState(false)
 
  
   
@@ -320,7 +320,7 @@ const Pricing = ({code}) => {
       setSAminValue
       )
 
-      GetCheckPricingAllStatus(setcheckPricingStatus)
+      // GetCheckPricingAllStatus(setcheckPricingStatus)
  
   }, [code])
 
@@ -3715,11 +3715,7 @@ const Pricing = ({code}) => {
         return
       }
 
-      if(checkPricingStatus == false){
-        ErrorAlert("Error","Please fill instructor details and payment details")
-        setloading_button(false)
-        return
-      }
+      
 
       var raw = {
         "courseCode":`${code}`,
@@ -4022,24 +4018,15 @@ const Pricing = ({code}) => {
 
         <hr />
 
-        {Paid_Type == 2 &&  (
-          checkPricingStatus == false && (
-          <div className="container">
-          <Alert severity="warning" color="warning">
-             To procced you need to complete the paid <a href="/profile">instructor details.</a>
-          </Alert>
-          </div>
-          )
-        )}
       
         {/* Paid Type */}
         {loading_btn ?  <LoadingSpinner w={"40%"} h={"100%"} wpclass={"m-4"} /> :      
         <>
         <div className="container m-2">
-        <h6>Please Select the Type of Your Course ?</h6>
+        <h6>Please select the type of your course:</h6>
           <Radio.Group onChange={onChangePaidType} value={Paid_Type}>
-          <Radio value={1} >Free Course</Radio>
-          <Radio value={2}>Paid Course</Radio>
+          <Radio value={1} >Free course</Radio>
+          <Radio value={2}>Paid course</Radio>
         </Radio.Group>
         </div>
 

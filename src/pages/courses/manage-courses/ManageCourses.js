@@ -41,9 +41,11 @@ import CourseMessages from './messages/courseMessages';
 import Promotion from './promotions/Promotion';
 import Settings from './settings/Settings'
 import AddCoupon from './promotions/AddCoupon';
-import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckInstructorVerify, ChangeInstructorVerify, CheckOwnershipOfContent, checkCourseCompletionStatus } from '../../../api'
+import { InstructorVerify , GetCourseTitle , OwnThisContent , RequestSubmitReview , CheckInstructorVerify, ChangeInstructorVerify, CheckOwnershipOfContent, checkCourseCompletionStatus, GetCheckPricingAllStatus } from '../../../api'
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import Spinner from 'react-bootstrap/Spinner';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -105,12 +107,17 @@ const ManageCourses = () => {
 
   const embeddedClientRef = useRef(null);
 
+  // ==================== INSTRUCTOR =================
+  const [checkPricingStatus, setcheckPricingStatus] = useState(false)
+
   const handleClose = () => setShow(false);
 
 
+  // SUBMIT FOR REVIEW
   const handleShow = () => {
     setbtn_loading(true)
 
+    //  == Fill the Section ===
     if(IntendedLearnersCheck == false){
       ErrorAlert("Empty section","Please Complete Intended Learners")
       setbtn_loading(false)
@@ -137,93 +144,121 @@ const ManageCourses = () => {
 
     if(CourseMessagesCheck == false){
       ErrorAlert("Empty section","Please Complete Course Message Section")
+
       setbtn_loading(false)
       return
     }
 
- 
-    
+    //  == Fill the Section ===
 
+    // === Check if the Intructor details are filled =====
+ 
+    if(checkPricingStatus == false){
+      // ErrorAlert("Error","Please fill instructor details and payment details")
+      Swal.fire({
+        title: "<strong>Fill Details</strong>",
+        icon: "info",
+        html: `
+          Please visit your profile page and fill the profile details , Accept terms and if this is a paid course then fill the payment details as well.
+        `,
+        showCloseButton: false,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: `
+          <a  className="text-white" href="/profile?code=${code}"><b>Go To My Profile</b></a>
+        `,
+        confirmButtonAriaLabel: "Thumbs up, great!",
+        cancelButtonText: `
+          <i class="fa fa-thumbs-down"></i>
+        `,
+        cancelButtonAriaLabel: "Thumbs down"
+      });
+      setbtn_loading(false)
+      return
+    }
+
+    // === Check if the Intructor details are filled =====
+
+
+
+    if(checkInstructorVerification == 0){
+          // PERSONA
+          const client = new Persona.Client({
+            ...options,
+            environment: "sandbox",
+            onLoad: (error) => {
+              if (error) {
+                setbtn_loading(false)
+                console.error(
+                  `Failed with code: ${error.code} and message ${error.message}`
+                );
+              }
+      
+              client.open();
+            },
+            onStart: (inquiryId) => {
+              console.log(`Started inquiry ${inquiryId}`);
+            },
+            onComplete: (inquiryId) => {
+              console.log(`Sending finished inquiry ${inquiryId} to backend`);
+              setbtn_loading(false)
+    
+                  // Verify Instructor
+                  ChangeInstructorVerify(code)
+
+                  // ========= Content Ownership ======
+                  // Get Content Ownership
+                  if(courseOwnership == 0){
+                    setShow(true)
+                    setbtn_loading(false)
+                    return
+                  }
+                  // ========= Content Ownership ======
+
+              //   // Send to Request
+              // RequestSubmitReview(code,setbtn_loading)
+    
+             
+    
+              fetch(`/server-handler?inquiry-id=${inquiryId}`);
+            },
+            onEvent: (name, meta) => {
+              switch (name) {
+                case "start":
+                  console.log(`Received event: start`);
+                  break;
+                default:
+                  console.log(
+                    `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+                  );
+                  setbtn_loading(false)
+              }
+            }
+          });
+          embeddedClientRef.current = client;
+      
+          window.exit = (force) =>
+            client ? client.exit(force) : alert("Initialize client first");
+          return
+    }
+
+
+    // If the Instructor is Verfied
+     // ========= Content Ownership ======
+    // Get Content Ownership
+    if(courseOwnership == 0){
+      setShow(true)
+      setbtn_loading(false)
+      return
+    }
+    // ========= Content Ownership ======
+
+      // Send to Request
+      RequestSubmitReview(code,setbtn_loading)
    
 
 
-    // Check Personal ID
-    // If Not Verify
-    if(checkInstructorVerification == 0){
-      // PERSONA
-      const client = new Persona.Client({
-        ...options,
-        environment: "sandbox",
-        onLoad: (error) => {
-          if (error) {
-            setbtn_loading(false)
-            console.error(
-              `Failed with code: ${error.code} and message ${error.message}`
-            );
-          }
-  
-          client.open();
-        },
-        onStart: (inquiryId) => {
-          console.log(`Started inquiry ${inquiryId}`);
-        },
-        onComplete: (inquiryId) => {
-          console.log(`Sending finished inquiry ${inquiryId} to backend`);
-          setbtn_loading(false)
-
-          // Verify Instructor
-          ChangeInstructorVerify(code)
-
-          if(courseOwnership == 0 || courseOwnership == false){
-            setShow(true)
-            return
-          }
-
-          fetch(`/server-handler?inquiry-id=${inquiryId}`);
-        },
-        onEvent: (name, meta) => {
-          switch (name) {
-            case "start":
-              console.log(`Received event: start`);
-              break;
-            default:
-              console.log(
-                `Received event: ${name} with meta: ${JSON.stringify(meta)}`
-              );
-              setbtn_loading(false)
-          }
-        }
-      });
-      embeddedClientRef.current = client;
-  
-      window.exit = (force) =>
-        client ? client.exit(force) : alert("Initialize client first");
-
-       // Get Content Ownership
-        if(courseOwnership == 0){
-          setShow(true)
-          setbtn_loading(false)
-          return
-        }
-
-      return
-    }else{
-      //  If Verified - Person
-
-       // Get Content Ownership
-      if(courseOwnership == 0){
-        setShow(true)
-        setbtn_loading(false)
-        return
-      }
-
-         // Send to Request
-      RequestSubmitReview(code)
-
-
-    }
-
-    
+ 
 
   
   };
@@ -237,15 +272,11 @@ const ManageCourses = () => {
       return
     }
 
-    // setShow(false)
+  
 
     // Send Ownersship
-    OwnThisContent(code,setShow)
+    OwnThisContent(code,setbtn_loading,setcheckOnwership,setShow)
 
-    // Check the Personal Verification
-
-    // Send to Request
-    RequestSubmitReview(code)
 
   };
 
@@ -351,6 +382,10 @@ const ManageCourses = () => {
     CheckOwnershipOfContent(code,setcourseOwnership)
     // console.log(checkInstructorVerification)
     // console.log(courseOwnership)
+
+   
+
+    GetCheckPricingAllStatus(setcheckPricingStatus)
 
   }, [code,checkInstructorVerification,options,courseOwnership])
   
