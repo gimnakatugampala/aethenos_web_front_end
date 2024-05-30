@@ -165,12 +165,18 @@ const QA = () => {
             </div>
             </Paper>}
           </div>
+
           <div className="col-md-8">
-           {questionItemContent != "" && <ScrollBarPage answerContent={answerContent} questionItemContent={questionItemContent} />} 
+            <div className="mb-3 d-flex align-items-start">
+                {questionItemContent != "" && <ScrollBarPage answerContent={answerContent} questionItemContent={questionItemContent} />} 
+           </div>
+
+            <div className="d-flex align-items-end">
             {questionItemCode != "" && (
-            <InputGroup className="mb-3">
+            <InputGroup className="mb-3 d-flex align-items-end">
               <Form.Control
-              onChange={(e) => setanswer(e.target.value)}
+              as="textarea" 
+                onChange={(e) => setanswer(e.target.value)}
                 placeholder="Post a public answer"
                 aria-label="Post a public answer"
                 aria-describedby="basic-addon2"
@@ -179,7 +185,7 @@ const QA = () => {
                 <Button
                   onClick={handlePublishAnswer}
                   variant="contained"
-                  className="w-90"
+                  className="w-90 p-3 m-1"
                 >
                   Publish
                 </Button>
@@ -187,6 +193,9 @@ const QA = () => {
             </InputGroup>
             )}
           </div>
+
+          </div>
+          
         </div>
       </Card>
     </div>

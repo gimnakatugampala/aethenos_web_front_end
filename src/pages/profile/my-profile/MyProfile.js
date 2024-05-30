@@ -43,6 +43,11 @@ const MyProfile = () => {
     const [uploadImage, setuploadImage] = useState("")
     const [preview_img, setpreview_img] = useState("")
 
+    const [link_to_course, setlink_to_course] = useState("")
+    const [external_ratings, setexternal_ratings] = useState("")
+    const [external_number_of_number, setexternal_number_of_number] = useState("")
+    const [any_comment, setany_comment] = useState("")
+
     const [btn_loading, setbtn_loading] = useState(false)
 
     // ============= RADIO BUTTON / Payment Details ===========
@@ -82,21 +87,30 @@ const MyProfile = () => {
             setfacebook,
             setlinkedin,
             setyoutube,
+            setlink_to_course,
+            setexternal_ratings,
+            setexternal_number_of_number,
+            setany_comment,
             setprofile_img)
     }, [])
     
     // Save Profile Data
     const handleProfileData = () =>{
-        console.log(typeof uploadImage)
-        console.log(first_Name)
-        console.log(last_name)
-        console.log(headline)
-        console.log(biography)
-        console.log(website)
-        console.log(twitter)
-        console.log(facebook)
-        console.log(linkedin)
-        console.log(youtube)
+        // console.log(typeof uploadImage)
+        // console.log(first_Name)
+        // console.log(last_name)
+        // console.log(headline)
+        // console.log(biography)
+        // console.log(website)
+        // console.log(twitter)
+        // console.log(facebook)
+        // console.log(linkedin)
+        // console.log(youtube)
+
+        console.log(link_to_course)
+        console.log(external_ratings)
+        console.log(external_number_of_number)
+        console.log(any_comment)
 
         if(first_Name == ""){
             ErrorAlert("Error","Please Enter First Name")
@@ -122,6 +136,10 @@ const MyProfile = () => {
             facebook,
             linkedin,
             youtube,
+            link_to_course,
+            external_ratings,
+            external_number_of_number,
+            any_comment,
             setbtn_loading)
 
     }
@@ -296,6 +314,42 @@ const MyProfile = () => {
                 </div>
 
                 </div>
+
+                <Card className='col-md-12  border border-secondary p-4 m-3'>
+                <div >
+                <Form.Label><b>External Course Link and Ratings (optional):</b></Form.Label>
+                <p>You can provide a link to any external site or platform where you have the same course available below (optional). This will help us fast-track your course approval.</p>
+
+                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Label><b>Link to course:</b></Form.Label>
+                    <Form.Control value={link_to_course} onChange={(e) => setlink_to_course(e.target.value)} type="text" placeholder="https://www.link.com" />
+                </Form.Group>
+
+              <p>You can also provide the ratings and number of students for your externally hosted course below (optional). We can verify and display same as External Ratings and External Number of Students on our site. This may help you with initial course enrollments until you gain sufficient reviews and student numbers on our site. We will NOT be disclosing the external course site or platform details.</p>
+
+              <p>Please fill in below details if you wish to display your external course ratings and number of students on our site.</p>
+
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label><b>External Rating (number of stars out of 5):</b></Form.Label>
+                <Form.Control value={external_ratings} onChange={(e) => setexternal_ratings(e.target.value)} type="text" placeholder="Enter a Number" />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Label><b>External Number of Students:</b></Form.Label>
+                <Form.Control value={external_number_of_number} onChange={(e) => setexternal_number_of_number(e.target.value)} type="text" placeholder="Enter the No of Students" />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                <Form.Label><b>Any comments:</b></Form.Label>
+                <Form.Control value={any_comment} onChange={(e) => setany_comment(e.target.value)} as="textarea" rows={4} />
+              </Form.Group>
+
+              <p><b><i>Note: We will only display external rating and number of students if we are able to independently verify same by following the course link you have provided.</i></b></p>
+
+                </div>
+                </Card>
+
+
             </div>
 
             {btn_loading ? <Button  variant="contained"><Spinner size="sm" animation="border" variant="light" /></Button> : <Button  onClick={handleProfileData} variant="contained">Save</Button>}

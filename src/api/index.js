@@ -2774,6 +2774,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
   setfacebook,
   setlinkedin,
   setyoutube,
+  setlink_to_course,
+  setexternal_ratings,
+  setexternal_number_of_number,
+  setany_comment,
   setprofile_img) =>{
 
   var myHeaders = new Headers();
@@ -2800,7 +2804,13 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstru
     setfacebook(result.facebook == null ? "" : result.facebook)
     setlinkedin(result.linkedin == null ? "" : result.linkedin)
     setyoutube(result.youtube == null ? "" : result.youtube)
+    setlink_to_course(result.instructorExternalDetailsResponse[0].linkToCourse == null ? "" :  result.instructorExternalDetailsResponse[0].linkToCourse )
+    setexternal_ratings(result.instructorExternalDetailsResponse[0].externalRating == null ? "" : result.instructorExternalDetailsResponse[0].externalRating)
+    setexternal_number_of_number(result.instructorExternalDetailsResponse[0].externalNumberOfStudents == null ? "" : result.instructorExternalDetailsResponse[0].externalNumberOfStudents)
+    setany_comment(result.instructorExternalDetailsResponse[0].anyComments == null ? "" : result.instructorExternalDetailsResponse[0].anyComments)
     setprofile_img(result.profile_img == null ? "" : result.profile_img)
+
+
   })
   .catch(error => console.log('error', error));
 
@@ -2817,6 +2827,10 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstru
   facebook,
   linkedin,
   youtube,
+  link_to_course,
+  external_ratings,
+  external_number_of_number,
+  any_comment,
   setbtn_loading) =>{
 
     setbtn_loading(true)
@@ -2835,6 +2849,10 @@ formdata.append("youtube", `${youtube}`);
 formdata.append("firstName", `${first_Name}`);
 formdata.append("lastName", `${last_name}`);
 typeof uploadImage == "object" && formdata.append("profileImage", uploadImage);
+formdata.append("linkToCourse", `${link_to_course}`);
+formdata.append("externalRating", `${external_ratings}`);
+formdata.append("externalNumberOfStudents", `${external_number_of_number}`);
+formdata.append("anyComments", `${any_comment}`);
 
 
 var requestOptions = {
