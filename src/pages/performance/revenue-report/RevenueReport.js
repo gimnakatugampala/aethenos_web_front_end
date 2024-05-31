@@ -81,24 +81,24 @@ function RevenueReport() {
           ]}
           series={[
             {
-              id: "France",
-              label: "Udemy Organic",
+              id: "Aethenos",
+              label: "Aethenos",
               data: FranceGDPperCapita,
               stack: "total",
               area: true,
               showMark: false,
             },
             {
-              id: "Germany",
-              label: "Affliate Program",
+              id: "Your Promotions",
+              label: "Your Promotions",
               data: GermanyGDPperCapita,
               stack: "total",
               area: true,
               showMark: false,
             },
             {
-              id: "United Kingdom",
-              label: "Add Program",
+              id: "Refunds",
+              label: "Refunds",
               data: UKGDPperCapita,
               stack: "total",
               area: true,
@@ -118,7 +118,7 @@ function RevenueReport() {
         title="Revenue Report"
         columns={[
           {
-            title: "Time Period",
+            title: "Month",
             field: "timePeriod",
             render: (rowData) => (
               <a href="/performance/revenue-report/1">{rowData.timePeriod}</a>
@@ -126,23 +126,8 @@ function RevenueReport() {
             headerStyle: headerCellStyle,
           },
           {
-            title: "Pre-tax Amount",
+            title: "Your revenue",
             field: "amount",
-            headerStyle: headerCellStyle,
-          },
-          {
-            title: "Expected Payment Date",
-            field: "expectedPaymentDate",
-            headerStyle: headerCellStyle,
-          },
-          {
-            title: "Withholding Tax",
-            field: "withholdingTax",
-            headerStyle: headerCellStyle,
-          },
-          {
-            title: "Net Earning",
-            field: "netEarning",
             headerStyle: headerCellStyle,
           },
           {
@@ -155,43 +140,8 @@ function RevenueReport() {
           {
             timePeriod: "Mar 2023",
             amount: "$100",
-            expectedPaymentDate: "2023-03-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 1",
-          },
-          {
-            timePeriod: "Apr 2023",
-            amount: "$150",
-            expectedPaymentDate: "2023-04-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 2",
-          },
-          {
-            timePeriod: "May 2023",
-            amount: "$200",
-            expectedPaymentDate: "2023-05-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 3",
-          },
-          {
-            timePeriod: "Jun 2023",
-            amount: "$250",
-            expectedPaymentDate: "2023-06-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 4",
-          },
-          {
-            timePeriod: "Jul 2023",
-            amount: "$300",
-            expectedPaymentDate: "2023-07-15",
-            withholdingTax: "$50",
-            netEarning: "$20",
-            notes: "Note 5",
-          },
+            expectedPaymentDate: "2023-03-15"
+          }
         ]}
         options={{
           sorting: true,

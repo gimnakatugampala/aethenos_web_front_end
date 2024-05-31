@@ -3743,6 +3743,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
       Unauthorized(result.status,"performance/students") 
       if(result.message == "Error"){
       setstudents([])
+      return
       }
       setstudents(result)
     })

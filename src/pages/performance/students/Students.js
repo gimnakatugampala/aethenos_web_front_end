@@ -88,8 +88,23 @@ const Students = () => {
         title="Student List"
         columns={[
           {
+            title: "Profile Image",
+            field: "img",
+            headerStyle: headerCellStyle,
+          },
+          {
             title: "Student Name",
             field: "studentName",
+            headerStyle: headerCellStyle,
+          },
+          {
+            title: "Email",
+            field: "email",
+            headerStyle: headerCellStyle,
+          },
+          {
+            title: "Country",
+            field: "country",
             headerStyle: headerCellStyle,
           },
           {
