@@ -156,16 +156,16 @@ const ManageCourses = () => {
     if(checkPricingStatus == false){
       // ErrorAlert("Error","Please fill instructor details and payment details")
       Swal.fire({
-        title: "<strong>Fill Details</strong>",
+        title: "<strong>Information Required!</strong>",
         icon: "info",
         html: `
-          Please visit your profile page and fill the profile details , Accept terms and if this is a paid course then fill the payment details as well.
+        Please visit your profile page and fill the profile details, accept the instructor terms and complete the payout details if this is a paid course.
         `,
         showCloseButton: false,
         showCancelButton: false,
         focusConfirm: false,
         confirmButtonText: `
-          <a  className="text-white" href="/profile?code=${code}"><b>Go To My Profile</b></a>
+          <a  style="color:white" href="/profile?code=${code}"><b>Go to My Profile</b></a>
         `,
         confirmButtonAriaLabel: "Thumbs up, great!",
         cancelButtonText: `
@@ -578,7 +578,7 @@ const ManageCourses = () => {
           <Modal.Title>Content Ownership</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h6 className='my-4'><b>Identify your ownership rights to the course content</b></h6>
+          <h6 className='my-4'><b>Confirm your ownership rights to the course content.</b></h6>
 
       
           <div className="form-check my-3">

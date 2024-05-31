@@ -194,7 +194,7 @@ function Sidenav({ color }) {
            > 
            <LeaderboardIcon />
            </span>
-            <span className="label">Dashboard view</span>
+            <span className="label">Dashboard</span>
           </NavLink>
         </Menu.Item>
 

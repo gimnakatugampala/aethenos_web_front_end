@@ -15,7 +15,7 @@ function RevenueReport() {
     <div>
       <div className="mb-5">
        <Typography className="m-0 p-0" variant="h4" gutterBottom>
-       Dashboard view
+       Dashboard
       </Typography>
       <span className="p-0 m-0">Get top insights about your performance</span>
       </div>

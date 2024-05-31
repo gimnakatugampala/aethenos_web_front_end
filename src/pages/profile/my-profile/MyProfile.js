@@ -126,6 +126,13 @@ const MyProfile = () => {
           return
       }
 
+    
+        const rating = parseFloat(external_ratings);
+        if (rating < 1 && rating > 5) {
+          ErrorAlert("Error","External rating should be between 1 to 5")
+          return
+        } 
+  
         UpdateProfileDetails(uploadImage,
             first_Name,
             last_name,
@@ -227,13 +234,13 @@ const MyProfile = () => {
         id="uncontrolled-tab-example"
         className="my-3"
         >
-          <Tab eventKey="up" title="Aethenos Profile">
+          <Tab eventKey="up" title="Your Profile">
 
             <div className='row'>
 
             <div className='col-md-5'>
 
-                <p className='m-0 p-0'><b>Image preview</b></p>
+                <p className='m-0 p-0'><b>Profile picture</b></p>
                 <label>Minimum 200x200 pixels, Maximum 6000x6000 pixels</label>
 
                 {preview_img == "" ? (
@@ -250,7 +257,7 @@ const MyProfile = () => {
 
                 <div className='col-md-4'>
                 <div className='mt-5'>
-                    <label for="formFile" class="form-label">Upload Image</label>
+                    <label for="formFile" class="form-label">Upload Image <span className='text-danger'>*</span></label>
                     <input onChange={(e) => handleImageUpload(e)} accept='image/*' class="form-control" type="file" id="formFile" />
                 </div>
 
@@ -285,6 +292,11 @@ const MyProfile = () => {
                 <div className='col-md-6'>
 
                 <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input value={website} onChange={(e) => setwebsite(e.target.value)} type="text" class="form-control" placeholder="Enter an Email" />
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label">Website</label>
                     <input value={website} onChange={(e) => setwebsite(e.target.value)} type="text" class="form-control" placeholder="URL" />
                 </div>
@@ -317,7 +329,7 @@ const MyProfile = () => {
 
                 <Card className='col-md-12  border border-secondary p-4 m-3'>
                 <div >
-                <Form.Label><b>External Course Link and Ratings (optional):</b></Form.Label>
+                <Form.Label><b>External course link and ratings (optional):</b></Form.Label>
                 <p>You can provide a link to any external site or platform where you have the same course available below (optional). This will help us fast-track your course approval.</p>
 
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -325,17 +337,17 @@ const MyProfile = () => {
                     <Form.Control value={link_to_course} onChange={(e) => setlink_to_course(e.target.value)} type="text" placeholder="https://www.link.com" />
                 </Form.Group>
 
-              <p>You can also provide the ratings and number of students for your externally hosted course below (optional). We can verify and display same as External Ratings and External Number of Students on our site. This may help you with initial course enrollments until you gain sufficient reviews and student numbers on our site. We will NOT be disclosing the external course site or platform details.</p>
+              <p>You can also provide the ratings and number of students for your externally hosted course below (optional). We will verify and display same as external ratings and external number of students on our site. This may help you with initial course enrollments until you gain sufficient reviews and student numbers on our site. We will NOT be disclosing the external course site or platform details.</p>
 
               <p>Please fill in below details if you wish to display your external course ratings and number of students on our site.</p>
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label><b>External Rating (number of stars out of 5):</b></Form.Label>
+                <Form.Label><b>External rating (number of stars out of 5):</b></Form.Label>
                 <Form.Control value={external_ratings} onChange={(e) => setexternal_ratings(e.target.value)} type="text" placeholder="Enter a Number" />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label><b>External Number of Students:</b></Form.Label>
+                <Form.Label><b>External number of students:</b></Form.Label>
                 <Form.Control value={external_number_of_number} onChange={(e) => setexternal_number_of_number(e.target.value)} type="text" placeholder="Enter the No of Students" />
               </Form.Group>
 
