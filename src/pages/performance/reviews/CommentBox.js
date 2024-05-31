@@ -77,12 +77,12 @@ const CommentBox = ({reviewCode, replies , setcmbCourses}) => {
   return (
     <div>
 
-      {isExpanded ? (
+      {/* {isExpanded ? (
         <Button className="m-3" onClick={handleButtonClick} ><i class="fa-solid fa-xmark mx-2"></i> Cancel</Button>
         ) : (
         <Button className="m-3"  onClick={handleButtonClick} ><i class="fa-solid fa-reply mx-2"></i> Respond</Button>
 
-      )}
+      )} */}
 
 
       {isExpanded && (

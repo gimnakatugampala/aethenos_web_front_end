@@ -96,6 +96,13 @@ function Messages() {
     GetAllChatRoomMessages(user.chatRoomCode,setroomMessages)
   };
 
+
+useEffect(() => {
+  setTimeout(() => {
+    GetAllChatRoomMessages(selectedChatCode,setroomMessages)
+  }, 1500);
+})
+
   
 
   useEffect(() => {
@@ -105,7 +112,11 @@ function Messages() {
   }, [chatRooms])
 
   useEffect(() => {
-    GetAllChatRoomMessages(selectedChatCode,setroomMessages)
+
+    setTimeout(() => {
+      GetAllChatRoomMessages(selectedChatCode,setroomMessages)
+    }, 1500);
+
   }, [selectedChatCode,messageTextAdd])
 
   
@@ -157,7 +168,7 @@ function Messages() {
   return (
     
       <div className="container">
-        <div className="row">
+        <div  className="row">
 
         
              <Typography className="mb-4" variant="h4" gutterBottom>
@@ -293,20 +304,20 @@ function Messages() {
 
                   </div>
 
-                  <Paper elevation={3} className="p-3" style={{ minHeight: "70vh", overflowY: "auto", background:'#D5D8DC' }}>
-                    <List>
-                      {roomMessages.map((message, index) => (
-                        <MessageBox
-                          key={index}
-                          styles={{ width: 300, color: '#000', fontWeight: 'bold', background: message.from == selectedUser ? '#fff' : '#e01D20' }}
-                          onReplyMessageClick={() => console.log('reply clicked!')}
-                          position={message.from == selectedUser ? 'left' : 'right'}
-                          type={'text'}
-                          text={message.message}
-                        />
-                      ))}
-                    </List>
-                  </Paper>
+                  <Paper elevation={3} className="p-3" style={{ height: "50vh", overflowY: "scroll", background: '#D5D8DC' }}>
+                      <List>
+                        {roomMessages.map((message, index) => (
+                          <MessageBox
+                            key={index}
+                            styles={{ width: 300, color: '#000', fontWeight: 'bold', background: message.from === selectedUser ? '#fff' : '#e01D20' }}
+                            onReplyMessageClick={() => console.log('reply clicked!')}
+                            position={message.from === selectedUser ? 'left' : 'right'}
+                            type={'text'}
+                            text={message.message}
+                          />
+                        ))}
+                      </List>
+                    </Paper>
 
 
 

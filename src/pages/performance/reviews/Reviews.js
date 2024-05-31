@@ -20,6 +20,7 @@ import CommentBox from "./CommentBox";
 import { GetCousesOfInstructror, GetReviewByCourse } from "../../../api";
 import { FILE_PATH } from "../../../commonFunctions/FilePaths";
 import { Rating } from 'react-simple-star-rating'
+import StarRatings from 'react-star-ratings'
 import moment from 'moment'
 import { Paper } from "@mui/material";
 
@@ -157,6 +158,12 @@ const Reviews = () => {
                     <div className="card-body">
                       <h6 className="card-title m-0 p-0">{SelectedCourse.courseTitle}</h6>
                       <p style={{fontSize:'13px'}} className="my-2 p-0">{SelectedCourse.rating} Course Rating</p>
+                      <StarRatings
+                        starDimension="30px"
+                         rating={SelectedCourse.rating}
+                        starRatedColor="rgb(255, 188, 11)"
+                        numberOfStars={5}
+                      />
                     </div>
                   </div>
                 </div>
@@ -212,7 +219,7 @@ const Reviews = () => {
                     <i className="fas fa-star"></i>
                     <i className="fas fa-star"></i>
                     <i className="fas fa-star"></i>
-                    <h3 className="m-0">No Reviews Yet</h3>
+                    <h3 className="m-0">Select course to see reviews</h3>
                   </div>
               </Paper>
               )}
