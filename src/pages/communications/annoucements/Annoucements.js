@@ -24,6 +24,7 @@ const Annoucements = () => {
   const [isComposeVisible, setComposeVisible] = useState(false);
   const [cmbCourses, setcmbCourses] = useState([])
 
+  const [selectedCourse, setselectedCourse] = useState("")
   const [announcementTitle, setannouncementTitle] = useState("")
   const [AnnoucementDesc, setAnnoucementDesc] = useState("")
 
@@ -40,18 +41,22 @@ const Annoucements = () => {
       return
     }
 
+    
+
+    if(selectedCourse == ""){
+      ErrorAlert("Error","Please Select Course")
+      return
+    }
+
     if(AnnoucementDesc == "<p><br></p>"){
       ErrorAlert("Empty Field","Please Enter Annoucement Description")
       return
     }
 
-    if(courseCode != ""){
-      AddAnnoucement(courseCode,announcementTitle,AnnoucementDesc,setComposeVisible,setannouncementTitle,setAnnoucementDesc,setannoucements)
+    
+      AddAnnoucement(courseCode,selectedCourse,announcementTitle,AnnoucementDesc,setComposeVisible,setannouncementTitle,setAnnoucementDesc,setannoucements)
       return
-    }else{
-      ErrorAlert("Error","Please Select Course")
-      return
-    }
+    
 
 
   }
@@ -74,6 +79,11 @@ const Annoucements = () => {
     setcourseCode(e.target.value)
 
     
+  }
+
+  const handleSelectCourseName = (e) =>{
+    console.log(e.target.value)
+    setselectedCourse(e.target.value)
   }
   
   return (
@@ -150,10 +160,25 @@ const Annoucements = () => {
               <div>
                 <div>
 
+                
+
                   <Form.Group className="mb-3">
                       <Form.Label>Content</Form.Label>
                       <Form.Control onChange={(e) => setannouncementTitle(e.target.value)} type="text" placeholder="Announcement and email title (55 character max)" />
                     </Form.Group>
+
+                    <div className='my-3'>
+                    <Form.Label>Select Course</Form.Label>
+                    <Form.Select  
+                    onChange={handleSelectCourseName}
+                    defaultValue={""} 
+                    aria-label="Default select example">
+                    <option value={""}>All Courses</option>
+                        {cmbCourses.length > 0 && cmbCourses.map((course,index) => (
+                          <option key={index} value={course.code}>{course.title}</option>
+                        ))}
+                      </Form.Select>
+                </div>
 
                     <JoditEditor onChange={(e) => setAnnoucementDesc(e)} />
 

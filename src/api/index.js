@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { ENV_STATUS } from "../commonFunctions/env";
+import moment from "moment";
 
 const CURRENT_USER = Cookies.get('aethenos');
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
@@ -3411,7 +3412,20 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
     .then((result) => {
       console.log(result)
       Unauthorized(result.status,`performance/announcements`)
-      setannoucements(result)
+
+      if(result.length == 0){
+        setannoucements([])
+        return
+      }
+
+
+      const formattedResult = result.map(r => ({
+        ...r,
+        createdDate: moment(r.createdDate).format('MMMM Do YYYY, h:mm:ss a')
+    }));
+
+
+    setannoucements(formattedResult);
 
       if(result.message == "Error"){
         setannoucements([])
@@ -3426,14 +3440,14 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/getDefa
   return tempDiv.textContent || tempDiv.innerText || "";
 }
 
- export const AddAnnoucement = async(courseCode,announcementTitle,AnnoucementDesc,setComposeVisible,setannouncementTitle,setAnnoucementDesc,setannoucements) =>{
+ export const AddAnnoucement = async(courseCode,selectedCourse,announcementTitle,AnnoucementDesc,setComposeVisible,setannouncementTitle,setAnnoucementDesc,setannoucements) =>{
 
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   const formdata = new FormData();
-formdata.append("courseCode", `${courseCode}`);
+formdata.append("courseCode", `${selectedCourse}`);
 formdata.append("title", `${announcementTitle}`);
 formdata.append("content", `${stripHTML(AnnoucementDesc)}`);
 
@@ -3509,7 +3523,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/getAll
 
  }
 
- export const AddAnswer = async(questionItemCode,answer,setanswer) =>{
+ export const AddAnswer = async(questionItemCode,answer,setanswer,courseCode,setquestions) =>{
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -3532,6 +3546,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAns
     Unauthorized(result.status,`communications/qa`)
     if(result.variable == "200"){
       SuccessAlert("Success",result.message)
+      // GetAllQuestions(courseCode,setquestions)
+
+      // setTimeout(() => {
+      //     window.location.reload()
+      // }, 1500);
       setanswer("")
       return
     }

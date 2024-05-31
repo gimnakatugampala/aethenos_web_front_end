@@ -60,8 +60,8 @@ const QA = () => {
       return
     }
 
-    AddAnswer(questionItemCode,answer,setanswer)
-    GetAllQuestions(courseCode,setquestions)
+    AddAnswer(questionItemCode,answer,setanswer,courseCode,setquestions)
+    // GetAllQuestions()
   }
 
   return (
