@@ -60,7 +60,7 @@ const QA = () => {
       return
     }
 
-    AddAnswer(questionItemCode,answer,setanswer,courseCode,setquestions)
+    AddAnswer(questionItemCode,answer,setanswer,courseCode,questions,setquestions,setanswerContent,setquestionItemContent)
     // GetAllQuestions()
   }
 
@@ -172,10 +172,11 @@ const QA = () => {
            </div>
 
             <div className="d-flex align-items-end">
-            {questionItemCode != "" && (
+            {questionItemContent != "" && (
             <InputGroup className="mb-3 d-flex align-items-end">
               <Form.Control
               as="textarea" 
+              value={answer}
                 onChange={(e) => setanswer(e.target.value)}
                 placeholder="Post a public answer"
                 aria-label="Post a public answer"

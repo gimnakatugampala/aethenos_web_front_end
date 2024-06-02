@@ -3523,41 +3523,49 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/getAll
 
  }
 
- export const AddAnswer = async(questionItemCode,answer,setanswer,courseCode,setquestions) =>{
-
+ export const AddAnswer = async (questionItemCode,answer,setanswer,courseCode,questions,setquestions,setanswerContent,setquestionItemContent) => {
   var myHeaders = new Headers();
-  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
   const formdata = new FormData();
-formdata.append("QuestionCode", `${questionItemCode}`);
-formdata.append("answer", `${answer}`);
+  formdata.append("QuestionCode", `${questionItemCode}`);
+  formdata.append("answer", `${answer}`);
 
-const requestOptions = {
-  method: "PUT",
-  body: formdata,
-  headers: myHeaders,
-  redirect: "follow"
+  const requestOptions = {
+    method: "PUT",
+    body: formdata,
+    headers: myHeaders,
+    redirect: "follow"
+  };
+
+  fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAnswer", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+      Unauthorized(result.status, `communications/qa`);
+      if (result.variable == "200") {
+        // SuccessAlert("Success", result.message);
+        // setquestionItemContent("");
+
+        // Fetch updated questions
+        GetAllQuestions(courseCode, (updatedQuestions) => {
+          setquestions(updatedQuestions);
+
+          // Find the updated answer content
+          const updatedQuestion = updatedQuestions.find(
+            (question) => question.questionCode == questionItemCode
+          );
+          if (updatedQuestion) {
+            setanswerContent(updatedQuestion.answer);
+          }
+
+          setanswer("");
+        });
+      }
+    })
+    .catch((error) => console.error(error));
 };
 
-fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/communication/addAnswer", requestOptions)
-  .then((response) => response.json())
-  .then((result) => {
-    console.log(result)
-    Unauthorized(result.status,`communications/qa`)
-    if(result.variable == "200"){
-      SuccessAlert("Success",result.message)
-      // GetAllQuestions(courseCode,setquestions)
-
-      // setTimeout(() => {
-      //     window.location.reload()
-      // }, 1500);
-      setanswer("")
-      return
-    }
-  })
-  .catch((error) => console.error(error));
-
- }
  
  export const GetReviewByCourse = async(courseCode,setSelectedCourse) =>{
 

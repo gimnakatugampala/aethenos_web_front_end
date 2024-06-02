@@ -128,7 +128,7 @@ const MyProfile = () => {
 
     
         const rating = parseFloat(external_ratings);
-        if (rating < 1 && rating > 5) {
+        if (rating < 0 || rating > 5) {
           ErrorAlert("Error","External rating should be between 1 to 5")
           return
         } 
@@ -180,6 +180,11 @@ const MyProfile = () => {
   
     const [payoneerEmail, setpayoneerEmail] = useState("")
     const [payoneerUsername, setpayoneerUsername] = useState("")
+
+    const [bankAccountNumber, setbankAccountNumber] = useState("")
+    const [bankSortNoOne, setbankSortNoOne] = useState("")
+    const [bankSortNoTwo, setbankSortNoTwo] = useState("")
+    const [bankSortNoThree, setbankSortNoThree] = useState("")
   
 
   
@@ -479,6 +484,58 @@ const MyProfile = () => {
                             </div>
                         
 
+                            </div>
+
+                            </div>
+
+                    </div>
+
+                    <div className='col-md-12 my-3'>
+                    <div className='d-flex justify-content-between'>
+                            <div>
+                            <Radio
+                              checked={selectedValue === 'uk'}
+                              onChange={handleChange}
+                              value="uk"
+                              name="radio-buttons"
+                              inputProps={{ 'aria-label': 'B' }}
+                            />
+                                {/* <img width={100} src='/images/payoneer.png' /> */}
+                                <span><b>UK Bank</b></span>
+                            </div>
+
+                            <div className='row'>
+
+                            <div className='col-md-5'></div>
+
+                            <div className='col-md-7'>
+                            <div className='row my-2'>
+
+
+                            <div className='col-md-2'><span><b>Sort No</b></span></div>
+
+                                <div className='col-md-3'>
+                                  <Form.Control disabled={selectedValue != 'uk'} value={bankSortNoOne} onChange={(e) => setbankSortNoOne(e.target.value)} type="text" />
+                                </div>        
+                                <div className='col-md-3'>
+                                  <Form.Control disabled={selectedValue != 'uk'} value={bankSortNoTwo} onChange={(e) => setbankSortNoTwo(e.target.value)} type="text" />
+                                </div>        
+                                <div className='col-md-3'>
+                                  <Form.Control disabled={selectedValue != 'uk'} value={bankSortNoThree} onChange={(e) => setbankSortNoThree(e.target.value)} type="text" />
+                                </div>        
+
+                            </div>
+
+                            
+                            <Form>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                <Form.Control disabled={selectedValue != 'uk'} value={bankAccountNumber} onChange={(e) => setbankAccountNumber(e.target.value)} type="text" placeholder="Account Number" />
+                                </Form.Group>
+                            </Form>
+
+                            </div>
+
+                            
                             </div>
 
                             </div>
