@@ -268,7 +268,7 @@ useEffect(() => {
                                 variant="body2"
                                 color="text.primary"
                               >
-                                <b>{user.student}</b> ({user.courseTitle})
+                                <b>{user.student}</b> <span className="mx-1"> ({user.courseTitle}) </span>
                               </Typography>
                               {user.lastMessage.length > 15 ? (
                                 <span>{user.lastMessage.substring(0, 15)}...</span>
@@ -332,7 +332,7 @@ useEffect(() => {
                   
                     <div className="text-center">
                       <i className="fas fa-search fa-2x p-3"></i>
-                      <h3 className="m-0">Chat With Students</h3>
+                      <h3 className="m-0">Chat with students</h3>
                     </div>
                   
                 </Paper>

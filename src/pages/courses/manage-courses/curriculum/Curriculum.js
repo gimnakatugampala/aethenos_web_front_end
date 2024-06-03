@@ -933,16 +933,28 @@ console.log(item)
 
         <hr />
 
-        <p>You can start developing your course here.</p>
-        <p>Create separate sections for lessons and include lectures, quizzes, practice tests and assignments.</p>
-        <p>Have a clear structure to your course content by following a good course outline and clearly label your sections and lectures. </p>
-        <p>Please note that the maximum video content length on free courses is 2.5 hours.</p>
-        <p>For a paid course the minimum video content length should be 45 minutes and minimum number of lectures should be 5.</p>
-        <p>The maximum video content length on free courses is 2.5 hours. Please reduce your total video length to comply.</p>
-        <p>The minimum video content length on a paid courses is 45 minutes. Please reduce your total video length to comply.</p>
-        <p>The minimum number of lectures on a paid course should be 5 Please increase your number of lectures to comply.</p>
-        <p>The minimum video content length on a paid courses is 45 minutes. Please increase your total video length to comply.</p>
+        <p>You can start creating and uploading your course here.</p>
+        <p>Create separate sections for lessons and include lectures, quizzes, practice tests, assignments and coding exercises.</p>
+        <p>Have a clear structure to your course content by following a good course outline and clearly label your sections and lectures.</p>
 
+        <p><b>IMPORTANT NOTICE:</b></p>
+        <ul>
+          <li><b>Please note that the maximum video content length on free courses is 2.5 hours.</b></li>
+          <li><b>For a paid course the minimum video content length should be 45 minutes and the minimum number of lectures should be 5.</b></li>
+          <li><b>HD video quality (720p or 1080p) is required on all video content.</b></li>
+
+        </ul>
+
+        <p>Resources can be added to course lectures help students learn more effectively and to enhance the learning experience.</p>
+
+        <ol>
+          <li>Downloadable resources: can be virtually any filetype such as .PDF, .PPTX, .DOCX, .XLS, .JPG, .ZIP, .MP3. MP4, .MOV etc. </li>
+          <li>External resources: these are hyperlinks to websites.</li>
+          <li>Source code: all forms of source code files can be uploaded for development courses. </li>
+        </ol>
+
+
+       
         {/* Section 1 */}
       {sectionData != null  ? (
         sectionData.length > 0  ?  sectionData.map((section,index) => (

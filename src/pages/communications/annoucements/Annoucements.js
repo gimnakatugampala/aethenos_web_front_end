@@ -106,7 +106,7 @@ const Annoucements = () => {
             id: 'uncontrolled-native',
           }}
         >
-           <option value={""}>All Courses</option>
+           <option value={""}>All courses</option>
           {cmbCourses.length > 0 && cmbCourses.map((course,index) => (
             <option key={index} value={course.code}>{course.title}</option>
           ))}
@@ -173,7 +173,7 @@ const Annoucements = () => {
                     onChange={handleSelectCourseName}
                     defaultValue={""} 
                     aria-label="Default select example">
-                    <option value={""}>All Courses</option>
+                    <option value={""}>All courses</option>
                         {cmbCourses.length > 0 && cmbCourses.map((course,index) => (
                           <option key={index} value={course.code}>{course.title}</option>
                         ))}

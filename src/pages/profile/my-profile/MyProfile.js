@@ -258,22 +258,27 @@ const MyProfile = () => {
       }else if (selectedValue == "uk"){
 
         if(bankSortNoOne == ""){
-          ErrorAlert("Empty Field","Enter Sort No One")
+          ErrorAlert("Empty Field","Enter Sort No one")
           return
         }
     
         if(bankSortNoTwo == ""){
-          ErrorAlert("Empty Field","Enter Sort No Two")
+          ErrorAlert("Empty Field","Enter Sort No two")
           return
         }
 
         if(bankSortNoThree == ""){
-          ErrorAlert("Empty Field","Enter Sort No Three")
+          ErrorAlert("Empty Field","Enter Sort No three")
           return
         }
 
         if(bankAccountNumber == ""){
-          ErrorAlert("Empty Field","Enter Bank Account Number")
+          ErrorAlert("Empty Field","Enter Bank Account number")
+          return
+        }
+
+        if(bankAccountNumber.length > 8){
+          ErrorAlert("Empty Field","Only enter 8 characters")
           return
         }
 
@@ -557,7 +562,7 @@ const MyProfile = () => {
                               inputProps={{ 'aria-label': 'B' }}
                             />
                                 {/* <img width={100} src='/images/payoneer.png' /> */}
-                                <span><b>UK Bank</b></span>
+                                <span><b>Bank account (UK only)</b></span>
                             </div>
 
                             <div className='row'>
@@ -568,7 +573,7 @@ const MyProfile = () => {
                             <div className='row my-2'>
 
 
-                            <div className='col-md-2'><span><b>Sort No</b></span></div>
+                            <div className='col-md-2'><span><b>Sort code</b></span></div>
 
                                 <div className='col-md-3'>
                                   <Form.Control disabled={selectedValue != 'uk'} value={bankSortNoOne} onChange={(e) => setbankSortNoOne(e.target.value)} type="text" />
@@ -582,7 +587,7 @@ const MyProfile = () => {
 
                             </div>
 
-                            
+                            <div className='col-md-2'><span><b>Account number</b></span></div>
                             <Form>
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                 <Form.Control disabled={selectedValue != 'uk'} value={bankAccountNumber} onChange={(e) => setbankAccountNumber(e.target.value)} type="text" placeholder="Account Number" />
