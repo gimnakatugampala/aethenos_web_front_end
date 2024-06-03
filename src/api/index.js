@@ -1,10 +1,12 @@
 import SuccessAlert from "../commonFunctions/Alerts/SuccessAlert";
 import ErrorAlert from "../commonFunctions/Alerts/ErrorAlert";
 import Cookies from 'js-cookie'
+import Avatar from '@mui/material/Avatar';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import { ENV_STATUS } from "../commonFunctions/env";
 import moment from "moment";
+import { FILE_PATH } from "../commonFunctions/FilePaths";
 
 const CURRENT_USER = Cookies.get('aethenos');
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
@@ -3758,7 +3760,13 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/chat/sendChat", requ
       setstudents([])
       return
       }
-      setstudents(result)
+
+      const updatedResult = result.map(student => ({
+        ...student,
+        profileImgTag: student.profileImg != ""  ? <img className="w-50 " src={`${FILE_PATH}${student.profileImg}`} alt={student.studentName} /> : <Avatar src="/static/images/avatar/1.jpg" alt={`${student.studentName}`} sx={{ width: 35, height: 35 }} />
+    }));
+
+      setstudents(updatedResult)
     })
     .catch((error) => console.error(error));
 

@@ -37,7 +37,7 @@ export default function Questions({ setanswerContent, questions, setquestionItem
 
   // Function to filter messages based on the search keyword
   const filterMessages = () => {
-    const filtered = questions.filter(
+    const filtered = questions != null && questions.filter(
       (message) =>
         message.userName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
         message.question.toLowerCase().includes(searchKeyword.toLowerCase())
@@ -84,13 +84,14 @@ export default function Questions({ setanswerContent, questions, setquestionItem
       </div>
       <Paper square sx={{ height: "505px", overflow: "auto", pb: "50px" }}>
         <List sx={{ mb: 2 }}>
-          {filteredMessages.map(({ questionCode, userName, question, isRead, answer }) => (
+          {filteredMessages.map(({ questionCode, userName, question, isRead, answer , courseTitle }) => (
             <React.Fragment key={questionCode}>
               <ListItem onClick={() => handleSelectQuestionItem(questionCode, question, answer)} button>
                 <ListItemAvatar>
                   <Avatar alt={userName} src={"/static/images/avatar/1.jpg"} />
                 </ListItemAvatar>
-                <ListItemText primary={userName} secondary={question} />
+                <ListItemText primary={`${userName} - ${courseTitle}`} secondary={question} />
+
                 {isRead === "0" && <Badge invisible={false} variant="dot" color="primary"></Badge>}
               </ListItem>
             </React.Fragment>

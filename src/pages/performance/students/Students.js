@@ -89,7 +89,7 @@ const Students = () => {
         columns={[
           {
             title: "Profile Image",
-            field: "img",
+            field: "profileImgTag",
             headerStyle: headerCellStyle,
           },
           {
