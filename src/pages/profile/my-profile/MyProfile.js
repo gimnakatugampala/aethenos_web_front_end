@@ -39,6 +39,7 @@ const MyProfile = () => {
     const [facebook, setfacebook] = useState("")
     const [linkedin, setlinkedin] = useState("")
     const [youtube, setyoutube] = useState("")
+    const [email, setemail] = useState("")
     const [profile_img, setprofile_img] = useState("")
     const [uploadImage, setuploadImage] = useState("")
     const [preview_img, setpreview_img] = useState("")
@@ -75,24 +76,13 @@ const MyProfile = () => {
     const query = useQuery();
     const code = query.get('code');
 
-    
+    function isValidEmail(email) {
+      // Regular expression for basic email validation
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      return emailPattern.test(email);
+  }
 
-    useEffect(() => {
-        GetInstructorProfileDetails(setfirst_Name,
-            setlast_name,
-            setheadline,
-            setbiography,
-            setwebsite,
-            settwitter,
-            setfacebook,
-            setlinkedin,
-            setyoutube,
-            setlink_to_course,
-            setexternal_ratings,
-            setexternal_number_of_number,
-            setany_comment,
-            setprofile_img)
-    }, [])
+ 
     
     // Save Profile Data
     const handleProfileData = () =>{
@@ -132,7 +122,15 @@ const MyProfile = () => {
           ErrorAlert("Error","External rating should be between 1 to 5")
           return
         } 
-  
+
+        if(email != ""){
+          
+          if (!isValidEmail(email)) {
+            ErrorAlert("Error", "Please enter a valid email address.");
+            return;
+        }
+        }
+
         UpdateProfileDetails(uploadImage,
             first_Name,
             last_name,
@@ -147,6 +145,7 @@ const MyProfile = () => {
             external_ratings,
             external_number_of_number,
             any_comment,
+            email,
             setbtn_loading)
 
     }
@@ -189,15 +188,39 @@ const MyProfile = () => {
 
   
     useEffect(() => {
-      GetWalletDetails(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername,setSelectedValue)
+      GetWalletDetails(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername,
+        setbankSortNoOne,
+        setbankSortNoTwo,
+        setbankSortNoThree,
+        setbankAccountNumber,setSelectedValue)
 
       GetCheckPricingStatus(setInstructorTermsCheck)
 
     }, [])
+
+    useEffect(() => {
+      GetInstructorProfileDetails(setfirst_Name,
+          setlast_name,
+          setheadline,
+          setbiography,
+          setwebsite,
+          settwitter,
+          setfacebook,
+          setlinkedin,
+          setyoutube,
+          setlink_to_course,
+          setexternal_ratings,
+          setexternal_number_of_number,
+          setany_comment,
+          setemail,
+          setprofile_img
+        )
+  }, [])
     
 
 
     const handleConnectWallet = () =>{
+
       if(selectedValue == "paypal"){
 
         if(paypalEmail == ""){
@@ -210,9 +233,12 @@ const MyProfile = () => {
           return
         }
 
-        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue)
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,bankSortNoOne,
+          bankSortNoTwo,
+          bankSortNoThree,
+          bankAccountNumber,setbtn_loading_payment_details,selectedValue)
 
-      }else{
+      }else if (selectedValue == "payoneer"){
 
         if(payoneerEmail == ""){
           ErrorAlert("Empty Field","Please Fill Email")
@@ -224,7 +250,37 @@ const MyProfile = () => {
           return
         }
 
-        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue)
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,bankSortNoOne,
+          bankSortNoTwo,
+          bankSortNoThree,
+          bankAccountNumber,setbtn_loading_payment_details,selectedValue)
+
+      }else if (selectedValue == "uk"){
+
+        if(bankSortNoOne == ""){
+          ErrorAlert("Empty Field","Enter Sort No One")
+          return
+        }
+    
+        if(bankSortNoTwo == ""){
+          ErrorAlert("Empty Field","Enter Sort No Two")
+          return
+        }
+
+        if(bankSortNoThree == ""){
+          ErrorAlert("Empty Field","Enter Sort No Three")
+          return
+        }
+
+        if(bankAccountNumber == ""){
+          ErrorAlert("Empty Field","Enter Bank Account Number")
+          return
+        }
+
+        AddWalletDetails(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,bankSortNoOne,
+          bankSortNoTwo,
+          bankSortNoThree,
+          bankAccountNumber,setbtn_loading_payment_details,selectedValue)
 
       }
     }
@@ -293,12 +349,12 @@ const MyProfile = () => {
 
                 </div>
 
-
+               
                 <div className='col-md-6'>
 
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input value={website} onChange={(e) => setwebsite(e.target.value)} type="text" class="form-control" placeholder="Enter an Email" />
+                    <input value={email} onChange={(e) => setemail(e.target.value)} type="text" class="form-control" placeholder="Enter an Email" />
                 </div>
 
                 <div class="mb-3">

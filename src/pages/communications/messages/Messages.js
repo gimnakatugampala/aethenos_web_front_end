@@ -98,18 +98,17 @@ function Messages() {
 
 
 useEffect(() => {
-  setTimeout(() => {
-    GetAllChatRoomMessages(selectedChatCode,setroomMessages)
-  }, 1500);
-})
+ 
+  GetAllChatRoomMessages(selectedChatCode,setroomMessages)
+},[])
 
-  
 
-  useEffect(() => {
+
+useEffect(() => {
     GetAllInstructorsofThePurchaseMsg(setinstructors)
     GetAllChatRooms(setchatRooms)
     console.log(chatRooms)
-  }, [chatRooms])
+  }, [selectedChatCode])
 
   useEffect(() => {
 
@@ -256,7 +255,7 @@ useEffect(() => {
                       }}
                       alignItems="flex-start"
                     >
-                      <ListItemButton selected={selectedUser == user.student ? true : false}>
+                      <ListItemButton selected={selectedUser == user.student && selectedChatCode ==  user.chatRoomCode  ? true : false}>
                         <ListItemAvatar>
                           <Avatar alt={user.student} src="/static/images/avatar/1.jpg" />
                         </ListItemAvatar>

@@ -2779,6 +2779,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
   setexternal_ratings,
   setexternal_number_of_number,
   setany_comment,
+  setemail,
   setprofile_img) =>{
 
   var myHeaders = new Headers();
@@ -2811,6 +2812,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstru
     setany_comment(result.instructorExternalDetailsResponse[0].anyComments == null ? "" : result.instructorExternalDetailsResponse[0].anyComments)
     setprofile_img(result.profile_img == null ? "" : result.profile_img)
 
+    setemail(result.instructorExternalEmail == null ? "" : result.instructorExternalEmail)
+
 
   })
   .catch(error => console.log('error', error));
@@ -2832,6 +2835,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/getInstru
   external_ratings,
   external_number_of_number,
   any_comment,
+  email,
   setbtn_loading) =>{
 
     setbtn_loading(true)
@@ -2854,6 +2858,7 @@ formdata.append("linkToCourse", `${link_to_course}`);
 formdata.append("externalRating", `${external_ratings}`);
 formdata.append("externalNumberOfStudents", `${external_number_of_number}`);
 formdata.append("anyComments", `${any_comment}`);
+formdata.append("email", `${email}`);
 
 
 var requestOptions = {
@@ -4394,7 +4399,10 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteE
 
 }
 
-export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,setbtn_loading_payment_details,selectedValue) =>{
+export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,payoneerUsername,bankSortNoOne,
+  bankSortNoTwo,
+  bankSortNoThree,
+  bankAccountNumber,setbtn_loading_payment_details,selectedValue) =>{
 
   setbtn_loading_payment_details(true)
 
@@ -4406,7 +4414,11 @@ export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,p
   formdata.append("paypalEmail", `${paypalEmail}`);
   formdata.append("payoneerUserName", `${payoneerUsername}`);
   formdata.append("payoneerEmail", `${payoneerEmail}`);
-  selectedValue == "paypal" ? formdata.append("paymentMethodId", "2") : formdata.append("paymentMethodId", "4");
+  selectedValue == "paypal" ? formdata.append("paymentMethodId", "2") : selectedValue == "payoneer" ?  formdata.append("paymentMethodId", "4") : formdata.append("paymentMethodId", "5")
+  formdata.append("accountNumber", `${bankAccountNumber}`);
+  formdata.append("sort1", `${bankSortNoOne}`);
+  formdata.append("sort2", `${bankSortNoTwo}`);
+  formdata.append("sort3", `${bankSortNoThree}`);
   
   const requestOptions = {
     method: "POST",
@@ -4433,7 +4445,11 @@ export const AddWalletDetails = async(paypalEmail,paypalUsername,payoneerEmail,p
 
 }
 
-export const GetWalletDetails = async(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername,setSelectedValue) =>{
+export const GetWalletDetails = async(setpaypalEmail,setpaypalUsername,setpayoneerEmail,setpayoneerUsername,
+  setbankSortNoOne,
+  setbankSortNoTwo,
+  setbankSortNoThree,
+  setbankAccountNumber,setSelectedValue) =>{
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -4454,6 +4470,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/ge
     setpaypalUsername(result.paypalUserName)
     setpayoneerEmail(result.payoneerEmail)
     setpayoneerUsername(result.payoneerUserName)
+
+    setbankSortNoOne(result.sort1)
+    setbankSortNoTwo(result.sort2)
+    setbankSortNoThree(result.sort3)
+    setbankAccountNumber(result.accountNumber)
 
     if(result.selected == ""){
       setSelectedValue('paypal')
