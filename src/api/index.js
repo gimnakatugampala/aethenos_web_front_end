@@ -7,6 +7,8 @@ import 'sweetalert2/src/sweetalert2.scss'
 import { ENV_STATUS } from "../commonFunctions/env";
 import moment from "moment";
 import { FILE_PATH } from "../commonFunctions/FilePaths";
+import Persona from "persona";
+import { useRef, useState } from "react";
 
 const CURRENT_USER = Cookies.get('aethenos');
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
@@ -1919,7 +1921,13 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
  }
 
- export const OwnThisContent = async(code,setbtn_loading,setcheckOnwership,setShow) =>{
+ export const OwnThisContent = async(code,setbtn_loading,setcheckOnwership,setShow,checkInstructorVerification,options,embeddedClientRef) =>{
+
+  // const [options, setOptions] = useState({
+  //   templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk"
+  // });
+
+  // const embeddedClientRef = useRef(null);
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -1940,8 +1948,62 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
         setShow(false)
         setcheckOnwership(true)
 
-          // Send to Request
-          RequestSubmitReview(code,setbtn_loading)
+        // -- Check if the Instructor is verified
+        if(checkInstructorVerification == 0){
+          // PERSONA
+          const client = new Persona.Client({
+            ...options,
+            environment: "sandbox",
+            onLoad: (error) => {
+              if (error) {
+                setbtn_loading(false)
+                console.error(
+                  `Failed with code: ${error.code} and message ${error.message}`
+                );
+              }
+      
+              client.open();
+            },
+            onStart: (inquiryId) => {
+              console.log(`Started inquiry ${inquiryId}`);
+            },
+            onComplete: (inquiryId) => {
+              console.log(`Sending finished inquiry ${inquiryId} to backend`);
+              setbtn_loading(false)
+    
+                // Verify Instructor
+                ChangeInstructorVerify(code)
+
+                  // Send to Request
+                RequestSubmitReview(code,setbtn_loading)
+    
+             
+    
+              fetch(`/server-handler?inquiry-id=${inquiryId}`);
+            },
+            onEvent: (name, meta) => {
+              switch (name) {
+                case "start":
+                  console.log(`Received event: start`);
+                  break;
+                default:
+                  console.log(
+                    `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+                  );
+                  setbtn_loading(false)
+              }
+            }
+          });
+          embeddedClientRef.current = client;
+      
+          window.exit = (force) =>
+            client ? client.exit(force) : alert("Initialize client first");
+          return
+    }
+
+
+        // Send to Request
+        RequestSubmitReview(code,setbtn_loading)
 
 
       }else{
@@ -1968,7 +2030,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
   fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/CheckOwnCourse/${code}`, requestOptions)
     .then(response => response.json())
     .then(result => {
-      // console.log(result)
+      console.log(result)
       Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
       setcourseOwnership(result)
     })
@@ -2092,7 +2154,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
         setTimeout(() => {
           window.location.href = "/courses"
-        }, 1300);
+        }, 2000);
 
         return
       }

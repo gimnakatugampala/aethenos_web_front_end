@@ -179,6 +179,16 @@ const ManageCourses = () => {
 
     // === Check if the Intructor details are filled =====
 
+        // If the Instructor is Verfied
+      // ========= Content Ownership ======
+      // Get Content Ownership
+      if(courseOwnership == 0){
+        setShow(true)
+        setbtn_loading(false)
+        return
+      }
+      // ========= Content Ownership ======
+
 
 
     if(checkInstructorVerification == 0){
@@ -208,15 +218,15 @@ const ManageCourses = () => {
 
                   // ========= Content Ownership ======
                   // Get Content Ownership
-                  if(courseOwnership == 0){
-                    setShow(true)
-                    setbtn_loading(false)
-                    return
-                  }
+                  // if(courseOwnership == 0){
+                  //   setShow(true)
+                  //   setbtn_loading(false)
+                  //   return
+                  // }
                   // ========= Content Ownership ======
 
-              //   // Send to Request
-              // RequestSubmitReview(code,setbtn_loading)
+                // Send to Request
+              RequestSubmitReview(code,setbtn_loading)
     
              
     
@@ -243,15 +253,7 @@ const ManageCourses = () => {
     }
 
 
-    // If the Instructor is Verfied
-     // ========= Content Ownership ======
-    // Get Content Ownership
-    if(courseOwnership == 0){
-      setShow(true)
-      setbtn_loading(false)
-      return
-    }
-    // ========= Content Ownership ======
+
 
       // Send to Request
       RequestSubmitReview(code,setbtn_loading)
@@ -275,7 +277,7 @@ const ManageCourses = () => {
   
 
     // Send Ownersship
-    OwnThisContent(code,setbtn_loading,setcheckOnwership,setShow)
+    OwnThisContent(code,setbtn_loading,setcheckOnwership,setShow,checkInstructorVerification,options,embeddedClientRef)
 
 
   };

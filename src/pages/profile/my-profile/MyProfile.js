@@ -343,13 +343,13 @@ const MyProfile = () => {
 
                 <label class="form-label">Headline<span className='text-danger'>*</span></label>
                 <div class="input-group mb-3">
-                    <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Instructor at Aethenos" />
+                    <input maxLength={60} value={headline} onChange={(e) => setheadline(e.target.value)} type="text" class="form-control" placeholder="Your occupation, specialization, and qualification" />
                     <span class="input-group-text" >{60 - headline.length}</span>
                 </div>
 
                 <div class="mb-3">
                     <label  class="form-label">Biography<span className='text-danger'>*</span></label>
-                    <textarea value={biography} onChange={(e) => setbiography(e.target.value)} class="form-control"  rows="3"></textarea>
+                    <textarea placeholder='Your professional and personal profile.' value={biography} onChange={(e) => setbiography(e.target.value)} class="form-control"  rows="3"></textarea>
                 </div>
 
                 </div>
@@ -573,7 +573,7 @@ const MyProfile = () => {
                             <div className='row my-2'>
 
 
-                            <div className='col-md-2'><span><b>Sort code</b></span></div>
+                            <div className='col-md-3'><span><b>Sort code</b></span></div>
 
                                 <div className='col-md-3'>
                                   <Form.Control disabled={selectedValue != 'uk'} value={bankSortNoOne} onChange={(e) => setbankSortNoOne(e.target.value)} type="text" />
@@ -587,7 +587,7 @@ const MyProfile = () => {
 
                             </div>
 
-                            <div className='col-md-2'><span><b>Account number</b></span></div>
+                            <div className='col-md-4'><span><b>Account number</b></span></div>
                             <Form>
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                 <Form.Control disabled={selectedValue != 'uk'} value={bankAccountNumber} onChange={(e) => setbankAccountNumber(e.target.value)} type="text" placeholder="Account Number" />

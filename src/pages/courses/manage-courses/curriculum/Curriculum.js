@@ -926,7 +926,7 @@ console.log(item)
 
       <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
-        Create your Course
+        Create your course
         </Typography>
         
         </div>
