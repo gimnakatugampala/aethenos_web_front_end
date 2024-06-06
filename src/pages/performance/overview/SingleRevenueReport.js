@@ -21,14 +21,14 @@ const SingleRevenueReport = () => {
       <div className="container text-center">
         <div className="row">
           <div className="col-12">
-            <p className="fs-5">
-              Revenue Report: <span className="fs-4 font-bold"> Mar 2019</span>
+            <p className="fs-5 my-4">
+              Revenue Report / <span className="fs-4 font-bold"> Mar 2019</span>
             </p>
           </div>
         </div>
       </div>
       
-      <div className="container ml-5">
+      <div className="container my-4">
         <p className="font-bold fs-10 mb-0">
           You earned $71 during this period. May 8, 2019 is the expected payment
           date for this payment.
@@ -42,8 +42,10 @@ const SingleRevenueReport = () => {
 
       <div className="container">
         <div className="row text-center">
-          <div className="col-4">
+          <div className="col-6">
             <Card>
+              <h6><i>Your Total Earnings</i></h6>
+              <h6><b>$45.00</b></h6>
               <PieChart
                 series={[
                   {
@@ -61,7 +63,7 @@ const SingleRevenueReport = () => {
               />
             </Card>
           </div>
-          <div className="col-4">
+          {/* <div className="col-4">
             <Card>
               <PieChart
                 series={[
@@ -79,9 +81,11 @@ const SingleRevenueReport = () => {
                 height={200}
               />
             </Card>
-          </div>
-          <div className="col-4">
+          </div> */}
+          <div className="col-6">
             <Card>
+            <h6><i>Your Earning by Courses</i></h6>
+              <h6><b></b></h6>
               <PieChart
                 series={[
                   {
@@ -103,17 +107,17 @@ const SingleRevenueReport = () => {
       </div>
 
       <Tabs className="mt-5">
+
         <Tab
           eventKey="home"
           title={
             <div className="tab-title">
-              <div>Total Revenue</div>
-              <div className="font-bold fs-5">$100</div>
+              <div className="font-bold fs-5">Purchases</div>
               <div>$20 this month</div>
             </div>
           }
         >
-          <MaterialTable
+        <MaterialTable
             title="Total Revenue"
             columns={[
               { title: "Date", field: "date", headerStyle: headerCellStyle },
@@ -133,13 +137,28 @@ const SingleRevenueReport = () => {
                 headerStyle: headerCellStyle,
               },
               {
-                title: "Channel",
-                field: "channel",
+                title: "Price Paid",
+                field: "pricePaid",
                 headerStyle: headerCellStyle,
               },
               {
-                title: "Price Period",
-                field: "pricePeriod",
+                title: "Payment Processing",
+                field: "paymentProcessing",
+                headerStyle: headerCellStyle,
+              },
+              {
+                title: "Apple/Google fees",
+                field: "appleGooglefees",
+                headerStyle: headerCellStyle,
+              },
+              {
+                title: "Tax",
+                field: "tax",
+                headerStyle: headerCellStyle,
+              },
+              {
+                title: "Net Revenue",
+                field: "netRevenue",
                 headerStyle: headerCellStyle,
               },
               {
@@ -147,6 +166,16 @@ const SingleRevenueReport = () => {
                 field: "yourRevenue",
                 headerStyle: headerCellStyle,
               },
+              {
+                title: "Channel",
+                field: "channel",
+                headerStyle: headerCellStyle,
+              },
+              {
+                title: "Platform",
+                field: "platform",
+                headerStyle: headerCellStyle,
+              }
             ]}
             data={[
               {
@@ -154,65 +183,36 @@ const SingleRevenueReport = () => {
                 customerName: "$100",
                 course: "Course 1",
                 couponCode: "ABC123",
-                channel: "Online",
-                pricePeriod: "Monthly",
+                pricePaid:"48329",
+                paymentProcessing:"48329",
+                appleGooglefees:"",
+                tax:"",
+                netRevenue:"43636",
                 yourRevenue: "$1000",
-              },
-              {
-                date: "Apr 2023",
-                customerName: "$150",
-                course: "Course 2",
-                couponCode: "DEF456",
-                channel: "In-Person",
-                pricePeriod: "Yearly",
-                yourRevenue: "$1500",
-              },
-              {
-                date: "May 2023",
-                customerName: "$200",
-                course: "Course 3",
-                couponCode: "GHI789",
                 channel: "Online",
-                pricePeriod: "Monthly",
-                yourRevenue: "$2000",
-              },
-              {
-                date: "Jun 2023",
-                customerName: "$250",
-                course: "Course 4",
-                couponCode: "JKL012",
-                channel: "Online",
-                pricePeriod: "Yearly",
-                yourRevenue: "$2500",
-              },
-              {
-                date: "Jul 2023",
-                customerName: "$300",
-                course: "Course 5",
-                couponCode: "MNO345",
-                channel: "In-Person",
-                pricePeriod: "Monthly",
-                yourRevenue: "$3000",
-              },
+                platform: "Monthly",
+              }
             ]}
             options={{
               sorting: true,
               exportButton: true,
             }}
           />
+
         </Tab>
+
+
         <Tab
-          eventKey="profile"
+          eventKey="refunds"
           title={
             <div className="tab-title">
-              <div>Total Enrollment</div>
-              <div className="font-bold fs-5">$500</div>
+              <div className="font-bold fs-5">Refunds</div>
               <div>$200 this month</div>
             </div>
           }
         >
           <MaterialTable
-            title="Total Enrollment"
+            title="All Refunds"
             columns={[
               { title: "Date", field: "date", headerStyle: headerCellStyle },
               {
@@ -226,72 +226,24 @@ const SingleRevenueReport = () => {
                 headerStyle: headerCellStyle,
               },
               {
-                title: "Coupon Code",
-                field: "couponCode",
+                title: "Refund Amount",
+                field: "refundAmount",
                 headerStyle: headerCellStyle,
               },
               {
-                title: "Channel",
-                field: "channel",
+                title: "Change to Your Revenue",
+                field: "changeRevenue",
                 headerStyle: headerCellStyle,
-              },
-              {
-                title: "Price Period",
-                field: "pricePeriod",
-                headerStyle: headerCellStyle,
-              },
-              {
-                title: "Your Revenue",
-                field: "yourRevenue",
-                headerStyle: headerCellStyle,
-              },
+              }
             ]}
             data={[
               {
                 date: "Mar 2023",
                 customerName: "$100",
                 course: "Course 1",
-                couponCode: "ABC123",
-                channel: "Online",
-                pricePeriod: "Monthly",
-                yourRevenue: "$1000",
-              },
-              {
-                date: "Apr 2023",
-                customerName: "$150",
-                course: "Course 2",
-                couponCode: "DEF456",
-                channel: "In-Person",
-                pricePeriod: "Yearly",
-                yourRevenue: "$1500",
-              },
-              {
-                date: "May 2023",
-                customerName: "$200",
-                course: "Course 3",
-                couponCode: "GHI789",
-                channel: "Online",
-                pricePeriod: "Monthly",
-                yourRevenue: "$2000",
-              },
-              {
-                date: "Jun 2023",
-                customerName: "$250",
-                course: "Course 4",
-                couponCode: "JKL012",
-                channel: "Online",
-                pricePeriod: "Yearly",
-                yourRevenue: "$2500",
-              },
-              {
-                date: "Jul 2023",
-                customerName: "$300",
-                course: "Course 5",
-                couponCode: "MNO345",
-                channel: "In-Person",
-                pricePeriod: "Monthly",
-                yourRevenue: "$3000",
-              },
+                refundAmount: "12.88",
+                changeRevenue: "-12.88"
+              }
             ]}
             options={{
               sorting: true,
@@ -299,7 +251,8 @@ const SingleRevenueReport = () => {
             }}
           />
         </Tab>
-        <Tab
+
+        {/* <Tab
           eventKey="contact"
           title={
             <div className="tab-title">
@@ -396,7 +349,8 @@ const SingleRevenueReport = () => {
               exportButton: true,
             }}
           />
-        </Tab>
+        </Tab> */}
+
       </Tabs>
     </Card>
   );
