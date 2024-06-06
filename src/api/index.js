@@ -711,6 +711,7 @@ console.log(course_cat)
   promo_vid,
   course_image,
   videoSrc,
+  own_topic,
   setloading_btn) =>{
 
 
@@ -729,7 +730,10 @@ console.log(course_cat)
   formdata.append("category", `${course_cat}`);
   formdata.append("subcategory", `${course_sub_cat}`);
   formdata.append("keywords", `${keywords}`);
-  formdata.append("topic", `${course_topic}`);
+
+  course_topic == 'other' ? formdata.append("topic", '') :  formdata.append("topic", `${course_topic}`);
+  course_topic == 'other' &&  formdata.append("ownTopic", `${own_topic}`);
+
   typeof course_image == "object" && formdata.append("course_image",  course_image) 
   typeof promo_vid == "object" &&  formdata.append("promotional_video", promo_vid) 
 

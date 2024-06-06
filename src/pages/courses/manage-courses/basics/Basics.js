@@ -50,6 +50,8 @@ const Basics = ({code}) => {
   const [course_image, setcourse_image] = useState("")
   const [promo_vid, setpromo_vid] = useState("")
 
+  const [own_topic, setown_topic] = useState("")
+
   const [preview_img, setpreview_img] = useState("")
 
   const [videoSrc , seVideoSrc] = useState("");
@@ -111,7 +113,14 @@ const Basics = ({code}) => {
     }else if(course_topic == ""){
       ErrorAlert("Empty Field","Please Select a Topic")
       return
+    }else if(course_topic == 'other'){
+        if(own_topic == ""){
+          ErrorAlert("Empty Field","Please Enter your own topic")
+          return
+        }
     }
+
+    
 
     setloading_btn(true)
 
@@ -129,6 +138,7 @@ const Basics = ({code}) => {
       promo_vid,
       course_image,
       videoSrc,
+      own_topic,
       setloading_btn
       )
 
@@ -351,14 +361,14 @@ const handleFileChange = (event) => {
                
             </Form.Select>
             </div>
-            
+
             {course_topic == 'other' && (
             <>
             <div className="col-md-9 mt-3"></div>
             <div className="col-md-3 mt-3">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Own Topic</Form.Label>
-              <Form.Control type="text" placeholder="Enter your own topic" />
+              <Form.Control value={own_topic} onChange={(e) => setown_topic(e.target.value)} type="text" placeholder="Enter your own topic" />
             </Form.Group>
             </div>
             </>
