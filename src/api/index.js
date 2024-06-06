@@ -4642,3 +4642,46 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructorPayment/ch
   .catch((error) => console.error(error));
 
 }
+
+export const PasswordReset = async(confirmPassword,currentPassword) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("newPassword", `${confirmPassword}`);
+formdata.append("oldPassword", `${currentPassword}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/studentProfile/resetPassword", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    Unauthorized(result.status,"account-settings") 
+
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+
+      setTimeout(() => {
+        window.location.href = "/courses"
+      }, 2000);
+
+
+      return
+    }
+
+    if(result.variable == "404"){
+      ErrorAlert("Error",result.message)
+      return
+    }
+
+  })
+  .catch((error) => console.error(error));
+
+}

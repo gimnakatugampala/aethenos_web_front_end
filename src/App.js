@@ -28,6 +28,7 @@ import QA from "./pages/communications/qa/QA";
 import Messages from "./pages/communications/messages/Messages";
 
 import MyProfile from "./pages/profile/my-profile/MyProfile";
+import AccountSettings from "./pages/profile/account-settings/AccountSettings";
 // import Login from "./pages/login/Login.js"
 
 import theme from "./commonFunctions/theme";
@@ -74,6 +75,7 @@ function App() {
             <Route exact path="/profile" component={MyProfile} />
             <Route exact path="/verification" component={Verification} />
             <Route exact path="/payouts" component={Payouts} />
+            <Route exact path="/account-settings" component={AccountSettings} />
             
             <Route
               exact

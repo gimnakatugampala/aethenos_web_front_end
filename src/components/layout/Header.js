@@ -39,6 +39,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PaidIcon from '@mui/icons-material/Paid';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookies from "js-cookie";
+import SettingsIcon from '@mui/icons-material/Settings';
 import { GetInstructorProfileDetails, GetNotifications } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 
@@ -211,6 +212,17 @@ function Header({
          <AccountCircleIcon fontSize="medium" /> 
          </ListItemIcon>
          Profile Details
+        </MenuItem>
+        </a>
+
+        <Divider />
+        
+        <a href="/account-settings">
+        <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+         <SettingsIcon fontSize="medium" /> 
+         </ListItemIcon>
+         Account Settings
         </MenuItem>
         </a>
 

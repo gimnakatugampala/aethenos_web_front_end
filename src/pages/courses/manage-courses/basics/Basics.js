@@ -335,7 +335,8 @@ const handleFileChange = (event) => {
               <option value="">Select Course Sub Category</option>
               {subcatData != null && subcatData.map((subcategory,index) => (
               <option key={index}  value={subcategory.id}>{subcategory.name}</option>
-              ))}
+            ))}
+           
             </Form.Select>
             </div>
           
@@ -346,8 +347,22 @@ const handleFileChange = (event) => {
               {topicsData != null &&  topicsData.map((topic,index) => (
               <option key={index} value={topic.id}>{topic.topic}</option>
               ))}
+              {course_sub_cat != "" && <option value="other">Other</option>}
+               
             </Form.Select>
             </div>
+            
+            {course_topic == 'other' && (
+            <>
+            <div className="col-md-9 mt-3"></div>
+            <div className="col-md-3 mt-3">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Own Topic</Form.Label>
+              <Form.Control type="text" placeholder="Enter your own topic" />
+            </Form.Group>
+            </div>
+            </>
+            )}
 
             <div className="col-md-12 my-3">
               <h6>What are the keywords that can help students find your course?</h6>
