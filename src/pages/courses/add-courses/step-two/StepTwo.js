@@ -18,10 +18,10 @@ const StepTwo = ({course_keywords, setcourse_keywords}) => {
       <div className='my-5'>
       <Typography.Title
         level={3}>
-        Enter Some Keywords to find your Course
+        Enter keywords to find your course
       </Typography.Title>
 
-      <p>When Typing These Keywords by Student Your Course Will Appear</p>
+     
 
       </div>
 
@@ -34,7 +34,7 @@ const StepTwo = ({course_keywords, setcourse_keywords}) => {
             name="keywords"
             placeHolder="Enter Search Keywords"
           />
-          <em>Please enter a minimum of 5 keywords to be used as search terms for students. Press Enter after each keyword.</em>
+          <em>Please enter a minimum of 5 keywords and press Enter key after each keyword.</em>
     </div>
 
 

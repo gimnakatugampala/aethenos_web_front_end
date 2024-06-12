@@ -164,8 +164,11 @@ export const InstructorVerify = async() =>{
       if(result.variable == "200"){
         setloading(false)
         SuccessAlert("Test Video Sent For Approval!", "Please Await our Feedback to Proceed")
+
+        setTimeout(() => {
+          window.location.href = "/courses"
+        }, 2500);
   
-        window.location.href = "/courses"
   
       }
 

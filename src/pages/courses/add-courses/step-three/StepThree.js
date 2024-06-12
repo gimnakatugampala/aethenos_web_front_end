@@ -37,7 +37,7 @@ const StepThree = ({setcourse_image}) => {
         Upload Course Image
       </Typography.Title>
 
-      <p>You Can Always Change It.</p>
+    
       </div>
 
       <div className='pt-3'>

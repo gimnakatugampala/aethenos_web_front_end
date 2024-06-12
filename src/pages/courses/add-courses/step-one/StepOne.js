@@ -33,20 +33,21 @@ const StepOne = ({setcourse_title , setcourse_category}) => {
       <div className='my-5'>
       <Typography.Title
         level={3}>
-        Please Enter Course Title
+        Please enter a course title
       </Typography.Title>
 
-      <p>It's ok if you can't think of a good title now. You can change it later.</p>
+      {/* <p>It's ok if you can't think of a good title now. You can change it later.</p> */}
       </div>
       
-      <div className='pt-3'>
+      <div  className='pt-3'>
       
-      <div class="input-group">
+      <div style={{width:'400px'}} class="input-group">
         <input maxLength={60} onChange={onChnageTitle} type="text" class="form-control" placeholder="Enter Course Title" />
         <span class="input-group-text" id="course-title-count">60</span>
       </div>
 
         <Select
+        style={{width:'400px'}}
         className='my-2 category-select'
         size='large'
         placeholder="Select Course Category"

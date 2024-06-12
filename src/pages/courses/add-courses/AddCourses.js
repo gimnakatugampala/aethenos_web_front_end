@@ -230,7 +230,7 @@ const AddCourses = () => {
               ) : activeStep == 2 ? (
                 <StepThree setcourse_image={setcourse_image} />
               ) : activeStep == 3 && (
-                <StepFour setcourse_test_video={setcourse_test_video} />
+                <StepFour course_test_video={course_test_video} setcourse_test_video={setcourse_test_video} />
               ) }
             </div>
 
