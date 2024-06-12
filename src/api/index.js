@@ -399,7 +399,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
         UpdateCourseProgress(code)
         setTimeout(() => {
           window.location.reload()
-        }, 1500);
+        }, 2000);
 
         // window.location.reload()
       }else{
@@ -2645,10 +2645,11 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
     redirect: 'follow'
   };
 
-  let timerInterval;
+  
   Swal.fire({
     title: "Uploading ...",
     timerProgressBar: true,
+    allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading();
 

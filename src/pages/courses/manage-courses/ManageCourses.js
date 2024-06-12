@@ -31,7 +31,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import LoadingOverlay from 'react-loading-overlay';
 
 import IntendedLearners from './intended-learners/IntendedLearners';
 import Curriculum from './curriculum/Curriculum';
@@ -426,6 +426,7 @@ const ManageCourses = () => {
   </Header>
 
   {/* Content */}
+ 
 
   <Row>
 
@@ -574,6 +575,7 @@ const ManageCourses = () => {
   </Row>
 
 
+
   {/* Content Copyrights */}
   <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -604,6 +606,7 @@ const ManageCourses = () => {
 
 
   </Layout>
+  
   )
 }
 

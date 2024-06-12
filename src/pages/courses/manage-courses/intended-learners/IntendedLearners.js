@@ -298,8 +298,8 @@ const saveIntendedLeaners = (e) =>{
 
 
       <div className='section-1'>
-          <div className='mt-4 mb-2'>
-          <Typography variant="h6" >What will be taught in your course?</Typography>
+          <div className='mt-1 mb-2'>
+          <Typography variant="h6" ><b>What will be taught in your course ?</b></Typography>
           <p>Enter at least 3 learning objectives/outcomes.</p>
           </div>
 
@@ -417,7 +417,7 @@ const saveIntendedLeaners = (e) =>{
     {/* Section 2 */}
     <div className='section-2'>
     <div className='mt-4 mb-2'>
-    <Typography variant="h6" >What are the requirements/prerequisites for this course?</Typography>
+    <Typography variant="h6" ><b>What are the requirements/prerequisites for this course?</b></Typography>
       <p>Give details of any required experience, skills, equipment/tools that students should have prior to taking this course. Enter at least 3 requirements/prerequisites.</p>
       </div>
 
@@ -536,7 +536,7 @@ const saveIntendedLeaners = (e) =>{
     {/* Section 3 */}
     <div className='section-3'>
     <div className='mt-4 mb-2'>
-    <Typography variant="h6" >Who is this course for?</Typography>
+    <Typography variant="h6" ><b>Who is this course for ?</b></Typography>
     <p>
     Describe the target audience for the course to help students decide if this course is suitable for them.
     </p>

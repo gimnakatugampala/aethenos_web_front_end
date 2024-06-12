@@ -51,6 +51,7 @@
     "react-images-uploading": "^3.1.7",
     "react-list-drag-and-drop": "^0.9.2",
     "react-loader-spinner": "^5.4.5",
+    "react-loading-overlay": "^1.0.1",
     "react-multistep": "^5.5.8",
     "react-password-checklist": "^1.6.0",
     "react-player": "^2.16.0",

@@ -14,6 +14,8 @@ import Table from 'react-bootstrap/Table';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import JoditEditor from "jodit-react";
+import DnsIcon from '@mui/icons-material/Dns';
+
 
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -47,6 +49,9 @@ import 'sweetalert2/src/sweetalert2.scss'
 
 
 
+const syllabusIcon = {
+  fontSize: '17px'
+}
 
 const Curriculum = ({code}) => {
 
@@ -130,6 +135,7 @@ const Curriculum = ({code}) => {
 
   const [updateLectureName, setupdateLectureName] = useState("")
   const [updateQuizName, setupdateQuizName] = useState("")
+  const [updateQuizDescription, setupdateQuizDescription] = useState("")
   const [updateAssignmentName, setupdateAssignmentName] = useState("")
   const [updatePraticeTestName, setupdatePraticeTestName] = useState("")
   const [updateCodingExerciseName, setupdateCodingExerciseName] = useState("")
@@ -217,7 +223,7 @@ const Curriculum = ({code}) => {
       setbtn_section_loading(true)
 
       if(section == ""){
-        ErrorAlert("Empty Field","Please Fill The Section Title")
+        ErrorAlert("Empty field","Please fill the section title")
         setbtn_section_loading(false)
         return
       }
@@ -302,7 +308,7 @@ const Curriculum = ({code}) => {
     const handleSaveLecture = (courseID) =>{
       // setshowLecInput(false)
       if(lecturetitle == ""){
-        ErrorAlert("Empty Field","Please Enter Lecture Title")
+        ErrorAlert("Empty field","Please enter lecture title")
         return
       }
 
@@ -362,27 +368,27 @@ const Curriculum = ({code}) => {
       console.log(PraticeTestSolutionsExLink)
 
       if(PracticeTestTitle == ""){
-        ErrorAlert("Empty Field","Please Fill The Title")
+        ErrorAlert("Empty field","Please fill the title")
         return
       }
 
       if(PracticeTestDesc == ""){
-        ErrorAlert("Empty Field","Please Fill The Description")
+        ErrorAlert("Empty field","Please fill the description")
         return
       }
 
       if(PracticeTestDuration == ""){
-        ErrorAlert("Empty Field","Please Fill The Duration")
+        ErrorAlert("Empty field","Please fill the duration")
         return
       }
 
       if(PracticeTestMinPassMark == ""){
-        ErrorAlert("Empty Field","Please Fill The Min Pass Mark")
+        ErrorAlert("Empty field","Please fill the min pass mark")
         return
       }
 
       if(PracticeTestInstructions == ""){
-        ErrorAlert("Empty Field","Please Fill The Instructors")
+        ErrorAlert("Empty field","Please fill the instructors")
         return
       }
 
@@ -442,17 +448,17 @@ const Curriculum = ({code}) => {
       console.log(CodingExercisesSolutionsVideo)
 
       if(CodingExerciseTitle == ""){
-        ErrorAlert("Empty Field","Please Fill the Title")
+        ErrorAlert("Empty field","Please fill the title")
         return
       }
 
       if(CodingExerciseDesc == ""){
-        ErrorAlert("Empty Field","Please Fill the Description")
+        ErrorAlert("Empty field","Please fill the description")
         return
       }
 
       if(CodingExerciseInstructions == ""){
-        ErrorAlert("Empty Field","Please Fill the Instructors")
+        ErrorAlert("Empty field","Please fill the instructors")
         return
       }
 
@@ -517,22 +523,22 @@ const Curriculum = ({code}) => {
       console.log(AssignmentSolutionsExLink)
 
       if(AssignmentTitle == ""){
-        ErrorAlert("Empty Field","Please Fill Title")
+        ErrorAlert("Empty field","Please fill title")
         return
       }
 
       if(AssignmentDesc == ""){
-        ErrorAlert("Empty Field","Please Fill Description")
+        ErrorAlert("Empty field","Please fill description")
         return
       }
 
       if(AssignmentDuration == ""){
-        ErrorAlert("Empty Field","Please Fill Duration")
+        ErrorAlert("Empty field","Please fill duration")
         return
       }
 
       if(AssignmentInstructors == ""){
-        ErrorAlert("Empty Field","Please Fill Instructions")
+        ErrorAlert("Empty field","Please fill instructions")
         return
       }
 
@@ -734,7 +740,7 @@ const Curriculum = ({code}) => {
     console.log(curriculum_desc)
 
     if(curriculum_desc == ""){
-      ErrorAlert("Empty Field","Please Enter Description")
+      ErrorAlert("Empty field","Please enter description")
       return
     }
 
@@ -759,11 +765,11 @@ const Curriculum = ({code}) => {
 
       if(curriclum_ex_res_tile == ""){
 
-        ErrorAlert("Empty Field","Please Enter Title")
+        ErrorAlert("Empty field","Please enter title")
         return
 
       }else if(curriculum_ex_res_link == ""){
-        ErrorAlert("Empty Field","Please Enter Link")
+        ErrorAlert("Empty field","Please enter link")
         return
 
       }else{
@@ -788,7 +794,7 @@ const Curriculum = ({code}) => {
    const handleSaveArticle = (ID) =>{
 
     if(article == ""){
-      ErrorAlert("Empty Field","Please Enter Text Content")
+      ErrorAlert("Empty field","Please enter text content")
       return
     }
 
@@ -838,9 +844,9 @@ const Curriculum = ({code}) => {
       console.log(quizDesc)
 
       if(quizTitle == ""){
-        ErrorAlert("Empty Field","Please Enter Quiz Title")
+        ErrorAlert("Empty field","Please enter quiz title")
       }else if(quizDesc == ""){
-        ErrorAlert("Empty Field","Please Enter Quiz Description")
+        ErrorAlert("Empty field","Please enter quiz description")
       }else{
 
         AddCurriculumQuiz(code,setsectionData,sectionID,quizTitle,quizDesc,setshowQuizInput,setshowCurriculumItem,setquizTitle,setquizDesc)
@@ -860,13 +866,13 @@ const Curriculum = ({code}) => {
     console.log(curriculumID)
 
     if(question == ""){
-      ErrorAlert("Empty Field","Please Enter a Question");
+      ErrorAlert("Empty field","Please enter a question");
       return
     }else if(answerOption == ""){
-      ErrorAlert("Empty Field","Please Select a Correct Answer");
+      ErrorAlert("Empty field","Please select correct answer");
       return
     }else if(answerOne == ""){
-      ErrorAlert("Empty Field","Please Enter Answer One");
+      ErrorAlert("Empty field","Please enter answer one");
       return
     }else{
       AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData)
@@ -960,10 +966,10 @@ console.log(item)
         sectionData.length > 0  ?  sectionData.map((section,index) => (
           <div key={index} className="card p-2 my-3">
             <CardContent>
-
+            
               <div className="d-flex justify-content-between section-container">
                 <Typography  variant="subtitle1">
-                  <b>{index + 1}. Section:</b> <FileCopyIcon sx={{ fontSize: 15 }} />{" "}
+                  <b>{index + 1}. Section:</b> <DnsIcon sx={{ fontSize: 15 }} />{" "}
                   
                 {/* When Clicked Edit */}
                   {showSectionEditInput == index ? (
@@ -993,7 +999,7 @@ console.log(item)
                   ) : (
                     <>
                     <span>{section.courseSection.sectionName}</span> 
-                    <EditIcon onClick={(e) => {
+                    <EditIcon style={syllabusIcon} onClick={(e) => {
 
                         if(showSectionEditInput == index){
                           setshowSectionEditInput(null)
@@ -1004,7 +1010,7 @@ console.log(item)
                         }
                           
                     }} className="mx-1" />
-                    <DeleteIcon className="mx-1"  onClick={() => handleSectionDelete(section)}  />
+                    <DeleteIcon style={syllabusIcon} className="mx-1"  onClick={() => handleSectionDelete(section)}  />
                     </>
                   )}
 
@@ -1060,9 +1066,9 @@ console.log(item)
                           <span>
                           <Typography>
                             <CheckCircleIcon fontSize="small" />{i + 1}. Lesson:{" "}
-                            <FileCopyIcon sx={{ fontSize: 15 }} /> {item.title}
+                            {item.article != "N/A" ? <FileCopyIcon sx={{ fontSize: 15 }} /> : <PlayCircleIcon sx={{ fontSize: 15 }} />} {item.title}
                             <span className="mx-5">
-                            <EditIcon onClick={(e) => {
+                            <EditIcon style={syllabusIcon} onClick={(e) => {
                                 if(showEditTitleInput == index + i + item.id){
                                   setshowEditTitleInput(null)
                                   setupdateLectureName("")
@@ -1072,7 +1078,7 @@ console.log(item)
                                 }
                                   
                             }} />
-                            <DeleteIcon onClick={() => handleLectureDelete(item)} />
+                            <DeleteIcon style={syllabusIcon} onClick={() => handleLectureDelete(item)} />
                             </span>
                           </Typography>
                           </span>
@@ -1135,7 +1141,11 @@ console.log(item)
                                           <>
                                               {showDescription == index + i + item.id && (
                                                 <>
-                                                <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                                                {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+                                                <Button onClick={() => {
+                                                setcurriculum_desc(item.description == "N/A" ? "" : item.description)
+                                                setshowDescription(showDescription == index + i + item.id ? null : index + i + item.id)
+                                              }} className="m-2" variant="contained"><AddIcon /> Description</Button>
                                                 <Button onClick={() => setshowResources(null)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button> 
                                                 <JoditEditor value={curriculum_desc} onChange={(value) => setcurriculum_desc(value)} />
 
@@ -1210,7 +1220,7 @@ console.log(item)
 
 
                                             {/* Downloadable Files */}
-                                          {item.curriculumItemFiles.length > 0 && (
+                                          {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype == "Downloadable Items") && (
                                               <div className="p-2">
                                                   <h6><b>Downloadable Files</b></h6>
                                                   <ListGroup>
@@ -1251,7 +1261,7 @@ console.log(item)
                                           )}
 
                                           {/* Source Code */}
-                                          {item.curriculumItemFiles.length > 0 && (
+                                          {item.curriculumItemFiles.some(source => source.filetype === "Source Code") && (
                                               <div className="p-2">
                                                   <h6><b>Source Code</b></h6>
                                                   <ListGroup>
@@ -1664,7 +1674,7 @@ console.log(item)
                                 
 
                                     {/* Downloadable Files */}
-                                  {item.curriculumItemFiles.length > 0 && (
+                                  {item.curriculumItemFiles.some(downloaditem => downloaditem.filetype == "Downloadable Items")  && (
                                       <div className="p-2">
                                           <h6><b>Downloadable Files</b></h6>
                                           <ListGroup>
@@ -1680,7 +1690,7 @@ console.log(item)
                                                             </ListGroup.Item>
                                                       ))
                                               ) : (
-                                                  <p>No Downloadable Items</p>
+                                                  <></>
                                               )}
                                           </ListGroup>
                                       </div>
@@ -1704,7 +1714,7 @@ console.log(item)
                                   )}
 
                                   {/* Source Code */}
-                                  {item.curriculumItemFiles.length > 0 && (
+                                  {item.curriculumItemFiles.some(source => source.filetype === "Source Code") && (
                                       <div className="p-2">
                                             <h6><b>Source Code</b></h6>
                                           <ListGroup>
@@ -1739,7 +1749,9 @@ console.log(item)
                 {/* Quiz */}
                 {item.type == "Quiz" && (
                   showEditQuizInput == index + i + item.id ? ( 
-                    <div className="d-flex">
+                    <div >
+
+                    <div>
                     <Form.Control 
                       className="mx-1"
                       value={updateQuizName} 
@@ -1747,6 +1759,12 @@ console.log(item)
                       type="text" 
                       placeholder="Quiz Name" 
                     />
+
+                    <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1">
+                      <Form.Control value={updateQuizDescription} onChange={(e) => setupdateQuizDescription(e.target.value)} as="textarea" rows={3} />
+                    </Form.Group>
+
+                    </div>
 
                     <Button onClick={(e) => {
                         if(showEditQuizInput == index + i + item.id){
@@ -1771,17 +1789,20 @@ console.log(item)
                         <CheckCircleIcon fontSize="small" />{i + 1}. Quiz:{" "}
                         <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
                         <span className="mx-5">
-                              <EditIcon onClick={(e) => {
+                              <EditIcon style={syllabusIcon} onClick={(e) => {
                                   if(showEditQuizInput == index + i + item.id){
                                     setshowEditQuizInput(null)
                                     setupdateQuizName("")
+                                    setupdateQuizDescription("")
                                   }else{
                                     setshowEditQuizInput(index + i + item.id)
                                     setupdateQuizName(item.title)
+                                    setupdateQuizDescription(item.description)
+                                    console.log(item)
                                   }
                                     
                               }} />
-                           <DeleteIcon onClick={() => handleQuizDelete(item)} />
+                           <DeleteIcon style={syllabusIcon} onClick={() => handleQuizDelete(item)} />
                           </span>
                       </Typography>
   
@@ -1814,7 +1835,7 @@ console.log(item)
                           size="small"
                           variant="outlined"
                         >
-                          <AddIcon /> Questions
+                          {item.getQuizs[0] == null ? (<><AddIcon /> Question</>) : (<><EditIcon /> Edit</>)}
                         </Button>
                       )}
                       </span>
@@ -1834,7 +1855,7 @@ console.log(item)
                                     <Form.Control value={question} onChange={(e) => setquestion(e.target.value)} as="textarea" rows={3} />
                                   </Form.Group>
   
-                                  <Form.Label>Answers</Form.Label>
+                                  <Form.Label>Answers (Please select correct answer)</Form.Label>
                                   <RadioGroup
                                     name="group1"
                                     onChange={(e) => setanswerOption(e.target.value)}
@@ -1850,7 +1871,7 @@ console.log(item)
                                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Control value={answerOne} onChange={(e) => setanswerOne(e.target.value)} as="textarea" rows={3} />
                                       </Form.Group>
-                                      <Form.Control value={answerExplainOne == "null" ? "" : answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                      <Form.Control value={answerExplainOne == "null" ? "" : answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
                                       </div>
   
                                     {/* 2 */}
@@ -1861,7 +1882,7 @@ console.log(item)
                                       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                         <Form.Control value={answerTwo} onChange={(e) => setanswerTwo(e.target.value)} as="textarea" rows={3} />
                                       </Form.Group>
-                                      <Form.Control value={answerExplainTwo == "null" ? "" : answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                      <Form.Control value={answerExplainTwo == "null" ? "" : answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
                                       </div>
   
                                   {/* 3 */}
@@ -1873,7 +1894,7 @@ console.log(item)
                                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                     <Form.Control value={answerThree} onChange={(e) => setanswerThree(e.target.value)} as="textarea" rows={3} />
                                   </Form.Group>
-                                  <Form.Control value={answerExplainThree == "null" ? "" : answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                  <Form.Control value={answerExplainThree == "null" ? "" : answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
                                   </div>
   
                                   {/* 4 */}
@@ -1885,7 +1906,7 @@ console.log(item)
                                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                     <Form.Control value={answerFour} onChange={(e) => setanswerFour(e.target.value)} as="textarea" rows={3} />
                                   </Form.Group>
-                                  <Form.Control value={answerExplainFour == "null" ? "" : answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                  <Form.Control value={answerExplainFour == "null" ? "" : answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
                                   </div>
   
   
@@ -1900,7 +1921,7 @@ console.log(item)
                                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                     <Form.Control value={answerFive} onChange={(e) => setanswerFive(e.target.value)} as="textarea" rows={3} />
                                   </Form.Group>
-                                  <Form.Control value={answerExplainFive == "null" ? "" : answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't the best answer" />
+                                  <Form.Control value={answerExplainFive == "null" ? "" : answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
                                   </div>
   
   
@@ -2081,7 +2102,7 @@ console.log(item)
                       <CheckCircleIcon fontSize="small" />{i + 1}. Assignment:{" "}
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
-                              <EditIcon onClick={(e) => {
+                              <EditIcon style={syllabusIcon} onClick={(e) => {
                                   if(showEditAssignmentInput == index + i + item.id ){
                                     setshowEditAssignmentInput(null)
                                     setupdateAssignmentName("")
@@ -2091,7 +2112,7 @@ console.log(item)
                                   }
                                     
                                 }} />
-                                <DeleteIcon onClick={() => handleAssignmentDelete(item)}  />
+                                <DeleteIcon style={syllabusIcon} onClick={() => handleAssignmentDelete(item)}  />
                       </span>
                     </Typography>
                  </span>
@@ -2186,6 +2207,16 @@ console.log(item)
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Upload Video</Form.Label>
+
+                                {item.getAssignment[0].assignmentVideo != "" && (
+                                <ListGroup className="my-2">
+                                <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                    <span>{item.getAssignment[0].assignmentVideo}</span>
+                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                  </ListGroup.Item>
+                                </ListGroup>
+                                )}
+
                                 <Form.Control  accept="video/*" onChange={(e) => {
                                   setAssignmentVideo(e.target.files[0])
                                 }} type="file" />
@@ -2193,6 +2224,16 @@ console.log(item)
 
                               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Downloadable Resourses</Form.Label>
+
+                                {item.getAssignment[0].downloadableResource != "" && (
+                                <ListGroup className="my-2">
+                                <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                    <span>{item.getAssignment[0].downloadableResource}</span>
+                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                  </ListGroup.Item>
+                              </ListGroup>
+                                )}
+
                                 <Form.Control  onChange={(e) => setAssignmentDResourses(e.target.files[0])} type="file"  />
                               </Form.Group>
 
@@ -2213,7 +2254,16 @@ console.log(item)
                             </Form.Group>
 
                           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                          <Form.Label>Upload Question</Form.Label>
+                          <Form.Label>Upload Questions</Form.Label>
+                          {item.getAssignment[0].questionSheet != "" && (
+                          <ListGroup className="my-2">
+                                <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                    <span>{item.getAssignment[0].questionSheet}</span>
+                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                  </ListGroup.Item>
+                              </ListGroup>
+                          )}
+
                           <Form.Control  onChange={(e) => setAssignmentQuestionFile(e.target.files[0])} type="file" />
                           </Form.Group>
 
@@ -2235,11 +2285,29 @@ console.log(item)
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                 <Form.Label>Upload Video</Form.Label>
+                              {item.getAssignment[0].solutionVideo != "" && (
+                                <ListGroup className="my-2">
+                                <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                    <span>{item.getAssignment[0].solutionVideo}</span>
+                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                  </ListGroup.Item>
+                              </ListGroup>
+                              )}
+
                                 <Form.Control  accept="video/*" onChange={(e) => setAssignmentSolutionsVideo(e.target.files[0])} type="file" />
                               </Form.Group>
 
                           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>Upload Solutions</Form.Label>
+                          {item.getAssignment[0].solutionsSheet != "" && (
+                          <ListGroup className="my-2">
+                                <ListGroup.Item className="d-flex justify-content-between" key={index}>
+                                    <span>{item.getAssignment[0].solutionsSheet}</span>
+                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                  </ListGroup.Item>
+                              </ListGroup>
+                          )}
+
                           <Form.Control  onChange={(e) => setAssignmentSolutionsFile(e.target.files[0])} type="file" />
                           </Form.Group>
 
@@ -2300,7 +2368,7 @@ console.log(item)
                       <CheckCircleIcon fontSize="small" />{i + 1}. Practice Test:{" "}
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
-                          <EditIcon onClick={(e) => {
+                          <EditIcon style={syllabusIcon} onClick={(e) => {
                               if(showEditPraticeTestInput == index + i + item.id){
                                 setshowEditPraticeTestInput(null)
                                 setupdatePraticeTestName("")
@@ -2310,7 +2378,7 @@ console.log(item)
                               }
                                 
                             }} />
-                      <DeleteIcon onClick={() => handlePracticeTestDelete(item)} />
+                      <DeleteIcon style={syllabusIcon} onClick={() => handlePracticeTestDelete(item)} />
                         </span>
                     </Typography>
                     </span>
@@ -2341,18 +2409,18 @@ console.log(item)
                           setmainSectionID(section.courseSection.sectionId)
 
                           // Fill Data
-                          setPraticeTestCode(item.getPracticeTests[0].practiceTestCode)
-                          setPracticeTestTitle(item.title)
-                          setPracticeTestDesc(item.description)
-                          setPracticeTestDuration(item.getPracticeTests[0].duration)
-                          setPracticeTestInstructions(item.getPracticeTests[0].instructions)
-                          setPracticeTestMinPassMark(item.getPracticeTests[0].minimumuPassMark)
+                          setPraticeTestCode(item.getPracticeTests[0] == null ? "" : item.getPracticeTests[0].practiceTestCode)
+                          setPracticeTestTitle(item == null ? "" :  item.title)
+                          setPracticeTestDesc(item == null ? "" :  item.description)
+                          setPracticeTestDuration(item.getPracticeTests[0] == null ? "" :  item.getPracticeTests[0].duration)
+                          setPracticeTestInstructions(item.getPracticeTests[0] == null ? "" :  item.getPracticeTests[0].instructions)
+                          setPracticeTestMinPassMark(item.getPracticeTests[0] == null ? "" :  item.getPracticeTests[0].minimumuPassMark)
 
 
-                          setPracticeTestExLink(item.getPracticeTests[0].externalLink)
-                          setPracticeTestQuestionExLink(item.getPracticeTests[0].questionLink)
+                          setPracticeTestExLink(item.getPracticeTests[0] == null ? "" : item.getPracticeTests[0].externalLink)
+                          setPracticeTestQuestionExLink(item.getPracticeTests[0] == null ? "" : item.getPracticeTests[0].questionLink)
 
-                          setPraticeTestSolutionsExLink(item.getPracticeTests[0].solutionLink)
+                          setPraticeTestSolutionsExLink(item.getPracticeTests[0] == null ? "" : item.getPracticeTests[0].solutionLink)
 
 
                         }}
@@ -2411,7 +2479,17 @@ console.log(item)
 
                       <Form>
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                      <Form.Label>Upload Question</Form.Label>
+                      <Form.Label>Upload Questions</Form.Label>
+
+                      {item.getPracticeTests[0] != null && item.getPracticeTests[0].practiceTestQuestionSheet != "" && (
+                      <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getPracticeTests[0].practiceTestQuestionSheet}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      )}
+
                       <Form.Control  onChange={(e) => setPracticeTestQuestionFile(e.target.files[0])} type="file" />
                       </Form.Group>
 
@@ -2427,6 +2505,15 @@ console.log(item)
                       <Form>
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Solutions</Form.Label>
+                      {item.getPracticeTests[0] != null && item.getPracticeTests[0].practiceTestSolutionSheet != "" && (
+                      <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getPracticeTests[0].practiceTestSolutionSheet}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      )}
+
                       <Form.Control  onChange={(e) => setPracticeTestSolutionsFile(e.target.files[0])} type="file" />
                       </Form.Group>
 
@@ -2487,7 +2574,7 @@ console.log(item)
                           <CheckCircleIcon fontSize="small" />{i + 1}. Coding Exercise:{" "}
                           <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
                           <span className="mx-5">
-                              <EditIcon onClick={(e) => {
+                              <EditIcon style={syllabusIcon} onClick={(e) => {
                                   if(showEditCodingExerciseInput == index + i + item.id){
                                     setshowEditCodingExerciseInput(null)
                                     setupdateCodingExerciseName("")
@@ -2497,7 +2584,7 @@ console.log(item)
                                   }
                                     
                                 }} />
-                          <DeleteIcon onClick={() => handleCodingExercisesDelete(item)} />
+                          <DeleteIcon style={syllabusIcon} onClick={() => handleCodingExercisesDelete(item)} />
                           </span>
                         </Typography>
                       </span>
@@ -2579,11 +2666,35 @@ console.log(item)
       
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>Upload Video</Form.Label>
+
+                          {item.getCodingExercises[0].codingVideo != "" && (
+
+                          <ListGroup className="my-2">
+                          <ListGroup.Item className="d-flex justify-content-between">
+                              <span>{item.getCodingExercises[0].codingVideo}</span>
+                              <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            </ListGroup.Item>
+                          </ListGroup>
+                          )}
+
+
                           <Form.Control  accept="video/*" onChange={(e) => setCodingExerciseVideo(e.target.files[0])} type="file" />
                         </Form.Group>
     
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                           <Form.Label>Downloadable Resourses</Form.Label>
+
+                          {item.getCodingExercises[0].downloadableResource != "" && (
+
+                          <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getCodingExercises[0].downloadableResource}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                          )}
+
+
                           <Form.Control onChange={(e) => setCodingExerciseDResourses(e.target.files[0])} type="file" multiple />
                         </Form.Group>
     
@@ -2599,6 +2710,18 @@ console.log(item)
                       <Form>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload coding exercises</Form.Label>
+
+                      {item.getCodingExercises[0].codingExerciseSheet != "" && (
+
+                      <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getCodingExercises[0].codingExerciseSheet}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      )}
+
+
                       <Form.Control  onChange={(e) => setCodingExerciseUploadEx(e.target.files[0])} type="file" multiple />
                     </Form.Group>
       
@@ -2610,6 +2733,17 @@ console.log(item)
     
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>Upload Video</Form.Label>
+
+                          {item.getCodingExercises[0].codingExerciseVideo != "" && (
+                          <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getCodingExercises[0].codingExerciseVideo}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                          )}
+
+
                           <Form.Control  accept="video/*" onChange={(e) => setCodingExerciseQVideo(e.target.files[0])} type="file" />
                         </Form.Group>
                     </Form>
@@ -2619,6 +2753,17 @@ console.log(item)
                       <Form>
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                       <Form.Label>Upload Solutions</Form.Label>
+
+                      {item.getCodingExercises[0].codingSolutionsSheet != "" && (
+                      <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getCodingExercises[0].codingSolutionsSheet}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      )}
+
+
                       <Form.Control  onChange={(e) => setCodingExercisesSolutionsFile(e.target.files[0])} type="file" multiple />
                     </Form.Group>
       
@@ -2630,14 +2775,26 @@ console.log(item)
     
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>Upload Video</Form.Label>
+
+                          {item.getCodingExercises[0].codingSolutionsVideo != "" && (
+                            
+                          <ListGroup className="my-2">
+                        <ListGroup.Item className="d-flex justify-content-between">
+                            <span>{item.getCodingExercises[0].codingSolutionsVideo}</span>
+                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                          )}
+
+
                           <Form.Control  accept="video/*" onChange={(e) => setCodingExercisesSolutionsVideo(e.target.files[0])} type="file" />
                         </Form.Group>
-                    <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel Coding Exercise</Button>
-                    {btnLoadingCodingExcercise ? (
-                    <Button  className="mx-1" variant="contained">Saving..</Button>
-                    ) :(
-                    <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
-                    )}
+                          <Button onClick={() => setshowCodingExecInput(null)} variant="outlined">Cancel Coding Exercise</Button>
+                          {btnLoadingCodingExcercise ? (
+                          <Button  className="mx-1" variant="contained">Saving..</Button>
+                          ) :(
+                          <Button onClick={handleCodingExecSave} className="mx-1" variant="contained">Save Coding Exercise</Button>
+                          )}
       
                     </Form>
                       </Tab>
@@ -2708,6 +2865,17 @@ console.log(item)
                       </Button>
 
                       <Button onClick={() => {
+                        setshowAssignmentInput(showAssignmentInput == index ? null : index)
+                        setshowLecInput(null)
+                        setshowQuizInput(null)
+                        setshowPracticeTestInput(null)
+                        setshowCodingExecInput(null)
+                      }} variant="text">
+                      <AddIcon />
+                        Assignment
+                      </Button>
+
+                      <Button onClick={() => {
                         setshowCodingExecInput(showCodingExecInput == index ? null : index)
                         setshowLecInput(null)
                         setshowQuizInput(null)
@@ -2718,16 +2886,7 @@ console.log(item)
                         Coding Excercises
                       </Button>
 
-                      <Button onClick={() => {
-                        setshowAssignmentInput(showAssignmentInput == index ? null : index)
-                        setshowLecInput(null)
-                        setshowQuizInput(null)
-                        setshowPracticeTestInput(null)
-                        setshowCodingExecInput(null)
-                      }} variant="text">
-                      <AddIcon />
-                        Assignment
-                      </Button>
+                      
 
                   </div>
                 )}
@@ -2844,7 +3003,7 @@ console.log(item)
 
                 <Form>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Upload Question</Form.Label>
+                <Form.Label>Upload Questions</Form.Label>
                 <Form.Control  onChange={(e) => setPracticeTestQuestionFile(e.target.files[0])} type="file" />
               </Form.Group>
 
@@ -3095,7 +3254,7 @@ console.log(item)
       )) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
       ) : 
       <div className="d-flex justify-content-center">
-        <h4>No Content Found</h4>
+        <h4>No Course Content Found</h4>
       </div>
       }
 
