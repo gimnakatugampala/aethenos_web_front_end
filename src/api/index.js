@@ -57,7 +57,7 @@ export const LoginInstructor = async(email, password,url,setloading) =>{
         return
       }else{
 
-        SuccessAlert("Login Successful!","Successfully Login as an Instructor")
+        SuccessAlert("Login successful!","Successfully login as an instructor")
 
         if(ENV_STATUS == "dev"){
           Cookies.set('aethenos', result.token, { expires: 7, path: '' })
@@ -163,7 +163,7 @@ export const InstructorVerify = async() =>{
 
       if(result.variable == "200"){
         setloading(false)
-        SuccessAlert("Test Video Sent For Approval!", "Please Await our Feedback to Proceed")
+        SuccessAlert("Test video sent For approval!", "Please await our feedback to proceed")
 
         setTimeout(() => {
           window.location.href = "/courses"
@@ -2248,7 +2248,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  }
 
- export const UpdateQuizName = async(code,quiz,updateQuizName,section) =>{
+ export const UpdateQuizName = async(code,quiz,updateQuizName,updateQuizDescription,section) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2258,6 +2258,7 @@ formdata.append("courseSectionId", `${section.courseSection.sectionId}`);
 formdata.append("sectionCurriculumItemId", `${quiz.id}`);
 formdata.append("curriculumItemTypeId", "2");
 formdata.append("name", `${updateQuizName}`);
+formdata.append("description", `${updateQuizDescription}`);
 
 const requestOptions = {
   method: "PUT",
@@ -2412,7 +2413,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
 
  }
 
- export const DeleteResourcesFile = async(code,file) =>{
+ export const DeleteResourcesFile = async(code,file,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowDescRes,setshowContentAdd,setcurriculumvisiblity) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -2432,10 +2433,17 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
 
-      setTimeout(() => {
-        window.location.reload()
+      // setTimeout(() => {
+      //   window.location.reload()
         
-      }, 1000);
+      // }, 1000);
+
+      setshowMain(null)
+      setshowDescRes(true)
+      setshowContentAdd(null)
+      setcurriculumvisiblity("")
+
+      GetCurriculum(code,setsectionData)
 
       return
     }
@@ -2613,7 +2621,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
     Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
 
     if(result.variable == "200"){
-      SuccessAlert("Added", "Text Content Succesfull Added")
+      SuccessAlert("Added", "Text content succesful added")
       setarticle("")
       setshowMain(null)
       setshowDescRes(true)
@@ -2831,7 +2839,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
       Unauthorized(result.status,`courses/manage/${code}/#settings`)
       console.log(result)
       if(result.variable == "200"){
-        SuccessAlert("Success","Course Successfully Unpublished")
+        SuccessAlert("Success","Course successfully unpublished")
         return
       }
     })
@@ -2946,7 +2954,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/instructor/updateIns
     Unauthorized(result.status,"profile") 
     console.log(result)
     if(result.variable == "200"){
-      SuccessAlert("Success","Instructor Profile Update Successfully")
+      SuccessAlert("Success","Instructor profile update successfully")
       setbtn_loading(false)
     }
   })
@@ -3945,7 +3953,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addPrac
       if(PraticeTestCode == ""){
         SuccessAlert("Success",result.message)
       }else{
-        SuccessAlert("Success","Practice Test Updated")
+        SuccessAlert("Success","Practice test updated")
       }
 
       setshowContentAdd(null)
@@ -4045,7 +4053,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addCodi
       if(CodingExerciseCode == ""){
         SuccessAlert("Success",result.message)
       }else{
-        SuccessAlert("Success","Coding Exercise Updated")
+        SuccessAlert("Success","Coding exercise updated")
 
       }
 
@@ -4152,7 +4160,7 @@ export const AssignmentSave = async(mainSectionID,AssignmentCode,AssignmentTitle
         if(AssignmentCode == ""){
           SuccessAlert("Success",result.message)
         }else{
-          SuccessAlert("Success","Assignment Updated")
+          SuccessAlert("Success","Assignment updated")
         }
 
         

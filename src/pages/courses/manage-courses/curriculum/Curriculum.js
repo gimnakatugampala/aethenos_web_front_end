@@ -264,8 +264,14 @@ const Curriculum = ({code}) => {
   }
     // update Quiz Name
     const handleUpdateQuizName = (quiz,section) =>{
- 
-    UpdateQuizName(code,quiz,updateQuizName,section)
+      console.log(updateQuizDescription)
+    UpdateQuizName(code,quiz,updateQuizName,updateQuizDescription,section)
+
+    // console.log(section)
+    // console.log(quiz)
+
+   
+
   }
 
     // update Assignment Name
@@ -298,7 +304,7 @@ const Curriculum = ({code}) => {
     }).then((result) => {
       if (result.isConfirmed) {
         
-        DeleteResourcesFile(code,item.url)
+        DeleteResourcesFile(code,item.url,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowDescRes,setshowContentAdd,setcurriculumvisiblity)
       }
     });
 
@@ -337,11 +343,6 @@ const Curriculum = ({code}) => {
         }).then((result) => {
 
           if (result.isConfirmed) {
-            // Swal.fire({
-            //   title: "Deleted!",
-            //   text: "Your file has been deleted.",
-            //   icon: "success"
-            // });
             VideoDelete(video.url,code,setcurriculumvisiblitymc,setshowMain,setsectionData,setshowDescRes,setshowContentAdd,setcurriculumvisiblity)
           }
 
@@ -2212,7 +2213,12 @@ console.log(item)
                                 <ListGroup className="my-2">
                                 <ListGroup.Item className="d-flex justify-content-between" key={index}>
                                     <span>{item.getAssignment[0].assignmentVideo}</span>
-                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                    <span><Button onClick={() => {
+                                      let video = {
+                                        url : item.getAssignment[0].assignmentVideo
+                                      }
+                                      handleVideoDelete(video)
+                                      }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                                   </ListGroup.Item>
                                 </ListGroup>
                                 )}
@@ -2229,7 +2235,12 @@ console.log(item)
                                 <ListGroup className="my-2">
                                 <ListGroup.Item className="d-flex justify-content-between" key={index}>
                                     <span>{item.getAssignment[0].downloadableResource}</span>
-                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                    <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getAssignment[0].downloadableResource
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                      }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                                   </ListGroup.Item>
                               </ListGroup>
                                 )}
@@ -2259,7 +2270,12 @@ console.log(item)
                           <ListGroup className="my-2">
                                 <ListGroup.Item className="d-flex justify-content-between" key={index}>
                                     <span>{item.getAssignment[0].questionSheet}</span>
-                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                    <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getAssignment[0].questionSheet
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                      }}  className="p-0" variant="contained"><DeleteIcon /></Button></span>
                                   </ListGroup.Item>
                               </ListGroup>
                           )}
@@ -2289,7 +2305,12 @@ console.log(item)
                                 <ListGroup className="my-2">
                                 <ListGroup.Item className="d-flex justify-content-between" key={index}>
                                     <span>{item.getAssignment[0].solutionVideo}</span>
-                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                    <span><Button onClick={() => {
+                                      let video = {
+                                        url : item.getAssignment[0].solutionVideo
+                                      }
+                                      handleVideoDelete(video)
+                                      }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                                   </ListGroup.Item>
                               </ListGroup>
                               )}
@@ -2303,7 +2324,12 @@ console.log(item)
                           <ListGroup className="my-2">
                                 <ListGroup.Item className="d-flex justify-content-between" key={index}>
                                     <span>{item.getAssignment[0].solutionsSheet}</span>
-                                    <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                                    <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getAssignment[0].solutionsSheet
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                      }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                                   </ListGroup.Item>
                               </ListGroup>
                           )}
@@ -2485,7 +2511,12 @@ console.log(item)
                       <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getPracticeTests[0].practiceTestQuestionSheet}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getPracticeTests[0].practiceTestQuestionSheet
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                    }}  className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                       )}
@@ -2509,7 +2540,12 @@ console.log(item)
                       <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getPracticeTests[0].practiceTestSolutionSheet}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getPracticeTests[0].practiceTestSolutionSheet
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                    }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                       )}
@@ -2615,14 +2651,14 @@ console.log(item)
                               setmainSectionID(section.courseSection.sectionId)
 
                               // Fill Data
-                              setCodingExerciseCode(item.getCodingExercises[0].codingExerciseCode)
-                              setCodingExerciseTitle(item.title)
-                              setCodingExerciseDesc(item.description)
-                              setCodingExerciseInstructions(item.getCodingExercises[0].instructions)
+                              setCodingExerciseCode(item.getCodingExercises[0] == null ? "" : item.getCodingExercises[0].codingExerciseCode)
+                              setCodingExerciseTitle(item == null ? "" : item.title)
+                              setCodingExerciseDesc(item == null ? "" :  item.description)
+                              setCodingExerciseInstructions(item.getCodingExercises[0] == null ? "" : item.getCodingExercises[0].instructions)
                               setCodingExerciseExLink(item.getCodingExercises[0].externalLink == null ? "" : item.getCodingExercises[0].externalLink)
 
-                              setCodingExerciseExternalLink(item.getCodingExercises[0].codingExternalLink)
-                              setCodingExercisesExLinkSolutions(item.getCodingExercises[0].solutionsExternalLink)
+                              setCodingExerciseExternalLink(item.getCodingExercises[0] == null ? "" : item.getCodingExercises[0].codingExternalLink)
+                              setCodingExercisesExLinkSolutions(item.getCodingExercises[0] == null ? "" : item.getCodingExercises[0].solutionsExternalLink)
                               
 
 
@@ -2672,7 +2708,12 @@ console.log(item)
                           <ListGroup className="my-2">
                           <ListGroup.Item className="d-flex justify-content-between">
                               <span>{item.getCodingExercises[0].codingVideo}</span>
-                              <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                              <span><Button onClick={() => {
+                                      let video = {
+                                        url : item.getCodingExercises[0].codingVideo
+                                      }
+                                      handleVideoDelete(video)
+                                    }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                             </ListGroup.Item>
                           </ListGroup>
                           )}
@@ -2689,7 +2730,12 @@ console.log(item)
                           <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getCodingExercises[0].downloadableResource}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getCodingExercises[0].downloadableResource
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                    }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                           )}
@@ -2716,7 +2762,12 @@ console.log(item)
                       <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getCodingExercises[0].codingExerciseSheet}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button  onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getCodingExercises[0].codingExerciseSheet
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                    }} className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                       )}
@@ -2738,7 +2789,12 @@ console.log(item)
                           <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getCodingExercises[0].codingExerciseVideo}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button onClick={() => {
+                                      let video = {
+                                        url : item.getCodingExercises[0].codingExerciseVideo
+                                      }
+                                      handleVideoDelete(video)
+                                    }}  className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                           )}
@@ -2758,7 +2814,12 @@ console.log(item)
                       <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getCodingExercises[0].codingSolutionsSheet}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button onClick={() => {
+                                      let Resourceitem = {
+                                        url : item.getCodingExercises[0].codingSolutionsSheet
+                                      }
+                                      handleDeleteDownloableFilesLecture(Resourceitem)
+                                    }}  className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                       )}
@@ -2781,7 +2842,12 @@ console.log(item)
                           <ListGroup className="my-2">
                         <ListGroup.Item className="d-flex justify-content-between">
                             <span>{item.getCodingExercises[0].codingSolutionsVideo}</span>
-                            <span><Button className="p-0" variant="contained"><DeleteIcon /></Button></span>
+                            <span><Button onClick={() => {
+                                      let video = {
+                                        url : item.getCodingExercises[0].codingSolutionsVideo
+                                      }
+                                      handleVideoDelete(video)
+                                    }}  className="p-0" variant="contained"><DeleteIcon /></Button></span>
                           </ListGroup.Item>
                         </ListGroup>
                           )}
