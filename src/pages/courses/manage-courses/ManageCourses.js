@@ -376,7 +376,7 @@ const ManageCourses = () => {
 
   // console.log(code)
 
-  GetCourseTitle(code,setcourse_title,setstatus_type,setcourseVideoLength,settitle_loading)
+  // GetCourseTitle(code,setcourse_title,setstatus_type,setcourseVideoLength,settitle_loading)
 
   },[window.history.state]);
 
@@ -390,12 +390,16 @@ const ManageCourses = () => {
 
     GetCheckPricingAllStatus(setcheckPricingStatus)
 
+    
+
   }, [code,checkInstructorVerification,options,courseOwnership])
   
   useEffect(() => {
 
     setInterval(() => {
       checkCourseCompletionStatus(code,setIntendedLearnersCheck,setSyllabusCheck,setPricingCheck,setCourseMessagesCheck,setPromotionsCheck,setCourseLandingPageCheck)
+
+      GetCourseTitle(code,setcourse_title,setstatus_type,setcourseVideoLength,settitle_loading)
     }, 3000);
 
     
@@ -422,7 +426,7 @@ const ManageCourses = () => {
       </Space>
       
       <Space size={10}>
-        <span className='course-subtitle'>{courseVideoLength / 60}min of video content uploaded</span>
+        <span className='course-subtitle'>{(courseVideoLength / 60).toFixed(2)} min of video content uploaded</span>
       </Space>
 
 

@@ -947,6 +947,28 @@ console.log(item)
 
   }
 
+  const counters = {
+    Lecture: 0,
+    Quiz: 0,
+    Assignment: 0,
+    CodingExercise: 0,
+    PracticeTest:0
+};
+
+// Count each type
+// section !=null && section.courseSection.sectionCurriculumItem.forEach(item => {
+//     if (item.type == "Lecture") {
+//         counters.Lecture += 1;
+//     } else if (item.type == "Quiz") {
+//         counters.Quiz += 1;
+//     } else if (item.type == "Assignment") {
+//         counters.Assignment += 1;
+//     } else if (item.type == "Coding Exercise") {
+//         counters.CodingExercise += 1;
+//     }else if (item.type == "Practice Test") {
+//       counters.PracticeTest += 1;
+//   }
+// });
 
   return (
     <div className="col-md-8 curriculum-container">
@@ -1047,12 +1069,24 @@ console.log(item)
               {/* Lecture > Quiz > Assignment */}
               {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  { 
 
-
+                    if (item.type == "Lecture") {
+                          counters.Lecture += 1;
+                      } else if (item.type == "Quiz") {
+                          counters.Quiz += 1;
+                      } else if (item.type == "Assignment") {
+                          counters.Assignment += 1;
+                      } else if (item.type == "Coding Exercise") {
+                          counters.CodingExercise += 1;
+                      }else if (item.type == "Practice Test") {
+                        counters.PracticeTest += 1;
+                    }
                 return (
 
                 // Lecture
                 <>
                 {item.type == "Lecture" && (
+
+                  
                   <>
                   {/* Edit Lecture */}
               
@@ -1087,7 +1121,7 @@ console.log(item)
                         <div className="d-flex justify-content-between align-items-center p-2">
                           <span>
                           <Typography>
-                            <CheckCircleIcon fontSize="small" />{i + 1}. Lesson:{" "}
+                            <CheckCircleIcon fontSize="small" />{counters.Lecture}. Lesson:{" "}
                             {item.article != "N/A" ? <FileCopyIcon sx={{ fontSize: 15 }} /> : <PlayCircleIcon sx={{ fontSize: 15 }} />} {item.title}
                             <span className="mx-5">
                             <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -1824,7 +1858,7 @@ console.log(item)
                     <span>
       
                       <Typography>
-                        <CheckCircleIcon fontSize="small" />{i + 1}. Quiz:{" "}
+                        <CheckCircleIcon fontSize="small" />{counters.Quiz}. Quiz:{" "}
                         <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
                         <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2137,7 +2171,7 @@ console.log(item)
                   <div className="d-flex justify-content-between align-items-center p-2">
                  <span>
                     <Typography>
-                      <CheckCircleIcon fontSize="small" />{i + 1}. Assignment:{" "}
+                      <CheckCircleIcon fontSize="small" />{counters.Assignment}. Assignment:{" "}
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2428,7 +2462,7 @@ console.log(item)
                 <div className="d-flex justify-content-between align-items-center p-2">
                   <span>
                     <Typography>
-                      <CheckCircleIcon fontSize="small" />{i + 1}. Practice Test:{" "}
+                      <CheckCircleIcon fontSize="small" />{counters.PracticeTest}. Practice Test:{" "}
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                           <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2644,7 +2678,7 @@ console.log(item)
                     <div className="d-flex justify-content-between align-items-center p-2">
                       <span>
                         <Typography>
-                          <CheckCircleIcon fontSize="small" />{i + 1}. Coding Exercise:{" "}
+                          <CheckCircleIcon fontSize="small" />{counters.CodingExercise}. Coding Exercise:{" "}
                           <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
                           <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
