@@ -79,6 +79,7 @@ const ManageCourses = () => {
 
   const [course_title, setcourse_title] = useState("")
   const [status_type, setstatus_type] = useState("")
+  const [courseVideoLength, setcourseVideoLength] = useState(0)
 
   const [checkInstructorVerification, setcheckInstructorVerification] = useState(null)
   const [btn_loading, setbtn_loading] = useState(false)
@@ -290,10 +291,10 @@ const ManageCourses = () => {
       setselectTab("intended-learners")
       setSelectedIndex(0)
       window.history.pushState("intended-learners", "Manage Course", `#intended-learners`);
-    }else if (index == "curriculum"){
-      setselectTab("curriculum")
+    }else if (index == "syllabus"){
+      setselectTab("syllabus")
       setSelectedIndex(1)
-      window.history.pushState("curriculum", "Manage Course", `#curriculum`);
+      window.history.pushState("syllabus", "Manage Course", `#syllabus`);
     }else if (index == "course-landing-page"){
       setselectTab("course-landing-page")
       setSelectedIndex(2)
@@ -327,7 +328,7 @@ const ManageCourses = () => {
 
     if(window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "intended-learners"){
       setSelectedIndex(0)
-    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "curriculum"){
+    }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "syllabus"){
       setSelectedIndex(1)
     }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "course-landing-page"){
       setSelectedIndex(2)
@@ -349,7 +350,7 @@ const ManageCourses = () => {
 
       if(window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "intended-learners"){
         setSelectedIndex(0)
-      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "curriculum"){
+      }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "syllabus"){
         setSelectedIndex(1)
       }else if (window.location.href.replace(window.location.pathname,"").replace(/.*#/, '') == "course-landing-page"){
         setSelectedIndex(2)
@@ -375,7 +376,7 @@ const ManageCourses = () => {
 
   // console.log(code)
 
-  GetCourseTitle(code,setcourse_title,setstatus_type,settitle_loading)
+  GetCourseTitle(code,setcourse_title,setstatus_type,setcourseVideoLength,settitle_loading)
 
   },[window.history.state]);
 
@@ -419,6 +420,10 @@ const ManageCourses = () => {
           ) }
           
       </Space>
+      
+      <Space size={10}>
+        <span className='course-subtitle'>{courseVideoLength / 60}min of video content uploaded</span>
+      </Space>
 
 
      </div>
@@ -455,7 +460,7 @@ const ManageCourses = () => {
         
         <ListItemButton
           selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, "curriculum")}
+          onClick={(event) => handleListItemClick(event, "syllabus")}
         >
           <ListItemIcon>
             <LibraryBooksIcon />
@@ -559,7 +564,7 @@ const ManageCourses = () => {
     {/* HERE */}
     {/*  */}
     { selectTab == "intended-learners"   ? <IntendedLearners code={code} /> : 
-     selectTab == "curriculum" ?  <Curriculum  code={code}  /> : 
+     selectTab == "syllabus" ?  <Curriculum  code={code}  /> : 
      selectTab == "course-landing-page" ? <Basics  code={code}  /> : 
      selectTab == "pricing" ? <Pricing  code={code}  /> : 
      selectTab == "course-messages" ? <CourseMessages  code={code}  /> :

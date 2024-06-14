@@ -296,7 +296,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseByIn
 
  }
 
- export const GetCourseTitle = async(code,setcourse_title,setstatus_type,settitle_loading) =>{
+ export const GetCourseTitle = async(code,setcourse_title,setstatus_type,setcourseVideoLength,settitle_loading) =>{
 
   var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -316,6 +316,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/course/getCourseTitl
 
     setcourse_title(result.title)
     setstatus_type(result.approveType)
+    setcourseVideoLength(result.courseLength)
     settitle_loading(false)
   })
   .catch(error => console.log('error', error));
@@ -987,7 +988,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
     .then(response => response.json())
     .then(result => {
       console.log(result)
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
       
       if(result.message == "Error"){
         setsectionData(null)
@@ -1862,7 +1863,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(result => {
       console.log(result)
 
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
       if(result.message == "Course section Added successfully"){
           SuccessAlert("Section Added",result.message)
@@ -1906,7 +1907,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(result => {
       console.log(result)
 
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
       if(result.message == "Error"){
         ErrorAlert("Error",result.variable)
@@ -2038,7 +2039,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(response => response.json())
     .then(result => {
       console.log(result)
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
       setcourseOwnership(result)
     })
     .catch(error => console.log('error', error));
@@ -2062,7 +2063,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
       .then(result => {
         console.log(result)
 
-        Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+        Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
         setcheckInstructorVerification(result.isVerify)
         
@@ -2153,7 +2154,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
     .then(response => response.json())
     .then(result => {
       console.log(result)
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
       if(result.variable == "200"){
         SuccessAlert("Success",result.message);
@@ -2191,7 +2192,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateS
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Updated",result.message)
@@ -2230,7 +2231,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Updated",result.message)
@@ -2272,7 +2273,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Updated",result.message)
@@ -2313,7 +2314,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Updated",result.message)
@@ -2354,7 +2355,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Updated",result.message)
@@ -2395,7 +2396,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateC
   .then((result) => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Updated",result.message)
@@ -2427,7 +2428,7 @@ const requestOptions = {
 fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteCurriculumItemFile/${file}`, requestOptions)
   .then((response) => response.json())
   .then((result) => {
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
     console.log(result)
 
     if(result.variable == "200"){
@@ -2474,7 +2475,7 @@ fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/deleteC
     .then(result => {
       console.log(result)
 
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
       if(result.variable == "200"){
         SuccessAlert("Added",result.message)
@@ -2511,7 +2512,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addDown
   .then(response => response.json())
   .then(result => {
     console.log(result)
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Added",result.message)
@@ -2546,7 +2547,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addExte
   .then(response => response.json())
   .then(result => {
     console.log(result)
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Added",result.message)
@@ -2585,7 +2586,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSour
   .then(result => {
 
     console.log(result)
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Added!",result.message)
@@ -2618,7 +2619,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
   .then(response => response.json())
   .then(result => {
     console.log(result)
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Added", "Text content succesful added")
@@ -2638,6 +2639,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
 
  export const AddCurriculumVideo = async(code,ID,video,duration,setsectionData,setshowMain,setshowDescRes,setshowContentAdd,setcurriculumvisiblity) =>{
 
+  console.log(ID)
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
@@ -2665,7 +2667,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
       .then(response => response.json())
       .then(result => {
         console.log(result)
-        Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+        Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
   
         if(result.variable == "200"){
           SuccessAlert("Uploaded",result.message)
@@ -2710,7 +2712,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addArti
     .then(response => response.json())
     .then(result => {
       console.log(result)
-      Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+      Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
       if(result.variable == "200"){
         SuccessAlert("Added",result.message)
@@ -2775,7 +2777,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
   .then(result => {
     console.log(result)
 
-    Unauthorized(result.status,`courses/manage/${code}/#curriculum`)
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
     if(result.variable == "200"){
       SuccessAlert("Saved",result.message)
@@ -2796,6 +2798,32 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addQues
   })
   .catch(error => console.log('error', error));
 
+
+ }
+
+ export const SetVideoPreviewAPI = async(code, video, status, setsectionData) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
+
+const formdata = new FormData();
+formdata.append("videoFileName", `${video}`);
+formdata.append("PreviewVideo", `${status}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/setPreviewVideo", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    GetCurriculum(code,setsectionData)
+  })
+  .catch((error) => console.error(error));
 
  }
 

@@ -30,7 +30,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, VideoDelete} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, SetVideoPreviewAPI, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, VideoDelete} from "../../../../api"
 import "./Curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -45,6 +45,8 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import CodeIcon from '@mui/icons-material/Code';
 import Spinner from 'react-bootstrap/Spinner';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { Switch } from 'antd';
+
 import 'sweetalert2/src/sweetalert2.scss'
 
 
@@ -108,6 +110,8 @@ const Curriculum = ({code}) => {
   const [curriculum_desc, setcurriculum_desc] = useState("")
   const [curriclum_ex_res_tile, setcurriclum_ex_res_tile] = useState("")
   const [curriculum_ex_res_link, setcurriculum_ex_res_link] = useState("")
+
+  
 
   const [quizTitle, setquizTitle] = useState("")
   const [quizDesc, setquizDesc] = useState("")
@@ -829,6 +833,23 @@ const Curriculum = ({code}) => {
 
    }
 
+  //  Set Video preview
+  const handleSetVideoPreview = (status, item) => {
+    GetCurriculum(code,setsectionData)
+
+      {item.curriculumItemFiles.length > 0 && (
+        item.curriculumItemFiles.some(video => video.filetype === "Video") && (
+            item.curriculumItemFiles
+                .filter(video => video.filetype === "Video")
+                .map((video) => {
+                    console.log(video.url)
+                    console.log(status)
+                    SetVideoPreviewAPI(code, video.url, status,setsectionData)
+                })
+        )
+  )}
+  }
+
   //  Save Quiz > First Step
     // Show Quiz Input
     const handleShowQuizInput = () =>{
@@ -1111,6 +1132,8 @@ console.log(item)
                                 setarticle(item.article == "N/A" ? "" : item.article)
                                 setcurriculum_desc(item.description == "N/A" ? "" : item.description)
                                 setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
+
+                              
                               }}
                               className="mx-2"
                               size="small"
@@ -1138,7 +1161,7 @@ console.log(item)
                                           {/* List of Resources / External Link */}
                                          {item.description != "N/A" && <p className="m-0 p-0"><b>Description</b></p> } 
                                           <p>{item.description != "N/A" && removeHtmlTags(item.description)}</p>
-
+                                          
                                           <>
                                               {showDescription == index + i + item.id && (
                                                 <>
@@ -1303,6 +1326,8 @@ console.log(item)
                                     <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
                                     <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
                                   </Form.Group>
+
+                                  
         
         
                                   {/* After Upload */}
@@ -1556,8 +1581,20 @@ console.log(item)
                                     <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
                                     <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
                                   </Form.Group>
+                              
+                               
         
-        
+                              {item.curriculumItemFiles.length > 0 && (
+                                item.curriculumItemFiles.some(video => video.filetype === "Video") && (
+                                    item.curriculumItemFiles
+                                        .filter(video => video.filetype === "Video")
+                                        .map((video) => (
+                                          <div className="d-flex justify-content-end m-2">
+                                          <p><span className="mx-2">Preview Video :</span><Switch checked={video.previewVideo}  onChange={(e) => handleSetVideoPreview(e,item)}  /></p>
+                                        </div>
+                                        ))
+                                )
+                          )}
                                   {/* After Upload */}
                                   <Table striped bordered hover>
                                       <thead>
