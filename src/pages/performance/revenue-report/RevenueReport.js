@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../revenue-report/RevenueReport";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -6,6 +6,9 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { Card } from "antd";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
+import { GetRevenueReport } from "../../../api";
+import MainLoader from "../../../commonFunctions/loaders/MainLoader/MainLoader";
+import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 
 function RevenueReport() {
   const years = [
@@ -64,6 +67,14 @@ function RevenueReport() {
   const headerCellStyle = {
     fontWeight: "bold",
   };
+
+  const [RevenueReportData, setRevenueReportData] = useState(null)
+
+  useEffect(() => {
+    GetRevenueReport(setRevenueReportData)
+  })
+  
+
   return (
     <Card className="p-2">
       <p className="fs-5 font-bold">Revenue Report</p>
@@ -114,20 +125,21 @@ function RevenueReport() {
         />
       </Card>
 
+      {RevenueReportData != null ? (
       <MaterialTable
         title="Revenue Report"
         columns={[
           {
             title: "Month",
-            field: "timePeriod",
+            field: "month",
             render: (rowData) => (
-              <a href="/performance/revenue-report/1">{rowData.timePeriod}</a>
+              <a href={`/performance/revenue-report/${rowData.id}`}>{rowData.month}</a>
             ),
             headerStyle: headerCellStyle,
           },
           {
             title: "Your revenue",
-            field: "amount",
+            field: "yourRevenue",
             headerStyle: headerCellStyle,
           },
           {
@@ -136,18 +148,16 @@ function RevenueReport() {
             headerStyle: headerCellStyle,
           },
         ]}
-        data={[
-          {
-            timePeriod: "Mar 2023",
-            amount: "$100",
-            expectedPaymentDate: "2023-03-15"
-          }
-        ]}
+        data={RevenueReportData}
         options={{
           sorting: true,
           exportButton: true,
         }}
       />
+      ) : (
+        <LoadingSpinner />
+      )}
+
     </Card>
   );
 }

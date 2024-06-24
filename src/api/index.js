@@ -1865,8 +1865,8 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/addSing
 
       Unauthorized(result.status,`courses/manage/${code}/#syllabus`)
 
-      if(result.message == "Course section Added successfully"){
-          SuccessAlert("Section Added",result.message)
+      if(result.sectionCode == 218){
+          SuccessAlert("Section added",result.message)
           UpdateCourseProgress(code)
           setshowSectionInput(false)
           setsection("")
@@ -4726,6 +4726,76 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/studentProfile/reset
     }
 
   })
+  .catch((error) => console.error(error));
+
+}
+
+export const GetRevenueOverview = async(setoverViewStatus) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/revenue/getInstructorRevenueOverview", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"performance/overview") 
+
+    setoverViewStatus(result)
+  
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const GetRevenueReport = async(setRevenueReportData) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/revenue/getInstructorRevenueReport", requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,"performance/revenue-report") 
+
+    setRevenueReportData(result)
+
+
+  
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const GetRevenueReportByID = async() =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/revenue/getInstructorMonthlyRevenueExpandedReport/1", requestOptions)
+  .then((response) => response.json())
+  .then((result) => console.log(result))
   .catch((error) => console.error(error));
 
 }

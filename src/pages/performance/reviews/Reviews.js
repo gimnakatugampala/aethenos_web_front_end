@@ -157,7 +157,7 @@ const Reviews = () => {
                   <div className="col-md-9">
                     <div className="card-body">
                       <h6 className="card-title m-0 p-0">{SelectedCourse.courseTitle}</h6>
-                      <p style={{fontSize:'13px'}} className="my-2 p-0">{SelectedCourse.rating} Course Rating</p>
+                      <p style={{fontSize:'13px'}} className="my-2 p-0">{parseFloat(SelectedCourse.rating).toFixed(2)} Course Rating</p>
                       <StarRatings
                         starDimension="30px"
                          rating={SelectedCourse.rating}

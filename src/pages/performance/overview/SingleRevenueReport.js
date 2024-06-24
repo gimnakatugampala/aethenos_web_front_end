@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -6,8 +6,15 @@ import { Card } from "antd";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
 import { PieChart, pieArcClasses } from "@mui/x-charts/PieChart";
+import { GetRevenueReportByID } from "../../../api";
 
 const SingleRevenueReport = () => {
+
+  useEffect(() => {
+    GetRevenueReportByID()
+  }, [])
+  
+
   const data = [
     { id: 0, value: 10, label: "series A" },
     { id: 1, value: 15, label: "series B" },

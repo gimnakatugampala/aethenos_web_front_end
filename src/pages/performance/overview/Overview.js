@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{ useEffect, useState } from "react";
 import "../revenue-report/RevenueReport";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -8,10 +8,24 @@ import { Card } from "antd";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import { GetRevenueOverview } from "../../../api";
+import MainLoader from "../../../commonFunctions/loaders/MainLoader/MainLoader";
+import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 
 
 function RevenueReport() {
+
+  const [overViewStatus, setoverViewStatus] = useState(null)
+
+
+  useEffect(() => {
+    GetRevenueOverview(setoverViewStatus)
+  }, [overViewStatus])
+  
+  
+
   return (
+    overViewStatus == null  ? <LoadingSpinner /> : (
     <div>
       <div className="mb-5">
        <Typography className="m-0 p-0" variant="h4" gutterBottom>
@@ -32,8 +46,8 @@ function RevenueReport() {
           title={
             <div className="tab-title">
               <div>Total Revenue</div>
-              <div className="font-bold fs-5">$100</div>
-              <div>$20 this month</div>
+              <div className="font-bold fs-5">${overViewStatus != null && overViewStatus.totalRevenue}</div>
+              <div>${overViewStatus != null &&  overViewStatus.thisMonthRevenue} this month</div>
             </div>
           }
         >
@@ -60,8 +74,8 @@ function RevenueReport() {
           title={
             <div className="tab-title">
               <div>Total Enrollment</div>
-              <div className="font-bold fs-5">$500.66</div>
-              <div>$200 this month</div>
+              <div className="font-bold fs-5">{overViewStatus != null && overViewStatus.totalEnrollments}</div>
+              <div>{overViewStatus != null && overViewStatus.thisMonthEnrollments} this month</div>
             </div>
           }
         >
@@ -86,8 +100,8 @@ function RevenueReport() {
           title={
             <div className="tab-title">
               <div>Instructor Rating</div>
-              <div className="font-bold fs-5">4</div>
-              <div>21 rating this month</div>
+              <div className="font-bold fs-5">{overViewStatus != null && parseFloat(overViewStatus.instructorRating).toFixed(2)}</div>
+              <div>{overViewStatus != null && overViewStatus.thisMonthRating} rating this month</div>
             </div>
           }
         >
@@ -116,6 +130,7 @@ function RevenueReport() {
       </div>
     </Card>
     </div>
+    )
   );
 }
 
