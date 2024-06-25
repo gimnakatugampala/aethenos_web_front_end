@@ -9,9 +9,7 @@ import {
   Input,
   Checkbox,
 } from "antd";
-import logo1 from "../assets/images/logos-facebook.svg";
-import logo2 from "../assets/images/logo-apple.svg";
-import logo3 from "../assets/images/Google__G__Logo.svg.png";
+
 
 import { Link } from "react-router-dom";
 import {
@@ -167,7 +165,7 @@ export default class SignUp extends Component {
               title={<h5>Register With</h5>}
               bordered="false"
             >
-              <div className="sign-up-gateways">
+              {/* <div className="sign-up-gateways">
                 <Button type="false">
                   <img src={logo1} alt="logo 1" />
                 </Button>
@@ -177,7 +175,7 @@ export default class SignUp extends Component {
                 <Button type="false">
                   <img src={logo3} alt="logo 3" />
                 </Button>
-              </div>
+              </div> */}
               <p className="text-center my-25 font-semibold text-muted">Or</p>
               <Form
                 name="basic"

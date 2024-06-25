@@ -11,7 +11,7 @@ import Persona from "persona";
 import { useRef, useState } from "react";
 
 const CURRENT_USER = Cookies.get('aethenos');
-const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api/"
+const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api"
 
 
 // Unauthorized
@@ -4782,7 +4782,7 @@ fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/revenue/getInstructo
 
 }
 
-export const GetRevenueReportByID = async() =>{
+export const GetRevenueReportByID = async(id,setrefundNo,setpurchasesNo,setpurchasedData,settimePeriod,setrefundData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4793,9 +4793,21 @@ const requestOptions = {
   redirect: "follow"
 };
 
-fetch("https://aethenosinstructor.exon.lk:2053/aethenos-api/revenue/getInstructorMonthlyRevenueExpandedReport/1", requestOptions)
+fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/revenue/getInstructorMonthlyRevenueExpandedReport/${id}`, requestOptions)
   .then((response) => response.json())
-  .then((result) => console.log(result))
+  .then((result) => {
+    
+    console.log(result)
+
+    Unauthorized(result.status,"performance/revenue-report") 
+
+    setrefundNo(result.totalRefunds)
+    setpurchasesNo(result.totalPurchases)
+    setpurchasedData(result.purchases)
+    settimePeriod(result.timePeriod)
+    setrefundData(result.refunds)
+
+  })
   .catch((error) => console.error(error));
 
 }

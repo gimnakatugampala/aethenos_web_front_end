@@ -19,7 +19,7 @@ import {
 
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import avtar from "../../assets/images/team-2.jpg";
+// import avtar from "../../assets/images/team-2.jpg";
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';

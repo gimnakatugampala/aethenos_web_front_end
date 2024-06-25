@@ -15,6 +15,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import JoditEditor from "jodit-react";
 import DnsIcon from '@mui/icons-material/Dns';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
 import Typography from "@mui/material/Typography";
@@ -887,6 +888,13 @@ const Curriculum = ({code}) => {
     console.log(ID)
     console.log(curriculumID)
 
+    console.log(answerOptionOne)
+    console.log(answerOptionTwo)
+    console.log(answerOptionThree)
+    console.log(answerOptionFour)
+    console.log(answerOptionFive)
+    console.log(answerOption)
+
     if(question == ""){
       ErrorAlert("Empty field","Please enter a question");
       return
@@ -897,6 +905,44 @@ const Curriculum = ({code}) => {
       ErrorAlert("Empty field","Please enter answer one");
       return
     }else{
+
+      if(answerOption == "ans1"){
+
+        if(answerOne == ""){
+          ErrorAlert("Empty field","Please add answer")
+          return
+        }
+
+      }else if(answerOption == "ans2"){
+
+        if(answerTwo == ""){
+          ErrorAlert("Empty field","Please add answer")
+          return
+        }
+
+      }else if(answerOption == "ans3"){
+
+        if(answerThree == ""){
+          ErrorAlert("Empty field","Please add answer")
+          return
+        }
+
+      }else if(answerOption == "ans4"){
+
+        if(answerFour == ""){
+          ErrorAlert("Empty field","Please add answer")
+          return
+        }
+
+      }else if(answerOption == "ans5"){
+
+        if(answerFive == ""){
+          ErrorAlert("Empty field","Please add answer")
+          return
+        }
+
+      }
+
       AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData)
     }
     
@@ -1121,7 +1167,7 @@ console.log(item)
                         <div className="d-flex justify-content-between align-items-center p-2">
                           <span>
                           <Typography>
-                            <CheckCircleIcon fontSize="small" />{counters.Lecture}. Lesson:{" "}
+                            <CheckCircleIcon fontSize="small" />{i + 1}. Lesson:{" "}{counters.Lecture}{" "}
                             {item.article != "N/A" ? <FileCopyIcon sx={{ fontSize: 15 }} /> : <PlayCircleIcon sx={{ fontSize: 15 }} />} {item.title}
                             <span className="mx-5">
                             <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -1221,7 +1267,13 @@ console.log(item)
                                                 setcurriculum_desc(item.description == "N/A" ? "" : item.description)
                                                 setshowDescription(showDescription == index + i + item.id ? null : index + i + item.id)
                                               }} className="m-2" variant="outlined"><AddIcon /> Description</Button>
-                                              <Button onClick={() => setshowResources(showResources == index + i + item.id ? null : index + i + item.id)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+
+                                              {showResources == index + i + item.id ? 
+                                              (<Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Resourses</Button>) : (
+                                                <Button onClick={() => setshowResources(showResources == index + i + item.id ? null : index + i + item.id)}  className="m-2" variant="outlined"><AddIcon /> Resourses</Button>
+                                              )
+                                            }
+
                                               
                                             
                                               </div>
@@ -1229,7 +1281,7 @@ console.log(item)
 
                                               {showResources == index + i + item.id && (
                                                 <div>
-                                                  <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button>
+                                                  {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
 
                                                   {/* Tabs */}
                                                   <Tabs
@@ -1380,7 +1432,7 @@ console.log(item)
                                                 .filter(video => video.filetype === "Video")
                                                 .map((video, index) => (
                                                     <tr key={index}>
-                                                      <td>{video.url}</td>
+                                                      <td>{video.title}</td>
                                                       <td>Video</td>
                                                       <td><Button onClick={() => {
                                                         handleVideoDelete(video)
@@ -1645,7 +1697,7 @@ console.log(item)
                                                 .filter(video => video.filetype === "Video")
                                                 .map((video, index) => (
                                                     <tr key={index}>
-                                                      <td>{video.url}</td>
+                                                      <td>{video.title}</td>
                                                       <td>Video</td>
                                                       <td><Button onClick={() => {
                                                         handleVideoDelete(video)
@@ -1858,7 +1910,7 @@ console.log(item)
                     <span>
       
                       <Typography>
-                        <CheckCircleIcon fontSize="small" />{counters.Quiz}. Quiz:{" "}
+                        <CheckCircleIcon fontSize="small" />{i + 1}. Quiz:{" "}{counters.Quiz}{" "}
                         <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
                         <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2171,7 +2223,7 @@ console.log(item)
                   <div className="d-flex justify-content-between align-items-center p-2">
                  <span>
                     <Typography>
-                      <CheckCircleIcon fontSize="small" />{counters.Assignment}. Assignment:{" "}
+                      <CheckCircleIcon fontSize="small" />{i + 1}. Assignment:{" "}{counters.Assignment}{" "}
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2462,7 +2514,7 @@ console.log(item)
                 <div className="d-flex justify-content-between align-items-center p-2">
                   <span>
                     <Typography>
-                      <CheckCircleIcon fontSize="small" />{counters.PracticeTest}. Practice Test:{" "}
+                      <CheckCircleIcon fontSize="small" />{i + 1}. Practice Test:{" "}{counters.PracticeTest}{" "}
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                           <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2678,7 +2730,7 @@ console.log(item)
                     <div className="d-flex justify-content-between align-items-center p-2">
                       <span>
                         <Typography>
-                          <CheckCircleIcon fontSize="small" />{counters.CodingExercise}. Coding Exercise:{" "}
+                          <CheckCircleIcon fontSize="small" />{i + 1}. Coding Exercise:{" "}{counters.CodingExercise}{" "}
                           <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
                           <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2973,7 +3025,7 @@ console.log(item)
                         setshowCodingExecInput(null)
                         setshowPracticeTestInput(null)
                       }} variant="text">
-                        <AddIcon />
+                        <AddCircleIcon className="mx-1" />
                         Lesson
                       </Button>
                   
@@ -2985,7 +3037,7 @@ console.log(item)
                         setshowPracticeTestInput(null)
 
                       }} variant="text">
-                      <AddIcon />
+                      <AddCircleIcon className="mx-1" />
                         Quiz
                       </Button>
 
@@ -2997,7 +3049,7 @@ console.log(item)
                         setshowCodingExecInput(null)
 
                       }} variant="text">
-                      <AddIcon />
+                      <AddCircleIcon className="mx-1" />
                         Pratice Test
                       </Button>
 
@@ -3008,7 +3060,7 @@ console.log(item)
                         setshowPracticeTestInput(null)
                         setshowCodingExecInput(null)
                       }} variant="text">
-                      <AddIcon />
+                      <AddCircleIcon className="mx-1" />
                         Assignment
                       </Button>
 
@@ -3019,7 +3071,7 @@ console.log(item)
                         setshowPracticeTestInput(null)
                         setshowAssignmentInput(null)
                       }} variant="text">
-                      <AddIcon />
+                      <AddCircleIcon className="mx-1" />
                         Coding Excercises
                       </Button>
 

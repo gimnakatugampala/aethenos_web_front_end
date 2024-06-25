@@ -138,7 +138,7 @@ function RevenueReport() {
             headerStyle: headerCellStyle,
           },
           {
-            title: "Your revenue",
+            title: "Your revenue ($)",
             field: "yourRevenue",
             headerStyle: headerCellStyle,
           },
