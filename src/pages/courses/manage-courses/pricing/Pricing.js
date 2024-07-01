@@ -9,7 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from '@mui/material';
 import AddIcon from "@mui/icons-material/Add";
 import { css } from "../../manage-courses/pricing/Pricing.css";
-import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing, SavePriceCountries , PricingConvertToFree, GetCheckPricingAllStatus} from "../../../../api";
+import { GetDiscountTypes , SavePriceDefault , GetPriceDefault , GetCoursePricingType , GetCountriesListPricing, SavePriceCountries , PricingConvertToFree, GetCheckPricingAllStatus, checkPaidCourseOfSyllabus} from "../../../../api";
 
 import getSymbolFromCurrency from 'currency-symbol-map'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -26,6 +26,9 @@ const Pricing = ({code}) => {
 
     // Select Free Or Paid Course
     const [Paid_Type, setPaid_Type] = useState("")
+
+    const [VideoLength, setVideoLength] = useState(0)
+    const [NoOfLessons, setNoOfLessons] = useState(0)
 
     const onChangePaidType = (e) => {
       setPaid_Type(e.target.value);
@@ -59,6 +62,9 @@ const Pricing = ({code}) => {
   
 
   useEffect(() => {
+
+      // Check Syllabus Pricing
+      checkPaidCourseOfSyllabus(code,setVideoLength,setNoOfLessons)
 
 
     // Get Paid Type
@@ -3700,7 +3706,40 @@ const Pricing = ({code}) => {
     // console.log(inputValuesListPrice)
     // console.log(selectDiscountTypeList)
     console.log(Paid_Type)
+    console.log(VideoLength)
+    console.log(NoOfLessons)
     setloading_button(true)
+
+    if(Paid_Type == 1){
+      
+      if(VideoLength > 9000){
+        ErrorAlert("Error","The maximum video content length on free courses is 2.5 hours. Please reduce your total video length to comply.")
+        setloading_button(false)
+        return
+      }
+
+      
+    }else if(Paid_Type == 2){
+
+      if(VideoLength < 2700){
+        ErrorAlert("Error","The minimum video content length on a paid course is 45 minutes. Please reduce your total video length to comply.")
+        setloading_button(false)
+        return
+
+      }else if(NoOfLessons < 5){
+        ErrorAlert("Error","The minimum number of lectures on a paid course should be 5 Please increase your number of lectures to comply.")
+        setloading_button(false)
+        return
+      }else if(VideoLength < 2700 && NoOfLessons < 5){
+        ErrorAlert("Error","For a paid course the minimum video content length should be 45 minutes and minimum number of lectures should be 5.")
+        setloading_button(false)
+        return
+      }
+
+    }
+
+
+  
 
    
     if(Paid_Type == 1){

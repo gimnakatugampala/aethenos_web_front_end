@@ -9,8 +9,11 @@ import MaterialTable from "material-table";
 import { GetRevenueReport } from "../../../api";
 import MainLoader from "../../../commonFunctions/loaders/MainLoader/MainLoader";
 import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
+import formatNumber from "../../../commonFunctions/NumberFormat";
 
 function RevenueReport() {
+
+
   const years = [
     new Date(1990, 0, 1),
     new Date(1991, 0, 1),
@@ -43,21 +46,21 @@ function RevenueReport() {
     new Date(2018, 0, 1),
   ];
 
-  const FranceGDPperCapita = [
+  const AethenosDataSet = [
     28129, 28294.264, 28619.805, 28336.16, 28907.977, 29418.863, 29736.645,
     30341.807, 31323.078, 32284.611, 33409.68, 33920.098, 34152.773, 34292.03,
     35093.824, 35495.465, 36166.16, 36845.684, 36761.793, 35534.926, 36086.727,
     36691, 36571, 36632, 36527, 36827, 37124, 37895, 38515.918,
   ];
 
-  const UKGDPperCapita = [
+  const RefundsDataSet = [
     26189, 25792.014, 25790.186, 26349.342, 27277.543, 27861.215, 28472.248,
     29259.764, 30077.385, 30932.537, 31946.037, 32660.441, 33271.3, 34232.426,
     34865.78, 35623.625, 36214.07, 36816.676, 36264.79, 34402.36, 34754.473,
     34971, 35185, 35618, 36436, 36941, 37334, 37782.83, 38058.086,
   ];
 
-  const GermanyGDPperCapita = [
+  const PromotionsDataSet = [
     25391, 26769.96, 27385.055, 27250.701, 28140.057, 28868.945, 29349.982,
     30186.945, 31129.584, 32087.604, 33367.285, 34260.29, 34590.93, 34716.44,
     35528.715, 36205.574, 38014.137, 39752.207, 40715.434, 38962.938, 41109.582,
@@ -69,17 +72,19 @@ function RevenueReport() {
   };
 
   const [RevenueReportData, setRevenueReportData] = useState(null)
+  const [revenueDate, setrevenueDate] = useState("")
+  const [revenueAmount, setrevenueAmount] = useState(0)
 
   useEffect(() => {
-    GetRevenueReport(setRevenueReportData)
+    GetRevenueReport(setRevenueReportData,setrevenueDate,setrevenueAmount)
   })
   
 
   return (
     <Card className="p-2">
       <p className="fs-5 font-bold">Revenue Report</p>
-      <h1 className="font-bold m-0 p-0">$50,523.55</h1>
-      <p className="fs-10 m-0 p-0">Your lifetime earnings of March 12 2019</p>
+      <h1 className="font-bold m-0 p-0">${formatNumber(revenueAmount)}</h1>
+      <p className="fs-10 m-0 p-0">Your lifetime earnings of {revenueDate}</p>
       <Card className="my-3">
         <LineChart
           xAxis={[
@@ -94,7 +99,7 @@ function RevenueReport() {
             {
               id: "Aethenos",
               label: "Aethenos",
-              data: FranceGDPperCapita,
+              data: AethenosDataSet,
               stack: "total",
               area: true,
               showMark: false,
@@ -102,7 +107,7 @@ function RevenueReport() {
             {
               id: "Your Promotions",
               label: "Your Promotions",
-              data: GermanyGDPperCapita,
+              data: PromotionsDataSet,
               stack: "total",
               area: true,
               showMark: false,
@@ -110,7 +115,7 @@ function RevenueReport() {
             {
               id: "Refunds",
               label: "Refunds",
-              data: UKGDPperCapita,
+              data: RefundsDataSet,
               stack: "total",
               area: true,
               showMark: false,

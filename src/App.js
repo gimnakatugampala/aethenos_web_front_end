@@ -43,15 +43,14 @@ import { useEffect, useState } from "react";
 import Cookies from 'js-cookie'
 import { VerifyTheInstructor } from "./api";
 
+import './App.css'
+
 function App() {
 
 
-
-
-  
-
   return (
     <div className="App">
+     
       <ThemeProvider theme={theme}>
         <Switch>
           <Route path="/" exact component={Home} />
@@ -130,6 +129,7 @@ function App() {
           <Redirect from="*" to="/courses" />
         </Switch>
       </ThemeProvider>
+     
     </div>
   );
 }

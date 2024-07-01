@@ -99,23 +99,23 @@ const Basics = ({code}) => {
       ErrorAlert("Empty Field","Please Enter Course Description")
       return
     }else if(lang == ""){
-      ErrorAlert("Empty Field","Please Select a Language")
+      ErrorAlert("Empty field","Please select a language")
       return
     }else if(level == ""){
-      ErrorAlert("Empty Field","Please Select a Level")
+      ErrorAlert("Empty field","Please select a level")
       return
     }else if(course_cat == ""){
-      ErrorAlert("Empty Field","Please Select a Course Category")
+      ErrorAlert("Empty field","Please select a course category")
       return
     }else if(course_sub_cat == ""){
-      ErrorAlert("Empty Field","Please Select a Course Sub Category")
+      ErrorAlert("Empty field","Please select a course sub category")
       return
     }else if(course_topic == ""){
-      ErrorAlert("Empty Field","Please Select a Topic")
+      ErrorAlert("Empty field","Please select a topic")
       return
     }else if(course_topic == 'other'){
         if(own_topic == ""){
-          ErrorAlert("Empty Field","Please Enter your own topic")
+          ErrorAlert("Empty field","Please enter your own topic")
           return
         }
     }
@@ -268,7 +268,7 @@ const handleFileChange = (event) => {
       
       <div className="basics-container">
           <div className="my-3">
-            <h6>Course title</h6>
+            <h6>Course title <span className="text-danger">*</span></h6>
             <div class="input-group mb-3">
               <input
                 value={course_title}
@@ -285,7 +285,7 @@ const handleFileChange = (event) => {
           </div>
 
           <div className="my-3">
-            <h6>Course subtitle</h6>
+            <h6>Course subtitle <span className="text-danger">*</span></h6>
             <div class="input-group mb-3">
               <input
               value={course_subtitle}
@@ -302,14 +302,14 @@ const handleFileChange = (event) => {
           </div>
 
           <div className="my-3">
-            <h6>Course description</h6>
+            <h6>Course description <span className="text-danger">*</span></h6>
             <textarea value={course_desc} onChange={(e) => setcourse_desc(e.target.value)} class="form-control" rows="3"></textarea>
           </div>
 
           <div className="row my-3">
 
             <div className="col-md-6">
-            <Form.Label>Language</Form.Label>
+            <Form.Label>Language <span className="text-danger">*</span></Form.Label>
             <Form.Select value={lang} onChange={(e) => setlang(e.target.value)} aria-label="Default select example">
             <option value="">Select Course Language</option>
             {langData.map((lang,index) => (
@@ -320,7 +320,7 @@ const handleFileChange = (event) => {
             </div>
 
             <div className="col-md-6">
-            <Form.Label>Course Level</Form.Label>
+            <Form.Label>Course Level <span className="text-danger">*</span></Form.Label>
             <Form.Select value={level} onChange={(e) => setlevel(e.target.value)} aria-label="Default select example">
             <option value="">Select Course Level</option>
             {levelData.map((level,index) => (
@@ -330,7 +330,7 @@ const handleFileChange = (event) => {
             </div>
             
             <div className="col-md-4 mt-3">
-            <Form.Label>Course Category</Form.Label>
+            <Form.Label>Course Category <span className="text-danger">*</span></Form.Label>
             <Form.Select value={course_cat} onChange={(e) => setcourse_cat(e.target.value)} >
             <option disabled value="">Select Course Category</option>
             {cat != null && cat.map((category,index) => (
@@ -340,7 +340,7 @@ const handleFileChange = (event) => {
             </div>
 
             <div className="col-md-5 mt-3">
-            <Form.Label>Course Sub Category</Form.Label>
+            <Form.Label>Course Sub Category <span className="text-danger">*</span></Form.Label>
               <Form.Select value={course_sub_cat} onChange={(e) =>  setcourse_sub_cat(e.target.value)} >
               <option value="">Select Course Sub Category</option>
               {subcatData != null && subcatData.map((subcategory,index) => (
@@ -351,7 +351,7 @@ const handleFileChange = (event) => {
             </div>
           
             <div className="col-md-3 mt-3">
-            <Form.Label>Course Topic</Form.Label>
+            <Form.Label>Course Topic <span className="text-danger">*</span></Form.Label>
               <Form.Select value={course_topic} onChange={(e) => setcourse_topic(e.target.value)} >
               <option value="">Select Topic</option>
               {topicsData != null &&  topicsData.map((topic,index) => (
@@ -367,8 +367,8 @@ const handleFileChange = (event) => {
             <div className="col-md-9 mt-3"></div>
             <div className="col-md-3 mt-3">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Own Topic</Form.Label>
-              <Form.Control value={own_topic} onChange={(e) => setown_topic(e.target.value)} type="text" placeholder="Enter your own topic" />
+              <Form.Label>Suggest a topic <span className="text-danger">*</span></Form.Label>
+              <Form.Control value={own_topic} onChange={(e) => setown_topic(e.target.value)} type="text" placeholder="Enter your suggested topic" />
             </Form.Group>
             </div>
             </>
@@ -389,9 +389,9 @@ const handleFileChange = (event) => {
           <div className="row my-3">
             <div className="col-md-4">
               <h6>
-                <b>Course image</b>
+                <b>Course image <span className="text-danger">*</span></b>
               </h6>
-              {preview_img == "" ? <img style={{objectFit:'cover'}} height={200} width={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img style={{objectFit:'cover'}} height={200} width={200} src={preview_img} /> : <img style={{objectFit:'cover'}} height={200} width={200} src={`${FILE_PATH}${preview_img}`} /> }
+              {preview_img == "" ? <img style={{objectFit:'cover'}} height={200} width={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img  height={150} width={200} src={preview_img} /> : <img  height={150} width={200} src={`${FILE_PATH}${preview_img}`} /> }
             
 
      

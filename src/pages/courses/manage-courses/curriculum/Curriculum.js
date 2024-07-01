@@ -47,6 +47,8 @@ import CodeIcon from '@mui/icons-material/Code';
 import Spinner from 'react-bootstrap/Spinner';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import { Switch } from 'antd';
+import Badge from 'react-bootstrap/Badge';
+
 
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -66,6 +68,10 @@ const Curriculum = ({code}) => {
   const [curriculumvisiblity, setcurriculumvisiblity] = useState("");
   const [curriculumvisiblitymc, setcurriculumvisiblitymc] = useState("")
   const [extracurriculum, setextracurriculum] = useState("")
+
+  const [uploadingVideo, setUploadingVideo] = useState(null);
+  const [uploadingVideoName, setuploadingVideoName] = useState("")
+
 
   const [showSectionInput, setshowSectionInput] = useState(false)
 
@@ -810,7 +816,10 @@ const Curriculum = ({code}) => {
 // Save Video > Video
    const handleSaveVideo = (video,ID) =>{
       console.log(video)
+      setuploadingVideoName(video.name)
       console.log(ID)
+
+      
       // console.log(e.target.files)
 
       const reader = new FileReader();
@@ -823,7 +832,8 @@ const Curriculum = ({code}) => {
             const duration = Math.round(video1.duration);
             console.log('Video duration:', duration, 'seconds');
             
-            AddCurriculumVideo(code,ID,video,duration,setsectionData,setshowMain,setshowDescRes,setshowContentAdd,setcurriculumvisiblity)
+            AddCurriculumVideo(code,ID,video,duration,setsectionData,setshowMain,setshowDescRes,setshowContentAdd,setcurriculumvisiblity,setUploadingVideo,setuploadingVideoName)
+            
           };
           
           video1.src = event.target.result;
@@ -1406,42 +1416,43 @@ console.log(item)
                             showMain == index + i + item.id ? (
                                 curriculumvisiblity == "video" ? (
                                 <div className="p-3">
-                          
+                           
                                   {/* Upload Input */}
                                   <Form.Group controlId="formFile" className="my-3">
-                                    <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
+                                    <Form.Control accept="video/*" onChange={(e) => {
+                                      setUploadingVideo(index + i + item.id)
+                                      handleSaveVideo(e.target.files[0],item.id)
+                                    }} placeholder="Add a Video" type="file" />
                                     <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
                                   </Form.Group>
 
                                   
         
         
-                                  {/* After Upload */}
+                                  {/* Before Video Upload */}
                                   <Table striped bordered hover>
                                       <thead>
                                         <tr>
                                           <th>Filename</th>
+                                          <th>Status</th>
                                           <th>Type</th>
-                                          <th>Actions</th>
                                         </tr>
                                       </thead>
                                       <tbody>
-                                      {item.curriculumItemFiles.length > 0 && (
-                                        item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
-                                            item.curriculumItemFiles
-                                                .filter(video => video.filetype === "Video")
-                                                .map((video, index) => (
-                                                    <tr key={index}>
-                                                      <td>{video.title}</td>
+                                      {uploadingVideo == index + i + item.id && (
+                                        // item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
+                                            // item.curriculumItemFiles
+                                                // .filter(video => video.filetype === "Video")
+                                                // .map((video, index) => (
+                                                    <tr>
+                                                      <td>{uploadingVideo == index + i + item.id ? uploadingVideoName : ""}</td>
+                                                      <td><td>{uploadingVideo == index + i + item.id ? <Badge bg="info">Uploading</Badge> : <Badge bg="success">Completed</Badge>}</td></td>
                                                       <td>Video</td>
-                                                      <td><Button onClick={() => {
-                                                        handleVideoDelete(video)
-                                                      }} variant="contained"><DeleteIcon /></Button></td>
                                                     </tr>
-                                                ))
-                                        ) : (
-                                            <p>No Video</p>
-                                        )
+                                                // ))
+                                        // ) : (
+                                        //     <p>No Video</p>
+                                        // )
                                   )}
         
                                       </tbody>
@@ -1664,7 +1675,10 @@ console.log(item)
                                 <div className="p-3">
                                     {/* Upload Input */}
                                     <Form.Group controlId="formFile" className="my-3">
-                                    <Form.Control accept="video/*" onChange={(e) => handleSaveVideo(e.target.files[0],item.id)} placeholder="Add a Video" type="file" />
+                                    <Form.Control accept="video/*" onChange={(e) =>{
+                                      setUploadingVideo(index + i + item.id) 
+                                      handleSaveVideo(e.target.files[0],item.id)
+                                      }} placeholder="Add a Video" type="file" />
                                     <Form.Label style={{fontSize:11}}><b>Note:</b> Video file should be High Definition (HD) quality, with a minimum resolution of 720p and maximum resolution of 1080p.</Form.Label>
                                   </Form.Group>
                               
@@ -1681,11 +1695,12 @@ console.log(item)
                                         ))
                                 )
                           )}
-                                  {/* After Upload */}
+                                  {/* After Video Upload */}
                                   <Table striped bordered hover>
                                       <thead>
                                         <tr>
                                           <th>Filename</th>
+                                          <th>Status</th>
                                           <th>Type</th>
                                           <th>Actions</th>
                                         </tr>
@@ -1697,7 +1712,8 @@ console.log(item)
                                                 .filter(video => video.filetype === "Video")
                                                 .map((video, index) => (
                                                     <tr key={index}>
-                                                      <td>{video.title}</td>
+                                                      <td>{uploadingVideo == index + i + item.id ? uploadingVideoName : video.title}</td>
+                                                      <td><td>{uploadingVideo == index + i + item.id ? <Badge bg="info">Uploading</Badge> : <Badge bg="success">Completed</Badge>}</td></td>
                                                       <td>Video</td>
                                                       <td><Button onClick={() => {
                                                         handleVideoDelete(video)
