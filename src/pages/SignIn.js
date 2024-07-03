@@ -48,19 +48,19 @@ const SignIn = () => {
     if (email === "") {
       Swal.fire({
         title: "Empty Field!",
-        text: "Please Enter Your Email",
+        text: "Please enter your email",
         icon: "error"
       });
     } else if (!validateEmail(email)) {
       Swal.fire({
         title: "Invalid Email!",
-        text: "Please Enter A Valid Email",
+        text: "Please enter a valid email",
         icon: "error"
       });
     } else if (password === "") {
       Swal.fire({
         title: "Empty Field!",
-        text: "Please Enter Your Password",
+        text: "Please enter your password",
         icon: "error"
       });
     } else {
@@ -82,7 +82,7 @@ const SignIn = () => {
             >
               <Title className="mb-15">Sign In</Title>
               <Title className="font-regular text-muted" level={5}>
-                Enter your email and password to sign in as Instructor
+                Enter your email and password to sign in as instructor
               </Title>
               
               <Form onSubmit={onHandleSubmit}>
@@ -118,6 +118,11 @@ const SignIn = () => {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formPassword">
+                  <a href="/forgot-password">Forgot Password ?</a>
+                </Form.Group>
+
 
                 <AntButton type="primary" htmlType="submit" block>
                   Login

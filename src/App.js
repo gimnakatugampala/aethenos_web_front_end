@@ -6,6 +6,7 @@ import Rtl from "./pages/Rtl";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 
 import AllCourses from "./pages/courses/all-courses/AllCourses";
 import AddCourses from "./pages/courses/add-courses/AddCourses";
@@ -57,6 +58,7 @@ function App() {
           <Route path="/sign-up" exact component={SignUp} />
           {/* <Route path="/sign-in" exact component={SignIn} /> */}
           <Route path="/login" exact component={SignIn} />
+          <Route path="/forgot-password" exact component={ForgotPassword} />
 
           <Route path="/courses/manage/:code/" exact component={ManageCourses} />
 

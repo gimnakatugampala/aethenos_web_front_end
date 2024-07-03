@@ -3713,7 +3713,7 @@ const Pricing = ({code}) => {
     if(Paid_Type == 1){
       
       if(VideoLength > 9000){
-        ErrorAlert("Error","The maximum video content length on free courses is 2.5 hours. Please reduce your total video length to comply.")
+        ErrorAlert("Error","The maximum video content length on a free course is 2.5 hours. Please reduce your total video length to comply.")
         setloading_button(false)
         return
       }
