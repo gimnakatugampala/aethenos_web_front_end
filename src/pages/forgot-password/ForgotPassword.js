@@ -21,7 +21,7 @@ import {
 import logo from "../../assets/images/utils/aethenos_logo.jpg";
 import { useState } from "react";
 import ErrorAlert from "../../commonFunctions/Alerts/ErrorAlert";
-import { SendEmailVerficationCode, VerifyCode } from "../../api";
+import { ChangeToNewPassword, SendEmailVerficationCode, VerifyCode } from "../../api";
 import ButtonSpinner from "../../commonFunctions/loaders/Spinner/ButtonSpinner";
 import VerificationInput from "react-verification-input";
 const { Title } = Typography;
@@ -42,6 +42,9 @@ const ForgotPassword = () => {
 
     const [password, setpassword] = useState("")
     const [conPassword, setconPassword] = useState("")
+
+    const [showPassword, setShowPassword] = useState(false);
+
 
     // ========== Submit ==========
     const onFinish = () => {
@@ -66,8 +69,9 @@ const ForgotPassword = () => {
     const handleSubmit = () =>{
       console.log(VerficationCode)
 
-      if(VerficationCode.length < 12){
+      if(VerficationCode.length < 5){
         ErrorAlert("Error","Verification code is incomplete")
+        setbtnLoading(false)
         return
       }
 
@@ -76,6 +80,9 @@ const ForgotPassword = () => {
 
 
     const handleChangePassword = () =>{
+
+      
+
       if(password == ""){
         ErrorAlert("Error","Please enter password")
         return
@@ -86,6 +93,8 @@ const ForgotPassword = () => {
         ErrorAlert("Error","Password do not match")
         return
       }
+
+      ChangeToNewPassword(VerficationCode,email,conPassword,setbtnLoading)
 
 
     }
@@ -121,14 +130,23 @@ const ForgotPassword = () => {
                 <Form.Item
                   name="password"
                 >
-                  <Input type="password" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password" />
+                  <Input type={showPassword ? "text" : "password"}  value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password" />
                 </Form.Item>
 
                 <Form.Item
                   name="conpassword"
                 >
-                  <Input type="password" value={conPassword} onChange={(e) => setconPassword(e.target.value)}  placeholder="Enter Confirm Password" />
+                  <Input type={showPassword ? "text" : "password"}  value={conPassword} onChange={(e) => setconPassword(e.target.value)}  placeholder="Enter Confirm Password" />
                 </Form.Item>
+
+                <Form.Item>
+              <Checkbox 
+                checked={showPassword} 
+                onChange={(e) => setShowPassword(e.target.checked)}
+              >
+                Show Password
+              </Checkbox>
+            </Form.Item>
 
  
 
@@ -169,7 +187,7 @@ const ForgotPassword = () => {
                 <p className="m-0 p-0">Verification code sent successfully. Please check your email</p>
 
                 <div className="d-flex justify-content-center my-4">
-                    <VerificationInput value={VerficationCode} onChange={(e) => setVerficationCode(e)} length={12} className="mx-auto text-center" />
+                    <VerificationInput value={VerficationCode} onChange={(e) => setVerficationCode(e)} length={5} className="mx-auto text-center" />
                 </div>
                 {btnLoading ? (
                     <Button
@@ -183,8 +201,8 @@ const ForgotPassword = () => {
                   <Button
                   onClick={handleSubmit}
                       style={{ width: "80%" }}
-                      type="primary"
-                      htmlType="submit"
+                       type="primary"
+                    htmlType="submit"
                     >
                       Verify
                     </Button>

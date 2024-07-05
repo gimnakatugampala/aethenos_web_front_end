@@ -4952,26 +4952,25 @@ export const VerifyCode = async(VerficationCode,email,setcodeSuccess,setbtnLoadi
   const formdata = new FormData();
 formdata.append("verificationCode", `${VerficationCode}`);
 formdata.append("email", `${email}`);
-formdata.append("newPassword", "9922557@Gimna");
 
 const requestOptions = {
-  method: "PUT",
+  method: "POST",
   body: formdata,
   redirect: "follow"
 };
 
-fetch(`${BACKEND_LINK}/studentProfile/updatePassword`, requestOptions)
+fetch(`${BACKEND_LINK}/studentProfile/verifyVerificationCode`, requestOptions)
   .then((response) => response.json())
   .then((result) => {
     console.log(result)
 
-    if(result.variable == "200"){
+    if(result){
       setcodeSuccess(true)
       setbtnLoading(false)
 
       return
     }else{
-      ErrorAlert("Error",result.message)
+      ErrorAlert("Error","invalid code")
       setbtnLoading(false)
       setcodeSuccess(false)
       return
@@ -4979,5 +4978,43 @@ fetch(`${BACKEND_LINK}/studentProfile/updatePassword`, requestOptions)
 
   })
   .catch((error) => console.error(error));
+
+}
+
+export const ChangeToNewPassword = async(VerficationCode,email,conPassword,setbtnLoading) =>{
+
+  setbtnLoading(true)
+
+  const formdata = new FormData();
+  formdata.append("verificationCode", `${VerficationCode}`);
+formdata.append("email", `${email}`);
+formdata.append("newPassword", `${conPassword}`);
+  
+  const requestOptions = {
+    method: "PUT",
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch(`${BACKEND_LINK}/studentProfile/updatePassword`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      if(result.variable == "200"){
+          SuccessAlert("Success",result.message)
+
+          setTimeout(() => {
+              setbtnLoading(false)
+              window.location.href = "/login"
+          },2500)
+
+          return
+      }else{
+        ErrorAlert("Error",result.message)
+        setbtnLoading(false)
+        return
+      }
+    })
+    .catch((error) => console.error(error));
 
 }
