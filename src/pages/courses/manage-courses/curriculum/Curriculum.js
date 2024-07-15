@@ -2191,7 +2191,7 @@ const Curriculum = ({code}) => {
                                       {item.getQuizs != null && item.getQuizs.length > 0 && item.getQuizs.map((q,inz) => (
                                       <tr key={inz}>
                                         <td>{inz + 1}</td>
-                                        <td>{q.question.length > 40 ? q.question.slice(0, 40) + "..." : q.question }</td>
+                                        <td>{q.question.length > 50 ? q.question.slice(0, 50) + "..." : q.question }</td>
                                         <td><Button onClick={() => handleShowEditQuizListItem(q)} color="info" variant="contained"><EditIcon /></Button> <Button onClick={() => handleQuizListItemDelete(q)} variant="contained"><DeleteIcon /></Button></td>
                                       </tr>
                                       ))}
