@@ -1024,7 +1024,7 @@ const Curriculum = ({code}) => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        DeleteQuestionsAndAnswers(code,q.id)
+        DeleteQuestionsAndAnswers(code,q.id,setsectionData)
       }
     });
   }
@@ -2188,7 +2188,7 @@ const Curriculum = ({code}) => {
                                     </thead>
                                     <tbody>
 
-                                      {QuizQuestionsList != null && QuizQuestionsList.getQuizs.length > 0 && QuizQuestionsList.getQuizs.map((q,inz) => (
+                                      {item.getQuizs != null && item.getQuizs.length > 0 && item.getQuizs.map((q,inz) => (
                                       <tr key={inz}>
                                         <td>{inz + 1}</td>
                                         <td>{q.question.length > 40 ? q.question.slice(0, 40) + "..." : q.question }</td>

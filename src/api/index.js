@@ -2848,7 +2848,7 @@ fetch(`${BACKEND_LINK}/managecourse/addQuestionAndAnswers`, requestOptions)
        setanswerExplainFour("")
        setanswerExplainFive("")
 
-       setQuizQuestionsList(item)
+      //  setQuizQuestionsList(item)
 
        
 
@@ -5067,7 +5067,7 @@ fetch(`${BACKEND_LINK}/revenue/getInstructorRevenueReportChart`, requestOptions)
 
 }
 
-export const DeleteQuestionsAndAnswers = async(code,quizId) =>{
+export const DeleteQuestionsAndAnswers = async(code,quizId,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -5087,6 +5087,7 @@ fetch(`${BACKEND_LINK}/managecourse/deleteQuestionAndAnswers/${quizId}`, request
 
     if(result.variable == "200"){
       SuccessAlert("Success",result.message)
+      GetCurriculum(code,setsectionData)
       return
     }else{
       ErrorAlert("Error",result.message)
@@ -5143,6 +5144,7 @@ export const UpdateSubmitQuestionsAndAnswers = async(quizForUpdateSelected,code,
       console.log(result)
       if(result.variable == "200"){
         SuccessAlert("Success",result.message)
+        GetCurriculum(code,setsectionData)
         return
       }else{
         ErrorAlert("Error",result.message)
