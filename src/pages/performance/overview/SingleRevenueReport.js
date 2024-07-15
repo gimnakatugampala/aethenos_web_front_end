@@ -6,7 +6,7 @@ import { Card } from "antd";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
 import { PieChart, pieArcClasses } from "@mui/x-charts/PieChart";
-import { GetRevenueReportByID } from "../../../api";
+import { GetRevenueReportByID, RevenueChart } from "../../../api";
 import { useParams } from 'react-router-dom';
 
 
@@ -24,6 +24,11 @@ const SingleRevenueReport = () => {
   useEffect(() => {
     GetRevenueReportByID(id,setrefundNo,setpurchasesNo,setpurchasedData,settimePeriod,setrefundData)
   }, [id])
+
+  // useEffect(() => {
+  //   RevenueChart()
+  // })
+  
   
 
   const data = [

@@ -2779,36 +2779,40 @@ fetch(`${BACKEND_LINK}/managecourse/addArticle`, requestOptions)
 
  }
 
- export const AddCurriculumQnAQuiz = async(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData) =>{
+ export const AddCurriculumQnAQuiz = async(item,code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData,setquestion,setanswerOption,setanswerOne,setanswerTwo,setanswerThree,setanswerFour,setanswerFive,setanswerExplainOne,setanswerExplainTwo,setanswerExplainThree,setanswerExplainFour,setanswerExplainFive,setQuizQuestionsList) =>{
+
+  
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
 formdata.append("question", `${question}`);
-
-if(curriculumID != "" ){
-  formdata.append("quizId", `${curriculumID}`)
-}
-
-
-formdata.append("answer", `${answerOne},${answerTwo},${answerThree},${answerFour},${answerFive}`);
-formdata.append("explanation", `${answerExplainOne},${answerExplainTwo},${answerExplainThree},${answerExplainFour},${answerExplainFive}`);
-
+formdata.append("sectionCurriculumItemId", `${ID}`);
+formdata.append("answer1", `${answerOne}`);
+formdata.append("answer2", `${answerTwo}`);
+formdata.append("answer3", `${answerThree}`);
+formdata.append("answer4", `${answerFour}`);
+formdata.append("answer5", `${answerFive}`);
+formdata.append("explanation1", `${answerExplainOne}`);
+formdata.append("explanation2", `${answerExplainTwo}`);
+formdata.append("explanation3", `${answerExplainThree}`);
+formdata.append("explanation4", `${answerExplainFour}`);
+formdata.append("explanation5", `${answerExplainFive}`);
 
 if(answerOption == "ans1"){
-  formdata.append("correctAnswer", "true,false,false,false,false");
+  formdata.append("correctAnswer", "1");
 }else if(answerOption == "ans2"){
-  formdata.append("correctAnswer", "false,true,false,false,false");
+  formdata.append("correctAnswer", "2");
 }else if(answerOption == "ans3"){
-  formdata.append("correctAnswer", "false,false,true,false,false");
+  formdata.append("correctAnswer", "3");
 }else if(answerOption == "ans4"){
-  formdata.append("correctAnswer", "false,false,false,true,false");
+  formdata.append("correctAnswer", "4");
 }else if(answerOption == "ans5"){
-  formdata.append("correctAnswer", "false,false,false,false,true");
+  formdata.append("correctAnswer", "5");
 }
 
-formdata.append("lectureId", `${ID}`);
+
 
 var requestOptions = {
   method: 'PUT',
@@ -2828,7 +2832,26 @@ fetch(`${BACKEND_LINK}/managecourse/addQuestionAndAnswers`, requestOptions)
       SuccessAlert("Saved",result.message)
       setcurriculumvisiblitymc("")
       setshowMain(null)
+
       GetCurriculum(code,setsectionData)
+
+      setquestion("")
+      setanswerOption("")
+       setanswerOne("")
+       setanswerTwo("")
+       setanswerThree("")
+       setanswerFour("")
+       setanswerFive("")
+       setanswerExplainOne("")
+       setanswerExplainTwo("")
+       setanswerExplainThree("")
+       setanswerExplainFour("")
+       setanswerExplainFive("")
+
+       setQuizQuestionsList(item)
+
+       
+
       return
     }
 
@@ -5013,6 +5036,116 @@ formdata.append("newPassword", `${conPassword}`);
         ErrorAlert("Error",result.message)
         setbtnLoading(false)
         return
+      }
+    })
+    .catch((error) => console.error(error));
+
+}
+
+export const RevenueChart = async(setchartData) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`${BACKEND_LINK}/revenue/getInstructorRevenueReportChart`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`performance/revenue-report`) 
+
+    setchartData(result)
+
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const DeleteQuestionsAndAnswers = async(code,quizId) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "PUT",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`${BACKEND_LINK}/managecourse/deleteQuestionAndAnswers/${quizId}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+
+    Unauthorized(result.status,`courses/manage/${code}/#syllabus`) 
+
+    if(result.variable == "200"){
+      SuccessAlert("Success",result.message)
+      return
+    }else{
+      ErrorAlert("Error",result.message)
+    }
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const UpdateSubmitQuestionsAndAnswers = async(quizForUpdateSelected,code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData,setquestion,setanswerOption,setanswerOne,setanswerTwo,setanswerThree,setanswerFour,setanswerFive,setanswerExplainOne,setanswerExplainTwo,setanswerExplainThree,setanswerExplainFour,setanswerExplainFive,setQuizQuestionsList) =>{
+
+  console.log(ID)
+  console.log(curriculumID)
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+  
+  const formdata = new FormData();
+  formdata.append("question", `${question}`);
+  formdata.append("quizId", `${quizForUpdateSelected}`);
+  formdata.append("answer1", `${answerOne}`);
+  formdata.append("answer2", `${answerTwo}`);
+  formdata.append("answer3", `${answerThree}`);
+  formdata.append("answer4", `${answerFour}`);
+  formdata.append("answer5", `${answerFive}`);
+  formdata.append("explanation1", `${answerExplainOne}`);
+  formdata.append("explanation2", `${answerExplainTwo}`);
+  formdata.append("explanation3", `${answerExplainThree}`);
+  formdata.append("explanation4", `${answerExplainFour}`);
+  formdata.append("explanation5", `${answerExplainFive}`);
+  
+  if(answerOption == "ans1"){
+    formdata.append("correctAnswer", "1");
+  }else if(answerOption == "ans2"){
+    formdata.append("correctAnswer", "2");
+  }else if(answerOption == "ans3"){
+    formdata.append("correctAnswer", "3");
+  }else if(answerOption == "ans4"){
+    formdata.append("correctAnswer", "4");
+  }else if(answerOption == "ans5"){
+    formdata.append("correctAnswer", "5");
+  }
+  
+  const requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow"
+  };
+  
+  fetch(`${BACKEND_LINK}/managecourse/updateQuestionAndAnswers`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      if(result.variable == "200"){
+        SuccessAlert("Success",result.message)
+        return
+      }else{
+        ErrorAlert("Error",result.message)
       }
     })
     .catch((error) => console.error(error));

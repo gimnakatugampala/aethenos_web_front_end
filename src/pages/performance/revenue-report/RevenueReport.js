@@ -6,12 +6,19 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { Card } from "antd";
 import Link from "@mui/material/Link";
 import MaterialTable from "material-table";
-import { GetRevenueReport } from "../../../api";
+import { GetRevenueReport, RevenueChart } from "../../../api";
 import MainLoader from "../../../commonFunctions/loaders/MainLoader/MainLoader";
 import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 import formatNumber from "../../../commonFunctions/NumberFormat";
 
 function RevenueReport() {
+
+  const [chartData, setchartData] = useState(null)
+
+  useEffect(() => {
+    RevenueChart(setchartData)
+  },[])
+  
 
 
   const years = [
@@ -77,7 +84,7 @@ function RevenueReport() {
 
   useEffect(() => {
     GetRevenueReport(setRevenueReportData,setrevenueDate,setrevenueAmount)
-  })
+  },[])
   
 
   return (
@@ -85,12 +92,15 @@ function RevenueReport() {
       <p className="fs-5 font-bold">Revenue Report</p>
       <h1 className="font-bold m-0 p-0">${formatNumber(revenueAmount)}</h1>
       <p className="fs-10 m-0 p-0">Your lifetime earnings of {revenueDate}</p>
+
+    {chartData == null ? "Loading.." : (
+
       <Card className="my-3">
         <LineChart
           xAxis={[
             {
               id: "Years",
-              data: years,
+              data: chartData.years,
               scaleType: "time",
               valueFormatter: (date) => date.getFullYear(),
             },
@@ -99,7 +109,7 @@ function RevenueReport() {
             {
               id: "Aethenos",
               label: "Aethenos",
-              data: AethenosDataSet,
+              data: chartData.aethenosDataSets,
               stack: "total",
               area: true,
               showMark: false,
@@ -107,7 +117,7 @@ function RevenueReport() {
             {
               id: "Your Promotions",
               label: "Your Promotions",
-              data: PromotionsDataSet,
+              data: chartData.promotionsDataSets,
               stack: "total",
               area: true,
               showMark: false,
@@ -115,7 +125,7 @@ function RevenueReport() {
             {
               id: "Refunds",
               label: "Refunds",
-              data: RefundsDataSet,
+              data: chartData.refundsDataSets,
               stack: "total",
               area: true,
               showMark: false,
@@ -129,6 +139,7 @@ function RevenueReport() {
           margin={{ left: 70 }}
         />
       </Card>
+    )}
 
       {RevenueReportData != null ? (
       <MaterialTable
