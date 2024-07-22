@@ -63,7 +63,7 @@ const SingleRevenueReport = () => {
         </p>
       </div> */}
 
-      <div className="container">
+      {/* <div className="container">
         <div className="row text-center">
           <div className="col-6">
             <Card>
@@ -86,7 +86,7 @@ const SingleRevenueReport = () => {
               />
             </Card>
           </div>
-          {/* <div className="col-4">
+          <div className="col-4">
             <Card>
               <PieChart
                 series={[
@@ -104,7 +104,7 @@ const SingleRevenueReport = () => {
                 height={200}
               />
             </Card>
-          </div> */}
+          </div>
           <div className="col-6">
             <Card>
             <h6><i>Your Earning by Courses</i></h6>
@@ -127,7 +127,7 @@ const SingleRevenueReport = () => {
             </Card>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Tabs className="mt-5">
 
