@@ -308,7 +308,7 @@ var requestOptions = {
 fetch(`${BACKEND_LINK}/course/getCourseTitleAndApproveType/${code}`, requestOptions)
   .then(response => response.json())
   .then(result => {
-    console.log(result)
+    // console.log(result)
 
     Unauthorized(result.status,`courses/manage/${code}/#course-landing-page`)
 
@@ -4326,7 +4326,7 @@ const requestOptions = {
 fetch(`${BACKEND_LINK}/course/checkCourseCompleteDetails/${code}`, requestOptions)
   .then((response) => response.json())
   .then((result) => {
-    console.log(result)
+    // console.log(result)
 
     Unauthorized(result.status,"courses") 
 
@@ -5171,3 +5171,48 @@ fetch(`${BACKEND_LINK}/revenue/getInstructorChartDetailsForThisMonth`, requestOp
   .catch((error) => console.error(error));
 
 }
+
+
+
+export const updateSectionData = async (courseCode, sectionId, curriculumItemId, arrangedNo) => { 
+
+  // alert(courseCode)
+  // alert(sectionId)
+  // alert(curriculumItemId)
+  // alert(arrangedNo)
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  const formdata = new FormData();
+
+  formdata.append("courseCode", `${courseCode}`);
+formdata.append("sectionId", `${sectionId}`);
+formdata.append("curriculumItemId", `${curriculumItemId}`);
+formdata.append("arrangedNo", `${arrangedNo}`);
+
+
+  const requestOptions = {
+    method: "PUT",
+    headers: myHeaders,   
+    body: formdata,
+    redirect: "follow"
+  };
+
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateSectionCurriculumItemOrder`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    if(result.variable == "200"){
+        SuccessAlert("Success",result.message)       
+
+        return
+    }else{
+      ErrorAlert("Error",result.message)   
+      return
+    }
+  })
+  .catch((error) => console.error(error));
+
+  
+};
