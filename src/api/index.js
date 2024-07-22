@@ -5199,12 +5199,12 @@ formdata.append("arrangedNo", `${arrangedNo}`);
     redirect: "follow"
   };
 
-  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateSectionCurriculumItemOrder`, requestOptions)
+  fetch(`${BACKEND_LINK}/managecourse/updateSectionCurriculumItemOrder`, requestOptions)
   .then((response) => response.json())
   .then((result) => {
     console.log(result)
     if(result.variable == "200"){
-        SuccessAlert("Success",result.message)       
+        // SuccessAlert("Success",result.message)       
 
         return
     }else{
