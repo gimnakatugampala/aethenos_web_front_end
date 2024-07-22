@@ -1002,7 +1002,26 @@ fetch(`${BACKEND_LINK}/managecourse/updateCoupon`, requestOptions)
         return
       }
       
-      setsectionData(result)
+
+      result.forEach(section => {
+        section.courseSection.sectionCurriculumItem.sort((a, b) => {
+            // Handle case where both are null
+            if (a.arrangeNo === null && b.arrangeNo === null) return 0;
+    
+            // Handle case where one is null and the other is not
+            if (a.arrangeNo === null) return 1;
+            if (b.arrangeNo === null) return -1;
+    
+            // Convert to numbers and sort numerically
+            const aArrangeNo = parseInt(a.arrangeNo, 10);
+            const bArrangeNo = parseInt(b.arrangeNo, 10);
+    
+            return aArrangeNo - bArrangeNo;
+        });
+    });
+
+    
+    setsectionData(result)
 
     })
     .catch(error => console.log('error', error));
@@ -3106,7 +3125,7 @@ fetch(`${BACKEND_LINK}/instructor/updateInstructorProfile`, requestOptions)
       console.log(result)
 
       if(result.variable == "200" && result.message != null){
-        setreferalCode(`https://www.aethenos.com?ref=${result.message}`)
+        setreferalCode(`https://www.aethenos.com/course/draft/${code}/?referralCode=${result.message}`)
       }else{
         setreferalCode(``)
       }
@@ -5199,12 +5218,12 @@ formdata.append("arrangedNo", `${arrangedNo}`);
     redirect: "follow"
   };
 
-  fetch(`${BACKEND_LINK}/managecourse/updateSectionCurriculumItemOrder`, requestOptions)
+  fetch(`https://aethenosinstructor.exon.lk:2053/aethenos-api/managecourse/updateSectionCurriculumItemOrder`, requestOptions)
   .then((response) => response.json())
   .then((result) => {
     console.log(result)
     if(result.variable == "200"){
-        // SuccessAlert("Success",result.message)       
+        SuccessAlert("Success",result.message)       
 
         return
     }else{
