@@ -5153,3 +5153,21 @@ export const UpdateSubmitQuestionsAndAnswers = async(quizForUpdateSelected,code,
     .catch((error) => console.error(error));
 
 }
+
+export const GetChartOverviewData = async(setChartData) =>{
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`${BACKEND_LINK}/revenue/getInstructorChartDetailsForThisMonth`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => setChartData(result))
+  .catch((error) => console.error(error));
+
+}
