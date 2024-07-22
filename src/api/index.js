@@ -5042,7 +5042,7 @@ formdata.append("newPassword", `${conPassword}`);
 
 }
 
-export const RevenueChart = async(setchartData) =>{
+export const RevenueChart = async(setChartData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -5060,7 +5060,7 @@ fetch(`${BACKEND_LINK}/revenue/getInstructorRevenueReportChart`, requestOptions)
 
     Unauthorized(result.status,`performance/revenue-report`) 
 
-    setchartData(result)
+    setChartData(result)
 
   })
   .catch((error) => console.error(error));
