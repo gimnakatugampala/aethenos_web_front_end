@@ -35,7 +35,7 @@ body {
   padding: 33px 20px;
 }
 .layout-dashboard .ant-layout-sider.sider-primary .brand img {
-  height: 30px;
+  height: auto;
 }
 .layout-dashboard .ant-layout-sider.sider-primary hr {
   margin: 18px 0;

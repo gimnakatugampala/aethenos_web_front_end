@@ -43,7 +43,7 @@ function Sidenav({ color }) {
   return (
     <>
       <div className="brand">
-        <img src={logo} alt="LOGO" />
+        <img width="150" src={logo} alt="LOGO" />
         {/* <span>Aethenos</span> */}
       </div>
       <hr />

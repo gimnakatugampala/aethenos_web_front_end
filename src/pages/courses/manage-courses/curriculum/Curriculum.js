@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "antd";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -16,7 +16,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import JoditEditor from "jodit-react";
 import DnsIcon from '@mui/icons-material/Dns';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import { updateSectionData } from '../../../../api';
 
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,8 +31,8 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteQuestionsAndAnswers, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, SetVideoPreviewAPI, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, UpdateSubmitQuestionsAndAnswers, VideoDelete} from "../../../../api"
-import "./Curriculum.css";
+import { AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, SetVideoPreviewAPI, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, VideoDelete} from "../../../../api"
+import "./curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -59,6 +59,8 @@ const syllabusIcon = {
 }
 
 const Curriculum = ({code}) => {
+
+  console.log(code)
 
   let counter = 1;
 
@@ -95,10 +97,6 @@ const Curriculum = ({code}) => {
   const [answerExplainThree, setanswerExplainThree] = useState("")
   const [answerExplainFour, setanswerExplainFour] = useState("")
   const [answerExplainFive, setanswerExplainFive] = useState("")
-
-  const [QuizQuestionsList, setQuizQuestionsList] = useState(null)
-  const [quizUpdateEnabled, setquizUpdateEnabled] = useState(false)
-  const [quizForUpdateSelected, setquizForUpdateSelected] = useState(null)
 
 
 
@@ -742,7 +740,11 @@ const Curriculum = ({code}) => {
 
   useEffect(() => {
     GetCurriculum(code,setsectionData)
+    
   }, [])
+
+  
+
 
   useEffect(() => {
   sectionData.forEach(f => {
@@ -894,7 +896,7 @@ const Curriculum = ({code}) => {
 
   // Save > Answer & Question
   const handleQuestionsAnswer = (item) =>{
-    console.log(item)
+    // console.log(item.id)
 
     let ID = item.id // Lect ID
     let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id // Curriculum ID
@@ -957,9 +959,7 @@ const Curriculum = ({code}) => {
 
       }
 
-      AddCurriculumQnAQuiz(item,code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,
-        setcurriculumvisiblitymc,setshowMain,setsectionData,
-        setquestion,setanswerOption,setanswerOne,setanswerTwo,setanswerThree,setanswerFour,setanswerFive,setanswerExplainOne,setanswerExplainTwo,setanswerExplainThree,setanswerExplainFour,setanswerExplainFive,setQuizQuestionsList)
+      AddCurriculumQnAQuiz(code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData)
     }
     
     
@@ -975,246 +975,101 @@ const Curriculum = ({code}) => {
   // Get Quiz Data
   const handleFillQuiz = (item) => {
    
-  console.log(item)
-  setQuizQuestionsList(item)
-    // setquestion(item.getQuizs.length == 0 ? "" : item.getQuizs[0].question)
+console.log(item)
+    setquestion(item.getQuizs.length == 0 ? "" : item.getQuizs[0].question)
 
-    // setanswerOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].name)
-    // setanswerTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].name)
-    // setanswerThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].name)
-    // setanswerFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].name)
-    // setanswerFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].name)
+    setanswerOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].name)
+    setanswerTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].name)
+    setanswerThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].name)
+    setanswerFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].name)
+    setanswerFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].name)
 
-    // setanswerExplainOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].explanation)
-    // setanswerExplainTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].explanation)
-    // setanswerExplainThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].explanation)
-    // setanswerExplainFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].explanation)
-    // setanswerExplainFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].explanation)
+    setanswerExplainOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].explanation)
+    setanswerExplainTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].explanation)
+    setanswerExplainThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].explanation)
+    setanswerExplainFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].explanation)
+    setanswerExplainFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].explanation)
 
-    // if(item.getQuizs.length != 0){  
-    //   if(item.getQuizs[0].getAnswers[0].correctAnswer == true){
-    //     setanswerOption("ans1")
-    //   }else if(item.getQuizs[0].getAnswers[1].correctAnswer == true){
-    //     setanswerOption("ans2")
-    //   }else if(item.getQuizs[0].getAnswers[2].correctAnswer == true){
-    //     setanswerOption("ans3")
-    //   }else if(item.getQuizs[0].getAnswers[3].correctAnswer == true){
-    //     setanswerOption("ans4")
-    //   }else if(item.getQuizs[0].getAnswers[4].correctAnswer == true){
-    //     setanswerOption("ans5")
-    //   }
-    // }else{
-    //   setanswerOption("")
-    // }
-
-
-  }
-
-  // Delete Quiz List Item
-  const handleQuizListItemDelete = (q) => {
-    console.log(q)
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        DeleteQuestionsAndAnswers(code,q.id,setsectionData)
-      }
-    });
-  }
-
-  // Update  show
-  const handleShowEditQuizListItem = (q) => {
-    console.log(q)
-
-    setquizForUpdateSelected(q.id)
-
-
-    setquizUpdateEnabled(true)
-
-    setquestion(q.question)
-
-    setanswerOne(q.answers[0] && q.answers[0].name != null ? q.answers[0].name : "");
-    setanswerTwo(q.answers[1] && q.answers[1].name != null ? q.answers[1].name : "");
-    setanswerThree(q.answers[2] && q.answers[2].name != null ? q.answers[2].name : "");
-    setanswerFour(q.answers[3] && q.answers[3].name != null ? q.answers[3].name : "");
-    setanswerFive(q.answers[4] && q.answers[4].name != null ? q.answers[4].name : "");
-    
-
-    setanswerExplainOne(q.answers[0] && q.answers[0].explanation != null ? q.answers[0].explanation : "");
-    setanswerExplainTwo(q.answers[1] && q.answers[1].explanation != null ? q.answers[1].explanation : "");
-    setanswerExplainThree(q.answers[2] && q.answers[2].explanation != null ? q.answers[2].explanation : "");
-    setanswerExplainFour(q.answers[3] && q.answers[3].explanation != null ? q.answers[3].explanation : "");
-    setanswerExplainFive(q.answers[4] && q.answers[4].explanation != null ? q.answers[4].explanation : "");
-    
-
-    if(q.answers[0].correctAnswer != null){
-      if(q.answers[0].correctAnswer){
+    if(item.getQuizs.length != 0){  
+      if(item.getQuizs[0].getAnswers[0].correctAnswer == true){
         setanswerOption("ans1")
-        return
-      }
-    }
-
-    if(q.answers[1].correctAnswer != null){
-      if(q.answers[1].correctAnswer){
+      }else if(item.getQuizs[0].getAnswers[1].correctAnswer == true){
         setanswerOption("ans2")
-        return
-      }
-    }
-
-    if(q.answers[2].correctAnswer != null){
-      if(q.answers[2].correctAnswer){
+      }else if(item.getQuizs[0].getAnswers[2].correctAnswer == true){
         setanswerOption("ans3")
-        return
-      }
-    }
-
-    if(q.answers[3].correctAnswer != null){
-      if(q.answers[3].correctAnswer){
+      }else if(item.getQuizs[0].getAnswers[3].correctAnswer == true){
         setanswerOption("ans4")
-        return
-      }
-    }
-
-    if(q.answers[4].correctAnswer != null){
-      if(q.answers[4].correctAnswer){
+      }else if(item.getQuizs[0].getAnswers[4].correctAnswer == true){
         setanswerOption("ans5")
-        return
       }
-    }
-    
-
-  }
-
-  // Update submit quiz
-  const handleQuestionsAnswerUpdate = (item) => {
-    console.log(item)
-
-    // const [, setquizForUpdateSelected] = useState(null)
-
-
-    
-    let ID = item.id // Lect ID
-    let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id // Curriculum ID
-    // console.log(item.getQuizs.length)
-    console.log(ID)
-    console.log(curriculumID)
-
-    console.log(answerOptionOne)
-    console.log(answerOptionTwo)
-    console.log(answerOptionThree)
-    console.log(answerOptionFour)
-    console.log(answerOptionFive)
-    console.log(answerOption)
-
-    if(question == ""){
-      ErrorAlert("Empty field","Please enter a question");
-      return
-    }else if(answerOption == ""){
-      ErrorAlert("Empty field","Please select correct answer");
-      return
-    }else if(answerOne == ""){
-      ErrorAlert("Empty field","Please enter answer one");
-      return
     }else{
-
-      if(answerOption == "ans1"){
-
-        if(answerOne == ""){
-          ErrorAlert("Empty field","Please add answer")
-          return
-        }
-
-      }else if(answerOption == "ans2"){
-
-        if(answerTwo == ""){
-          ErrorAlert("Empty field","Please add answer")
-          return
-        }
-
-      }else if(answerOption == "ans3"){
-
-        if(answerThree == ""){
-          ErrorAlert("Empty field","Please add answer")
-          return
-        }
-
-      }else if(answerOption == "ans4"){
-
-        if(answerFour == ""){
-          ErrorAlert("Empty field","Please add answer")
-          return
-        }
-
-      }else if(answerOption == "ans5"){
-
-        if(answerFive == ""){
-          ErrorAlert("Empty field","Please add answer")
-          return
-        }
-
-      }
-
-      UpdateSubmitQuestionsAndAnswers(quizForUpdateSelected,code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,
-        setcurriculumvisiblitymc,setshowMain,setsectionData,
-        setquestion,setanswerOption,setanswerOne,setanswerTwo,setanswerThree,setanswerFour,setanswerFive,setanswerExplainOne,setanswerExplainTwo,setanswerExplainThree,setanswerExplainFour,setanswerExplainFive,setQuizQuestionsList)
+      setanswerOption("")
     }
 
-  }
-
-  // Cancel update quiz
-  const handleQuestionsAnswerUpdateCancel = () =>{
-    setquestion("")
-
-    setanswerOption("")
-
-    setanswerOne("")
-    setanswerTwo("")
-    setanswerThree("")
-    setanswerFour("")
-    setanswerFive("")
-
-    setanswerExplainOne("")
-    setanswerExplainTwo("")
-    setanswerExplainThree("")
-    setanswerExplainFour("")
-    setanswerExplainFive("")
-
-    setquizUpdateEnabled(false)
-    setquizForUpdateSelected(null)
 
   }
 
-  const counters = {
+  
+const [curriculumSections, setCurriculumSections] = useState(sectionData);
+const [draggingIndex, setDraggingIndex] = useState(null);
+const [expandedIndex, setExpandedIndex] = useState(null);
+
+const dragItem = useRef();
+const dragOverItem = useRef();
+
+let dragOverItemNo = useRef();
+
+const setDragOverNo =( i ) => {
+  dragOverItemNo = i+1;
+};
+
+const handledragStart =( e ) => {
+  e.currentTarget.style.opacity = '0.9'; 
+};
+
+
+const handleSort = (e, sectionIndex, section, item) => {
+
+  if(dragOverItem.current !== null && dragItem.current !== null){
+
+    console.log("ok")
+  const updatedSections = [...sectionData];
+
+  const currentSection = updatedSections[sectionIndex].courseSection.sectionCurriculumItem;
+
+  const draggedItemContent = currentSection.splice(dragItem.current, 1)[0];
+
+  currentSection.splice(dragOverItem.current, 0, draggedItemContent);
+
+
+  updateSectionData(code, section.courseSection.sectionId, item, dragOverItemNo);
+
+  setCurriculumSections(updatedSections);
+  
+  dragItem.current = null;
+  dragOverItem.current = null;
+  setDraggingIndex(null);
+  dragOverItemNo = (null);
+
+
+}
+
+};
+
+  const newCounters = {
     Lecture: 0,
     Quiz: 0,
     Assignment: 0,
     CodingExercise: 0,
-    PracticeTest:0
-};
+    PracticeTest: 0
+  };
 
-// Count each type
-// section !=null && section.courseSection.sectionCurriculumItem.forEach(item => {
-//     if (item.type == "Lecture") {
-//         counters.Lecture += 1;
-//     } else if (item.type == "Quiz") {
-//         counters.Quiz += 1;
-//     } else if (item.type == "Assignment") {
-//         counters.Assignment += 1;
-//     } else if (item.type == "Coding Exercise") {
-//         counters.CodingExercise += 1;
-//     }else if (item.type == "Practice Test") {
-//       counters.PracticeTest += 1;
-//   }
-// });
+
+ 
 
   return (
+
+
     <div className="col-md-8 curriculum-container">
       <Card className="py-2 my-2 p-4">
 
@@ -1252,6 +1107,9 @@ const Curriculum = ({code}) => {
         {/* Section 1 */}
       {sectionData != null  ? (
         sectionData.length > 0  ?  sectionData.map((section,index) => (
+
+      
+
           <div key={index} className="card p-2 my-3">
             <CardContent>
             
@@ -1308,25 +1166,48 @@ const Curriculum = ({code}) => {
 
               
 
-              <div className="my-2">
+             
 
               {/* Lecture > Quiz > Assignment */}
-              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  { 
+              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  {         
+      
+                if (item.type == "Lecture") {
+                  newCounters.Lecture += 1;
+              } else if (item.type == "Quiz") {
+                newCounters.Quiz += 1;
+              } else if (item.type == "Assignment") {
+                newCounters.Assignment += 1;
+              } else if (item.type == "Coding Exercise") {
+                newCounters.CodingExercise += 1;
+              }else if (item.type == "Practice Test") {
+                newCounters.PracticeTest += 1;
+            }
 
-                    if (item.type == "Lecture") {
-                          counters.Lecture += 1;
-                      } else if (item.type == "Quiz") {
-                          counters.Quiz += 1;
-                      } else if (item.type == "Assignment") {
-                          counters.Assignment += 1;
-                      } else if (item.type == "Coding Exercise") {
-                          counters.CodingExercise += 1;
-                      }else if (item.type == "Practice Test") {
-                        counters.PracticeTest += 1;
-                    }
+            const isExpanded = expandedIndex === index + i + item.id;
                 return (
-
-                // Lecture
+                  <div 
+                  
+                  className={`my-2 ${draggingIndex === i ? "dragging" : "draggable"}`}
+                  key={i}
+                  draggable
+                     onDragStart={(e) => {
+                            dragItem.current = i;
+                            setDraggingIndex(i);
+                            handledragStart(e);
+                        
+                          }}
+                  onDragEnter={(e) => {dragOverItem.current = i; 
+                      setDragOverNo(i)
+                  }}
+                  onDragEnd={(e) => handleSort(e, index, section, item.id)}
+                  onDragOver={(e) => {
+                    e.preventDefault();                  
+                  }}
+                  style={{ cursor: isExpanded ? 'default' : 'move' }}
+                  
+                
+                >                 
+                
                 <>
                 {item.type == "Lecture" && (
 
@@ -1365,7 +1246,7 @@ const Curriculum = ({code}) => {
                         <div className="d-flex justify-content-between align-items-center p-2">
                           <span>
                           <Typography>
-                            <CheckCircleIcon fontSize="small" />{i + 1}. Lesson:{" "}{counters.Lecture}{" "}
+                            <CheckCircleIcon fontSize="small" />{i + 1}. Lesson:{" "}{newCounters.Lecture}{" "}
                             {item.article != "N/A" ? <FileCopyIcon sx={{ fontSize: 15 }} /> : <PlayCircleIcon sx={{ fontSize: 15 }} />} {item.title}
                             <span className="mx-5">
                             <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -1403,6 +1284,7 @@ const Curriculum = ({code}) => {
                           ) : (
                             <Button
                               onClick={() => {
+                                setExpandedIndex(isExpanded ? null : index + i + item.id);
                                 setshowDescRes(false)
                                 setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
                                 console.log(index + i + item.id)
@@ -2069,6 +1951,8 @@ const Curriculum = ({code}) => {
 
 
                       </Card>
+
+                
                       </>
                   )}
                 </>
@@ -2114,7 +1998,7 @@ const Curriculum = ({code}) => {
                     <span>
       
                       <Typography>
-                        <CheckCircleIcon fontSize="small" />{i + 1}. Quiz:{" "}{counters.Quiz}{" "}
+                        <CheckCircleIcon fontSize="small" />{i + 1}. Quiz:{" "}{newCounters.Quiz}{" "}
                         <QuizIcon sx={{ fontSize: 15 }} /> {item.title}
                         <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2139,13 +2023,13 @@ const Curriculum = ({code}) => {
                       {showContentAdd == index + i + item.id ? (
                         <Button
                           onClick={() => {
+                            
                             setshowDescRes(true)
                             setshowMain(null)
                             console.log(index + i + item.id)
                             setshowContentAdd(null)
                             setcurriculumvisiblitymc("")
                             // handleContentshow()
-                            handleQuestionsAnswerUpdateCancel()
                           }}
                           className="mx-2"
                           size="small"
@@ -2156,6 +2040,8 @@ const Curriculum = ({code}) => {
                       ) : (
                         <Button
                           onClick={() => {
+                            
+                            setExpandedIndex(isExpanded ? null : index + i + item.id);
                             setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
                             setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
                             handleFillQuiz(item)
@@ -2176,125 +2062,8 @@ const Curriculum = ({code}) => {
                     {showContentAdd == index + i + item.id && (
                           item.getQuizs.length  != 0 ? (
                               <div>
-                            
-                            <div className="container m-4">
-                            <Table  striped bordered hover>
-                                    <thead>
-                                      <tr>
-                                        <th>#</th>
-                                        <th>Quiz</th>
-                                        <th>Action</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-
-                                      {item.getQuizs != null && item.getQuizs.length > 0 && item.getQuizs.map((q,inz) => (
-                                      <tr key={inz}>
-                                        <td>{inz + 1}</td>
-                                        <td>{q.question.length > 50 ? q.question.slice(0, 50) + "..." : q.question }</td>
-                                        <td><Button onClick={() => handleShowEditQuizListItem(q)} color="info" variant="contained"><EditIcon /></Button> <Button onClick={() => handleQuizListItemDelete(q)} variant="contained"><DeleteIcon /></Button></td>
-                                      </tr>
-                                      ))}
-                                    </tbody>
-                                  </Table>
-                                  </div>
                                     
                                     {/* MCQ FORM */}
-                                    {/* Update show */}
-                                  {quizUpdateEnabled ? (
-                                    <Form className="p-2">
-                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Question</Form.Label>
-                                    <Form.Control value={question} onChange={(e) => setquestion(e.target.value)} as="textarea" rows={3} />
-                                  </Form.Group>
-  
-                                  <Form.Label>Answers (Please select correct answer)</Form.Label>
-                                  <RadioGroup
-                                    name="group1"
-                                    onChange={(e) => setanswerOption(e.target.value)}
-                                    value={answerOption}
-                                  >
-                                  <div className="row">
-  
-                                    {/* 1 */}
-                                      <div className="col-md-1">
-                                        <Radio value={answerOptionOne} onChange={(e) => setanswerOptionOne(e.target.value)} />
-                                      </div>
-                                      <div className="col-md-11 mb-3">
-                                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control value={answerOne} onChange={(e) => setanswerOne(e.target.value)} as="textarea" rows={3} />
-                                      </Form.Group>
-                                      <Form.Control value={answerExplainOne == "null" ? "" : answerExplainOne} onChange={(e) => setanswerExplainOne(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
-                                      </div>
-  
-                                    {/* 2 */}
-                                      <div className="col-md-1">
-                                        <Radio value={answerOptionTwo} onChange={(e) => setanswerOptionTwo(e.target.value)} />
-                                      </div>
-                                      <div className="col-md-11 mb-3">
-                                      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control value={answerTwo} onChange={(e) => setanswerTwo(e.target.value)} as="textarea" rows={3} />
-                                      </Form.Group>
-                                      <Form.Control value={answerExplainTwo == "null" ? "" : answerExplainTwo} onChange={(e) => setanswerExplainTwo(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
-                                      </div>
-  
-                                  {/* 3 */}
-                                  <div className="col-md-1">
-                                    <Radio value={answerOptionThree} onChange={(e) => setanswerOptionThree(e.target.value)} />
-                                  </div>
-  
-                                  <div className="col-md-11 mb-3">
-                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Control value={answerThree} onChange={(e) => setanswerThree(e.target.value)} as="textarea" rows={3} />
-                                  </Form.Group>
-                                  <Form.Control value={answerExplainThree == "null" ? "" : answerExplainThree} onChange={(e) => setanswerExplainThree(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
-                                  </div>
-  
-                                  {/* 4 */}
-                                  <div className="col-md-1">
-                                    <Radio value={answerOptionFour} onChange={(e) => setanswerOptionFour(e.target.value)} />
-                                  </div>
-  
-                                  <div className="col-md-11 mb-3">
-                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Control value={answerFour} onChange={(e) => setanswerFour(e.target.value)} as="textarea" rows={3} />
-                                  </Form.Group>
-                                  <Form.Control value={answerExplainFour == "null" ? "" : answerExplainFour} onChange={(e) => setanswerExplainFour(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
-                                  </div>
-  
-  
-  
-                                  {/* 5*/}
-                                  <div className="col-md-1">
-                                    <Radio value={answerOptionFive} onChange={(e) => setanswerOptionFive(e.target.value)} />
-  
-                                  </div>
-  
-                                  <div className="col-md-11 mb-3">
-                                  <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Control value={answerFive} onChange={(e) => setanswerFive(e.target.value)} as="textarea" rows={3} />
-                                  </Form.Group>
-                                  <Form.Control value={answerExplainFive == "null" ? "" : answerExplainFive} onChange={(e) => setanswerExplainFive(e.target.value)} type="text" placeholder="Explain why this is or isn't an answer" />
-                                  </div>
-  
-  
-                                  </div>
-                                  </RadioGroup>
-  
-                                  <div className="d-flex justify-content-end">
-
-                                  <Button className="m-1" onClick={() => handleQuestionsAnswerUpdateCancel()}  variant="outlined">
-                                      CANCEL
-                                    </Button>
-                                 
-                                    <Button className="m-1" onClick={() => handleQuestionsAnswerUpdate(item)}  variant="contained">
-                                      UPDATE
-                                    </Button>
-                                    
-                                  </div>
-                                
-                                </Form>
-                                  ) : (
                                   <Form className="p-2">
                                   <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                     <Form.Label>Question</Form.Label>
@@ -2375,22 +2144,13 @@ const Curriculum = ({code}) => {
                                   </RadioGroup>
   
                                   <div className="d-flex justify-content-end">
-
-                                 
-                                   
-                                  <Button className="m-1" onClick={() => handleQuestionsAnswer(item)}  variant="contained">
-                                      SAVE
-                                    </Button>
-
-
-                                  
+                                  <Button onClick={() => handleQuestionsAnswer(item)}  variant="outlined">
+                                    SAVE
+                                  </Button>
                                   </div>
                                 
+  
                                 </Form>
-                                  )}
-                                  
-
-
                               </div>
                           ) : (
                             curriculumvisiblitymc != "mc" &&
@@ -2399,11 +2159,12 @@ const Curriculum = ({code}) => {
                               <Card sx={{ width: 140 }} elevation={3}>
                                 <CardActionArea
                                   onClick={() => {
+                                    setExpandedIndex(isExpanded ? null : index + i + item.id);
                                     setshowDescRes(true)
                                     setcurriculumvisiblitymc("mc")
                                     setshowMain(index + i + item.id)
                                     setshowContentAdd(index + i + item.id)
-                                    // handleFillQuiz(item)
+                                    handleFillQuiz(item)
                                   }}
                                   className="d-flex justify-content-center align-items-center text-center"
                                 >
@@ -2422,8 +2183,7 @@ const Curriculum = ({code}) => {
   
                     {showMain == index + i + item.id && curriculumvisiblitymc == "mc" && (
                          <div>
-
-                    
+                         
                                     
                          {/* MCQ FORM */}
                        <Form className="p-2">
@@ -2555,7 +2315,7 @@ const Curriculum = ({code}) => {
                   <div className="d-flex justify-content-between align-items-center p-2">
                  <span>
                     <Typography>
-                      <CheckCircleIcon fontSize="small" />{i + 1}. Assignment:{" "}{counters.Assignment}{" "}
+                      <CheckCircleIcon fontSize="small" />{i + 1}. Assignment:{" "}{newCounters.Assignment}{" "}
                       <AssessmentIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2577,6 +2337,7 @@ const Curriculum = ({code}) => {
                     {showContentAdd == index + i + item.id  ? (
                       <Button
                         onClick={() => {
+                      
                           setshowDescRes(true)
                           setshowMain(null)
                           console.log(index + i + item.id )
@@ -2593,6 +2354,7 @@ const Curriculum = ({code}) => {
                     ) : (
                       <Button
                         onClick={() => {
+                          setExpandedIndex(isExpanded ? null : index + i + item.id);
                           setshowMain(showMain == index + i + item.id  ? null : index + i + item.id )
                           setshowContentAdd(showContentAdd == index + i + item.id  ? null : index + i + item.id )
 
@@ -2846,7 +2608,7 @@ const Curriculum = ({code}) => {
                 <div className="d-flex justify-content-between align-items-center p-2">
                   <span>
                     <Typography>
-                      <CheckCircleIcon fontSize="small" />{i + 1}. Practice Test:{" "}{counters.PracticeTest}{" "}
+                      <CheckCircleIcon fontSize="small" />{i + 1}. Practice Test:{" "}{newCounters.PracticeTest}{" "}
                       <BugReportIcon sx={{ fontSize: 15 }} /> {item.title}
                       <span className="mx-5">
                           <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -2867,6 +2629,7 @@ const Curriculum = ({code}) => {
                     {showContentAdd == index + i + item.id ? (
                       <Button
                         onClick={() => {
+                         
                           setshowDescRes(true)
                           setshowMain(null)
                           console.log(index + i + item.id)
@@ -2883,6 +2646,7 @@ const Curriculum = ({code}) => {
                     ) : (
                       <Button
                         onClick={() => {
+                          setExpandedIndex(isExpanded ? null : index + i + item.id);
                           setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
                           setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
 
@@ -3062,7 +2826,7 @@ const Curriculum = ({code}) => {
                     <div className="d-flex justify-content-between align-items-center p-2">
                       <span>
                         <Typography>
-                          <CheckCircleIcon fontSize="small" />{i + 1}. Coding Exercise:{" "}{counters.CodingExercise}{" "}
+                          <CheckCircleIcon fontSize="small" />{i + 1}. Coding Exercise:{" "}{newCounters.CodingExercise}{" "}
                           <CodeIcon sx={{ fontSize: 15 }} /> {item.title}
                           <span className="mx-5">
                               <EditIcon style={syllabusIcon} onClick={(e) => {
@@ -3083,6 +2847,7 @@ const Curriculum = ({code}) => {
                         {showContentAdd == index + i + item.id ? (
                           <Button
                             onClick={() => {
+                             
                               setshowDescRes(true)
                               setshowMain(null)
                               console.log(index + i + item.id)
@@ -3099,6 +2864,7 @@ const Curriculum = ({code}) => {
                         ) : (
                           <Button
                             onClick={() => {
+                              setExpandedIndex(isExpanded ? null : index + i + item.id);
                               setshowMain(showMain == index + i + item.id ? null : index + i + item.id)
                               setshowContentAdd(showContentAdd == index + i + item.id ? null : index + i + item.id)
 
@@ -3326,9 +3092,15 @@ const Curriculum = ({code}) => {
                 </Card>))}
 
                 </>
-                )})}
 
-              </div>
+
+                </div>
+               
+                )
+                
+                })}
+
+            
 
               
 
@@ -3771,6 +3543,8 @@ const Curriculum = ({code}) => {
               {/* Syllabus Item > Assignment */}
 
             </CardContent>
+
+        
           </div> 
       )) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
       ) : 
@@ -3821,8 +3595,17 @@ const Curriculum = ({code}) => {
 
         </div>
       </Card>
+
+
+
+  
     </div>
+ 
+
+
   );
+
 };
+
 
 export default Curriculum;
