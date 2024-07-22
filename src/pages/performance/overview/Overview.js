@@ -22,7 +22,7 @@ function RevenueReport() {
     // Fetch the chart data
     GetChartOverviewData(setChartData);
 
-  });
+  },[chartData,overViewStatus]);
 
   if (!overViewStatus || !chartData) {
     return <LoadingSpinner />;
