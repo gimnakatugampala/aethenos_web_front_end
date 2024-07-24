@@ -1,79 +1,35 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { Layout, Row, Col } from "antd";
-import { HeartFilled } from "@ant-design/icons";
+import logo from "../../assets/images/utils/aethenos_logo.jpg";
+import exonlogo from "../../assets/images/utils/exon_icon1.jpg";
 
 function Footer() {
   const { Footer: AntFooter } = Layout;
 
   return (
-    // <AntFooter style={{ background: "#fafafa" }}>
-    //   <Row className="just">
-    //     <Col xs={24} md={12} lg={12}>
-    //       <div className="copyright">
-    //         © 2021, made with
-    //         {<HeartFilled />} by
-    //         <a href="#pablo" className="font-weight-bold" target="_blank">
-    //           Creative Tim
-    //         </a>
-    //         for a better web.
-    //       </div>
-    //     </Col>
-    //     <Col xs={24} md={12} lg={12}>
-    //       <div className="footer-menu">
-    //         <ul>
-    //           <li className="nav-item">
-    //             <a
-    //               href="#pablo"
-    //               className="nav-link text-muted"
-    //               target="_blank"
-    //             >
-    //               Creative Tim
-    //             </a>
-    //           </li>
-    //           <li className="nav-item">
-    //             <a
-    //               href="#pablo"
-    //               className="nav-link text-muted"
-    //               target="_blank"
-    //             >
-    //               About Us
-    //             </a>
-    //           </li>
-    //           <li className="nav-item">
-    //             <a
-    //               href="#pablo"
-    //               className="nav-link text-muted"
-    //               target="_blank"
-    //             >
-    //               Blog
-    //             </a>
-    //           </li>
-    //           <li className="nav-item">
-    //             <a
-    //               href="#pablo"
-    //               className="nav-link pe-0 text-muted"
-    //               target="_blank"
-    //             >
-    //               License
-    //             </a>
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </Col>
-    //   </Row>
-    // </AntFooter>
-    <></>
+    <AntFooter className="footer-ant" style={{ backgroundColor: "white" }}>
+      <Row justify="space-between" align="middle">
+        <Col xs={14} md={12} lg={12}>
+          <div>
+            <img width="150" src={logo} alt="LOGO" />
+          </div>
+        </Col>
+        <Col xs={24} md={12} lg={12}>
+          <div className="float-right" style={{ display: "flex", justifyContent: "flex-end", alignItems: "center"}}> 
+
+            <div className="float-right">
+              <span>
+                Copyrights © 2024. <br></br>
+                Exon Software Solutions
+              </span>
+            </div>
+
+            <div className="float-right" style={{ marginLeft: "2%"}}>
+              <img width="50" src={exonlogo} alt="LOGO" />
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </AntFooter>
   );
 }
 

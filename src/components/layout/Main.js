@@ -6,6 +6,7 @@ import { Layout, Drawer, Affix } from "antd";
 import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
+import '../../assets/styles/main.css'
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -68,6 +69,8 @@ function Main({ children }) {
           </Sider>
         </Layout>
       </Drawer>
+      
+      <div>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -77,13 +80,16 @@ function Main({ children }) {
         trigger={null}
         width={250}
         theme="light"
+      
         className={`sider-primary ant-layout-sider-primary ${
           sidenavType === "#fff" ? "active-route" : ""
         }`}
-        style={{ background: sidenavType }}
+        style={{ position: "absolute", height: "100%" }}
       >
         <Sidenav color={sidenavColor} />
       </Sider>
+      </div>
+
       <Layout>
         {fixed ? (
           <Affix>
@@ -110,7 +116,10 @@ function Main({ children }) {
             />
           </AntHeader>
         )}
+
+      <div>
         <Content className="content-ant">{children}</Content>
+        </div>
         <Footer />
       </Layout>
     </Layout>
