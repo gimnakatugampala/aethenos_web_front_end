@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 @media (min-width: 992px) {
-  .layout-dashboard {
+  .layout-dashboard .ant-layout-footer {
     margin: 0 0 20px 20px;
   }
   .layout-dashboard .ant-layout-sider.sider-primary {
@@ -82,39 +82,3 @@
     justify-content: flex-end;
   }
 }
-@media (max-width: 991px) {
-  .all-courses-container{
-    display: contents;
-    margin-left: 20%;
-    padding-right: 10%;
-  }
-}
-
-@media (min-width: 991px) and (max-width: 1000px) {
-  .all-courses-container{
-    width: 55%;
-    float: unset;
-}
-}
-
-@media (min-width: 1000px) and (max-width: 1200px) {
-  .all-courses-container{
-    width: 75%;
-    float: right;
-}
-}
-
-@media (min-width: 1200px) and (max-width: 1600px) {
-  .all-courses-container{
-    padding-left: 30px;
-    padding-right: 30px;
-    width: 82%;
-    float: right;
-}
-}
-
-
-
-
-
-

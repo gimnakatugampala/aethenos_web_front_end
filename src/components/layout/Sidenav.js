@@ -47,9 +47,59 @@ function Sidenav({ color }) {
         {/* <span>Aethenos</span> */}
       </div>
       <hr />
-      
-      <Menu theme="light" mode="inline" >
-       
+      <Menu theme="light" mode="inline">
+        {/* <Menu.Item key="1">
+          <NavLink to="/dashboard">
+            <span
+              className="icon"
+              style={{
+                background: page === "dashboard" ? color : "",
+              }}
+            >
+              {dashboard}
+            </span>
+            <span className="label">Dashboard</span>
+          </NavLink>
+        </Menu.Item> */}
+        {/* <Menu.Item key="2">
+          <NavLink to="/tables">
+            <span
+              className="icon"
+              style={{
+                background: page === "tables" ? color : "",
+              }}
+            >
+              {tables}
+            </span>
+            <span className="label">Tables</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/billing">
+            <span
+              className="icon"
+              style={{
+                background: page === "billing" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Billing</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <NavLink to="/rtl">
+            <span
+              className="icon"
+              style={{
+                background: page === "rtl" ? color : "",
+              }}
+            >
+              {rtl}
+            </span>
+            <span className="label">RTL</span>
+          </NavLink>
+        </Menu.Item> */}
         <Menu.Item className="menu-item-header" key="1">
           Courses
         </Menu.Item>
