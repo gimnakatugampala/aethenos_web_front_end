@@ -65,7 +65,7 @@ const QA = () => {
   }
 
   return (
-    <div className=" all-courses-container mb-5">
+    <div className="container">
       <div className="row">
         <div className="col-md-2">
              <Typography variant="h4" gutterBottom>

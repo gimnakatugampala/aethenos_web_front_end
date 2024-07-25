@@ -1051,19 +1051,19 @@ const handleSort = (e, sectionIndex, section, item) => {
   setDraggingIndex(null);
   dragOverItemNo = (null);
 
-  
 
 }
 
 };
 
-const newCounters = {
-  Lecture: 0,
-  Quiz: 0,
-  Assignment: 0,
-  CodingExercise: 0,
-  PracticeTest:0
-};
+  const newCounters = {
+    Lecture: 0,
+    Quiz: 0,
+    Assignment: 0,
+    CodingExercise: 0,
+    PracticeTest: 0
+  };
+
 
  
 
@@ -1108,7 +1108,7 @@ const newCounters = {
       {sectionData != null  ? (
         sectionData.length > 0  ?  sectionData.map((section,index) => (
 
-          
+      
 
           <div key={index} className="card p-2 my-3">
             <CardContent>
@@ -1169,9 +1169,8 @@ const newCounters = {
              
 
               {/* Lecture > Quiz > Assignment */}
-              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  {   
-                
-               
+              {section.courseSection.sectionCurriculumItem.length > 0 && section.courseSection.sectionCurriculumItem.map((item,i) =>  {         
+      
                 if (item.type == "Lecture") {
                   newCounters.Lecture += 1;
               } else if (item.type == "Quiz") {
@@ -1962,8 +1961,6 @@ const newCounters = {
                 {/* Quiz */}
                 {item.type == "Quiz" && (
                   showEditQuizInput == index + i + item.id ? ( 
-
-
                     <div >
 
                     <div>
@@ -3549,10 +3546,7 @@ const newCounters = {
 
         
           </div> 
-
-          
-      )
-    ) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
+      )) : <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
       ) : 
       <div className="d-flex justify-content-center">
         <h4>No Course Content Found</h4>
