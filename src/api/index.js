@@ -3125,7 +3125,7 @@ fetch(`${BACKEND_LINK}/instructor/updateInstructorProfile`, requestOptions)
       console.log(result)
 
       if(result.variable == "200" && result.message != null){
-        setreferalCode(`https://www.aethenos.com/course/draft/${code}/?referralCode=${result.message}`)
+        setreferalCode(`https://www.aethenos.com?ref=${result.message}`)
       }else{
         setreferalCode(``)
       }
