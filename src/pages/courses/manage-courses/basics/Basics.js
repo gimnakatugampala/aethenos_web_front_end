@@ -246,7 +246,7 @@ const handleFileChange = (event) => {
   
 
   return (
-    <div className="col-md-8">
+    <div className="col-md-10 px-4 mb-4">
       <Card className="py-2 my-2 p-4">
 
       <div className='d-flex justify-content-between'>

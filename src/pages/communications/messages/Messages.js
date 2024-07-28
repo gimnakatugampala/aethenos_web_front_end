@@ -166,61 +166,17 @@ useEffect(() => {
 
   return (
     
-      <div className="container">
-        <div  className="row">
+      <div className="all-courses-container">
+        <div  className="row mx-2" style={{justifyContent: "space-between"}} >
 
         
-             <Typography className="mb-4" variant="h4" gutterBottom>
+             <Typography className="mb-4 "variant="h4" gutterBottom>
                Messages
-            </Typography>
- 
-
-          {/* <div className="col-3">
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Unread"
-              />
-            </FormGroup>
-          </div>
-          <div className="col-3">
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label={<span className="fs-7">No top answer</span>}
-              />
-            </FormGroup>
-          </div>
-          <div className="col-3">
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label={<span className="fs-6">No answers</span>}
-              />
-            </FormGroup>
-          </div>
-          <div className="col-3">
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox />}
-                label={<span className="fs-8">No instructor answer</span>}
-              />
-              <Button onClick={() => setshowAddMessage(true)}  className="my-2" variant="contained">Compose</Button>
-            </FormGroup>
-          </div>
-          <div className="col-3 mb-4">
-            <select className="form-select fs-6 mt-3">
-              <option value="newestToOldest">Newest to Oldest</option>
-              <option value="oldestToNewest">Oldest to Newest</option>
-              <option value="priceLowToHigh">Price: Low to High</option>
-              <option value="priceHighToLow">Price: High to Low</option>
-              <option value="ratingHighToLow">Rating: High to Low</option>
-            </select>
-          </div> */}
+            </Typography>      
         </div>
         
 
-        <Card className="p-3">
+        <Card className="p-3 border-rad-20 mb-4" >
           <Container fluid>
             <Row  className="vh-130">
 

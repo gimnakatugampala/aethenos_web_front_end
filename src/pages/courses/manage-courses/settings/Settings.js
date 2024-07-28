@@ -18,7 +18,7 @@ function App({code}) {
   
 
   return (
-    <div className="col-md-8">
+    <div className="col-md-10 px-4 mb-4">
       <Card className="py-2 my-2">
         <Typography className="p-3" variant="h4">
           Settings

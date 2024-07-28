@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Layout,
-  Row,
-  Col,
-  Typography,
-  Button as AntButton
-} from "antd";
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import { Layout, Row, Col, Typography, Button as AntButton } from "antd";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import validateEmail from "../commonFunctions/emailValid";
 import { LoginInstructor } from "../api";
 import signinbg from "../assets/images/img-signin.jpg";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import MainLoader from "../commonFunctions/loaders/MainLoader/MainLoader";
 import logo from "../assets/images/utils/aethenos_logo.jpg";
-
+import { Card } from "react-bootstrap";
 
 const { Title } = Typography;
 const { Content } = Layout;
 
 const SignIn = () => {
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -35,7 +28,9 @@ const SignIn = () => {
 
   useEffect(() => {
     // Get Session Details
-    const sessionTimeout = new URLSearchParams(window.location.search).get("sessionTimeout");
+    const sessionTimeout = new URLSearchParams(window.location.search).get(
+      "sessionTimeout"
+    );
     if (sessionTimeout) {
       setShow(true);
     } else {
@@ -51,52 +46,64 @@ const SignIn = () => {
       Swal.fire({
         title: "Empty Field!",
         text: "Please enter your email",
-        icon: "error"
+        icon: "error",
       });
     } else if (!validateEmail(email)) {
       Swal.fire({
         title: "Invalid Email!",
         text: "Please enter a valid email",
-        icon: "error"
+        icon: "error",
       });
     } else if (password === "") {
       Swal.fire({
         title: "Empty Field!",
         text: "Please enter your password",
-        icon: "error"
+        icon: "error",
       });
     } else {
       setLoading(true);
-      LoginInstructor(email, password, new URLSearchParams(window.location.search).get("rediect-url"), setLoading);
+      LoginInstructor(
+        email,
+        password,
+        new URLSearchParams(window.location.search).get("rediect-url"),
+        setLoading
+      );
     }
   };
 
   return (
     <>
-      
-      <Layout className="layout-default layout-signin">
+    <Card>
+      <Layout className="">
         {loading && <MainLoader />}
-      
+
         <Content className="signin">
-      
-          <Row gutter={[24, 0]} justify="space-around" >
-            <Col className="main-sign-in"
-              xs={{ span: 24, offset: 0 }}
-              lg={{ span: 6, offset: 2 }}
-              md={{ span: 12 }}
+          <Row gutter={[24, 0]} justify="space-around">
+            <Col
+              className="main-sign-in"
+              // xs={{ span: 24, offset: 0 }}
+              // lg={{ span: 6, offset: 2 }}
+              // md={{ span: 12 }}
             >
-               <div className="main-sign-in-logo" >
-        <img width="150" height={"100%"} src={logo} alt="LOGO" />
-        {/* <span>Aethenos</span> */}
-      </div>
-              
-              <Title className="mb-15 main-sign-in-title" >Sign In</Title>
-              <Title className="font-regular text-muted" level={5} align="center">
+              <div className="main-sign-in-logo">
+                <img width="150" height={"100%"} src={logo} alt="LOGO" />
+                {/* <span>Aethenos</span> */}
+              </div>
+
+              <Title className="mb-15 main-sign-in-title">Sign In</Title>
+              <Title
+                className="font-regular text-muted"
+                level={5}
+                align="center"
+              >
                 Enter your email and password to sign in as instructor
               </Title>
-              
+
               <Form onSubmit={onHandleSubmit}>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
                     onChange={(e) => setEmail(e.target.value)}
@@ -110,7 +117,7 @@ const SignIn = () => {
                   <InputGroup>
                     <Form.Control
                       onChange={(e) => setPassword(e.target.value)}
-                      type={showPassword ? 'text' : 'password'}
+                      type={showPassword ? "text" : "password"}
                       placeholder="Password"
                       aria-label="Password"
                       aria-describedby="basic-addon2"
@@ -118,7 +125,7 @@ const SignIn = () => {
                     <InputGroup.Text
                       onClick={() => setShowPassword(!showPassword)}
                       id="basic-addon2"
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: "pointer" }}
                     >
                       {showPassword ? (
                         <i className="fa-solid fa-eye-slash"></i>
@@ -133,13 +140,17 @@ const SignIn = () => {
                   <a href="/forgot-password">Forgot Password ?</a>
                 </Form.Group>
 
-
-                <AntButton type="primary" htmlType="submit" block className="sign-in-button">
+                <AntButton
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  className="sign-in-button"
+                >
                   Login
                 </AntButton>
               </Form>
             </Col>
-            <Col
+            {/* <Col
               className="sign-img"
               style={{ padding: 12 }}
               xs={{ span: 24 }}
@@ -147,17 +158,13 @@ const SignIn = () => {
               md={{ span: 12 }}
             >
               <img src={signinbg} alt="" />
-           
-            </Col>
-         
+            </Col> */}
           </Row>
-       
         </Content>
-      
       </Layout>
-     
+      </Card>
     </>
   );
-}
+};
 
 export default SignIn;

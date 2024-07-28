@@ -374,7 +374,7 @@ body {
 }
 
 .layout-dashboard .ant-layout-header {
-  background: transparent;
+  background: white;
   height: auto;
   padding: 16px;
   margin: 10px 4px;
@@ -549,7 +549,7 @@ h4 {
 
 .layout-dashboard .header-control .anticon.anticon-search svg {
   width: 16px;
-  height: 16px;
+  height: 10px;
 }
 .layout-dashboard .header-control .header-search svg path {
   fill: #8c8c8c;
@@ -1231,7 +1231,7 @@ img {
   margin-bottom: 3rem !important;
 }
 .icon-move-right .anticon-right {
-  color: #40a9ff;
+  color: #e01d20;
   margin-left: 2px;
 }
 .icon-move-right {
@@ -1760,7 +1760,6 @@ body {
 }
 /* sign up start */
 .layout-default.ant-layout.layout-sign-up header.ant-layout-header {
-  background-color: transparent;
   color: #fff;
   margin: 0;
   padding: 0 20px;
@@ -2182,9 +2181,9 @@ body {
 /* sign in end */
 
 @media (min-width: 768px) {
-  .sign-img img {
+  /* .sign-img img {
     margin: 0;
-  }
+  } */
   .card-signup {
     margin-bottom: 120px;
   }
@@ -3059,23 +3058,23 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 }
 
 .ant-layout-header {
-  background-color: white !important;
+  background-color: white;
   padding: 20px !important;
   margin: 0 !important;
   margin-bottom: 20px !important;
 }
 
 .all-coueses-control-items {
-
   justify-content: right !important;
-
 }
 
 .main-sign-in {
   border: 1px solid rgba(146, 43, 33, 0.145);
-  flex: auto;
+  /* flex: auto; */
   background-color: white;
-  margin: auto;
+  /* margin: auto; */
+  margin-top: 10%;
+  margin-bottom: 10%;
   padding: 50px !important;
   border-radius: 25px;
   /* display: flex !important; */
@@ -3099,23 +3098,22 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   color: rgb(18, 25, 38);
   font-weight: 700 !important;
   font-family: Poppins, sans-serif !important;
-  line-height: 1.2  !important;
+  line-height: 1.2 !important;
   display: flex;
   justify-content: center;
 }
 
-.main-sign-in-logo{
+.main-sign-in-logo {
   display: flex;
   justify-content: center;
 }
-
 
 .notification-toggle {
   position: relative;
   display: inline-block;
   padding-left: 5px;
-    padding-right: 5px;
-    background-color: #ff4d4f;
+  padding-right: 5px;
+  background-color: #ff4d4f;
 }
 
 .icon-container {
@@ -3140,8 +3138,8 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   font-weight: bold;
 }
 
-.footer-ant{
-
+.footer-ant {
+  position: fixed;
   z-index: 99;
   background-color: white;
   width: 100%;
@@ -3149,14 +3147,18 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   margin-bottom: 0px;
 }
 
-.footer-ant {
-  background-color: white;
-}
-
 .float-right {
   text-align: right; /* Aligns content to the right */
 }
 
-.ant-progress-bg{
+.ant-progress-bg {
   background-color: #ff4d4f !important;
+}
+
+.border-rad-20 {
+  border-radius: 20px !important;
+}
+
+.nav-link {
+  color: #ff4d4f;
 }

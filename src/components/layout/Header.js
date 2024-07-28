@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { Row, Col, Breadcrumb, Button, List } from "antd";
+import { Row, Col, Breadcrumb, List } from "antd";
+import Button from "@mui/material/Button";
 import Dropdown from "react-bootstrap/Dropdown";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import { parseISO, formatDistanceToNow } from "date-fns";
+// import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 
 import {
   SearchOutlined,
@@ -108,6 +112,8 @@ function Header({
     }
   };
 
+  console.log("notifications", notifications);
+
   return (
     <>
       <Row gutter={[24, 0]}>
@@ -130,18 +136,94 @@ function Header({
                   variant="danger"
                   id="dropdown-basic"
                   className="notification-toggle"
-                   bsPrefix="custom-toggle"
+                  bsPrefix="custom-toggle"
                 >
-                 <img width="20px" src={bellIcon} alt="LOGO" />
+                  <img width="20px" src={bellIcon} alt="LOGO" />
                   <span className="notification-count">
                     {notifications.length}
                   </span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
+                  <div height="80px">
+                    <span
+                      style={{
+                        display: "flex",
+                        justifyContent: "end",
+                        color: "#ff4d4f",
+                        alignItems: "center",
+                      }}
+                    >
+                      <NotificationsNoneOutlinedIcon
+                        style={{ margin: "auto" }}
+                      />
+
+                      <span
+                        style={{
+                          fontSize: "14px",
+                          color: "black",
+                          display: "flex",
+                          flexDirection: "row",
+                          fontWeight: "bold",
+                          justifyContent: "flex-end",
+                          
+                        }}
+                      >
+                        You Have Received {notifications.length} New
+                        Notifications
+                      </span>
+
+                      <Button className="m-2" variant="outlined">
+                        View All
+                      </Button>
+                    </span>
+                  </div>
                   {notifications.map((notification, index) => (
-                    <Dropdown.Item key={index}>
-                      {notification.notification}
+                    <Dropdown.Item
+                      key={index}
+                      style={{
+                        justifyContent: "flex-start",
+                        display: "flex",
+                        flexDirection: "column",
+
+                        border: "1px solid #e0e0e0",
+                        padding: "10px",
+                        boxSizing: "border-box",
+                      }}
+                    >
+                      <MenuItem
+                        onClick={handleClose}
+                        style={{
+                          width: "400px",
+                          display: "flex",
+                          flexDirection: "row",
+                          textWrap: "balance",
+                        }}
+                      >
+                        <div style={{ display: "flex" }}>
+                          <ListItemIcon>
+                            <NotificationsNoneOutlinedIcon />
+                          </ListItemIcon>
+                          <span style={{ fontWeight: "bold" }}>
+                            {notification.notification}
+                          </span>
+                        </div>
+                      </MenuItem>
+
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          color: "gray",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {formatDistanceToNow(
+                          parseISO(notification.notificationTime)
+                        )}{" "}
+                        ago
+                      </span>
                     </Dropdown.Item>
                   ))}
                   {notifications.length === 0 && (
@@ -149,13 +231,6 @@ function Header({
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-
-              {/* <Typography sx={{ minWidth: 50 }}>
-        <Badge badgeContent={notifications.length}} color="primary">
-            <NotificationsIcon color="action" />
-          </Badge>
-        </Typography> */}
-
               <Tooltip title="Account settings">
                 <IconButton
                   onClick={handleClick}
@@ -173,6 +248,7 @@ function Header({
                 </IconButton>
               </Tooltip>
             </Box>
+
             <Menu
               anchorEl={anchorEl}
               id="account-menu"
@@ -240,15 +316,6 @@ function Header({
               </a>
 
               <Divider />
-
-              {/* <a href="/payouts">
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-            <PaidIcon fontSize="medium"  />
-          </ListItemIcon>
-          Payouts Details
-        </MenuItem>
-        </a> */}
 
               <Divider />
 

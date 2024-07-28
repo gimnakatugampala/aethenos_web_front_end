@@ -58,6 +58,7 @@
 .all-courses-container{
     width: 85%;
     float: right;
+    padding-right: 1%;
 } 
 .custom-search .ant-input-search-button {
     background-color: #ff4d4f !important; /* Button background color */
