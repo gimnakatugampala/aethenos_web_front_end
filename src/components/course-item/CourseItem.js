@@ -106,20 +106,20 @@ const CourseItem = ({course,filledPercent}) => {
 
    
         {course.course.approvalType.id != null && course.course.approvalType.id == 3 && (
-            <div className='d-flex justify-content-center'> 
-              <Button variant="outlined"><a  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
+            <div className='d-flex justify-content-end mt-3' > 
+              <Button variant="outlined" ><a style={{ color: '#ff4d4f' }}  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
             </div> 
          )}
 
           {course.course.approvalType.id != null && course.course.approvalType.id == 4 && (
-              <div className='d-flex justify-content-center'> 
-             <Button variant="outlined"><a  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
+              <div className='d-flex justify-content-end mt-3'> 
+             <Button variant="outlined" ><a style={{ color: '#ff4d4f' }}   href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
             </div> 
           )}
 
           {course.course.approvalType.id != null && course.course.approvalType.id == 5 && (
-              <div className='d-flex justify-content-center'> 
-              <Button variant="outlined"><a  href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
+              <div className='d-flex justify-content-end mt-3'> 
+              <Button variant="outlined" ><a style={{ color: '#ff4d4f' }} href={`/courses/manage/${course.course.code}/`}>Manage Course</a></Button>
             </div> 
           )}
 

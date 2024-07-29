@@ -1,4 +1,3 @@
-
 body {
   padding: 0 0 30px 0;
   background-color: #fafafa;
@@ -163,7 +162,7 @@ body {
   .ant-menu-item
   .active
   .icon {
-  background-color: #e01D20;
+  background-color: #e01d20;
 }
 .layout-dashboard
   .ant-layout-sider.sider-primary
@@ -181,7 +180,7 @@ body {
   .ant-menu-submenu
   .active
   .icon {
-  background-color: #e01D20;
+  background-color: #e01d20;
 }
 
 .layout-dashboard .ant-layout-sider.sider-primary .ant-menu-item .icon,
@@ -263,7 +262,7 @@ body {
 .layout-dashboard
   .ant-layout-sider.sider-primary.ant-layout-sider-primary
   .footer-box {
-  background-color: #e01D20;
+  background-color: #e01d20;
   color: #fff;
   box-shadow: none;
 }
@@ -291,7 +290,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 15px;
-  background-color: #e01D20;
+  background-color: #e01d20;
 }
 
 .layout-dashboard
@@ -712,7 +711,7 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav
 ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav
   li.ant-menu-item-selected
   span.anticon {
-  background: #e01D20;
+  background: #e01d20;
   color: #fff;
 }
 
@@ -756,7 +755,7 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav
   box-shadow: 0px 4px 6px #0000001f;
   border-radius: 6px;
   font-size: 19px;
-  background: #e01D20;
+  background: #e01d20;
   color: #fff;
   direction: ltr;
   margin-bottom: 15px;
@@ -957,7 +956,7 @@ button.ant-btn.bell strong {
   width: 48px;
   height: 48px;
   text-align: center;
-  background: #e01D20;
+  background: #e01d20;
   color: #fff;
   border-radius: 0.5rem;
   margin-left: auto;
@@ -1025,7 +1024,7 @@ button.ant-btn.bell strong {
 }
 
 .sales ul li:last-child span.anticon {
-  color: #e01D20;
+  color: #e01d20;
 }
 .sales ul li {
   color: #8c8c8c;
@@ -1043,7 +1042,7 @@ button.ant-btn.bell strong {
 
 span.blue {
   margin-left: 5px;
-  color: #e01D20;
+  color: #e01d20;
   font-weight: 600;
 }
 .project-ant h5 {
@@ -1054,7 +1053,7 @@ span.blue {
 
 span.blue {
   margin-left: 5px;
-  color: #e01D20;
+  color: #e01d20;
   font-weight: 600;
 }
 .project-ant {
@@ -1082,12 +1081,12 @@ span.blue {
 }
 
 .antd-pro-pages-dashboard-analysis-style-salesExtra a:hover {
-  color: #e01D20;
-  border: 1px solid #e01D20;
+  color: #e01d20;
+  border: 1px solid #e01d20;
 }
 .antd-pro-pages-dashboard-analysis-style-salesExtra a.active {
-  color: #e01D20;
-  border: 1px solid #e01D20;
+  color: #e01d20;
+  border: 1px solid #e01d20;
 }
 
 .ant-list-box th {
@@ -1236,7 +1235,7 @@ img {
   margin-left: 2px;
 }
 .icon-move-right {
-  color: #e01D20;
+  color: #e01d20;
 
   display: block;
 }
@@ -1480,7 +1479,7 @@ span.ismobile {
   cursor: pointer;
 }
 
-.setting-drwer:hover{
+.setting-drwer:hover {
   color: rgb(241, 226, 226);
 }
 
@@ -1942,7 +1941,7 @@ body {
 .layout-default .ant-layout-footer .ant-menu-horizontal {
   border: none;
   line-height: 1.5;
-  margin: 0 0 30px;
+  /* margin: 0 0 30px; */
   background-color: transparent;
   font-size: 16px;
 }
@@ -2006,7 +2005,7 @@ body {
   vertical-align: middle;
 }
 .layout-default .ant-layout-footer .menu-nav-social a:hover svg {
-  fill: #e01D20;
+  fill: #e01d20;
 }
 .layout-default .ant-layout-footer .copyright a {
   color: inherit;
@@ -2219,7 +2218,7 @@ button.ant-btn.bell strong {
 }
 /* old css end */
 
-.layout-dashboard .ant-layout-footer {
+.layout-dashboard {
   background: transparent;
   margin: 0 20px 20px 20px;
   padding: 0;
@@ -2328,7 +2327,7 @@ section.ant-layout.layout-content .ant-layout-content.content-ant {
   width: 64px;
   height: 64px;
   margin: auto;
-  background-color: #e01D20;
+  background-color: #e01d20;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgb(0 0 0 / 12%);
   display: flex;
