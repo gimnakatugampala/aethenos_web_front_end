@@ -3139,8 +3139,7 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 }
 
 .footer-ant {
-  position: fixed;
-  z-index: 99;
+  position: relative;
   background-color: white;
   width: 100%;
   bottom: 0;
@@ -3161,4 +3160,12 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 
 .nav-link {
   color: #ff4d4f;
+}
+
+.intended-lerners-sidepanel{
+  max-width: 200px;
+  min-width: 200px;
+  width: 200px;
+  background-color: #f0f2f5;
+  width: 100%;
 }

@@ -31,7 +31,7 @@ function Main({ children }) {
     }
   }, [pathname]);
 
-  return (
+  return ( 
     <Layout
       className={`layout-dashboard ${
         pathname === "profile" ? "layout-profile" : ""
@@ -121,6 +121,7 @@ function Main({ children }) {
           <Footer />
         </div>
       </Layout>
+      
     </Layout>
   );
 }

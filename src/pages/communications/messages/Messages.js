@@ -166,7 +166,7 @@ useEffect(() => {
 
   return (
     
-      <div className="all-courses-container">
+      <div className="all-courses-container mb-4">
         <div  className="row mx-2" style={{justifyContent: "space-between"}} >
 
         
