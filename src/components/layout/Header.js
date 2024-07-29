@@ -17,30 +17,29 @@ import {
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 // import avtar from "../../assets/images/team-2.jpg";
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import Badge from '@mui/material/Badge';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import Popover from '@mui/material/Popover';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import PaidIcon from '@mui/icons-material/Paid';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import PersonAdd from "@mui/icons-material/PersonAdd";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+import Badge from "@mui/material/Badge";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Popover from "@mui/material/Popover";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import PaidIcon from "@mui/icons-material/Paid";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Cookies from "js-cookie";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 import { GetInstructorProfileDetails, GetNotifications } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
-
-
+import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
 function Header({
   placement,
   name,
@@ -50,32 +49,30 @@ function Header({
   handleSidenavType,
   handleFixedNavbar,
 }) {
-
   const [notifications, setNotifications] = useState([]);
 
-  const [first_Name, setfirst_Name] = useState("")
-    const [last_name, setlast_name] = useState("")
-    const [headline, setheadline] = useState("")
-    const [biography, setbiography] = useState("")
-    const [website, setwebsite] = useState("")
-    const [twitter, settwitter] = useState("")
-    const [facebook, setfacebook] = useState("")
-    const [linkedin, setlinkedin] = useState("")
-    const [youtube, setyoutube] = useState("")
-    const [profile_img, setprofile_img] = useState("")
-    const [uploadImage, setuploadImage] = useState("")
+  const [first_Name, setfirst_Name] = useState("");
+  const [last_name, setlast_name] = useState("");
+  const [headline, setheadline] = useState("");
+  const [biography, setbiography] = useState("");
+  const [website, setwebsite] = useState("");
+  const [twitter, settwitter] = useState("");
+  const [facebook, setfacebook] = useState("");
+  const [linkedin, setlinkedin] = useState("");
+  const [youtube, setyoutube] = useState("");
+  const [profile_img, setprofile_img] = useState("");
+  const [uploadImage, setuploadImage] = useState("");
 
   useEffect(() => {
-    GetNotifications(setNotifications)
-  }, [])
-  
+    GetNotifications(setNotifications);
+  }, []);
 
   const handleNotification = () => {
     // Add your notification logic here
     // For example, add a new notification to the list
     const newNotification = {
       id: Date.now(),
-      message: 'New notification message',
+      message: "New notification message",
     };
     setNotifications([...notifications, newNotification]);
   };
@@ -89,32 +86,29 @@ function Header({
     setAnchorEl(null);
   };
 
-
   useEffect(() => {
-    GetInstructorProfileDetails(setfirst_Name,
-        setlast_name,
-        setheadline,
-        setbiography,
-        setwebsite,
-        settwitter,
-        setfacebook,
-        setlinkedin,
-        setyoutube,
-        setprofile_img)
-}, [])
-
-  
-
+    GetInstructorProfileDetails(
+      setfirst_Name,
+      setlast_name,
+      setheadline,
+      setbiography,
+      setwebsite,
+      settwitter,
+      setfacebook,
+      setlinkedin,
+      setyoutube,
+      setprofile_img
+    );
+  }, []);
 
   // Logout
   const handleLogout = () => {
-
-    if(ENV_STATUS == "dev"){
-      Cookies.remove('aethenos', { path: '' })
-      window.location.reload()
-    }else{
-      Cookies.remove('aethenos', { domain: '.aethenos.com' })
-      window.location.href = "aethenos.com"
+    if (ENV_STATUS == "dev") {
+      Cookies.remove("aethenos", { path: "" });
+      window.location.reload();
+    } else {
+      Cookies.remove("aethenos", { domain: ".aethenos.com" });
+      window.location.href = "aethenos.com";
     }
   };
 
@@ -123,16 +117,19 @@ function Header({
   return (
     <>
       <Row gutter={[24, 0]}>
-        <Col span={24} md={6}>
-        
-        </Col>
+        <Col span={24} md={6}></Col>
         <Col span={24} md={18} className="header-control">
-       
-       
-      <React.Fragment>
-
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <a href="https://aethenos.com" style={{ minWidth: 100 }}>Student</a>
+          <React.Fragment>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <a href="https://aethenos.com" style={{ minWidth: 100 }}>
+                Student
+              </a>
 
               <Dropdown>
                 <Dropdown.Toggle
@@ -296,41 +293,40 @@ function Header({
                 </MenuItem>
               </a>
 
-        <Divider />
-        
-        <a href="/account-settings">
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-         <SettingsIcon fontSize="medium" /> 
-         </ListItemIcon>
-         Account Settings
-        </MenuItem>
-        </a>
+              <Divider />
 
-        <Divider />
-        
-        <a href="/verification">
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <CheckCircleIcon fontSize="medium" />
-        </ListItemIcon>
-         Instructor  Verification
-        </MenuItem>
-        </a>
+              <a href="/account-settings">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <SettingsIcon fontSize="medium" />
+                  </ListItemIcon>
+                  Account Settings
+                </MenuItem>
+              </a>
 
               <Divider />
 
-        <Divider />
-        
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <Logout fontSize="medium" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
-    </React.Fragment>
-          
+              <a href="/verification">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <CheckCircleIcon fontSize="medium" />
+                  </ListItemIcon>
+                  Instructor Verification
+                </MenuItem>
+              </a>
+
+              <Divider />
+
+              <Divider />
+
+              <MenuItem onClick={handleLogout}>
+                <ListItemIcon>
+                  <Logout fontSize="medium" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </Menu>
+          </React.Fragment>
         </Col>
       </Row>
     </>
