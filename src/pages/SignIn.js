@@ -73,25 +73,29 @@ const SignIn = () => {
 
   return (
     <>
-      
-      <Layout className="layout-default layout-signin">
+    <Card>
+      <Layout className="">
         {loading && <MainLoader />}
-      
+
         <Content className="signin">
-      
-          <Row gutter={[24, 0]} justify="space-around" >
-            <Col className="main-sign-in"
-              xs={{ span: 24, offset: 0 }}
-              lg={{ span: 6, offset: 2 }}
-              md={{ span: 12 }}
+          <Row gutter={[24, 0]} justify="space-around">
+            <Col
+              className="main-sign-in"
+              // xs={{ span: 24, offset: 0 }}
+              // lg={{ span: 6, offset: 2 }}
+              // md={{ span: 12 }}
             >
-               <div className="main-sign-in-logo" >
-        <img width="150" height={"100%"} src={logo} alt="LOGO" />
-        {/* <span>Aethenos</span> */}
-      </div>
-              
-              <Title className="mb-15 main-sign-in-title" >Sign In</Title>
-              <Title className="font-regular text-muted" level={5} align="center">
+              <div className="main-sign-in-logo">
+                <img width="150" height={"100%"} src={logo} alt="LOGO" />
+                {/* <span>Aethenos</span> */}
+              </div>
+
+              <Title className="mb-15 main-sign-in-title">Sign In</Title>
+              <Title
+                className="font-regular text-muted"
+                level={5}
+                align="center"
+              >
                 Enter your email and password to sign in as instructor
               </Title>
 
@@ -136,8 +140,12 @@ const SignIn = () => {
                   <a href="/forgot-password">Forgot Password ?</a>
                 </Form.Group>
 
-
-                <AntButton type="primary" htmlType="submit" block className="sign-in-button">
+                <AntButton
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  className="sign-in-button"
+                >
                   Login
                 </AntButton>
               </Form>
@@ -150,13 +158,11 @@ const SignIn = () => {
               md={{ span: 12 }}
             >
               <img src={signinbg} alt="" />
-           
-            </Col>
-         
+            </Col> */}
           </Row>
         </Content>
       </Layout>
-     
+      </Card>
     </>
   );
 };
