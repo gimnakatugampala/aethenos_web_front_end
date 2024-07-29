@@ -47,9 +47,9 @@ const QA = () => {
   }, [courseCode]);
 
   // ---------- Select QA --------------
-  const handleSelectQA = (e) => {
-    console.log(e.target.value);
-    setcourseCode(e.target.value);
+  const handleSelectQA = (value) => {
+    console.log(value);
+    setcourseCode(value);
     setquestionItemCode("");
     setquestionItemContent("");
   };

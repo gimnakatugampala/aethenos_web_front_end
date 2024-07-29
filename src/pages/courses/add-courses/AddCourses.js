@@ -176,7 +176,7 @@ const AddCourses = () => {
   }
 
   return (
-   <div>
+   <div className='all-courses-container'>
 
     {loading && <MainLoader /> }
     

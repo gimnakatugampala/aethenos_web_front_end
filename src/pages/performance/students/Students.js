@@ -34,9 +34,9 @@ const Students = () => {
   const [courseCode, setcourseCode] = useState("all");
 
   // ---------- Select QA --------------
-  const handleSelectQA = (e) => {
-    console.log(e.target.value);
-    setcourseCode(e.target.value);
+  const handleSelectQA = (value) => {
+    console.log(value);
+    setcourseCode(value);
   };
 
   // Get Courses
