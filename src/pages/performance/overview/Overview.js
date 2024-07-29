@@ -35,8 +35,8 @@ function RevenueReport() {
   const ratingData = chartData.rating || [];
 
   return (
-    <div>
-      <div className="mb-5">
+    <div className=" all-courses-container mb-5">
+      <div className="row mb-4 mx-2" style={{justifyContent: "space-between"}}>
         <Typography className="m-0 p-0" variant="h4" gutterBottom>
           Dashboard
         </Typography>

@@ -57,7 +57,7 @@ const CourseMessages = ({code}) => {
   
   
   return (
-    <div className="col-md-8">
+    <div className="col-md-10 px-4 mb-4">
       <Card className="py-2 my-2">
 
       <div className='d-flex justify-content-between'>
@@ -83,7 +83,7 @@ const CourseMessages = ({code}) => {
           <br />
           <br />
 
-          <Space direction="vertical" size="middle">
+          <Space direction="vertical" size="middle" style={{width: "100%"}}>
             <Typography variant="h6">Welcome Message</Typography>
             <JoditEditor value={welcomemsg} onChange={(value) => setwelcomemsg(value)} />
             <br />

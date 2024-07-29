@@ -19,7 +19,6 @@ import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpi
 import formatNumInt from "../../../../commonFunctions/formatNumInt";
 
 
-
 const Pricing = ({code}) => {
 
   const numberOnlyRegex = /^[0-9]+$/;
@@ -4042,7 +4041,7 @@ const Pricing = ({code}) => {
   }
 
   return (
-    <div className="col-md-8">
+    <div className="col-md-10 px-4 mb-4">
       <Card className="py-2 my-2">
       <div className='d-flex justify-content-between p-4'>
         <Typography className="p-3" variant="h4">
@@ -4133,12 +4132,12 @@ const Pricing = ({code}) => {
                               </Form.Control.Feedback>
                           </td>
                           <td>
-                          <select style={{width:130}} value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
+                          <Select style={{width:130}} value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
                             <option value="0" disabled selected>Select an Option</option>
                             {dis_types.map((type,index) => (
                               <option key={index} value={type.id}>{type.name}</option>
                             ))}
-                          </select>
+                          </Select>
                           </td>
                           <td>
                         

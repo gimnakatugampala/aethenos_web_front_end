@@ -8,7 +8,7 @@ import MaterialTable from 'material-table';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Typography from "@mui/material/Typography";
 import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
+import { Select, Space } from 'antd';
 
 const TrafficConversation = () => {
 
@@ -48,7 +48,7 @@ const TrafficConversation = () => {
     <div className='col-md-8'></div>
       <div className='col-md-4'>
     <FormControl fullWidth>
-        <NativeSelect
+        <Select
           defaultValue={10}
           inputProps={{
             name: 'age',
@@ -58,7 +58,7 @@ const TrafficConversation = () => {
           <option value={10}>Last 30 days</option>
           <option value={20}>Last 12 months</option>
           <option value={30}>All channel</option>
-        </NativeSelect>
+        </Select>
       </FormControl>
       </div>
     </div>

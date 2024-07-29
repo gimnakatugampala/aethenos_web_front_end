@@ -1,14 +1,11 @@
-
-import React , { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Breadcrumb,
-  Button,
-  List,
-} from "antd";
-import Dropdown from 'react-bootstrap/Dropdown';
-
+import React, { useState, useEffect } from "react";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { Row, Col, Breadcrumb, List } from "antd";
+import Button from "@mui/material/Button";
+import Dropdown from "react-bootstrap/Dropdown";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import { parseISO, formatDistanceToNow } from "date-fns";
+// import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 
 import {
   SearchOutlined,
@@ -119,10 +116,7 @@ function Header({
       Cookies.remove('aethenos', { domain: '.aethenos.com' })
       window.location.href = "aethenos.com"
     }
-
-   
-    
-  }
+  };
 
   return (
     <>
@@ -138,82 +132,97 @@ function Header({
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <a href="https://aethenos.com" style={{ minWidth: 100 }}>Student</a>
 
-        <Dropdown>
-      <Dropdown.Toggle variant="danger" id="dropdown-basic">
-        Notifications ({notifications.length})
-      </Dropdown.Toggle>
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="danger"
+                  id="dropdown-basic"
+                  className="notification-toggle"
+                   bsPrefix="custom-toggle"
+                >
+                 <img width="20px" src={bellIcon} alt="LOGO" />
+                  <span className="notification-count">
+                    {notifications.length}
+                  </span>
+                </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        {notifications.map((notification,index) => (
-          <Dropdown.Item key={index}>{notification.notification}</Dropdown.Item>
-        ))}
-        {notifications.length === 0 && <Dropdown.Item>No notifications</Dropdown.Item>}
-      </Dropdown.Menu>
-    </Dropdown>
+                <Dropdown.Menu>
+                  {notifications.map((notification, index) => (
+                    <Dropdown.Item key={index}>
+                      {notification.notification}
+                    </Dropdown.Item>
+                  ))}
+                  {notifications.length === 0 && (
+                    <Dropdown.Item>No notifications</Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
 
-        {/* <Typography sx={{ minWidth: 50 }}>
+              {/* <Typography sx={{ minWidth: 50 }}>
         <Badge badgeContent={notifications.length}} color="primary">
             <NotificationsIcon color="action" />
           </Badge>
         </Typography> */}
 
-
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-          >
-            <Avatar src="/static/images/avatar/1.jpg" alt={`${first_Name} ${last_name}`} sx={{ width: 35, height: 35 }}>{`${first_Name[0]}${last_name[0]}`}</Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-      >
-        <a href="/profile">
-        <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-         <AccountCircleIcon fontSize="medium" /> 
-         </ListItemIcon>
-         Profile Details
-        </MenuItem>
-        </a>
+              <Tooltip title="Account settings">
+                <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                >
+                  <Avatar
+                    src="/static/images/avatar/1.jpg"
+                    alt={`${first_Name} ${last_name}`}
+                    sx={{ width: 35, height: 35 }}
+                  >{`${first_Name[0]}${last_name[0]}`}</Avatar>
+                </IconButton>
+              </Tooltip>
+            </Box>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              onClick={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <a href="/profile">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <AccountCircleIcon fontSize="medium" />
+                  </ListItemIcon>
+                  Profile Details
+                </MenuItem>
+              </a>
 
         <Divider />
         
@@ -237,9 +246,9 @@ function Header({
         </MenuItem>
         </a>
 
-        <Divider />
+              <Divider />
 
-        {/* <a href="/payouts">
+              {/* <a href="/payouts">
         <MenuItem onClick={handleClose}>
         <ListItemIcon>
             <PaidIcon fontSize="medium"  />

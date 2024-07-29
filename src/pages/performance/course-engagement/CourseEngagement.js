@@ -14,7 +14,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { BarChart } from '@mui/x-charts/BarChart';
 import Typography from "@mui/material/Typography";
 import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';
+import { Select, Space } from 'antd';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
@@ -74,7 +74,7 @@ const xLabels1 = [
 
         <div className="col-md-3">
         <FormControl fullWidth>
-        <NativeSelect
+        <Select
           defaultValue={10}
           inputProps={{
             name: 'age',
@@ -84,7 +84,7 @@ const xLabels1 = [
           <option value={10}>All Courses</option>
           <option value={20}>Learn Photoshop</option>
           <option value={30}>Software Development</option>
-        </NativeSelect>
+        </Select>
       </FormControl>
 
         </div>
@@ -98,7 +98,7 @@ const xLabels1 = [
     <h5 className='mt-2'>Minutes Consumed by Active Students</h5>
     <div>
     <FormControl fullWidth>
-        <NativeSelect
+        <Select
           defaultValue={10}
           inputProps={{
             name: 'age',
@@ -108,7 +108,7 @@ const xLabels1 = [
           <option value={10}>Last 12 months</option>
           <option value={20}>Last 30 days</option>
           <option value={30}>Last 12 months</option>
-        </NativeSelect>
+        </Select>
       </FormControl>
     </div>
 </div>
