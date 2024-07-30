@@ -520,8 +520,8 @@ const ManageCourses = () => {
 
       {/* Content */}
 
-      <Row>
-        <div className="col-md-2 p-4">
+      <Row  className="">
+        <div className="col-md-2 p-4 " >
           <List component="nav" aria-label="main mailbox folders">
             <ListItemButton
               selected={selectedIndex === 0}
@@ -532,12 +532,12 @@ const ManageCourses = () => {
               <ListItemIcon>
                 <LocalLibraryIcon />
               </ListItemIcon>
-              <ListItemText primary="Target Audience" />
+              <ListItemText primary="Target Audience" className="listItem-intended-lerners"/>
 
               {IntendedLearnersCheck ? (
-                <CheckCircleOutlineIcon />
+                <CheckCircleOutlineIcon style={{position: "relative"}} />
               ) : (
-                <RadioButtonUncheckedIcon />
+                <RadioButtonUncheckedIcon style={{position: "relative"}}/>
               )}
             </ListItemButton>
 

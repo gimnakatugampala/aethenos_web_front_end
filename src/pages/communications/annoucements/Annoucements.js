@@ -75,10 +75,10 @@ const Annoucements = () => {
   }, [courseCode]);
 
   // Get All Annoucements
-  const handleSelectAnnoucement = (e) => {
-    console.log(e.target.value);
+  const handleSelectAnnoucement = (value) => {
+    console.log(value);
 
-    setcourseCode(e.target.value);
+    setcourseCode(value);
   };
 
   const handleSelectCourseName = (e) => {

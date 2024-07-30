@@ -46,10 +46,10 @@ const Reviews = () => {
     GetCousesOfInstructror(setcmbCourses);
   }, [courseCode]);
 
-  const handleSelectReviews = (e) => {
-    console.log(e.target.value);
-    setcourseCode(e.target.value);
-    GetReviewByCourse(e.target.value, setSelectedCourse);
+  const handleSelectReviews = (value) => {
+    console.log(value);
+    setcourseCode(value);
+    GetReviewByCourse(value, setSelectedCourse);
   };
 
   return (
@@ -70,12 +70,12 @@ const Reviews = () => {
                 <Select onChange={handleSelectReviews}
                   placeholder="All Courses"
                   size='large'
-                  style={{width:'400px'}}>
+                  style={{width:'100%'}}>
                   
                   {/* <option value={""}>All Courses</option> */}
                   {cmbCourses.length > 0 &&
                     cmbCourses.map((course, index) => (
-                      <option key={index} value={course.code}>
+                      <option key={index} value={course.code}> 
                         {course.title}
                       </option>
                     ))}
