@@ -4069,16 +4069,7 @@ const Pricing = ({code}) => {
         </Radio.Group>
         </div>
 
-        {/* <div className="container m-2">
-
-        <Alert icon={false} variant="outlined" severity="warning">
-        {VideoLength > 150 && Paid_Type == 1 && <> <i className="fa-solid fa-triangle-exclamation fa-1x"></i>  The maximum video content length on a free course is 2.5 hours. Please reduce your total video length to comply. <br /> </>} 
-        {VideoLength < 45 && Paid_Type == 2 && <> <i className="fa-solid fa-triangle-exclamation"></i>  The minimum video content length on a paid course is 45 minutes. Please increase your total video length to comply. <br /> </> } 
-        {NoOfLessons < 5 && Paid_Type == 2 && <> <i className="fa-solid fa-triangle-exclamation"></i>  The minimum number of lectures on a paid course is 5. Please increase your total number of lectures to comply. <br /> </> } 
-        {NoOfLessons < 5 && VideoLength < 45 && Paid_Type == 2 &&  <> <i className="fa-solid fa-triangle-exclamation"></i>  The minimum video content length on a paid course is 45 minutes and the minimum number of lectures on a paid course is 5. Please increase your total video length and total number of lectures to comply. <br /> </> } 
-        </Alert>
-        </div> */}
-
+    
 
         {VideoLength > 150 && Paid_Type == 1 && (
         <div className="container m-2">
