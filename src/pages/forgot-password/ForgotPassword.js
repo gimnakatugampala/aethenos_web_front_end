@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Layout,
   Menu,
   Button,
   Typography,
@@ -8,8 +7,10 @@ import {
   Form,
   Input,
   Checkbox,
+  Layout,
+  Row,
+  Col,
 } from "antd";
-
 
 import { Link } from "react-router-dom";
 import {
@@ -21,7 +22,11 @@ import {
 import logo from "../../assets/images/utils/aethenos_logo.jpg";
 import { useState } from "react";
 import ErrorAlert from "../../commonFunctions/Alerts/ErrorAlert";
-import { ChangeToNewPassword, SendEmailVerficationCode, VerifyCode } from "../../api";
+import {
+  ChangeToNewPassword,
+  SendEmailVerficationCode,
+  VerifyCode,
+} from "../../api";
 import ButtonSpinner from "../../commonFunctions/loaders/Spinner/ButtonSpinner";
 import VerificationInput from "react-verification-input";
 import toast, { Toaster } from 'react-hot-toast';
@@ -29,8 +34,6 @@ import PasswordChecklist from "react-password-checklist"
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
-
-
 
 const ForgotPassword = () => {
 
@@ -47,16 +50,15 @@ const ForgotPassword = () => {
     const [conPassword, setconPassword] = useState("")
     const [isValidPassword, setisValidPassword] = useState(false)
 
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  // ========== Submit ==========
+  const onFinish = () => {
+    console.log(email);
 
-    // ========== Submit ==========
-    const onFinish = () => {
-        console.log(email)
+    setbtnLoading(true);
 
-        setbtnLoading(true)
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(email)) {
             // console.log("Invalid email:", email);
@@ -103,51 +105,69 @@ const ForgotPassword = () => {
         return
       }
 
-      ChangeToNewPassword(VerficationCode,email,conPassword,setbtnLoading)
-
-
-    }
+    ChangeToNewPassword(VerficationCode, email, conPassword, setbtnLoading);
+  };
 
   return (
     <>
+      <Card>
      <Toaster />
-        <div className="layout-default ant-layout layout-sign-up">
-          <Header>
+        <Layout className="">
+          <Content className="signin">
+            <Row gutter={[24, 0]} justify="space-around">
+              {/* <Header>
             <div className="header-col header-btn">
             <img src={logo} alt="LOGO" />
             </div>
-          </Header>
-
-          <Content className="p-0 mt-5">
-
-            {showVerificationInputs ? (
-
-            codeSuccess ? (
-              <Card
-                className="card-signup header-solid h-full ant-card pt-0 mt-3 text-center"
-                title={<h1 className="text-center fw-semibold p-0 m-0">Change Password</h1>}
-                bordered="false"
+          </Header> */}
+              <Col
+                className="main-sign-in"
+                // xs={{ span: 24, offset: 0 }}
+                // lg={{ span: 6, offset: 2 }}
+                // md={{ span: 12 }}
               >
+                <Content className="signin">
+                  {showVerificationInputs ? (
+                    codeSuccess ? (
+                      <div bordered="false">
+                        <div className="main-sign-in-logo">
+                          <img
+                            width="150"
+                            height={"100%"}
+                            src={logo}
+                            alt="LOGO"
+                          />
+                          {/* <span>Aethenos</span> */}
+                        </div>
 
-              <Form
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={handleChangePassword}
-                // onFinishFailed={onFinishFailed}
-                className="row-col"
-              >
-        
-                <Form.Item
-                  name="password"
-                >
-                  <Input type={showPassword ? "text" : "password"}  value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password" />
-                </Form.Item>
+                        <Title className="mb-15 main-sign-in-title">
+                          Reset Password
+                        </Title>
 
-                <Form.Item
-                  name="conpassword"
-                >
-                  <Input type={showPassword ? "text" : "password"}  value={conPassword} onChange={(e) => setconPassword(e.target.value)}  placeholder="Enter Confirm Password" />
-                </Form.Item>
+                        <Form
+                          name="basic"
+                          initialValues={{ remember: true }}
+                          onFinish={handleChangePassword}
+                          // onFinishFailed={onFinishFailed}
+                          className="row-col"
+                        >
+                          <Form.Item name="password">
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              value={password}
+                              onChange={(e) => setpassword(e.target.value)}
+                              placeholder="Enter Password"
+                            />
+                          </Form.Item>
+
+                          <Form.Item name="conpassword">
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              value={conPassword}
+                              onChange={(e) => setconPassword(e.target.value)}
+                              placeholder="Enter Confirm Password"
+                            />
+                          </Form.Item>
 
                 <Form.Item>
               <Checkbox 
@@ -170,133 +190,161 @@ const ForgotPassword = () => {
 
  
 
-                <Form.Item>
-                {btnLoading ? (
+                          <Form.Item>
+                            {btnLoading ? (
+                              <Button
+                                style={{ width: "100%" }}
+                                type="primary"
+                                htmlType="submit"
+                                className="mx-auto text-center"
+                              >
+                                <ButtonSpinner />
+                              </Button>
+                            ) : (
+                              <Button
+                                style={{ width: "80%" }}
+                                type="primary"
+                                htmlType="submit"
+                                className="mx-auto text-center"
+                              >
+                                Change Password
+                              </Button>
+                            )}
+                          </Form.Item>
+                        </Form>
+                      </div>
+                    ) : (
+                      <div className="" bordered="false">
+                        <div className="main-sign-in-logo">
+                          <img
+                            width="150"
+                            height={"100%"}
+                            src={logo}
+                            alt="LOGO"
+                          />
+                          {/* <span>Aethenos</span> */}
+                        </div>
 
-                    <Button
-                    style={{ width: "100%" }}
-                    type="primary"
-                    htmlType="submit"
-                    >
-                    <ButtonSpinner />
-                    </Button>
+                        <Title className="mb-15 main-sign-in-title">
+                          Reset Password
+                        </Title>
+                        <p className="m-0 p-0">
+                          Verification code sent successfully. Please check your
+                          email
+                        </p>
 
-                ) : (
-                  <Button
-             
-                    style={{ width: "80%" }}
-                    type="primary"
-                    htmlType="submit"
-                  >
-                    Change Password
-                  </Button>
-                )}
-                </Form.Item>
-              </Form>
-                
+                        <div className="d-flex justify-content-center my-4">
+                          <VerificationInput
+                            value={VerficationCode}
+                            onChange={(e) => setVerficationCode(e)}
+                            length={5}
+                            className="mx-auto text-center"
+                          />
+                        </div>
+                        {btnLoading ? (
+                          <Button
+                            style={{ width: "100%" }}
+                            type="primary"
+                            htmlType="submit"
+                            className="sign-in-button"
+                          >
+                            <ButtonSpinner />
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={handleSubmit}
+                            style={{ width: "80%" }}
+                            type="primary"
+                            htmlType="submit"
+                            className="sign-in-button"
+                          >
+                            Verify
+                          </Button>
+                        )}
+                      </div>
+                    )
+                  ) : (
+                    <div>
+                      <div className="main-sign-in-logo">
+                        <img
+                          width="150"
+                          height={"100%"}
+                          src={logo}
+                          alt="LOGO"
+                        />
+                        {/* <span>Aethenos</span> */}
+                      </div>
 
-               
-                
-            </Card>
-            ) : (
-              <Card
-                className="card-signup header-solid h-full ant-card pt-0 mt-3 text-center"
-                title={<h1 className="text-center fw-semibold p-0 m-0">Verification</h1>}
-                bordered="false"
-              >
-                <p className="m-0 p-0">Verification code sent successfully. Please check your email</p>
+                      <Title className="ant-typography mb-15 main-sign-in-title">
+                        Reset Password
+                      </Title>
 
-                <div className="d-flex justify-content-center my-4">
-                    <VerificationInput value={VerficationCode} onChange={(e) => setVerficationCode(e)} length={5} className="mx-auto text-center" />
-                </div>
+                      <p className="text-center font-semibold text-muted mb-4 ">
+                        Enter your Aethenos Account email address.
+                      </p>
+                      <Form
+                        name="basic"
+                        initialValues={{ remember: true }}
+                        onFinish={onFinish}
+                        // onFinishFailed={onFinishFailed}
+                      >
+                        <Form.Item
+                          name="email"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input your email!",
+                            },
+                          ]}
+                        >
+                          <Input
+                            value={email}
+                            onChange={(e) => setemail(e.target.value)}
+                            placeholder="Enter email"
+                          />
+                        </Form.Item>
 
+                        <Form.Item>
+                          {btnLoading ? (
+                            <Button
+                              style={{ width: "100%" }}
+                              type="primary"
+                              htmlType="submit"
+                              className="sign-in-button"
+                            >
+                              <ButtonSpinner />
+                            </Button>
+                          ) : (
+                            <Button
+                              style={{ width: "100%" }}
+                              type="primary"
+                              htmlType="submit"
+                              className="sign-in-button"
+                            >
+                              Next
+                            </Button>
+                          )}
+                        </Form.Item>
+                      </Form>
 
-                {btnLoading ? (
-                    <Button
-                    style={{ width: "100%" }}
-                    type="primary"
-                    htmlType="submit"
-                    >
-                    <ButtonSpinner />
-                    </Button>
-                ) : (
-                  <Button
-                  onClick={handleSubmit}
-                      style={{ width: "80%" }}
-                       type="primary"
-                    htmlType="submit"
-                    >
-                      Verify
-                    </Button>
-                )}
-
-              <p role="button" tabindex="0" onClick={onFinish} className="my-3 p-2 text-center"><b>Resend code</b></p>
-
-            </Card>
-            )
-
-            ) : (
-            <Card
-              className="card-signup header-solid h-full ant-card pt-0 mt-3"
-              title={<h1 className="text-center fw-semibold p-0 m-0">Reset password</h1>}
-              bordered="false"
-            >
-
-              <p className="text-center font-semibold text-muted">Enter your Aethenos Account email address.</p>
-              <Form
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                // onFinishFailed={onFinishFailed}
-                className="row-col"
-              >
-          
-                <Form.Item
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please input your email!" },
-                  ]}
-                >
-                  <Input value={email} onChange={(e) => setemail(e.target.value)} placeholder="Enter email" />
-                </Form.Item>
-
- 
-
-                <Form.Item>
-                {btnLoading ? (
-
-                    <Button
-                    style={{ width: "100%" }}
-                    type="primary"
-                    htmlType="submit"
-                    >
-                    <ButtonSpinner />
-                    </Button>
-
-                ) : (
-                  <Button
-                    style={{ width: "100%" }}
-                    type="primary"
-                    htmlType="submit"
-                  >
-                    Next
-                  </Button>
-                )}
-                </Form.Item>
-              </Form>
-              <p className="font-semibold text-muted text-center">
-                <Link to="/login?sessionTimeout=true&rediect-url=courses" className="font-bold">
-                  Return to Login
-                </Link>
-              </p>
-            </Card>
-            )}
-       
+                      <p className="font-semibold text-muted text-center">
+                        <Link
+                          to="/login?sessionTimeout=true&rediect-url=courses"
+                          className="font-bold "
+                        >
+                          Return to Login
+                        </Link>
+                      </p>
+                    </div>
+                  )}
+                </Content>
+              </Col>
+            </Row>
           </Content>
-    
-        </div>
-      </>
-  )
-}
+        </Layout>
+      </Card>
+    </>
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;

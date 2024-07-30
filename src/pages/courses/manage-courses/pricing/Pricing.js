@@ -19,7 +19,7 @@ import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpi
 import formatNumInt from "../../../../commonFunctions/formatNumInt";
 
 
-
+ 
 const Pricing = ({code}) => {
 
   const numberOnlyRegex = /^[0-9]+$/;
@@ -4167,7 +4167,7 @@ const Pricing = ({code}) => {
                               </Form.Control.Feedback>
                           </td>
                           <td>
-                          <Select style={{width:130}} value={DDisType}  onChange={handleDefaultDiscountType} class="form-select" aria-label="Default select example">
+                          <Select style={{width:130}} value={DDisType}  onChange={handleDefaultDiscountType}  aria-label="Default select example">
                             <option value="0" disabled selected>Select an Option</option>
                             {dis_types.map((type,index) => (
                               <option key={index} value={type.id}>{type.name}</option>

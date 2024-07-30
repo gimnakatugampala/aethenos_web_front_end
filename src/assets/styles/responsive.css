@@ -113,6 +113,44 @@
 }
 }
 
+@media (min-width: 1600px) and (max-width: 2000px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 85%;
+    float: right;
+}
+}
+
+@media (min-width: 2000px) and (max-width: 2400px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 88%;
+    float: right;
+}}
+
+@media (min-width: 2400px) and (max-width: 3400px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 90%;
+    float: right;
+}
+
+}
+@media (min-width: 3400px) and (max-width: 5800px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 93%;
+    float: right;
+}
+
+}
+
+
+
 
 @media (min-width: 0px) and (max-width: 1500px) {
   .listItem-intended-lerners{

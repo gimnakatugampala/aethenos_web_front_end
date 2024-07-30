@@ -1,0 +1,6 @@
+/* Annoucements.css */
+.ant-table-cell {
+    word-wrap: break-word; /* Break long words onto the next line */
+    overflow-wrap: break-word; /* Ensure long words break properly */
+    max-width: 300px; /* Adjust the maximum width of the cell */
+  }

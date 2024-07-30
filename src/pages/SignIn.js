@@ -51,7 +51,7 @@ const SignIn = () => {
     } else if (!validateEmail(email)) {
       Swal.fire({
         title: "Invalid Email!",
-        text: "Please enter a valid email",
+        text: "Please enter a valid email", 
         icon: "error",
       });
     } else if (password === "") {
@@ -136,7 +136,7 @@ const SignIn = () => {
                   </InputGroup>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formPassword">
+                <Form.Group className="mb-3 font-bold " controlId="formPassword">
                   <a href="/forgot-password">Forgot Password ?</a>
                 </Form.Group>
 
