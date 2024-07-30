@@ -4,7 +4,7 @@ import { Row, Col, Breadcrumb, List } from "antd";
 import Button from "@mui/material/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import { parseISO, formatDistanceToNow } from "date-fns";
+// import { parseISO, formatDistanceToNow } from "date-fns";
 // import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 
 import {
@@ -219,9 +219,9 @@ function Header({
                           justifyContent: "flex-end",
                         }}
                       >
-                        {formatDistanceToNow(
+                        {/* {formatDistanceToNow(
                           parseISO(notification.notificationTime)
-                        )}{" "}
+                        )}{" "} */}
                         ago
                       </span>
                     </Dropdown.Item>

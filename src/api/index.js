@@ -10,6 +10,7 @@ import { FILE_PATH } from "../commonFunctions/FilePaths";
 import Persona from "persona";
 import { useRef, useState } from "react";
 import ReactToastSuccess from "../commonFunctions/Toasts/ReactToastSuccess";
+import SuccessToast from "../commonFunctions/Toasts/SuccessToast";
 
 const CURRENT_USER = Cookies.get('aethenos');
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api"
@@ -4957,7 +4958,7 @@ fetch(`${BACKEND_LINK}/course/checkPaidCourseValidation/${code}`, requestOptions
 
 }
 
-export const SendEmailVerficationCode = async(email,setbtnLoading,setshowVerificationInputs) =>{
+export const SendEmailVerficationCode = async(email,toast,setbtnLoading,setshowVerificationInputs) =>{
 
   setbtnLoading(true)
 
@@ -4975,6 +4976,10 @@ export const SendEmailVerficationCode = async(email,setbtnLoading,setshowVerific
         console.log(result)
         setshowVerificationInputs(true)
         setbtnLoading(false)
+
+        toast.success("Verfication has been sent to your email")
+
+        return
 
       }else{
         ErrorAlert("Error",result.message)

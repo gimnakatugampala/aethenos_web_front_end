@@ -24,6 +24,9 @@ import ErrorAlert from "../../commonFunctions/Alerts/ErrorAlert";
 import { ChangeToNewPassword, SendEmailVerficationCode, VerifyCode } from "../../api";
 import ButtonSpinner from "../../commonFunctions/loaders/Spinner/ButtonSpinner";
 import VerificationInput from "react-verification-input";
+import toast, { Toaster } from 'react-hot-toast';
+import PasswordChecklist from "react-password-checklist"
+
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 
@@ -42,6 +45,7 @@ const ForgotPassword = () => {
 
     const [password, setpassword] = useState("")
     const [conPassword, setconPassword] = useState("")
+    const [isValidPassword, setisValidPassword] = useState(false)
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -60,8 +64,8 @@ const ForgotPassword = () => {
             ErrorAlert("Error","Please enter a valid email")
             return
         }
-
-        SendEmailVerficationCode(email,setbtnLoading,setshowVerificationInputs)
+        
+        SendEmailVerficationCode(email,toast,setbtnLoading,setshowVerificationInputs)
 
 
     }
@@ -94,6 +98,11 @@ const ForgotPassword = () => {
         return
       }
 
+      if(isValidPassword == false){
+        ErrorAlert("Error","Your Password should match the checklist")
+        return
+      }
+
       ChangeToNewPassword(VerficationCode,email,conPassword,setbtnLoading)
 
 
@@ -101,6 +110,7 @@ const ForgotPassword = () => {
 
   return (
     <>
+     <Toaster />
         <div className="layout-default ant-layout layout-sign-up">
           <Header>
             <div className="header-col header-btn">
@@ -148,6 +158,16 @@ const ForgotPassword = () => {
               </Checkbox>
             </Form.Item>
 
+            <PasswordChecklist
+				rules={["minLength","specialChar","number","capital","match"]}
+				minLength={5}
+				value={password}
+				valueAgain={conPassword}
+				onChange={(isValid) => {
+          setisValidPassword(isValid)
+        }}
+			/>
+
  
 
                 <Form.Item>
@@ -189,6 +209,8 @@ const ForgotPassword = () => {
                 <div className="d-flex justify-content-center my-4">
                     <VerificationInput value={VerficationCode} onChange={(e) => setVerficationCode(e)} length={5} className="mx-auto text-center" />
                 </div>
+
+
                 {btnLoading ? (
                     <Button
                     style={{ width: "100%" }}
@@ -207,6 +229,9 @@ const ForgotPassword = () => {
                       Verify
                     </Button>
                 )}
+
+              <p role="button" tabindex="0" onClick={onFinish} className="my-3 p-2 text-center"><b>Resend code</b></p>
+
             </Card>
             )
 
