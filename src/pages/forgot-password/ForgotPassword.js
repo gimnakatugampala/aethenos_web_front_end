@@ -29,26 +29,25 @@ import {
 } from "../../api";
 import ButtonSpinner from "../../commonFunctions/loaders/Spinner/ButtonSpinner";
 import VerificationInput from "react-verification-input";
-import toast, { Toaster } from 'react-hot-toast';
-import PasswordChecklist from "react-password-checklist"
+import toast, { Toaster } from "react-hot-toast";
+import PasswordChecklist from "react-password-checklist";
 
 const { Title } = Typography;
 const { Header, Footer, Content } = Layout;
 
 const ForgotPassword = () => {
+  const [email, setemail] = useState("");
 
-    const [email, setemail] = useState("")
+  const [btnLoading, setbtnLoading] = useState(false);
+  const [showVerificationInputs, setshowVerificationInputs] = useState(false);
 
-    const [btnLoading, setbtnLoading] = useState(false)
-    const [showVerificationInputs, setshowVerificationInputs] = useState(false)
+  const [codeSuccess, setcodeSuccess] = useState(false);
 
-    const [codeSuccess, setcodeSuccess] = useState(false)
+  const [VerficationCode, setVerficationCode] = useState("");
 
-    const [VerficationCode, setVerficationCode] = useState("")
-
-    const [password, setpassword] = useState("")
-    const [conPassword, setconPassword] = useState("")
-    const [isValidPassword, setisValidPassword] = useState(false)
+  const [password, setpassword] = useState("");
+  const [conPassword, setconPassword] = useState("");
+  const [isValidPassword, setisValidPassword] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -60,50 +59,49 @@ const ForgotPassword = () => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailRegex.test(email)) {
-            // console.log("Invalid email:", email);
-            setbtnLoading(false)
-            ErrorAlert("Error","Please enter a valid email")
-            return
-        }
-        
-        SendEmailVerficationCode(email,toast,setbtnLoading,setshowVerificationInputs)
-
-
+    if (!emailRegex.test(email)) {
+      // console.log("Invalid email:", email);
+      setbtnLoading(false);
+      ErrorAlert("Error", "Please enter a valid email");
+      return;
     }
 
-    const handleSubmit = () =>{
-      console.log(VerficationCode)
+    SendEmailVerficationCode(
+      email,
+      toast,
+      setbtnLoading,
+      setshowVerificationInputs
+    );
+  };
 
-      if(VerficationCode.length < 5){
-        ErrorAlert("Error","Verification code is incomplete")
-        setbtnLoading(false)
-        return
-      }
+  const handleSubmit = () => {
+    console.log(VerficationCode);
 
-      VerifyCode(VerficationCode,email,setcodeSuccess,setbtnLoading)
+    if (VerficationCode.length < 5) {
+      ErrorAlert("Error", "Verification code is incomplete");
+      setbtnLoading(false);
+      return;
     }
 
+    VerifyCode(VerficationCode, email, setcodeSuccess, setbtnLoading);
+  };
 
-    const handleChangePassword = () =>{
+  const handleChangePassword = () => {
+    if (password == "") {
+      ErrorAlert("Error", "Please enter password");
+      return;
+    } else if (conPassword == "") {
+      ErrorAlert("Error", "Please enter confirm password");
+      return;
+    } else if (password != conPassword) {
+      ErrorAlert("Error", "Password do not match");
+      return;
+    }
 
-      
-
-      if(password == ""){
-        ErrorAlert("Error","Please enter password")
-        return
-      }else if(conPassword == ""){
-        ErrorAlert("Error","Please enter confirm password")
-        return
-      }else if(password != conPassword){
-        ErrorAlert("Error","Password do not match")
-        return
-      }
-
-      if(isValidPassword == false){
-        ErrorAlert("Error","Your Password should match the checklist")
-        return
-      }
+    if (isValidPassword == false) {
+      ErrorAlert("Error", "Your Password should match the checklist");
+      return;
+    }
 
     ChangeToNewPassword(VerficationCode, email, conPassword, setbtnLoading);
   };
@@ -111,7 +109,7 @@ const ForgotPassword = () => {
   return (
     <>
       <Card>
-     <Toaster />
+        <Toaster />
         <Layout className="">
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
@@ -140,7 +138,7 @@ const ForgotPassword = () => {
                           {/* <span>Aethenos</span> */}
                         </div>
 
-                        <Title className="mb-15 main-sign-in-title">
+                        <Title className="main-sign-in-title">
                           Reset Password
                         </Title>
 
@@ -169,26 +167,32 @@ const ForgotPassword = () => {
                             />
                           </Form.Item>
 
-                <Form.Item>
-              <Checkbox 
-                checked={showPassword} 
-                onChange={(e) => setShowPassword(e.target.checked)}
-              >
-                Show Password
-              </Checkbox>
-            </Form.Item>
+                          <Form.Item>
+                            <Checkbox
+                              checked={showPassword}
+                              onChange={(e) =>
+                                setShowPassword(e.target.checked)
+                              }
+                            >
+                              Show Password
+                            </Checkbox>
+                          </Form.Item>
 
-            <PasswordChecklist
-				rules={["minLength","specialChar","number","capital","match"]}
-				minLength={5}
-				value={password}
-				valueAgain={conPassword}
-				onChange={(isValid) => {
-          setisValidPassword(isValid)
-        }}
-			/>
-
- 
+                          <PasswordChecklist
+                            rules={[
+                              "minLength",
+                              "specialChar",
+                              "number",
+                              "capital",
+                              "match",
+                            ]}
+                            minLength={5}
+                            value={password}
+                            valueAgain={conPassword}
+                            onChange={(isValid) => {
+                              setisValidPassword(isValid);
+                            }}
+                          />
 
                           <Form.Item>
                             {btnLoading ? (
@@ -196,16 +200,16 @@ const ForgotPassword = () => {
                                 style={{ width: "100%" }}
                                 type="primary"
                                 htmlType="submit"
-                                className="mx-auto text-center"
+                                className="sign-in-button mt-3"
                               >
                                 <ButtonSpinner />
                               </Button>
                             ) : (
                               <Button
-                                style={{ width: "80%" }}
+                                style={{ width: "100%" }}
                                 type="primary"
                                 htmlType="submit"
-                                className="mx-auto text-center"
+                                className="sign-in-button mt-3"
                               >
                                 Change Password
                               </Button>
@@ -253,7 +257,7 @@ const ForgotPassword = () => {
                         ) : (
                           <Button
                             onClick={handleSubmit}
-                            style={{ width: "80%" }}
+                            style={{ width: "100%" }}
                             type="primary"
                             htmlType="submit"
                             className="sign-in-button"

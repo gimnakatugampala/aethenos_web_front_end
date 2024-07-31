@@ -271,7 +271,7 @@ const IntendedLearners = ({ code }) => {
   };
 
   return (
-    <div className="col-md-10 px-4 mb-4" >
+    <div className="col-md-10 px-4 mb-4  course-landing-page-responsive" >
       <Card className="py-2 my-2 p-4">
         <div className="d-flex justify-content-between">
           <Typography className="my-2" variant="h4">

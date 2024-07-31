@@ -86,8 +86,6 @@ function Header({
     GetNotifications(setNotifications);
   }, []);
 
-  
-
   const handleNotification = () => {
     // Add your notification logic here
     // For example, add a new notification to the list
@@ -132,8 +130,6 @@ function Header({
       window.location.href = "aethenos.com";
     }
   };
-
-  console.log("notifications", notifications);
 
   return (
     <>
@@ -187,7 +183,6 @@ function Header({
                           flexDirection: "row",
                           fontWeight: "bold",
                           justifyContent: "flex-end",
-                          
                         }}
                       >
                         You Have Received {notifications.length} New
@@ -195,7 +190,7 @@ function Header({
                       </span>
 
                       <Button className="m-2" variant="outlined">
-                        View All
+                        <a href="/performance/notifications">View All</a>
                       </Button>
                     </span>
                   </div>
@@ -240,7 +235,7 @@ function Header({
                           justifyContent: "flex-end",
                         }}
                       >
-                       {calculateTimeAgo(notification.notificationTime)}
+                        {calculateTimeAgo(notification.notificationTime)}
                       </span>
                     </Dropdown.Item>
                   ))}
@@ -296,6 +291,7 @@ function Header({
                     bgcolor: "background.paper",
                     transform: "translateY(-50%) rotate(45deg)",
                     zIndex: 0,
+                    color: "red",
                   },
                 },
               }}

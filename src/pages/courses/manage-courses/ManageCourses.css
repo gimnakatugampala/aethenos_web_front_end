@@ -33,3 +33,13 @@
 .mng-course-header{
     background-color: rgb(211, 23, 23) !important;
 }
+
+@media (min-width: 0px) and (max-width: 1500px) {
+    .left-side-nav-course{
+        font-size: xx-small;
+    }
+  
+    
+  }
+  
+

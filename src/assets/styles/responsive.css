@@ -88,12 +88,18 @@
     margin-left: 20%;
     padding-right: 10%;
   }
+
+
 }
 
 @media (min-width: 991px) and (max-width: 1000px) {
   .all-courses-container{
     width: 55%;
     float: unset;
+}
+
+.submit-for-review-text{
+  font-size: 2px !important;
 }
 }
 
@@ -111,6 +117,7 @@
     width: 82%;
     float: right;
 }
+
 }
 
 @media (min-width: 1600px) and (max-width: 2000px) {
@@ -120,6 +127,7 @@
     width: 85%;
     float: right;
 }
+
 }
 
 @media (min-width: 2000px) and (max-width: 2400px) {
@@ -148,19 +156,41 @@
 }
 
 }
+@media (min-width: 900px) and (max-width: 1000px) {
+  .course-landing-page-responsive{
+    max-width: 72%;
+   }
 
+}
+@media (min-width: 1000px) and (max-width: 1100px) {
+  .course-landing-page-responsive{
+    max-width: 74%;
+   }
 
+}
+@media (min-width: 1100px) and (max-width: 1200px) {
+  .course-landing-page-responsive{
+    max-width: 76%;
+   }
 
+}
+@media (min-width: 1200px) and (max-width: 1300px) {
+  .course-landing-page-responsive{
+    max-width: 78%;
+   }
 
-@media (min-width: 0px) and (max-width: 1500px) {
-  .listItem-intended-lerners{
-/*  
- font-size: x-small;
-    /* background-color: #f0f2f5; */
-    /* min-width: 29px; */
-  }
+}
+@media (min-width: 1300px) and (max-width: 1400px) {
+  .course-landing-page-responsive{
+    max-width: 80%;
+   }
 
-  
+}
+@media (min-width: 1400px) and (max-width: 1500px) {
+  .course-landing-page-responsive{
+    max-width: 82%;
+   }
+
 }
 
 

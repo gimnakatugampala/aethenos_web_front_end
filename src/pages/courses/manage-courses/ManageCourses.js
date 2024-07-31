@@ -10,7 +10,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { Button } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
-
+import { SidebarComponent } from "@syncfusion/ej2-react-navigations";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import LayersIcon from "@mui/icons-material/Layers";
@@ -102,6 +102,7 @@ const ManageCourses = () => {
 
   const [courseOwnership, setcourseOwnership] = useState(0);
   const [checkOnwership, setcheckOnwership] = useState(false);
+  const [sidenavType, setSidenavType] = useState("transparent");
   // -------- PERSONA ---------------
   const [options, setOptions] = useState({
     templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk",
@@ -483,6 +484,12 @@ const ManageCourses = () => {
     }, 3000);
   }, [code]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDiv = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <Layout>
       <Header
@@ -492,7 +499,7 @@ const ManageCourses = () => {
           paddingInline: 50,
           lineHeight: "normal",
           backgroundColor: "#000",
-        }}    
+        }}
       >
         <div className="d-flex justify-content-between">
           <Space size={30}>
@@ -520,24 +527,30 @@ const ManageCourses = () => {
 
       {/* Content */}
 
-      <Row  className="">
-        <div className="col-md-2 p-4 " >
-          <List component="nav" aria-label="main mailbox folders">
+      <Row>
+        <div className={` col-md-2 p-3 left-side-nav-course`} style={{minWidth: "250px"}}>
+          <List>
             <ListItemButton
               selected={selectedIndex === 0}
               onClick={(event) =>
                 handleListItemClick(event, "intended-learners")
               }
             >
-              <ListItemIcon>
+              <ListItemIcon
+                className="submit-for-review-text"
+                style={{ minWidth: "30px" }}
+              >
                 <LocalLibraryIcon />
               </ListItemIcon>
-              <ListItemText primary="Target Audience" className="listItem-intended-lerners"/>
+              <ListItemText
+                primary="Target Audience"
+                className="listItem-intended-lerners "
+              />
 
               {IntendedLearnersCheck ? (
-                <CheckCircleOutlineIcon style={{position: "relative"}} />
+                <CheckCircleOutlineIcon style={{ position: "relative" }} />
               ) : (
-                <RadioButtonUncheckedIcon style={{position: "relative"}}/>
+                <RadioButtonUncheckedIcon style={{ position: "relative" }} />
               )}
             </ListItemButton>
 
@@ -545,7 +558,7 @@ const ManageCourses = () => {
               selected={selectedIndex === 1}
               onClick={(event) => handleListItemClick(event, "syllabus")}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "30px" }}>
                 <LibraryBooksIcon />
               </ListItemIcon>
               <ListItemText primary="Syllabus" />
@@ -563,7 +576,7 @@ const ManageCourses = () => {
                 handleListItemClick(event, "course-landing-page")
               }
             >
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "30px" }}>
                 <LayersIcon />
               </ListItemIcon>
               <ListItemText primary="Course Landing Page" />
@@ -579,7 +592,7 @@ const ManageCourses = () => {
               selected={selectedIndex === 3}
               onClick={(event) => handleListItemClick(event, "pricing")}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "30px" }}>
                 <MonetizationOnIcon />
               </ListItemIcon>
               <ListItemText primary="Pricing" />
@@ -595,7 +608,7 @@ const ManageCourses = () => {
               selected={selectedIndex === 4}
               onClick={(event) => handleListItemClick(event, "course-messages")}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "30px" }}>
                 <ForumIcon />
               </ListItemIcon>
               <ListItemText primary="Courses Messages" />
@@ -611,7 +624,7 @@ const ManageCourses = () => {
               selected={selectedIndex === 5}
               onClick={(event) => handleListItemClick(event, "promotions")}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "30px" }}>
                 <TrendingUpIcon />
               </ListItemIcon>
               <ListItemText primary="Promotions" />
@@ -627,21 +640,24 @@ const ManageCourses = () => {
               selected={selectedIndex === 6}
               onClick={(event) => handleListItemClick(event, "settings")}
             >
-              <ListItemIcon>
+              <ListItemIcon style={{ minWidth: "30px" }}>
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItemButton>
 
-            <ListItemText style={ {textAlign: "center"}}>
+            <ListItemText
+              className="submit-for-review-text"
+              style={{ textAlign: "center" }}
+            >
               {btn_loading ? (
-                <Button className="mx-4 w-75 my-3 py-2" variant="contained">
+                <Button className="mx-2 w-55 py-2" variant="contained">
                   <Spinner size="sm" animation="border" variant="light" />{" "}
                 </Button>
               ) : (
                 <Button
                   onClick={handleShow}
-                  className="mx-4 w-75 my-3"
+                  className="mx-2 w-75 my-3 "
                   variant="contained"
                 >
                   Submit For Review

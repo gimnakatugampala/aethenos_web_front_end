@@ -22,6 +22,7 @@ import CourseEngagement from "./pages/performance/course-engagement/CourseEngage
 import Annoucements from "./pages/communications/annoucements/Annoucements";
 import Assignments from "./pages/communications/assignments/Assignments";
 import Students from "./pages/performance/students/Students";
+import Notification from "./pages/performance/notifications/Notification";
 import Verification from "./pages/profile/verification/Verification";
 import Payouts from "./pages/profile/payouts/Payouts";
 
@@ -55,7 +56,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/sign-up" exact component={SignUp} />
+          <Route path="/sign-up" exact component={SignUp} /> 
           {/* <Route path="/sign-in" exact component={SignIn} /> */}
           <Route path="/login" exact component={SignIn} />
           <Route path="/forgot-password" exact component={ForgotPassword} />
@@ -127,6 +128,7 @@ function App() {
             <Route exact path="/performance/reviews" component={Reviews} />
             <Route exact path="/performance/traffic-conversions" component={TrafficConversation} />
             <Route exact path="/performance/students" component={Students} />
+            <Route exact path="/performance/notifications" component={Notification} />
           </Main>
           <Redirect from="*" to="/courses" />
         </Switch>

@@ -246,7 +246,7 @@ const handleFileChange = (event) => {
   
 
   return (
-    <div className="col-md-10 px-4 mb-4">
+    <div className="col-md-10 px-4 mb-4 course-landing-page-responsive ">
       <Card className="py-2 my-2 p-4">
 
       <div className='d-flex justify-content-between'>
@@ -266,7 +266,7 @@ const handleFileChange = (event) => {
         </p>
 
       
-      <div className="basics-container">
+      <div className="px-3">
           <div className="my-3">
             <h6>Course title <span className="text-danger">*</span></h6>
             <div class="input-group mb-3">

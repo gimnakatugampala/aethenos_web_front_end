@@ -50,7 +50,7 @@ function Main({ children }) {
         } `}
       >
         <Layout
-          className={`layout-dashboard ${
+          className={`layout-dashboard ${ 
             pathname === "rtl" ? "layout-dashboard-rtl" : ""
           }`}
         >
