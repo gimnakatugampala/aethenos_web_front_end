@@ -105,12 +105,12 @@
 
 @media (min-width: 1000px) and (max-width: 1200px) {
   .all-courses-container{
-    width: 75%;
+    width: 78%;
     float: right;
 }
 }
 
-@media (min-width: 1200px) and (max-width: 1600px) {
+@media (min-width: 1200px) and (max-width: 1400px) {
   .all-courses-container{
     padding-left: 30px;
     padding-right: 30px;
@@ -120,21 +120,47 @@
 
 }
 
-@media (min-width: 1600px) and (max-width: 2000px) {
+@media (min-width: 1400px) and (max-width: 1600px) {
   .all-courses-container{
     padding-left: 30px;
     padding-right: 30px;
-    width: 85%;
+    width: 84%;
     float: right;
 }
 
 }
 
-@media (min-width: 2000px) and (max-width: 2400px) {
+@media (min-width: 1600px) and (max-width: 1800px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 86%;
+    float: right;
+}
+
+}
+@media (min-width: 1800px) and (max-width: 2000px) {
   .all-courses-container{
     padding-left: 30px;
     padding-right: 30px;
     width: 88%;
+    float: right;
+}
+
+}
+
+@media (min-width: 2000px) and (max-width: 2200px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 90%;
+    float: right;
+}}
+@media (min-width: 2200px) and (max-width: 2400px) {
+  .all-courses-container{
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 91%;
     float: right;
 }}
 
@@ -142,7 +168,7 @@
   .all-courses-container{
     padding-left: 30px;
     padding-right: 30px;
-    width: 90%;
+    width: 91%;
     float: right;
 }
 

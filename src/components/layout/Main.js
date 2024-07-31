@@ -44,7 +44,7 @@ function Main({ children }) {
         onClose={() => setVisible(false)}
         visible={visible}
         key={placement === "right" ? "left" : "right"}
-        width={250}
+        width={220}
         className={`drawer-sidebar ${
           pathname === "rtl" ? "drawer-sidebar-rtl" : ""
         } `}
@@ -56,7 +56,7 @@ function Main({ children }) {
         >
           <Sider
             trigger={null}
-            width={250}
+            width={220}
             theme="light"
             className={`sider-primary ant-layout-sider-primary ${
               sidenavType === "#fff" ? "active-route" : ""
@@ -76,7 +76,7 @@ function Main({ children }) {
             console.log(collapsed, type);
           }}
           trigger={null}
-          width={250}
+          width={220}
           theme="light"
           className={`sider-primary ant-layout-sider-primary ${
             sidenavType === "#fff" ? "active-route" : ""
