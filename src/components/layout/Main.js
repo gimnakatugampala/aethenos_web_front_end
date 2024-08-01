@@ -9,11 +9,11 @@ import "../../assets/styles/main.css";
 const { Header: AntHeader, Content, Sider } = Layout;
 
 function Main({ children }) {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [placement, setPlacement] = useState("right");
   const [sidenavColor, setSidenavColor] = useState("#DC143C");
   const [sidenavType, setSidenavType] = useState("transparent");
-  const [fixed, setFixed] = useState(false);
+  const [fixed, setFixed] = useState(true);
 
   const openDrawer = () => setVisible(!visible);
   const handleSidenavType = (type) => setSidenavType(type);
@@ -37,7 +37,7 @@ function Main({ children }) {
         pathname === "profile" ? "layout-profile" : ""
       } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
     >
-      <Drawer
+      {/* <Drawer
         title={false}
         placement={placement === "right" ? "left" : "right"}
         closable={false}
@@ -61,14 +61,14 @@ function Main({ children }) {
             className={`sider-primary ant-layout-sider-primary ${
               sidenavType === "#fff" ? "active-route" : ""
             }`}
-            style={{ background: sidenavType }}
+            style={{ background: sidenavType , }}
           >
             <Sidenav color={sidenavColor} />
           </Sider>
         </Layout>
-      </Drawer>
+      </Drawer> */}
 
-      <div>
+            <div >
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
@@ -81,11 +81,11 @@ function Main({ children }) {
           className={`sider-primary ant-layout-sider-primary ${
             sidenavType === "#fff" ? "active-route" : ""
           }`}
-          style={{ position: "absolute", height: "100%" }}
+          style={{height: "100%" ,top: "95px"}}
         >
           <Sidenav color={sidenavColor} />
-        </Sider>
-      </div>
+        </Sider> 
+        </div>
 
       <Layout>
         {fixed ? (

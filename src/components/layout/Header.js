@@ -40,6 +40,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { GetInstructorProfileDetails, GetNotificationsLatest } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
+import logo from "../../assets/images/utils/aethenos_logo.jpg";
 
 const calculateTimeAgo = (dateString) => {
   const now = new Date();
@@ -134,7 +135,13 @@ function Header({
   return (
     <>
       <Row gutter={[24, 0]}>
-        <Col span={24} md={6}></Col>
+        <Col span={24} md={6}>
+        <div className="brand">
+        <img width="150" src={logo} alt="LOGO" />
+        {/* <span>Aethenos</span> */}
+      </div>
+        
+        </Col>
         <Col span={24} md={18} className="header-control">
           <React.Fragment>
             <Box

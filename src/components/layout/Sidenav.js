@@ -1,7 +1,7 @@
 
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
-import logo from "../../assets/images/utils/aethenos_logo.jpg";
+
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -42,11 +42,7 @@ function Sidenav({ color }) {
 
   return (
     <>
-      <div className="brand">
-        <img width="150" src={logo} alt="LOGO" />
-        {/* <span>Aethenos</span> */}
-      </div>
-      <hr />
+  
       
       <Menu theme="light" mode="inline" >
        

@@ -13,7 +13,7 @@ body {
   flex-direction: row;
 }
 .layout-dashboard {
-  background: transparent;
+  /* background: transparent; */
   text-align: left;
   position: relative;
   overflow-x: hidden;
@@ -3058,8 +3058,7 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 }
 
 .ant-layout-header {
-  background-color: white;
-  padding: 20px !important;
+  background-color: white;  
   margin: 0 !important;
   margin-bottom: 20px !important;
 }
@@ -3144,10 +3143,9 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   width: 100%;
   bottom: 0;
   margin-bottom: 0px;
-  margin-left: 1%;
   margin-right: 1%;
   padding: 10px !important;
-   
+   z-index: 99;
 
 }
 
@@ -3179,4 +3177,11 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
   width: 200px;
   background-color: #f0f2f5;
   width: 100%;
+}
+
+
+.ant-layout-sider-primary{
+ z-index: 0;
+ height: "100%";
+ top: "105px"
 }
