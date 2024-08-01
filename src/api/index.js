@@ -234,21 +234,21 @@ fetch(`${BACKEND_LINK}/editcourse/getCourseByCode/${code}`, requestOptions)
   };
   
   fetch(`${BACKEND_LINK}/editcourse/updateCourse`, requestOptions)
-    .then(response => response.json())
+    .then(response => response.text())
     .then(result => {
 
-      Unauthorized(result.status,`edit-course?code=${code}`)
+      // Unauthorized(result.status,`edit-course?code=${code}`)
 
       console.log(result)
-      if(result.variable == "200"){
-        SuccessAlert("Course Updated!",result.message)
+      // if(result.variable == "200"){
+      //   SuccessAlert("Course Updated!",result.message)
 
-        setTimeout(() => {
-          window.location.href = "/courses"
-        }, 1000);
-      }else{
-        ErrorAlert("Error",result.message)
-      }
+      //   setTimeout(() => {
+      //     window.location.href = "/courses"
+      //   }, 1000);
+      // }else{
+      //   ErrorAlert("Error",result.message)
+      // }
 
     })
     .catch(error => console.log('error', error));
