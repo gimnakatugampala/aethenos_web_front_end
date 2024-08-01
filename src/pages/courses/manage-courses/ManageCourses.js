@@ -496,8 +496,7 @@ const ManageCourses = () => {
         style={{
           color: "#fff",
           height: 64,
-          paddingInline: 50,
-          lineHeight: "normal",
+          paddingInline: 50,        
           backgroundColor: "#000",
         }}
       >
