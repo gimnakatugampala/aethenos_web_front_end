@@ -5,17 +5,20 @@ import Sidenav from "./Sidenav";
 import Header from "./Header";
 import Footer from "./Footer";
 import "../../assets/styles/main.css";
+import { ButtonBase } from "@mui/material";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import MenuIcon from '@mui/icons-material/Menu';
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
 function Main({ children }) {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [placement, setPlacement] = useState("right");
-  const [sidenavColor, setSidenavColor] = useState("#DC143C");
+  const [sidenavColor, setSidenavColor] = useState("#fffff");
   const [sidenavType, setSidenavType] = useState("transparent");
   const [fixed, setFixed] = useState(true);
 
-  const openDrawer = () => setVisible(!visible);
+  const openDrawer = () => setVisible(visible);
   const handleSidenavType = (type) => setSidenavType(type);
   const handleSidenavColor = (color) => setSidenavColor(color);
   const handleFixedNavbar = (type) => setFixed(type);
@@ -37,8 +40,9 @@ function Main({ children }) {
         pathname === "profile" ? "layout-profile" : ""
       } ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}
     >
-      {/* <Drawer
+      <Drawer     
         title={false}
+        
         placement={placement === "right" ? "left" : "right"}
         closable={false}
         onClose={() => setVisible(false)}
@@ -50,7 +54,7 @@ function Main({ children }) {
         } `}
       >
         <Layout
-          className={`layout-dashboard ${ 
+          className={`layout-dashboard ${
             pathname === "rtl" ? "layout-dashboard-rtl" : ""
           }`}
         >
@@ -61,14 +65,14 @@ function Main({ children }) {
             className={`sider-primary ant-layout-sider-primary ${
               sidenavType === "#fff" ? "active-route" : ""
             }`}
-            style={{ background: sidenavType , }}
+            style={{ background: sidenavType }}
           >
             <Sidenav color={sidenavColor} />
           </Sider>
         </Layout>
-      </Drawer> */}
+      </Drawer>
 
-            <div >
+      <div className="max-width-sider">
         <Sider
           breakpoint="lg"
           collapsedWidth="0"
@@ -81,13 +85,32 @@ function Main({ children }) {
           className={`sider-primary ant-layout-sider-primary ${
             sidenavType === "#fff" ? "active-route" : ""
           }`}
-          style={{height: "100%" ,top: "95px"}}
+          style={{ height: "100%", top: "95px" }}
         >
           <Sidenav color={sidenavColor} />
-        </Sider> 
-        </div>
+        </Sider>
+      </div>
 
       <Layout>
+        <ButtonBase className="button-left-arrow-header" 
+          sx={{
+            position: "fixed",
+            borderRadius: "10px",
+            overflow: "hidden",     
+            color: "#ff4d4f",  
+            top: "25px",
+            left: "18px",       
+            zIndex: "999",
+            transition: 'background-color 0.3s ease', 
+            '&:hover': {
+              backgroundColor: '#bfbfbf', 
+            },
+          }}
+        onClick={() => setVisible(true)}
+ 
+        >
+          <MenuIcon className="menu-icon" sx={{ fontSize: '30px' }} />
+        </ButtonBase>
         {fixed ? (
           <Affix>
             <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>

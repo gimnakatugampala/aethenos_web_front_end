@@ -47,7 +47,7 @@ const StepOne = ({setcourse_title , setcourse_category}) => {
       </div>
 
         <Select
-        style={{width:'400px'}}
+        style={{width:'400px'}} 
         className='my-2 category-select'
         size='large'
         placeholder="Select Course Category"

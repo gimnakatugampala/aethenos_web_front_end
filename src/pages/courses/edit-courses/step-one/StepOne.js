@@ -29,7 +29,7 @@ const StepOne = ({course_title,setcourse_title,course_cat,setcourse_cat}) => {
   return (
     <div className="stepone-container">
 
-      <div>
+      <div> 
       <div className='my-5'>
       <Typography.Title
         level={3}>

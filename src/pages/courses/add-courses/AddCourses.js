@@ -171,7 +171,7 @@ const AddCourses = () => {
     // console.log(course_title)
     // console.log(course_category)
     // console.log(course_keywords)
-    // console.log(course_image)
+    // console.log(course_image) 
     // console.log(course_test_video)
   }
 

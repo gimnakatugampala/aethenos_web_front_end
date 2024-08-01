@@ -119,9 +119,9 @@ const EditCourse = () => {
     }
   
     return (
-     <div>
+     <div className='all-courses-container'>
   
-  <Card bordered={false}>  
+  <Card bordered={false}>   
     <Box direction='vertical' sx={{ width: '100%'}}>
           
         <Stepper className='my-2' activeStep={activeStep}>

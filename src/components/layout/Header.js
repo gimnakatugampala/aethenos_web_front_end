@@ -40,7 +40,9 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { GetInstructorProfileDetails, GetNotificationsLatest } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
-import logo from "../../assets/images/utils/aethenos_logo.jpg";
+import logoFull from "../../assets/images/utils/aethenos_logo.jpg";
+import logoSmall from "../../assets/images/utils/aethenos_logo_small.png";
+import { ButtonBase } from "@mui/material";
 
 const calculateTimeAgo = (dateString) => {
   const now = new Date();
@@ -88,8 +90,6 @@ function Header({
   }, []);
 
   const handleNotification = () => {
-    // Add your notification logic here
-    // For example, add a new notification to the list
     const newNotification = {
       id: Date.now(),
       message: "New notification message",
@@ -136,11 +136,22 @@ function Header({
     <>
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
-        <div className="brand">
-        <img width="150" src={logo} alt="LOGO" />
-        {/* <span>Aethenos</span> */}
-      </div>
-        
+          <div className="brand brand-small">
+            <img
+              width="25"
+              src={logoSmall}
+              alt="LOGO"
+              style={{ marginRight: "10px", marginLeft: "20px" }}
+            />
+          </div>
+          <div className="brand brand-large">
+            <img
+              width="150"
+              src={logoFull}
+              alt="LOGO"
+              style={{ marginRight: "10px" }}
+            />
+          </div>
         </Col>
         <Col span={24} md={18} className="header-control">
           <React.Fragment>

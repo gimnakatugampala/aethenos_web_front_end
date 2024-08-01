@@ -1,24 +1,20 @@
-
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import ChatIcon from '@mui/icons-material/Chat';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import SpeakerPhoneIcon from '@mui/icons-material/SpeakerPhone';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import ChatIcon from "@mui/icons-material/Chat";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import SpeakerPhoneIcon from "@mui/icons-material/SpeakerPhone";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import logoFull from "../../assets/images/utils/aethenos_logo.jpg";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace("/", "");
-
-  
-
-
 
   const signup = [
     <svg
@@ -42,10 +38,16 @@ function Sidenav({ color }) {
 
   return (
     <>
-  
-      
-      <Menu theme="light" mode="inline" >
-       
+      <Menu theme="light" mode="inline">
+        <div className="brand brand-nav-large">
+          <img
+            width="150"
+            src={logoFull}
+            alt="LOGO"
+            // style={{ marginRight: "10px" }}
+          />
+        </div>
+
         <Menu.Item className="menu-item-header" key="1">
           Courses
         </Menu.Item>
@@ -61,9 +63,8 @@ function Sidenav({ color }) {
               <AutoStoriesIcon />
             </span>
             <span className="label">Courses</span>
-          </NavLink>  
+          </NavLink>
         </Menu.Item>
-
 
         <Menu.Item className="menu-item-header" key="3">
           Communications
@@ -71,14 +72,14 @@ function Sidenav({ color }) {
 
         <Menu.Item key="4">
           <NavLink to="/communications/qa">
-          <span
+            <span
               className="icon"
               style={{
                 background: page === "communications/qa" ? color : "",
               }}
-           >
-            <QuestionMarkIcon />
-          </span>
+            >
+              <QuestionMarkIcon />
+            </span>
             <span className="label">Q & A</span>
           </NavLink>
         </Menu.Item>
@@ -90,14 +91,14 @@ function Sidenav({ color }) {
               style={{
                 background: page === "communications/messages" ? color : "",
               }}
-           >
-            <ChatIcon />
+            >
+              <ChatIcon />
             </span>
             <span className="label">Messages</span>
           </NavLink>
         </Menu.Item>
 
-          {/* <Menu.Item key="6">
+        {/* <Menu.Item key="6">
           <NavLink to="/communications/assignments">
             <span
               className="icon"
@@ -116,15 +117,15 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "communications/announcements" ? color : "",
+                background:
+                  page === "communications/announcements" ? color : "",
               }}
-           >
-            <SpeakerPhoneIcon />
-          </span>
+            >
+              <SpeakerPhoneIcon />
+            </span>
             <span className="label">Announcements</span>
           </NavLink>
         </Menu.Item>
-
 
         <Menu.Item className="menu-item-header" key="8">
           Performance
@@ -137,9 +138,9 @@ function Sidenav({ color }) {
               style={{
                 background: page === "performance/overview" ? color : "",
               }}
-           > 
-           <LeaderboardIcon />
-           </span>
+            >
+              <LeaderboardIcon />
+            </span>
             <span className="label">Dashboard</span>
           </NavLink>
         </Menu.Item>
@@ -151,21 +152,23 @@ function Sidenav({ color }) {
               style={{
                 background: page === "performance/students" ? color : "",
               }}
-           >
-            <PersonOutlineIcon />
-          </span>
+            >
+              <PersonOutlineIcon />
+            </span>
             <span className="label">Students</span>
           </NavLink>
         </Menu.Item>
 
-          <Menu.Item key="11">
+        <Menu.Item key="11">
           <NavLink to="/performance/reviews">
             <span
               className="icon"
               style={{
                 background: page === "performance/reviews" ? color : "",
               }}
-           >{signup}</span>
+            >
+              {signup}
+            </span>
             <span className="label">Reviews</span>
           </NavLink>
         </Menu.Item>
@@ -228,7 +231,6 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item> */}
       </Menu>
-      
     </>
   );
 }

@@ -83,145 +83,147 @@
   }
 }
 @media (max-width: 991px) {
-  .all-courses-container{
+  .all-courses-container {
     display: contents;
     margin-left: 20%;
     padding-right: 10%;
   }
+}
+@media (min-width: 991px) {
+  .button-left-arrow-header {
+    display: none !important;
+  }
+  .brand-small {
+    display: none !important;
+  }
 
+  .brand-nav-large {
+    display: none !important;
+  }
+}
+@media (max-width: 991px) {
+  .max-width-sider {
+    display: none !important;
+  }
 
+  .brand-large {
+    display: none !important;
+  }
 }
 
 @media (min-width: 991px) and (max-width: 1000px) {
-  .all-courses-container{
-    width: 55%;
-    float: unset;
-}
+  .all-courses-container {
+    width: 74%;
+    float: right;
+  }
 
-.submit-for-review-text{
-  font-size: 2px !important;
-}
+  .submit-for-review-text {
+    font-size: 2px !important;
+  }
 }
 
 @media (min-width: 1000px) and (max-width: 1200px) {
-  .all-courses-container{
+  .all-courses-container {
     width: 78%;
     float: right;
-}
+  }
 }
 
 @media (min-width: 1200px) and (max-width: 1400px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 82%;
     float: right;
-}
-
+  }
 }
 
 @media (min-width: 1400px) and (max-width: 1600px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 84%;
     float: right;
-}
-
+  }
 }
 
 @media (min-width: 1600px) and (max-width: 1800px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 86%;
     float: right;
-}
-
+  }
 }
 @media (min-width: 1800px) and (max-width: 2000px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 88%;
     float: right;
-}
-
+  }
 }
 
 @media (min-width: 2000px) and (max-width: 2200px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 90%;
     float: right;
-}}
+  }
+}
 @media (min-width: 2200px) and (max-width: 2400px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 91%;
     float: right;
-}}
+  }
+}
 
 @media (min-width: 2400px) and (max-width: 3400px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 91%;
     float: right;
-}
-
+  }
 }
 @media (min-width: 3400px) and (max-width: 5800px) {
-  .all-courses-container{
+  .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
     width: 93%;
     float: right;
-}
-
+  }
 }
 @media (min-width: 900px) and (max-width: 1000px) {
-  .course-landing-page-responsive{
+  .course-landing-page-responsive {
     max-width: 72%;
-   }
-
+  }
 }
 @media (min-width: 1000px) and (max-width: 1100px) {
-  .course-landing-page-responsive{
+  .course-landing-page-responsive {
     max-width: 74%;
-   }
-
+  }
 }
 @media (min-width: 1100px) and (max-width: 1200px) {
-  .course-landing-page-responsive{
+  .course-landing-page-responsive {
     max-width: 76%;
-   }
-
+  }
 }
 @media (min-width: 1200px) and (max-width: 1300px) {
-  .course-landing-page-responsive{
+  .course-landing-page-responsive {
     max-width: 78%;
-   }
-
+  }
 }
 @media (min-width: 1300px) and (max-width: 1400px) {
-  .course-landing-page-responsive{
+  .course-landing-page-responsive {
     max-width: 80%;
-   }
-
+  }
 }
 @media (min-width: 1400px) and (max-width: 1500px) {
-  .course-landing-page-responsive{
+  .course-landing-page-responsive {
     max-width: 82%;
-   }
-
+  }
 }
-
-
-
-
-
-
-
