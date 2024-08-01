@@ -37,7 +37,7 @@ import PaidIcon from "@mui/icons-material/Paid";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Cookies from "js-cookie";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { GetInstructorProfileDetails, GetNotifications } from "../../api";
+import { GetInstructorProfileDetails, GetNotificationsLatest } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
 
@@ -83,7 +83,7 @@ function Header({
   const [uploadImage, setuploadImage] = useState("");
 
   useEffect(() => {
-    GetNotifications(setNotifications);
+    GetNotificationsLatest(setNotifications);
   }, []);
 
   const handleNotification = () => {

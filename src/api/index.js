@@ -3975,6 +3975,38 @@ fetch(`${BACKEND_LINK}/chat/sendChat`, requestOptions)
 
  }
 
+ export const GetNotificationsLatest = async(setNotifications) =>{
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow"
+  };
+  
+  fetch(`${BACKEND_LINK}/notification/getOwnNotifications`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      Unauthorized(result.status,"courses")
+      if (result && result.length > 0) {
+        // Get the latest notification by sorting based on notificationTime
+        const latestNotification = result.sort((a, b) => new Date(b.notificationTime) - new Date(a.notificationTime)).slice(0, 5);
+  
+        // Set the latest notification
+        setNotifications(latestNotification);
+      } else {
+        // If no notifications, set an empty object or handle accordingly
+        setNotifications([]);
+      }
+
+    })
+    .catch((error) => console.error(error));
+
+ }
+
  export const GetNotifications = async(setNotifications) =>{
 
   var myHeaders = new Headers();
@@ -3991,7 +4023,17 @@ fetch(`${BACKEND_LINK}/chat/sendChat`, requestOptions)
     .then((result) => {
       console.log(result)
       Unauthorized(result.status,"courses")
-      setNotifications(result)
+      if (result && result.length > 0) {
+        // Get the latest notification by sorting based on notificationTime
+        const latestNotification = result.sort((a, b) => new Date(b.notificationTime) - new Date(a.notificationTime));
+  
+        // Set the latest notification
+        setNotifications(latestNotification);
+      } else {
+        // If no notifications, set an empty object or handle accordingly
+        setNotifications([]);
+      }
+
     })
     .catch((error) => console.error(error));
 
