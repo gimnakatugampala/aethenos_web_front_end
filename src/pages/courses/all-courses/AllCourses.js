@@ -49,14 +49,14 @@ const AllCourses = () => {
 
     
         <Search
-        className="w-95 mx-4 custom-search"
+        className="w-100 mx-4 custom-search"
           placeholder="Search Courses"
           onSearch={onSearch}
           enterButton
           
         />
 
-        <Button type="primary" className=" mt-1" danger>
+        <Button type="primary" className="" danger>
           <a className="icon-container" href="/add-courses">
             <PlusOutlined className="icon" />
             Add Course

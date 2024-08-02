@@ -36,14 +36,14 @@ function RevenueReport() {
 
   return (
     <div className=" all-courses-container mb-5">
-      <div className="row mb-4 mx-2" style={{justifyContent: "space-between"}}>
+      <div className="row mb-4 mx-3" style={{justifyContent: "space-between"}}>
         <Typography className="m-0 p-0" variant="h4" gutterBottom>
           Dashboard
         </Typography>
         <span className="p-0 m-0">Get top insights about your performance</span>
       </div>
 
-      <Card className="px-5 m-3 py-3">
+      <Card className="px-5 py-3">
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
           {/* Total Revenue */}
           <Tab
