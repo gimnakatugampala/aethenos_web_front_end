@@ -51,7 +51,9 @@ const Notification = () => {
           </div>
         </div>
         <Card className="border-rad-20">
-          <MaterialTable
+        <div className="px-5 m-3 py-3">
+        
+        <MaterialTable
             className="border-rad-20 p-2 px-4 mx-5"
             title=""
             columns={[
@@ -59,14 +61,14 @@ const Notification = () => {
                 title: "Notification",
                 field: "notification",
                 headerStyle: headerCellStyle,
-                cellStyle: { width: "70%" }, 
+                cellStyle: { width: "60%" }, 
               },
               {
                 title: "Notification Time",
               field: "notificationTime",
               headerStyle: headerCellStyle,
               render: rowData => formatDateTime(rowData.notificationTime), // Formatting the date and time
-              cellStyle: { width: "30%" }, 
+              cellStyle: { width: "40%" }, 
             
               },
             ]}
@@ -76,6 +78,7 @@ const Notification = () => {
               exportButton: true,
             }}
           />
+          </div>
         </Card>
       </div>
  

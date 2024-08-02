@@ -73,8 +73,8 @@ const SignIn = () => {
 
   return (
     <>
-    <Card>
-      <Layout className="">
+    {/* <Card> */}
+      <Layout className="" >
         {loading && <MainLoader />}
 
         <Content className="signin">
@@ -162,7 +162,7 @@ const SignIn = () => {
           </Row>
         </Content>
       </Layout>
-      </Card>
+      {/* </Card> */}
     </>
   );
 };
