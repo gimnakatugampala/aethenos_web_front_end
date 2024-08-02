@@ -44,7 +44,7 @@ const Students = () => {
     GetCousesOfInstructror(setcmbCourses);
     console.log(cmbCourses);
   }, [cmbCourses]);
-
+ 
   useEffect(() => {
     StudentsEnrolled(setstudents, courseCode);
   }, [courseCode]);
@@ -81,8 +81,12 @@ const Students = () => {
         </div>
       </div>
       <Card className="border-rad-20">
+    
+       <div className="px-5 m-3 py-3">
+            {/* Education Announcement */}
+            <>
         <MaterialTable
-          className="border-rad-20 p-2 mx-5"
+          className="border-rad-20 mx-5"
           title="Student List"
           columns={[
             {
@@ -154,6 +158,10 @@ const Students = () => {
             exportButton: true,
           }}
         />
+    </>
+
+    </div>
+
       </Card>
     </div>
   );

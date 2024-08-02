@@ -43,7 +43,7 @@ function RevenueReport() {
         <span className="p-0 m-0">Get top insights about your performance</span>
       </div>
 
-      <Card className="p-3">
+      <Card className="px-5 m-3 py-3">
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
           {/* Total Revenue */}
           <Tab

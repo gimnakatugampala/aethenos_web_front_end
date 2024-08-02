@@ -91,7 +91,7 @@ const Annoucements = () => {
     <div className="all-courses-container  mb-5">
       <div
         className="row mb-4 mx-2"
-        style={{ justifyContent: "space-between" }}
+        style={{ justifyContent: "space-between" }} 
       >
         <div className="col-md-4">
           <Typography variant="h4" gutterBottom>

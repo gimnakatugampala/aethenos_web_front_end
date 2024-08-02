@@ -327,10 +327,10 @@ const MyProfile = () => {
         <Tabs
           defaultActiveKey="up"
           id="uncontrolled-tab-example"
-          className="my-3"
+          className="my-3 mx-5"
         >
           <Tab eventKey="up" title="Your Profile">
-            <div className="row">
+            <div className="row mx-4" style={{ justifyContent: "center" }}>
               <div className="col-md-8">
                 <p className="m-0 p-0">
                   <b>Profile picture</b>
@@ -501,7 +501,7 @@ const MyProfile = () => {
                 </div>
               </div>
 
-              <Card className="col-md-12  border border-secondary p-4 m-3">
+              <Card className="col-md-11  border border-secondary p-4 m-3">
                 <div>
                   <Form.Label>
                     <b>External course link and ratings (optional):</b>
@@ -602,15 +602,17 @@ const MyProfile = () => {
               </Card>
             </div>
 
-            {btn_loading ? (
-              <Button variant="contained">
-                <Spinner size="sm" animation="border" variant="light" />
-              </Button>
-            ) : (
-              <Button onClick={handleProfileData} variant="contained">
-                Save
-              </Button>
-            )}
+            <div style={{ float: "right" }}>
+              {btn_loading ? (
+                <Button variant="contained">
+                  <Spinner size="sm" animation="border" variant="light" />
+                </Button>
+              ) : (
+                <Button onClick={handleProfileData} variant="contained">
+                  Save
+                </Button>
+              )}
+            </div>
           </Tab>
 
           <Tab eventKey="instructor-terms" title="Instructor Terms">
@@ -638,6 +640,7 @@ const MyProfile = () => {
                 <Button
                   onClick={handleSubmitInstructorTerms}
                   variant="contained"
+                  className="mt-3"
                 >
                   Save
                 </Button>
@@ -842,7 +845,7 @@ const MyProfile = () => {
                       </div>
                     </div>
 
-                    <div className="col-md-12 my-3">
+                    <div style={{ float: "right" }}>
                       {btn_loading_payment_details ? (
                         <Button variant="contained">
                           <Spinner
