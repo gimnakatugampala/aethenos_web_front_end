@@ -240,15 +240,15 @@ fetch(`${BACKEND_LINK}/editcourse/getCourseByCode/${code}`, requestOptions)
       Unauthorized(result.status,`edit-course?code=${code}`)
 
       console.log(result)
-      if(result.variable == "200"){
-        SuccessAlert("Course Updated!",result.message)
+      // if(result.variable == "200"){
+      //   SuccessAlert("Course Updated!",result.message)
 
-        setTimeout(() => {
-          window.location.href = "/courses"
-        }, 1000);
-      }else{
-        ErrorAlert("Error",result.message)
-      }
+      //   setTimeout(() => {
+      //     window.location.href = "/courses"
+      //   }, 1000);
+      // }else{
+      //   ErrorAlert("Error",result.message)
+      // }
 
     })
     .catch(error => console.log('error', error));
