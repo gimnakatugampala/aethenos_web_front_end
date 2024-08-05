@@ -61,7 +61,7 @@ const Students = () => {
           </Typography>
         </div>
 
-        <div className="col-md-2" style={{ float: "right" }}>
+        <div className="col-md-2 mt-3 mt-md-2" style={{ float: "right" }}>
           <FormControl fullWidth>
             <Select
               onChange={handleSelectQA}
@@ -82,8 +82,8 @@ const Students = () => {
       </div>
       <Card className="border-rad-20">
     
-       <div className="px-5 m-3 py-3">
-            {/* Education Announcement */}
+       <div className="m-3">
+            {/* Education Announcement */} 
             <>
         <MaterialTable
           className="border-rad-20 mx-5"

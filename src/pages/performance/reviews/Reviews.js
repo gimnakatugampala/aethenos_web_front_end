@@ -60,13 +60,13 @@ const Reviews = () => {
             Reviews
           </Typography>
         </div>
-        <Card className="border-rad-20" style={{ padding: "2%" }}>
-          <div className="row">
+        <Card className="border-rad-20">
+          <div className="row outer-shadow-box m-3" >
             <div
-              className="col-3 bg-white pt-4 mt-0"
+              className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 bg-white pt-4 mt-0"
               // style={{ height: "1000vh" }}
             >
-              <div className="combo-box mb-4">
+              <div className="combo-box mb-4 px-2">
                 <Select onChange={handleSelectReviews}
                   placeholder="All Courses"
                   size='large'

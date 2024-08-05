@@ -176,8 +176,8 @@ useEffect(() => {
         </div>
         
 
-        <Card className="p-3 border-rad-20 mb-4" >
-          <Container fluid>
+        <Card className="border-rad-20 mb-4" >
+          <div className="outer-shadow-box m-3">
             <Row  className="vh-130">
 
               <Col sm={5} md={5} lg={4} className="bg-light border-right">
@@ -300,7 +300,7 @@ useEffect(() => {
             </Row>
            
 
-          </Container>
+          </div>
         </Card>
       </div>
 

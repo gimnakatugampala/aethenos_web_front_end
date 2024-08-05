@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ScrollBarPage from "./ScrollBarPage";
-import {
-  Container,
-  Row,
-} from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import "./QA.css";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -22,7 +19,7 @@ import {
   GetCousesOfInstructror,
 } from "../../../api";
 import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
-import { Select, Space } from 'antd';
+import { Select, Space } from "antd";
 import { Paper } from "@mui/material";
 
 const QA = () => {
@@ -78,14 +75,17 @@ const QA = () => {
 
   return (
     <div className=" all-courses-container mb-5">
-      <div className="row mb-4 mx-2" style={{justifyContent: "space-between"}}>
+      <div
+        className="row mb-4 mx-2"
+        style={{ justifyContent: "space-between" }}
+      >
         <div className=" col-md-2 ">
           <Typography variant="h4" gutterBottom>
             Q&A
           </Typography>
         </div>
 
-        <div className="col-md-2" style={{float: "right"}}>
+        <div className="col-md-2" style={{ float: "right" }}>
           <FormControl fullWidth>
             <Select
               onChange={handleSelectQA}
@@ -106,77 +106,71 @@ const QA = () => {
           </FormControl>
         </div>
       </div>
-    
 
-      <Card className="border-rad-20 p-2">
-      <Container fluid className="p-3 ">
-      <Row  className="vh-130 ">
-
-        <div className="row ">
-          <div className="col-md-4 bg-light p-3">
-            {questions.length > 0 ? (
-              <Questions
-                setanswerContent={setanswerContent}
-                questions={questions}
-                setquestionItemContent={setquestionItemContent}
-                setquestionItemCode={setquestionItemCode}
-               
-              />
-            ) : (
-              <Paper
-             
-                square
-                sx={{ height: "505px", overflow: "auto", pb: "50px" }}
-              >
-                <div
-                  className="d-flex justify-content-center align-items-center h-100"
-                  style={{ height: "100vh" }}
-                >
-                  <h4>No Questions Found</h4>
-                </div>
-              </Paper>
-            )}
-          </div>
-
-          <div className="col-md-8">
-            <div className="mb-3 d-flex align-items-start">
-              {questionItemContent != "" && (
-                <ScrollBarPage
-                  answerContent={answerContent}
-                  questionItemContent={questionItemContent}
-                />
-              )}
-            </div>
-
-            <div className="d-flex align-items-end">
-              {questionItemContent != "" && (
-                <InputGroup className="mb-3 d-flex align-items-end">
-                  <Form.Control
-                    as="textarea"
-                    value={answer}
-                    onChange={(e) => setanswer(e.target.value)}
-                    placeholder="Post a public answer"
-                    aria-label="Post a public answer"
-                    aria-describedby="basic-addon2"
+      <Card className="border-rad-20">
+        <div className="outer-shadow-box m-3 ">
+          <Row className="vh-130 ">
+            <div className="row ">
+              <div className="col-md-4 bg-light p-3">
+                {questions.length > 0 ? (
+                  <Questions
+                    setanswerContent={setanswerContent}
+                    questions={questions}
+                    setquestionItemContent={setquestionItemContent}
+                    setquestionItemCode={setquestionItemCode}
                   />
-                  <div className="col-2"  style={{display: "contents"}}>
-                    <Button
-                      onClick={handlePublishAnswer}
-                      variant="contained"
-                      className="w-90 p-3 m-1"
-                     
+                ) : (
+                  <Paper
+                    square
+                    sx={{ height: "505px", overflow: "auto", pb: "50px" }}
+                  >
+                    <div
+                      className="d-flex justify-content-center align-items-center h-100"
+                      style={{ height: "100vh" }}
                     >
-                      Publish
-                    </Button>
-                  </div>
-                </InputGroup>
-              )}
+                      <h4>No Questions Found</h4>
+                    </div>
+                  </Paper>
+                )}
+              </div>
+
+              <div className="col-md-8">
+                <div className="mb-3 d-flex align-items-start">
+                  {questionItemContent != "" && (
+                    <ScrollBarPage
+                      answerContent={answerContent}
+                      questionItemContent={questionItemContent}
+                    />
+                  )}
+                </div>
+
+                <div className="d-flex align-items-end">
+                  {questionItemContent != "" && (
+                    <InputGroup className="mb-3 d-flex align-items-end">
+                      <Form.Control
+                        as="textarea"
+                        value={answer}
+                        onChange={(e) => setanswer(e.target.value)}
+                        placeholder="Post a public answer"
+                        aria-label="Post a public answer"
+                        aria-describedby="basic-addon2"
+                      />
+                      <div className="col-2" style={{ display: "contents" }}>
+                        <Button
+                          onClick={handlePublishAnswer}
+                          variant="contained"
+                          className="w-90 p-3 m-1"
+                        >
+                          Publish
+                        </Button>
+                      </div>
+                    </InputGroup>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          </Row>
         </div>
-        </Row>
-              </Container>
-            
       </Card>
     </div>
   );

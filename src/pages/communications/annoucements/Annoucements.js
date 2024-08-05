@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Annoucements.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { Card } from "antd";
+import Card from "@mui/material/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -31,7 +31,6 @@ const Annoucements = () => {
 
   const [courseCode, setcourseCode] = useState("");
   const [annoucements, setannoucements] = useState([]);
-
 
   // Add Annoucement
   const handleAddAnnouncement = () => {
@@ -91,7 +90,7 @@ const Annoucements = () => {
     <div className="all-courses-container  mb-5">
       <div
         className="row mb-4 mx-2"
-        style={{ justifyContent: "space-between" }} 
+        style={{ justifyContent: "space-between" }}
       >
         <div className="col-md-4">
           <Typography variant="h4" gutterBottom>
@@ -121,117 +120,121 @@ const Annoucements = () => {
         </div>
       </div>
 
-      <Card>
-        <Tabs
-          defaultActiveKey="home"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-        >
-          <Tab
-            eventKey="home"
-            title={
-              <div className="tab-title">
-                <div>Educational announcement</div>
-              </div>
-            }
+     
+      <Card className="border-rad-20">
+        <div className="outer-shadow-box m-3">
+          <Tabs
+            defaultActiveKey="home"
+            id="uncontrolled-tab-example"
+            className="mb-3 "
           >
-            {/* Education Announcement */}
-            <>
-              <div>
-                <div className="d-flex align-items-center my-3">
-                  {isComposeVisible ? (
-                    <Button
-                      size="sm"
-                      variant="outline-danger"
-                      className="float-end"
-                      onClick={toggleCompose}
-                    >
-                      <i class="fa-solid fa-xmark"></i> Cancel
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      variant="danger"
-                      className="float-end"
-                      onClick={toggleCompose}
-                    >
-                      <i class="fa-solid fa-plus"></i> Compose
-                    </Button>
+            <Tab
+              eventKey="home"
+              title={
+                <div className="tab-title">
+                  <div>Educational announcement</div>
+                </div>
+              }
+            >
+              {/* Education Announcement */}
+              <>
+                <div>
+                  <div className="d-flex align-items-center my-3">
+                    {isComposeVisible ? (
+                      <Button
+                        size="sm"
+                        variant="outline-danger"
+                        className="float-end"
+                        onClick={toggleCompose}
+                      >
+                        <i class="fa-solid fa-xmark"></i> Cancel
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        className="float-end"
+                        onClick={toggleCompose}
+                      >
+                        <i class="fa-solid fa-plus"></i> Compose
+                      </Button>
+                    )}
+                  </div>
+
+                  {isComposeVisible && (
+                    <div>
+                      <div>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Content</Form.Label>
+                          <Form.Control
+                            onChange={(e) =>
+                              setannouncementTitle(e.target.value)
+                            }
+                            type="text"
+                            placeholder="Announcement and email title (55 character max)"
+                          />
+                        </Form.Group>
+
+                        <div className="my-3">
+                          <Form.Label>Select Course</Form.Label>
+                          <Form.Select
+                            onChange={handleSelectCourseName}
+                            defaultValue={""}
+                            aria-label="Default select example"
+                          >
+                            <option value={""}>All courses</option>
+                            {cmbCourses.length > 0 &&
+                              cmbCourses.map((course, index) => (
+                                <option key={index} value={course.code}>
+                                  {course.title}
+                                </option>
+                              ))}
+                          </Form.Select>
+                        </div>
+
+                        <JoditEditor onChange={(e) => setAnnoucementDesc(e)} />
+
+                        <br></br>
+                        <div className="d-flex align-items-center px-3">
+                          <Button
+                            onClick={handleAddAnnouncement}
+                            variant="danger"
+                            className="mb-3"
+                          >
+                            <i class="fa-regular fa-paper-plane"></i> Send
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </div>
 
-                {isComposeVisible && (
-                  <div>
-                    <div>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Content</Form.Label>
-                        <Form.Control
-                          onChange={(e) => setannouncementTitle(e.target.value)}
-                          type="text"
-                          placeholder="Announcement and email title (55 character max)"
-                        />
-                      </Form.Group>
-
-                      <div className="my-3">
-                        <Form.Label>Select Course</Form.Label>
-                        <Form.Select
-                          onChange={handleSelectCourseName}
-                          defaultValue={""}
-                          aria-label="Default select example"
-                        >
-                          <option value={""}>All courses</option>
-                          {cmbCourses.length > 0 &&
-                            cmbCourses.map((course, index) => (
-                              <option key={index} value={course.code}>
-                                {course.title}
-                              </option>
-                            ))}
-                        </Form.Select>
-                      </div>
-
-                      <JoditEditor onChange={(e) => setAnnoucementDesc(e)} />
-
-                      <br></br>
-                      <div className="d-flex align-items-center px-3">
-                        <Button
-                          onClick={handleAddAnnouncement}
-                          variant="danger"
-                          className="mb-3"
-                        >
-                          <i class="fa-regular fa-paper-plane"></i> Send
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
+                {!isComposeVisible && (
+                  <p>
+                    You can send educational announcements to your students
+                    here. Students will get these announcements via their
+                    Aethenos account dashboard.
+                  </p>
                 )}
-              </div>
 
-              {!isComposeVisible && (
-                <p>
-                  You can send educational announcements to your students here.
-                  Students will get these announcements via their Aethenos
-                  account dashboard.
-                </p>
-              )}
-
-              <MaterialTable
-                title=""
-                columns={[
-                  { title: "Announcement Title", field: "tittle" },
-                  { title: "Announcement Content", field: "content" },
-                  { title: "Created Date", field: "createdDate" },
-                ]}
-                data={annoucements}
-                options={{
-                  exportButton: true,
-                }}
-              />
-
-          
-            </>
-          </Tab>
-        </Tabs>
-      </Card>
+                <MaterialTable
+                  title=""
+                  columns={[
+                    { title: "Announcement Title", field: "tittle" },
+                    { title: "Announcement Content", field: "content" },
+                    { title: "Created Date", field: "createdDate" },
+                  ]}
+                  data={annoucements}
+                  options={{
+                    exportButton: true,
+                  }}
+                />
+              </>
+            </Tab>
+          </Tabs>
+          </div>
+        </Card>
+   
     </div>
   );
 };

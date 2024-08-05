@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "antd";
+import Card from "@mui/material/Card";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { LineChart } from "@mui/x-charts/LineChart";
@@ -43,7 +43,8 @@ function RevenueReport() {
         <span className="p-0 m-0">Get top insights about your performance</span>
       </div>
 
-      <Card className="px-5 py-3">
+      <Card className="border-rad-20">
+      <div className="row outer-shadow-box m-3" >
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
           {/* Total Revenue */}
           <Tab
@@ -125,6 +126,7 @@ function RevenueReport() {
               Revenue Report <i className="fa-solid fa-angle-right"></i>
             </a>
           </Card>
+        </div>
         </div>
       </Card>
     </div>

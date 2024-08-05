@@ -139,7 +139,9 @@ const CourseItem = ({ course, filledPercent }) => {
                     )
                   )}
                 </span>
+                <div className="ant-progress-outer" style={{ width: "calc(100% - 10px)"}}>
                 <Progress percent={percent} />
+                </div>
               </div>
             </div>
           </div>
