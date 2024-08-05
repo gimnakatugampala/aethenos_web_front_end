@@ -216,8 +216,14 @@ fetch(`${BACKEND_LINK}/editcourse/getCourseByCode/${code}`, requestOptions)
   var formdata = new FormData();
   formdata.append("code", `${code}`);
   formdata.append("course_title", `${course_title}`);
-  formdata.append("img", course_img);
-  formdata.append("test_video", course_video);
+  if(course_img != ""){
+    formdata.append("img", course_img);
+  }
+
+  if(course_video != ""){
+    formdata.append("test_video", course_video);
+  }
+  
   formdata.append("approval_type_id", "1");
   formdata.append("course_category_id", `${course_cat}`);
   formdata.append("keywords", `${keywords[0]}`);
@@ -234,21 +240,21 @@ fetch(`${BACKEND_LINK}/editcourse/getCourseByCode/${code}`, requestOptions)
   };
   
   fetch(`${BACKEND_LINK}/editcourse/updateCourse`, requestOptions)
-    .then(response => response.text())
+    .then(response => response.json())
     .then(result => {
 
       Unauthorized(result.status,`edit-course?code=${code}`)
 
       console.log(result)
-      // if(result.variable == "200"){
-      //   SuccessAlert("Course Updated!",result.message)
+      if(result.variable == "200"){
+        SuccessAlert("Course Updated!",result.message)
 
-      //   setTimeout(() => {
-      //     window.location.href = "/courses"
-      //   }, 1000);
-      // }else{
-      //   ErrorAlert("Error",result.message)
-      // }
+        setTimeout(() => {
+          window.location.href = "/courses"
+        }, 1000);
+      }else{
+        ErrorAlert("Error",result.message)
+      }
 
     })
     .catch(error => console.log('error', error));
@@ -2979,42 +2985,47 @@ fetch(`${BACKEND_LINK}/managecourse/setPreviewVideo`, requestOptions)
   setprofile_img) =>{
 
   var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
+  fetch(`${BACKEND_LINK}/instructor/getInstructorProfileDetails`, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      Unauthorized(result.status,`profile`)
+      setfirst_Name(result.first_name == null ? "" : result.first_name)
+      setlast_name(result.last_name == null ? "" : result.last_name)
+      setheadline(result.headline == null ? "" : result.headline)
+      setbiography(result.biography == null ? "" : result.biography)
+      setwebsite(result.website == null ? "" : result.website)
+      settwitter(result.twitter == null ? "" : result.twitter)
+      setfacebook(result.facebook == null ? "" : result.facebook)
+      setlinkedin(result.linkedin == null ? "" : result.linkedin)
+      setyoutube(result.youtube == null ? "" : result.youtube)
+      
+      if (result.instructorExternalDetailsResponse && result.instructorExternalDetailsResponse.length > 0) {
+        setlink_to_course(result.instructorExternalDetailsResponse[0].linkToCourse == null ? "" :  result.instructorExternalDetailsResponse[0].linkToCourse )
+        setexternal_ratings(result.instructorExternalDetailsResponse[0].externalRating == null ? "" : result.instructorExternalDetailsResponse[0].externalRating)
+        setexternal_number_of_number(result.instructorExternalDetailsResponse[0].externalNumberOfStudents == null ? "" : result.instructorExternalDetailsResponse[0].externalNumberOfStudents)
+        setany_comment(result.instructorExternalDetailsResponse[0].anyComments == null ? "" : result.instructorExternalDetailsResponse[0].anyComments)
+      } else {
+        setlink_to_course("")
+        setexternal_ratings("")
+        setexternal_number_of_number("")
+        setany_comment("")
+      }
 
-fetch(`${BACKEND_LINK}/instructor/getInstructorProfileDetails`, requestOptions)
-  .then(response => response.json())
-  .then(result => {
-    console.log(result)
-    Unauthorized(result.status,`profile`)
-    setfirst_Name(result.first_name == null ? "" : result.first_name)
-    setlast_name(result.last_name == null ? "" : result.last_name)
-    setheadline(result.headline == null ? "" : result.headline)
-    setbiography(result.biography == null ? "" : result.biography)
-    setwebsite(result.website == null ? "" : result.website)
-    settwitter(result.twitter == null ? "" : result.twitter)
-    setfacebook(result.facebook == null ? "" : result.facebook)
-    setlinkedin(result.linkedin == null ? "" : result.linkedin)
-    setyoutube(result.youtube == null ? "" : result.youtube)
-    setlink_to_course(result.instructorExternalDetailsResponse[0].linkToCourse == null ? "" :  result.instructorExternalDetailsResponse[0].linkToCourse )
-    setexternal_ratings(result.instructorExternalDetailsResponse[0].externalRating == null ? "" : result.instructorExternalDetailsResponse[0].externalRating)
-    setexternal_number_of_number(result.instructorExternalDetailsResponse[0].externalNumberOfStudents == null ? "" : result.instructorExternalDetailsResponse[0].externalNumberOfStudents)
-    setany_comment(result.instructorExternalDetailsResponse[0].anyComments == null ? "" : result.instructorExternalDetailsResponse[0].anyComments)
-    setprofile_img(result.profile_img == null ? "" : result.profile_img)
+      setprofile_img(result.profile_img == null ? "" : result.profile_img)
+      setemail(result.instructorExternalEmail == null ? "" : result.instructorExternalEmail)
+    })
+    .catch(error => console.log('error', error));
+}
 
-    setemail(result.instructorExternalEmail == null ? "" : result.instructorExternalEmail)
-
-
-  })
-  .catch(error => console.log('error', error));
-
- }
 
  export const UpdateProfileDetails = async(
   uploadImage,
