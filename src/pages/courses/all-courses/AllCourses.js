@@ -56,7 +56,7 @@ const AllCourses = () => {
           
         />
 
-        <Button type="primary" className="" danger>
+        <Button type="primary" className="add-course" danger>
           <a className="icon-container" href="/add-courses">
             <PlusOutlined className="icon" />
             Add Course

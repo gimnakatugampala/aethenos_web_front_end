@@ -73,7 +73,7 @@ const CourseItem = ({ course, filledPercent }) => {
               />
             </div>
 
-            <div className="col-md-10 p-0">
+            <div className="col-md-10 p-0 card-main">
               <h5 className="card-title">
                 <b>
                   {course.course.courseTitle == null

@@ -3065,6 +3065,7 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 
 .all-coueses-control-items {
   justify-content: right !important;
+  align-items: center;
 }
 
 .main-sign-in {
@@ -3180,8 +3181,10 @@ section.ant-layout.ant-layout-has-sider.layout-dashboard.layout-profile
 }
 
 
-/* .ant-layout-sider-primary{
- z-index: 0;
- height: "100%";
- top: "105px"
-} */
+.add-course{
+  border-radius: 5px;
+}
+
+.all-courses-container{
+  width: calc(100% - 230px);
+}

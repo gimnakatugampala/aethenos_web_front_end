@@ -85,7 +85,7 @@ function Main({ children }) {
           className={`sider-primary ant-layout-sider-primary ${
             sidenavType === "#fff" ? "active-route" : ""
           }`}
-          style={{ height: "100%", top: "95px" }}
+          style={{ height: "100%" }}
         >
           <Sidenav color={sidenavColor} />
         </Sider>
