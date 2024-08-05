@@ -144,14 +144,7 @@ function Header({
               style={{ marginRight: "10px", marginLeft: "20px" }}
             />
           </div>
-          <div className="brand brand-large">
-            <img
-              width="150"
-              src={logoFull}
-              alt="LOGO"
-              style={{ marginRight: "10px" }}
-            />
-          </div>
+       
         </Col>
         <Col span={24} md={18} className="header-control">
           <React.Fragment>

@@ -48,6 +48,15 @@ function Sidenav({ color }) {
           />
         </div>
 
+        <div className="brand brand-large">
+            <img
+              width="150"
+              src={logoFull}
+              alt="LOGO"
+              style={{ marginRight: "10px" }}
+            />
+          </div>
+
         <Menu.Item className="menu-item-header" key="1">
           Courses
         </Menu.Item>

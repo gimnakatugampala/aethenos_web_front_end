@@ -85,8 +85,7 @@
 @media (max-width: 991px) {
   .all-courses-container {
     display: contents;
-    margin-left: 20%;
-    padding-right: 10%;
+    margin-left: 20%;  
   }
 }
 @media (min-width: 991px) {
@@ -110,10 +109,53 @@
     display: none !important;
   }
 }
+/* 
+@media (max-width: 425px) {
 
-@media (min-width: 991px) and (max-width: 1000px) {
+} */
+
+@media (max-width: 767px) {
+  .card-main {
+    margin: 10px;
+  }
+  .brand-small {
+    position: absolute;
+  }
+  .header-control {
+    margin-top: 0px !important;
+  }
+  .footer-left-logo {
+    position: absolute;
+    width: 150px;
+  }
+  .footer-right-logo {
+    width: 150px;
+    float: inline-end;
+  }
+
+  .float-right {
+    margin-right: 0px;
+    font-size: small;
+    line-height: normal;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .footer-left-logo {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .footer-right-logo {
+    flex: none;
+    max-width: 100%;
+    font-size: small;
+  }
+}
+
+/* @media (min-width: 991px) and (max-width: 1000px) {
   .all-courses-container {
-    width: 74%;
+    width: calc(100% - 230px);
     float: right;
   }
 
@@ -122,7 +164,13 @@
   }
 }
 
-@media (min-width: 1000px) and (max-width: 1200px) {
+@media (min-width: 1000px) and (max-width: 1100px) {
+  .all-courses-container {
+    width: 76%;
+    float: right;
+  }
+}
+@media (min-width: 1100px) and (max-width: 1200px) {
   .all-courses-container {
     width: 78%;
     float: right;
@@ -164,7 +212,7 @@
   }
 }
 
-@media (min-width: 2000px) and (max-width: 2200px) {
+@media (min-width: 2000px) and (max-width: 2300px) {
   .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
@@ -172,7 +220,7 @@
     float: right;
   }
 }
-@media (min-width: 2200px) and (max-width: 2400px) {
+@media (min-width: 2300px) and (max-width: 2400px) {
   .all-courses-container {
     padding-left: 30px;
     padding-right: 30px;
@@ -196,7 +244,9 @@
     width: 93%;
     float: right;
   }
-}
+} */
+
+
 @media (min-width: 900px) and (max-width: 1000px) {
   .course-landing-page-responsive {
     max-width: 72%;
