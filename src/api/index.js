@@ -2536,7 +2536,7 @@ fetch(`${BACKEND_LINK}/managecourse/deleteCurriculumItemFile/${file}`, requestOp
 
       if(result.variable == "200"){
         SuccessAlert("Added",result.message)
-        setshowDescription(null)
+        // setshowDescription(null)
         // setcurriculum_desc("")
         GetCurriculum(code,setsectionData)
         return
@@ -2686,10 +2686,10 @@ fetch(`${BACKEND_LINK}/managecourse/addArticle`, requestOptions)
 
     if(result.variable == "200"){
       SuccessAlert("Added", result.message)
-      setarticle("")
-      setshowMain(null)
-      setshowDescRes(true)
-      setshowContentAdd(null)
+      // setarticle("")
+      // setshowMain(null)
+      // setshowDescRes(true)
+      // setshowContentAdd(null)
       GetCurriculum(code,setsectionData)
 
       return
