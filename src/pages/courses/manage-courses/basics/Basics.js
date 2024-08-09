@@ -423,7 +423,7 @@ const handleFileChange = (event) => {
           <div className="row my-2">
             <div className="col-md-4">
               <h6>
-                <b>Promotional video</b>
+                <b>Promotional video <span className="text-danger">*</span></b>
               </h6>
 
              {videoSrc == "" ? (<img src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" width="200" height="200" />) : 
