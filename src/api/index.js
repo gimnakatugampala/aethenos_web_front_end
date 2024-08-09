@@ -2494,10 +2494,10 @@ fetch(`${BACKEND_LINK}/managecourse/deleteCurriculumItemFile/${file}`, requestOp
         
       // }, 1000);
 
-      setshowMain(null)
-      setshowDescRes(true)
-      setshowContentAdd(null)
-      setcurriculumvisiblity("")
+      // setshowMain(null)
+      // setshowDescRes(true)
+      // setshowContentAdd(null)
+      // setcurriculumvisiblity("")
 
       GetCurriculum(code,setsectionData)
 
@@ -4417,7 +4417,7 @@ fetch(`${BACKEND_LINK}/course/checkCourseCompleteDetails/${code}`, requestOption
 
 }
 
-export const AssignmentDelete = async(code) =>{
+export const AssignmentDelete = async(code,Ccode,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4437,9 +4437,12 @@ fetch(`${BACKEND_LINK}/managecourse/deleteAssignment/${code}`, requestOptions)
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
-      setTimeout(() => {
-        window.location.reload()
-    },2000)
+    //   setTimeout(() => {
+    //     window.location.reload()
+    // },2000)
+
+    GetCurriculum(Ccode,setsectionData)
+
       return
     }else{
       ErrorAlert("Error",result.message)
@@ -4450,7 +4453,7 @@ fetch(`${BACKEND_LINK}/managecourse/deleteAssignment/${code}`, requestOptions)
 
 }
 
-export const PracticeTestDelete = async(code) =>{
+export const PracticeTestDelete = async(code,Ccode,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4471,9 +4474,11 @@ fetch(`${BACKEND_LINK}/managecourse/deletePracticeTest/${code}`, requestOptions)
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
 
-      setTimeout(() => {
-        window.location.reload()
-    },2000)
+    //   setTimeout(() => {
+    //     window.location.reload()
+    // },2000)
+
+    GetCurriculum(Ccode,setsectionData)
 
       return
     }else{
@@ -4484,7 +4489,7 @@ fetch(`${BACKEND_LINK}/managecourse/deletePracticeTest/${code}`, requestOptions)
 
 }
 
-export const CodingExerciseDelete = async(code) =>{
+export const CodingExerciseDelete = async(code,Ccode,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4502,9 +4507,11 @@ fetch(`${BACKEND_LINK}/managecourse/deleteCodingExercise/${code}`, requestOption
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
-      setTimeout(() => {
-        window.location.reload()
-    },2000)
+    //   setTimeout(() => {
+    //     window.location.reload()
+    // },2000)
+
+    GetCurriculum(Ccode,setsectionData)
       return
     }else{
       ErrorAlert("Error",result.message)
@@ -4514,7 +4521,7 @@ fetch(`${BACKEND_LINK}/managecourse/deleteCodingExercise/${code}`, requestOption
 
 }
 
-export const LectureDelete = async(id) =>{
+export const LectureDelete = async(id,code,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4532,9 +4539,11 @@ fetch(`${BACKEND_LINK}/managecourse/deletelecture/${id}`, requestOptions)
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
-      setTimeout(() => {
-        window.location.reload()
-    },2000)
+    //   setTimeout(() => {
+    //     window.location.reload()
+    // },2000)
+
+    GetCurriculum(code,setsectionData)
       return
     }else{
       ErrorAlert("Error",result.message)
@@ -4546,7 +4555,7 @@ fetch(`${BACKEND_LINK}/managecourse/deletelecture/${id}`, requestOptions)
 }
 
 
-export const QuizDelete = async(id) =>{
+export const QuizDelete = async(id,code,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4567,9 +4576,11 @@ fetch(`${BACKEND_LINK}/managecourse/deletequiz/${id}`, requestOptions)
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
 
-      setTimeout(() => {
-        window.location.reload()
-    },2000)
+    //   setTimeout(() => {
+    //     window.location.reload()
+    // },2000)
+
+    GetCurriculum(code,setsectionData)
 
       return
     }else{
@@ -4582,7 +4593,7 @@ fetch(`${BACKEND_LINK}/managecourse/deletequiz/${id}`, requestOptions)
 
 }
 
-export const SectionDelete = async(id) =>{
+export const SectionDelete = async(id,code,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4602,9 +4613,12 @@ fetch(`${BACKEND_LINK}/managecourse/deletecourseSection/${id}`, requestOptions)
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
-      setTimeout(() => {
-          window.location.reload()
-      },2000)
+      // setTimeout(() => {
+      //     window.location.reload()
+      // },2000)
+
+      GetCurriculum(code,setsectionData)
+
       return
     }else{
       ErrorAlert("Error",result.message)
@@ -4655,7 +4669,7 @@ fetch(`${BACKEND_LINK}/managecourse/deleteCurriculumItemFile/${id}`, requestOpti
 
 }
 
-export const ExternalResoucesDelete = async(id) =>{
+export const ExternalResoucesDelete = async(id,code,setsectionData) =>{
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -4675,9 +4689,10 @@ fetch(`${BACKEND_LINK}/managecourse/deleteExternalResources/${id}`, requestOptio
 
     if(result.variable == "200"){
       SuccessAlert("Deleted",result.message)
-      setTimeout(() => {
-          window.location.reload()
-      },2000)
+      // setTimeout(() => {
+      //     window.location.reload()
+      // },2000)
+      GetCurriculum(code,setsectionData)
       return
     }else{
       ErrorAlert("Error",result.message)

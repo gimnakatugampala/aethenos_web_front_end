@@ -618,7 +618,7 @@ const Curriculum = ({code}) => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          SectionDelete(section.courseSection.sectionId)
+          SectionDelete(section.courseSection.sectionId,code,setsectionData)
         }
       });
 
@@ -635,7 +635,7 @@ const Curriculum = ({code}) => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          LectureDelete(item.id)
+          LectureDelete(item.id,code,setsectionData)
         }
       });
 
@@ -654,7 +654,7 @@ const Curriculum = ({code}) => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          QuizDelete(item.id)
+          QuizDelete(item.id,code,setsectionData)
         }
       });
 
@@ -674,7 +674,7 @@ const Curriculum = ({code}) => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          AssignmentDelete(item.getAssignment[0].assignmentCode)
+          AssignmentDelete(item.getAssignment[0].assignmentCode,code,setsectionData)
         }
       });
 
@@ -692,7 +692,7 @@ const Curriculum = ({code}) => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          PracticeTestDelete(item.getPracticeTests[0].practiceTestCode)
+          PracticeTestDelete(item.getPracticeTests[0].practiceTestCode,code,setsectionData)
         }
       });
 
@@ -713,7 +713,7 @@ const Curriculum = ({code}) => {
       }).then((result) => {
         if (result.isConfirmed) {
           // PracticeTestDelete(item.getPracticeTests[0].practiceTestCode)
-          CodingExerciseDelete(item.getCodingExercises[0].codingExerciseCode)
+          CodingExerciseDelete(item.getCodingExercises[0].codingExerciseCode,code,setsectionData)
         }
       });
 
@@ -733,7 +733,7 @@ const Curriculum = ({code}) => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          ExternalResoucesDelete(link.id)
+          ExternalResoucesDelete(link.id,code,setsectionData)
         }
       });
 
