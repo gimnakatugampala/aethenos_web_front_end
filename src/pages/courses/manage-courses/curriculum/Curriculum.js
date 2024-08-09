@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "antd";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -31,7 +31,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import ArticleIcon from "@mui/icons-material/Article";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteQuestionsAndAnswers, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, SetVideoPreviewAPI, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, UpdateSectionName, UpdateSubmitQuestionsAndAnswers, VideoDelete} from "../../../../api"
+import {AddCurriculumArticle, AddCurriculumDescription, AddCurriculumDownloadable, AddCurriculumExternalResourses, AddCurriculumQnAQuiz, AddCurriculumQuiz, AddCurriculumSection, AddCurriculumSourceCode, AddCurriculumVideo, AddLectureTitle, AssignmentDelete, AssignmentSave, CodingExerciseDelete, CodingExerciseSave, DeleteQuestionsAndAnswers, DeleteResourcesFile, ExternalResoucesDelete, GetCurriculum, LectureDelete, PracticeTestDelete, PracticeTestSave, QuizDelete, SectionDelete, SetVideoPreviewAPI, UpdateAssignmentName, UpdateCodingExerciseName, UpdateLectureName, UpdatePraticeTestName, UpdateQuizName, updateSectionData, UpdateSectionName, UpdateSubmitQuestionsAndAnswers, VideoDelete} from "../../../../api"
 import "./curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import removeHtmlTags from "../../../../commonFunctions/RemoveHTML";
@@ -1199,6 +1199,52 @@ const Curriculum = ({code}) => {
     PracticeTest:0
 };
 
+
+const [curriculumSections, setCurriculumSections] = useState(sectionData);
+  const [draggingIndex, setDraggingIndex] = useState(null);
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  const dragItem = useRef();
+  const dragOverItem = useRef();
+
+  let dragOverItemNo = useRef();
+
+  const setDragOverNo = (i) => {
+    dragOverItemNo = i + 1;
+  };
+
+  const handledragStart = (e) => {
+    e.currentTarget.style.opacity = "0.9";
+  };
+
+  const handleSort = (e, sectionIndex, section, item) => {
+    if (dragOverItem.current !== null && dragItem.current !== null) {
+      console.log("ok");
+      const updatedSections = [...sectionData];
+
+      const currentSection =
+        updatedSections[sectionIndex].courseSection.sectionCurriculumItem;
+
+      const draggedItemContent = currentSection.splice(dragItem.current, 1)[0];
+
+      currentSection.splice(dragOverItem.current, 0, draggedItemContent);
+
+      updateSectionData(
+        code,
+        section.courseSection.sectionId,
+        item,
+        dragOverItemNo
+      );
+
+      setCurriculumSections(updatedSections);
+
+      dragItem.current = null;
+      dragOverItem.current = null;
+      setDraggingIndex(null);
+      dragOverItemNo = null;
+    }
+  };
+
 // Count each type
 // section !=null && section.courseSection.sectionCurriculumItem.forEach(item => {
 //     if (item.type == "Lecture") {
@@ -1215,7 +1261,7 @@ const Curriculum = ({code}) => {
 // });
 
   return (
-    <div className="col-md-8 curriculum-container">
+    <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
       <Card className="py-2 my-2 p-4">
 
       <div className='d-flex justify-content-between'>
@@ -1324,9 +1370,35 @@ const Curriculum = ({code}) => {
                       }else if (item.type == "Practice Test") {
                         counters.PracticeTest += 1;
                     }
+
+                    const isExpanded =
+                    expandedIndex === index + i + item.id;
                 return (
 
                 // Lecture
+                <div
+                className={`my-2 ${
+                  draggingIndex === i ? "dragging" : "draggable"
+                }`}
+                key={i}
+                draggable
+                onDragStart={(e) => {
+                  dragItem.current = i;
+                  setDraggingIndex(i);
+                  handledragStart(e);
+                }}
+                onDragEnter={(e) => {
+                  dragOverItem.current = i;
+                  setDragOverNo(i);
+                }}
+                onDragEnd={(e) =>
+                  handleSort(e, index, section, item.id)
+                }
+                onDragOver={(e) => {
+                  e.preventDefault();
+                }}
+                style={{ cursor: isExpanded ? "default" : "move" }}
+              >
                 <>
                 {item.type == "Lecture" && (
 
@@ -3326,6 +3398,7 @@ const Curriculum = ({code}) => {
                 </Card>))}
 
                 </>
+                </div>
                 )})}
 
               </div>
