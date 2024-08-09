@@ -4071,7 +4071,7 @@ const Pricing = ({code}) => {
 
     
 
-        {VideoLength > 150 && Paid_Type == 1 && (
+        {VideoLength > 9000 && Paid_Type == 1 && (
         <div className="container m-2">
         <Alert variant="outlined" severity="warning">
                The maximum video content length on a free course is 2.5 hours. Please reduce your total video length to comply.

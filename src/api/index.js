@@ -1826,6 +1826,7 @@ fetch(`${BACKEND_LINK}/managecourse/addSingleCoursePricing`, requestOptions)
     Unauthorized(result.status,`courses/manage/${code}/#pricing`)
 
     if(result.variable == "404"){
+
       ErrorAlert("Error",result.message)
       setloading_button(false)
       return
@@ -2805,7 +2806,9 @@ fetch(`${BACKEND_LINK}/managecourse/addArticle`, requestOptions)
 
  }
 
- export const AddCurriculumQnAQuiz = async(item,code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,setcurriculumvisiblitymc,setshowMain,setsectionData,setquestion,setanswerOption,setanswerOne,setanswerTwo,setanswerThree,setanswerFour,setanswerFive,setanswerExplainOne,setanswerExplainTwo,setanswerExplainThree,setanswerExplainFour,setanswerExplainFive,setQuizQuestionsList) =>{
+ export const AddCurriculumQnAQuiz = async(item,code,curriculumID,question,ID,answerOne,answerTwo,answerThree,answerFour,answerFive,answerExplainOne,answerExplainTwo,answerExplainThree,answerExplainFour,answerExplainFive,answerOption,
+        setcurriculumvisiblitymc,setshowMain,setsectionData,
+        setquestion,setanswerOption,setanswerOne,setanswerTwo,setanswerThree,setanswerFour,setanswerFive,setanswerExplainOne,setanswerExplainTwo,setanswerExplainThree,setanswerExplainFour,setanswerExplainFive,setQuizQuestionsList) =>{
 
   
 
