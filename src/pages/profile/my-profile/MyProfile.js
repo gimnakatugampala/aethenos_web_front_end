@@ -291,7 +291,7 @@ const MyProfile = () => {
       }
 
       if (bankAccountNumber.length > 8) {
-        ErrorAlert("Empty Field", "Only enter 8 characters");
+        ErrorAlert("Empty Field", "Only enter 8 characters for account number");
         return;
       }
 
