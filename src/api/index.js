@@ -2202,6 +2202,33 @@ fetch(`${BACKEND_LINK}/managecourse/addSingleCoursePricing`, requestOptions)
 
         return
       }else{
+
+        if(result.message == "Instructor profile details are not complete. So please fill it and try again"){
+
+          Swal.fire({
+            title: "<strong>Information Required!</strong>",
+            icon: "error",
+            html: `
+            ${result.message}
+            `,
+            showCloseButton: false,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: `
+              <a  style="color:white" href="/profile?code=${code}"><b>Go to My Profile</b></a>
+            `,
+            confirmButtonAriaLabel: "Thumbs up, great!",
+            cancelButtonText: `
+              <i class="fa fa-thumbs-down"></i>
+            `,
+            cancelButtonAriaLabel: "Thumbs down",
+          });
+
+
+          setbtn_loading(false)
+          return
+        }
+
         ErrorAlert("Error",result.message)
         setbtn_loading(false)
         return

@@ -100,10 +100,21 @@ const MyProfile = () => {
     // console.log(linkedin)
     // console.log(youtube)
 
-    console.log(link_to_course);
-    console.log(external_ratings);
-    console.log(external_number_of_number);
-    console.log(any_comment);
+
+    // console.log(profile_img)
+    // console.log(uploadImage)
+    // console.log(preview_img)
+
+
+    // console.log(link_to_course);
+    // console.log(external_ratings);
+    // console.log(external_number_of_number);
+    // console.log(any_comment);
+
+    if(profile_img == "" && uploadImage == "" && preview_img == ""){
+      ErrorAlert("Error", "Please add a profile image");
+      return;
+    }
 
     if (first_Name == "") {
       ErrorAlert("Error", "Please Enter First Name");
@@ -602,6 +613,8 @@ const MyProfile = () => {
               </Card>
             </div>
 
+        
+
             <div style={{ float: "right" }}>
               {btn_loading ? (
                 <Button variant="contained">
@@ -613,6 +626,24 @@ const MyProfile = () => {
                 </Button>
               )}
             </div>
+
+            {/* {code != null && (
+                    <div className="mx-auto text-center">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <Button className="mx-auto " variant="contained">
+                        <a
+                          className="text-white"
+                          href={`/courses/manage/${code}/`}
+                        >
+                          Go back to course
+                        </a>
+                      </Button>
+                    </div>
+                  )} */}
+
           </Tab>
 
           <Tab eventKey="instructor-terms" title="Instructor Terms">
