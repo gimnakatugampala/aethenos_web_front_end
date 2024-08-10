@@ -337,13 +337,13 @@ const Pricing = ({code}) => {
 
 
   // Select Discount Type
-  const handleDefaultDiscountType = (e) =>{
-    console.log(e.target.value)
+  const handleDefaultDiscountType = (value) =>{
+    console.log(value)
     // 1 - No Discount
     // 2 - Percentage
     // 3 - By Value
 
-    if(e.target.value == '1'){
+    if(value == '1'){
 
 
       setDGlobalNetPrice(DGlobalPricing)
@@ -351,7 +351,7 @@ const Pricing = ({code}) => {
       setDDisPercent(0)
       setDDisAmt(0)
 
-    }else if(e.target.value == '2'){
+    }else if(value == '2'){
 
       console.log(DDisPercent)
       console.log(DGlobalPricing)
@@ -359,7 +359,7 @@ const Pricing = ({code}) => {
       setDGlobalNetPrice(parseFloat(DGlobalPricing) - parseFloat(DGlobalPricing) * parseFloat(DDisPercent == "" ? 0 : DDisPercent)/100)
 
 
-    }else if(e.target.value == '3'){
+    }else if(value == '3'){
   
 
       setDGlobalNetPrice(parseFloat(DGlobalPricing) - parseFloat(DDisAmt == "" ? 0 : DDisAmt))
@@ -370,7 +370,7 @@ const Pricing = ({code}) => {
 
     }
 
-    setDDisType(e.target.value == "" ? 0 :  e.target.value )
+    setDDisType(value == "" ? 0 :  value)
   }
 
 // Enter Global Price
@@ -3754,6 +3754,192 @@ const Pricing = ({code}) => {
         return
       }
 
+      console.log(DGlobalPricing)
+      console.log(PriceRangeMinDefault)
+      console.log(DGlobalPricing)
+      console.log(PriceRangeMaxDefault)
+
+      console.log(MinDefaultValue)
+
+      // ============== Check the Net price within range ==============
+      if (formatNumber(DGlobalNetPrice) != "0.00" && (formatNumber(DGlobalNetPrice) < MinDefaultValue)) {
+        ErrorAlert("Error","Global net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < USAMinValue)) {
+        ErrorAlert("Error","United States net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+
+      if (formatNumber(AusNetPrice) != "0.00" && (formatNumber(AusNetPrice) < AusminValue)) {
+        ErrorAlert("Error","Australia net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(BrazilNetPrice) != "0.00" && (formatNumber(BrazilNetPrice) < BrazilminValue)) {
+        ErrorAlert("Error","Brazil net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(CanadaNetPrice) != "0.00" && (formatNumber(CanadaNetPrice) < CanadaminValue)) {
+        ErrorAlert("Error","Canada net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(ChileNetPrice) != "0.00" && (formatNumber(ChileNetPrice) < ChileminValue)) {
+        ErrorAlert("Error","Chile net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(ColumbiaNetPrice) != "0.00" && (formatNumber(ColumbiaNetPrice) < ColumbiaminValue)) {
+        ErrorAlert("Error","Columbia net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(EgyptNetPrice) != "0.00" && (formatNumber(EgyptNetPrice) < EgyptminValue)) {
+        ErrorAlert("Error","Egypt net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(EUNetPrice) != "0.00" && (formatNumber(EUNetPrice) < EUminValue)) {
+        ErrorAlert("Error","European Union net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(GBPNetPrice) != "0.00" && (formatNumber(GBPNetPrice) < GBPminValue)) {
+        ErrorAlert("Error","Great Britain net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(IndonesiaNetPrice) != "0.00" && (formatNumber(IndonesiaNetPrice) < IndonesiaminValue)) {
+        ErrorAlert("Error","Indonesia net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(IsrealNetPrice) != "0.00" && (formatNumber(IsrealNetPrice) < IsrealminValue)) {
+        ErrorAlert("Error","Israel net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(IndiaNetPrice) != "0.00" &&  (formatNumber(IndiaNetPrice) < IndiaminValue)) {
+        ErrorAlert("Error","India net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumInt(JapanNetPrice) != "0" && (formatNumInt(JapanNetPrice) < JapanminValue)) {
+        ErrorAlert("Error","Japan net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(SKNetPrice) != "0.00" && (formatNumber(SKNetPrice) < SKminValue)) {
+        ErrorAlert("Error","South Korea net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(MexicoNetPrice) != "0.00" && (formatNumber(MexicoNetPrice) < MexicominValue)) {
+        ErrorAlert("Error","Mexico net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(MalaysiaNetPrice) != "0.00" && (formatNumber(MalaysiaNetPrice) < MalaysiaminValue)) {
+        ErrorAlert("Error","Malaysia net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+
+      if (formatNumber(NIgeriaNetPrice) != "0.00" && (formatNumber(NIgeriaNetPrice) < NigeriaminValue)) {
+        ErrorAlert("Error","Nigeria net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(NorwayNetPrice) != "0.00" && (formatNumber(NorwayNetPrice) < NorwayminValue)) {
+        ErrorAlert("Error","Norway net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(PeruNetPrice) != "0.00" && (formatNumber(PeruNetPrice) < Peruminvalue)) {
+        ErrorAlert("Error","Peru net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(PhilipinesNetPrice) != "0.00" && (formatNumber(PhilipinesNetPrice) < PhilipinesminValue)) {
+        ErrorAlert("Error","Philippines net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(PolandNetPrice) != "0.00" && (formatNumber(PolandNetPrice) < PolandminValue)) {
+        ErrorAlert("Error","Poland net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(RomaniaNetPrice) != "0.00" && (formatNumber(RomaniaNetPrice) < Romaniaminvalue)) {
+        ErrorAlert("Error","Romania net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(RussiaNetPrice) != "0.00" && (formatNumber(RussiaNetPrice) < RussiaminValue)) {
+        ErrorAlert("Error","Russia net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(SingaporeNetPrice) != "0.00" && (formatNumber(SingaporeNetPrice) < SingaporeminValue)) {
+        ErrorAlert("Error","Singapore net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(ThailandNetPrice) != "0.00" && (formatNumber(ThailandNetPrice) < ThailandminValue)) {
+        ErrorAlert("Error","Thailand net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(TaiwanNetPrice) != "0.00" && (formatNumber(TaiwanNetPrice) < TaiwanminValue)) {
+        ErrorAlert("Error","Taiwan net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(VietnamNetPrice) != "0.00" && (formatNumber(VietnamNetPrice) < VietnamminValue)) {
+        ErrorAlert("Error","Vietnam net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+      if (formatNumber(SANetPrice) != "0.00" && (formatNumber(SANetPrice) < SAminValue)) {
+        ErrorAlert("Error","South Africa net price should be greater than minimum price");
+        setloading_button(false)
+        return
+      }
+
+
+    
       
 
       var raw = {
@@ -4170,7 +4356,7 @@ const Pricing = ({code}) => {
                           <Select style={{width:130}} value={DDisType}  onChange={handleDefaultDiscountType}  aria-label="Default select example">
                             <option value="0" disabled selected>Select an Option</option>
                             {dis_types.map((type,index) => (
-                              <option key={index} value={type.id}>{type.name}</option>
+                              <option key={index + Math.random()} value={type.id}>{type.name}</option>
                             ))}
                           </Select>
                           </td>
