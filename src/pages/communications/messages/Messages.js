@@ -25,10 +25,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
-import { MessageBox } from 'react-chat-elements'
+import { MessageBox } from 'react-chat-elements';
 
-import 'react-chat-elements/dist/main.css'
-import './Messages.css'
+import 'react-chat-elements/dist/main.css';
+import './Messages.css';
 import { AddSendMessage, GetAllChatRoomMessages, GetAllChatRooms, GetAllInstructorsofThePurchaseMsg } from "../../../api";
 import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
 
@@ -67,151 +67,131 @@ function Messages() {
   };
 
   const [selectedUser, setSelectedUser] = useState("");
-  const [showAddMessage, setshowAddMessage] = useState(true)
+  const [showAddMessage, setshowAddMessage] = useState(true);
   const [messages, setMessages] = useState(initialMessages[selectedUser]);
   const [messageText, setMessageText] = useState("");
   const [userFilter, setUserFilter] = useState("");
 
-  const [instructors, setinstructors] = useState([])
-  const [selectedInstructor, setselectedInstructor] = useState("")
-  const [selectedCourse, setselectedCourse] = useState("")
-  const [messageTextAdd, setmessageTextAdd] = useState("")
+  const [instructors, setinstructors] = useState([]);
+  const [selectedInstructor, setselectedInstructor] = useState("");
+  const [selectedCourse, setselectedCourse] = useState("");
+  const [messageTextAdd, setmessageTextAdd] = useState("");
 
-  const [roomMessages, setroomMessages] = useState([])
+  const [roomMessages, setroomMessages] = useState([]);
 
-  const [selectedChatCode, setselectedChatCode] = useState("")
-  const [chatRooms, setchatRooms] = useState([])
+  const [selectedChatCode, setselectedChatCode] = useState("");
+  const [chatRooms, setchatRooms] = useState([]);
 
-  const [selectedStudentCode, setselectedStudentCode] = useState("")
+  const [selectedStudentCode, setselectedStudentCode] = useState("");
 
+  const [loadingMessages, setLoadingMessages] = useState(false);
 
   const handleUserClick = (user) => {
     setSelectedUser(user.student);
-    // setMessages(initialMessages[user]);
-    console.log(user)
-    setselectedCourse(user.courseCode)
-    setselectedChatCode(user.chatRoomCode)
-    setselectedInstructor(user.student)
-    setselectedStudentCode(user.studentUserCode)
-    GetAllChatRoomMessages(user.chatRoomCode,setroomMessages)
+    setselectedCourse(user.courseCode);
+    setselectedChatCode(user.chatRoomCode);
+    setselectedInstructor(user.student);
+    setselectedStudentCode(user.studentUserCode);
+
+    // Clear current messages and set loading state
+    setroomMessages([]);
+    setLoadingMessages(true);
+
+    GetAllChatRoomMessages(user.chatRoomCode, (messages) => {
+      setroomMessages(messages);
+      setLoadingMessages(false); // Stop loading when messages are loaded
+    });
   };
 
+  // Poll for new messages every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (selectedChatCode) {
+        GetAllChatRoomMessages(selectedChatCode, setroomMessages);
+      }
+    }, 3000); // Adjust the polling interval as needed
 
-useEffect(() => {
- 
-  GetAllChatRoomMessages(selectedChatCode,setroomMessages)
-},[])
-
-
-
-useEffect(() => {
-    GetAllInstructorsofThePurchaseMsg(setinstructors)
-    GetAllChatRooms(setchatRooms)
-    console.log(chatRooms)
-  }, [selectedChatCode])
+    // Cleanup on unmount
+    return () => clearInterval(interval);
+  }, [selectedChatCode]);
 
   useEffect(() => {
-
-    setTimeout(() => {
-      GetAllChatRoomMessages(selectedChatCode,setroomMessages)
-    }, 1500);
-
-  }, [selectedChatCode,messageTextAdd])
-
-  
-
+    GetAllInstructorsofThePurchaseMsg(setinstructors);
+    GetAllChatRooms(setchatRooms);
+  }, []);
 
   // Compose Message
-  const handleComposeMessage = (e) =>{
+  const handleComposeMessage = (e) => {
     e.preventDefault();
-    console.log(selectedInstructor)
-    console.log(messageTextAdd)
-
-    if(selectedInstructor == ""){
-      ErrorAlert("Empty Field","Please Select Instructor")
-      return
+    if (selectedInstructor === "") {
+      ErrorAlert("Empty Field", "Please Select Instructor");
+      return;
     }
 
-    if(messageTextAdd == ""){
-      ErrorAlert("Empty Field","Please Enter Message")
-      return
+    if (messageTextAdd === "") {
+      ErrorAlert("Empty Field", "Please Enter Message");
+      return;
     }
 
-    AddSendMessage(selectedInstructor,messageTextAdd,selectedCourse,selectedChatCode,setmessageTextAdd,GetAllChatRooms,setchatRooms)
-    
-  }
-
+    AddSendMessage(selectedInstructor, messageTextAdd, selectedCourse, selectedChatCode, setmessageTextAdd, GetAllChatRooms, setchatRooms);
+  };
 
   // Send Message
-  const handleSelectedMessageSend = (e) =>{
+  const handleSelectedMessageSend = (e) => {
     e.preventDefault();
 
-    if(selectedStudentCode == ""){
-      ErrorAlert("Empty Field","Please Select Student")
-      return
+    if (selectedStudentCode === "") {
+      ErrorAlert("Empty Field", "Please Select Student");
+      return;
     }
 
-    if(messageTextAdd == ""){
-      ErrorAlert("Empty Field","Please Enter Message")
-      return
+    if (messageTextAdd === "") {
+      ErrorAlert("Empty Field", "Please Enter Message");
+      return;
     }
 
-
-    AddSendMessage(selectedStudentCode,messageTextAdd,selectedCourse,selectedChatCode,setmessageTextAdd,GetAllChatRooms,setchatRooms)
-
-   
-  }
-  
-  
+    AddSendMessage(selectedStudentCode, messageTextAdd, selectedCourse, selectedChatCode, setmessageTextAdd, GetAllChatRooms, setchatRooms);
+  };
 
   return (
-    
-      <div className="all-courses-container mb-4">
-        <div  className="row mx-2" style={{justifyContent: "space-between"}} >
+    <div className="all-courses-container mb-4">
+      <div className="row mx-2" style={{ justifyContent: "space-between" }}>
+        <Typography className="mb-4 " variant="h4" gutterBottom>
+          Messages
+        </Typography>
+      </div>
 
-        
-             <Typography className="mb-4 "variant="h4" gutterBottom>
-               Messages
-            </Typography>      
-        </div>
-        
+      <Card className="border-rad-20 mb-4">
+        <div className="outer-shadow-box m-3">
+          <Row className="vh-130">
+            <Col sm={5} md={5} lg={4} className="bg-light border-right">
+              <Typography className="p-3 d-flex justify-content-between" variant="h5" gutterBottom>
+                Chat Users
+              </Typography>
 
-        <Card className="border-rad-20 mb-4" >
-          <div className="outer-shadow-box m-3">
-            <Row  className="vh-130">
+              <div className="input-group mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Chat Users"
+                  aria-label="Search Chat Users"
+                  onChange={(e) => setUserFilter(e.target.value)}
+                  value={userFilter}
+                />
+                <Button variant="contained"><SearchIcon /></Button>
+              </div>
 
-              <Col sm={5} md={5} lg={4} className="bg-light border-right">
-
-                <Typography className="p-3 d-flex justify-content-between" variant="h5" gutterBottom>
-                 Chat Users  
-               </Typography>
-
-
-             
-                <div className="input-group mb-3">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search Chat Users"
-                    aria-label="Search Chat Users"
-                    onChange={(e) => setUserFilter(e.target.value)}
-                    value={userFilter}
-                  />
-                  <Button variant="contained"><SearchIcon /></Button>
-                </div>
-
-                <List sx={{ width: '100%' }}>
+              <List sx={{ width: '100%' }}>
                 {chatRooms.length > 0 ? chatRooms.map((user, index) => (
                   <React.Fragment key={index}>
                     <ListItem
                       onClick={() => {
                         setshowAddMessage(false);
-                        console.log(user);
-                        handleUserClick(user)
+                        handleUserClick(user);
                       }}
                       alignItems="flex-start"
                     >
-                      <ListItemButton selected={selectedUser == user.student && selectedChatCode ==  user.chatRoomCode  ? true : false}>
+                      <ListItemButton selected={selectedUser === user.student && selectedChatCode === user.chatRoomCode}>
                         <ListItemAvatar>
                           <Avatar alt={user.student} src="/static/images/avatar/1.jpg" />
                         </ListItemAvatar>
@@ -238,28 +218,28 @@ useEffect(() => {
                     </ListItem>
                     <Divider variant="inset" component="li" />
                   </React.Fragment>
-                )) : 
-                <div className="d-flex justify-content-center align-items-center text-center">
+                )) :
+                  <div className="d-flex justify-content-center align-items-center text-center">
                     <h5 className="d-flex justify-content-center align-items-center text-center">No Chats Found</h5>
-                </div>}
+                  </div>}
               </List>
+            </Col>
 
-              </Col>
-
-         
-    
-           
-              <Col sm={7} md={7} lg={8}>
-                {selectedUser != "" ? (
-                  <>
+            <Col sm={7} md={7} lg={8}>
+              {selectedUser !== "" ? (
+                <>
                   <div className="d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
-                  <Typography variant="h5" className="p-3" gutterBottom>
-                  Chat with <b>{selectedUser}</b>
-                  </Typography>
-
+                    <Typography variant="h5" className="p-3" gutterBottom>
+                      Chat with <b>{selectedUser}</b>
+                    </Typography>
                   </div>
 
                   <Paper elevation={3} className="p-3" style={{ height: "50vh", overflowY: "scroll", background: '#D5D8DC' }}>
+                    {loadingMessages ? (
+                      <div className="d-flex justify-content-center align-items-center">
+                        <span>Loading...</span>
+                      </div>
+                    ) : (
                       <List>
                         {roomMessages.map((message, index) => (
                           <MessageBox
@@ -272,38 +252,28 @@ useEffect(() => {
                           />
                         ))}
                       </List>
-                    </Paper>
-
-
+                    )}
+                  </Paper>
 
                   <form onSubmit={handleSelectedMessageSend} className="input-group p-2">
                     <textarea value={messageTextAdd} onChange={(e) => setmessageTextAdd(e.target.value)} placeholder="Type a Message" className="form-control" aria-label="With textarea"></textarea>
-                      <Button type="submit" variant="contained"><SendIcon /></Button>
+                    <Button type="submit" variant="contained"><SendIcon /></Button>
                   </form>
-
-                  </>
-                ) : 
+                </>
+              ) :
                 (
-                  <Paper elevation={3} className="p-3 d-flex justify-content-center align-items-center" style={{ minHeight: "70vh", overflowY: "auto", background:'#D5D8DC' }}>
-                  
+                  <Paper elevation={3} className="p-3 d-flex justify-content-center align-items-center" style={{ minHeight: "70vh", overflowY: "auto", background: '#D5D8DC' }}>
                     <div className="text-center">
                       <i className="fas fa-search fa-2x p-3"></i>
                       <h3 className="m-0">Chat with students</h3>
                     </div>
-                  
-                </Paper>
+                  </Paper>
                 )}
-
-                </Col>
-             
-
-            </Row>
-           
-
-          </div>
-        </Card>
-      </div>
-
+            </Col>
+          </Row>
+        </div>
+      </Card>
+    </div>
   );
 }
 
