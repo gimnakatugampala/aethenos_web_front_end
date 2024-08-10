@@ -1965,13 +1965,15 @@ fetch(`${BACKEND_LINK}/managecourse/addSingleCoursePricing`, requestOptions)
 
  }
 
- export const OwnThisContent = async(code,setbtn_loading,setcheckOnwership,setShow,checkInstructorVerification,options,embeddedClientRef) =>{
+ export const OwnThisContent = async(code,setbtn_loading,setcheckOnwership,setShow,checkInstructorVerification,options,embeddedClientRef,setbtn_accept_loading) =>{
 
   // const [options, setOptions] = useState({
   //   templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk"
   // });
 
   // const embeddedClientRef = useRef(null);
+
+  setbtn_accept_loading(true)
 
   var myHeaders = new Headers();
   myHeaders.append("Authorization",`Bearer ${CURRENT_USER}`);
@@ -1991,6 +1993,7 @@ fetch(`${BACKEND_LINK}/managecourse/addSingleCoursePricing`, requestOptions)
         
         setShow(false)
         setcheckOnwership(true)
+        setbtn_accept_loading(false)
 
         // -- Check if the Instructor is verified
         if(checkInstructorVerification == 0){
@@ -2052,6 +2055,12 @@ fetch(`${BACKEND_LINK}/managecourse/addSingleCoursePricing`, requestOptions)
 
       }else{
         // return "AlreadyOwned"
+
+        setbtn_accept_loading(false)
+
+        setTimeout(() => {
+          window.location.reload()
+        },1500)
 
         ErrorAlert("Error",result.message)
       }

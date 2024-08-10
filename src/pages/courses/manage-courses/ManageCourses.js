@@ -88,6 +88,7 @@ const ManageCourses = () => {
   const [checkInstructorVerification, setcheckInstructorVerification] =
     useState(null);
   const [btn_loading, setbtn_loading] = useState(false);
+  const [btn_accept_loading, setbtn_accept_loading] = useState(false)
 
   // ================= STATUS ==========================
 
@@ -276,7 +277,8 @@ const ManageCourses = () => {
       setShow,
       checkInstructorVerification,
       options,
-      embeddedClientRef
+      embeddedClientRef,
+      setbtn_accept_loading
     );
   };
 
@@ -717,15 +719,25 @@ const ManageCourses = () => {
               </p>
             </label>
           </div>
+        
 
           <div className="d-flex justify-content-end">
-            <Button
-              onClick={handleShowVerification}
-              className="my-4"
-              variant="contained"
-            >
-              Accept
-            </Button>
+            {btn_accept_loading ? (
+               <Button
+               className="my-4"
+               variant="contained"
+             >
+               Loading ...
+             </Button>
+            ) : (
+              <Button
+                onClick={handleShowVerification}
+                className="my-4"
+                variant="contained"
+              >
+                Accept
+              </Button>
+            )}
           </div>
         </Modal.Body>
       </Modal>
