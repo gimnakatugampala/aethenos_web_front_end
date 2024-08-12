@@ -34,6 +34,7 @@ function useQuery() {
 }
 
 const MyProfile = () => {
+  const [Primary_Email, setPrimary_Email] = useState("")
   const [first_Name, setfirst_Name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [headline, setheadline] = useState("");
@@ -215,6 +216,7 @@ const MyProfile = () => {
 
   useEffect(() => {
     GetInstructorProfileDetails(
+      setPrimary_Email,
       setfirst_Name,
       setlast_name,
       setheadline,
@@ -387,6 +389,25 @@ const MyProfile = () => {
                   />
                 </div>
               </div>
+
+              <div className="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">
+                   Primary Email
+                  </label>
+                  <input
+                    value={Primary_Email}
+                    onChange={(e) => setPrimary_Email(e.target.value)}
+                    disabled
+                    type="email"
+                    class="form-control"
+                    readOnly
+                    placeholder="Email"
+                  />
+                </div>
+                </div>
+
+                <div className="col-md-6"></div>
 
               <div className="col-md-6">
                 <div class="mb-3">

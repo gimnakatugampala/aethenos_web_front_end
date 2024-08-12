@@ -3007,7 +3007,7 @@ fetch(`${BACKEND_LINK}/managecourse/setPreviewVideo`, requestOptions)
     .catch(error => console.log('error', error));
  }
 
- export const GetInstructorProfileDetails = async(setfirst_Name,
+ export const GetInstructorProfileDetails = async(setPrimary_Email,setfirst_Name,
   setlast_name,
   setheadline,
   setbiography,
@@ -3037,6 +3037,8 @@ fetch(`${BACKEND_LINK}/managecourse/setPreviewVideo`, requestOptions)
     .then(result => {
       console.log(result)
       Unauthorized(result.status,`profile`)
+
+      setPrimary_Email(result.email == null ? "" : result.email)
       setfirst_Name(result.first_name == null ? "" : result.first_name)
       setlast_name(result.last_name == null ? "" : result.last_name)
       setheadline(result.headline == null ? "" : result.headline)
