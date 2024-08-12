@@ -6,6 +6,7 @@ import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpin
 import formatNumber from "../../../commonFunctions/NumberFormat";
 import { GetRevenueReport, RevenueChart } from "../../../api";
 import Typography from "@mui/material/Typography";
+
 // Mapping full month names to abbreviated forms
 const monthAbbreviations = {
   JANUARY: "JAN",
@@ -50,7 +51,8 @@ function RevenueReport() {
 
   const AethenosDataSet = chartData?.aethenosDataSets || [];
   const RefundsDataSet = chartData?.refundsDataSets || [];
-  const PromotionsDataSet = chartData?.promotionsDataSets || [];
+  const ReferalLinkDataSet = chartData?.referalLinkDataSets || [];
+  const CouponDataSet = chartData?.couponDataSets || [];
   const formattedYears = chartData?.years ? formatYears(chartData.years) : [];
 
   const headerCellStyle = {
@@ -60,21 +62,15 @@ function RevenueReport() {
   return (
     <div className="mb-5 all-courses-container">
       <div className="mb-4">
-      <Typography className="m-0 p-0" variant="h4" gutterBottom>
-        <p className="fs-5 font-bold">Revenue Report</p>
-      </Typography>
-      <h1 className="font-bold m-0 p-0">${formatNumber(revenueAmount)}</h1>
-      <p className="fs-10 m-0 p-0">
-        Your lifetime earnings as of {revenueDate}
-      </p>
+        <Typography className="m-0 p-0" variant="h4" gutterBottom>
+          <p className="fs-5 font-bold">Revenue Report</p>
+        </Typography>
+        <h1 className="font-bold m-0 p-0">${formatNumber(revenueAmount)}</h1>
+        <p className="fs-10 m-0 p-0">
+          Your lifetime earnings as of {revenueDate}
+        </p>
       </div>
-      <Card className="p-2 ">
-        {/* <p className="fs-5 font-bold">Revenue Report</p>
-      <h1 className="font-bold m-0 p-0">${formatNumber(revenueAmount)}</h1>
-      <p className="fs-10 m-0 p-0">
-        Your lifetime earnings as of {revenueDate}
-      </p> */}
-
+      <Card className="p-2">
         {chartData == null ? (
           "Loading.."
         ) : (
@@ -101,14 +97,16 @@ function RevenueReport() {
                   stack: "total",
                   area: true,
                   showMark: false,
+                  color: "#4caf50", // Green
                 },
                 {
-                  id: "Your Promotions",
-                  label: "Your Promotions",
-                  data: PromotionsDataSet,
+                  id: "Coupons",
+                  label: "Coupons",
+                  data: CouponDataSet,
                   stack: "total",
                   area: true,
                   showMark: false,
+                  color: "#f44336", // Red
                 },
                 {
                   id: "Refunds",
@@ -117,6 +115,16 @@ function RevenueReport() {
                   stack: "total",
                   area: true,
                   showMark: false,
+                  color: "#2196f3", // Blue
+                },
+                {
+                  id: "Referral Links",
+                  label: "Referral Links",
+                  data: ReferalLinkDataSet,
+                  stack: "total",
+                  area: true,
+                  showMark: false,
+                  color: "#ff9800", // Orange
                 },
               ]}
               sx={{
