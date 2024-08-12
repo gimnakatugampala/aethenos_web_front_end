@@ -403,6 +403,16 @@ const Curriculum = ({code}) => {
         return
       }
 
+      if (isNaN(PracticeTestMinPassMark)) {
+        ErrorAlert("Invalid input", "Please enter a valid number");
+        return;
+      }
+      
+      if (PracticeTestMinPassMark <= 0 || PracticeTestMinPassMark >= 100) {
+        ErrorAlert("Invalid value", "The pass mark must be above 0 and below 100");
+        return;
+      }
+
       if(PracticeTestInstructions == ""){
         ErrorAlert("Empty field","Please fill the instructors")
         return
