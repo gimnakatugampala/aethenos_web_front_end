@@ -2753,9 +2753,17 @@ const [curriculumSections, setCurriculumSections] = useState(sectionData);
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                              <Form.Label>Duration(HH:MM)</Form.Label>
-                              <Form.Control value={AssignmentDuration} onChange={(e) => setAssignmentDuration(e.target.value)} type="text" placeholder="00:00" />
-                            </Form.Group>
+                                <Form.Label>Duration (HH:MM)</Form.Label>
+                                <Form.Control 
+                                  value={AssignmentDuration} 
+                                  onChange={(e) => setAssignmentDuration(e.target.value)} 
+                                  type="time" // Use time input type for 24-hour format
+                                  step="300" // Optional: 5-minute intervals
+                                  placeholder="00:00" 
+                                />
+                              </Form.Group>
+
+
 
 
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -3037,10 +3045,21 @@ const [curriculumSections, setCurriculumSections] = useState(sectionData);
                           <Form.Control value={PracticeTestDesc} onChange={(e) => setPracticeTestDesc(e.target.value)} as="textarea" rows={2} />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                          <Form.Label>Duration</Form.Label>
-                          <Form.Control value={PracticeTestDuration} onChange={(e) => setPracticeTestDuration(e.target.value)} type="text" placeholder="00:00" />
-                        </Form.Group>
+   
+
+
+<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Duration (HH:MM)</Form.Label>
+                                <Form.Control 
+                                  value={PracticeTestDuration} 
+                                  onChange={(e) => setPracticeTestDuration(e.target.value)} 
+                                  type="time" // Use time input type for 24-hour format
+                                  step="300" // Optional: 5-minute intervals
+                                  placeholder="00:00" 
+                                  
+                                />
+                              </Form.Group>
+
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                           <Form.Label>Minimum pass mark</Form.Label>
