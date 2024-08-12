@@ -785,7 +785,7 @@ const MyProfile = () => {
                                     setpayoneerUsername(e.target.value)
                                   }
                                   type="text"
-                                  placeholder="Enter Payoneer Email"
+                                  placeholder="Enter Payoneer Username"
                                 />
                               </Form.Group>
                             </Form>
