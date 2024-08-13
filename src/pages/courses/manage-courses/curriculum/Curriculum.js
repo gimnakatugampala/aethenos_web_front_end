@@ -2041,14 +2041,25 @@ function showVideoModal(videoUrl, title) {
                                                       <td><td>{uploadingVideo == index + i + item.id ? <Badge bg="info">Uploading</Badge> : <Badge bg="success">Completed</Badge>}</td></td>
                                                       <td>Video</td>
                                                       <td>
+
                                                         <Button onClick={() => {
                                                         handleVideoDelete(video)
-                                                      }} variant="contained"><DeleteIcon /></Button>
+                                                      }} size="small" variant="contained"><DeleteIcon />
+                                                      </Button>
 
                                                       <Button onClick={() => {
                                                         // console.log(video)
                                                         showVideoModal(`${FILE_PATH}${video.url}`, video.title);
-                                                      }} variant="secondary"><RemoveRedEyeIcon /></Button>
+                                                      }} size="small" variant="secondary"><RemoveRedEyeIcon /></Button>
+
+                                                  {uploadingVideo == index + i + item.id && (
+                                                      <Button onClick={() => {
+                                                     
+                                                      }} size="small" variant="contained"><CloseIcon />
+                                                      </Button>
+                                                    )}
+
+
                                                       </td>
                                                     </tr>
                                                 ))

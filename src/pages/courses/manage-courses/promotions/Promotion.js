@@ -111,9 +111,9 @@ const Promotion = ({code}) => {
 
     </div>
        <hr />
-
+       <h5><b>Referral link</b></h5>
       <div className='card p-3'>
-        <h5 className='m-0 p-0'><b>Referral link</b></h5>
+        {/* <h5 className='m-0 p-0'><b>Referral link</b></h5> */}
         <p>We will credit You with sales made using this link</p>
 
         <InputGroup className="mb-3">
