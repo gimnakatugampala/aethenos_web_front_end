@@ -1272,9 +1272,9 @@ const [curriculumSections, setCurriculumSections] = useState(sectionData);
 // });
 
 
-function showVideoModal(videoUrl) {
+function showVideoModal(videoUrl, title) {
   Swal.fire({
-    title: 'Watch this Video',
+    title: title,
     html: `
       <video controls width="100%" height="auto">
         <source src="${videoUrl}" type="video/mp4">
@@ -1290,7 +1290,7 @@ function showVideoModal(videoUrl) {
     cancelButtonText: 'Play Again',
   }).then((result) => {
     if (result.dismiss === Swal.DismissReason.cancel) {
-      showVideoModal(videoUrl); // Replay video if Play Again is clicked
+      showVideoModal(videoUrl, title); // Replay video if Play Again is clicked
     }
   });
 }
@@ -2046,8 +2046,8 @@ function showVideoModal(videoUrl) {
                                                       }} variant="contained"><DeleteIcon /></Button>
 
                                                       <Button onClick={() => {
-                                                        // console.log(video)
-                                                        showVideoModal(`${FILE_PATH}${video.url}`);
+                                                        console.log(video)
+                                                        showVideoModal(`${FILE_PATH}${video.url}`, video.title);
                                                       }} variant="secondary"><RemoveRedEyeIcon /></Button>
                                                       </td>
                                                     </tr>
