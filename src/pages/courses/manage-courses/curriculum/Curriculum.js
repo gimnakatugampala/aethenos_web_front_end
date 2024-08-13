@@ -2046,7 +2046,7 @@ function showVideoModal(videoUrl, title) {
                                                       }} variant="contained"><DeleteIcon /></Button>
 
                                                       <Button onClick={() => {
-                                                        console.log(video)
+                                                        // console.log(video)
                                                         showVideoModal(`${FILE_PATH}${video.url}`, video.title);
                                                       }} variant="secondary"><RemoveRedEyeIcon /></Button>
                                                       </td>
