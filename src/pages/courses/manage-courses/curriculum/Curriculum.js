@@ -16,7 +16,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import JoditEditor from "jodit-react";
 import DnsIcon from '@mui/icons-material/Dns';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
@@ -51,6 +51,7 @@ import Badge from 'react-bootstrap/Badge';
 
 
 import 'sweetalert2/src/sweetalert2.scss'
+import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 
 
 
@@ -1270,6 +1271,30 @@ const [curriculumSections, setCurriculumSections] = useState(sectionData);
 //   }
 // });
 
+
+function showVideoModal(videoUrl) {
+  Swal.fire({
+    title: 'Watch this Video',
+    html: `
+      <video controls width="100%" height="auto">
+        <source src="${videoUrl}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    `,
+    width: '60%', // Adjust the width of the modal as needed
+    padding: '1em',
+    showCloseButton: true,
+    showCancelButton: true,
+    focusConfirm: false,
+    confirmButtonText: 'Close',
+    cancelButtonText: 'Play Again',
+  }).then((result) => {
+    if (result.dismiss === Swal.DismissReason.cancel) {
+      showVideoModal(videoUrl); // Replay video if Play Again is clicked
+    }
+  });
+}
+
   return (
     <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
       <Card className="py-2 my-2 p-4">
@@ -2015,16 +2040,23 @@ const [curriculumSections, setCurriculumSections] = useState(sectionData);
                                                       <td>{uploadingVideo == index + i + item.id ? uploadingVideoName : video.title}</td>
                                                       <td><td>{uploadingVideo == index + i + item.id ? <Badge bg="info">Uploading</Badge> : <Badge bg="success">Completed</Badge>}</td></td>
                                                       <td>Video</td>
-                                                      <td><Button onClick={() => {
+                                                      <td>
+                                                        <Button onClick={() => {
                                                         handleVideoDelete(video)
-                                                      }} variant="contained"><DeleteIcon /></Button></td>
+                                                      }} variant="contained"><DeleteIcon /></Button>
+
+                                                      <Button onClick={() => {
+                                                        // console.log(video)
+                                                        showVideoModal(`${FILE_PATH}${video.url}`);
+                                                      }} variant="secondary"><RemoveRedEyeIcon /></Button>
+                                                      </td>
                                                     </tr>
                                                 ))
                                         ) : (
                                             <p>No Video</p>
                                         )
                                   )}
-        
+     
                                       </tbody>
                                     </Table>
 
