@@ -104,6 +104,7 @@ function Header({
   };
   const handleClose = () => {
     setAnchorEl(null);
+    
   };
 
   useEffect(() => {

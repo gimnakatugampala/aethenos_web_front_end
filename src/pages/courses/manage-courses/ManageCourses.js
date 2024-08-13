@@ -502,8 +502,8 @@ const ManageCourses = () => {
           backgroundColor: "#000",
         }}
       >
-        <div className="d-flex justify-content-between">
-          <Space size={30}>
+        <div className="d-flex justify-content-between ">
+          <Space className="edit-course-header">
             <a className="link-back" href="/courses">
               <ArrowBackIosIcon fontSize="small" /> Back to Courses
             </a>

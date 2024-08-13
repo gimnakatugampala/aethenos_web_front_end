@@ -153,6 +153,30 @@
   }
 }
 
+@media (min-width: 695px) and (max-width: 991px) {
+
+  .edit-course-header{
+    padding-inline: 19px;
+    gap: 20px;
+  }
+
+  .course-subtitle{}
+  
+  .course-title{
+    font-size: 10px;
+  }
+}
+@media (min-width: 991px) and (max-width: 1175px) {
+  .course-title{
+    font-size: 14px;
+  }
+
+  .edit-course-header{
+   
+    gap: 30px;
+  }
+}
+
 /* @media (min-width: 991px) and (max-width: 1000px) {
   .all-courses-container {
     width: calc(100% - 230px);
