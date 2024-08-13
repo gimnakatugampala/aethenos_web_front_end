@@ -929,6 +929,9 @@ const Curriculum = ({code}) => {
     }else if(answerOne == ""){
       ErrorAlert("Empty field","Please enter answer one");
       return
+    }else if(answerTwo == ""){
+      ErrorAlert("Empty field","Please enter answer two");
+      return
     }else{
 
       if(answerOption == "ans1"){
