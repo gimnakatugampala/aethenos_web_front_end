@@ -37,7 +37,11 @@ import PaidIcon from "@mui/icons-material/Paid";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Cookies from "js-cookie";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { GetInstructorProfileDetails, GetNotificationsLatest } from "../../api";
+import {
+  GetInstructorProfileDetails,
+  GetNotificationsLatest,
+  UpdateNotifications,
+} from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
 import logoFull from "../../assets/images/utils/aethenos_logo.jpg";
@@ -89,13 +93,13 @@ function Header({
     GetNotificationsLatest(setNotifications);
   }, []);
 
-  const handleNotification = () => {
-    const newNotification = {
-      id: Date.now(),
-      message: "New notification message",
-    };
-    setNotifications([...notifications, newNotification]);
-  };
+  // const handleNotification = () => {
+  //   const newNotification = {
+  //     id: Date.now(),
+  //     message: "New notification message",
+  //   };
+  //   setNotifications([...notifications, newNotification]);
+  // };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -104,7 +108,12 @@ function Header({
   };
   const handleClose = () => {
     setAnchorEl(null);
-    
+  };
+
+  const handleNotificationClick = (notificationCode) => {
+
+    UpdateNotifications(notificationCode);
+    GetNotificationsLatest(setNotifications);
   };
 
   useEffect(() => {
@@ -145,7 +154,6 @@ function Header({
               style={{ marginRight: "10px", marginLeft: "20px" }}
             />
           </div>
-       
         </Col>
         <Col span={24} md={18} className="header-control">
           <React.Fragment>
@@ -156,7 +164,7 @@ function Header({
                 textAlign: "center",
               }}
             >
-              <a href="https://aethenos.com" style={{ minWidth: 100 }}>
+              <a href="https://aethenos.com" style={{ minWidth: 100 }} className="font-bold ">
                 Student
               </a>
 
@@ -169,11 +177,12 @@ function Header({
                 >
                   <img width="20px" src={bellIcon} alt="LOGO" />
                   <span className="notification-count">
-                    {notifications.length}
+                    {notifications.filter(notification => !notification.isRead).length}
                   </span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
+                {notifications.filter(notification => !notification.isRead).length > 0 && (
                   <div height="80px">
                     <span
                       style={{
@@ -197,7 +206,7 @@ function Header({
                           justifyContent: "flex-end",
                         }}
                       >
-                        You Have Received {notifications.length} New
+                        You Have Received  {notifications.filter(notification => !notification.isRead).length} New
                         Notifications
                       </span>
 
@@ -206,54 +215,66 @@ function Header({
                       </Button>
                     </span>
                   </div>
-                  {notifications.map((notification, index) => (
-                    <Dropdown.Item
-                      key={index}
-                      style={{
-                        justifyContent: "flex-start",
-                        display: "flex",
-                        flexDirection: "column",
-
-                        border: "1px solid #e0e0e0",
-                        padding: "10px",
-                        boxSizing: "border-box",
-                      }}
-                    >
-                      <MenuItem
-                        onClick={handleClose}
+                )}
+                  {notifications
+                    .filter((notification) => !notification.isRead)
+                    .map((notification, index) => (
+                      <Dropdown.Item
+                        key={index}
                         style={{
-                          width: "400px",
+                          justifyContent: "flex-start",
                           display: "flex",
-                          flexDirection: "row",
-                          textWrap: "balance",
+                          flexDirection: "column",
+
+                          border: "1px solid #e0e0e0",
+                          padding: "10px",
+                          boxSizing: "border-box",
                         }}
                       >
-                        <div style={{ display: "flex" }}>
-                          <ListItemIcon>
-                            <NotificationsNoneOutlinedIcon />
-                          </ListItemIcon>
-                          <span style={{ fontWeight: "bold" }}>
-                            {notification.notification}
-                          </span>
-                        </div>
-                      </MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleNotificationClick(
+                              notification.notificationCode
+                            );
+                            handleClose();
+                          }}
+                          style={{
+                            width: "400px",
+                            display: "flex",
+                            flexDirection: "row",
+                            textWrap: "balance",
+                          }}
+                        >
+                          <div style={{ display: "flex" }}>
+                            <ListItemIcon>
+                              <NotificationsNoneOutlinedIcon />
+                            </ListItemIcon>
+                            <span style={{ fontWeight: "bold" }}>
+                              {notification.notification}
+                            </span>
+                          </div>
+                        </MenuItem>
 
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          color: "gray",
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        {calculateTimeAgo(notification.notificationTime)}
-                      </span>
-                    </Dropdown.Item>
-                  ))}
-                  {notifications.length === 0 && (
-                    <Dropdown.Item>No notifications</Dropdown.Item>
-                  )}
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color: "gray",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          {calculateTimeAgo(notification.notificationTime)}
+                        </span>
+                      </Dropdown.Item>
+                    ))} 
+                      {notifications.filter(notification => !notification.isRead).length == 0 && (
+                      <Dropdown.Item>No New notifications</Dropdown.Item>
+                    )}
+                    
+          
+                 
+
                 </Dropdown.Menu>
               </Dropdown>
               <Tooltip title="Account settings">

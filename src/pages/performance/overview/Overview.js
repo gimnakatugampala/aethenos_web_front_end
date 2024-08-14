@@ -121,7 +121,7 @@ function RevenueReport() {
           </Tab>
         </Tabs>
         <div className="text-center">
-          <Card>
+          <Card className="mb-3 font-bold " >
             <a href="/performance/revenue-report">
               Revenue Report <i className="fa-solid fa-angle-right"></i>
             </a>

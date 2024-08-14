@@ -301,9 +301,7 @@ const Curriculum = ({ code }) => {
 
   // update lecture
   const handleUpdateLectureName = (lecture, section) => {
-    console.log(lecture);
-    console.log(section);
-    console.log(updateLectureName);
+
 
     UpdateLectureName(code, lecture, updateLectureName, section);
   };
@@ -422,18 +420,7 @@ const Curriculum = ({ code }) => {
 
   // ====== SUBMIT PRACTICE TEST ======
   const handlePracticetestSave = () => {
-    console.log(mainSectionID);
-    console.log(PraticeTestCode);
-    console.log(PracticeTestTitle);
-    console.log(PracticeTestDesc);
-    console.log(PracticeTestDuration);
-    console.log(PracticeTestMinPassMark);
-    console.log(PracticeTestInstructions);
-    console.log(PracticeTestExLink);
-    console.log(PracticeTestQuestionFile);
-    console.log(PracticeTestQuestionExLink);
-    console.log(PracticeTestSolutionsFile);
-    console.log(PraticeTestSolutionsExLink);
+
 
     if (PracticeTestTitle == "") {
       ErrorAlert("Empty field", "Please fill the title");
@@ -509,22 +496,7 @@ const Curriculum = ({ code }) => {
 
   // ======= SUBMIT CODING EXEC =======
   const handleCodingExecSave = () => {
-    console.log(CodingExerciseTitle);
-    console.log(CodingExerciseCode);
-    console.log(CodingExerciseDesc);
-    console.log(CodingExerciseInstructions);
-    console.log(CodingExerciseVideo);
-    console.log(CodingExerciseDResourses);
-    console.log(CodingExerciseExLink);
-
-    console.log(CodingExerciseUploadEx);
-    console.log(CodingExerciseExternalLink);
-    console.log(CodingExerciseQVideo);
-
-    console.log(CodingExercisesSolutionsFile);
-    console.log(CodingExercisesExLinkSolutions);
-    console.log(CodingExercisesSolutionsVideo);
-
+   
     if (CodingExerciseTitle == "") {
       ErrorAlert("Empty field", "Please fill the title");
       return;
@@ -960,11 +932,6 @@ const Curriculum = ({ code }) => {
 
   // Save Quiz
   const handleSaveQuiz = (sectionID) => {
-    // setshowQuizInput(null)
-
-    console.log(sectionID);
-    console.log(quizTitle);
-    console.log(quizDesc);
 
     if (quizTitle == "") {
       ErrorAlert("Empty field", "Please enter quiz title");
@@ -992,15 +959,6 @@ const Curriculum = ({ code }) => {
     let ID = item.id; // Lect ID
     let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id; // Curriculum ID
     // console.log(item.getQuizs.length)
-    console.log(ID);
-    console.log(curriculumID);
-
-    console.log(answerOptionOne);
-    console.log(answerOptionTwo);
-    console.log(answerOptionThree);
-    console.log(answerOptionFour);
-    console.log(answerOptionFive);
-    console.log(answerOption);
 
     if (question == "") {
       ErrorAlert("Empty field", "Please enter a question");
@@ -1089,35 +1047,6 @@ const Curriculum = ({ code }) => {
   const handleFillQuiz = (item) => {
     console.log(item);
     setQuizQuestionsList(item);
-    // setquestion(item.getQuizs.length == 0 ? "" : item.getQuizs[0].question)
-
-    // setanswerOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].name)
-    // setanswerTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].name)
-    // setanswerThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].name)
-    // setanswerFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].name)
-    // setanswerFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].name)
-
-    // setanswerExplainOne(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[0].explanation)
-    // setanswerExplainTwo(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[1].explanation)
-    // setanswerExplainThree(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[2].explanation)
-    // setanswerExplainFour(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[3].explanation)
-    // setanswerExplainFive(item.getQuizs.length == 0 ? "" : item.getQuizs[0].getAnswers[4].explanation)
-
-    // if(item.getQuizs.length != 0){
-    //   if(item.getQuizs[0].getAnswers[0].correctAnswer == true){
-    //     setanswerOption("ans1")
-    //   }else if(item.getQuizs[0].getAnswers[1].correctAnswer == true){
-    //     setanswerOption("ans2")
-    //   }else if(item.getQuizs[0].getAnswers[2].correctAnswer == true){
-    //     setanswerOption("ans3")
-    //   }else if(item.getQuizs[0].getAnswers[3].correctAnswer == true){
-    //     setanswerOption("ans4")
-    //   }else if(item.getQuizs[0].getAnswers[4].correctAnswer == true){
-    //     setanswerOption("ans5")
-    //   }
-    // }else{
-    //   setanswerOption("")
-    // }
   };
 
   // Delete Quiz List Item
@@ -1230,8 +1159,6 @@ const Curriculum = ({ code }) => {
   // Update submit quiz
   const handleQuestionsAnswerUpdate = (item) => {
     console.log(item);
-
-    // const [, setquizForUpdateSelected] = useState(null)
 
     let ID = item.id; // Lect ID
     let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id; // Curriculum ID
@@ -1362,7 +1289,6 @@ const Curriculum = ({ code }) => {
 
   const handleSort = (e, sectionIndex, section, item) => {
     if (dragOverItem.current !== null && dragItem.current !== null) {
-      console.log("ok");
       const updatedSections = [...sectionData];
 
       const currentSection =
@@ -1387,21 +1313,6 @@ const Curriculum = ({ code }) => {
       dragOverItemNo = null;
     }
   };
-
-  // Count each type
-  // section !=null && section.courseSection.sectionCurriculumItem.forEach(item => {
-  //     if (item.type == "Lecture") {
-  //         counters.Lecture += 1;
-  //     } else if (item.type == "Quiz") {
-  //         counters.Quiz += 1;
-  //     } else if (item.type == "Assignment") {
-  //         counters.Assignment += 1;
-  //     } else if (item.type == "Coding Exercise") {
-  //         counters.CodingExercise += 1;
-  //     }else if (item.type == "Practice Test") {
-  //       counters.PracticeTest += 1;
-  //   }
-  // });
 
   function showVideoModal(videoUrl, title) {
     Swal.fire({
