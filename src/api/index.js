@@ -5480,7 +5480,7 @@ export const UpdateSubmitQuestionsAndAnswers = async (
   answerExplainThree,
   answerExplainFour,
   answerExplainFive,
-  answerOption,
+  newAnswerOption,
   setcurriculumvisiblitymc,
   setshowMain,
   setsectionData,
@@ -5499,7 +5499,7 @@ export const UpdateSubmitQuestionsAndAnswers = async (
   setQuizQuestionsList
 ) => {
   console.log(ID);
-  console.log(curriculumID);
+  console.log( newAnswerOption);
 
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -5518,15 +5518,15 @@ export const UpdateSubmitQuestionsAndAnswers = async (
   formdata.append("explanation4", `${answerExplainFour}`);
   formdata.append("explanation5", `${answerExplainFive}`);
 
-  if (answerOption == "ans1") {
+  if (newAnswerOption == "ans1") {
     formdata.append("correctAnswer", "1");
-  } else if (answerOption == "ans2") {
+  } else if (newAnswerOption == "ans2") {
     formdata.append("correctAnswer", "2");
-  } else if (answerOption == "ans3") {
+  } else if (newAnswerOption == "ans3") {
     formdata.append("correctAnswer", "3");
-  } else if (answerOption == "ans4") {
+  } else if (newAnswerOption == "ans4") {
     formdata.append("correctAnswer", "4");
-  } else if (answerOption == "ans5") {
+  } else if (newAnswerOption == "ans5") {
     formdata.append("correctAnswer", "5");
   }
 
