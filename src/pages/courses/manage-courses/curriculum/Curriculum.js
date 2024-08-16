@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "antd";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { CardContent } from "@mui/material";
@@ -17,7 +18,7 @@ import JoditEditor from "jodit-react";
 import DnsIcon from "@mui/icons-material/Dns";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import OpenWithOutlinedIcon from '@mui/icons-material/OpenWithOutlined';
+import OpenWithOutlinedIcon from "@mui/icons-material/OpenWithOutlined";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -259,10 +260,41 @@ const Curriculum = ({ code }) => {
 
   const showAddSectionInput = () => setshowSectionInput(!showSectionInput);
 
+  const [answerOptions, setAnswerOptions] = useState([
+    {
+      id: "1",
+      option: answerOptionOne,
+      text: answerOne,
+      explanation: answerExplainOne,
+    },
+    {
+      id: "2",
+      option: answerOptionTwo,
+      text: answerTwo,
+      explanation: answerExplainTwo,
+    },
+    {
+      id: "3",
+      option: answerOptionThree,
+      text: answerThree,
+      explanation: answerExplainThree,
+    },
+    {
+      id: "4",
+      option: answerOptionFour,
+      text: answerFour,
+      explanation: answerExplainFour,
+    },
+    {
+      id: "5",
+      option: answerOptionFive,
+      text: answerFive,
+      explanation: answerExplainFive,
+    },
+  ]);
+
   // Add Section
   const handleSubmitSection = () => {
-    console.log(section);
-
     setbtn_section_loading(true);
 
     if (section == "") {
@@ -301,8 +333,6 @@ const Curriculum = ({ code }) => {
 
   // update lecture
   const handleUpdateLectureName = (lecture, section) => {
-
-
     UpdateLectureName(code, lecture, updateLectureName, section);
   };
   // update Quiz Name
@@ -420,8 +450,6 @@ const Curriculum = ({ code }) => {
 
   // ====== SUBMIT PRACTICE TEST ======
   const handlePracticetestSave = () => {
-
-
     if (PracticeTestTitle == "") {
       ErrorAlert("Empty field", "Please fill the title");
       return;
@@ -496,7 +524,6 @@ const Curriculum = ({ code }) => {
 
   // ======= SUBMIT CODING EXEC =======
   const handleCodingExecSave = () => {
-   
     if (CodingExerciseTitle == "") {
       ErrorAlert("Empty field", "Please fill the title");
       return;
@@ -932,7 +959,6 @@ const Curriculum = ({ code }) => {
 
   // Save Quiz
   const handleSaveQuiz = (sectionID) => {
-
     if (quizTitle == "") {
       ErrorAlert("Empty field", "Please enter quiz title");
     } else if (quizDesc == "") {
@@ -1034,6 +1060,8 @@ const Curriculum = ({ code }) => {
         setanswerExplainFive,
         setQuizQuestionsList
       );
+
+      handleQuestionsAnswerUpdateCancel();
     }
   };
 
@@ -1064,95 +1092,74 @@ const Curriculum = ({ code }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         DeleteQuestionsAndAnswers(code, q.id, setsectionData);
+        handleQuestionsAnswerUpdateCancel();
       }
     });
   };
 
   // Update  show
+
   const handleShowEditQuizListItem = (q) => {
     console.log(q);
-
     setquizForUpdateSelected(q.id);
-
     setquizUpdateEnabled(true);
-
     setquestion(q.question);
 
-    setanswerOne(
-      q.answers[0] && q.answers[0].name != null ? q.answers[0].name : ""
-    );
-    setanswerTwo(
-      q.answers[1] && q.answers[1].name != null ? q.answers[1].name : ""
-    );
-    setanswerThree(
-      q.answers[2] && q.answers[2].name != null ? q.answers[2].name : ""
-    );
-    setanswerFour(
-      q.answers[3] && q.answers[3].name != null ? q.answers[3].name : ""
-    );
-    setanswerFive(
-      q.answers[4] && q.answers[4].name != null ? q.answers[4].name : ""
+    const answers = [
+      {
+        id: "1",
+        option: "ans1",
+        text: q.answers[0]?.name || "",
+        explanation: q.answers[0]?.explanation || "",
+      },
+      {
+        id: "2",
+        option: "ans2",
+        text: q.answers[1]?.name || "",
+        explanation: q.answers[1]?.explanation || "",
+      },
+      {
+        id: "3",
+        option: "ans3",
+        text: q.answers[2]?.name || "",
+        explanation: q.answers[2]?.explanation || "",
+      },
+      {
+        id: "4",
+        option: "ans4",
+        text: q.answers[3]?.name || "",
+        explanation: q.answers[3]?.explanation || "",
+      },
+      {
+        id: "5",
+        option: "ans5",
+        text: q.answers[4]?.name || "",
+        explanation: q.answers[4]?.explanation || "",
+      },
+    ];
+
+    setanswerOne(q.answers[0]?.name || "");
+    setanswerTwo(q.answers[1]?.name || "");
+    setanswerThree(q.answers[2]?.name || "");
+    setanswerFour(q.answers[3]?.name || "");
+    setanswerFive(q.answers[4]?.name || "");
+
+    setanswerExplainOne(q.answers[0]?.explanation || "");
+    setanswerExplainTwo(q.answers[1]?.explanation || "");
+    setanswerExplainThree(q.answers[2]?.explanation || "");
+    setanswerExplainFour(q.answers[3]?.explanation || "");
+    setanswerExplainFive(q.answers[4]?.explanation || "");
+
+    setAnswerOptions(answers);
+
+    console.log(answerOptions);
+
+    const correctAnswerIndex = q.answers.findIndex(
+      (answer) => answer.correctAnswer
     );
 
-    setanswerExplainOne(
-      q.answers[0] && q.answers[0].explanation != null
-        ? q.answers[0].explanation
-        : ""
-    );
-    setanswerExplainTwo(
-      q.answers[1] && q.answers[1].explanation != null
-        ? q.answers[1].explanation
-        : ""
-    );
-    setanswerExplainThree(
-      q.answers[2] && q.answers[2].explanation != null
-        ? q.answers[2].explanation
-        : ""
-    );
-    setanswerExplainFour(
-      q.answers[3] && q.answers[3].explanation != null
-        ? q.answers[3].explanation
-        : ""
-    );
-    setanswerExplainFive(
-      q.answers[4] && q.answers[4].explanation != null
-        ? q.answers[4].explanation
-        : ""
-    );
-
-    if (q.answers[0].correctAnswer != null) {
-      if (q.answers[0].correctAnswer) {
-        setanswerOption("ans1");
-        return;
-      }
-    }
-
-    if (q.answers[1].correctAnswer != null) {
-      if (q.answers[1].correctAnswer) {
-        setanswerOption("ans2");
-        return;
-      }
-    }
-
-    if (q.answers[2].correctAnswer != null) {
-      if (q.answers[2].correctAnswer) {
-        setanswerOption("ans3");
-        return;
-      }
-    }
-
-    if (q.answers[3].correctAnswer != null) {
-      if (q.answers[3].correctAnswer) {
-        setanswerOption("ans4");
-        return;
-      }
-    }
-
-    if (q.answers[4].correctAnswer != null) {
-      if (q.answers[4].correctAnswer) {
-        setanswerOption("ans5");
-        return;
-      }
+    if (correctAnswerIndex !== -1) {
+      setanswerOption(`ans${correctAnswerIndex + 1}`);
     }
   };
 
@@ -1161,7 +1168,22 @@ const Curriculum = ({ code }) => {
     console.log(item);
 
     let ID = item.id; // Lect ID
-    let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id; // Curriculum ID
+    let curriculumID = item.getQuizs.length == 0 ? "" : item.getQuizs[0].id;
+
+    const updatedAnswers = answerOptions.map((answer) => ({
+      ...answer,
+      isSelected: answer.option === answerOption,
+    }));
+
+    const selectedAnswerIndex = updatedAnswers.findIndex(
+      (answer) => answer.isSelected
+    );
+
+    const answerOptionsMapping = ["ans1", "ans2", "ans3", "ans4", "ans5"];
+    const newAnswerOption =
+      selectedAnswerIndex !== -1
+        ? answerOptionsMapping[selectedAnswerIndex]
+        : null;
 
     if (question == "") {
       ErrorAlert("Empty field", "Please enter a question");
@@ -1203,6 +1225,8 @@ const Curriculum = ({ code }) => {
         }
       }
 
+      setanswerOption(newAnswerOption);
+
       UpdateSubmitQuestionsAndAnswers(
         quizForUpdateSelected,
         code,
@@ -1219,7 +1243,7 @@ const Curriculum = ({ code }) => {
         answerExplainThree,
         answerExplainFour,
         answerExplainFive,
-        answerOption,
+        newAnswerOption,
         setcurriculumvisiblitymc,
         setshowMain,
         setsectionData,
@@ -1237,6 +1261,8 @@ const Curriculum = ({ code }) => {
         setanswerExplainFive,
         setQuizQuestionsList
       );
+
+      handleQuestionsAnswerUpdateCancel();
     }
   };
 
@@ -1337,6 +1363,60 @@ const Curriculum = ({ code }) => {
     });
   }
 
+  const updateAnswer = (index, newText, newExplanation) => {
+    const newAnswers = [...answerOptions];
+    newAnswers[index].text = newText;
+    newAnswers[index].explanation = newExplanation;
+    setAnswerOptions(newAnswers);
+
+    if (index === 0) {
+      setanswerOne(newText);
+      setanswerExplainOne(newExplanation);
+    }
+    if (index === 1) {
+      setanswerTwo(newText);
+      setanswerExplainTwo(newExplanation);
+    }
+    if (index === 2) {
+      setanswerThree(newText);
+      setanswerExplainThree(newExplanation);
+    }
+    if (index === 3) {
+      setanswerFour(newText);
+      setanswerExplainFour(newExplanation);
+    }
+    if (index === 4) {
+      setanswerFive(newText);
+      setanswerExplainFive(newExplanation);
+    }
+
+    console.log(answerOptions);
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const reorderedItems = Array.from(answerOptions);
+
+    const [movedItem] = reorderedItems.splice(result.source.index, 1);
+    reorderedItems.splice(result.destination.index, 0, movedItem);
+
+    // Update the reordered answer options state
+    setAnswerOptions(reorderedItems);
+
+    // Update the individual answer state variables
+    setanswerOne(reorderedItems[0].text);
+    setanswerTwo(reorderedItems[1].text);
+    setanswerThree(reorderedItems[2].text);
+    setanswerFour(reorderedItems[3].text);
+    setanswerFive(reorderedItems[4].text);
+
+    setanswerExplainOne(reorderedItems[0].explanation);
+    setanswerExplainTwo(reorderedItems[1].explanation);
+    setanswerExplainThree(reorderedItems[2].explanation);
+    setanswerExplainFour(reorderedItems[3].explanation);
+    setanswerExplainFive(reorderedItems[4].explanation);
+  };
   return (
     <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
       <Card className="py-2 my-2 p-4">
@@ -1474,12 +1554,17 @@ const Curriculum = ({ code }) => {
                           />
                         </>
                       )}
-                     
                     </Typography>
-                      <Card className="p-3">
-                      <div className="mx-5"> <h4> <OpenWithOutlinedIcon/> {" "} You can edit the order of the content by simply dragging</h4> </div>
-                      </Card>
-                    
+                    <Card className="p-3">
+                      <div className="mx-5">
+                        {" "}
+                        <h4>
+                          {" "}
+                          <OpenWithOutlinedIcon /> You can rearrange the content
+                          simply by dragging
+                        </h4>{" "}
+                      </div>
+                    </Card>
                   </div>
 
                   <div className="my-2">
@@ -1524,9 +1609,7 @@ const Curriculum = ({ code }) => {
                               onDragOver={(e) => {
                                 e.preventDefault();
                               }}
-                              style={{
-                                cursor: isExpanded ? "default" : "move",
-                              }}
+                             
                             >
                               <>
                                 {item.type == "Lecture" && (
@@ -1585,7 +1668,9 @@ const Curriculum = ({ code }) => {
                                           key={index + i + item.id}
                                           className="my-3"
                                         >
-                                          <div className="d-flex justify-content-between align-items-center p-2">
+                                          <div className="d-flex justify-content-between align-items-center p-2"  style={{
+                                cursor: isExpanded ? "default" : "move",
+                              }}>
                                             <span>
                                               <Typography>
                                                 <CheckCircleIcon fontSize="small" />
@@ -3600,7 +3685,9 @@ const Curriculum = ({ code }) => {
                                       key={index + i + item.id}
                                       className="my-3"
                                     >
-                                      <div className="d-flex justify-content-between align-items-center p-2">
+                                      <div className="d-flex justify-content-between align-items-center p-2" style={{
+                                cursor: isExpanded ? "default" : "move",
+                              }}>
                                         <span>
                                           <Typography>
                                             <CheckCircleIcon fontSize="small" />
@@ -3759,7 +3846,8 @@ const Curriculum = ({ code }) => {
                                             </div>
 
                                             {/* MCQ FORM */}
-                                            {/* Update show */}
+                                            {/* test show */}
+
                                             {quizUpdateEnabled ? (
                                               <Form className="p-2">
                                                 <Form.Group
@@ -3769,6 +3857,26 @@ const Curriculum = ({ code }) => {
                                                   <Form.Label>
                                                     Question
                                                   </Form.Label>
+                                                  <Card
+                                                    className="p-3 my-2 float-right"
+                                                    style={{
+                                                      textAlign: "center",
+                                                      float: "right",
+                                                      width:
+                                                        "calc(35% - 100px)",
+                                                    }}
+                                                  >
+                                                    <div className="mx-5">
+                                                      {" "}
+                                                      <h4>
+                                                        {" "}
+                                                        <OpenWithOutlinedIcon />{" "}
+                                                        You can rearrange the
+                                                        Answers & Explanations simply by
+                                                        dragging
+                                                      </h4>{" "}
+                                                    </div>
+                                                  </Card>
                                                   <Form.Control
                                                     value={question}
                                                     onChange={(e) =>
@@ -3778,249 +3886,124 @@ const Curriculum = ({ code }) => {
                                                     }
                                                     as="textarea"
                                                     rows={3}
-                                                  />
+                                                  />{" "}
                                                 </Form.Group>
 
                                                 <Form.Label>
                                                   Answers (Please select correct
                                                   answer)
                                                 </Form.Label>
-                                                <RadioGroup
-                                                  name="group1"
-                                                  onChange={(e) =>
-                                                    setanswerOption(
-                                                      e.target.value
-                                                    )
-                                                  }
-                                                  value={answerOption}
+
+                                                <DragDropContext
+                                                  onDragEnd={onDragEnd}
                                                 >
-                                                  <div className="row">
-                                                    {/* 1 */}
-                                                    <div className="col-md-1">
-                                                      <Radio
-                                                        value={answerOptionOne}
-                                                        onChange={(e) =>
-                                                          setanswerOptionOne(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                      />
-                                                    </div>
-                                                    <div className="col-md-11 mb-3">
-                                                      <Form.Group
-                                                        className="mb-3"
-                                                        controlId="exampleForm.ControlTextarea1"
+                                                  <Droppable droppableId="answers">
+                                                    {(provided) => (
+                                                      <div
+                                                        className="row"
+                                                        {...provided.droppableProps}
+                                                        ref={provided.innerRef}
                                                       >
-                                                        <Form.Control
-                                                          value={answerOne}
-                                                          onChange={(e) =>
-                                                            setanswerOne(
-                                                              e.target.value
-                                                            )
-                                                          }
-                                                          as="textarea"
-                                                          rows={3}
-                                                        />
-                                                      </Form.Group>
-                                                      <Form.Control
-                                                        value={
-                                                          answerExplainOne ==
-                                                          "null"
-                                                            ? ""
-                                                            : answerExplainOne
-                                                        }
-                                                        onChange={(e) =>
-                                                          setanswerExplainOne(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                        type="text"
-                                                        placeholder="Explain why this is or isn't an answer"
-                                                      />
-                                                    </div>
+                                                        {answerOptions.map(
+                                                          (answer, index) => (
+                                                            <Draggable
+                                                              key={answer.id}
+                                                              draggableId={
+                                                                answer.id
+                                                              }
+                                                              index={index}
+                                                            >
+                                                              {(provided) => (
+                                                                <div
+                                                                  className="col-md-12 mb-3"
+                                                                  ref={
+                                                                    provided.innerRef
+                                                                  }
+                                                                  {...provided.draggableProps}
+                                                                  {...provided.dragHandleProps}
+                                                                >
+                                                                  <div className="row">
+                                                                    {/* Radio Button */}
+                                                                    <div className="col-md-1">
+                                                                      <Radio
+                                                                        value={
+                                                                          answer.option
+                                                                        }
+                                                                        onChange={() =>
+                                                                          setanswerOption(
+                                                                            answer.option
+                                                                          )
+                                                                        }
+                                                                        checked={
+                                                                          answer.option ===
+                                                                          answerOption
+                                                                        }
+                                                                      />
+                                                                    </div>
 
-                                                    {/* 2 */}
-                                                    <div className="col-md-1">
-                                                      <Radio
-                                                        value={answerOptionTwo}
-                                                        onChange={(e) =>
-                                                          setanswerOptionTwo(
-                                                            e.target.value
+                                                                    {/* Answer Text and Explanation */}
+                                                                    <div className="col-md-11">
+                                                                      <Form.Group
+                                                                        className="mb-3"
+                                                                        controlId={`answer-${
+                                                                          index +
+                                                                          1
+                                                                        }`}
+                                                                      >
+                                                                        <Form.Control
+                                                                          value={
+                                                                            answer.text
+                                                                          }
+                                                                          onChange={(
+                                                                            e
+                                                                          ) =>
+                                                                            updateAnswer(
+                                                                              index,
+                                                                              e
+                                                                                .target
+                                                                                .value,
+                                                                              answer.explanation
+                                                                            )
+                                                                          }
+                                                                          as="textarea"
+                                                                          rows={
+                                                                            3
+                                                                          }
+                                                                        />
+                                                                      </Form.Group>
+                                                                      <Form.Control
+                                                                        value={
+                                                                          answer.explanation ===
+                                                                          "null"
+                                                                            ? ""
+                                                                            : answer.explanation
+                                                                        }
+                                                                        onChange={(
+                                                                          e
+                                                                        ) =>
+                                                                          updateAnswer(
+                                                                            index,
+                                                                            answer.text,
+                                                                            e
+                                                                              .target
+                                                                              .value
+                                                                          )
+                                                                        }
+                                                                        type="text"
+                                                                        placeholder="Explain why this is or isn't an answer"
+                                                                      />
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              )}
+                                                            </Draggable>
                                                           )
-                                                        }
-                                                      />
-                                                    </div>
-                                                    <div className="col-md-11 mb-3">
-                                                      <Form.Group
-                                                        className="mb-3"
-                                                        controlId="exampleForm.ControlTextarea1"
-                                                      >
-                                                        <Form.Control
-                                                          value={answerTwo}
-                                                          onChange={(e) =>
-                                                            setanswerTwo(
-                                                              e.target.value
-                                                            )
-                                                          }
-                                                          as="textarea"
-                                                          rows={3}
-                                                        />
-                                                      </Form.Group>
-                                                      <Form.Control
-                                                        value={
-                                                          answerExplainTwo ==
-                                                          "null"
-                                                            ? ""
-                                                            : answerExplainTwo
-                                                        }
-                                                        onChange={(e) =>
-                                                          setanswerExplainTwo(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                        type="text"
-                                                        placeholder="Explain why this is or isn't an answer"
-                                                      />
-                                                    </div>
-
-                                                    {/* 3 */}
-                                                    <div className="col-md-1">
-                                                      <Radio
-                                                        value={
-                                                          answerOptionThree
-                                                        }
-                                                        onChange={(e) =>
-                                                          setanswerOptionThree(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                      />
-                                                    </div>
-
-                                                    <div className="col-md-11 mb-3">
-                                                      <Form.Group
-                                                        className="mb-3"
-                                                        controlId="exampleForm.ControlTextarea1"
-                                                      >
-                                                        <Form.Control
-                                                          value={answerThree}
-                                                          onChange={(e) =>
-                                                            setanswerThree(
-                                                              e.target.value
-                                                            )
-                                                          }
-                                                          as="textarea"
-                                                          rows={3}
-                                                        />
-                                                      </Form.Group>
-                                                      <Form.Control
-                                                        value={
-                                                          answerExplainThree ==
-                                                          "null"
-                                                            ? ""
-                                                            : answerExplainThree
-                                                        }
-                                                        onChange={(e) =>
-                                                          setanswerExplainThree(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                        type="text"
-                                                        placeholder="Explain why this is or isn't an answer"
-                                                      />
-                                                    </div>
-
-                                                    {/* 4 */}
-                                                    <div className="col-md-1">
-                                                      <Radio
-                                                        value={answerOptionFour}
-                                                        onChange={(e) =>
-                                                          setanswerOptionFour(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                      />
-                                                    </div>
-
-                                                    <div className="col-md-11 mb-3">
-                                                      <Form.Group
-                                                        className="mb-3"
-                                                        controlId="exampleForm.ControlTextarea1"
-                                                      >
-                                                        <Form.Control
-                                                          value={answerFour}
-                                                          onChange={(e) =>
-                                                            setanswerFour(
-                                                              e.target.value
-                                                            )
-                                                          }
-                                                          as="textarea"
-                                                          rows={3}
-                                                        />
-                                                      </Form.Group>
-                                                      <Form.Control
-                                                        value={
-                                                          answerExplainFour ==
-                                                          "null"
-                                                            ? ""
-                                                            : answerExplainFour
-                                                        }
-                                                        onChange={(e) =>
-                                                          setanswerExplainFour(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                        type="text"
-                                                        placeholder="Explain why this is or isn't an answer"
-                                                      />
-                                                    </div>
-
-                                                    {/* 5*/}
-                                                    <div className="col-md-1">
-                                                      <Radio
-                                                        value={answerOptionFive}
-                                                        onChange={(e) =>
-                                                          setanswerOptionFive(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                      />
-                                                    </div>
-
-                                                    <div className="col-md-11 mb-3">
-                                                      <Form.Group
-                                                        className="mb-3"
-                                                        controlId="exampleForm.ControlTextarea1"
-                                                      >
-                                                        <Form.Control
-                                                          value={answerFive}
-                                                          onChange={(e) =>
-                                                            setanswerFive(
-                                                              e.target.value
-                                                            )
-                                                          }
-                                                          as="textarea"
-                                                          rows={3}
-                                                        />
-                                                      </Form.Group>
-                                                      <Form.Control
-                                                        value={
-                                                          answerExplainFive ==
-                                                          "null"
-                                                            ? ""
-                                                            : answerExplainFive
-                                                        }
-                                                        onChange={(e) =>
-                                                          setanswerExplainFive(
-                                                            e.target.value
-                                                          )
-                                                        }
-                                                        type="text"
-                                                        placeholder="Explain why this is or isn't an answer"
-                                                      />
-                                                    </div>
-                                                  </div>
-                                                </RadioGroup>
+                                                        )}
+                                                        {provided.placeholder}
+                                                      </div>
+                                                    )}
+                                                  </Droppable>
+                                                </DragDropContext>
 
                                                 <div className="d-flex justify-content-end">
                                                   <Button
@@ -4032,7 +4015,6 @@ const Curriculum = ({ code }) => {
                                                   >
                                                     CANCEL
                                                   </Button>
-
                                                   <Button
                                                     className="m-1"
                                                     onClick={() =>
@@ -4690,7 +4672,9 @@ const Curriculum = ({ code }) => {
                                       key={index + i + item.id}
                                       className="my-3"
                                     >
-                                      <div className="d-flex justify-content-between align-items-center p-2">
+                                      <div className="d-flex justify-content-between align-items-center p-2" style={{
+                                cursor: isExpanded ? "default" : "move",
+                              }}>
                                         <span>
                                           <Typography>
                                             <CheckCircleIcon fontSize="small" />
@@ -5387,7 +5371,9 @@ const Curriculum = ({ code }) => {
                                       key={index + i + item.id}
                                       className="my-3"
                                     >
-                                      <div className="d-flex justify-content-between align-items-center p-2">
+                                      <div className="d-flex justify-content-between align-items-center p-2" style={{
+                                cursor: isExpanded ? "default" : "move",
+                              }}>
                                         <span>
                                           <Typography>
                                             <CheckCircleIcon fontSize="small" />
@@ -5925,7 +5911,9 @@ const Curriculum = ({ code }) => {
                                       key={index + i + item.id}
                                       className="my-3"
                                     >
-                                      <div className="d-flex justify-content-between align-items-center p-2">
+                                      <div className="d-flex justify-content-between align-items-center p-2" style={{
+                                cursor: isExpanded ? "default" : "move",
+                              }}>
                                         <span>
                                           <Typography>
                                             <CheckCircleIcon fontSize="small" />
