@@ -60,6 +60,7 @@ import {
   UpdateAssignmentName,
   UpdateCodingExerciseName,
   UpdateLectureName,
+  UpdateLessonVideo,
   UpdatePraticeTestName,
   UpdateQuizName,
   updateSectionData,
@@ -1417,6 +1418,87 @@ const Curriculum = ({ code }) => {
     setanswerExplainFour(reorderedItems[3].explanation);
     setanswerExplainFive(reorderedItems[4].explanation);
   };
+
+
+  // ============================ VIDEO UPLAODING ========================
+
+  const [videoFile, setVideoFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunk size
+  const progressBarRef = useRef(null);
+
+  const handleVideoSubmit = (e) => {
+    const selectedFile = e.target.files[0]; // Get the first file from the input
+
+    if (selectedFile) {
+      // File size limit (2.5GB in bytes)
+      const maxSize = 2.5 * 1024 * 1024 * 1024;
+
+      if (selectedFile.size > maxSize) {
+        setVideoFile(null);
+        ErrorAlert('Error', 'File size exceeds 2.5GB.');
+        return;
+      } else {
+        setVideoFile(selectedFile);
+        console.log('Selected file:', selectedFile);
+        uploadFile(selectedFile); // Start the upload process
+      }
+    } else {
+      ErrorAlert('Error', 'No file selected.');
+    }
+  };
+
+  const uploadFile = async (file) => {
+    if (!file) return;
+
+    setUploading(true);
+
+    try {
+      const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+      let uploadedChunks = 0;
+      let start = 0, end;
+
+      const startTime = new Date();
+
+      for (let i = 1; i <= totalChunks; i++) {
+        end = start + CHUNK_SIZE;
+        const chunk = file.slice(start, end);
+        const formData = new FormData();
+        // formData.append('chunkIndex', i);
+        // formData.append('totalChunks', totalChunks);
+        // formData.append('fileName', file.name);
+        formData.append('file', chunk);
+
+        await UpdateLessonVideo(formData);
+
+        uploadedChunks++;
+        const progress = Math.floor((uploadedChunks / totalChunks) * 100);
+        updateProgressBar(progress);
+
+        start = end;
+      }
+
+      const endTime = new Date();
+      const timeElapsed = (endTime - startTime) / 1000;
+      console.log('Time elapsed:', timeElapsed, 'seconds');
+
+    } catch (err) {
+      console.log(err);
+      ErrorAlert('Error', 'Error uploading file');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const updateProgressBar = (progress) => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = progress + '%';
+      progressBarRef.current.textContent = progress + '%';
+    }
+  };
+
+  // =================================================================
+
   return (
     <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
       <Card className="py-2 my-2 p-4">
@@ -1426,10 +1508,15 @@ const Curriculum = ({ code }) => {
           </Typography>
         </div>
 
-        <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Default file input example</Form.Label>
-        <Form.Control onClick={hanldeVideoSubmit} type="file" />
-      </Form.Group>
+        <div>
+      <input type="file" accept="video/*" onChange={handleVideoSubmit} />
+      <div className="progress">
+        <div className="progress-bar" role="progressbar" style={{ width: '0%' }} ref={progressBarRef}></div>
+      </div>
+      <button className="btn btn-info" onClick={() => videoFile && uploadFile(videoFile)} disabled={uploading}>
+        {uploading ? 'Uploading...' : 'Upload'}
+      </button>
+    </div>
 
         <hr />
 

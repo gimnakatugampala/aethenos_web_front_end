@@ -5617,3 +5617,22 @@ export const updateSectionData = async (
     })
     .catch((error) => console.error(error));
 };
+
+
+export const UpdateLessonVideo = async (formData) => {
+  const requestOptions = {
+    method: 'POST',
+    body: formData,
+    redirect: 'follow',
+  };
+
+  try {
+    const response = await fetch(`${BACKEND_LINK}/api/files/upload`, requestOptions);
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
