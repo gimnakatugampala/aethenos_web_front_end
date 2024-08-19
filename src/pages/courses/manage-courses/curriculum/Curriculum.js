@@ -1534,6 +1534,8 @@ const Curriculum = ({ code }) => {
       progressBarRef.current.style.width = progress + '%';
       progressBarRef.current.textContent = progress + '%';
     }
+
+    console.log(progress)
   };
 
   // ===============================
@@ -1548,14 +1550,14 @@ const Curriculum = ({ code }) => {
         </div>
 
         <div>
-      <input type="file" accept="video/*" onChange={handleVideoSubmit} />
-      <div className="progress">
-        <div className="progress-bar" role="progressbar" style={{ width: '0%' }} ref={progressBarRef}></div>
+        <input type="file" accept="video/*" onChange={handleVideoSubmit} />
+        <div className="progress">
+          <div className="progress-bar" role="progressbar" style={{ width: '0%' }} ref={progressBarRef}></div>
+        </div>
+        <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(videoFile, updateProgressBar, setUploading)} disabled={uploading}>
+          {uploading ? 'Uploading...' : 'Upload'}
+        </button>
       </div>
-      <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(videoFile, updateProgressBar, setUploading)} disabled={uploading}>
-        {uploading ? 'Uploading...' : 'Upload'}
-      </button>
-    </div>
 
         <hr />
 
