@@ -88,6 +88,7 @@ import Badge from "react-bootstrap/Badge";
 import "sweetalert2/src/sweetalert2.scss";
 import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChunks";
+import { uploadSyllabusVideoChunks } from "../../../../commonFunctions/uploadSyllabusVideoChunks";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -105,8 +106,17 @@ const Curriculum = ({ code }) => {
   const [curriculumvisiblitymc, setcurriculumvisiblitymc] = useState("");
   const [extracurriculum, setextracurriculum] = useState("");
 
+  // ============= VIDEO =================
   const [uploadingVideo, setUploadingVideo] = useState(null);
   const [uploadingVideoName, setuploadingVideoName] = useState("");
+
+  const [uploading, setUploading] = useState(false);
+  const [videoFile, setVideoFile] = useState(null);
+  const progressBarRef = useRef(null);
+  const [uploadingVideoProgress, setuploadingVideoProgress] = useState(0)
+  const [videoUploadingDuration, setvideoUploadingDuration] = useState(0)
+  const [videoUploadingID, setvideoUploadingID] = useState("")
+// ============= VIDEO =================
 
   const [showSectionInput, setshowSectionInput] = useState(false);
 
@@ -899,28 +909,44 @@ const Curriculum = ({ code }) => {
   };
 
   // Save Video > Video
-  const handleSaveVideo = (video, ID) => {
+  const handleSaveVideo = async (video, ID) => {
     console.log(video);
     setuploadingVideoName(video.name);
     console.log(ID);
+    setvideoUploadingID(ID);
 
-    // console.log(e.target.files)
+    if (!video) {
+      ErrorAlert('Error', 'No file selected.');
+      return;
+    }
 
-    const reader = new FileReader();
+    // Get duration
+    const videoElement = document.createElement("video");
+    videoElement.preload = 'metadata';
+    videoElement.onloadedmetadata = function () {
+      const duration = Math.round(videoElement.duration);
+      console.log("Video duration:", duration, "seconds");
+      setvideoUploadingDuration(duration);
+    };
+    videoElement.src = URL.createObjectURL(video);
 
-    reader.onload = function (event) {
-      const video1 = document.createElement("video");
+    const maxSize = 3 * 1024 * 1024 * 1024; // 3GB limit
+    if (video.size > maxSize) {
+      setVideoFile(null);
+      ErrorAlert('Error', 'File size exceeds 3.0GB.');
+      return;
+    }
 
-      video1.onloadedmetadata = function () {
-        // Get the duration of the video in seconds
-        const duration = Math.round(video1.duration);
-        console.log("Video duration:", duration, "seconds");
+    setVideoFile(video);
 
+    try {
+      await uploadSyllabusVideoChunks(fieUploadUUID, video, updateProgressBar, setUploading, () => {
         AddCurriculumVideo(
           code,
           ID,
+          fieUploadUUID,
           video,
-          duration,
+          videoUploadingDuration,
           setsectionData,
           setshowMain,
           setshowDescRes,
@@ -929,13 +955,70 @@ const Curriculum = ({ code }) => {
           setUploadingVideo,
           setuploadingVideoName
         );
-      };
+      });
+    } catch (error) {
+      console.error('Error during file upload:', error);
+      ErrorAlert('Error', 'Error uploading file.');
+    }
+};
+  
+  
 
-      video1.src = event.target.result;
-    };
+  // ===============================
 
-    reader.readAsDataURL(video);
+
+  const updateProgressBar = (progress, video, ID) => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = `${progress}%`;
+      progressBarRef.current.textContent = `${progress}%`;
+    }
+  
+    setuploadingVideoProgress(progress);
+  
+    // Execute AddCurriculumVideo after progress reaches 100%
+    if (progress === 100) {
+      // AddCurriculumVideo(
+      //   code,
+      //   ID,
+      //   fieUploadUUID,
+      //   video,
+      //   videoUploadingDuration,
+      //   setsectionData,
+      //   setshowMain,
+      //   setshowDescRes,
+      //   setshowContentAdd,
+      //   setcurriculumvisiblity,
+      //   setUploadingVideo,
+      //   setuploadingVideoName
+      // );
+    }
   };
+  
+  
+
+  // const handleVideoSubmit = (e) => {
+  //   const selectedFile = e.target.files[0];
+  //   if (selectedFile) {
+  //     const maxSize = 3 * 1024 * 1024 * 1024;
+  //     if (selectedFile.size > maxSize) {
+  //       setVideoFile(null);
+  //       ErrorAlert('Error','File size exceeds 3.0GB.');
+  //       return;
+  //     } else {
+  //       setVideoFile(selectedFile);
+  //       uploadFileInChunks(
+  //         fieUploadUUID,
+  //         selectedFile,
+  //         updateProgressBar,
+  //         setUploading
+  //       );
+  //     }
+  //   } else {
+  //     ErrorAlert('Error', 'No file selected.');
+  //   }
+  // };
+
+  // ===============================
 
   //  Set Video preview
   const handleSetVideoPreview = (status, item) => {
@@ -1505,44 +1588,7 @@ const Curriculum = ({ code }) => {
   // =================================================================
 
 
-  // ===============================
-
-  const [uploading, setUploading] = useState(false);
-  const [videoFile, setVideoFile] = useState(null);
-  const progressBarRef = useRef(null);
-
-  const handleVideoSubmit = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const maxSize = 3 * 1024 * 1024 * 1024;
-      if (selectedFile.size > maxSize) {
-        setVideoFile(null);
-        ErrorAlert('Error','File size exceeds 3.0GB.');
-        return;
-      } else {
-        setVideoFile(selectedFile);
-        uploadFileInChunks(
-          fieUploadUUID,
-          selectedFile,
-          updateProgressBar,
-          setUploading
-        );
-      }
-    } else {
-      ErrorAlert('Error', 'No file selected.');
-    }
-  };
-
-  const updateProgressBar = (progress) => {
-    if (progressBarRef.current) {
-      progressBarRef.current.style.width = progress + '%';
-      progressBarRef.current.textContent = progress + '%';
-    }
-
-    console.log(progress)
-  };
-
-  // ===============================
+  
 
   return (
     <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
@@ -1553,7 +1599,7 @@ const Curriculum = ({ code }) => {
           </Typography>
         </div>
 
-        <div>
+        {/* <div>
         <input type="file" accept="video/*" onChange={handleVideoSubmit} />
         <div className="progress">
           <div className="progress-bar" role="progressbar" style={{ width: '0%' }} ref={progressBarRef}></div>
@@ -1561,7 +1607,7 @@ const Curriculum = ({ code }) => {
         <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(fieUploadUUID, videoFile, updateProgressBar, setUploading)} disabled={uploading}>
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
-      </div>
+      </div> */}
 
         <hr />
 
@@ -2484,15 +2530,15 @@ const Curriculum = ({ code }) => {
                                                               {uploadingVideo ==
                                                               index +
                                                                 i +
-                                                                item.id ? (
-                                                                <Badge bg="info">
-                                                                  Uploading
-                                                                </Badge>
-                                                              ) : (
+                                                                item.id && uploadingVideoProgress != 100 ?
+                                                                (<Badge bg="info">
+                                                                {uploadingVideoProgress} %
+                                                              </Badge>) : (
                                                                 <Badge bg="success">
-                                                                  Completed
-                                                                </Badge>
-                                                              )}
+                                                                Completed
+                                                              </Badge>
+                                                              )
+                                                              }
                                                             </td>
                                                           </td>
                                                           <td>Video</td>

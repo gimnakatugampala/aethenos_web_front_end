@@ -2802,6 +2802,7 @@ export const AddCurriculumArticle = async (
 export const AddCurriculumVideo = async (
   code,
   ID,
+  fieUploadUUID,
   video,
   duration,
   setsectionData,
@@ -2818,8 +2819,9 @@ export const AddCurriculumVideo = async (
 
   var formdata = new FormData();
   formdata.append("CurriculumItemId", `${ID}`);
-  formdata.append("Video", video);
+  formdata.append("Video", fieUploadUUID + "_" + video.name);
   formdata.append("videoLength", `${duration}`);
+  formdata.append("originalFileName", video.name);
 
   var requestOptions = {
     method: "PUT",
