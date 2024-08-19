@@ -1520,7 +1520,8 @@ const Curriculum = ({ code }) => {
         setVideoFile(selectedFile);
         uploadFileInChunks(
           selectedFile,
-          updateProgressBar
+          updateProgressBar,
+          setUploading
         );
       }
     } else {
@@ -1551,7 +1552,7 @@ const Curriculum = ({ code }) => {
       <div className="progress">
         <div className="progress-bar" role="progressbar" style={{ width: '0%' }} ref={progressBarRef}></div>
       </div>
-      <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(videoFile,updateProgressBar)} disabled={uploading}>
+      <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(videoFile, updateProgressBar, setUploading)} disabled={uploading}>
         {uploading ? 'Uploading...' : 'Upload'}
       </button>
     </div>

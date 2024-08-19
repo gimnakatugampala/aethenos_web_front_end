@@ -1,11 +1,14 @@
 import { UpdateLessonVideo } from "../api";
 import ErrorAlert from "./Alerts/ErrorAlert";
 
-export const uploadFileInChunks = async (file, updateProgressCallback) => {
+export const uploadFileInChunks = async (file, updateProgressCallback, setUploading) => {
     if (!file) {
       ErrorAlert('Error', 'No file selected.');
+      setUploading(false)
       return;
     }
+
+    setUploading(true)
   
     const CHUNK_SIZE = 5 * 1024 * 1024; // Default to 5MB if not provided
     const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
@@ -40,7 +43,10 @@ export const uploadFileInChunks = async (file, updateProgressCallback) => {
   
     } catch (err) {
       console.error('Error uploading file:', err);
+      setUploading(false)
       ErrorAlert('Error', 'Error uploading file');
+    }finally{
+      setUploading(false)
     }
   };
   
