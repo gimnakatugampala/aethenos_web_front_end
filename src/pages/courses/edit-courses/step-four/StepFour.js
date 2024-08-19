@@ -5,6 +5,7 @@ import { Divider, Radio, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { Input } from 'antd';
+import { FILE_PATH } from '../../../../commonFunctions/FilePaths';
 
 
 const StepFour = ({preview_video, setcourse_video}) => {
@@ -30,9 +31,9 @@ const StepFour = ({preview_video, setcourse_video}) => {
        </Typography.Title>
 
        <p>Please Upload a Test Video to See Your Quality of Filming.</p>
-       <Input onChange={onAddVideo} type='file' placeholder="Basic usage" />
+       <Input onChange={onAddVideo} type='file' accept="video/*" placeholder="Basic usage" />
 
-             <video id='add-course-test-video' width={240} src={preview_video == "" ? "" : preview_video} autoPlay>
+             <video className='mt-3' id='add-course-test-video' width={240} src={preview_video == "" ? "" : `${FILE_PATH}${preview_video}`} autoPlay>
                 Your browser does not support the video tag.
             </video>
        

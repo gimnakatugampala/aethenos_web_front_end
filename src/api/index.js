@@ -201,10 +201,10 @@ export const getEditCourse = (
       setcourse_cat(result.course_category_id);
       setkeywords(result.keywordArray);
       setpreview_img(
-        `https://aethenosinstructor.exon.lk:2053/aethenos-assert/${result.img}`
+        `${result.img}`
       );
       setpreview_video(
-        `https://aethenosinstructor.exon.lk:2053/aethenos-assert/${result.test_video}`
+        `${result.test_video}`
       );
     })
     .catch((error) => console.log("error", error));
@@ -212,11 +212,13 @@ export const getEditCourse = (
 
 export const EditCourses = async (
   code,
+  fieUploadUUID,
   course_title,
   keywords,
   course_cat,
   course_img,
-  course_video
+  course_video,
+  setloading
 ) => {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -229,7 +231,7 @@ export const EditCourses = async (
   }
 
   if (course_video != "") {
-    formdata.append("test_video", course_video);
+    formdata.append("test_video", fieUploadUUID + "_" + course_video.name);
   }
 
   formdata.append("approval_type_id", "1");
@@ -256,11 +258,14 @@ export const EditCourses = async (
       if (result.variable == "200") {
         SuccessAlert("Course Updated!", result.message);
 
+        setloading(false)
+
         setTimeout(() => {
           window.location.href = "/courses";
         }, 1000);
       } else {
         ErrorAlert("Error", result.message);
+        setloading(false)
       }
     })
     .catch((error) => console.log("error", error));

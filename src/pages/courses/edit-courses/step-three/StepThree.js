@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
 import Button from '@mui/material/Button';
 import { Modal, Upload } from 'antd';
+import { FILE_PATH } from '../../../../commonFunctions/FilePaths';
 
 import './StepThree.css'
 
@@ -41,10 +42,15 @@ const StepThree = ({preview_img,setpreview_img,setcourse_img}) => {
 
       <div className='pt-3'>
             <img
+            className='mb-3'
                  width={200}
                  height={200}
                  id
-                src={preview_img == "" ?  'https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg' : preview_img}
+                src={ preview_img === "" 
+                  ? 'https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg' 
+                  : preview_img.includes('data:image/')
+                  ? preview_img
+                  : `${FILE_PATH}${preview_img}`}
               />
 
 <ImageUploading

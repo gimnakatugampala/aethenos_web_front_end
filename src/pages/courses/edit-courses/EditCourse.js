@@ -1,5 +1,5 @@
 import './EditCourse.css'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import StepOne from './step-one/StepOne';
 import StepTwo from './step-two/StepTwo';
 import StepThree from './step-three/StepThree';
@@ -14,10 +14,17 @@ import Typography from '@mui/material/Typography';
 import { Card , Space } from 'antd';
 import { getEditCourse } from '../../../api';
 import { EditCourses } from '../../../api';
+import { uploadFileInChunks } from '../../../commonFunctions/uploadFileInChunks';
+import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
+import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
 const EditCourse = () => {
+
+    // File Upload
+    let fieUploadUUID = Date.now().toString();
+
 
   const [course_title, setcourse_title] = useState("")
   const [course_cat, setcourse_cat] = useState("")
@@ -29,6 +36,10 @@ const EditCourse = () => {
 
   const [preview_video, setpreview_video] = useState('')
   const [course_video, setcourse_video] = useState('')
+
+
+  const [loading, setloading] = useState(false)
+
 
 
 
@@ -100,26 +111,93 @@ const EditCourse = () => {
     const handleReset = () => {
       setActiveStep(0);
     };
+
+
+    const [uploading, setUploading] = useState(false);
+    const [videoFile, setVideoFile] = useState(null);
+    const progressBarRef = useRef(null);
   
     // Click
-  
     const handleClick = (e) =>{
       e.preventDefault()
 
-      EditCourses(
+      // EditCourses(
+      //   new URLSearchParams(window.location.search).get("code"),
+      //   course_title,
+      //   keywords,
+      //   course_cat,
+      //   course_img,
+      //   course_video
+      //   )
+
+      setloading(true)
+
+      if(course_video == ""){
+
+        // Do not run the upload video
+        EditCourses(
         new URLSearchParams(window.location.search).get("code"),
+        fieUploadUUID,
         course_title,
         keywords,
         course_cat,
         course_img,
-        course_video
+        course_video,
+        setloading
         )
+
+      }else{
+        // Run the upload
+        const maxSize = 3 * 1024 * 1024 * 1024;
+        if (course_video.size > maxSize) {
+          setVideoFile(null);
+          setloading(false)
+          ErrorAlert('Error','File size exceeds 3.0GB.');
+          return;
+        } else {
+          setVideoFile(course_video);
+          uploadFileInChunks(
+            fieUploadUUID,
+            course_video,
+            updateProgressBar,
+            setUploading
+          );
+        }
+      }
+
+      console.log(preview_video)
+      console.log(course_video)
+      console.log(course_img)
 
       // window.location.href = "/courses"
     }
+
+    const updateProgressBar = (progress) => {
+      if (progressBarRef.current) {
+        progressBarRef.current.style.width = progress + '%';
+        progressBarRef.current.textContent = progress + '%';
+      }
+  
+      if(progress == 100){
+        EditCourses(
+          new URLSearchParams(window.location.search).get("code"),
+          fieUploadUUID,
+          course_title,
+          keywords,
+          course_cat,
+          course_img,
+          course_video,
+          setloading
+          )
+      }
+  
+      console.log(progress)
+    };
   
     return (
      <div className='all-courses-container'>
+
+{loading && <MainLoader /> }
   
   <Card bordered={false}>   
     <Box direction='vertical' sx={{ width: '100%'}}>
