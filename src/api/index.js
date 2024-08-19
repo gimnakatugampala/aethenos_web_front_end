@@ -110,6 +110,7 @@ export const getCourseCategories = async (setcategories) => {
 };
 
 export const addCourse = async (
+  fieUploadUUID,
   course_title,
   course_category,
   course_keywords,
@@ -125,7 +126,7 @@ export const addCourse = async (
   var formdata = new FormData();
   formdata.append("course_title", `${course_title}`);
   formdata.append("img", course_image);
-  formdata.append("test_video", course_test_video);
+  formdata.append("test_video",fieUploadUUID + "_" + course_test_video.name);
   formdata.append("approval_type_id", "1");
   formdata.append("course_category_id", `${course_category}`);
   formdata.append("keywords", `${course_keywords[0]}`);

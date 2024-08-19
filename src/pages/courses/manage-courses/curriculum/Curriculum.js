@@ -96,6 +96,8 @@ const syllabusIcon = {
 const Curriculum = ({ code }) => {
   let counter = 1;
 
+  let fieUploadUUID = Date.now().toString();
+
   const [showContentAdd, setshowContentAdd] = useState(null);
   const [showMain, setshowMain] = useState(null);
   const [showDescRes, setshowDescRes] = useState(true);
@@ -1424,7 +1426,7 @@ const Curriculum = ({ code }) => {
   // ============================ VIDEO UPLAODING ========================
 
   // const [videoFile, setVideoFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
+ 
   // const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunk size
   // const progressBarRef = useRef(null);
 
@@ -1505,6 +1507,7 @@ const Curriculum = ({ code }) => {
 
   // ===============================
 
+  const [uploading, setUploading] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const progressBarRef = useRef(null);
 
@@ -1514,11 +1517,12 @@ const Curriculum = ({ code }) => {
       const maxSize = 3 * 1024 * 1024 * 1024;
       if (selectedFile.size > maxSize) {
         setVideoFile(null);
-        alert('File size exceeds 3.0GB.');
+        ErrorAlert('Error','File size exceeds 3.0GB.');
         return;
       } else {
         setVideoFile(selectedFile);
         uploadFileInChunks(
+          fieUploadUUID,
           selectedFile,
           updateProgressBar,
           setUploading
@@ -1554,7 +1558,7 @@ const Curriculum = ({ code }) => {
         <div className="progress">
           <div className="progress-bar" role="progressbar" style={{ width: '0%' }} ref={progressBarRef}></div>
         </div>
-        <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(videoFile, updateProgressBar, setUploading)} disabled={uploading}>
+        <button className="btn btn-info" onClick={() => videoFile && uploadFileInChunks(fieUploadUUID, videoFile, updateProgressBar, setUploading)} disabled={uploading}>
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
       </div>

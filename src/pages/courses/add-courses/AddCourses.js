@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import StepOne from './step-one/StepOne';
 import StepTwo from './step-two/StepTwo';
@@ -16,10 +16,19 @@ import { addCourse } from '../../../api';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 import 'sweetalert2/src/sweetalert2.scss'
+import { uploadFileInChunks } from '../../../commonFunctions/uploadFileInChunks';
+import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
+
+
 const AddCourses = () => {
+
+
+  // File Upload
+  let fieUploadUUID = Date.now().toString();
+
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -148,18 +157,65 @@ const AddCourses = () => {
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+ 
+  const [uploading, setUploading] = useState(false);
+  const [videoFile, setVideoFile] = useState(null);
+  const progressBarRef = useRef(null);
 
-  // Click
 
   const handleClick = (e) =>{
     e.preventDefault()
 
     setloading(true)
 
-    addCourse(
+    if (course_test_video != "") {
+      const maxSize = 3 * 1024 * 1024 * 1024;
+      if (course_test_video.size > maxSize) {
+        setVideoFile(null);
+        setloading(false)
+        ErrorAlert('Error','File size exceeds 3.0GB.');
+        return;
+      } else {
+        setVideoFile(course_test_video);
+        uploadFileInChunks(
+          fieUploadUUID,
+          course_test_video,
+          updateProgressBar,
+          setUploading
+        );
+      }
+    } else {
+      ErrorAlert('Error', 'No file selected.');
+      setloading(false)
+    }
+
+   
+
+    // addCourse(
+    //   course_title,
+    //   course_category,
+    //   course_keywords,
+    //   course_image,
+    //   course_test_video,
+    //   setloading
+    // )
+
+    // console.log(course_title)
+    // console.log(course_category)
+    // console.log(course_keywords)
+    // console.log(course_image) 
+    console.log(course_test_video)
+  }
+
+  const updateProgressBar = (progress) => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = progress + '%';
+      progressBarRef.current.textContent = progress + '%';
+    }
+
+    if(progress == 100){
+        addCourse(
+      fieUploadUUID,
       course_title,
       course_category,
       course_keywords,
@@ -167,13 +223,10 @@ const AddCourses = () => {
       course_test_video,
       setloading
     )
+    }
 
-    // console.log(course_title)
-    // console.log(course_category)
-    // console.log(course_keywords)
-    // console.log(course_image) 
-    // console.log(course_test_video)
-  }
+    console.log(progress)
+  };
 
   return (
    <div className='all-courses-container'>
