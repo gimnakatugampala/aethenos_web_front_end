@@ -5628,7 +5628,7 @@ export const UpdateLessonVideo = async (formData) => {
 
   try {
     const response = await fetch(`${BACKEND_LINK}/api/files/upload`, requestOptions);
-    const result = await response.json();
+    const result = await response.text();
     console.log(result);
     return result;
   } catch (error) {
