@@ -4207,7 +4207,6 @@ export const GetNotificationsLatest = async (setNotifications) => {
   fetch(`${BACKEND_LINK}/notification/getOwnNotifications`, requestOptions)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
       Unauthorized(result.status, "courses");
       if (result && result.length > 0) {
         const latestNotification = result.sort(

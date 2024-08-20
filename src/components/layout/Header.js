@@ -91,7 +91,10 @@ function Header({
 
   useEffect(() => {
     GetNotificationsLatest(setNotifications);
-  }, []);
+    console.log(notifications)
+  }, [notifications]);
+
+
 
   // const handleNotification = () => {
   //   const newNotification = {
@@ -114,7 +117,19 @@ function Header({
 
     UpdateNotifications(notificationCode);
     GetNotificationsLatest(setNotifications);
+    window.location.href = "/performance/notifications";
+  
+
   };
+
+
+  const updateNotificationList = () => {
+
+    GetNotificationsLatest(setNotifications);
+
+  };
+
+
 
   useEffect(() => {
     GetInstructorProfileDetails(
@@ -174,6 +189,7 @@ function Header({
                   id="dropdown-basic"
                   className="notification-toggle"
                   bsPrefix="custom-toggle"
+                
                 >
                   <img width="20px" src={bellIcon} alt="LOGO" />
                   <span className="notification-count">
@@ -187,7 +203,7 @@ function Header({
                     <span
                       style={{
                         display: "flex",
-                        justifyContent: "end",
+                        justifyContent: "end",     
                         color: "#ff4d4f",
                         alignItems: "center",
                       }}
@@ -225,7 +241,7 @@ function Header({
                           justifyContent: "flex-start",
                           display: "flex",
                           flexDirection: "column",
-
+                        
                           border: "1px solid #e0e0e0",
                           padding: "10px",
                           boxSizing: "border-box",
