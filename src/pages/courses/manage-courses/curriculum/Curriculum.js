@@ -916,11 +916,14 @@ const Curriculum = ({ code }) => {
     setuploadingVideoName(video.name);
     console.log(ID);
     setvideoUploadingID(ID);
+   
 
     if (!video) {
       ErrorAlert('Error', 'No file selected.');
       return;
     }
+
+    setuploadingVideoProgress(0)
 
     // Get duration
     const videoElement = document.createElement('video');
