@@ -2478,6 +2478,7 @@ const Curriculum = ({ code }) => {
             >
               <Form.Control
                 accept="video/*"
+                disabled={uploading}
                 onChange={(e) => {
                   setUploadingVideo(
                     index + i + item.id
@@ -3184,7 +3185,7 @@ const Curriculum = ({ code }) => {
             0 &&
             showMain == index + i + item.id && (
               <div className="my-3">
-                {/* Display Video After Upaed Video */}
+                {/* Display Video After Upload Video */}
 
                 <div className="p-3">
                   {/* Upload Input */}
@@ -3194,6 +3195,7 @@ const Curriculum = ({ code }) => {
                   >
                     <Form.Control
                       accept="video/*"
+                      disabled={uploading}
                       onChange={(e) => {
                         setUploadingVideo(
                           index + i + item.id
@@ -3218,6 +3220,8 @@ const Curriculum = ({ code }) => {
                     </Form.Label>
                   </Form.Group>
 
+                  
+                 
                   {item.curriculumItemFiles
                     .length > 0 &&
                     item.curriculumItemFiles.some(
@@ -3262,7 +3266,36 @@ const Curriculum = ({ code }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {item.curriculumItemFiles
+
+                    {uploading && uploadingVideo ==
+                  index + i + item.id && (
+                  <tr>
+                    <td>
+                      {uploadingVideo ==
+                      index + i + item.id
+                        ? uploadingVideoName
+                        : ""}
+                    </td>
+                    <td>
+                      <td>
+                        {uploadingVideo ==
+                        index +
+                          i +
+                          item.id && uploadingVideoProgress != 100 ?
+                          (<Badge bg="info">
+                          {uploadingVideoProgress} %
+                        </Badge>) : (
+                          <Badge bg="success">
+                          Completed
+                        </Badge>
+                        )
+                        }
+                      </td>
+                    </td>
+                    <td>Video</td>
+                  </tr>
+                )}
+                      {uploading == false &&  item.curriculumItemFiles
                         .length > 0 &&
                         (item.curriculumItemFiles.some(
                           (video) =>
@@ -3282,27 +3315,18 @@ const Curriculum = ({ code }) => {
                               ) => (
                                 <tr key={index}>
                                   <td>
-                                    {uploadingVideo ==
-                                    index +
-                                      i +
-                                      item.id
-                                      ? uploadingVideoName
-                                      : video.title}
+                                    {uploadingVideo == index + i + item.id ? uploadingVideoName : video.title}
                                   </td>
                                   <td>
                                     <td>
-                                      {uploadingVideo ==
-                                      index +
-                                        i +
-                                        item.id ? (
-                                        <Badge bg="info">
-                                          Uploading
-                                        </Badge>
+                                    {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (<Badge bg="info">
+                                      {uploadingVideoProgress} %
+                                    </Badge>
                                       ) : (
-                                        <Badge bg="success">
+                                          <Badge bg="success">
                                           Completed
                                         </Badge>
-                                      )}
+                                        )}
                                     </td>
                                   </td>
                                   <td>Video</td>
