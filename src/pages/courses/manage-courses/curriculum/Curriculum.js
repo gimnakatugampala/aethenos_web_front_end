@@ -909,6 +909,8 @@ const Curriculum = ({ code }) => {
   };
 
   // Save Video > Video
+  const abortControllerRef = useRef(null); // Define abortControllerRef
+
   const handleSaveVideo = async (video, ID) => {
     console.log(video);
     setuploadingVideoName(video.name);
@@ -921,11 +923,11 @@ const Curriculum = ({ code }) => {
     }
 
     // Get duration
-    const videoElement = document.createElement("video");
+    const videoElement = document.createElement('video');
     videoElement.preload = 'metadata';
     videoElement.onloadedmetadata = function () {
       const duration = Math.round(videoElement.duration);
-      console.log("Video duration:", duration, "seconds");
+      console.log('Video duration:', duration, 'seconds');
       setvideoUploadingDuration(duration);
     };
     videoElement.src = URL.createObjectURL(video);
@@ -939,30 +941,45 @@ const Curriculum = ({ code }) => {
 
     setVideoFile(video);
 
+    abortControllerRef.current = new AbortController(); // Initialize AbortController
+
     try {
-      await uploadSyllabusVideoChunks(fieUploadUUID, video, updateProgressBar, setUploading, () => {
-        AddCurriculumVideo(
-          code,
-          ID,
-          fieUploadUUID,
-          video,
-          videoUploadingDuration,
-          setsectionData,
-          setshowMain,
-          setshowDescRes,
-          setshowContentAdd,
-          setcurriculumvisiblity,
-          setUploadingVideo,
-          setuploadingVideoName
-        );
-      });
+      await uploadSyllabusVideoChunks(
+        fieUploadUUID,
+        video,
+        updateProgressBar,
+        setUploading,
+        () => {
+          // Check if the upload was canceled before executing AddCurriculumVideo
+          if (!abortControllerRef.current.signal.aborted) {
+            AddCurriculumVideo(
+              code,
+              ID,
+              fieUploadUUID,
+              video,
+              videoUploadingDuration,
+              setsectionData,
+              setshowMain,
+              setshowDescRes,
+              setshowContentAdd,
+              setcurriculumvisiblity,
+              setUploadingVideo,
+              setuploadingVideoName
+            );
+          }
+        },
+        abortControllerRef.current // Pass the controller to the upload function
+      );
     } catch (error) {
-      console.error('Error during file upload:', error);
-      ErrorAlert('Error', 'Error uploading file.');
+      if (error.name === 'AbortError') {
+        console.log('Upload canceled');
+      } else {
+        console.error('Error during file upload:', error);
+        ErrorAlert('Error', 'Error uploading file.');
+      }
     }
-};
-  
-  
+  };
+
 
   // ===============================
 
@@ -974,23 +991,12 @@ const Curriculum = ({ code }) => {
     }
   
     setuploadingVideoProgress(progress);
-  
-    // Execute AddCurriculumVideo after progress reaches 100%
-    if (progress === 100) {
-      // AddCurriculumVideo(
-      //   code,
-      //   ID,
-      //   fieUploadUUID,
-      //   video,
-      //   videoUploadingDuration,
-      //   setsectionData,
-      //   setshowMain,
-      //   setshowDescRes,
-      //   setshowContentAdd,
-      //   setcurriculumvisiblity,
-      //   setUploadingVideo,
-      //   setuploadingVideoName
-      // );
+
+  };
+
+  const handleCancelUpload = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort(); // Cancel the upload
     }
   };
   
@@ -2510,15 +2516,12 @@ const Curriculum = ({ code }) => {
                   <th>Filename</th>
                   <th>Status</th>
                   <th>Type</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {uploadingVideo ==
-                  index + i + item.id && (
-                  // item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
-                  // item.curriculumItemFiles
-                  // .filter(video => video.filetype === "Video")
-                  // .map((video, index) => (
+                {uploadingVideo == index + i + item.id &&  uploading && (
+                
                   <tr>
                     <td>
                       {uploadingVideo ==
@@ -2543,11 +2546,36 @@ const Curriculum = ({ code }) => {
                       </td>
                     </td>
                     <td>Video</td>
+                    <td> 
+                        <Button
+                          onClick={() => {
+                            Swal.fire({
+                              title: 'Are you sure?',
+                              text: "Do you want to cancel the upload?",
+                              icon: 'warning',
+                              showCancelButton: true,
+                              confirmButtonText: 'Yes, cancel it!',
+                              cancelButtonText: 'No, keep uploading'
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                abortControllerRef.current.abort(); // Cancel the upload
+                                Swal.fire(
+                                  'Cancelled!',
+                                  'Your upload has been cancelled.',
+                                  'success'
+                                );
+                              }
+                            });
+                          }}
+                          size="small"
+                          variant=""
+                        >
+                          <CloseIcon />
+                          Cancel
+                        </Button>
+
+                        </td>
                   </tr>
-                  // ))
-                  // ) : (
-                  //     <p>No Video</p>
-                  // )
                 )}
               </tbody>
             </Table>
@@ -3267,34 +3295,60 @@ const Curriculum = ({ code }) => {
                     </thead>
                     <tbody>
 
-                    {uploading && uploadingVideo ==
-                  index + i + item.id && (
-                  <tr>
-                    <td>
-                      {uploadingVideo ==
-                      index + i + item.id
-                        ? uploadingVideoName
-                        : ""}
-                    </td>
-                    <td>
-                      <td>
-                        {uploadingVideo ==
-                        index +
-                          i +
-                          item.id && uploadingVideoProgress != 100 ?
-                          (<Badge bg="info">
-                          {uploadingVideoProgress} %
-                        </Badge>) : (
-                          <Badge bg="success">
-                          Completed
-                        </Badge>
-                        )
-                        }
-                      </td>
-                    </td>
-                    <td>Video</td>
-                  </tr>
-                )}
+
+              {/* Re-upload */}
+              {uploading && uploadingVideo == index + i + item.id && (
+                      <tr>
+                        <td>
+                          {uploadingVideo == index + i + item.id ? uploadingVideoName : ""}
+                        </td>
+                        <td>
+                          <td>
+                            {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (
+                              <Badge bg="info">
+                                {uploadingVideoProgress} %
+                              </Badge>
+                            ) : (
+                              <Badge bg="success">
+                                Completed
+                              </Badge>
+                            )}
+                          </td>
+                        </td>
+                        <td>Video</td>
+                        <td> 
+                        <Button
+                          onClick={() => {
+                            Swal.fire({
+                              title: 'Are you sure?',
+                              text: "Do you want to cancel the upload?",
+                              icon: 'warning',
+                              showCancelButton: true,
+                              confirmButtonText: 'Yes, cancel it!',
+                              cancelButtonText: 'No, keep uploading'
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                abortControllerRef.current.abort(); // Cancel the upload
+                                Swal.fire(
+                                  'Cancelled!',
+                                  'Your upload has been cancelled.',
+                                  'success'
+                                );
+                              }
+                            });
+                          }}
+                          size="small"
+                          variant=""
+                        >
+                          <CloseIcon />
+                          Cancel
+                        </Button>
+
+                        </td>
+                      </tr>
+                    )}
+
+                {/* After after list - In DB */}
                       {uploading == false &&  item.curriculumItemFiles
                         .length > 0 &&
                         (item.curriculumItemFiles.some(

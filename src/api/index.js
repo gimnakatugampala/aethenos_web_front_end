@@ -5627,20 +5627,28 @@ export const updateSectionData = async (
 };
 
 
-export const UpdateLessonVideo = async (formData) => {
+export const UpdateLessonVideo = async (formData, options = {}) => {
   const requestOptions = {
     method: 'POST',
     body: formData,
     redirect: 'follow',
+    ...options, // Spread the options parameter to include any additional options, like the abort signal
   };
 
   try {
     const response = await fetch(`${BACKEND_LINK}/api/files/upload`, requestOptions);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const result = await response.text();
     console.log(result);
     return result;
   } catch (error) {
-    console.error('Error:', error);
-    throw error;
+    if (error.name === 'AbortError') {
+      console.log('Upload canceled');
+    } else {
+      console.error('Error:', error);
+      throw error;
+    }
   }
 };
