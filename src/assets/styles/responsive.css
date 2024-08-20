@@ -151,6 +151,10 @@
     max-width: 100%;
     font-size: small;
   }
+
+  .float-right{
+    margin-right: 15px;
+  }
 }
 
 @media (min-width: 695px) and (max-width: 991px) {
