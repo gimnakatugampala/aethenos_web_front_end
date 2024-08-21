@@ -2567,6 +2567,8 @@ const Curriculum = ({ code }) => {
                                 }).then((result) => {
                                   if (result.isConfirmed) {
                                     abortControllerRef.current.abort(); // Cancel the upload
+                                    // setUploading(false)
+                                    // GetCurriculum(code, setsectionData)
                                     Swal.fire(
                                       'Cancelled!',
                                       'Your upload has been cancelled.',
@@ -3342,6 +3344,8 @@ const Curriculum = ({ code }) => {
                                       'Your upload has been cancelled.',
                                       'success'
                                     );
+                                    // setUploading(false)
+                                    // GetCurriculum(code, setsectionData)
                                   }
                                 });
                               }}
@@ -3357,8 +3361,7 @@ const Curriculum = ({ code }) => {
                         )}
 
                     {/* After after list - In DB */}
-                      {uploading == false &&  item.curriculumItemFiles
-                            .length > 0 &&
+                      {uploading == false &&  item.curriculumItemFiles.length > 0 &&
                             (item.curriculumItemFiles.some(
                               (video) =>
                                 video.filetype ===
@@ -3377,11 +3380,12 @@ const Curriculum = ({ code }) => {
                                   ) => (
                                     <tr key={index}>
                                       <td>
-                                        {uploadingVideo == index + i + item.id ? uploadingVideoName : video.title}
+                                        {uploadingVideo == index + i + item.id && uploading == true ? uploadingVideoName : video.title}
                                       </td>
                                       <td>
                                         <td>
-                                        {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (<Badge bg="info">
+                                        {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 && uploading == true  ? (
+                                        <Badge bg="info">
                                           {uploadingVideoProgress} %
                                         </Badge>
                                           ) : (
@@ -3419,18 +3423,6 @@ const Curriculum = ({ code }) => {
                                           <RemoveRedEyeIcon />
                                         </Button>
 
-                                        {uploadingVideo ==
-                                          index +
-                                            i +
-                                            item.id && (
-                                          <Button
-                                            onClick={() => {}}
-                                            size="small"
-                                            variant="contained"
-                                          >
-                                            <CloseIcon />
-                                          </Button>
-                                        )}
                                       </td>
                                     </tr>
                                   )

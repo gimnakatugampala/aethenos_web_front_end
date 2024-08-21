@@ -9,7 +9,7 @@ export const uploadSyllabusVideoChunks = async (
     updateProgressCallback,
     setUploading,
     onUploadComplete,
-    abortController // Pass the AbortController as an argument
+    abortController // Pass the AbortController as an argument,
   ) => {
     if (!file) {
       ErrorAlert('Error', 'No file selected.');
@@ -71,6 +71,7 @@ export const uploadSyllabusVideoChunks = async (
     } catch (err) {
       if (err.name === 'AbortError' || err.message === 'Upload aborted') {
         console.log('Upload canceled');
+        
       } else {
         console.error('Error uploading file:', err);
         ErrorAlert('Error', 'Error uploading file');
