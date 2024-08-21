@@ -6392,7 +6392,7 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>Title</Form.Label>
+                                      <Form.Label>Title <span className="text-danger">*</span></Form.Label>
                                       <Form.Control
                                         value={CodingExerciseTitle}
                                         onChange={(e) =>
@@ -6410,7 +6410,7 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlTextarea1"
                                     >
                                       <Form.Label>
-                                        Description
+                                        Description <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
                                         value={CodingExerciseDesc}
@@ -6429,7 +6429,7 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlTextarea1"
                                     >
                                       <Form.Label>
-                                        Instructions
+                                        Instructions <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
                                         value={
@@ -6488,11 +6488,19 @@ const Curriculum = ({ code }) => {
 
                                       <Form.Control
                                         accept="video/*"
-                                        onChange={(e) =>
-                                          setCodingExerciseVideo(
-                                            e.target.files[0]
-                                          )
-                                        }
+                                        onChange={(e) => {
+                                          const selectedFile = e.target.files[0];
+                                      
+                                          if (selectedFile) {
+                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                                      
+                                            if (selectedFile.size < maxSizeInBytes) {
+                                              setCodingExerciseVideo(selectedFile);
+                                            } else {
+                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                            }
+                                          }
+                                        }}
                                         type="file"
                                       />
                                     </Form.Group>
@@ -6541,11 +6549,19 @@ const Curriculum = ({ code }) => {
                                       )}
 
                                       <Form.Control
-                                        onChange={(e) =>
-                                          setCodingExerciseDResourses(
-                                            e.target.files[0]
-                                          )
-                                        }
+                                         onChange={(e) => {
+                                          const selectedFile = e.target.files[0];
+                                      
+                                          if (selectedFile) {
+                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                                      
+                                            if (selectedFile.size < maxSizeInBytes) {
+                                              setCodingExerciseDResourses(selectedFile);
+                                            } else {
+                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                            }
+                                          }
+                                        }}
                                         type="file"
                                         multiple
                                       />
@@ -6621,13 +6637,20 @@ const Curriculum = ({ code }) => {
                                       )}
 
                                       <Form.Control
-                                        onChange={(e) =>
-                                          setCodingExerciseUploadEx(
-                                            e.target.files[0]
-                                          )
-                                        }
+                                        onChange={(e) => {
+                                          const selectedFile = e.target.files[0];
+                                      
+                                          if (selectedFile) {
+                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                                      
+                                            if (selectedFile.size < maxSizeInBytes) {
+                                              setCodingExerciseUploadEx(selectedFile);
+                                            } else {
+                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                            }
+                                          }
+                                        }}
                                         type="file"
-                                        multiple
                                       />
                                     </Form.Group>
 
@@ -6696,11 +6719,19 @@ const Curriculum = ({ code }) => {
 
                                       <Form.Control
                                         accept="video/*"
-                                        onChange={(e) =>
-                                          setCodingExerciseQVideo(
-                                            e.target.files[0]
-                                          )
-                                        }
+                                        onChange={(e) => {
+                                          const selectedFile = e.target.files[0];
+                                      
+                                          if (selectedFile) {
+                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                                      
+                                            if (selectedFile.size < maxSizeInBytes) {
+                                              setCodingExerciseQVideo(selectedFile);
+                                            } else {
+                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                            }
+                                          }
+                                        }}
                                         type="file"
                                       />
                                     </Form.Group>
@@ -6755,11 +6786,19 @@ const Curriculum = ({ code }) => {
                                       )}
 
                                       <Form.Control
-                                        onChange={(e) =>
-                                          setCodingExercisesSolutionsFile(
-                                            e.target.files[0]
-                                          )
-                                        }
+                                         onChange={(e) => {
+                                          const selectedFile = e.target.files[0];
+                                      
+                                          if (selectedFile) {
+                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                                      
+                                            if (selectedFile.size < maxSizeInBytes) {
+                                              setCodingExercisesSolutionsFile(selectedFile);
+                                            } else {
+                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                            }
+                                          }
+                                        }}
                                         type="file"
                                         multiple
                                       />
@@ -6830,11 +6869,19 @@ const Curriculum = ({ code }) => {
 
                                       <Form.Control
                                         accept="video/*"
-                                        onChange={(e) =>
-                                          setCodingExercisesSolutionsVideo(
-                                            e.target.files[0]
-                                          )
-                                        }
+                                        onChange={(e) => {
+                                          const selectedFile = e.target.files[0];
+                                      
+                                          if (selectedFile) {
+                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                                      
+                                            if (selectedFile.size < maxSizeInBytes) {
+                                              setCodingExercisesSolutionsVideo(selectedFile);
+                                            } else {
+                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                            }
+                                          }
+                                        }}
                                         type="file"
                                       />
                                     </Form.Group>
@@ -7321,7 +7368,7 @@ const Curriculum = ({ code }) => {
                             className="mb-3"
                             controlId="exampleForm.ControlInput1"
                           >
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label>Title <span className="text-danger">*</span></Form.Label>
                             <Form.Control
                               value={CodingExerciseTitle}
                               onChange={(e) =>
@@ -7336,7 +7383,7 @@ const Curriculum = ({ code }) => {
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                           >
-                            <Form.Label>Description</Form.Label>
+                            <Form.Label>Description <span className="text-danger">*</span></Form.Label>
                             <Form.Control
                               value={CodingExerciseDesc}
                               onChange={(e) =>
@@ -7351,7 +7398,7 @@ const Curriculum = ({ code }) => {
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                           >
-                            <Form.Label>Instructions</Form.Label>
+                            <Form.Label>Instructions <span className="text-danger">*</span></Form.Label>
                             <Form.Control
                               value={CodingExerciseInstructions}
                               onChange={(e) =>
@@ -7369,9 +7416,19 @@ const Curriculum = ({ code }) => {
                             <Form.Label>Upload Video</Form.Label>
                             <Form.Control
                               accept="video/*"
-                              onChange={(e) =>
-                                setCodingExerciseVideo(e.target.files[0])
-                              }
+                              onChange={(e) => {
+                                const selectedFile = e.target.files[0];
+                            
+                                if (selectedFile) {
+                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                            
+                                  if (selectedFile.size < maxSizeInBytes) {
+                                    setCodingExerciseVideo(selectedFile);
+                                  } else {
+                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                  }
+                                }
+                              }}
                               type="file"
                             />
                           </Form.Group>
@@ -7382,9 +7439,19 @@ const Curriculum = ({ code }) => {
                           >
                             <Form.Label>Downloadable Resourses</Form.Label>
                             <Form.Control
-                              onChange={(e) =>
-                                setCodingExerciseDResourses(e.target.files[0])
-                              }
+                              onChange={(e) => {
+                                const selectedFile = e.target.files[0];
+                            
+                                if (selectedFile) {
+                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                            
+                                  if (selectedFile.size < maxSizeInBytes) {
+                                    setCodingExerciseDResourses(selectedFile);
+                                  } else {
+                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                  }
+                                }
+                              }}
                               type="file"
                               multiple
                             />
@@ -7415,9 +7482,19 @@ const Curriculum = ({ code }) => {
                           >
                             <Form.Label>Upload coding Exercises</Form.Label>
                             <Form.Control
-                              onChange={(e) =>
-                                setCodingExerciseUploadEx(e.target.files[0])
-                              }
+                              onChange={(e) => {
+                                const selectedFile = e.target.files[0];
+                            
+                                if (selectedFile) {
+                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                            
+                                  if (selectedFile.size < maxSizeInBytes) {
+                                    setCodingExerciseUploadEx(selectedFile);
+                                  } else {
+                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                  }
+                                }
+                              }}
                               type="file"
                               multiple
                             />
@@ -7445,9 +7522,19 @@ const Curriculum = ({ code }) => {
                             <Form.Label>Upload Video</Form.Label>
                             <Form.Control
                               accept="video/*"
-                              onChange={(e) =>
-                                setCodingExerciseQVideo(e.target.files[0])
-                              }
+                              onChange={(e) => {
+                                const selectedFile = e.target.files[0];
+                            
+                                if (selectedFile) {
+                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                            
+                                  if (selectedFile.size < maxSizeInBytes) {
+                                    setCodingExerciseQVideo(selectedFile);
+                                  } else {
+                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                  }
+                                }
+                              }}
                               type="file"
                             />
                           </Form.Group>
@@ -7461,11 +7548,19 @@ const Curriculum = ({ code }) => {
                           >
                             <Form.Label>Upload solutions</Form.Label>
                             <Form.Control
-                              onChange={(e) =>
-                                setCodingExercisesSolutionsFile(
-                                  e.target.files[0]
-                                )
-                              }
+                              onChange={(e) => {
+                                const selectedFile = e.target.files[0];
+                            
+                                if (selectedFile) {
+                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                            
+                                  if (selectedFile.size < maxSizeInBytes) {
+                                    setCodingExercisesSolutionsFile(selectedFile);
+                                  } else {
+                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                  }
+                                }
+                              }}
                               type="file"
                               multiple
                             />
@@ -7495,11 +7590,19 @@ const Curriculum = ({ code }) => {
                             <Form.Label>Upload Video</Form.Label>
                             <Form.Control
                               accept="video/*"
-                              onChange={(e) =>
-                                setCodingExercisesSolutionsVideo(
-                                  e.target.files[0]
-                                )
-                              }
+                              onChange={(e) => {
+                                const selectedFile = e.target.files[0];
+                            
+                                if (selectedFile) {
+                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
+                            
+                                  if (selectedFile.size < maxSizeInBytes) {
+                                    setCodingExercisesSolutionsVideo(selectedFile);
+                                  } else {
+                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                  }
+                                }
+                              }}
                               type="file"
                             />
                           </Form.Group>
