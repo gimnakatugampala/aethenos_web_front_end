@@ -912,77 +912,80 @@ const Curriculum = ({ code }) => {
   // Save Video > Video
   const abortControllerRef = useRef(null); // Define abortControllerRef
 
+  useEffect(() => {
+    console.log('Updated videoUploadingDuration:', videoUploadingDuration);
+  }, [videoUploadingDuration]);
+
   const handleSaveVideo = async (video, ID) => {
     console.log(video);
     setuploadingVideoName(video.name);
     console.log(ID);
     setvideoUploadingID(ID);
-   
-
+  
     if (!video) {
       ErrorAlert('Error', 'No file selected.');
       return;
     }
-
-    setuploadingVideoProgress(0)
-
+  
+    setuploadingVideoProgress(0);
+  
     // Get duration
     const videoElement = document.createElement('video');
     videoElement.preload = 'metadata';
-    videoElement.onloadedmetadata = function () {
+    videoElement.onloadedmetadata = async function () {
       const duration = Math.round(videoElement.duration);
       console.log('Video duration:', duration, 'seconds');
       setvideoUploadingDuration(duration);
+  
+      const maxSize = 3 * 1024 * 1024 * 1024; // 3GB limit
+      if (video.size > maxSize) {
+        setVideoFile(null);
+        ErrorAlert('Error', 'File size exceeds 3.0GB.');
+        return;
+      }
+  
+      setVideoFile(video);
+  
+      abortControllerRef.current = new AbortController(); // Initialize AbortController
+  
+      try {
+        await uploadSyllabusVideoChunks(
+          fieUploadUUID,
+          uploadType,
+          video,
+          updateProgressBar,
+          setUploading,
+          () => {
+            // Check if the upload was canceled before executing AddCurriculumVideo
+            if (!abortControllerRef.current.signal.aborted) {
+              AddCurriculumVideo(
+                code,
+                ID,
+                fieUploadUUID,
+                video,
+                duration, // Use the duration here
+                setsectionData,
+                setshowMain,
+                setshowDescRes,
+                setshowContentAdd,
+                setcurriculumvisiblity,
+                setUploadingVideo,
+                setuploadingVideoName
+              );
+            }
+          },
+          abortControllerRef.current // Pass the controller to the upload function
+        );
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Upload canceled');
+        } else {
+          console.error('Error during file upload:', error);
+          ErrorAlert('Error', 'Error uploading file.');
+        }
+      }
     };
     videoElement.src = URL.createObjectURL(video);
-
-    const maxSize = 3 * 1024 * 1024 * 1024; // 3GB limit
-    if (video.size > maxSize) {
-      setVideoFile(null);
-      ErrorAlert('Error', 'File size exceeds 3.0GB.');
-      return;
-    }
-
-    setVideoFile(video);
-
-    abortControllerRef.current = new AbortController(); // Initialize AbortController
-
-    try {
-      await uploadSyllabusVideoChunks(
-        fieUploadUUID,
-        uploadType,
-        video,
-        updateProgressBar,
-        setUploading,
-        () => {
-          // Check if the upload was canceled before executing AddCurriculumVideo
-          if (!abortControllerRef.current.signal.aborted) {
-            AddCurriculumVideo(
-              code,
-              ID,
-              fieUploadUUID,
-              video,
-              videoUploadingDuration,
-              setsectionData,
-              setshowMain,
-              setshowDescRes,
-              setshowContentAdd,
-              setcurriculumvisiblity,
-              setUploadingVideo,
-              setuploadingVideoName
-            );
-          }
-        },
-        abortControllerRef.current // Pass the controller to the upload function
-      );
-    } catch (error) {
-      if (error.name === 'AbortError') {
-        console.log('Upload canceled');
-      } else {
-        console.error('Error during file upload:', error);
-        ErrorAlert('Error', 'Error uploading file.');
-      }
-    }
   };
 
 

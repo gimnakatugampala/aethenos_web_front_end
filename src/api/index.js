@@ -2555,14 +2555,18 @@ export const DeleteResourcesFile = async (
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
+  const formdata = new FormData();
+  formdata.append("url", `${file}`);
+  
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
-    redirect: "follow",
+    body: formdata,
+    redirect: "follow"
   };
 
   fetch(
-    `${BACKEND_LINK}/managecourse/deleteCurriculumItemFile/${file}`,
+    `${BACKEND_LINK}/managecourse/deleteCurriculumItemFile`,
     requestOptions
   )
     .then((response) => response.json())
@@ -4876,14 +4880,18 @@ export const VideoDelete = async (
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
+  const formdata = new FormData();
+  formdata.append("url", `${id}`);
+  
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
-    redirect: "follow",
+    body: formdata,
+    redirect: "follow"
   };
 
   fetch(
-    `${BACKEND_LINK}/managecourse/deleteCurriculumItemFile/${id}`,
+    `${BACKEND_LINK}/managecourse/deleteCurriculumItemFile`,
     requestOptions
   )
     .then((response) => response.json())
