@@ -1656,6 +1656,11 @@ const Curriculum = ({ code }) => {
               HD video quality (720p or 1080p) is required on all video content.
             </b>
           </li>
+          <li>
+            <b>
+            The maximum file size allowed per video file is 3.0 GB.
+            </b>
+          </li>
         </ul>
 
         <p>
