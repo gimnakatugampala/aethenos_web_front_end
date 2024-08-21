@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-export const uploadFileInChunks = async (fieUploadUUID, file, updateProgressCallback, setUploading) => {
+export const uploadFileInChunks = async (fieUploadUUID,uploadType, file, updateProgressCallback, setUploading) => {
     if (!file) {
       ErrorAlert('Error', 'No file selected.');
       setUploading(false)
@@ -30,6 +30,7 @@ export const uploadFileInChunks = async (fieUploadUUID, file, updateProgressCall
         formData.append('totalChunks', totalChunks);
         formData.append('fileName', fieUploadUUID + "_" + file.name);
         formData.append('fileSize', file.size);
+        formData.append('type', uploadType);
   
         await UpdateLessonVideo(formData);
   

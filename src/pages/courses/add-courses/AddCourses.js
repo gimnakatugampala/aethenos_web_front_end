@@ -28,6 +28,7 @@ const AddCourses = () => {
 
   // File Upload
   let fieUploadUUID = Date.now().toString();
+  let uploadType = "test-video"
 
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -179,6 +180,7 @@ const AddCourses = () => {
         setVideoFile(course_test_video);
         uploadFileInChunks(
           fieUploadUUID,
+          uploadType,
           course_test_video,
           updateProgressBar,
           setUploading

@@ -147,26 +147,37 @@ const Basics = ({code}) => {
   };
 
 
-const handleVideo = (event) =>{
-  const selectedFile = event.target.files[0];
+  const handleVideo = (event) => {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      // Check if the file is a video
+      if (selectedFile.type.startsWith('video/')) {
+        // Check if the file size is less than 100MB (100 * 1024 * 1024 bytes)
+        const maxSizeInBytes = 100 * 1024 * 1024;
+  
+        if (selectedFile.size <= maxSizeInBytes) {
+          // File is valid, set the promo video state
+          setpromo_vid(selectedFile);
+  
+          // Create a preview of the video file
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            seVideoSrc(reader.result);
+          };
+          reader.readAsDataURL(selectedFile);
+        } else {
+          // File size is too large
+          ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller video.");
 
-    if (selectedFile && selectedFile.type.startsWith('video/')) {
-
-
-      setpromo_vid(selectedFile)
-
-      // It's a video file
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        seVideoSrc(reader.result);
-      };
-
-      reader.readAsDataURL(selectedFile);
-    } else {
-      ErrorAlert("Error","Please Enter a Valid Video")
+          return
+        }
+      } else {
+        // File is not a video
+        ErrorAlert("Error", "Please enter a valid video file.");
+      }
     }
-}
+  };
 
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];

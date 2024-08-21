@@ -24,6 +24,7 @@ const EditCourse = () => {
 
     // File Upload
     let fieUploadUUID = Date.now().toString();
+    let uploadType = "test-video"
 
 
   const [course_title, setcourse_title] = useState("")
@@ -158,6 +159,7 @@ const EditCourse = () => {
           setVideoFile(course_video);
           uploadFileInChunks(
             fieUploadUUID,
+            uploadType,
             course_video,
             updateProgressBar,
             setUploading

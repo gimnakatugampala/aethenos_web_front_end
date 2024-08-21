@@ -98,6 +98,7 @@ const Curriculum = ({ code }) => {
   let counter = 1;
 
   let fieUploadUUID = Date.now().toString();
+  let uploadType = "lesson-video"
 
   const [showContentAdd, setshowContentAdd] = useState(null);
   const [showMain, setshowMain] = useState(null);
@@ -949,6 +950,7 @@ const Curriculum = ({ code }) => {
     try {
       await uploadSyllabusVideoChunks(
         fieUploadUUID,
+        uploadType,
         video,
         updateProgressBar,
         setUploading,

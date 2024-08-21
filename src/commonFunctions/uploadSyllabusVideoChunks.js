@@ -4,6 +4,7 @@ import { UpdateLessonVideo } from '../api';
 
 export const uploadSyllabusVideoChunks = async (
     fieUploadUUID,
+    uploadType,
     file,
     updateProgressCallback,
     setUploading,
@@ -39,6 +40,7 @@ export const uploadSyllabusVideoChunks = async (
         formData.append('totalChunks', totalChunks);
         formData.append('fileName', fieUploadUUID + "_" + file.name);
         formData.append('fileSize', file.size);
+        formData.append('type', uploadType);
   
         // Pass the abort signal to the request
         const options = {
