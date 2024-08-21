@@ -1857,195 +1857,1047 @@ const Curriculum = ({ code }) => {
                                       </div>
                                     ) : (
                                       <>
-                                {/* Get Lecture */}
-                          <Card
-                            key={index + i + item.id}
-                            className="my-3"
-                          >
-                          <div className="d-flex justify-content-between align-items-center p-2"  style={{
-                          cursor: isExpanded ? "default" : "move",
-                        }}>
-                            <span>
-                              <Typography>
-                                <CheckCircleIcon fontSize="small" />
-                                {i + 1}. Lesson:{" "}
-                                {counters.Lecture}{" "}
-                                {item.article != "N/A" ? (
-                                  <FileCopyIcon
-                                    sx={{ fontSize: 15 }}
-                                  />
-                                ) : (
-                                  <PlayCircleIcon
-                                    sx={{ fontSize: 15 }}
-                                  />
-                                )}{" "}
-                                {item.title}
-                                <span className="mx-5">
-                                  <EditIcon
-                                    style={syllabusIcon}
-                                    onClick={(e) => {
-                                      if (
-                                        showEditTitleInput ==
-                                        index + i + item.id
-                                      ) {
-                                        setshowEditTitleInput(
-                                          null
-                                        );
-                                        setupdateLectureName(
-                                          ""
-                                        );
-                                      } else {
-                                        setshowEditTitleInput(
-                                          index + i + item.id
-                                        );
-                                        setupdateLectureName(
-                                          item.title
-                                        );
-                                      }
-                                    }}
-                                  />
-                                  <DeleteIcon
-                                    style={syllabusIcon}
-                                    onClick={() =>
-                                      handleLectureDelete(item)
-                                    }
-                                  />
+                              {/* Get Lecture */}
+                              <Card
+                                key={index + i + item.id}
+                                className="my-3"
+                              >
+                              <div className="d-flex justify-content-between align-items-center p-2"  style={{
+                              cursor: isExpanded ? "default" : "move",
+                            }}>
+                                <span>
+                                  <Typography>
+                                    <CheckCircleIcon fontSize="small" />
+                                    {i + 1}. Lesson:{" "}
+                                    {counters.Lecture}{" "}
+                                    {item.article != "N/A" ? (
+                                      <FileCopyIcon
+                                        sx={{ fontSize: 15 }}
+                                      />
+                                    ) : (
+                                      <PlayCircleIcon
+                                        sx={{ fontSize: 15 }}
+                                      />
+                                    )}{" "}
+                                    {item.title}
+                                    <span className="mx-5">
+                                      <EditIcon
+                                        style={syllabusIcon}
+                                        onClick={(e) => {
+                                          if (
+                                            showEditTitleInput ==
+                                            index + i + item.id
+                                          ) {
+                                            setshowEditTitleInput(
+                                              null
+                                            );
+                                            setupdateLectureName(
+                                              ""
+                                            );
+                                          } else {
+                                            setshowEditTitleInput(
+                                              index + i + item.id
+                                            );
+                                            setupdateLectureName(
+                                              item.title
+                                            );
+                                          }
+                                        }}
+                                      />
+                                      <DeleteIcon
+                                        style={syllabusIcon}
+                                        onClick={() =>
+                                          handleLectureDelete(item)
+                                        }
+                                      />
+                                    </span>
+                                  </Typography>
                                 </span>
-                              </Typography>
-                            </span>
 
-                          {/* + Content Action Card */}
-                          <span>
-                            {showContentAdd ==
-                            index + i + item.id ? (
+                              {/* + Content Action Card */}
+                              <span>
+                                {showContentAdd ==
+                                index + i + item.id ? (
+                                  <Button
+                                    onClick={() => {
+                                      setshowDescRes(true);
+                                      setshowMain(null);
+                                      console.log(
+                                        index + i + item.id
+                                      );
+                                      setshowContentAdd(null);
+                                      setcurriculumvisiblity("");
+                                    }}
+                                    className="mx-2"
+                                    size="small"
+                                    variant="contained"
+                                  >
+                                    <CloseIcon />
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    onClick={() => {
+                                      setshowDescRes(false);
+                                      setshowMain(
+                                        showMain ==
+                                          index + i + item.id
+                                          ? null
+                                          : index + i + item.id
+                                      );
+                                      console.log(
+                                        index + i + item.id
+                                      );
+                                      console.log(item);
+                                      setarticle(
+                                        item.article == "N/A"
+                                          ? ""
+                                          : item.article
+                                      );
+                                      setcurriculum_desc(
+                                        item.description == "N/A"
+                                          ? ""
+                                          : item.description
+                                      );
+                                      setshowContentAdd(
+                                        showContentAdd ==
+                                          index + i + item.id
+                                          ? null
+                                          : index + i + item.id
+                                      );
+                                    }}
+                                    className="mx-2"
+                                    size="small"
+                                    variant="outlined"
+                                  >
+                                    <AddIcon /> Content
+                                  </Button>
+                                )}
+                              </span>
+                              {/* + Content Action Card */}
+                            </div>
+
+                {/* Show the Articles If Filled */}
+                {item.article != "N/A" &&
+                  showMain == index + i + item.id && (
+                  <div className="p-3">
+                    <div className="my-3">
+                      <JoditEditor
+                        value={article}
+                        onChange={(content) =>
+                          setarticle(content)
+                        }
+                      />
+                      <div className="d-flex flex-start my-2">
+                        <Button
+                          onClick={() =>
+                            handleSaveArticle(
+                              item.id
+                            )
+                          }
+                          variant="contained"
+                        >
+                          SAVE
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="my-3">
+                      {/* List of Resources / External Link */}
+                      {item.description !=
+                        "N/A" && (
+                        <p className="m-0 p-0">
+                          <b>Description</b>
+                        </p>
+                      )}
+                      <p>
+                        {item.description !=
+                          "N/A" &&
+                          removeHtmlTags(
+                            item.description
+                          )}
+                      </p>
+
+                      <>
+                        {showDescription ==
+                          index + i + item.id && (
+                          <>
+                            {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+                            <Button
+                              onClick={() => {
+                                setcurriculum_desc(
+                                  item.description ==
+                                    "N/A"
+                                    ? ""
+                                    : item.description
+                                );
+                                setshowDescription(
+                                  showDescription ==
+                                    index +
+                                      i +
+                                      item.id
+                                    ? null
+                                    : index +
+                                        i +
+                                        item.id
+                                );
+                              }}
+                              className="m-2"
+                              variant="contained"
+                            >
+                              <AddIcon />{" "}
+                              Description
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                setshowResources(
+                                  null
+                                )
+                              }
+                              className="m-2"
+                              variant="outlined"
+                            >
+                              <AddIcon /> Resourses
+                            </Button>
+                            <JoditEditor
+                              value={
+                                curriculum_desc
+                              }
+                              onChange={(value) =>
+                                setcurriculum_desc(
+                                  value
+                                )
+                              }
+                            />
+
+                            <div className="d-flex my-2">
                               <Button
-                                onClick={() => {
-                                  setshowDescRes(true);
-                                  setshowMain(null);
-                                  console.log(
-                                    index + i + item.id
-                                  );
-                                  setshowContentAdd(null);
-                                  setcurriculumvisiblity("");
-                                }}
-                                className="mx-2"
-                                size="small"
+                                onClick={() =>
+                                  setshowDescription(
+                                    null
+                                  )
+                                }
+                                className="mx-1"
+                                variant="outlined"
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                onClick={() =>
+                                  handleSaveDescription(
+                                    item.id
+                                  )
+                                }
+                                className="mx-1"
                                 variant="contained"
                               >
-                                <CloseIcon />
+                                Save
                               </Button>
-                            ) : (
+                            </div>
+                          </>
+                        )}
+
+                        {/* Add Description & Resourses */}
+                        {showMain ==
+                          index + i + item.id &&
+                          showDescription !=
+                            index + i + item.id && (
+                            <div className="d-flex justify-content-center p-2">
                               <Button
                                 onClick={() => {
-                                  setshowDescRes(false);
-                                  setshowMain(
-                                    showMain ==
-                                      index + i + item.id
-                                      ? null
-                                      : index + i + item.id
-                                  );
-                                  console.log(
-                                    index + i + item.id
-                                  );
-                                  console.log(item);
-                                  setarticle(
-                                    item.article == "N/A"
-                                      ? ""
-                                      : item.article
-                                  );
                                   setcurriculum_desc(
-                                    item.description == "N/A"
+                                    item.description ==
+                                      "N/A"
                                       ? ""
                                       : item.description
                                   );
-                                  setshowContentAdd(
-                                    showContentAdd ==
-                                      index + i + item.id
+                                  setshowDescription(
+                                    showDescription ==
+                                      index +
+                                        i +
+                                        item.id
                                       ? null
-                                      : index + i + item.id
+                                      : index +
+                                          i +
+                                          item.id
                                   );
                                 }}
-                                className="mx-2"
-                                size="small"
+                                className="m-2"
                                 variant="outlined"
                               >
-                                <AddIcon /> Content
+                                <AddIcon />{" "}
+                                Description
                               </Button>
-                            )}
-                          </span>
-                          {/* + Content Action Card */}
+
+                              {showResources ==
+                              index +
+                                i +
+                                item.id ? (
+                                <Button
+                                  onClick={() =>
+                                    setshowResources(
+                                      null
+                                    )
+                                  }
+                                  className="m-2"
+                                  variant="contained"
+                                >
+                                  <CloseIcon />{" "}
+                                  Resourses
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={() =>
+                                    setshowResources(
+                                      showResources ==
+                                        index +
+                                          i +
+                                          item.id
+                                        ? null
+                                        : index +
+                                            i +
+                                            item.id
+                                    )
+                                  }
+                                  className="m-2"
+                                  variant="outlined"
+                                >
+                                  <AddIcon />{" "}
+                                  Resourses
+                                </Button>
+                              )}
+                            </div>
+                          )}
+
+                        {showResources ==
+                          index + i + item.id && (
+                          <div>
+                            {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+
+                            {/* Tabs */}
+                            <Tabs
+                              defaultActiveKey="d-file"
+                              id="uncontrolled-tab-example"
+                              className="my-3"
+                            >
+                              <Tab
+                                eventKey="d-file"
+                                title="Downloadable File"
+                              >
+                                <Form.Group
+                                  controlId="formFile"
+                                  className="mb-3"
+                                >
+                                  {/* (e) =>  */}
+                                  <Form.Control
+                                    onChange={(e) =>
+                                      handleDownloadbaleFile(
+                                        e,
+                                        item.id
+                                      )
+                                    }
+                                    type="file"
+                                  />
+                                  <Form.Label
+                                    style={{
+                                      fontSize: 11,
+                                    }}
+                                  >
+                                    <b>Note:</b>{" "}
+                                    Resource files
+                                    can be any file
+                                    type that will
+                                    help students
+                                    with their
+                                    learning.
+                                  </Form.Label>
+                                </Form.Group>
+                              </Tab>
+                              <Tab
+                                eventKey="e-r"
+                                title="External Resources"
+                              >
+                                <Form>
+                                  <Form.Group
+                                    className="mb-3"
+                                    controlId="exampleForm.ControlInput1"
+                                  >
+                                    <Form.Label>
+                                      Title
+                                    </Form.Label>
+                                    <Form.Control
+                                      value={
+                                        curriclum_ex_res_tile
+                                      }
+                                      onChange={(
+                                        e
+                                      ) =>
+                                        setcurriclum_ex_res_tile(
+                                          e.target
+                                            .value
+                                        )
+                                      }
+                                      type="text"
+                                      placeholder="A Descriptive Title"
+                                    />
+                                  </Form.Group>
+
+                                  <Form.Group
+                                    className="mb-3"
+                                    controlId="exampleForm.ControlInput1"
+                                  >
+                                    <Form.Label>
+                                      URL
+                                    </Form.Label>
+                                    <Form.Control
+                                      value={
+                                        curriculum_ex_res_link
+                                      }
+                                      onChange={(
+                                        e
+                                      ) =>
+                                        setcurriculum_ex_res_link(
+                                          e.target
+                                            .value
+                                        )
+                                      }
+                                      type="text"
+                                      placeholder="https://externallink.com"
+                                    />
+                                  </Form.Group>
+                                  <Button
+                                    onClick={() =>
+                                      handleExternalResources(
+                                        item.id
+                                      )
+                                    }
+                                    variant="contained"
+                                  >
+                                    Add Link
+                                  </Button>
+                                </Form>
+                              </Tab>
+                              <Tab
+                                eventKey="source-code"
+                                title="Source Code"
+                              >
+                                <Form.Group
+                                  onChange={(e) =>
+                                    handleSaveSourceCode(
+                                      item.id,
+                                      e
+                                    )
+                                  }
+                                  controlId="formFile"
+                                  className="mb-3"
+                                >
+                                  <Form.Control type="file" />
+                                  {/* <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label> */}
+                                </Form.Group>
+                              </Tab>
+                            </Tabs>
+                          </div>
+                        )}
+                      </>
+
+                          {/* Downloadable Files */}
+                          {item.curriculumItemFiles.some(
+                            (downloaditem) =>
+                              downloaditem.filetype ==
+                              "Downloadable Items"
+                          ) && (
+                            <div className="p-2">
+                              <h6>
+                                <b>
+                                  Downloadable Files
+                                </b>
+                              </h6>
+                              <ListGroup>
+                                {item.curriculumItemFiles.some(
+                                  (downloaditem) =>
+                                    downloaditem.filetype ==
+                                    "Downloadable Items"
+                                ) ? (
+                                  item.curriculumItemFiles
+                                    .filter(
+                                      (downloaditem) =>
+                                        downloaditem.filetype ==
+                                        "Downloadable Items"
+                                    )
+                                    .map(
+                                      (
+                                        downloaditem,
+                                        index
+                                      ) => (
+                                        <ListGroup.Item
+                                          className="d-flex justify-content-between"
+                                          key={index}
+                                        >
+                                          <span>
+                                            {
+                                              downloaditem.title
+                                            }
+                                          </span>
+                                          <span>
+                                            <Button
+                                              onClick={() => {
+                                                handleDeleteDownloableFilesLecture(
+                                                  downloaditem
+                                                );
+                                              }}
+                                              className="p-0"
+                                              variant=""
+                                            >
+                                              <DeleteIcon />
+                                            </Button>
+                                          </span>
+                                        </ListGroup.Item>
+                                      )
+                                    )
+                                ) : (
+                                  // <p>No Downloadable Items</p>
+                                  <></>
+                                )}
+                              </ListGroup>
+                            </div>
+                          )}
+
+                          {/* External Resources */}
+                          {item.curriculumItemFiles.some(
+                            (link) =>
+                              link.filetype ===
+                              "External Resourses"
+                          ) && (
+                            <div className="p-2">
+                              <h6>
+                                <b>
+                                  External Resources
+                                </b>
+                              </h6>
+                              <ListGroup>
+                                {item.curriculumItemFiles
+                                  .filter(
+                                    (link) =>
+                                      link.filetype ===
+                                      "External Resourses"
+                                  )
+                                  .map(
+                                    (link, index) => (
+                                      <ListGroup.Item
+                                        className="d-flex justify-content-between"
+                                        key={index}
+                                      >
+                                        <span>
+                                          <a
+                                            target="_blank"
+                                            href={
+                                              link.url
+                                            }
+                                          >
+                                            <LaunchIcon fontSize="10" />
+                                            {link.title}
+                                          </a>
+                                        </span>
+                                        <span>
+                                          <Button
+                                            className="p-0"
+                                            variant=""
+                                          >
+                                            <DeleteIcon />
+                                          </Button>
+                                        </span>
+                                      </ListGroup.Item>
+                                    )
+                                  )}
+                              </ListGroup>
+                            </div>
+                          )}
+
+                          {/* Source Code */}
+                          {item.curriculumItemFiles.some(
+                            (source) =>
+                              source.filetype ===
+                              "Source Code"
+                          ) && (
+                            <div className="p-2">
+                              <h6>
+                                <b>Source Code</b>
+                              </h6>
+                              <ListGroup>
+                                {item.curriculumItemFiles.some(
+                                  (source) =>
+                                    source.filetype ===
+                                    "Source Code"
+                                ) ? (
+                                  item.curriculumItemFiles
+                                    .filter(
+                                      (source) =>
+                                        source.filetype ===
+                                        "Source Code"
+                                    )
+                                    .map(
+                                      (
+                                        source,
+                                        index
+                                      ) => (
+                                        <ListGroup.Item
+                                          className="d-flex justify-content-between"
+                                          key={index}
+                                        >
+                                          <span>
+                                            {
+                                              source.title
+                                            }
+                                          </span>
+                                          <span>
+                                            <Button
+                                              onClick={() => {
+                                                handleDeleteDownloableFilesLecture(
+                                                  source
+                                                );
+                                              }}
+                                              className="p-0"
+                                              variant=""
+                                            >
+                                              <DeleteIcon />
+                                            </Button>
+                                          </span>
+                                        </ListGroup.Item>
+                                      )
+                                    )
+                                ) : (
+                                  // <p>No Source Code</p>
+                                  <></>
+                                )}
+                              </ListGroup>
+                            </div>
+                          )}
                         </div>
+                      </div>
+                    )}
 
-                              {/* Show the Articles If Filled */}
-                              {item.article != "N/A" &&
-                                showMain == index + i + item.id && (
+        {/* Main Video Card & Text Based Card */}
+        {item.article == "N/A" &&
+          item.curriculumItemFiles.length ==
+            0 &&
+          (showMain == index + i + item.id ? (
+            curriculumvisiblity == "video" ? (
               <div className="p-3">
-                <div className="my-3">
-                  <JoditEditor
-                    value={article}
-                    onChange={(content) =>
-                      setarticle(content)
-                    }
+                {/* Upload Input */}
+                <Form.Group
+                  controlId="formFile"
+                  className="my-3"
+                >
+                  <Form.Control
+                    accept="video/*"
+                    disabled={uploading}
+                    onChange={(e) => {
+                      setUploadingVideo(
+                        index + i + item.id
+                      );
+                      handleSaveVideo(
+                        e.target.files[0],
+                        item.id
+                      );
+                    }}
+                    placeholder="Add a Video"
+                    type="file"
                   />
-                  <div className="d-flex flex-start my-2">
-                    <Button
-                      onClick={() =>
-                        handleSaveArticle(
-                          item.id
-                        )
-                      }
-                      variant="contained"
-                    >
-                      SAVE
-                    </Button>
-                  </div>
-                </div>
+                  <Form.Label
+                    style={{ fontSize: 11 }}
+                  >
+                    <b>Note:</b> Video file
+                    should be High Definition
+                    (HD) quality, with a
+                    minimum resolution of 720p
+                    and maximum resolution of
+                    1080p.
+                  </Form.Label>
+                </Form.Group>
 
-                <div className="my-3">
-                  {/* List of Resources / External Link */}
-                  {item.description !=
-                    "N/A" && (
-                    <p className="m-0 p-0">
-                      <b>Description</b>
-                    </p>
+                {/* Before Video Upload */}
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Filename</th>
+                      <th>Status</th>
+                      <th>Type</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {uploadingVideo == index + i + item.id &&  uploading && (
+                    
+                      <tr>
+                        <td>
+                          {uploadingVideo ==
+                          index + i + item.id
+                            ? uploadingVideoName
+                            : ""}
+                        </td>
+                        <td>
+                          <td>
+                            {uploadingVideo ==
+                            index +
+                              i +
+                              item.id && uploadingVideoProgress != 100 ?
+                              (<Badge bg="info">
+                              {uploadingVideoProgress} %
+                            </Badge>) : (
+                              <Badge bg="success">
+                              Completed
+                            </Badge>
+                            )
+                            }
+                          </td>
+                        </td>
+                        <td>Video</td>
+                        <td> 
+                            <Button
+                              onClick={() => {
+                                Swal.fire({
+                                  title: 'Are you sure?',
+                                  text: "Do you want to cancel the upload?",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonText: 'Yes, cancel it!',
+                                  cancelButtonText: 'No, keep uploading'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    abortControllerRef.current.abort(); // Cancel the upload
+                                    Swal.fire(
+                                      'Cancelled!',
+                                      'Your upload has been cancelled.',
+                                      'success'
+                                    );
+                                  }
+                                });
+                              }}
+                              size="small"
+                              variant=""
+                            >
+                              <CloseIcon />
+                              Cancel
+                            </Button>
+
+                            </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </Table>
+
+                {/* List of Resources / External Link */}
+                <>
+                  {showDescription ==
+                    index + i + item.id && (
+                    <>
+                      <Button
+                        onClick={() =>
+                          setshowDescription(
+                            null
+                          )
+                        }
+                        className="m-2"
+                        variant="contained"
+                      >
+                        <CloseIcon />{" "}
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          setshowResources(
+                            null
+                          )
+                        }
+                        className="m-2"
+                        variant="outlined"
+                      >
+                        <AddIcon /> Resourses
+                      </Button>
+                      <JoditEditor
+                        value={
+                          curriculum_desc
+                        }
+                        onChange={(value) =>
+                          setcurriculum_desc(
+                            value
+                          )
+                        }
+                      />
+
+                      <div className="d-flex my-2">
+                        <Button
+                          onClick={() =>
+                            setshowDescription(
+                              null
+                            )
+                          }
+                          className="mr-1"
+                          variant="outlined"
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() =>
+                            handleSaveDescription(
+                              item.id
+                            )
+                          }
+                          className="ml-1"
+                          variant="contained"
+                        >
+                          Save
+                        </Button>
+                      </div>
+                    </>
                   )}
-                  <p>
-                    {item.description !=
-                      "N/A" &&
-                      removeHtmlTags(
-                        item.description
+
+                      {/* Add Description & Resourses */}
+                      {showMain ==
+                        index + i + item.id &&
+                        showDescription !=
+                          index + i + item.id && (
+                          <div className="d-flex justify-content-center p-2">
+                            <Button
+                              onClick={() =>
+                                setshowDescription(
+                                  showDescription ==
+                                    index +
+                                      i +
+                                      item.id
+                                    ? null
+                                    : index +
+                                        i +
+                                        item.id
+                                )
+                              }
+                              className="m-2"
+                              variant="outlined"
+                            >
+                              <AddIcon />{" "}
+                              Description
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                setshowResources(
+                                  showResources ==
+                                    index +
+                                      i +
+                                      item.id
+                                    ? null
+                                    : index +
+                                        i +
+                                        item.id
+                                )
+                              }
+                              className="m-2"
+                              variant="outlined"
+                            >
+                              <AddIcon />{" "}
+                              Resourses
+                            </Button>
+                          </div>
+                        )}
+
+                      {showResources ==
+                        index + i + item.id && (
+                        <div>
+                          <Button
+                            onClick={() =>
+                              setshowResources(
+                                null
+                              )
+                            }
+                            className="m-2"
+                            variant="contained"
+                          >
+                            <CloseIcon />{" "}
+                          </Button>
+
+                          {/* Tabs */}
+                          <Tabs
+                            defaultActiveKey="d-file"
+                            id="uncontrolled-tab-example"
+                            className="my-3"
+                          >
+                            <Tab
+                              eventKey="d-file"
+                              title="Downloadable File"
+                            >
+                              <Form.Group
+                                controlId="formFile"
+                                className="mb-3"
+                              >
+                                {/* (e) =>  */}
+                                <Form.Control
+                                  onChange={(e) =>
+                                    handleDownloadbaleFile(
+                                      e,
+                                      item.id
+                                    )
+                                  }
+                                  type="file"
+                                />
+                                <Form.Label
+                                  style={{
+                                    fontSize: 11,
+                                  }}
+                                >
+                                  <b>Note:</b> A
+                                  resource is for
+                                  any type of
+                                  document that
+                                  can be used to
+                                  help students in
+                                  the lesson. This
+                                  file is going to
+                                  be seen as a
+                                  lesson extra.
+                                  Make sure
+                                  everything is
+                                  legible and the
+                                  file size is
+                                  less than 1 GiB.
+                                </Form.Label>
+                              </Form.Group>
+                            </Tab>
+                            <Tab
+                              eventKey="e-r"
+                              title="External Resources"
+                            >
+                              <Form>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="exampleForm.ControlInput1"
+                                >
+                                  <Form.Label>
+                                    Title
+                                  </Form.Label>
+                                  <Form.Control
+                                    value={
+                                      curriclum_ex_res_tile
+                                    }
+                                    onChange={(
+                                      e
+                                    ) =>
+                                      setcurriclum_ex_res_tile(
+                                        e.target
+                                          .value
+                                      )
+                                    }
+                                    type="text"
+                                    placeholder="A Descriptive Title"
+                                  />
+                                </Form.Group>
+
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="exampleForm.ControlInput1"
+                                >
+                                  <Form.Label>
+                                    URL
+                                  </Form.Label>
+                                  <Form.Control
+                                    value={
+                                      curriculum_ex_res_link
+                                    }
+                                    onChange={(
+                                      e
+                                    ) =>
+                                      setcurriculum_ex_res_link(
+                                        e.target
+                                          .value
+                                      )
+                                    }
+                                    type="text"
+                                    placeholder="https://externallink.com"
+                                  />
+                                </Form.Group>
+                                <Button
+                                  onClick={() =>
+                                    handleExternalResources(
+                                      item.id
+                                    )
+                                  }
+                                  variant="contained"
+                                >
+                                  Add Link
+                                </Button>
+                              </Form>
+                            </Tab>
+                            <Tab
+                              eventKey="source-code"
+                              title="Source Code"
+                            >
+                              <Form.Group
+                                onChange={(e) =>
+                                  handleSaveSourceCode(
+                                    item.id,
+                                    e
+                                  )
+                                }
+                                controlId="formFile"
+                                className="mb-3"
+                              >
+                                <Form.Control type="file" />
+                                <Form.Label
+                                  style={{
+                                    fontSize: 11,
+                                  }}
+                                >
+                                  <b>Note:</b>{" "}
+                                  Only available
+                                  for Python and
+                                  Ruby for now.
+                                  You can upload
+                                  .py and .rb
+                                  files.
+                                </Form.Label>
+                              </Form.Group>
+                            </Tab>
+                          </Tabs>
+                        </div>
                       )}
-                  </p>
+                    </>
+                  </div>
+              ) : curriculumvisiblity ==
+                "article" ? (
+                <div className="p-3">
+                  <div className="my-3">
+                    <JoditEditor
+                      value={article}
+                      onChange={(e) =>
+                        setarticle(e)
+                      }
+                    />
+                    <div className="d-flex flex-start my-2">
+                      <Button
+                        onClick={(e) =>
+                          handleSaveArticle(
+                            item.id
+                          )
+                        }
+                        variant="contained"
+                      >
+                        SAVE
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* List of Resources / External Link */}
 
                   <>
                     {showDescription ==
                       index + i + item.id && (
                       <>
-                        {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
                         <Button
-                          onClick={() => {
-                            setcurriculum_desc(
-                              item.description ==
-                                "N/A"
-                                ? ""
-                                : item.description
-                            );
+                          onClick={() =>
                             setshowDescription(
-                              showDescription ==
-                                index +
-                                  i +
-                                  item.id
-                                ? null
-                                : index +
-                                    i +
-                                    item.id
-                            );
-                          }}
+                              null
+                            )
+                          }
                           className="m-2"
                           variant="contained"
                         >
-                          <AddIcon />{" "}
-                          Description
+                          <CloseIcon />{" "}
                         </Button>
                         <Button
                           onClick={() =>
@@ -2076,7 +2928,7 @@ const Curriculum = ({ code }) => {
                                 null
                               )
                             }
-                            className="mx-1"
+                            className="mr-1"
                             variant="outlined"
                           >
                             Cancel
@@ -2087,7 +2939,7 @@ const Curriculum = ({ code }) => {
                                 item.id
                               )
                             }
-                            className="mx-1"
+                            className="ml-1"
                             variant="contained"
                           >
                             Save
@@ -2103,13 +2955,7 @@ const Curriculum = ({ code }) => {
                         index + i + item.id && (
                         <div className="d-flex justify-content-center p-2">
                           <Button
-                            onClick={() => {
-                              setcurriculum_desc(
-                                item.description ==
-                                  "N/A"
-                                  ? ""
-                                  : item.description
-                              );
+                            onClick={() =>
                               setshowDescription(
                                 showDescription ==
                                   index +
@@ -2119,59 +2965,50 @@ const Curriculum = ({ code }) => {
                                   : index +
                                       i +
                                       item.id
-                              );
-                            }}
+                              )
+                            }
                             className="m-2"
                             variant="outlined"
                           >
                             <AddIcon />{" "}
                             Description
                           </Button>
-
-                          {showResources ==
-                          index +
-                            i +
-                            item.id ? (
-                            <Button
-                              onClick={() =>
-                                setshowResources(
-                                  null
-                                )
-                              }
-                              className="m-2"
-                              variant="contained"
-                            >
-                              <CloseIcon />{" "}
-                              Resourses
-                            </Button>
-                          ) : (
-                            <Button
-                              onClick={() =>
-                                setshowResources(
-                                  showResources ==
-                                    index +
+                          <Button
+                            onClick={() =>
+                              setshowResources(
+                                showResources ==
+                                  index +
+                                    i +
+                                    item.id
+                                  ? null
+                                  : index +
                                       i +
                                       item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                )
-                              }
-                              className="m-2"
-                              variant="outlined"
-                            >
-                              <AddIcon />{" "}
-                              Resourses
-                            </Button>
-                          )}
+                              )
+                            }
+                            className="m-2"
+                            variant="outlined"
+                          >
+                            <AddIcon />{" "}
+                            Resourses
+                          </Button>
                         </div>
                       )}
 
                     {showResources ==
                       index + i + item.id && (
                       <div>
-                        {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+                        <Button
+                          onClick={() =>
+                            setshowResources(
+                              null
+                            )
+                          }
+                          className="m-2"
+                          variant="contained"
+                        >
+                          <CloseIcon />{" "}
+                        </Button>
 
                         {/* Tabs */}
                         <Tabs
@@ -2202,13 +3039,21 @@ const Curriculum = ({ code }) => {
                                   fontSize: 11,
                                 }}
                               >
-                                <b>Note:</b>{" "}
-                                Resource files
-                                can be any file
-                                type that will
-                                help students
-                                with their
-                                learning.
+                                <b>Note:</b> A
+                                resource is for
+                                any type of
+                                document that
+                                can be used to
+                                help students in
+                                the lesson. This
+                                file is going to
+                                be seen as a
+                                lesson extra.
+                                Make sure
+                                everything is
+                                legible and the
+                                file size is
+                                less than 1 GiB.
                               </Form.Label>
                             </Form.Group>
                           </Tab>
@@ -2291,1468 +3136,678 @@ const Curriculum = ({ code }) => {
                               className="mb-3"
                             >
                               <Form.Control type="file" />
-                              {/* <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label> */}
+                              <Form.Label
+                                style={{
+                                  fontSize: 11,
+                                }}
+                              >
+                                <b>Note:</b>{" "}
+                                Only available
+                                for Python and
+                                Ruby for now.
+                                You can upload
+                                .py and .rb
+                                files.
+                              </Form.Label>
                             </Form.Group>
                           </Tab>
                         </Tabs>
                       </div>
                     )}
                   </>
-
-                      {/* Downloadable Files */}
-                      {item.curriculumItemFiles.some(
-                        (downloaditem) =>
-                          downloaditem.filetype ==
-                          "Downloadable Items"
-                      ) && (
-                        <div className="p-2">
-                          <h6>
-                            <b>
-                              Downloadable Files
-                            </b>
-                          </h6>
-                          <ListGroup>
-                            {item.curriculumItemFiles.some(
-                              (downloaditem) =>
-                                downloaditem.filetype ==
-                                "Downloadable Items"
-                            ) ? (
-                              item.curriculumItemFiles
-                                .filter(
-                                  (downloaditem) =>
-                                    downloaditem.filetype ==
-                                    "Downloadable Items"
-                                )
-                                .map(
-                                  (
-                                    downloaditem,
-                                    index
-                                  ) => (
-                                    <ListGroup.Item
-                                      className="d-flex justify-content-between"
-                                      key={index}
-                                    >
-                                      <span>
-                                        {
-                                          downloaditem.title
-                                        }
-                                      </span>
-                                      <span>
-                                        <Button
-                                          onClick={() => {
-                                            handleDeleteDownloableFilesLecture(
-                                              downloaditem
-                                            );
-                                          }}
-                                          className="p-0"
-                                          variant=""
-                                        >
-                                          <DeleteIcon />
-                                        </Button>
-                                      </span>
-                                    </ListGroup.Item>
-                                  )
-                                )
-                            ) : (
-                              // <p>No Downloadable Items</p>
-                              <></>
-                            )}
-                          </ListGroup>
-                        </div>
-                      )}
-
-                      {/* External Resources */}
-                      {item.curriculumItemFiles.some(
-                        (link) =>
-                          link.filetype ===
-                          "External Resourses"
-                      ) && (
-                        <div className="p-2">
-                          <h6>
-                            <b>
-                              External Resources
-                            </b>
-                          </h6>
-                          <ListGroup>
-                            {item.curriculumItemFiles
-                              .filter(
-                                (link) =>
-                                  link.filetype ===
-                                  "External Resourses"
-                              )
-                              .map(
-                                (link, index) => (
-                                  <ListGroup.Item
-                                    className="d-flex justify-content-between"
-                                    key={index}
-                                  >
-                                    <span>
-                                      <a
-                                        target="_blank"
-                                        href={
-                                          link.url
-                                        }
-                                      >
-                                        <LaunchIcon fontSize="10" />
-                                        {link.title}
-                                      </a>
-                                    </span>
-                                    <span>
-                                      <Button
-                                        className="p-0"
-                                        variant=""
-                                      >
-                                        <DeleteIcon />
-                                      </Button>
-                                    </span>
-                                  </ListGroup.Item>
-                                )
-                              )}
-                          </ListGroup>
-                        </div>
-                      )}
-
-                      {/* Source Code */}
-                      {item.curriculumItemFiles.some(
-                        (source) =>
-                          source.filetype ===
-                          "Source Code"
-                      ) && (
-                        <div className="p-2">
-                          <h6>
-                            <b>Source Code</b>
-                          </h6>
-                          <ListGroup>
-                            {item.curriculumItemFiles.some(
-                              (source) =>
-                                source.filetype ===
-                                "Source Code"
-                            ) ? (
-                              item.curriculumItemFiles
-                                .filter(
-                                  (source) =>
-                                    source.filetype ===
-                                    "Source Code"
-                                )
-                                .map(
-                                  (
-                                    source,
-                                    index
-                                  ) => (
-                                    <ListGroup.Item
-                                      className="d-flex justify-content-between"
-                                      key={index}
-                                    >
-                                      <span>
-                                        {
-                                          source.title
-                                        }
-                                      </span>
-                                      <span>
-                                        <Button
-                                          onClick={() => {
-                                            handleDeleteDownloableFilesLecture(
-                                              source
-                                            );
-                                          }}
-                                          className="p-0"
-                                          variant=""
-                                        >
-                                          <DeleteIcon />
-                                        </Button>
-                                      </span>
-                                    </ListGroup.Item>
-                                  )
-                                )
-                            ) : (
-                              // <p>No Source Code</p>
-                              <></>
-                            )}
-                          </ListGroup>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-    {/* Main Video Card & Text Based Card */}
-    {item.article == "N/A" &&
-      item.curriculumItemFiles.length ==
-        0 &&
-      (showMain == index + i + item.id ? (
-        curriculumvisiblity == "video" ? (
-          <div className="p-3">
-            {/* Upload Input */}
-            <Form.Group
-              controlId="formFile"
-              className="my-3"
-            >
-              <Form.Control
-                accept="video/*"
-                disabled={uploading}
-                onChange={(e) => {
-                  setUploadingVideo(
-                    index + i + item.id
-                  );
-                  handleSaveVideo(
-                    e.target.files[0],
-                    item.id
-                  );
-                }}
-                placeholder="Add a Video"
-                type="file"
-              />
-              <Form.Label
-                style={{ fontSize: 11 }}
-              >
-                <b>Note:</b> Video file
-                should be High Definition
-                (HD) quality, with a
-                minimum resolution of 720p
-                and maximum resolution of
-                1080p.
-              </Form.Label>
-            </Form.Group>
-
-            {/* Before Video Upload */}
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Filename</th>
-                  <th>Status</th>
-                  <th>Type</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {uploadingVideo == index + i + item.id &&  uploading && (
-                
-                  <tr>
-                    <td>
-                      {uploadingVideo ==
-                      index + i + item.id
-                        ? uploadingVideoName
-                        : ""}
-                    </td>
-                    <td>
-                      <td>
-                        {uploadingVideo ==
-                        index +
-                          i +
-                          item.id && uploadingVideoProgress != 100 ?
-                          (<Badge bg="info">
-                          {uploadingVideoProgress} %
-                        </Badge>) : (
-                          <Badge bg="success">
-                          Completed
-                        </Badge>
-                        )
-                        }
-                      </td>
-                    </td>
-                    <td>Video</td>
-                    <td> 
-                        <Button
-                          onClick={() => {
-                            Swal.fire({
-                              title: 'Are you sure?',
-                              text: "Do you want to cancel the upload?",
-                              icon: 'warning',
-                              showCancelButton: true,
-                              confirmButtonText: 'Yes, cancel it!',
-                              cancelButtonText: 'No, keep uploading'
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                abortControllerRef.current.abort(); // Cancel the upload
-                                Swal.fire(
-                                  'Cancelled!',
-                                  'Your upload has been cancelled.',
-                                  'success'
-                                );
-                              }
-                            });
-                          }}
-                          size="small"
-                          variant=""
+                </div>
+                  ) : (
+                    <div className="d-flex justify-content-center">
+                      <div className="mx-2">
+                        <Card
+                          sx={{ width: 120 }}
+                          elevation={3}
                         >
-                          <CloseIcon />
-                          Cancel
-                        </Button>
+                          <CardActionArea
+                            onClick={() => {
+                              setshowDescRes(true);
+                              setcurriculumvisiblity(
+                                "video"
+                              );
+                            }}
+                            className="d-flex justify-content-center align-items-center text-center"
+                          >
+                            <CardContent>
+                              <PlayCircleIcon fontSize="large" />
 
-                        </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-
-            {/* List of Resources / External Link */}
-            <>
-              {showDescription ==
-                index + i + item.id && (
-                <>
-                  <Button
-                    onClick={() =>
-                      setshowDescription(
-                        null
-                      )
-                    }
-                    className="m-2"
-                    variant="contained"
-                  >
-                    <CloseIcon />{" "}
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      setshowResources(
-                        null
-                      )
-                    }
-                    className="m-2"
-                    variant="outlined"
-                  >
-                    <AddIcon /> Resourses
-                  </Button>
-                  <JoditEditor
-                    value={
-                      curriculum_desc
-                    }
-                    onChange={(value) =>
-                      setcurriculum_desc(
-                        value
-                      )
-                    }
-                  />
-
-                  <div className="d-flex my-2">
-                    <Button
-                      onClick={() =>
-                        setshowDescription(
-                          null
-                        )
-                      }
-                      className="mr-1"
-                      variant="outlined"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        handleSaveDescription(
-                          item.id
-                        )
-                      }
-                      className="ml-1"
-                      variant="contained"
-                    >
-                      Save
-                    </Button>
-                  </div>
-                </>
-              )}
-
-                  {/* Add Description & Resourses */}
-                  {showMain ==
-                    index + i + item.id &&
-                    showDescription !=
-                      index + i + item.id && (
-                      <div className="d-flex justify-content-center p-2">
-                        <Button
-                          onClick={() =>
-                            setshowDescription(
-                              showDescription ==
-                                index +
-                                  i +
-                                  item.id
-                                ? null
-                                : index +
-                                    i +
-                                    item.id
-                            )
-                          }
-                          className="m-2"
-                          variant="outlined"
-                        >
-                          <AddIcon />{" "}
-                          Description
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            setshowResources(
-                              showResources ==
-                                index +
-                                  i +
-                                  item.id
-                                ? null
-                                : index +
-                                    i +
-                                    item.id
-                            )
-                          }
-                          className="m-2"
-                          variant="outlined"
-                        >
-                          <AddIcon />{" "}
-                          Resourses
-                        </Button>
+                              <p className="my-2">
+                                Video Lecture
+                              </p>
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
                       </div>
-                    )}
 
-                  {showResources ==
-                    index + i + item.id && (
-                    <div>
-                      <Button
-                        onClick={() =>
-                          setshowResources(
-                            null
-                          )
-                        }
-                        className="m-2"
-                        variant="contained"
-                      >
-                        <CloseIcon />{" "}
-                      </Button>
+                      <div className="mx-2">
+                        <Card
+                          sx={{ width: 120 }}
+                          elevation={3}
+                        >
+                          <CardActionArea
+                            onClick={() => {
+                              setshowDescRes(true);
+                              setcurriculumvisiblity(
+                                "article"
+                              );
+                            }}
+                            className="d-flex justify-content-center align-items-center text-center"
+                          >
+                            <CardContent>
+                              <ArticleIcon fontSize="large" />
 
-                      {/* Tabs */}
-                      <Tabs
-                        defaultActiveKey="d-file"
-                        id="uncontrolled-tab-example"
+                              <p className="my-2">
+                                Text-based Lecture
+                              </p>
+                            </CardContent>
+                          </CardActionArea>
+                        </Card>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <></>
+                ))}
+
+              {/* Main Video Card & Text Based Card */}
+              {item.article == "N/A" && item.curriculumItemFiles.length !=
+                0 &&
+                showMain == index + i + item.id && (
+                  <div className="my-3">
+                    {/* Display Video After Upload Video */}
+
+                    <div className="p-3">
+                      {/* Upload Input */}
+                      <Form.Group
+                        controlId="formFile"
                         className="my-3"
                       >
-                        <Tab
-                          eventKey="d-file"
-                          title="Downloadable File"
-                        >
-                          <Form.Group
-                            controlId="formFile"
-                            className="mb-3"
-                          >
-                            {/* (e) =>  */}
-                            <Form.Control
-                              onChange={(e) =>
-                                handleDownloadbaleFile(
-                                  e,
-                                  item.id
-                                )
-                              }
-                              type="file"
-                            />
-                            <Form.Label
-                              style={{
-                                fontSize: 11,
-                              }}
-                            >
-                              <b>Note:</b> A
-                              resource is for
-                              any type of
-                              document that
-                              can be used to
-                              help students in
-                              the lesson. This
-                              file is going to
-                              be seen as a
-                              lesson extra.
-                              Make sure
-                              everything is
-                              legible and the
-                              file size is
-                              less than 1 GiB.
-                            </Form.Label>
-                          </Form.Group>
-                        </Tab>
-                        <Tab
-                          eventKey="e-r"
-                          title="External Resources"
-                        >
-                          <Form>
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlInput1"
-                            >
-                              <Form.Label>
-                                Title
-                              </Form.Label>
-                              <Form.Control
-                                value={
-                                  curriclum_ex_res_tile
-                                }
-                                onChange={(
-                                  e
-                                ) =>
-                                  setcurriclum_ex_res_tile(
-                                    e.target
-                                      .value
-                                  )
-                                }
-                                type="text"
-                                placeholder="A Descriptive Title"
-                              />
-                            </Form.Group>
-
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlInput1"
-                            >
-                              <Form.Label>
-                                URL
-                              </Form.Label>
-                              <Form.Control
-                                value={
-                                  curriculum_ex_res_link
-                                }
-                                onChange={(
-                                  e
-                                ) =>
-                                  setcurriculum_ex_res_link(
-                                    e.target
-                                      .value
-                                  )
-                                }
-                                type="text"
-                                placeholder="https://externallink.com"
-                              />
-                            </Form.Group>
-                            <Button
-                              onClick={() =>
-                                handleExternalResources(
-                                  item.id
-                                )
-                              }
-                              variant="contained"
-                            >
-                              Add Link
-                            </Button>
-                          </Form>
-                        </Tab>
-                        <Tab
-                          eventKey="source-code"
-                          title="Source Code"
-                        >
-                          <Form.Group
-                            onChange={(e) =>
-                              handleSaveSourceCode(
-                                item.id,
-                                e
-                              )
-                            }
-                            controlId="formFile"
-                            className="mb-3"
-                          >
-                            <Form.Control type="file" />
-                            <Form.Label
-                              style={{
-                                fontSize: 11,
-                              }}
-                            >
-                              <b>Note:</b>{" "}
-                              Only available
-                              for Python and
-                              Ruby for now.
-                              You can upload
-                              .py and .rb
-                              files.
-                            </Form.Label>
-                          </Form.Group>
-                        </Tab>
-                      </Tabs>
-                    </div>
-                  )}
-                </>
-              </div>
-          ) : curriculumvisiblity ==
-            "article" ? (
-            <div className="p-3">
-              <div className="my-3">
-                <JoditEditor
-                  value={article}
-                  onChange={(e) =>
-                    setarticle(e)
-                  }
-                />
-                <div className="d-flex flex-start my-2">
-                  <Button
-                    onClick={(e) =>
-                      handleSaveArticle(
-                        item.id
-                      )
-                    }
-                    variant="contained"
-                  >
-                    SAVE
-                  </Button>
-                </div>
-              </div>
-
-              {/* List of Resources / External Link */}
-
-              <>
-                {showDescription ==
-                  index + i + item.id && (
-                  <>
-                    <Button
-                      onClick={() =>
-                        setshowDescription(
-                          null
-                        )
-                      }
-                      className="m-2"
-                      variant="contained"
-                    >
-                      <CloseIcon />{" "}
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        setshowResources(
-                          null
-                        )
-                      }
-                      className="m-2"
-                      variant="outlined"
-                    >
-                      <AddIcon /> Resourses
-                    </Button>
-                    <JoditEditor
-                      value={
-                        curriculum_desc
-                      }
-                      onChange={(value) =>
-                        setcurriculum_desc(
-                          value
-                        )
-                      }
-                    />
-
-                    <div className="d-flex my-2">
-                      <Button
-                        onClick={() =>
-                          setshowDescription(
-                            null
-                          )
-                        }
-                        className="mr-1"
-                        variant="outlined"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          handleSaveDescription(
-                            item.id
-                          )
-                        }
-                        className="ml-1"
-                        variant="contained"
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </>
-                )}
-
-                {/* Add Description & Resourses */}
-                {showMain ==
-                  index + i + item.id &&
-                  showDescription !=
-                    index + i + item.id && (
-                    <div className="d-flex justify-content-center p-2">
-                      <Button
-                        onClick={() =>
-                          setshowDescription(
-                            showDescription ==
-                              index +
-                                i +
-                                item.id
-                              ? null
-                              : index +
-                                  i +
-                                  item.id
-                          )
-                        }
-                        className="m-2"
-                        variant="outlined"
-                      >
-                        <AddIcon />{" "}
-                        Description
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          setshowResources(
-                            showResources ==
-                              index +
-                                i +
-                                item.id
-                              ? null
-                              : index +
-                                  i +
-                                  item.id
-                          )
-                        }
-                        className="m-2"
-                        variant="outlined"
-                      >
-                        <AddIcon />{" "}
-                        Resourses
-                      </Button>
-                    </div>
-                  )}
-
-                {showResources ==
-                  index + i + item.id && (
-                  <div>
-                    <Button
-                      onClick={() =>
-                        setshowResources(
-                          null
-                        )
-                      }
-                      className="m-2"
-                      variant="contained"
-                    >
-                      <CloseIcon />{" "}
-                    </Button>
-
-                    {/* Tabs */}
-                    <Tabs
-                      defaultActiveKey="d-file"
-                      id="uncontrolled-tab-example"
-                      className="my-3"
-                    >
-                      <Tab
-                        eventKey="d-file"
-                        title="Downloadable File"
-                      >
-                        <Form.Group
-                          controlId="formFile"
-                          className="mb-3"
-                        >
-                          {/* (e) =>  */}
-                          <Form.Control
-                            onChange={(e) =>
-                              handleDownloadbaleFile(
-                                e,
-                                item.id
-                              )
-                            }
-                            type="file"
-                          />
-                          <Form.Label
-                            style={{
-                              fontSize: 11,
-                            }}
-                          >
-                            <b>Note:</b> A
-                            resource is for
-                            any type of
-                            document that
-                            can be used to
-                            help students in
-                            the lesson. This
-                            file is going to
-                            be seen as a
-                            lesson extra.
-                            Make sure
-                            everything is
-                            legible and the
-                            file size is
-                            less than 1 GiB.
-                          </Form.Label>
-                        </Form.Group>
-                      </Tab>
-                      <Tab
-                        eventKey="e-r"
-                        title="External Resources"
-                      >
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              Title
-                            </Form.Label>
-                            <Form.Control
-                              value={
-                                curriclum_ex_res_tile
-                              }
-                              onChange={(
-                                e
-                              ) =>
-                                setcurriclum_ex_res_tile(
-                                  e.target
-                                    .value
-                                )
-                              }
-                              type="text"
-                              placeholder="A Descriptive Title"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              URL
-                            </Form.Label>
-                            <Form.Control
-                              value={
-                                curriculum_ex_res_link
-                              }
-                              onChange={(
-                                e
-                              ) =>
-                                setcurriculum_ex_res_link(
-                                  e.target
-                                    .value
-                                )
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-                          <Button
-                            onClick={() =>
-                              handleExternalResources(
-                                item.id
-                              )
-                            }
-                            variant="contained"
-                          >
-                            Add Link
-                          </Button>
-                        </Form>
-                      </Tab>
-                      <Tab
-                        eventKey="source-code"
-                        title="Source Code"
-                      >
-                        <Form.Group
-                          onChange={(e) =>
-                            handleSaveSourceCode(
-                              item.id,
-                              e
-                            )
-                          }
-                          controlId="formFile"
-                          className="mb-3"
-                        >
-                          <Form.Control type="file" />
-                          <Form.Label
-                            style={{
-                              fontSize: 11,
-                            }}
-                          >
-                            <b>Note:</b>{" "}
-                            Only available
-                            for Python and
-                            Ruby for now.
-                            You can upload
-                            .py and .rb
-                            files.
-                          </Form.Label>
-                        </Form.Group>
-                      </Tab>
-                    </Tabs>
-                  </div>
-                )}
-              </>
-            </div>
-              ) : (
-                <div className="d-flex justify-content-center">
-                  <div className="mx-2">
-                    <Card
-                      sx={{ width: 120 }}
-                      elevation={3}
-                    >
-                      <CardActionArea
-                        onClick={() => {
-                          setshowDescRes(true);
-                          setcurriculumvisiblity(
-                            "video"
-                          );
-                        }}
-                        className="d-flex justify-content-center align-items-center text-center"
-                      >
-                        <CardContent>
-                          <PlayCircleIcon fontSize="large" />
-
-                          <p className="my-2">
-                            Video Lecture
-                          </p>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </div>
-
-                  <div className="mx-2">
-                    <Card
-                      sx={{ width: 120 }}
-                      elevation={3}
-                    >
-                      <CardActionArea
-                        onClick={() => {
-                          setshowDescRes(true);
-                          setcurriculumvisiblity(
-                            "article"
-                          );
-                        }}
-                        className="d-flex justify-content-center align-items-center text-center"
-                      >
-                        <CardContent>
-                          <ArticleIcon fontSize="large" />
-
-                          <p className="my-2">
-                            Text-based Lecture
-                          </p>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </div>
-                </div>
-              )
-            ) : (
-              <></>
-            ))}
-
-          {/* Main Video Card & Text Based Card */}
-          {item.curriculumItemFiles.length !=
-            0 &&
-            showMain == index + i + item.id && (
-              <div className="my-3">
-                {/* Display Video After Upload Video */}
-
-                <div className="p-3">
-                  {/* Upload Input */}
-                  <Form.Group
-                    controlId="formFile"
-                    className="my-3"
-                  >
-                    <Form.Control
-                      accept="video/*"
-                      disabled={uploading}
-                      onChange={(e) => {
-                        setUploadingVideo(
-                          index + i + item.id
-                        );
-                        handleSaveVideo(
-                          e.target.files[0],
-                          item.id
-                        );
-                      }}
-                      placeholder="Add a Video"
-                      type="file"
-                    />
-                    <Form.Label
-                      style={{ fontSize: 11 }}
-                    >
-                      <b>Note:</b> Video file
-                      should be High Definition
-                      (HD) quality, with a
-                      minimum resolution of 720p
-                      and maximum resolution of
-                      1080p.
-                    </Form.Label>
-                  </Form.Group>
-
-                  
-                 
-                  {item.curriculumItemFiles
-                    .length > 0 &&
-                    item.curriculumItemFiles.some(
-                      (video) =>
-                        video.filetype ===
-                        "Video"
-                    ) &&
-                    item.curriculumItemFiles
-                      .filter(
-                        (video) =>
-                          video.filetype ===
-                          "Video"
-                      )
-                      .map((video) => (
-                        <div className="d-flex justify-content-end m-2">
-                          <p>
-                            <span className="mx-2">
-                              Preview Video :
-                            </span>
-                            <Switch
-                              checked={
-                                video.previewVideo
-                              }
-                              onChange={(e) =>
-                                handleSetVideoPreview(
-                                  e,
-                                  item
-                                )
-                              }
-                            />
-                          </p>
-                        </div>
-                      ))}
-                  {/* After Video Upload */}
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>Filename</th>
-                        <th>Status</th>
-                        <th>Type</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-
-              {/* Re-upload */}
-              {uploading && uploadingVideo == index + i + item.id && (
-                      <tr>
-                        <td>
-                          {uploadingVideo == index + i + item.id ? uploadingVideoName : ""}
-                        </td>
-                        <td>
-                          <td>
-                            {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (
-                              <Badge bg="info">
-                                {uploadingVideoProgress} %
-                              </Badge>
-                            ) : (
-                              <Badge bg="success">
-                                Completed
-                              </Badge>
-                            )}
-                          </td>
-                        </td>
-                        <td>Video</td>
-                        <td> 
-                        <Button
-                          onClick={() => {
-                            Swal.fire({
-                              title: 'Are you sure?',
-                              text: "Do you want to cancel the upload?",
-                              icon: 'warning',
-                              showCancelButton: true,
-                              confirmButtonText: 'Yes, cancel it!',
-                              cancelButtonText: 'No, keep uploading'
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                abortControllerRef.current.abort(); // Cancel the upload
-                                Swal.fire(
-                                  'Cancelled!',
-                                  'Your upload has been cancelled.',
-                                  'success'
-                                );
-                              }
-                            });
+                        <Form.Control
+                          accept="video/*"
+                          disabled={uploading}
+                          onChange={(e) => {
+                            setUploadingVideo(
+                              index + i + item.id
+                            );
+                            handleSaveVideo(
+                              e.target.files[0],
+                              item.id
+                            );
                           }}
-                          size="small"
-                          variant=""
+                          placeholder="Add a Video"
+                          type="file"
+                        />
+                        <Form.Label
+                          style={{ fontSize: 11 }}
                         >
-                          <CloseIcon />
-                          Cancel
-                        </Button>
+                          <b>Note:</b> Video file
+                          should be High Definition
+                          (HD) quality, with a
+                          minimum resolution of 720p
+                          and maximum resolution of
+                          1080p.
+                        </Form.Label>
+                      </Form.Group>
 
-                        </td>
-                      </tr>
-                    )}
-
-                {/* After after list - In DB */}
-                      {uploading == false &&  item.curriculumItemFiles
+                      
+                    
+                      {item.curriculumItemFiles
                         .length > 0 &&
-                        (item.curriculumItemFiles.some(
+                        item.curriculumItemFiles.some(
                           (video) =>
                             video.filetype ===
                             "Video"
-                        ) ? (
-                          item.curriculumItemFiles
-                            .filter(
+                        ) &&
+                        item.curriculumItemFiles
+                          .filter(
+                            (video) =>
+                              video.filetype ===
+                              "Video"
+                          )
+                          .map((video) => (
+                            <div className="d-flex justify-content-end m-2">
+                              <p>
+                                <span className="mx-2">
+                                  Preview Video :
+                                </span>
+                                <Switch
+                                  checked={
+                                    video.previewVideo
+                                  }
+                                  onChange={(e) =>
+                                    handleSetVideoPreview(
+                                      e,
+                                      item
+                                    )
+                                  }
+                                />
+                              </p>
+                            </div>
+                          ))}
+                      {/* After Video Upload */}
+                      <Table striped bordered hover>
+                        <thead>
+                          <tr>
+                            <th>Filename</th>
+                            <th>Status</th>
+                            <th>Type</th>
+                            <th>Actions5</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+
+                  {/* Re-upload */}
+                  {uploading && uploadingVideo == index + i + item.id && (
+                          <tr>
+                            <td>
+                              {uploadingVideo == index + i + item.id ? uploadingVideoName : ""}
+                            </td>
+                            <td>
+                              <td>
+                                {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (
+                                  <Badge bg="info">
+                                    {uploadingVideoProgress} %
+                                  </Badge>
+                                ) : (
+                                  <Badge bg="success">
+                                    Completed
+                                  </Badge>
+                                )}
+                              </td>
+                            </td>
+                            <td>Video</td>
+                            <td> 
+                            <Button
+                              onClick={() => {
+                                Swal.fire({
+                                  title: 'Are you sure?',
+                                  text: "Do you want to cancel the upload?",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonText: 'Yes, cancel it!',
+                                  cancelButtonText: 'No, keep uploading'
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    abortControllerRef.current.abort(); // Cancel the upload
+                                    Swal.fire(
+                                      'Cancelled!',
+                                      'Your upload has been cancelled.',
+                                      'success'
+                                    );
+                                  }
+                                });
+                              }}
+                              size="small"
+                              variant=""
+                            >
+                              <CloseIcon />
+                              Cancel
+                            </Button>
+
+                            </td>
+                          </tr>
+                        )}
+
+                    {/* After after list - In DB */}
+                      {uploading == false &&  item.curriculumItemFiles
+                            .length > 0 &&
+                            (item.curriculumItemFiles.some(
                               (video) =>
                                 video.filetype ===
                                 "Video"
-                            )
-                            .map(
-                              (
-                                video,
-                                index
-                              ) => (
-                                <tr key={index}>
-                                  <td>
-                                    {uploadingVideo == index + i + item.id ? uploadingVideoName : video.title}
-                                  </td>
-                                  <td>
-                                    <td>
-                                    {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (<Badge bg="info">
-                                      {uploadingVideoProgress} %
-                                    </Badge>
-                                      ) : (
-                                          <Badge bg="success">
-                                          Completed
+                            ) ? (
+                              item.curriculumItemFiles
+                                .filter(
+                                  (video) =>
+                                    video.filetype ===
+                                    "Video"
+                                )
+                                .map(
+                                  (
+                                    video,
+                                    index
+                                  ) => (
+                                    <tr key={index}>
+                                      <td>
+                                        {uploadingVideo == index + i + item.id ? uploadingVideoName : video.title}
+                                      </td>
+                                      <td>
+                                        <td>
+                                        {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (<Badge bg="info">
+                                          {uploadingVideoProgress} %
                                         </Badge>
+                                          ) : (
+                                              <Badge bg="success">
+                                              Completed
+                                            </Badge>
+                                            )}
+                                        </td>
+                                      </td>
+                                      <td>Video</td>
+                                      <td>
+                                        <Button
+                                          onClick={() => {
+                                            handleVideoDelete(
+                                              video
+                                            );
+                                          }}
+                                          size="small"
+                                          variant=""
+                                        >
+                                          <DeleteIcon />
+                                        </Button>
+
+                                        <Button
+                                          onClick={() => {
+                                            // console.log(video)
+                                            showVideoModal(
+                                              `${FILE_PATH}${video.url}`,
+                                              video.title
+                                            );
+                                          }}
+                                          size="small"
+                                          variant="secondary"
+                                        >
+                                          <RemoveRedEyeIcon />
+                                        </Button>
+
+                                        {uploadingVideo ==
+                                          index +
+                                            i +
+                                            item.id && (
+                                          <Button
+                                            onClick={() => {}}
+                                            size="small"
+                                            variant="contained"
+                                          >
+                                            <CloseIcon />
+                                          </Button>
                                         )}
-                                    </td>
-                                  </td>
-                                  <td>Video</td>
-                                  <td>
-                                    <Button
-                                      onClick={() => {
-                                        handleVideoDelete(
-                                          video
-                                        );
-                                      }}
-                                      size="small"
-                                      variant=""
-                                    >
-                                      <DeleteIcon />
-                                    </Button>
+                                      </td>
+                                    </tr>
+                                  )
+                                )
+                            ) : (
+                              <p>No Video</p>
+                            ))}
+                        </tbody>
+                      </Table>
+                    </div>
 
-                                    <Button
-                                      onClick={() => {
-                                        // console.log(video)
-                                        showVideoModal(
-                                          `${FILE_PATH}${video.url}`,
-                                          video.title
-                                        );
-                                      }}
-                                      size="small"
-                                      variant="secondary"
-                                    >
-                                      <RemoveRedEyeIcon />
-                                    </Button>
+                      {/* <h3>video</h3> */}
 
-                                    {uploadingVideo ==
-                                      index +
-                                        i +
-                                        item.id && (
-                                      <Button
-                                        onClick={() => {}}
-                                        size="small"
-                                        variant="contained"
-                                      >
-                                        <CloseIcon />
-                                      </Button>
-                                    )}
-                                  </td>
-                                </tr>
-                              )
-                            )
-                        ) : (
-                          <p>No Video</p>
-                        ))}
-                    </tbody>
-                  </Table>
-                </div>
+                      {/*  Inputs of External Links / Resouces  */}
 
-                  {/* <h3>video</h3> */}
+                      {/* List of Resources / External Link */}
 
-                  {/*  Inputs of External Links / Resouces  */}
-
-                  {/* List of Resources / External Link */}
-
-                <>
-                  {showDescription ==
-                    index + i + item.id && (
                     <>
-                      <Button
-                        onClick={() =>
-                          setshowDescription(
-                            null
-                          )
-                        }
-                        className="m-2"
-                        variant="contained"
-                      >
-                        <CloseIcon />{" "}
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          setshowResources(null)
-                        }
-                        className="m-2"
-                        variant="outlined"
-                      >
-                        <AddIcon /> Resourses
-                      </Button>
-                      <JoditEditor
-                        value={curriculum_desc}
-                        onChange={(value) =>
-                          setcurriculum_desc(
-                            value
-                          )
-                        }
-                      />
-
-                      <div className="d-flex my-2">
-                        <Button
-                          onClick={() =>
-                            setshowDescription(
-                              null
-                            )
-                          }
-                          className="mx-1"
-                          variant="outlined"
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            handleSaveDescription(
-                              item.id
-                            )
-                          }
-                          className="mx-1"
-                          variant="contained"
-                        >
-                          Save
-                        </Button>
-                      </div>
-                    </>
-                  )}
-
-                  {/* Add Description & Resourses */}
-                  {showMain ==
-                    index + i + item.id &&
-                    showDescription !=
-                      index + i + item.id && (
-                      <div className="d-flex justify-content-center p-2">
-                        <Button
-                          onClick={() => {
-                            setcurriculum_desc(
-                              item.description ==
-                                "N/A"
-                                ? ""
-                                : item.description
-                            );
-                            setshowDescription(
-                              showDescription ==
-                                index +
-                                  i +
-                                  item.id
-                                ? null
-                                : index +
-                                    i +
-                                    item.id
-                            );
-                          }}
-                          className="m-2"
-                          variant="outlined"
-                        >
-                          <AddIcon />{" "}
-                          Description
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            setshowResources(
-                              showResources ==
-                                index +
-                                  i +
-                                  item.id
-                                ? null
-                                : index +
-                                    i +
-                                    item.id
-                            )
-                          }
-                          className="m-2"
-                          variant="outlined"
-                        >
-                          <AddIcon /> Resourses
-                        </Button>
-                      </div>
-                    )}
-
-                  {showResources ==
-                    index + i + item.id && (
-                    <div>
-                      <Button
-                        onClick={() =>
-                          setshowResources(null)
-                        }
-                        className="m-2"
-                        variant="contained"
-                      >
-                        <CloseIcon />{" "}
-                      </Button>
-
-                      {/* Tabs */}
-                      <Tabs
-                        defaultActiveKey="d-file"
-                        id="uncontrolled-tab-example"
-                        className="my-3"
-                      >
-                        <Tab
-                          eventKey="d-file"
-                          title="Downloadable File"
-                        >
-                          <Form.Group
-                            controlId="formFile"
-                            className="mb-3"
-                          >
-                            {/* (e) =>  */}
-                            <Form.Control
-                              onChange={(e) =>
-                                handleDownloadbaleFile(
-                                  e,
-                                  item.id
-                                )
-                              }
-                              type="file"
-                            />
-                            <Form.Label
-                              style={{
-                                fontSize: 11,
-                              }}
-                            >
-                              <b>Note:</b> A
-                              resource is for
-                              any type of
-                              document that can
-                              be used to help
-                              students in the
-                              lesson. This file
-                              is going to be
-                              seen as a lesson
-                              extra. Make sure
-                              everything is
-                              legible and the
-                              file size is less
-                              than 1 GiB.
-                            </Form.Label>
-                          </Form.Group>
-                        </Tab>
-                        <Tab
-                          eventKey="e-r"
-                          title="External Resources"
-                        >
-                          <Form>
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlInput1"
-                            >
-                              <Form.Label>
-                                Title
-                              </Form.Label>
-                              <Form.Control
-                                value={
-                                  curriclum_ex_res_tile
-                                }
-                                onChange={(e) =>
-                                  setcurriclum_ex_res_tile(
-                                    e.target
-                                      .value
-                                  )
-                                }
-                                type="text"
-                                placeholder="A Descriptive Title"
-                              />
-                            </Form.Group>
-
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlInput1"
-                            >
-                              <Form.Label>
-                                URL
-                              </Form.Label>
-                              <Form.Control
-                                value={
-                                  curriculum_ex_res_link
-                                }
-                                onChange={(e) =>
-                                  setcurriculum_ex_res_link(
-                                    e.target
-                                      .value
-                                  )
-                                }
-                                type="text"
-                                placeholder="https://externallink.com"
-                              />
-                            </Form.Group>
-                            <Button
-                              onClick={() =>
-                                handleExternalResources(
-                                  item.id
-                                )
-                              }
-                              variant="contained"
-                            >
-                              Add Link
-                            </Button>
-                          </Form>
-                        </Tab>
-                        <Tab
-                          eventKey="source-code"
-                          title="Source Code"
-                        >
-                          <Form.Group
-                            onChange={(e) =>
-                              handleSaveSourceCode(
-                                item.id,
-                                e
+                      {showDescription ==
+                        index + i + item.id && (
+                        <>
+                          <Button
+                            onClick={() =>
+                              setshowDescription(
+                                null
                               )
                             }
-                            controlId="formFile"
-                            className="mb-3"
+                            className="m-2"
+                            variant="contained"
                           >
-                            <Form.Control type="file" />
-                            <Form.Label
-                              style={{
-                                fontSize: 11,
-                              }}
-                            >
-                              <b>Note:</b> Only
-                              available for
-                              Python and Ruby
-                              for now. You can
-                              upload .py and .rb
-                              files.
-                            </Form.Label>
-                          </Form.Group>
-                        </Tab>
-                      </Tabs>
-                    </div>
-                  )}
-                </>
+                            <CloseIcon />{" "}
+                          </Button>
+                          <Button
+                            onClick={() =>
+                              setshowResources(null)
+                            }
+                            className="m-2"
+                            variant="outlined"
+                          >
+                            <AddIcon /> Resourses
+                          </Button>
+                          <JoditEditor
+                            value={curriculum_desc}
+                            onChange={(value) =>
+                              setcurriculum_desc(
+                                value
+                              )
+                            }
+                          />
 
-                            {/* Downloadable Files */}
-                            {item.curriculumItemFiles.some(
-                              (downloaditem) =>
-                                downloaditem.filetype ==
-                                "Downloadable Items"
-                            ) && (
-                              <div className="p-2">
-                                <h6>
-                                  <b>Downloadable Files</b>
-                                </h6>
-                                <ListGroup>
-                                  {item.curriculumItemFiles.some(
-                                    (downloaditem) =>
-                                      downloaditem.filetype ==
-                                      "Downloadable Items"
-                                  ) ? (
-                                    item.curriculumItemFiles
-                                      .filter(
+                          <div className="d-flex my-2">
+                            <Button
+                              onClick={() =>
+                                setshowDescription(
+                                  null
+                                )
+                              }
+                              className="mx-1"
+                              variant="outlined"
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                handleSaveDescription(
+                                  item.id
+                                )
+                              }
+                              className="mx-1"
+                              variant="contained"
+                            >
+                              Save
+                            </Button>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Add Description & Resourses */}
+                      {showMain ==
+                        index + i + item.id &&
+                        showDescription !=
+                          index + i + item.id && (
+                          <div className="d-flex justify-content-center p-2">
+                            <Button
+                              onClick={() => {
+                                setcurriculum_desc(
+                                  item.description ==
+                                    "N/A"
+                                    ? ""
+                                    : item.description
+                                );
+                                setshowDescription(
+                                  showDescription ==
+                                    index +
+                                      i +
+                                      item.id
+                                    ? null
+                                    : index +
+                                        i +
+                                        item.id
+                                );
+                              }}
+                              className="m-2"
+                              variant="outlined"
+                            >
+                              <AddIcon />{" "}
+                              Description
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                setshowResources(
+                                  showResources ==
+                                    index +
+                                      i +
+                                      item.id
+                                    ? null
+                                    : index +
+                                        i +
+                                        item.id
+                                )
+                              }
+                              className="m-2"
+                              variant="outlined"
+                            >
+                              <AddIcon /> Resourses
+                            </Button>
+                          </div>
+                        )}
+
+                      {showResources ==
+                        index + i + item.id && (
+                        <div>
+                          <Button
+                            onClick={() =>
+                              setshowResources(null)
+                            }
+                            className="m-2"
+                            variant="contained"
+                          >
+                            <CloseIcon />{" "}
+                          </Button>
+
+                          {/* Tabs */}
+                          <Tabs
+                            defaultActiveKey="d-file"
+                            id="uncontrolled-tab-example"
+                            className="my-3"
+                          >
+                            <Tab
+                              eventKey="d-file"
+                              title="Downloadable File"
+                            >
+                              <Form.Group
+                                controlId="formFile"
+                                className="mb-3"
+                              >
+                                {/* (e) =>  */}
+                                <Form.Control
+                                  onChange={(e) =>
+                                    handleDownloadbaleFile(
+                                      e,
+                                      item.id
+                                    )
+                                  }
+                                  type="file"
+                                />
+                                <Form.Label
+                                  style={{
+                                    fontSize: 11,
+                                  }}
+                                >
+                                  <b>Note:</b> A
+                                  resource is for
+                                  any type of
+                                  document that can
+                                  be used to help
+                                  students in the
+                                  lesson. This file
+                                  is going to be
+                                  seen as a lesson
+                                  extra. Make sure
+                                  everything is
+                                  legible and the
+                                  file size is less
+                                  than 1 GiB.
+                                </Form.Label>
+                              </Form.Group>
+                            </Tab>
+                            <Tab
+                              eventKey="e-r"
+                              title="External Resources"
+                            >
+                              <Form>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="exampleForm.ControlInput1"
+                                >
+                                  <Form.Label>
+                                    Title
+                                  </Form.Label>
+                                  <Form.Control
+                                    value={
+                                      curriclum_ex_res_tile
+                                    }
+                                    onChange={(e) =>
+                                      setcurriclum_ex_res_tile(
+                                        e.target
+                                          .value
+                                      )
+                                    }
+                                    type="text"
+                                    placeholder="A Descriptive Title"
+                                  />
+                                </Form.Group>
+
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="exampleForm.ControlInput1"
+                                >
+                                  <Form.Label>
+                                    URL
+                                  </Form.Label>
+                                  <Form.Control
+                                    value={
+                                      curriculum_ex_res_link
+                                    }
+                                    onChange={(e) =>
+                                      setcurriculum_ex_res_link(
+                                        e.target
+                                          .value
+                                      )
+                                    }
+                                    type="text"
+                                    placeholder="https://externallink.com"
+                                  />
+                                </Form.Group>
+                                <Button
+                                  onClick={() =>
+                                    handleExternalResources(
+                                      item.id
+                                    )
+                                  }
+                                  variant="contained"
+                                >
+                                  Add Link
+                                </Button>
+                              </Form>
+                            </Tab>
+                            <Tab
+                              eventKey="source-code"
+                              title="Source Code"
+                            >
+                              <Form.Group
+                                onChange={(e) =>
+                                  handleSaveSourceCode(
+                                    item.id,
+                                    e
+                                  )
+                                }
+                                controlId="formFile"
+                                className="mb-3"
+                              >
+                                <Form.Control type="file" />
+                                <Form.Label
+                                  style={{
+                                    fontSize: 11,
+                                  }}
+                                >
+                                  <b>Note:</b> Only
+                                  available for
+                                  Python and Ruby
+                                  for now. You can
+                                  upload .py and .rb
+                                  files.
+                                </Form.Label>
+                              </Form.Group>
+                            </Tab>
+                          </Tabs>
+                        </div>
+                      )}
+                    </>
+
+                                {/* Downloadable Files */}
+                                {item.curriculumItemFiles.some(
+                                  (downloaditem) =>
+                                    downloaditem.filetype ==
+                                    "Downloadable Items"
+                                ) && (
+                                  <div className="p-2">
+                                    <h6>
+                                      <b>Downloadable Files</b>
+                                    </h6>
+                                    <ListGroup>
+                                      {item.curriculumItemFiles.some(
                                         (downloaditem) =>
                                           downloaditem.filetype ==
                                           "Downloadable Items"
-                                      )
-                                      .map(
-                                        (
-                                          downloaditem,
-                                          index
-                                        ) => (
+                                      ) ? (
+                                        item.curriculumItemFiles
+                                          .filter(
+                                            (downloaditem) =>
+                                              downloaditem.filetype ==
+                                              "Downloadable Items"
+                                          )
+                                          .map(
+                                            (
+                                              downloaditem,
+                                              index
+                                            ) => (
+                                              <ListGroup.Item
+                                                className="d-flex justify-content-between"
+                                                key={index}
+                                              >
+                                                <span>
+                                                  {
+                                                    downloaditem.title
+                                                  }
+                                                </span>
+                                                <span>
+                                                  <Button
+                                                    onClick={() => {
+                                                      handleDeleteDownloableFilesLecture(
+                                                        downloaditem
+                                                      );
+                                                    }}
+                                                    className="p-0"
+                                                    variant=""
+                                                  >
+                                                    <DeleteIcon />
+                                                  </Button>
+                                                </span>
+                                              </ListGroup.Item>
+                                            )
+                                          )
+                                      ) : (
+                                        <></>
+                                      )}
+                                    </ListGroup>
+                                  </div>
+                                )}
+
+                                {/* External Resources */}
+                                {item.curriculumItemFiles.some(
+                                  (link) =>
+                                    link.filetype ===
+                                    "External Resourses"
+                                ) && (
+                                  <div className="p-2">
+                                    <h6>
+                                      <b>External Resources</b>
+                                    </h6>
+                                    <ListGroup>
+                                      {item.curriculumItemFiles
+                                        .filter(
+                                          (link) =>
+                                            link.filetype ===
+                                            "External Resourses"
+                                        )
+                                        .map((link, index) => (
                                           <ListGroup.Item
                                             className="d-flex justify-content-between"
                                             key={index}
                                           >
                                             <span>
-                                              {
-                                                downloaditem.title
-                                              }
+                                              <a
+                                                target="_blank"
+                                                href={link.url}
+                                              >
+                                                <LaunchIcon fontSize="10" />
+                                                {link.title}
+                                              </a>
                                             </span>
-                                            <span>
+                                            <span
+                                              onClick={() =>
+                                                handleDeleteExternalResources(
+                                                  link
+                                                )
+                                              }
+                                            >
                                               <Button
-                                                onClick={() => {
-                                                  handleDeleteDownloableFilesLecture(
-                                                    downloaditem
-                                                  );
-                                                }}
                                                 className="p-0"
                                                 variant=""
                                               >
@@ -3760,127 +3815,72 @@ const Curriculum = ({ code }) => {
                                               </Button>
                                             </span>
                                           </ListGroup.Item>
-                                        )
-                                      )
-                                  ) : (
-                                    <></>
-                                  )}
-                                </ListGroup>
-                              </div>
-                            )}
+                                        ))}
+                                    </ListGroup>
+                                  </div>
+                                )}
 
-                            {/* External Resources */}
-                            {item.curriculumItemFiles.some(
-                              (link) =>
-                                link.filetype ===
-                                "External Resourses"
-                            ) && (
-                              <div className="p-2">
-                                <h6>
-                                  <b>External Resources</b>
-                                </h6>
-                                <ListGroup>
-                                  {item.curriculumItemFiles
-                                    .filter(
-                                      (link) =>
-                                        link.filetype ===
-                                        "External Resourses"
-                                    )
-                                    .map((link, index) => (
-                                      <ListGroup.Item
-                                        className="d-flex justify-content-between"
-                                        key={index}
-                                      >
-                                        <span>
-                                          <a
-                                            target="_blank"
-                                            href={link.url}
-                                          >
-                                            <LaunchIcon fontSize="10" />
-                                            {link.title}
-                                          </a>
-                                        </span>
-                                        <span
-                                          onClick={() =>
-                                            handleDeleteExternalResources(
-                                              link
-                                            )
-                                          }
-                                        >
-                                          <Button
-                                            className="p-0"
-                                            variant=""
-                                          >
-                                            <DeleteIcon />
-                                          </Button>
-                                        </span>
-                                      </ListGroup.Item>
-                                    ))}
-                                </ListGroup>
-                              </div>
-                            )}
-
-                      {/* Source Code */}
-                      {item.curriculumItemFiles.some(
-                              (source) =>
-                                source.filetype ===
-                                "Source Code"
-                            ) && (
-                              <div className="p-2">
-                                <h6>
-                                  <b>Source Code</b>
-                                </h6>
-                                <ListGroup>
-                                  {item.curriculumItemFiles.some(
-                                    (source) =>
-                                      source.filetype ===
-                                      "Source Code"
-                                  ) ? (
-                                    item.curriculumItemFiles
-                                      .filter(
+                          {/* Source Code */}
+                          {item.curriculumItemFiles.some(
+                                  (source) =>
+                                    source.filetype ===
+                                    "Source Code"
+                                ) && (
+                                  <div className="p-2">
+                                    <h6>
+                                      <b>Source Code</b>
+                                    </h6>
+                                    <ListGroup>
+                                      {item.curriculumItemFiles.some(
                                         (source) =>
                                           source.filetype ===
                                           "Source Code"
-                                      )
-                                      .map(
-                                        (source, index) => (
-                                          <ListGroup.Item
-                                            className="d-flex justify-content-between"
-                                            key={index}
-                                          >
-                                            <span>
-                                              {source.title}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  handleDeleteDownloableFilesLecture(
-                                                    source
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
+                                      ) ? (
+                                        item.curriculumItemFiles
+                                          .filter(
+                                            (source) =>
+                                              source.filetype ===
+                                              "Source Code"
+                                          )
+                                          .map(
+                                            (source, index) => (
+                                              <ListGroup.Item
+                                                className="d-flex justify-content-between"
+                                                key={index}
                                               >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        )
-                                      )
-                                  ) : (
-                                    // <p>No Source Code</p>
-                                    <></>
-                                  )}
-                                </ListGroup>
+                                                <span>
+                                                  {source.title}
+                                                </span>
+                                                <span>
+                                                  <Button
+                                                    onClick={() => {
+                                                      handleDeleteDownloableFilesLecture(
+                                                        source
+                                                      );
+                                                    }}
+                                                    className="p-0"
+                                                    variant=""
+                                                  >
+                                                    <DeleteIcon />
+                                                  </Button>
+                                                </span>
+                                              </ListGroup.Item>
+                                            )
+                                          )
+                                      ) : (
+                                        // <p>No Source Code</p>
+                                        <></>
+                                      )}
+                                    </ListGroup>
+                                  </div>
+                                )}
                               </div>
                             )}
-                          </div>
+                            </Card>
+                          </>
                         )}
-                    </Card>
-                  </>
-                )}
-              </>
-            )}
+                      </>
+                    )}
 
             {/* Quiz */}
             {item.type == "Quiz" &&
