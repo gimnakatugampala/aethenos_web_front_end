@@ -3360,76 +3360,93 @@ const Curriculum = ({ code }) => {
                           </tr>
                         )}
 
+
+                        {/* uploadingVideo == index + i + item.id &&  */}
+{/* uploading == false &&  */}
                     {/* After after list - In DB */}
-                      {uploading == false &&  item.curriculumItemFiles.length > 0 &&
-                            (item.curriculumItemFiles.some(
-                              (video) =>
-                                video.filetype ===
-                                "Video"
-                            ) ? (
-                              item.curriculumItemFiles
-                                .filter(
-                                  (video) =>
-                                    video.filetype ===
-                                    "Video"
-                                )
-                                .map(
-                                  (
-                                    video,
-                                    index
-                                  ) => (
-                                    <tr key={index}>
-                                      <td>
-                                        {uploadingVideo == index + i + item.id && uploading == true ? uploadingVideoName : video.title}
-                                      </td>
-                                      <td>
-                                        <td>
-                                        {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 && uploading == true  ? (
-                                        <Badge bg="info">
-                                          {uploadingVideoProgress} %
-                                        </Badge>
-                                          ) : (
-                                              <Badge bg="success">
-                                              Completed
-                                            </Badge>
-                                            )}
-                                        </td>
-                                      </td>
-                                      <td>Video</td>
-                                      <td>
-                                        <Button
-                                          onClick={() => {
-                                            handleVideoDelete(
-                                              video
-                                            );
-                                          }}
-                                          size="small"
-                                          variant=""
-                                        >
-                                          <DeleteIcon />
-                                        </Button>
+                  {/* Iterate over the list of items */}
+{/* Iterate over the list of items */}
+{item.curriculumItemFiles.length > 0 &&
+  (item.curriculumItemFiles.some(
+    (video) => video.filetype === "Video"
+  ) ? (
+    item.curriculumItemFiles
+      .filter((video) => video.filetype === "Video")
+      .map((video, index) => (
+        // Check if this is the item being uploaded
+        uploading && uploadingVideo == index + i + item.id ? (
+          <tr key={index}>
+            <td>{uploadingVideoName}</td>
+            <td>
+              <Badge bg="info">
+                {uploadingVideoProgress} %
+              </Badge>
+            </td>
+            <td>Video</td>
+            <td>
+              <Button
+                onClick={() => {
+                  handleVideoDelete(video);
+                }}
+                size="small"
+                variant=""
+              >
+                <DeleteIcon />
+              </Button>
 
-                                        <Button
-                                          onClick={() => {
-                                            // console.log(video)
-                                            showVideoModal(
-                                              `${FILE_PATH}${video.url}`,
-                                              video.title
-                                            );
-                                          }}
-                                          size="small"
-                                          variant="secondary"
-                                        >
-                                          <RemoveRedEyeIcon />
-                                        </Button>
+              <Button
+                onClick={() => {
+                  showVideoModal(`${FILE_PATH}${video.url}`, video.title);
+                }}
+                size="small"
+                variant="secondary"
+              >
+                <RemoveRedEyeIcon />
+              </Button>
+            </td>
+          </tr>
+        ) : (
+          // For all other items, show completed videos normally
+          (uploadingVideo != index + i + item.id || !uploading) && (
+            <tr key={index}>
+              <td>{video.title}</td>
+              <td>
+                <Badge bg="success">Completed</Badge>
+              </td>
+              <td>Video</td>
+              <td>
+                <Button
+                  onClick={() => {
+                    handleVideoDelete(video);
+                  }}
+                  size="small"
+                  variant=""
+                >
+                  <DeleteIcon />
+                </Button>
 
-                                      </td>
-                                    </tr>
-                                  )
-                                )
-                            ) : (
-                              <p>No Video</p>
-                            ))}
+                <Button
+                  onClick={() => {
+                    showVideoModal(`${FILE_PATH}${video.url}`, video.title);
+                  }}
+                  size="small"
+                  variant="secondary"
+                >
+                  <RemoveRedEyeIcon />
+                </Button>
+              </td>
+            </tr>
+          )
+        )
+      ))
+  ) : (
+    <p>No Video</p>
+  ))}
+
+
+
+
+
                         </tbody>
                       </Table>
                     </div>
