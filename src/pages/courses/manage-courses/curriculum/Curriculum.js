@@ -3160,10 +3160,10 @@ const Curriculum = ({ code }) => {
                   </>
                 </div>
                   ) : (
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-center my-2">
                       <div className="mx-2">
                         <Card
-                          sx={{ width: 120 }}
+                          sx={{ width: 120 , height :100 }}
                           elevation={3}
                         >
                           <CardActionArea
@@ -3188,7 +3188,7 @@ const Curriculum = ({ code }) => {
 
                       <div className="mx-2">
                         <Card
-                          sx={{ width: 120 }}
+                          sx={{ width: 120  , height :100 }}
                           elevation={3}
                         >
                           <CardActionArea
