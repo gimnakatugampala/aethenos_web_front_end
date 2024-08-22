@@ -10,7 +10,7 @@ import CourseItem from "../../../components/course-item/CourseItem";
 import Colors from "../../../commonFunctions/Colors";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { GetAllCourses } from "../../../api";
+import { GetAllCourses, VideoStreaming } from "../../../api";
 import MainLoader from "../../../commonFunctions/loaders/MainLoader/MainLoader";
 import Spinner from "react-bootstrap/Spinner";
 import "./AllCourses.css";
@@ -22,6 +22,8 @@ const AllCourses = () => {
 
   useEffect(() => {
     GetAllCourses(setcourses);
+
+    
   }, []);
 
   const handleChange = (value) => {

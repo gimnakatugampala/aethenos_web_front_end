@@ -67,6 +67,7 @@ import {
   UpdateSectionName,
   UpdateSubmitQuestionsAndAnswers,
   VideoDelete,
+  VideoStreaming,
 } from "../../../../api";
 import "./curriculum.css";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -1441,12 +1442,16 @@ const Curriculum = ({ code }) => {
     }
   };
 
-  function showVideoModal(videoUrl, title) {
+  async function showVideoModal(videoUrl, title) {
+
+      // Fetch the URL using VideoStreaming function
+  const videoSourceUrl = await VideoStreaming(videoUrl);
+
     Swal.fire({
       title: title,
       html: `
       <video controls width="100%" height="auto">
-        <source src="${videoUrl}" type="video/mp4">
+        <source src="${videoSourceUrl}" >
         Your browser does not support the video tag.
       </video>
     `,
@@ -3401,7 +3406,7 @@ const Curriculum = ({ code }) => {
 
               <Button
                 onClick={() => {
-                  showVideoModal(`${FILE_PATH}${video.url}`, video.title);
+                  showVideoModal(`${video.url}`, video.title);
                 }}
                 size="small"
                 variant="secondary"
@@ -3432,7 +3437,7 @@ const Curriculum = ({ code }) => {
 
                 <Button
                   onClick={() => {
-                    showVideoModal(`${FILE_PATH}${video.url}`, video.title);
+                    showVideoModal(`${video.url}`, video.title);
                   }}
                   size="small"
                   variant="secondary"
