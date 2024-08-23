@@ -74,8 +74,7 @@ const CourseMessages = ({code}) => {
             <p>
               Write messages to your students (optional) that will be sent
               automatically when they join or complete your course to encourage
-              students to engage with course content. If you do not wish to send
-              a welcome or congratulations message, leave the text box blank.
+              students to engage with course content.
             </p>
           </div>
 
