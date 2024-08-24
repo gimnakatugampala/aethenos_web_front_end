@@ -5254,9 +5254,8 @@ const Curriculum = ({ code }) => {
                                       Downloadable Resourses
                                     </Form.Label>
 
-                                    {item.getAssignment[0]
-                                      .downloadableResource !=
-                                      "" && (
+                                    {item.getAssignment[0] != null && (
+                                      item.getAssignment[0].downloadableResource != "" &&
                                       <ListGroup className="my-2">
                                         <ListGroup.Item
                                           className="d-flex justify-content-between"
@@ -6475,6 +6474,7 @@ const Curriculum = ({ code }) => {
                                       </Form.Label>
 
                                       {item.getCodingExercises[0] != null && (
+                                        item.getCodingExercises[0].codingVideo != "" &&
                                         <ListGroup className="my-2">
                                           <ListGroup.Item className="d-flex justify-content-between">
                                             <span>
@@ -6533,8 +6533,8 @@ const Curriculum = ({ code }) => {
                                         Downloadable Resourses
                                       </Form.Label>
 
-                                      {item.getCodingExercises[0] !=
-                                        null && (
+                                      {item.getCodingExercises[0] != null && (
+                                        item.getCodingExercises[0].downloadableResource != "" &&
                                         <ListGroup className="my-2">
                                           <ListGroup.Item className="d-flex justify-content-between">
                                             <span>
@@ -6620,8 +6620,8 @@ const Curriculum = ({ code }) => {
                                         Upload coding exercises
                                       </Form.Label>
 
-                                      {item.getCodingExercises[0] !=
-                                        null && (
+                                      {item.getCodingExercises[0] != null && (
+                                        item.getCodingExercises[0].codingExerciseSheet != "" &&
                                         <ListGroup className="my-2">
                                           <ListGroup.Item className="d-flex justify-content-between">
                                             <span>
@@ -6701,8 +6701,8 @@ const Curriculum = ({ code }) => {
                                         Upload Video
                                       </Form.Label>
 
-                                      {item.getCodingExercises[0] !=
-                                        null && (
+                                      {item.getCodingExercises[0] != null && (
+                                        item.getCodingExercises[0].codingExerciseVideo != "" &&
                                         <ListGroup className="my-2">
                                           <ListGroup.Item className="d-flex justify-content-between">
                                             <span>
@@ -6767,8 +6767,8 @@ const Curriculum = ({ code }) => {
                                         Upload Solutions
                                       </Form.Label>
 
-                                      {item.getCodingExercises[0] !=
-                                        null && (
+                                      {item.getCodingExercises[0] != null && (
+                                        item.getCodingExercises[0].codingSolutionsSheet != "" &&
                                         <ListGroup className="my-2">
                                           <ListGroup.Item className="d-flex justify-content-between">
                                             <span>
@@ -6849,9 +6849,8 @@ const Curriculum = ({ code }) => {
                                         Upload Video
                                       </Form.Label>
 
-                                      {item.getCodingExercises[0]
-                                         !=
-                                        null && (
+                                      {item.getCodingExercises[0] != null && (
+                                        item.getCodingExercises[0].codingSolutionsVideo != "" &&
                                         <ListGroup className="my-2">
                                           <ListGroup.Item className="d-flex justify-content-between">
                                             <span>

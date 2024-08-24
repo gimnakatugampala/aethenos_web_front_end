@@ -4467,32 +4467,32 @@ export const CodingExerciseSave = async (
           SuccessAlert("Success", "Coding exercise updated");
         }
 
-        setshowContentAdd(null);
-        setshowMain(null);
+        // setshowContentAdd(null);
+        // setshowMain(null);
 
-        setCodingExerciseCode("");
+        // setCodingExerciseCode("");
 
-        setCodingExerciseTitle("");
-        setCodingExerciseDesc("");
-        setCodingExerciseInstructions("");
+        // setCodingExerciseTitle("");
+        // setCodingExerciseDesc("");
+        // setCodingExerciseInstructions("");
 
-        setCodingExerciseVideo(null);
-        setCodingExerciseDResourses(null);
-        setCodingExerciseExLink(null);
+        // setCodingExerciseVideo(null);
+        // setCodingExerciseDResourses(null);
+        // setCodingExerciseExLink(null);
 
-        setCodingExerciseUploadEx(null);
-        setCodingExerciseExternalLink("");
+        // setCodingExerciseUploadEx(null);
+        // setCodingExerciseExternalLink("");
 
-        setCodingExerciseQVideo(null);
+        // setCodingExerciseQVideo(null);
 
-        setCodingExercisesSolutionsFile(null);
-        setCodingExercisesExLinkSolutions("");
-        setCodingExercisesSolutionsVideo(null);
+        // setCodingExercisesSolutionsFile(null);
+        // setCodingExercisesExLinkSolutions("");
+        // setCodingExercisesSolutionsVideo(null);
 
-        setbtnLoadingCodingExcercise(false);
+        // setbtnLoadingCodingExcercise(false);
 
-        setshowCodingExecInput(null);
-        setshowCurriculumItem(null);
+        // setshowCodingExecInput(null);
+        // setshowCurriculumItem(null);
 
         GetCurriculum(code, setsectionData);
 
