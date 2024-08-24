@@ -5191,8 +5191,8 @@ const Curriculum = ({ code }) => {
                                       Upload Video
                                     </Form.Label>
 
-                                    {item.getAssignment[0]
-                                      .assignmentVideo != "" && (
+                                    {item.getAssignment[0] != null && (
+                                      item.getAssignment[0].assignmentVideo != "" && 
                                       <ListGroup className="my-2">
                                         <ListGroup.Item
                                           className="d-flex justify-content-between"
@@ -5361,8 +5361,8 @@ const Curriculum = ({ code }) => {
                                     <Form.Label>
                                       Upload Questions
                                     </Form.Label>
-                                    {item.getAssignment[0]
-                                      .questionSheet != "" && (
+                                    {item.getAssignment[0] != null && (
+                                      item.getAssignment[0].questionSheet != "" &&
                                       <ListGroup className="my-2">
                                         <ListGroup.Item
                                           className="d-flex justify-content-between"
@@ -5469,8 +5469,8 @@ const Curriculum = ({ code }) => {
                                     <Form.Label>
                                       Upload Video
                                     </Form.Label>
-                                    {item.getAssignment[0]
-                                      .solutionVideo != "" && (
+                                    {item.getAssignment[0] != null && (
+                                        item.getAssignment[0].solutionVideo != "" && 
                                       <ListGroup className="my-2">
                                         <ListGroup.Item
                                           className="d-flex justify-content-between"
@@ -5531,8 +5531,8 @@ const Curriculum = ({ code }) => {
                                     <Form.Label>
                                       Upload Solutions
                                     </Form.Label>
-                                    {item.getAssignment[0]
-                                      .solutionsSheet != "" && (
+                                    {item.getAssignment[0] != null && (
+                                        item.getAssignment[0].solutionsSheet != "" &&
                                       <ListGroup className="my-2">
                                         <ListGroup.Item
                                           className="d-flex justify-content-between"
