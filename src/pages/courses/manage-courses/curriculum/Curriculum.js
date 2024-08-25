@@ -6163,11 +6163,16 @@ const Curriculum = ({ code }) => {
                                     </Form.Group>
 
                                     <Button
-                                      onClick={() =>
-                                        setshowPracticeTestInput(
-                                          null
-                                        )
-                                      }
+                                        onClick={() => {
+                                        setshowDescRes(true);
+                                        setshowMain(null);
+                                        console.log(
+                                          index + i + item.id
+                                        );
+                                        setshowContentAdd(null);
+                                        setcurriculumvisiblitymc("");
+                                        // handleContentshow()
+                                      }}
                                       className="mx-1"
                                       variant="outlined"
                                     >
