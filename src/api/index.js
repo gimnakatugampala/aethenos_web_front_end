@@ -4353,28 +4353,28 @@ export const PracticeTestSave = async (
           SuccessAlert("Success", "Practice test updated");
         }
 
-        setshowContentAdd(null);
-        setshowMain(null);
+        // setshowContentAdd(null);
+        // setshowMain(null);
 
-        setPraticeTestCode("");
+        // setPraticeTestCode("");
 
-        setPracticeTestTitle("");
-        setPracticeTestDesc("");
-        setPracticeTestDuration("");
-        setPracticeTestInstructions("");
-        setPracticeTestMinPassMark("");
-        setPracticeTestExLink("");
+        // setPracticeTestTitle("");
+        // setPracticeTestDesc("");
+        // setPracticeTestDuration("");
+        // setPracticeTestInstructions("");
+        // setPracticeTestMinPassMark("");
+        // setPracticeTestExLink("");
 
-        setPracticeTestQuestionFile(null);
-        setPracticeTestQuestionExLink("");
+        // setPracticeTestQuestionFile(null);
+        // setPracticeTestQuestionExLink("");
 
-        setPracticeTestSolutionsFile(null);
-        setPraticeTestSolutionsExLink("");
+        // setPracticeTestSolutionsFile(null);
+        // setPraticeTestSolutionsExLink("");
 
         setbtnLoadingPracticeTest(false);
 
-        setshowPracticeTestInput(null);
-        setshowCurriculumItem(null);
+        // setshowPracticeTestInput(null);
+        // setshowCurriculumItem(null);
 
         GetCurriculum(code, setsectionData);
 
@@ -4489,7 +4489,7 @@ export const CodingExerciseSave = async (
         // setCodingExercisesExLinkSolutions("");
         // setCodingExercisesSolutionsVideo(null);
 
-        // setbtnLoadingCodingExcercise(false);
+        setbtnLoadingCodingExcercise(false);
 
         // setshowCodingExecInput(null);
         // setshowCurriculumItem(null);
@@ -4584,8 +4584,8 @@ export const AssignmentSave = async (
       console.log(result);
 
       if (result.variable == "200") {
-        setshowContentAdd(null);
-        setshowMain(null);
+        // setshowContentAdd(null);
+        // setshowMain(null);
 
         if (AssignmentCode == "") {
           SuccessAlert("Success", result.message);
@@ -4593,27 +4593,27 @@ export const AssignmentSave = async (
           SuccessAlert("Success", "Assignment updated");
         }
 
-        setshowAssignmentInput(null);
-        setshowCurriculumItem(null);
+        // setshowAssignmentInput(null);
+        // setshowCurriculumItem(null);
 
-        setAssignmentCode("");
+        // setAssignmentCode("");
 
-        setAssignmentTitle("");
-        setAssignmentDesc("");
-        setAssignmentDuration("");
-        setAssignmentInstructors("");
-        setAssignmentVideo(null);
-        setAssignmentDResourses(null);
-        setAssignmentExLink("");
+        // setAssignmentTitle("");
+        // setAssignmentDesc("");
+        // setAssignmentDuration("");
+        // setAssignmentInstructors("");
+        // setAssignmentVideo(null);
+        // setAssignmentDResourses(null);
+        // setAssignmentExLink("");
 
-        setAssignmentQuestion("");
-        setAssignmentQuestionFile(null);
-        setAssignmentQuestionLink("");
+        // setAssignmentQuestion("");
+        // setAssignmentQuestionFile(null);
+        // setAssignmentQuestionLink("");
 
-        setAssignmentSolutions("");
-        setAssignmentSolutionsVideo(null);
-        setAssignmentSolutionsFile(null);
-        setAssignmentSolutionsExLink("");
+        // setAssignmentSolutions("");
+        // setAssignmentSolutionsVideo(null);
+        // setAssignmentSolutionsFile(null);
+        // setAssignmentSolutionsExLink("");
         setbtnLoadingAssignment(false);
 
         GetCurriculum(code, setsectionData);
