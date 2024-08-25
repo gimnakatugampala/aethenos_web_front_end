@@ -2031,8 +2031,7 @@ const Curriculum = ({ code }) => {
                       </p>
 
                       <>
-                        {showDescription ==
-                          index + i + item.id && (
+                        {showDescription == index + i + item.id && (
                           <>
                             {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
                             <Button
@@ -2057,20 +2056,35 @@ const Curriculum = ({ code }) => {
                               className="m-2"
                               variant="contained"
                             >
-                              <AddIcon />{" "}
-                              Description
+                              <CloseIcon />{" "}
+                              Close Description
                             </Button>
-                            <Button
-                              onClick={() =>
-                                setshowResources(
-                                  null
-                                )
-                              }
-                              className="m-2"
-                              variant="outlined"
-                            >
-                              <AddIcon /> Resourses
-                            </Button>
+
+                        {showResources == index + i + item.id ? (
+                              <Button
+                                onClick={() => setshowResources(null)}
+                                className="m-2"
+                                variant="contained"
+                              >
+                                <CloseIcon /> Close Resources
+                              </Button>
+                            ) : (
+                              <Button
+                                onClick={() => 
+                                  setshowResources(
+                                    showResources === index + i + item.id
+                                      ? null
+                                      : index + i + item.id
+                                  )
+                                }
+                                className="m-2"
+                                variant="outlined"
+                              >
+                                <AddIcon /> Resources
+                              </Button>
+                            )}
+
+                            
                             <JoditEditor
                               value={
                                 curriculum_desc
@@ -2155,7 +2169,7 @@ const Curriculum = ({ code }) => {
                                   variant="contained"
                                 >
                                   <CloseIcon />{" "}
-                                  Resourses
+                                  Close Resourses
                                 </Button>
                               ) : (
                                 <Button
@@ -2175,7 +2189,7 @@ const Curriculum = ({ code }) => {
                                   variant="outlined"
                                 >
                                   <AddIcon />{" "}
-                                  Resourses
+                                  Resourses8
                                 </Button>
                               )}
                             </div>
