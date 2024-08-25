@@ -3370,39 +3370,31 @@ const Curriculum = ({ code }) => {
                             </div>
                           ))}
                       {/* After Video Upload */}
-                      <Table striped bordered hover>
-                        <thead>
-                          <tr>
-                            <th>Filename</th>
-                            <th>Status</th>
-                            <th>Type</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-
-
-                  {/* Re-upload */}
-                  {uploading && uploadingVideo == index + i + item.id && (
-                          <tr>
-                            <td>
-                              {uploadingVideo == index + i + item.id ? uploadingVideoName : ""}
-                            </td>
-                            <td>
-                              <td>
-                                {uploadingVideo == index + i + item.id && uploadingVideoProgress != 100 ? (
-                                  <Badge bg="info">
-                                    {uploadingVideoProgress} %
-                                  </Badge>
-                                ) : (
-                                  <Badge bg="success">
-                                    Completed
-                                  </Badge>
-                                )}
-                              </td>
-                            </td>
-                            <td>Video</td>
-                            <td> 
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th>Filename</th>
+                        <th>Status</th>
+                        <th>Type</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* Re-upload */}
+                      {uploading && uploadingVideo === index + i + item.id && (
+                        <tr>
+                          <td>{uploadingVideoName}</td>
+                          <td>
+                            {uploadingVideoProgress !== 100 ? (
+                              <Badge bg="info">
+                                {uploadingVideoProgress} %
+                              </Badge>
+                            ) : (
+                              <Badge bg="success">Completed</Badge>
+                            )}
+                          </td>
+                          <td>Video</td>
+                          <td>
                             <Button
                               onClick={() => {
                                 Swal.fire({
@@ -3420,111 +3412,65 @@ const Curriculum = ({ code }) => {
                                       'Your upload has been cancelled.',
                                       'success'
                                     );
-                                    // setUploading(false)
-                                    // GetCurriculum(code, setsectionData)
+                                    // Additional actions if needed
                                   }
                                 });
                               }}
                               size="small"
                               variant=""
+                              className="m-2"
                             >
-                              <CloseIcon />
-                              Cancel
+                              <CloseIcon /> Cancel
                             </Button>
+                          </td>
+                        </tr>
+                      )}
 
-                            </td>
+                      {/* Existing Uploaded Files */}
+                      {/* Only render existing files if not uploading this specific item */}
+                      {! (uploading && uploadingVideo === index + i + item.id) && item.curriculumItemFiles.length > 0 && (
+                        item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
+                          item.curriculumItemFiles
+                            .filter(video => video.filetype === "Video")
+                            .map((video, vidIndex) => (
+                              <tr key={vidIndex}>
+                                <td>{video.title}</td>
+                                <td>
+                                  <Badge bg="success">Completed</Badge>
+                                </td>
+                                <td>Video</td>
+                                <td>
+                    <Button
+                      onClick={() => {
+                        handleVideoDelete(video);
+                      }}
+                      size="small"
+                      variant=""
+                    >
+                      <DeleteIcon />
+                    </Button>
+
+                    <Button
+                      onClick={() => {
+                        showVideoModal(`${video.url}`, video.title);
+                      }}
+                      size="small"
+                      variant="secondary"
+                    >
+                      <RemoveRedEyeIcon />
+                    </Button>
+                  </td>
+                              </tr>
+                            ))
+                        ) : (
+                          <tr>
+                            <td colSpan="4">No Video</td>
                           </tr>
-                        )}
+                        )
+                      )}
+                    </tbody>
+                  </Table>
 
-
-                        {/* uploadingVideo == index + i + item.id &&  */}
-{/* uploading == false &&  */}
-                    {/* After after list - In DB */}
-                  {/* Iterate over the list of items */}
-{/* Iterate over the list of items */}
-{item.curriculumItemFiles.length > 0 &&
-  (item.curriculumItemFiles.some(
-    (video) => video.filetype === "Video"
-  ) ? (
-    item.curriculumItemFiles
-      .filter((video) => video.filetype === "Video")
-      .map((video, index) => (
-        // Check if this is the item being uploaded
-        uploading && uploadingVideo == index + i + item.id ? (
-          <tr key={index}>
-            <td>{uploadingVideoName}</td>
-            <td>
-              <Badge bg="info">
-                {uploadingVideoProgress} %
-              </Badge>
-            </td>
-            <td>Video</td>
-            <td>
-              <Button
-                onClick={() => {
-                  handleVideoDelete(video);
-                }}
-                size="small"
-                variant=""
-              >
-                <DeleteIcon />
-              </Button>
-
-              <Button
-                onClick={() => {
-                  showVideoModal(`${video.url}`, video.title);
-                }}
-                size="small"
-                variant="secondary"
-              >
-                <RemoveRedEyeIcon />
-              </Button>
-            </td>
-          </tr>
-        ) : (
-          // For all other items, show completed videos normally
-          (uploadingVideo != index + i + item.id || !uploading) && (
-            <tr key={index}>
-              <td>{video.title}</td>
-              <td>
-                <Badge bg="success">Completed</Badge>
-              </td>
-              <td>Video</td>
-              <td>
-                <Button
-                  onClick={() => {
-                    handleVideoDelete(video);
-                  }}
-                  size="small"
-                  variant=""
-                >
-                  <DeleteIcon />
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    showVideoModal(`${video.url}`, video.title);
-                  }}
-                  size="small"
-                  variant="secondary"
-                >
-                  <RemoveRedEyeIcon />
-                </Button>
-              </td>
-            </tr>
-          )
-        )
-      ))
-  ) : (
-    <p>No Video</p>
-  ))}
-
-
-
-
-
-                        </tbody>
-                      </Table>
                     </div>
 
                       {/* <h3>video</h3> */}
