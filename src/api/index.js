@@ -1944,7 +1944,7 @@ export const AddCurriculumSection = async (
       Unauthorized(result.status, `courses/manage/${code}/#syllabus`);
 
       if (result.statusCode == "200") {
-        SuccessAlert("Section added", result.message);
+        SyllabusToastSuccess(result.message);
         UpdateCourseProgress(code);
         setshowSectionInput(false);
         setsection("");
@@ -2304,7 +2304,7 @@ export const UpdateSectionName = async (code, section, updateSectionName) => {
       Unauthorized(result.status, `courses/manage/${code}/#syllabus`);
 
       if (result.variable == "200") {
-        SuccessAlert("Updated", result.message);
+        SyllabusToastSuccess(result.message);
 
         setTimeout(() => {
           window.location.reload();
