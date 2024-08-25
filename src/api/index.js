@@ -11,6 +11,7 @@ import Persona from "persona";
 import { useRef, useState } from "react";
 import ReactToastSuccess from "../commonFunctions/Toasts/ReactToastSuccess";
 import SuccessToast from "../commonFunctions/Toasts/SuccessToast";
+import SyllabusToastSuccess from "../commonFunctions/Toasts/SyllabusToastSuccess";
 
 const CURRENT_USER = Cookies.get("aethenos");
 const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api";
@@ -4348,9 +4349,9 @@ export const PracticeTestSave = async (
 
       if (result.variable == "200") {
         if (PraticeTestCode == "") {
-          SuccessAlert("Success", result.message);
+          SyllabusToastSuccess(result.message);
         } else {
-          SuccessAlert("Success", "Practice test updated");
+          SyllabusToastSuccess("Practice test updated");
         }
 
         // setshowContentAdd(null);
@@ -4462,9 +4463,9 @@ export const CodingExerciseSave = async (
 
       if (result.variable == "200") {
         if (CodingExerciseCode == "") {
-          SuccessAlert("Success", result.message);
+          SyllabusToastSuccess( result.message);
         } else {
-          SuccessAlert("Success", "Coding exercise updated");
+          SyllabusToastSuccess("Coding exercise updated");
         }
 
         // setshowContentAdd(null);
@@ -4588,9 +4589,9 @@ export const AssignmentSave = async (
         // setshowMain(null);
 
         if (AssignmentCode == "") {
-          SuccessAlert("Success", result.message);
+          SyllabusToastSuccess(result.message);
         } else {
-          SuccessAlert("Success", "Assignment updated");
+          SyllabusToastSuccess("Assignment updated");
         }
 
         // setshowAssignmentInput(null);
