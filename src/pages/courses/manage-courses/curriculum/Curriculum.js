@@ -5608,9 +5608,16 @@ const Curriculum = ({ code }) => {
                                   </Form.Group>
 
                                   <Button
-                                    onClick={() =>
-                                      setshowAssignmentInput(null)
-                                    }
+                                      onClick={() => {
+                                        setshowDescRes(true);
+                                        setshowMain(null);
+                                        console.log(
+                                          index + i + item.id
+                                        );
+                                        setshowContentAdd(null);
+                                        setcurriculumvisiblitymc("");
+                                        // handleContentshow()
+                                      }}
                                     variant="outlined"
                                   >
                                     Cancel
@@ -6906,9 +6913,16 @@ const Curriculum = ({ code }) => {
                                       />
                                     </Form.Group>
                                     <Button
-                                      onClick={() =>
-                                        setshowCodingExecInput(null)
-                                      }
+                                       onClick={() => {
+                                        setshowDescRes(true);
+                                        setshowMain(null);
+                                        console.log(
+                                          index + i + item.id
+                                        );
+                                        setshowContentAdd(null);
+                                        setcurriculumvisiblitymc("");
+                                        // handleContentshow()
+                                      }}
                                       variant="outlined"
                                     >
                                       Cancel Coding Exercise
