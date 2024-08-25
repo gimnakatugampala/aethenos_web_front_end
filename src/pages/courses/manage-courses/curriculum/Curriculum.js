@@ -2616,31 +2616,61 @@ const Curriculum = ({ code }) => {
 
                 {/* List of Resources / External Link */}
                 <>
-                  {showDescription ==
-                    index + i + item.id && (
-                    <>
-                      <Button
-                        onClick={() =>
-                          setshowDescription(
-                            null
-                          )
-                        }
-                        className="m-2"
-                        variant="contained"
-                      >
-                        <CloseIcon />{" "}
-                      </Button>
-                      <Button
-                        onClick={() =>
-                          setshowResources(
-                            null
-                          )
-                        }
-                        className="m-2"
-                        variant="outlined"
-                      >
-                        <AddIcon /> Resourses
-                      </Button>
+
+                 {showDescription == index + i + item.id && (
+                          <>
+                            {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+                            <Button
+                              onClick={() => {
+                                setcurriculum_desc(
+                                  item.description ==
+                                    "N/A"
+                                    ? ""
+                                    : item.description
+                                );
+                                setshowDescription(
+                                  showDescription ==
+                                    index +
+                                      i +
+                                      item.id
+                                    ? null
+                                    : index +
+                                        i +
+                                        item.id
+                                );
+                              }}
+                              className="m-2"
+                              variant="contained"
+                            >
+                              <CloseIcon />{" "}
+                              Close Description
+                            </Button>
+
+                        {showResources == index + i + item.id ? (
+                              <Button
+                                onClick={() => setshowResources(null)}
+                                className="m-2"
+                                variant="contained"
+                              >
+                                <CloseIcon /> Close Resources
+                              </Button>
+                            ) : (
+                              <Button
+                                onClick={() => 
+                                  setshowResources(
+                                    showResources === index + i + item.id
+                                      ? null
+                                      : index + i + item.id
+                                  )
+                                }
+                                className="m-2"
+                                variant="outlined"
+                              >
+                                <AddIcon /> Resources
+                              </Button>
+                            )}
+
+
                       <JoditEditor
                         value={
                           curriculum_desc
@@ -2685,6 +2715,8 @@ const Curriculum = ({ code }) => {
                         showDescription !=
                           index + i + item.id && (
                           <div className="d-flex justify-content-center p-2">
+
+
                             <Button
                               onClick={() =>
                                 setshowDescription(
@@ -2704,32 +2736,52 @@ const Curriculum = ({ code }) => {
                               <AddIcon />{" "}
                               Description
                             </Button>
-                            <Button
-                              onClick={() =>
-                                setshowResources(
-                                  showResources ==
-                                    index +
-                                      i +
-                                      item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                )
-                              }
-                              className="m-2"
-                              variant="outlined"
-                            >
-                              <AddIcon />{" "}
-                              Resourses
-                            </Button>
-                          </div>
-                        )}
+
+
+                          {showResources ==
+                              index +
+                                i +
+                                item.id ? (
+                                <Button
+                                  onClick={() =>
+                                    setshowResources(
+                                      null
+                                    )
+                                  }
+                                  className="m-2"
+                                  variant="contained"
+                                >
+                                  <CloseIcon />{" "}
+                                  Close Resourses
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={() =>
+                                    setshowResources(
+                                      showResources ==
+                                        index +
+                                          i +
+                                          item.id
+                                        ? null
+                                        : index +
+                                            i +
+                                            item.id
+                                    )
+                                  }
+                                  className="m-2"
+                                  variant="outlined"
+                                >
+                                  <AddIcon />{" "}
+                                  Resourses
+                                </Button>
+                              )}
+                            </div>
+                          )}
 
                       {showResources ==
                         index + i + item.id && (
                         <div>
-                          <Button
+                          {/* <Button
                             onClick={() =>
                               setshowResources(
                                 null
@@ -2739,7 +2791,7 @@ const Curriculum = ({ code }) => {
                             variant="contained"
                           >
                             <CloseIcon />{" "}
-                          </Button>
+                          </Button> */}
 
                           {/* Tabs */}
                           <Tabs
