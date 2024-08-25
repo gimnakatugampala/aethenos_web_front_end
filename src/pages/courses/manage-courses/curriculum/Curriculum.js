@@ -2189,7 +2189,7 @@ const Curriculum = ({ code }) => {
                                   variant="outlined"
                                 >
                                   <AddIcon />{" "}
-                                  Resourses8
+                                  Resourses
                                 </Button>
                               )}
                             </div>
