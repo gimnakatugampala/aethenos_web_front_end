@@ -3831,7 +3831,7 @@ export const AddAnnoucement = async (
   const formdata = new FormData();
   formdata.append("courseCode", `${selectedCourse}`);
   formdata.append("title", `${announcementTitle}`);
-  formdata.append("content", `${stripHTML(AnnoucementDesc)}`);
+  formdata.append("content", `${AnnoucementDesc}`);
 
   const requestOptions = {
     method: "POST",

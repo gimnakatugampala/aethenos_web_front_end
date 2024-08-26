@@ -221,7 +221,17 @@ const Annoucements = () => {
                   title=""
                   columns={[
                     { title: "Announcement Title", field: "tittle" },
-                    { title: "Announcement Content", field: "content" },
+                    {
+                      title: "Announcement Content",
+                      field: "content",
+                      render: rowData => {
+                        const maxLength = 100; // Set your desired max length
+                        const content = rowData.content;
+                        return content.length > maxLength
+                          ? `${content.substring(0, maxLength)}...`
+                          : content;
+                      }
+                    },
                     { title: "Created Date", field: "createdDate" },
                   ]}
                   data={annoucements}
