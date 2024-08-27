@@ -85,7 +85,9 @@ import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { Switch } from "antd";
 import Badge from "react-bootstrap/Badge";
-
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import SyllabusFormatTime from "../../../../commonFunctions/SyllabusFormatTime";
 import "sweetalert2/src/sweetalert2.scss";
 import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChunks";
@@ -1605,6 +1607,10 @@ const Curriculum = ({ code }) => {
   // };
 
   // =================================================================
+  
+
+ 
+
 
 
   
@@ -5161,7 +5167,7 @@ const Curriculum = ({ code }) => {
                                     <Form.Label>
                                       Duration (HH:MM)
                                     </Form.Label>
-                                    <Form.Control
+                                    {/* <Form.Control
                                       value={AssignmentDuration}
                                       onChange={(e) =>
                                         setAssignmentDuration(
@@ -5171,7 +5177,26 @@ const Curriculum = ({ code }) => {
                                       type="time" // Use time input type for 24-hour format
                                       step="300" // Optional: 5-minute intervals
                                       placeholder="00:00"
-                                    />
+                                    /> */}
+                                   
+                                   <Flatpickr
+                                    data-enable-time
+                                    options={{
+                                      noCalendar: true,
+                                      enableTime: true,
+                                      dateFormat: 'H:i',
+                                      time_24hr: true,
+                                    }}
+                                    value={AssignmentDuration}
+                                    onChange={([date]) => {
+                                       // Format the date to HH:MM
+                                      const formattedTime = SyllabusFormatTime(date);
+                                      setAssignmentDuration(formattedTime)
+                                      console.log(formattedTime); 
+                                    }}
+                                    className="form-control"
+                                  />
+
                                   </Form.Group>
 
                                   <Form.Group
@@ -5929,7 +5954,7 @@ const Curriculum = ({ code }) => {
                                       <Form.Label>
                                         Duration (HH:MM)
                                       </Form.Label>
-                                      <Form.Control
+                                      {/* <Form.Control
                                         value={PracticeTestDuration}
                                         onChange={(e) =>
                                           setPracticeTestDuration(
@@ -5939,7 +5964,27 @@ const Curriculum = ({ code }) => {
                                         type="time" // Use time input type for 24-hour format
                                         step="300" // Optional: 5-minute intervals
                                         placeholder="00:00"
-                                      />
+                                      /> */}
+
+
+                                  <Flatpickr
+                                    data-enable-time
+                                    options={{
+                                      noCalendar: true,
+                                      enableTime: true,
+                                      dateFormat: 'H:i',
+                                      time_24hr: true,
+                                    }}
+                                    value={PracticeTestDuration}
+                                    onChange={([date]) => {
+                                       // Format the date to HH:MM
+                                      const formattedTime = SyllabusFormatTime(date);
+                                      setPracticeTestDuration(formattedTime)
+                                      console.log(formattedTime); 
+                                    }}
+                                    className="form-control"
+                                  />
+
                                     </Form.Group>
 
                                     <Form.Group
@@ -7232,7 +7277,8 @@ const Curriculum = ({ code }) => {
                               Duration (HH:MM)
                               <span className="text-danger">*</span>
                             </Form.Label>
-                            <Form.Control
+
+                            {/* <Form.Control
                               value={PracticeTestDuration}
                               onChange={(e) =>
                                 setPracticeTestDuration(e.target.value)
@@ -7240,7 +7286,25 @@ const Curriculum = ({ code }) => {
                               type="time" // Use time input type for 24-hour format
                               step="300" // Optional: 5-minute intervals
                               placeholder="00:00"
-                            />
+                            /> */}
+
+                                <Flatpickr
+                                    data-enable-time
+                                    options={{
+                                      noCalendar: true,
+                                      enableTime: true,
+                                      dateFormat: 'H:i',
+                                      time_24hr: true,
+                                    }}
+                                    value={PracticeTestDuration}
+                                    onChange={([date]) => {
+                                       // Format the date to HH:MM
+                                      const formattedTime = SyllabusFormatTime(date);
+                                      setPracticeTestDuration(formattedTime)
+                                      console.log(formattedTime); 
+                                    }}
+                                    className="form-control"
+                                  />
                           </Form.Group>
 
                           <Form.Group
@@ -7731,7 +7795,7 @@ const Curriculum = ({ code }) => {
                               Duration (HH:MM)
                               <span className="text-danger">*</span>
                             </Form.Label>
-                            <Form.Control
+                            {/* <Form.Control
                               value={AssignmentDuration}
                               onChange={(e) =>
                                 setAssignmentDuration(e.target.value)
@@ -7739,7 +7803,26 @@ const Curriculum = ({ code }) => {
                               type="time" // Use time input type for 24-hour format
                               step="300" // Optional: 5-minute intervals
                               placeholder="00:00"
-                            />
+                            /> */}
+
+
+                              <Flatpickr
+                                    data-enable-time
+                                    options={{
+                                      noCalendar: true,
+                                      enableTime: true,
+                                      dateFormat: 'H:i',
+                                      time_24hr: true,
+                                    }}
+                                    value={AssignmentDuration}
+                                    onChange={([date]) => {
+                                       // Format the date to HH:MM
+                                      const formattedTime = SyllabusFormatTime(date);
+                                      setAssignmentDuration(formattedTime)
+                                      console.log(formattedTime); 
+                                    }}
+                                    className="form-control"
+                                  />
                           </Form.Group>
 
                           <Form.Group
