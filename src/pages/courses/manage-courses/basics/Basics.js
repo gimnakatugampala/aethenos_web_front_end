@@ -234,27 +234,28 @@ const handleFileChange = (event) => {
   
 
  
-  const  isDataURI = (dataURI) => {
-    // Check if the string starts with 'data:'
-    if (dataURI.startsWith('data:')) {
-      // Extract the media type and data
-      const [, mediaType, base64Data] = dataURI.match(/^data:([^;]+);base64,(.+)$/);
+  // const  isDataURI = (dataURI) => {
+  //   // Check if the string starts with 'data:'
+  //   if (dataURI.startsWith('data:')) {
+  //     // Extract the media type and data
+  //     const [, mediaType, base64Data] = dataURI.match(/^data:([^;]+);base64,(.+)$/);
   
-      // Check if the media type is present and the base64 data is valid
-      if (mediaType && base64Data) {
-        try {
-          // Decode the base64 data to check if it's a valid base64 string
-          atob(base64Data);
-          return true; // Valid data URI
-        } catch (error) {
-          return false; // Invalid base64 data
-        }
-      }
-    }
+  //     // Check if the media type is present and the base64 data is valid
+  //     if (mediaType && base64Data) {
+  //       try {
+  //         // Decode the base64 data to check if it's a valid base64 string
+  //         atob(base64Data);
+  //         return true; // Valid data URI
+  //       } catch (error) {
+  //         return false; // Invalid base64 data
+  //       }
+  //     }
+  //   }
   
-    return false; // Not a valid data URI
-  }
+  //   return false; // Not a valid data URI
+  // }
   
+  const isDataURI = (url) => url.startsWith('data:video');
 
   return (
     <div className="col-md-10 px-4 mb-4 course-landing-page-responsive ">
@@ -408,7 +409,7 @@ const handleFileChange = (event) => {
      
             </div>
 
-            <div className="col-md-7 d-flex align-items-center">
+            <div className="col-md-7 d-flex justify-content-start">
               <div>
                 <p>
                 Upload your course image here. 
@@ -437,8 +438,25 @@ const handleFileChange = (event) => {
                 <b>Promotional video <span className="text-danger">*</span></b>
               </h6>
 
-             {videoSrc == "" ? (<img src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" width="200" height="200" />) : 
-           isDataURI(videoSrc) ?  <ReactPlayer  width={200} height={200} url={`${videoSrc}`} /> : <ReactPlayer  width={200} height={200} url={`${FILE_PATH}${videoSrc}`} /> } 
+              {videoSrc === "" ? (
+                <img
+                  src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg"
+                  width="200"
+                  height="200"
+                  alt="Placeholder"
+                />
+              ) : (
+                <video
+                  width={200}
+                  height={200}
+                  controls
+                  src={isDataURI(videoSrc) ? videoSrc : `${FILE_PATH}${videoSrc}`}
+                  onError={(e) => console.error("Video Playback Error: ", e)}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              )}
+
               
             </div>
 
