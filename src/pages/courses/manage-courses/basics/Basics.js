@@ -120,6 +120,11 @@ const Basics = ({code}) => {
         }
     }
 
+    if(keywords.length != 5){
+      ErrorAlert("Error","Please enter only 5 keywords")
+      return
+    }
+
     
 
     setloading_btn(true)
