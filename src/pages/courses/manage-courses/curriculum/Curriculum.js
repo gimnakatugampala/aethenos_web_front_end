@@ -7077,6 +7077,23 @@ const Curriculum = ({ code }) => {
                             setshowQuizInput(null);
                             setshowAssignmentInput(null);
                             setshowCodingExecInput(null);
+
+                            // Empty the PT Inputs
+                            setPraticeTestCode("");
+
+                            setPracticeTestTitle("");
+                            setPracticeTestDesc("");
+                            setPracticeTestDuration("");
+                            setPracticeTestInstructions("");
+                            setPracticeTestMinPassMark("");
+                            setPracticeTestExLink("");
+
+                            setPracticeTestQuestionFile(null);
+                            setPracticeTestQuestionExLink("");
+
+                            setPracticeTestSolutionsFile(null);
+                            setPraticeTestSolutionsExLink("");
+
                           }}
                           variant="text"
                         >
@@ -7093,6 +7110,29 @@ const Curriculum = ({ code }) => {
                             setshowQuizInput(null);
                             setshowPracticeTestInput(null);
                             setshowCodingExecInput(null);
+
+                            // Empty all the Assignment Inputs
+                            
+
+                            setAssignmentCode("");
+
+                            setAssignmentTitle("");
+                            setAssignmentDesc("");
+                            setAssignmentDuration("");
+                            setAssignmentInstructors("");
+                            setAssignmentVideo(null);
+                            setAssignmentDResourses(null);
+                            setAssignmentExLink("");
+
+                            setAssignmentQuestion("");
+                            setAssignmentQuestionFile(null);
+                            setAssignmentQuestionLink("");
+
+                            setAssignmentSolutions("");
+                            setAssignmentSolutionsVideo(null);
+                            setAssignmentSolutionsFile(null);
+                            setAssignmentSolutionsExLink("");
+
                           }}
                           variant="text"
                         >
@@ -7109,6 +7149,28 @@ const Curriculum = ({ code }) => {
                             setshowQuizInput(null);
                             setshowPracticeTestInput(null);
                             setshowAssignmentInput(null);
+
+                            // Empty all the CE Inputs
+                            setCodingExerciseCode("");
+
+                            setCodingExerciseTitle("");
+                            setCodingExerciseDesc("");
+                            setCodingExerciseInstructions("");
+
+                            setCodingExerciseVideo(null);
+                            setCodingExerciseDResourses(null);
+                            setCodingExerciseExLink(null);
+
+                            setCodingExerciseUploadEx(null);
+                            setCodingExerciseExternalLink("");
+
+                            setCodingExerciseQVideo(null);
+
+                            setCodingExercisesSolutionsFile(null);
+                            setCodingExercisesExLinkSolutions("");
+                            setCodingExercisesSolutionsVideo(null);
+
+
                           }}
                           variant="text"
                         >
