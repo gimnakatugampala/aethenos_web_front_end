@@ -72,7 +72,7 @@ const CourseMessages = ({code}) => {
         <div className="pricing-container">
           <div className="pricing-header">
             <p>
-              Write messages to your students (optional) that will be sent
+              Write messages to your students that will be sent
               automatically when they join or complete your course to encourage
               students to engage with course content.
             </p>
