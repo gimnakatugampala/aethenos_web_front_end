@@ -108,7 +108,7 @@ const Annoucements = () => {
                 id: "uncontrolled-native",
               }}
             >
-              <option value={""}>All courses</option>
+              <option disabled value={""}>Select a Course</option>
               {cmbCourses.length > 0 &&
                 cmbCourses.map((course, index) => (
                   <option key={index} value={course.code}>
