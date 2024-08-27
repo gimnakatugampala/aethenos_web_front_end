@@ -3797,6 +3797,7 @@ export const GetAllAnnoucement = async (code, setannoucements) => {
 
       const formattedResult = result.map((r) => ({
         ...r,
+        content:stripHTML(r.content),
         createdDate: moment(r.createdDate).format("MMMM Do YYYY, h:mm:ss a"),
       }));
 
@@ -3809,7 +3810,7 @@ export const GetAllAnnoucement = async (code, setannoucements) => {
     .catch((error) => console.error(error));
 };
 
-function stripHTML(html) {
+export function stripHTML(html) {
   var tempDiv = document.createElement("div");
   tempDiv.innerHTML = html;
   return tempDiv.textContent || tempDiv.innerText || "";
