@@ -3375,7 +3375,7 @@ const Curriculum = ({ code }) => {
                             <div className="d-flex justify-content-end m-2">
                               <p>
                                 <span className="mx-2">
-                                  Preview Video :
+                                 Free Preview Video :
                                 </span>
                                 <Switch
                                   checked={
