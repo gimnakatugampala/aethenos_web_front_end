@@ -55,6 +55,7 @@ import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { FormatVideoTimeLength } from "../../../commonFunctions/FormatVideoTimeLength";
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -519,7 +520,7 @@ const ManageCourses = () => {
 
           <Space size={10}>
             <span className="course-subtitle">
-              {(courseVideoLength / 60).toFixed(2)} min of video content
+              {FormatVideoTimeLength(courseVideoLength)} of video content
               uploaded
             </span>
           </Space>
