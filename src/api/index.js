@@ -2670,7 +2670,7 @@ export const AddCurriculumDownloadable = async (
       if (result.variable == "200") {
         SuccessAlert("Added", result.message);
         GetCurriculum(code, setsectionData);
-        setshowResources(null);
+        // setshowResources(null);
         return;
       } else {
         ErrorAlert("Error", result.message);
