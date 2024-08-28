@@ -194,7 +194,7 @@ const IntendedLearners = ({ code }) => {
     if (studentsLearn.length < 3) {
       ErrorAlert(
         "Empty Field!",
-        "Please at least 3 inputs in what will students learn"
+        "Please at least 3 inputs for what will be taught in the course"
       );
       setloadingBtn(false);
       return;
