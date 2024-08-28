@@ -92,6 +92,8 @@ import "sweetalert2/src/sweetalert2.scss";
 import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChunks";
 import { uploadSyllabusVideoChunks } from "../../../../commonFunctions/uploadSyllabusVideoChunks";
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -5050,7 +5052,7 @@ const Curriculum = ({ code }) => {
                               <CheckCircleIcon fontSize="small" />
                               {i + 1}. Assignment:{" "}
                               {counters.Assignment}{" "}
-                              <AssessmentIcon
+                              <ListAltIcon
                                 sx={{ fontSize: 15 }}
                               />{" "}
                               {item.title}
@@ -5814,7 +5816,7 @@ const Curriculum = ({ code }) => {
                                 <CheckCircleIcon fontSize="small" />
                                 {i + 1}. Practice Test:{" "}
                                 {counters.PracticeTest}{" "}
-                                <BugReportIcon
+                                <AssignmentIcon
                                   sx={{ fontSize: 15 }}
                                 />{" "}
                                 {item.title}
