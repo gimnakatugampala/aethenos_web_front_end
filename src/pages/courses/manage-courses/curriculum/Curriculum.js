@@ -8164,7 +8164,7 @@ const Curriculum = ({ code }) => {
           )
         ) : (
           <div className="d-flex justify-content-center">
-            <h4>No Course Content Found</h4>
+            <h4></h4>
           </div>
         )}
 
