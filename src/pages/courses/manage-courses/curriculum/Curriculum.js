@@ -1115,7 +1115,7 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Empty field", "Please enter answer one");
       return;
     } else if (answerTwo == "") {
-      ErrorAlert("Empty field", "Please enter answer two");
+      ErrorAlert("Empty field", "Please enter a minimum of two answers");
       return;
     } else {
       if (answerOption == "ans1") {
@@ -1314,7 +1314,7 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Empty field", "Please enter answer one");
       return;
     } else if (answerTwo == "") {
-      ErrorAlert("Empty field", "Please enter answer two");
+      ErrorAlert("Empty field", "Please enter a minimum of two answers");
       return;
     } else {
       if (answerOption == "ans1") {
@@ -4144,7 +4144,7 @@ const Curriculum = ({ code }) => {
                         >
                           {item.getQuizs[0] == null ? (
                             <>
-                              <AddIcon /> Question
+                              <AddIcon /> Question(s)
                             </>
                           ) : (
                             <>
