@@ -420,21 +420,27 @@ const Pricing = ({code}) => {
   }
   
 // Percentage Discount
-  const handleDefaultPercentageDiscount = (e) =>{
+const handleDefaultPercentageDiscount = (e) => {
+  let discountValue = parseFloat(e.target.value);
 
-    if(e.target.value == ""){
-      setDDisPercent(0)
-    }
-
-    setDDisPercent(e.target.value)
-
-    setDGlobalNetPrice((parseFloat(DGlobalPricing) - parseFloat(DGlobalPricing) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-    // Calculate Discount Amount
-    setDDisAmt((Number.parseFloat(DGlobalPricing) - ((parseFloat(DGlobalPricing) - parseFloat(DGlobalPricing) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-   
-
+  if (isNaN(discountValue) || discountValue < 0) {
+    discountValue = 0; // Ensure the discount is not negative or invalid
   }
+
+  if (discountValue > 100) {
+    discountValue = 100; // Limit the discount to a maximum of 100%
+  }
+
+  setDDisPercent(discountValue);
+
+  const globalNetPrice = (parseFloat(DGlobalPricing) - parseFloat(DGlobalPricing) * discountValue / 100).toFixed(2);
+  setDGlobalNetPrice(globalNetPrice);
+
+  // Calculate Discount Amount
+  const discountAmount = (parseFloat(DGlobalPricing) - parseFloat(globalNetPrice)).toFixed(2);
+  setDDisAmt(discountAmount);
+}
+
 
   //  ---------------------
   
