@@ -16,35 +16,47 @@ const StepFour = ({course_test_video, setcourse_test_video}) => {
 
     const [URL, setURL] = useState("")
 
-    const onAddVideo = (e) =>{
-
-  
-
-
-      console.log(e.target.files[0].type)
-
-      if(!e.target.files[0].type.includes("video")){
+    const onAddVideo = (e) => {
+      const file = e.target.files[0];
+    
+      if (!file.type.includes("video")) {
         Swal.fire({
-          title: 'Upload Field!',
-          text: 'Please Add a Video!',
-          icon: 'error'
-        })
-
-        return
+          title: 'Upload Failed!',
+          text: 'Please add a video!',
+          icon: 'error',
+        });
+        return;
       }
-
-   
+    
+      // Create a URL for the video file
+      const blobURL = window.URL.createObjectURL(file);
       
-      
-      let blobURL = window.URL.createObjectURL(e.target.files[0]);
-      
-        setURL(blobURL)
-        setcourse_test_video(e.target.files[0])
-
-
-          // document.getElementById("add-course-test-video").url = blobURL;
-        
-    }
+      // Create a video element to check the duration
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+    
+      video.onloadedmetadata = function () {
+        window.URL.revokeObjectURL(video.src); // Clean up after getting metadata
+    
+        const duration = video.duration;
+        const minDuration = 5 * 60; // 5 minutes in seconds
+    
+        if (duration < minDuration) {
+          Swal.fire({
+            title: 'Upload Failed!',
+            text: 'Video must be at least 5 minutes long.',
+            icon: 'error',
+          });
+          return;
+        }
+    
+        // If the video duration is sufficient, set the blob URL and video file
+        setURL(blobURL);
+        setcourse_test_video(file);
+      };
+    
+      video.src = blobURL;
+    };
 
   return (
     <div className='d-flex justify-content-center align-items-center'>

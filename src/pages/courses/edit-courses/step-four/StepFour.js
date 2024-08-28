@@ -7,19 +7,47 @@ import { Button, message, Upload } from 'antd';
 import { Input } from 'antd';
 import { FILE_PATH } from '../../../../commonFunctions/FilePaths';
 
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 const StepFour = ({preview_video, setcourse_video}) => {
 
     const [URL, setURL] = useState("")
 
-    const onAddVideo = (e) =>{
-        setcourse_video(e.target.files[0])
-      
-        let blobURL = window.URL.createObjectURL(e.target.files[0]);
-
+    const onAddVideo = (e) => {
+      const file = e.target.files[0];
+    
+      // Create a URL for the video file
+      const blobURL = window.URL.createObjectURL(file);
+    
+      // Create a video element to check the duration
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+    
+      video.onloadedmetadata = function () {
+        window.URL.revokeObjectURL(video.src); // Clean up after getting metadata
+    
+        const duration = video.duration;
+        const minDuration = 5 * 60; // 5 minutes in seconds
+    
+        if (duration < minDuration) {
+          Swal.fire({
+            title: 'Upload Failed!',
+            text: 'Video must be at least 5 minutes long.',
+            icon: 'error',
+          });
+          return;
+        }
+    
+        // If the video duration is sufficient, proceed with setting the video file and blob URL
+        setcourse_video(file);
         document.getElementById("add-course-test-video").src = blobURL;
-        
-    }
+      };
+    
+      video.src = blobURL;
+    };
+    
 
   return (
     <div className='d-flex justify-content-center align-items-center'>
