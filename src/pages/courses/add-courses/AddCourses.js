@@ -18,6 +18,7 @@ import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 import 'sweetalert2/src/sweetalert2.scss'
 import { uploadFileInChunks } from '../../../commonFunctions/uploadFileInChunks';
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
+import MainLoaderCourse from '../../../commonFunctions/loaders/MainLoader/MainLoaderCourse';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
@@ -233,7 +234,7 @@ const AddCourses = () => {
   return (
    <div className='all-courses-container'>
 
-    {loading && <MainLoader /> }
+    {loading && <MainLoaderCourse /> }
     
       <Card bordered={false}>  
       <Box direction='vertical' sx={{ width: '100%'}}>

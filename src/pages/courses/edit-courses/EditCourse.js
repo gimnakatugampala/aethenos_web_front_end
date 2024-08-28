@@ -17,6 +17,7 @@ import { EditCourses } from '../../../api';
 import { uploadFileInChunks } from '../../../commonFunctions/uploadFileInChunks';
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
+import MainLoaderCourse from '../../../commonFunctions/loaders/MainLoader/MainLoaderCourse';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
@@ -199,7 +200,7 @@ const EditCourse = () => {
     return (
      <div className='all-courses-container'>
 
-{loading && <MainLoader /> }
+{loading && <MainLoaderCourse /> }
   
   <Card bordered={false}>   
     <Box direction='vertical' sx={{ width: '100%'}}>
