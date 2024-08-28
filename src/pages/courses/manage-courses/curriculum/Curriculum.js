@@ -2639,6 +2639,22 @@ const Curriculum = ({ code }) => {
                 {/* List of Resources / External Link */}
                 <>
 
+                <div className="my-3">
+                {item.description !=
+                        "N/A" && (
+                        <p className="m-0 p-0">
+                          <b>Description</b>
+                        </p>
+                      )}
+                      <p>
+                        {item.description !=
+                          "N/A" &&
+                          removeHtmlTags(
+                            item.description
+                          )}
+                      </p>
+                </div>
+
                  {showDescription == index + i + item.id && (
                           <>
                             {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
@@ -2986,6 +3002,22 @@ const Curriculum = ({ code }) => {
                   </div>
 
                   {/* List of Resources / External Link */}
+
+                  {/* <div className="my-3">
+                {item.description !=
+                        "N/A" && (
+                        <p className="m-0 p-0">
+                          <b>Description</b>
+                        </p>
+                      )}
+                      <p>
+                        {item.description !=
+                          "N/A" &&
+                          removeHtmlTags(
+                            item.description
+                          )}
+                      </p>
+                </div> */}
 
                   <>
                     {showDescription ==
@@ -3500,6 +3532,22 @@ const Curriculum = ({ code }) => {
                       {/*  Inputs of External Links / Resouces  */}
 
                       {/* List of Resources / External Link */}
+
+                      <div className="my-3">
+                {item.description !=
+                        "N/A" && (
+                        <p className="m-0 p-0">
+                          <b>Description</b>
+                        </p>
+                      )}
+                      <p>
+                        {item.description !=
+                          "N/A" &&
+                          removeHtmlTags(
+                            item.description
+                          )}
+                      </p>
+                </div>
 
                     <>
                       {showDescription ==
