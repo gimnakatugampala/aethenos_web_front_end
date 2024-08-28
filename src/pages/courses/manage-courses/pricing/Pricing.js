@@ -4276,15 +4276,15 @@ const Pricing = ({code}) => {
         {NoOfLessons < 5 && Paid_Type == 2 && (
         <div className="container m-2">
         <Alert variant="outlined" severity="warning">
-          The minimum number of lectures on a paid course is 5. Please increase your total number of lectures to comply.
+          The minimum number of lessons on a paid course is 5. Please increase your total number of lessons to comply.
         </Alert>
         </div>
         )}
 
-        {NoOfLessons < 5 && VideoLength < 45 && Paid_Type == 2 &&  (
+        {NoOfLessons < 5 || VideoLength < 45 && Paid_Type == 2 &&  (
         <div className="container m-2">
         <Alert variant="outlined" severity="warning">
-        The minimum video content length on a paid course is 45 minutes and the minimum number of lectures on a paid course is 5. Please increase your total video length and total number of lectures to comply.
+        The minimum video content length on a paid course is 45 minutes and the minimum number of lessons on a paid course is 5. Please increase your total video length and total number of lessons to comply.
         </Alert>
         </div>
         )}
