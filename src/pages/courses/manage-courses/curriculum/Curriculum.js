@@ -6752,7 +6752,7 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlInput1"
                                     >
                                       <Form.Label>
-                                        Upload coding exercises
+                                        Upload coding exercise
                                       </Form.Label>
 
                                       {item.getCodingExercises[0] != null && (
@@ -7241,7 +7241,7 @@ const Curriculum = ({ code }) => {
                           variant="text"
                         >
                           <AddCircleIcon className="mx-1" />
-                          Coding Excercises
+                          Coding Excercise
                         </Button>
                       </div>
                     )}
