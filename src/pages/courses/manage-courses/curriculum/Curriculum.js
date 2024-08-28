@@ -536,7 +536,12 @@ const Curriculum = ({ code }) => {
       setshowContentAdd,
       setshowMain,
       code,
-      setsectionData
+      setsectionData,
+
+      setshowQuizInput,
+      setshowLecInput,
+      setshowCodingExecInput,
+      setshowAssignmentInput
     );
   };
 
@@ -591,7 +596,12 @@ const Curriculum = ({ code }) => {
       setshowContentAdd,
       setshowMain,
       code,
-      setsectionData
+      setsectionData,
+
+      setshowQuizInput,
+      setshowLecInput,
+      setshowPracticeTestInput,
+      setshowAssignmentInput
     );
   };
 
@@ -672,7 +682,12 @@ const Curriculum = ({ code }) => {
       setshowContentAdd,
       setshowMain,
       code,
-      setsectionData
+      setsectionData,
+
+      setshowQuizInput,
+      setshowLecInput,
+      setshowPracticeTestInput,
+      setshowCodingExecInput
     );
   };
 
@@ -1608,6 +1623,7 @@ const Curriculum = ({ code }) => {
 
   // =================================================================
   
+
 
  
 

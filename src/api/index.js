@@ -4313,7 +4313,12 @@ export const PracticeTestSave = async (
   setshowContentAdd,
   setshowMain,
   code,
-  setsectionData
+  setsectionData,
+
+   setshowQuizInput,
+  setshowLecInput,
+  setshowCodingExecInput,
+  setshowAssignmentInput
 ) => {
   setbtnLoadingPracticeTest(true);
 
@@ -4378,6 +4383,16 @@ export const PracticeTestSave = async (
         // setshowPracticeTestInput(null);
         // setshowCurriculumItem(null);
 
+        // Close the inputs panel after saving
+        setshowQuizInput(null);
+        setshowLecInput(null);
+        setshowCurriculumItem(null);
+        setshowPracticeTestInput(null);
+        setshowCodingExecInput(null);
+        setshowAssignmentInput(null);
+
+        
+
         GetCurriculum(code, setsectionData);
 
         return;
@@ -4422,7 +4437,12 @@ export const CodingExerciseSave = async (
   setshowContentAdd,
   setshowMain,
   code,
-  setsectionData
+  setsectionData,
+
+  setshowQuizInput,
+  setshowLecInput,
+  setshowPracticeTestInput,
+  setshowAssignmentInput
 ) => {
   setbtnLoadingCodingExcercise(true);
 
@@ -4491,6 +4511,13 @@ export const CodingExerciseSave = async (
         // setCodingExercisesExLinkSolutions("");
         // setCodingExercisesSolutionsVideo(null);
 
+          setshowQuizInput(null);
+          setshowLecInput(null);
+          setshowCurriculumItem(null);
+          setshowPracticeTestInput(null);
+          setshowCodingExecInput(null);
+          setshowAssignmentInput(null);
+
         setbtnLoadingCodingExcercise(false);
 
         // setshowCodingExecInput(null);
@@ -4544,7 +4571,12 @@ export const AssignmentSave = async (
   setshowContentAdd,
   setshowMain,
   code,
-  setsectionData
+  setsectionData,
+
+  setshowQuizInput,
+  setshowLecInput,
+  setshowPracticeTestInput,
+  setshowCodingExecInput
 ) => {
   setbtnLoadingAssignment(true);
 
@@ -4611,6 +4643,13 @@ export const AssignmentSave = async (
         // setAssignmentQuestion("");
         // setAssignmentQuestionFile(null);
         // setAssignmentQuestionLink("");
+
+        setshowQuizInput(null);
+        setshowLecInput(null);
+        setshowCurriculumItem(null);
+        setshowPracticeTestInput(null);
+        setshowCodingExecInput(null);
+        setshowAssignmentInput(null);
 
         // setAssignmentSolutions("");
         // setAssignmentSolutionsVideo(null);
