@@ -4360,7 +4360,7 @@ const Curriculum = ({ code }) => {
                                                       )
                                                     }
                                                     type="text"
-                                                    placeholder="Explain why this is or isn't an answer"
+                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
                                                   />
                                                 </div>
                                               </div>
@@ -4473,7 +4473,7 @@ const Curriculum = ({ code }) => {
                                       )
                                     }
                                     type="text"
-                                    placeholder="Explain why this is or isn't an answer"
+                                    placeholder="Describe why the answer is correct/incorrect (optional)"
                                   />
                                 </div>
 
@@ -4517,7 +4517,7 @@ const Curriculum = ({ code }) => {
                                       )
                                     }
                                     type="text"
-                                    placeholder="Explain why this is or isn't an answer"
+                                    placeholder="Describe why the answer is correct/incorrect (optional)"
                                   />
                                 </div>
 
@@ -4564,7 +4564,7 @@ const Curriculum = ({ code }) => {
                                       )
                                     }
                                     type="text"
-                                    placeholder="Explain why this is or isn't an answer"
+                                    placeholder="Describe why the answer is correct/incorrect (optional)"
                                   />
                                 </div>
 
@@ -4609,7 +4609,7 @@ const Curriculum = ({ code }) => {
                                       )
                                     }
                                     type="text"
-                                    placeholder="Explain why this is or isn't an answer"
+                                    placeholder="Describe why the answer is correct/incorrect (optional)"
                                   />
                                 </div>
 
@@ -4654,7 +4654,7 @@ const Curriculum = ({ code }) => {
                                       )
                                     }
                                     type="text"
-                                    placeholder="Explain why this is or isn't an answer"
+                                    placeholder="Describe why the answer is correct/incorrect (optional)"
                                   />
                                 </div>
                               </div>
