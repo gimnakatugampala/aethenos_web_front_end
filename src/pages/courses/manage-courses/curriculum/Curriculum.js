@@ -8102,17 +8102,7 @@ const Curriculum = ({ code }) => {
                             <Form.Control
                               value={AssignmentSolutions}
                               onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setAssignmentSolutions(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
+                                setAssignmentSolutions(e.target.value)
                               }}
                               as="textarea"
                               rows={2}
