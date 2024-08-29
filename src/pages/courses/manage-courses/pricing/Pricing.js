@@ -4902,22 +4902,22 @@ const handleDefaultPercentageDiscount = (e) => {
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
-
                           <Form.Control 
-                          isInvalid={formatNumber(ChileNetPrice) != "0.00" && (formatNumber(ChileNetPrice) < ChileminValue) ? true : false} 
-                          readOnly disabled 
-                          value={ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}  />
+                              isInvalid={formatNumber(ChileNetPrice) != "0.00" && (parseFloat(ChileNetPrice) < parseFloat(ChileminValue))} 
+                              readOnly 
+                              disabled 
+                              value={ChileNetPrice == "" ? "0.00" : formatNumber(ChileNetPrice)}  
+                          />
                           <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-                  
-                            <tr>
-                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
-                            </Form.Label>
+                              Not within range
+                          </Form.Control.Feedback>
+                          <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                  Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
+                              </Form.Label>
                           </tr>
+                      </td>
 
-                          </td>
                         
                         </tr>
 
