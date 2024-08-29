@@ -2405,11 +2405,21 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                            <Form.Control disabled readOnly value={GBPDiscountAmount} type="text" />
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
-                            </Form.Label>
-                        </td>
+                        <Form.Control
+                          isInvalid={GBPDiscountAmount != 0 && GBPDiscountAmount < parseFloat(GBPminValue).toFixed(2)}
+                          disabled
+                          readOnly
+                          value={GBPDiscountAmount}
+                          type="text"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
+                        </Form.Label>
+                      </td>
+
 
                          
                         
