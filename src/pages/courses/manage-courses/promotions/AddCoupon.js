@@ -1811,7 +1811,7 @@ const AddCoupon = ({code}) => {
   
       if(numberOnlyRegex.test(e.target.value)){
         setSADiscountValue(e.target.value)
-        setSADiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(SAListPrice).toFixed(2)) * 100).toFixed(2))
+        setSADiscountPercent((((Number.parseFloat(SAListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(SAListPrice).toFixed(2)) * 100).toFixed(2))
         setSADiscountAmount((Number.parseFloat(SAListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
         setSADiscountValue("")
