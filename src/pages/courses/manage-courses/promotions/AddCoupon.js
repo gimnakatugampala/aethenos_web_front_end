@@ -2063,7 +2063,12 @@ const AddCoupon = ({code}) => {
                       
                     </td>
                     <td>
-                        <Form.Control disabled readOnly value={USADiscountAmount} type="text" />
+                        <Form.Control isInvalid={USADiscountAmount != 0 && USADiscountAmount < parseFloat(USAMinValue).toFixed(2)} disabled readOnly value={USADiscountAmount} type="text" />
+
+                        <Form.Control.Feedback type="invalid">
+                              Not within range
+                          </Form.Control.Feedback>
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("USD")}{parseFloat(USAMinValue).toFixed(2)}
                         </Form.Label>
@@ -2097,11 +2102,21 @@ const AddCoupon = ({code}) => {
                           <Form.Control disabled readOnly value={AusDiscountPercent}  type="text" />
                           </td>
                           <td>
-                          <Form.Control disabled readOnly value={AusDiscountAmount} type="text" />
-                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                        <Form.Control 
+                            isInvalid={AusDiscountAmount != 0 && AusDiscountAmount < parseFloat(AusminValue).toFixed(2)} 
+                            disabled 
+                            readOnly 
+                            value={AusDiscountAmount} 
+                            type="text" 
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Not within range
+                        </Form.Control.Feedback>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("AUD")} {parseFloat(AusminValue).toFixed(2)}
-                          </Form.Label>
-                        </td>
+                        </Form.Label>
+                    </td>
+
 
                       
                         
