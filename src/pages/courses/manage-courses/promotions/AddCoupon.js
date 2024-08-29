@@ -1398,7 +1398,7 @@ const AddCoupon = ({code}) => {
   
       if(numberOnlyRegex.test(e.target.value)){
         setPeruDiscountValue(e.target.value)
-        setPeruDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(PeruListPrice).toFixed(2)) * 100).toFixed(2))
+        setPeruDiscountPercent((((Number.parseFloat(PeruListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(PeruListPrice).toFixed(2)) * 100).toFixed(2))
         setPeruDiscountAmount((Number.parseFloat(PeruListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
         setPeruDiscountValue("")
