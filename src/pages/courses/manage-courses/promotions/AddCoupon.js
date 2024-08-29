@@ -1311,7 +1311,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setNigeriaDiscountValue(e.target.value)
-      setNigeriaDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(NigeriaListPrice).toFixed(2)) * 100).toFixed(2))
+      setNigeriaDiscountPercent((((Number.parseFloat(NigeriaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(NigeriaListPrice).toFixed(2)) * 100).toFixed(2))
       setNigeriaDiscountAmount((Number.parseFloat(NigeriaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setNigeriaDiscountValue("")
