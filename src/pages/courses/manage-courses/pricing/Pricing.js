@@ -4658,10 +4658,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                                 </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
-
+                                <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("USD")}{parseFloat(USAMinValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -4718,10 +4720,12 @@ const handleDefaultPercentageDiscount = (e) => {
                              <Form.Control.Feedback type="invalid">
                                 Not within range
                               </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
-
+                              <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("AUD")} {parseFloat(AusminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -4780,10 +4784,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                               </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
+                              <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("BRL")} {parseFloat(BrazilminValue).toFixed(2)}
+                              </Form.Label>
+                            </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
@@ -4840,9 +4846,10 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                               </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
-
+                              <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("CAD")} {parseFloat(CanadaminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
                           </td>
                         
@@ -4902,10 +4909,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
                   
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
@@ -4964,10 +4973,11 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
-
-                        </tr>
+                            <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
+                              </Form.Label>
+                                </tr>
                           </td>
                         
                         </tr>
@@ -5025,10 +5035,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("EGP")} {parseFloat(EgyptminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5087,10 +5099,12 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
 
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("EUR")} {parseFloat(EUminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5150,10 +5164,12 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
 
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5212,10 +5228,12 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
 
   
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5274,10 +5292,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("ILS")} {parseFloat(IsrealminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
@@ -5336,10 +5356,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("INR")} {parseFloat(IndiaminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5395,10 +5417,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("JPY"))} {JapanminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("JPY")} {JapanminValue}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5458,10 +5482,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
@@ -5519,10 +5545,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5585,10 +5613,12 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
 
   
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
+                            <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("MYR")} {parseFloat(MalaysiaminValue).toFixed(2)}
+                              </Form.Label>
+                            </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -5647,10 +5677,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
+                            <tr>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
+                        </Form.Label>
+                      </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -5707,10 +5739,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("NOK")} {parseFloat(NorwayminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr>
@@ -5769,10 +5803,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
      
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("PEN")} {parseFloat(Peruminvalue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr> 
@@ -5831,10 +5867,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
+                            <tr>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("PHP")} {parseFloat(PhilipinesminValue).toFixed(2)}
+                        </Form.Label>
+                      </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -5895,10 +5933,12 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
 
     
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PLN"))} {PolandminValue}</Form.Label>
+                            <tr>
+                  <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                    Minimum: {getSymbolFromCurrency("PLN")} {parseFloat(PolandminValue).toFixed(2)}
+                  </Form.Label>
+                </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -5956,10 +5996,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
+                            <tr>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("RON")} {parseFloat(Romaniaminvalue).toFixed(2)}
+                        </Form.Label>
+                      </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -6017,10 +6059,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
                             
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("RUB")} {parseFloat(RussiaminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
@@ -6079,10 +6123,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                             </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
+                            <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("SGD")} {parseFloat(SingaporeminValue).toFixed(2)}
+                              </Form.Label>
+                            </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -6138,10 +6184,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("THB")} {parseFloat(ThailandminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -6256,10 +6304,12 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
 
             
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
+                            <tr>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("TWD")} {parseFloat(TaiwanminValue).toFixed(2)}
+                        </Form.Label>
+                      </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
@@ -6318,10 +6368,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
+                            <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("VND")} {parseFloat(VietnamminValue).toFixed(2)}
+                              </Form.Label>
+                            </tr>
 
-                        </tr>
                           </td>
                         
                         </tr> 
@@ -6379,10 +6431,12 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
-
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SAminValue).toFixed(2)}
+                          </Form.Label>
                         </tr>
+
                           </td>
                         
                         </tr> 
