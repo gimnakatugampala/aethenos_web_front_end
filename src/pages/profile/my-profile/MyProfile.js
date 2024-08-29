@@ -283,27 +283,43 @@ const MyProfile = () => {
         selectedValue
       );
     } else if (selectedValue == "uk") {
-      if (bankSortNoOne == "") {
+      if (bankSortNoOne === "") {
         ErrorAlert("Empty Field", "Enter Sort No one");
         return;
-      }
-
-      if (bankSortNoTwo == "") {
+    }
+    
+    if (bankSortNoOne.length !== 2) {
+        ErrorAlert("Invalid Entry", "Sort No one must be exactly 2 digits");
+        return;
+    }
+    
+    if (bankSortNoTwo === "") {
         ErrorAlert("Empty Field", "Enter Sort No two");
         return;
-      }
-
-      if (bankSortNoThree == "") {
+    }
+    
+    if (bankSortNoTwo.length !== 2) {
+        ErrorAlert("Invalid Entry", "Sort No two must be exactly 2 digits");
+        return;
+    }
+    
+    if (bankSortNoThree === "") {
         ErrorAlert("Empty Field", "Enter Sort No three");
         return;
-      }
+    }
+    
+    if (bankSortNoThree.length !== 2) {
+        ErrorAlert("Invalid Entry", "Sort No three must be exactly 2 digits");
+        return;
+    }
+    
 
       if (bankAccountNumber == "") {
         ErrorAlert("Empty Field", "Enter Bank Account number");
         return;
       }
 
-      if (bankAccountNumber.length > 8) {
+      if (bankAccountNumber.length != 8) {
         ErrorAlert("Empty Field", "Only enter 8 characters for account number");
         return;
       }
