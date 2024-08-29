@@ -2319,11 +2319,20 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                        <Form.Control disabled readOnly value={EgyptDiscountAmount} type="text" />
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("EGP")} {parseFloat(EgyptminValue).toFixed(2)}
+                        <Form.Control
+                          isInvalid={EgyptDiscountAmount != 0 && EgyptDiscountAmount < parseFloat(EgyptminValue).toFixed(2)}
+                          disabled
+                          readOnly
+                          value={EgyptDiscountAmount}
+                          type="text"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("EGP")} {parseFloat(EgyptminValue).toFixed(2)}
                         </Form.Label>
-                    </td>
+                      </td>
 
                       
                         
