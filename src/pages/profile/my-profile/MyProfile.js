@@ -780,8 +780,8 @@ const MyProfile = () => {
                           <img width={100} src="/images/payoneer.png" />
                         </div>
 
-                        <div className="row">
-                          <div className="col-md-12">
+                        {/* <div className="row"> */}
+                          <div className="col-md-4">
                             <Form>
                               <Form.Group controlId="exampleForm.ControlInput1">
                                 <Form.Control
@@ -791,7 +791,7 @@ const MyProfile = () => {
                                     setpayoneerEmail(e.target.value)
                                   }
                                   type="email"
-                                  placeholder="Enter Payoneer Email"
+                                  placeholder="Enter Payoneer Email(Username)"
                                 />
                               </Form.Group>
                             </Form>
@@ -811,7 +811,7 @@ const MyProfile = () => {
                               </Form.Group>
                             </Form>
                           </div> */}
-                        </div>
+                        {/* </div> */}
                       </div>
                     </div>
 
