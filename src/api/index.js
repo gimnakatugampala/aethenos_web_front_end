@@ -5707,3 +5707,43 @@ export const VideoStreaming = async (filePath) => {
   let encodedFilePath = encodeURIComponent(filePath);
   return `${BACKEND_LINK}/videoStreming/video?url=${encodedFilePath}`;
 };
+
+
+export const updateQuizOrder = async (sectionCurriculumItemId, quizOrder , code, setsectionData, setLoading) => {
+
+  console.log(code)
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  const formdata = new FormData();
+  formdata.append("sectionCurriculumItemId", `${sectionCurriculumItemId}`);
+  formdata.append("quizOrder", `${quizOrder}`);
+  
+  const requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow"
+  };
+
+  fetch(`${BACKEND_LINK}/managecourse/updateQuizOrder`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      Unauthorized(result.status, "courses");
+
+      if (result.variable == "404") {
+        ErrorAlert("Error", result.message);
+        return;
+      }
+
+      if (result.variable == "200") {
+        GetCurriculum(code, setsectionData).finally(() => setLoading(false));       
+      } else {
+        ErrorAlert("Error", result.message);
+      }
+
+      console.log(result);
+    })
+    .catch((error) => console.error(error));
+};

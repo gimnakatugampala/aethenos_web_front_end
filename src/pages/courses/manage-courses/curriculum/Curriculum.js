@@ -63,6 +63,7 @@ import {
   UpdateLessonVideo,
   UpdatePraticeTestName,
   UpdateQuizName,
+  updateQuizOrder,
   updateSectionData,
   UpdateSectionName,
   UpdateSubmitQuestionsAndAnswers,
@@ -104,6 +105,8 @@ const Curriculum = ({ code }) => {
 
   let fieUploadUUID = Date.now().toString();
   let uploadType = "lesson-video"
+
+  const [loading, setLoading] = useState(false);
 
   const [showContentAdd, setshowContentAdd] = useState(null);
   const [showMain, setshowMain] = useState(null);
@@ -1627,7 +1630,21 @@ const Curriculum = ({ code }) => {
   
 
 
+  const onDragEndOfQuizTable = (result, quizzes, id) => {
+    if (!result.destination) return;
+
+    setLoading(true);
+    
+    const reorderedQuizzes = Array.from(quizzes);
+    const [moved] = reorderedQuizzes.splice(result.source.index, 1);
+    reorderedQuizzes.splice(result.destination.index, 0, moved);
+
+    const reorderedQuizIds = reorderedQuizzes.map((q) => q.id);
+
+    updateQuizOrder(id, reorderedQuizIds, code, setsectionData, setLoading);
  
+  };
+
 
 
 
@@ -4160,62 +4177,110 @@ const Curriculum = ({ code }) => {
 
                   {/* Landing Content */}
                   {showContentAdd == index + i + item.id &&
-                    (item.getQuizs.length != 0 ? (
-                      <div>
-                        <div className="container m-4">
-                          <Table striped bordered hover>
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Quiz</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {item.getQuizs != null &&
-                                item.getQuizs.length > 0 &&
-                                item.getQuizs.map(
-                                  (q, inz) => (
-                                    <tr key={inz}>
-                                      <td>{inz + 1}</td>
-                                      <td>
-                                        {q.question.length >
-                                        40
-                                          ? q.question.slice(
-                                              0,
-                                              40
-                                            ) + "..."
-                                          : q.question}
-                                      </td>
-                                      <td>
-                                        <Button
-                                          onClick={() =>
-                                            handleShowEditQuizListItem(
-                                              q
-                                            )
-                                          }
-                                          color="info"
-                                          variant=""
-                                        >
-                                          <EditIcon />
-                                        </Button>{" "}
-                                        <Button
-                                          onClick={() =>
-                                            handleQuizListItemDelete(
-                                              q
-                                            )
-                                          }
-                                          variant=""
-                                        >
-                                          <DeleteIcon />
-                                        </Button>
-                                      </td>
-                                    </tr>
-                                  )
-                                )}
-                            </tbody>
-                          </Table>
-                        </div>
+                                        (item.getQuizs.length != 0 ? (
+                                          <div>
+                                            <div className="container m-4">
+                                              <DragDropContext
+                                                onDragEnd={(result) =>
+                                                  onDragEndOfQuizTable(
+                                                    result,
+                                                    item.getQuizs,
+                                                    item.id 
+                                                  )
+                                                }
+                                              >
+                                                <Droppable droppableId="quizList">
+                                                  {(provided) => (
+                                                    <Table
+                                                      striped
+                                                      bordered
+                                                      hover
+                                                      {...provided.droppableProps}
+                                                      ref={provided.innerRef}
+                                                      style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.5 : 1 }}
+                                                    >
+                                                      <thead>
+                                                        <tr>
+                                                          <th>#</th>
+                                                          <th>Quiz</th>
+                                                          <th>Action</th>
+                                                          {/* <th><Button onClick={viewData}>hello</Button></th> */}
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        {item.getQuizs !=
+                                                          null &&
+                                                          item.getQuizs.length >
+                                                            0 &&
+                                                          item.getQuizs.map(
+                                                            (q, inz) => (
+                                                              <Draggable
+                                                                key={q.id}
+                                                                draggableId={
+                                                                  q.id
+                                                                }
+                                                                index={inz}
+                                                              >
+                                                                {(provided) => (
+                                                                  <tr
+                                                                    ref={
+                                                                      provided.innerRef
+                                                                    }
+                                                                    {...provided.draggableProps}
+                                                                    {...provided.dragHandleProps}
+                                                                  >
+                                                                    <td>
+                                                                      {inz + 1}
+                                                                    </td>
+                                                                    <td>
+                                                                      {q
+                                                                        .question
+                                                                        .length >
+                                                                      40
+                                                                        ? q.question.slice(
+                                                                            0,
+                                                                            40
+                                                                          ) +
+                                                                          "..."
+                                                                        : q.question}
+                                                                    </td>
+                                                                    <td>
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          handleShowEditQuizListItem(
+                                                                            q
+                                                                          )
+                                                                        }
+                                                                        color="info"
+                                                                        variant=""
+                                                                      >
+                                                                        <EditIcon />
+                                                                      </Button>{" "}
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          handleQuizListItemDelete(
+                                                                            q
+                                                                          )
+                                                                        }
+                                                                        variant=""
+                                                                      >
+                                                                        <DeleteIcon />
+                                                                      </Button>
+                                                                    </td>
+                                                                  </tr>
+                                                                )}
+                                                              </Draggable>
+                                                            )
+                                                          )}
+                                                        {provided.placeholder}
+                                                      </tbody>
+                                                    </Table>
+                                                  )}
+                                                </Droppable>
+                                              </DragDropContext>
+                                            </div>
+
+
 
                         {/* MCQ FORM */}
                         {/* test show */}
