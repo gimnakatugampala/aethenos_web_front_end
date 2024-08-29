@@ -29,7 +29,7 @@ import TextField from '@mui/material/TextField';
 import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment';
 import ButtonBootstrap from 'react-bootstrap/Button';
-import { GetPromotions , AddPromotions, GetCouponsAPI, StatusChangeAPI } from '../../../../api';
+import { GetPromotions , AddPromotions, GetCouponsAPI, StatusChangeAPI, GetAvailableCouponsCount } from '../../../../api';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { ActivatePromotions , DeactivatedPromotions , UpdatePromotions , GetPromotionsTypes } from '../../../../api';
@@ -50,6 +50,8 @@ const Promotion = ({code}) => {
 
   const [referalCode, setreferalCode] = useState(``)
   const [all_coupons, setall_coupons] = useState(null)
+
+  const [couponsCount, setcouponsCount] = useState(0)
 
 
   var currentDate = new Date();
@@ -74,6 +76,9 @@ const Promotion = ({code}) => {
   useEffect(() => {
     GetReferralLink(code,setreferalCode)
     GetCouponsAPI(code,setall_coupons)
+
+    GetAvailableCouponsCount(code,setcouponsCount)
+
   }, [code])
 
 
@@ -136,7 +141,7 @@ const Promotion = ({code}) => {
             <h6><b>{monthName} Coupons</b></h6>
 
             <div className='d-flex justify-content-between align-items-center'>
-                <p>You can create 3 more coupons this month</p>
+                <p>You can create {3 - couponsCount} more {3 - couponsCount == 1 ? 'coupon' : 'coupons'} this month</p>
 
                 <Button onClick={() => {
                   window.location.href = `/courses/manage/${code}/#add-coupon`

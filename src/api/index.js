@@ -5748,3 +5748,25 @@ export const updateQuizOrder = async (sectionCurriculumItemId, quizOrder , code,
     })
     .catch((error) => console.error(error));
 };
+
+export const GetAvailableCouponsCount = async (code, setcouponsCount) => {
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`${BACKEND_LINK}/course/getAvailableCouponCountForThisMonth/${code}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    Unauthorized(result.status, `courses/manage/${code}/#promotions`);
+    setcouponsCount(result)
+  })
+  .catch((error) => console.error(error));
+
+}
