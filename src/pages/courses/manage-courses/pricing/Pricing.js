@@ -2457,23 +2457,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Nigeria
-    const handleDefaultPercentageDiscountNigeria = (e) =>{
-
-      if(e.target.value == ""){
-        setNigeriaDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountNigeria = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-  
-      setNigeriaDisPercent(e.target.value)
-  
-      setNIgeriaNetPrice((parseFloat(NigeriaListPrice) - parseFloat(NigeriaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setNigeriaDisAmt((Number.parseFloat(NigeriaListPrice) - ((parseFloat(NigeriaListPrice) - parseFloat(NigeriaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setNigeriaDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(NigeriaListPrice) - parseFloat(NigeriaListPrice) * discountValue / 100).toFixed(2);
+    setNIgeriaNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(NigeriaListPrice) - parseFloat(netPrice)).toFixed(2);
+    setNigeriaDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
