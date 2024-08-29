@@ -889,7 +889,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setEgyptDiscountValue(e.target.value)
-      setEgyptDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(EgyptListPrice).toFixed(2)) * 100).toFixed(2))
+      setEgyptDiscountPercent((((Number.parseFloat(EgyptListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(EgyptListPrice).toFixed(2)) * 100).toFixed(2))
       setEgyptDiscountAmount((Number.parseFloat(EgyptListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setEgyptDiscountValue("")
