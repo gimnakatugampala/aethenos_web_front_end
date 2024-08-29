@@ -2659,11 +2659,21 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                            <Form.Control disabled readOnly value={MexicoDisountAmount} type="text" />
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
-                            </Form.Label>
+                          <Form.Control
+                            isInvalid={MexicoDisountAmount != 0 && MexicoDisountAmount < parseFloat(MexicominValue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={MexicoDisountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
+                          </Form.Label>
                         </td>
+
 
                         
                         
