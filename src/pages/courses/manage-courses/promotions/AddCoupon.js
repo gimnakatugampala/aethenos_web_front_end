@@ -753,7 +753,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setCanadaDiscountValue(e.target.value)
-      setCanadaDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(CanadaListPrice).toFixed(2)) * 100).toFixed(2))
+      setCanadaDiscountPercent((((Number.parseFloat(CanadaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(CanadaListPrice).toFixed(2)) * 100).toFixed(2))
       setCanadaDiscountAmount((Number.parseFloat(CanadaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setCanadaDiscountValue("")
