@@ -18,13 +18,14 @@ import { uploadFileInChunks } from '../../../commonFunctions/uploadFileInChunks'
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import MainLoader from '../../../commonFunctions/loaders/MainLoader/MainLoader';
 import MainLoaderCourse from '../../../commonFunctions/loaders/MainLoader/MainLoaderCourse';
+import { v4 as uuidv4 } from 'uuid';
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
 const EditCourse = () => {
 
     // File Upload
-    let fieUploadUUID = Date.now().toString();
+    let fieUploadUUID = uuidv4();
     let uploadType = "test-video"
 
 

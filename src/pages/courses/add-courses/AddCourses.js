@@ -19,6 +19,8 @@ import 'sweetalert2/src/sweetalert2.scss'
 import { uploadFileInChunks } from '../../../commonFunctions/uploadFileInChunks';
 import ErrorAlert from '../../../commonFunctions/Alerts/ErrorAlert';
 import MainLoaderCourse from '../../../commonFunctions/loaders/MainLoader/MainLoaderCourse';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
 
@@ -28,7 +30,7 @@ const AddCourses = () => {
 
 
   // File Upload
-  let fieUploadUUID = Date.now().toString();
+  let fieUploadUUID = uuidv4();
   let uploadType = "test-video"
 
 

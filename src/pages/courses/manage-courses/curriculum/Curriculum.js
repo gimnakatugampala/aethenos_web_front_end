@@ -95,6 +95,7 @@ import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChun
 import { uploadSyllabusVideoChunks } from "../../../../commonFunctions/uploadSyllabusVideoChunks";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import { v4 as uuidv4 } from 'uuid';
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -103,7 +104,7 @@ const syllabusIcon = {
 const Curriculum = ({ code }) => {
   let counter = 1;
 
-  let fieUploadUUID = Date.now().toString();
+  let fieUploadUUID = uuidv4();
   let uploadType = "lesson-video"
 
   const [loading, setLoading] = useState(false);
