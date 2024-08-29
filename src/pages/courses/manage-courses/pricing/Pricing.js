@@ -3280,22 +3280,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Singapore
-      const handleDefaultPercentageDiscountSingapore = (e) =>{
-
-        if(e.target.value == ""){
-          setSingaporeDisPercent(0)
-        }
+    const handleDefaultPercentageDiscountSingapore = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        setSingaporeDisPercent(e.target.value)
-    
-        setSingaporeNetPrice((parseFloat(SingaporeListPrice) - parseFloat(SingaporeListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-         // Calculate Discount Amount
-         setSingaporeDisAmt((Number.parseFloat(SingaporeListPrice) - ((parseFloat(SingaporeListPrice) - parseFloat(SingaporeListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setSingaporeDisPercent(discountValue);
+    
+      setSingaporeNetPrice((parseFloat(SingaporeListPrice) - parseFloat(SingaporeListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setSingaporeDisAmt((Number.parseFloat(SingaporeListPrice) - ((parseFloat(SingaporeListPrice) - parseFloat(SingaporeListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
