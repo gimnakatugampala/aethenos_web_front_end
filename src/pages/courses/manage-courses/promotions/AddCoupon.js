@@ -1961,7 +1961,7 @@ const AddCoupon = ({code}) => {
             </ol>
 
 
-            <div className="row">
+            <div className="row border border-dark p-2">
                 <p className='my-3'><b>Enter Global Discount Price (required):</b></p>
               
               <div className="price-range col-md-3">
