@@ -1355,7 +1355,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setNorwayDiscountValue(e.target.value)
-      setNorwayDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(NorwayListPrice).toFixed(2)) * 100).toFixed(2))
+      setNorwayDiscountPercent((((Number.parseFloat(NorwayListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(NorwayListPrice).toFixed(2)) * 100).toFixed(2))
       setNorwayDiscountAmount((Number.parseFloat(NorwayListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setNorwayDiscountValue("")
