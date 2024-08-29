@@ -3396,22 +3396,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Thailand
-      const handleDefaultPercentageDiscountThailand = (e) =>{
-
-        if(e.target.value == ""){
-          setThailandDisPercent(0)
-        }
+    const handleDefaultPercentageDiscountThailand = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        setThailandDisPercent(e.target.value)
-    
-        setThailandNetPrice((parseFloat(ThailandListPrice) - parseFloat(ThailandListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-          // Calculate Discount Amount
-          setThailandDisAmt((Number.parseFloat(ThailandListPrice) - ((parseFloat(ThailandListPrice) - parseFloat(ThailandListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setThailandDisPercent(discountValue);
+    
+      setThailandNetPrice((parseFloat(ThailandListPrice) - parseFloat(ThailandListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setThailandDisAmt((Number.parseFloat(ThailandListPrice) - ((parseFloat(ThailandListPrice) - parseFloat(ThailandListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
