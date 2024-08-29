@@ -2219,22 +2219,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Mexico
-    const handleDefaultPercentageDiscountMexico = (e) =>{
-
-      if(e.target.value == ""){
-        setMexicoDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountMexico = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setMexicoDisPercent(e.target.value)
-  
-      setMexicoNetPrice((parseFloat(MexicoListPrice) - parseFloat(MexicoListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setMexicoDisAmt((Number.parseFloat(MexicoListPrice) - ((parseFloat(MexicoListPrice) - parseFloat(MexicoListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setMexicoDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(MexicoListPrice) - parseFloat(MexicoListPrice) * discountValue / 100).toFixed(2);
+    setMexicoNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(MexicoListPrice) - parseFloat(netPrice)).toFixed(2);
+    setMexicoDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
@@ -2332,22 +2339,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Malaysia
-    const handleDefaultPercentageDiscountMalaysia = (e) =>{
-
-      if(e.target.value == ""){
-        setMalaysiaDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountMalaysia = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setMalaysiaDisPercent(e.target.value)
-  
-      setMalaysiaNetPrice((parseFloat(MalaysiaListPrice) - parseFloat(MalaysiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-       // Calculate Discount Amount
-       setMalaysiaDisAmt((Number.parseFloat(MalaysiaListPrice) - ((parseFloat(MalaysiaListPrice) - parseFloat(MalaysiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setMalaysiaDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(MalaysiaListPrice) - parseFloat(MalaysiaListPrice) * discountValue / 100).toFixed(2);
+    setMalaysiaNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(MalaysiaListPrice) - parseFloat(netPrice)).toFixed(2);
+    setMalaysiaDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
