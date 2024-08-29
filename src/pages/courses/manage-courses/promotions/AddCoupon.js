@@ -573,7 +573,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setDDiscountValue(e.target.value)
-      setDDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(DGlobalPricing).toFixed(2)) * 100).toFixed(2))
+      setDDiscountPercent((((Number.parseFloat(DGlobalPricing) - Number.parseFloat(e.target.value)) / Number.parseFloat(DGlobalPricing).toFixed(2)) * 100).toFixed(2))
       setDDiscountAmount((Number.parseFloat(DGlobalPricing) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setDDiscountValue("")
@@ -616,7 +616,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setUSADiscountValue(e.target.value)
-      setUSADiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(USAListPrice).toFixed(2)) * 100).toFixed(2))
+      setUSADiscountPercent((((Number.parseFloat(USAListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(USAListPrice).toFixed(2)) * 100).toFixed(2))
       setUSADiscountAmount((Number.parseFloat(USAListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setUSADiscountValue("")
@@ -1998,7 +1998,7 @@ const AddCoupon = ({code}) => {
 
              
               <div className="col-md-3">
-              <Form.Label className="pricing-label"><b>Discount (USD)</b></Form.Label>
+              <Form.Label className="pricing-label"><b>Discounted Amount (USD)</b></Form.Label>
               <Form.Control disabled readOnly value={DDiscountAmount}  type="text" />
               <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
                   <i>Minimum: ${parseFloat(MinDefaultValue).toFixed(2)}</i>
@@ -2029,7 +2029,7 @@ const AddCoupon = ({code}) => {
 
                 <th scope="col">Discount Price</th>
                 <th scope="col">Discount %</th>
-                <th scope="col">Discount Amount</th>
+                <th scope="col">Discounted Amount</th>
               
                
               </tr>
