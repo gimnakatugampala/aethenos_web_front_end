@@ -3857,22 +3857,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount SA
-      const handleDefaultPercentageDiscountSA = (e) =>{
-
-        if(e.target.value == ""){
-          setSADisPercent(0)
-        }
+    const handleDefaultPercentageDiscountSA = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        setSADisPercent(e.target.value)
-    
-        setSANetPrice((parseFloat(SAListPrice) - parseFloat(SAListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-           // Calculate Discount Amount
-           setSADisAmt((Number.parseFloat(SAListPrice) - ((parseFloat(SAListPrice) - parseFloat(SAListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setSADisPercent(discountValue);
+    
+      setSANetPrice((parseFloat(SAListPrice) - parseFloat(SAListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setSADisAmt((Number.parseFloat(SAListPrice) - ((parseFloat(SAListPrice) - parseFloat(SAListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
