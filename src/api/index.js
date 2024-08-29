@@ -3558,119 +3558,119 @@ export const GetCountriesDiscountCoupons = async (
 
       // ---------------
       setUSATip(result.priceRange[0].tip);
-      setUSAMinValue(result.priceRange[0].minimumPrice);
+      setUSAMinValue(result.priceRange[0].minimumValue);
       setUSAListPrice(result.prices[0].listPrice);
 
       setAusTip(result.priceRange[1].tip);
-      setAusminValue(result.priceRange[1].minimumPrice);
+      setAusminValue(result.priceRange[1].minimumValue);
       setAusListPrice(result.prices[1].listPrice);
 
       setBrazilTip(result.priceRange[2].tip);
-      setBrazilminValue(result.priceRange[2].minimumPrice);
+      setBrazilminValue(result.priceRange[2].minimumValue);
       setBrazilListPrice(result.prices[2].listPrice);
 
       setCanadaTip(result.priceRange[3].tip);
-      setCanadaminValue(result.priceRange[3].minimumPrice);
+      setCanadaminValue(result.priceRange[3].minimumValue);
       setCanadaListPrice(result.prices[3].listPrice);
 
       setChileTip(result.priceRange[4].tip);
-      setChileminValue(result.priceRange[4].minimumPrice);
+      setChileminValue(result.priceRange[4].minimumValue);
       setChileListPrice(result.prices[4].listPrice);
 
       setColumbiaTip(result.priceRange[5].tip);
-      setColumbiaminValue(result.priceRange[5].minimumPrice);
+      setColumbiaminValue(result.priceRange[5].minimumValue);
       setColumbiaListPrice(result.prices[5].listPrice);
 
       setEgyptTip(result.priceRange[6].tip);
-      setEgyptminValue(result.priceRange[6].minimumPrice);
+      setEgyptminValue(result.priceRange[6].minimumValue);
       setEgyptListPrice(result.prices[6].listPrice);
 
       setEUTip(result.priceRange[7].tip);
-      setEUminValue(result.priceRange[7].minimumPrice);
+      setEUminValue(result.priceRange[7].minimumValue);
       setEUListPrice(result.prices[7].listPrice);
 
       setGBPTip(result.priceRange[8].tip);
-      setGBPminValue(result.priceRange[8].minimumPrice);
+      setGBPminValue(result.priceRange[8].minimumValue);
       setGBPListPrice(result.prices[8].listPrice);
 
       setIndonesiaTip(result.priceRange[9].tip);
-      setIndonesiaminValue(result.priceRange[9].minimumPrice);
+      setIndonesiaminValue(result.priceRange[9].minimumValue);
       setIndonesiaListPrice(result.prices[9].listPrice);
       // -
       setIsrealTip(result.priceRange[10].tip);
-      setIsrealminValue(result.priceRange[10].minimumPrice);
+      setIsrealminValue(result.priceRange[10].minimumValue);
       setIsrealListPrice(result.prices[10].listPrice);
 
       setIndiaTip(result.priceRange[11].tip);
-      setIndiaminValue(result.priceRange[11].minimumPrice);
+      setIndiaminValue(result.priceRange[11].minimumValue);
       setIndiaListPrice(result.prices[11].listPrice);
 
       setJapanTip(result.priceRange[12].tip);
-      setJapanminValue(result.priceRange[12].minimumPrice);
+      setJapanminValue(result.priceRange[12].minimumValue);
       setJapanListPrice(result.prices[12].listPrice);
 
       setSKTip(result.priceRange[13].tip);
-      setSKminValue(result.priceRange[13].minimumPrice);
+      setSKminValue(result.priceRange[13].minimumValue);
       setSKListPrice(result.prices[13].listPrice);
 
       setMexicoTip(result.priceRange[14].tip);
-      setMexicominValue(result.priceRange[14].minimumPrice);
+      setMexicominValue(result.priceRange[14].minimumValue);
       setMexicoListPrice(result.prices[14].listPrice);
 
       setMalaysiaTip(result.priceRange[15].tip);
-      setMalaysiaminValue(result.priceRange[15].minimumPrice);
+      setMalaysiaminValue(result.priceRange[15].minimumValue);
       setMalaysiaListPrice(result.prices[15].listPrice);
 
       setNigeriaTip(result.priceRange[16].tip);
-      setNigeriaminValue(result.priceRange[16].minimumPrice);
+      setNigeriaminValue(result.priceRange[16].minimumValue);
       setNigeriaListPrice(result.prices[16].listPrice);
 
       setNorwayTip(result.priceRange[17].tip);
-      setNorwayminValue(result.priceRange[17].minimumPrice);
+      setNorwayminValue(result.priceRange[17].minimumValue);
       setNorwayListPrice(result.prices[17].listPrice);
 
       setPeruTip(result.priceRange[18].tip);
-      setPeruminvalue(result.priceRange[18].minimumPrice);
+      setPeruminvalue(result.priceRange[18].minimumValue);
       setPeruListPrice(result.prices[18].listPrice);
 
       setPhilipinesTip(result.priceRange[19].tip);
-      setPhilipinesminValue(result.priceRange[19].minimumPrice);
+      setPhilipinesminValue(result.priceRange[19].minimumValue);
       setPhilipinesListPrice(result.prices[19].listPrice);
 
       setPolandTip(result.priceRange[20].tip);
-      setPolandminValue(result.priceRange[20].minimumPrice);
+      setPolandminValue(result.priceRange[20].minimumValue);
       setPolandListPrice(result.prices[20].listPrice);
 
       setRomaniaTip(result.priceRange[21].tip);
-      setRomaniaminvalue(result.priceRange[21].minimumPrice);
+      setRomaniaminvalue(result.priceRange[21].minimumValue);
       setRomaniaListPrice(result.prices[21].listPrice);
 
       setRussiaTip(result.priceRange[22].tip);
-      setRussiaminValue(result.priceRange[22].minimumPrice);
+      setRussiaminValue(result.priceRange[22].minimumValue);
       setRussiaListPrice(result.prices[22].listPrice);
 
       setSingaporeTip(result.priceRange[23].tip);
-      setSingaporeminValue(result.priceRange[23].minimumPrice);
+      setSingaporeminValue(result.priceRange[23].minimumValue);
       setSingaporeListPrice(result.prices[23].listPrice);
 
       setThailandTip(result.priceRange[24].tip);
-      setThailandminValue(result.priceRange[24].minimumPrice);
+      setThailandminValue(result.priceRange[24].minimumValue);
       setThailandListPrice(result.prices[24].listPrice);
 
       setTurkeyTip(result.priceRange[25].tip);
-      setTurkeyminValue(result.priceRange[25].minimumPrice);
+      setTurkeyminValue(result.priceRange[25].minimumValue);
       setTurkeyListPrice(result.prices[25].listPrice);
 
       setTaiwanTip(result.priceRange[26].tip);
-      setTaiwanminValue(result.priceRange[26].minimumPrice);
+      setTaiwanminValue(result.priceRange[26].minimumValue);
       setTaiwanListPrice(result.prices[26].listPrice);
 
       setVietnamTip(result.priceRange[27].tip);
-      setVietnamminValue(result.priceRange[27].minimumPrice);
+      setVietnamminValue(result.priceRange[27].minimumValue);
       setVietnamListPrice(result.prices[27].listPrice);
 
       setSATip(result.priceRange[28].tip);
-      setSAminValue(result.priceRange[28].minimumPrice);
+      setSAminValue(result.priceRange[28].minimumValue);
       setSAListPrice(result.prices[28].listPrice);
     })
     .catch((error) => console.log("error", error));
