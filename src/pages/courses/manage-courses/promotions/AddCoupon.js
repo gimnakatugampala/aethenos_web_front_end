@@ -1729,7 +1729,7 @@ const AddCoupon = ({code}) => {
   
       if(numberOnlyRegex.test(e.target.value)){
         setTaiwanDiscountValue(e.target.value)
-        setTaiwanDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(TaiwanListPrice).toFixed(2)) * 100).toFixed(2))
+        setTaiwanDiscountPercent((((Number.parseFloat(TaiwanListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(TaiwanListPrice).toFixed(2)) * 100).toFixed(2))
         setTaiwanDiscountAmount((Number.parseFloat(TaiwanListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
         setTaiwanDiscountValue("")
