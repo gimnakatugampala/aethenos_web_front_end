@@ -843,7 +843,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setColumbiaDiscountValue(e.target.value)
-      setColumbiaDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(ColumbiaListPrice).toFixed(2)) * 100).toFixed(2))
+      setColumbiaDiscountPercent((((Number.parseFloat(ColumbiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(ColumbiaListPrice).toFixed(2)) * 100).toFixed(2))
       setColumbiaDiscountAmount((Number.parseFloat(ColumbiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setColumbiaDiscountValue("")
