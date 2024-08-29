@@ -1146,7 +1146,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setJapanDiscountValue(e.target.value)
-      setJapanDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(JapanListPrice).toFixed(2)) * 100).toFixed(2))
+      setJapanDiscountPercent((((Number.parseFloat(JapanListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(JapanListPrice).toFixed(2)) * 100).toFixed(2))
       setJapanDiscountAmount((Number.parseFloat(JapanListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setJapanDiscountValue("")
