@@ -2275,11 +2275,21 @@ const AddCoupon = ({code}) => {
                               <Form.Control disabled readOnly value={ColumbiaDiscountPercent}  type="text" />
                           </td>
                           <td>
-                              <Form.Control disabled readOnly value={ColumbiaDiscountAmount} type="text" />
-                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                  Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
-                              </Form.Label>
-                          </td>
+                          <Form.Control
+                            isInvalid={ColumbiaDiscountAmount != 0 && ColumbiaDiscountAmount < parseFloat(ColumbiaminValue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={ColumbiaDiscountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
+                          </Form.Label>
+                        </td>
+
 
                      
                         
