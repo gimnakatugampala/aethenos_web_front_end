@@ -660,22 +660,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Aus
-    const handleDefaultPercentageDiscountAus = (e) =>{
-
-      if(e.target.value == ""){
-        setAusDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountAus = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setAusDisPercent(e.target.value)
-  
-      setAusNetPrice((parseFloat(AusListPrice) - parseFloat(AusListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      // Calculate Discount Amount
-      setAusDisAmt((Number.parseFloat(AusListPrice) - ((parseFloat(AusListPrice) - parseFloat(AusListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-
-      console.log(e.target.value)
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setAusDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(AusListPrice) - parseFloat(AusListPrice) * discountValue / 100).toFixed(2);
+    setAusNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(AusListPrice) - parseFloat(netPrice)).toFixed(2);
+    setAusDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
 
