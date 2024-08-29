@@ -5668,23 +5668,23 @@ const handleDefaultPercentageDiscount = (e) => {
                               <Form.Control disabled={NigeriaDisType == 2 || NigeriaDisType == 1} value={NigeriaDisAmt} onChange={handleDefaultDiscountAmtNigeria} type="text" />
                             {/* )} */}
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
+                          <td style={{whiteSpace: 'nowrap'}}>
+                        <Form.Control 
+                            isInvalid={formatNumber(NIgeriaNetPrice) != "0.00" && parseFloat(NIgeriaNetPrice) < parseFloat(NigeriaminValue)} 
+                            readOnly 
+                            disabled 
+                            value={NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}  
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Not within range
+                        </Form.Control.Feedback>
+                        <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
+                            </Form.Label>
+                        </tr>
+                    </td>
 
-                          <Form.Control 
-                          isInvalid={formatNumber(NIgeriaNetPrice) != "0.00" && (formatNumber(NIgeriaNetPrice) < NigeriaminValue) ? true : false} 
-                          readOnly disabled 
-                          value={NIgeriaNetPrice == "" ? "0.00" : formatNumber(NIgeriaNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-
-                            <tr>
-                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                          Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
-                        </Form.Label>
-                      </tr>
-
-                          </td>
                         
                         </tr> 
 
