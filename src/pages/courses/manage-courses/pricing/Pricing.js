@@ -1143,22 +1143,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Columbia
-    const handleDefaultPercentageDiscountColumbia = (e) =>{
-
-      if(e.target.value == ""){
-        setColumbiaDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountColumbia = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setColumbiaDisPercent(e.target.value)
-  
-      setColumbiaNetPrice((parseFloat(ColumbiaListPrice) - parseFloat(ColumbiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setColumbiaDisAmt((Number.parseFloat(ColumbiaListPrice) - ((parseFloat(ColumbiaListPrice) - parseFloat(ColumbiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setColumbiaDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(ColumbiaListPrice) - parseFloat(ColumbiaListPrice) * discountValue / 100).toFixed(2);
+    setColumbiaNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(ColumbiaListPrice) - parseFloat(netPrice)).toFixed(2);
+    setColumbiaDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
   // ---------------------
