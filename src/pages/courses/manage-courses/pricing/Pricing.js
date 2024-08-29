@@ -1736,22 +1736,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Isreal
-    const handleDefaultPercentageDiscountIsreal = (e) =>{
-
-      if(e.target.value == ""){
-        setIsrealDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountIsreal = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setIsrealDisPercent(e.target.value)
-  
-      setIsrealNetPrice((parseFloat(IsrealListPrice) - parseFloat(IsrealListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-    // Calculate Discount Amount
-    setIsrealDisAmt((Number.parseFloat(IsrealListPrice) - ((parseFloat(IsrealListPrice) - parseFloat(IsrealListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setIsrealDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(IsrealListPrice) - parseFloat(IsrealListPrice) * discountValue / 100).toFixed(2);
+    setIsrealNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(IsrealListPrice) - parseFloat(netPrice)).toFixed(2);
+    setIsrealDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
   // ---------------------
