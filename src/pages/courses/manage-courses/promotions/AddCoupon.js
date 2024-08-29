@@ -2053,11 +2053,12 @@ const AddCoupon = ({code}) => {
                       
                     </td>
                     <td>
-                    
-                    <Form.Control disabled readOnly value={USADiscountAmount}   type="text" />
-                    <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{USAMinValue}</Form.Label>
-                    
-                    </td>
+                        <Form.Control disabled readOnly value={USADiscountAmount} type="text" />
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("USD")}{parseFloat(USAMinValue).toFixed(2)}
+                        </Form.Label>
+                      </td>
+
                 
                         
                         </tr>
@@ -2082,11 +2083,12 @@ const AddCoupon = ({code}) => {
                           <Form.Control disabled readOnly value={AusDiscountPercent}  type="text" />
                           </td>
                           <td>
-                     
-                          <Form.Control disabled readOnly value={AusDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("AUD"))} {AusminValue}</Form.Label>
-                            
-                          </td>
+                          <Form.Control disabled readOnly value={AusDiscountAmount} type="text" />
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("AUD")} {parseFloat(AusminValue).toFixed(2)}
+                          </Form.Label>
+                        </td>
+
                       
                         
                         </tr>
@@ -2111,9 +2113,12 @@ const AddCoupon = ({code}) => {
                              
                           </td>
                           <td>
-                          <Form.Control disabled readOnly value={BrazilDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("BRL"))} {BrazilminValue}</Form.Label>
-                          </td>
+                          <Form.Control disabled readOnly value={BrazilDiscountAmount} type="text" />
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("BRL")} {parseFloat(BrazilminValue).toFixed(2)}
+                          </Form.Label>
+                        </td>
+
                        
                         
                         </tr>
@@ -2139,10 +2144,12 @@ const AddCoupon = ({code}) => {
                           </td>
 
                           <td>
-                          <Form.Control disabled readOnly value={CanadaDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("CAD"))} {CanadaminValue}</Form.Label>
-                            
-                          </td>
+                          <Form.Control disabled readOnly value={CanadaDiscountAmount} type="text" />
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("CAD")} {parseFloat(CanadaminValue).toFixed(2)}
+                          </Form.Label>
+                        </td>
+
                         
                         
                         </tr>
@@ -2166,12 +2173,12 @@ const AddCoupon = ({code}) => {
                               <Form.Control disabled readOnly value={ChileDiscountPercent}  type="text" />
                           </td>
                           <td>
-                           
-                            <Form.Control disabled readOnly value={ChileDiscountAmount}   type="text" />
+                        <Form.Control disabled readOnly value={ChileDiscountAmount} type="text" />
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
+                        </Form.Label>
+                      </td>
 
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("CLP"))} {ChileminValue}</Form.Label>
-                           
-                          </td>
                          
                         
                         </tr>
@@ -2194,11 +2201,12 @@ const AddCoupon = ({code}) => {
                               <Form.Control disabled readOnly value={ColumbiaDiscountPercent}  type="text" />
                           </td>
                           <td>
-                           
-                          <Form.Control disabled readOnly value={ColumbiaDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("COP"))} {ColumbiaminValue}</Form.Label>
-                           
+                              <Form.Control disabled readOnly value={ColumbiaDiscountAmount} type="text" />
+                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                  Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
+                              </Form.Label>
                           </td>
+
                      
                         
                         </tr>
@@ -2223,12 +2231,12 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                            
-                          <Form.Control disabled readOnly value={EgyptDiscountAmount}  type="text" />
+                        <Form.Control disabled readOnly value={EgyptDiscountAmount} type="text" />
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("EGP")} {parseFloat(EgyptminValue).toFixed(2)}
+                        </Form.Label>
+                    </td>
 
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EGP"))}{EgyptminValue}</Form.Label>
-                           
-                          </td>
                       
                         
                         </tr>
@@ -2253,10 +2261,12 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                            
-                            <Form.Control disabled readOnly value={EUDiscountAmount}  type="text" />
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("EUR"))} {EUminValue}</Form.Label>
+                              <Form.Control disabled readOnly value={EUDiscountAmount} type="text" />
+                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                  Minimum: {getSymbolFromCurrency("EUR")} {parseFloat(EUminValue).toFixed(2)}
+                              </Form.Label>
                           </td>
+
                        
                         
                         </tr>
@@ -2281,11 +2291,12 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                            
-                              <Form.Control disabled readOnly value={GBPDiscountAmount}  type="text" />
-                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("GBP"))} {GBPminValue}</Form.Label>
-                            
-                          </td>
+                            <Form.Control disabled readOnly value={GBPDiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
+
                          
                         
                         </tr>
@@ -2310,13 +2321,12 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                           
-                          <Form.Control disabled readOnly value={IndonesiaDiscountAmount}  type="text" />
+                        <Form.Control disabled readOnly value={IndonesiaDiscountAmount} type="text" />
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
+                        </Form.Label>
+                    </td>
 
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("IDR"))} {IndonesiaminValue}</Form.Label>
-                          
-                          </td>
-                      
                         
                         </tr>
 
@@ -2339,13 +2349,12 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                         
+                            <Form.Control disabled readOnly value={IsrealDiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("ILS")} {parseFloat(IsrealminValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
 
-                          <Form.Control disabled readOnly value={IsrealDiscountAmount} type="text" />
-
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("ILS"))} {IsrealminValue}</Form.Label>
-                          
-                          </td>
                      
                         
                         </tr>
@@ -2370,11 +2379,12 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                          <Form.Control disabled readOnly value={IndiaDiscountAmount}  type="text" />
+                          <Form.Control disabled readOnly value={IndiaDiscountAmount} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("INR")} {parseFloat(IndiaminValue).toFixed(2)}
+                          </Form.Label>
+                      </td>
 
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("INR"))} {IndiaminValue}</Form.Label>
-                            
-                          </td>
                     
                         
                         </tr>
@@ -2428,11 +2438,12 @@ const AddCoupon = ({code}) => {
                               
                           </td>
                           <td>
-                           
-                          <Form.Control disabled readOnly value={SKDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SKminValue}</Form.Label>
-                            
-                          </td>
+                            <Form.Control disabled readOnly value={SKDiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
+
                        
                         
                         </tr>
@@ -2457,11 +2468,12 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                            <Form.Control disabled readOnly value={MexicoDisountAmount}  type="text" />
-                           
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MXN"))} {MexicominValue}</Form.Label>
+                            <Form.Control disabled readOnly value={MexicoDisountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
 
-                          </td>
                         
                         
                         </tr>
@@ -2486,13 +2498,12 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                            
-                          <Form.Control 
-                          disabled readOnly
-                          value={MalaysiaDiscountAmount}  type="text" />
-                  <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("MYR"))}{MalaysiaminValue}</Form.Label>
-                            
+                              <Form.Control disabled readOnly value={MalaysiaDiscountAmount} type="text" />
+                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                  Minimum: {getSymbolFromCurrency("MYR")} {parseFloat(MalaysiaminValue).toFixed(2)}
+                              </Form.Label>
                           </td>
+
                       
                         
                         </tr> 
@@ -2515,11 +2526,12 @@ const AddCoupon = ({code}) => {
                           <Form.Control disabled readOnly value={NigeriaDiscountPercent}  type="text" />
                           </td>
                           <td>
-                              <Form.Control disabled readOnly value={NigeriaDiscountAmount}  type="text" />
+                          <Form.Control disabled readOnly value={NigeriaDiscountAmount} type="text" />
+                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
+                          </Form.Label>
+                      </td>
 
-                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("NGN"))}{NigeriaminValue}</Form.Label>
-                           
-                          </td>
                         
                         
                         </tr> 
@@ -2544,11 +2556,12 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                            
-                          <Form.Control disabled readOnly value={NorwayDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("NOK"))}{NorwayminValue}</Form.Label>
-                           
-                          </td>
+                                <Form.Control disabled readOnly value={NorwayDiscountAmount} type="text" />
+                                <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                    Minimum: {getSymbolFromCurrency("NOK")} {parseFloat(NorwayminValue).toFixed(2)}
+                                </Form.Label>
+                            </td>
+
                       
                         
                         </tr>
@@ -2574,11 +2587,12 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                          
-                            
-                        <Form.Control disabled readOnly value={PeruDiscountAmount}  type="text" />
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PEN"))} {Peruminvalue}</Form.Label>
-                          </td>
+                    <Form.Control disabled readOnly value={PeruDiscountAmount} type="text" />
+                    <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                        Minimum: {getSymbolFromCurrency("PEN")} {parseFloat(Peruminvalue).toFixed(2)}
+                    </Form.Label>
+                </td>
+
                      
                         
                         </tr> 
@@ -2603,11 +2617,12 @@ const AddCoupon = ({code}) => {
 
                           </td>
                           <td>
-                         
-                          <Form.Control disabled readOnly value={PhilipinesAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PHP"))} {PhilipinesminValue}</Form.Label>
-                          
-                          </td>
+                    <Form.Control disabled readOnly value={PhilipinesAmount} type="text" />
+                    <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                        Minimum: {getSymbolFromCurrency("PHP")} {parseFloat(PhilipinesminValue).toFixed(2)}
+                    </Form.Label>
+                </td>
+
                        
                         
                         </tr> 
@@ -2632,12 +2647,12 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                       
+                            <Form.Control disabled readOnly value={PolandDiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("PLN")} {parseFloat(PolandminValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
 
-                        <Form.Control disabled readOnly value={PolandDiscountAmount}  type="text" />
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("PLN"))} {PolandminValue}</Form.Label>
-                          
-                          </td>
                          
                         
                         </tr> 
@@ -2662,11 +2677,12 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                          
-                          <Form.Control disabled readOnly value={RomaniaDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("RON"))} {Romaniaminvalue}</Form.Label>
-                           
-                          </td>
+                            <Form.Control disabled readOnly value={RomaniaDiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("RON")} {parseFloat(Romaniaminvalue).toFixed(2)}
+                            </Form.Label>
+                        </td>
+
                       
                         
                         </tr> 
@@ -2691,11 +2707,12 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                          
-                          <Form.Control disabled readOnly value={RussiaDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("RUB"))} {RussiaminValue}</Form.Label>
-                           
-                          </td>
+                        <Form.Control disabled readOnly value={RussiaDiscountAmount} type="text" />
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("RUB")} {parseFloat(RussiaminValue).toFixed(2)}
+                        </Form.Label>
+                    </td>
+
                         
                         
                         </tr>
@@ -2720,11 +2737,12 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                           
-                          <Form.Control disabled readOnly value={SingaporeDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("SGD"))} {SingaporeminValue}</Form.Label>
-                            
-                          </td>
+                    <Form.Control disabled readOnly value={SingaporeDiscountAmount} type="text" />
+                    <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                        Minimum: {getSymbolFromCurrency("SGD")} {parseFloat(SingaporeminValue).toFixed(2)}
+                    </Form.Label>
+                </td>
+
                         
                         
                         </tr> 
@@ -2749,16 +2767,17 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                            
-                          <Form.Control disabled readOnly value={ThailandDiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("THB"))} {ThailandminValue}</Form.Label>
-                           
-                          </td>
+                            <Form.Control disabled readOnly value={ThailandDiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("THB")} {parseFloat(ThailandminValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
+
                         
                         
                         </tr> 
 
-                        <tr>
+                        {/* <tr>
                           <td>Turkey
                         <td className="col-12 font-italic mt-5">  
                           <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("TRY"))}{TurkeyTip} may maximise sales.</Form.Label></td>
@@ -2786,7 +2805,7 @@ const AddCoupon = ({code}) => {
                           </td>
                         
                         
-                        </tr>
+                        </tr> */}
 
                           <tr>
                           <td>Taiwan
@@ -2808,13 +2827,12 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                         
+                        <Form.Control disabled readOnly value={TaiwanDiscountAmount} type="text" />
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("TWD")} {parseFloat(TaiwanminValue).toFixed(2)}
+                        </Form.Label>
+                    </td>
 
-                          <Form.Control disabled readOnly value={TaiwanDiscountAmount}  type="text" />
-
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TWD"))} {TaiwanminValue}</Form.Label>
-                          
-                          </td>
                         
                         
                         </tr>
@@ -2839,11 +2857,12 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                            
-                          <Form.Control disabled readOnly value={VietnamDisocuntAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("VND"))} {VietnamminValue}</Form.Label>
-                           
-                          </td>
+                        <Form.Control disabled readOnly value={VietnamDisocuntAmount} type="text" />
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("VND")} {parseFloat(VietnamminValue).toFixed(2)}
+                        </Form.Label>
+                    </td>
+
                        
                         
                         </tr> 
@@ -2869,11 +2888,12 @@ const AddCoupon = ({code}) => {
                         
                           </td>
                           <td>
-                          
-                          <Form.Control disabled readOnly value={SADiscountAmount}  type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("KRW"))} {SAminValue}</Form.Label>
-                          </td>
-                       
+                            <Form.Control disabled readOnly value={SADiscountAmount} type="text" />
+                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("ZAR")} {parseFloat(SAminValue).toFixed(2)}
+                            </Form.Label>
+                        </td>
+
                         
                         </tr> 
                           
