@@ -2745,11 +2745,21 @@ const AddCoupon = ({code}) => {
                           <Form.Control disabled readOnly value={NigeriaDiscountPercent}  type="text" />
                           </td>
                           <td>
-                          <Form.Control disabled readOnly value={NigeriaDiscountAmount} type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
-                          </Form.Label>
-                      </td>
+                      <Form.Control
+                        isInvalid={NigeriaDiscountAmount != 0 && NigeriaDiscountAmount < parseFloat(NigeriaminValue).toFixed(2)}
+                        disabled
+                        readOnly
+                        value={NigeriaDiscountAmount}
+                        type="text"
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Not within range
+                      </Form.Control.Feedback>
+                      <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                        Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
+                      </Form.Label>
+                    </td>
+
 
                         
                         
