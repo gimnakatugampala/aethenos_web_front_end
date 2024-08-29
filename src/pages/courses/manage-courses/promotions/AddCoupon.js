@@ -662,7 +662,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setAusDiscountValue(e.target.value)
-      setAusDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(AusListPrice).toFixed(2)) * 100).toFixed(2))
+      setAusDiscountPercent((((Number.parseFloat(AusListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(AusListPrice).toFixed(2)) * 100).toFixed(2))
       setAusDiscountAmount((Number.parseFloat(AusListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setAusDiscountValue("")
