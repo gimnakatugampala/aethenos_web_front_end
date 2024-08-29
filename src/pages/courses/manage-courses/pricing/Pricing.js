@@ -784,23 +784,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Aus
-    const handleDefaultPercentageDiscountBrazil = (e) =>{
-
-      if(e.target.value == ""){
-        setBrazilDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountBrazil = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-  
-      setBrazilDisPercent(e.target.value)
-  
-      setBrazilNetPrice((parseFloat(BrazilListPrice) - parseFloat(BrazilListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-        // Calculate Discount Amount
-        setBrazilDisAmt((Number.parseFloat(BrazilListPrice) - ((parseFloat(BrazilListPrice) - parseFloat(BrazilListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setBrazilDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(BrazilListPrice) - parseFloat(BrazilListPrice) * discountValue / 100).toFixed(2);
+    setBrazilNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(BrazilListPrice) - parseFloat(netPrice)).toFixed(2);
+    setBrazilDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
 
