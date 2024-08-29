@@ -174,12 +174,17 @@ const AddCoupon = ({code}) => {
           return
       }
 
+      console.log(startDateDiscount)
+      console.log(endDateDiscount)
+
+      const [day, month, year] = endDateDiscount.split("/");
+     const formattedEndDate = `${year}-${month}-${day}`;
 
 
       var raw = {
         "code":`${couponCodeDiscount}`,
         "start_date":`${moment(startDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
-        "end_date":`${moment(endDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
+        "end_date":`${moment(formattedEndDate).format("YYYY-MM-DD h:mm:ss")}`,
         "course_code":`${code}`,
         "global_list_price":`${DGlobalPricing == "" ? 0 : DGlobalPricing}`,
         "global_discount_price":`${DDiscountValue == "" ? 0 : DDiscountValue}`,
