@@ -4520,8 +4520,12 @@ const handleDefaultPercentageDiscount = (e) => {
 
                     <tr>
                         <td>Worldwide
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("USD"))}{GlobalTip} may optimize sales.</Form.Label></td>
+                        <td className="col-12 font-italic mt-5">
+                          <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("USD")}{parseFloat(GlobalTip).toFixed(2)} may optimize sales.
+                          </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>USD</td>
