@@ -1996,16 +1996,23 @@ const AddCoupon = ({code}) => {
                 </div>
                
 
-             
-              <div className="col-md-3">
-              <Form.Label className="pricing-label"><b>Discounted Amount (USD)</b></Form.Label>
-              <Form.Control disabled readOnly value={DDiscountAmount}  type="text" />
-              <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
-                  <i>Minimum: ${parseFloat(MinDefaultValue).toFixed(2)}</i>
-              </Form.Label>
+                <div className="col-md-3">
+                  <Form.Label className="pricing-label"><b>Discounted Amount (USD)</b></Form.Label>
+                  <Form.Control
+                    isInvalid={DDiscountAmount != 0 && DDiscountAmount < parseFloat(MinDefaultValue).toFixed(2)}
+                    disabled
+                    readOnly
+                    value={DDiscountAmount}
+                    type="text"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Not within range
+                  </Form.Control.Feedback>
+                  <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
+                    <i>Minimum: ${parseFloat(MinDefaultValue).toFixed(2)}</i>
+                  </Form.Label>
+                </div>
 
-              </div>
-               
 
               
 
