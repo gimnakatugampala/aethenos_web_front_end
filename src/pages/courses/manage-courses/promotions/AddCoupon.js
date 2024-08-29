@@ -2703,11 +2703,21 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                              <Form.Control disabled readOnly value={MalaysiaDiscountAmount} type="text" />
-                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                  Minimum: {getSymbolFromCurrency("MYR")} {parseFloat(MalaysiaminValue).toFixed(2)}
-                              </Form.Label>
-                          </td>
+                          <Form.Control
+                            isInvalid={MalaysiaDiscountAmount != 0 && MalaysiaDiscountAmount < parseFloat(MalaysiaminValue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={MalaysiaDiscountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("MYR")} {parseFloat(MalaysiaminValue).toFixed(2)}
+                          </Form.Label>
+                        </td>
+
 
                       
                         
