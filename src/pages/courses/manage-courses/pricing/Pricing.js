@@ -2575,22 +2575,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Norway
-    const handleDefaultPercentageDiscountNorway = (e) =>{
-
-      if(e.target.value == ""){
-        setNorwayDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountNorway = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setNorwayDisPercent(e.target.value)
-  
-      setNorwayNetPrice((parseFloat(NorwayListPrice) - parseFloat(NorwayListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setNorwayDisAmt((Number.parseFloat(NorwayListPrice) - ((parseFloat(NorwayListPrice) - parseFloat(NorwayListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setNorwayDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(NorwayListPrice) - parseFloat(NorwayListPrice) * discountValue / 100).toFixed(2);
+    setNorwayNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(NorwayListPrice) - parseFloat(netPrice)).toFixed(2);
+    setNorwayDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
