@@ -2964,11 +2964,21 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                            <Form.Control disabled readOnly value={RomaniaDiscountAmount} type="text" />
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("RON")} {parseFloat(Romaniaminvalue).toFixed(2)}
-                            </Form.Label>
+                          <Form.Control
+                            isInvalid={RomaniaDiscountAmount != 0 && RomaniaDiscountAmount < parseFloat(Romaniaminvalue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={RomaniaDiscountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("RON")} {parseFloat(Romaniaminvalue).toFixed(2)}
+                          </Form.Label>
                         </td>
+
 
                       
                         
