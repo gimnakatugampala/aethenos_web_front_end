@@ -2362,11 +2362,20 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                              <Form.Control disabled readOnly value={EUDiscountAmount} type="text" />
-                              <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                  Minimum: {getSymbolFromCurrency("EUR")} {parseFloat(EUminValue).toFixed(2)}
-                              </Form.Label>
-                          </td>
+                        <Form.Control
+                          isInvalid={EUDiscountAmount != 0 && EUDiscountAmount < parseFloat(EUminValue).toFixed(2)}
+                          disabled
+                          readOnly
+                          value={EUDiscountAmount}
+                          type="text"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("EUR")} {parseFloat(EUminValue).toFixed(2)}
+                        </Form.Label>
+                      </td>
 
                        
                         
