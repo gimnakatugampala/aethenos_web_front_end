@@ -1382,22 +1382,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount EU
-    const handleDefaultPercentageDiscountEU = (e) =>{
-
-      if(e.target.value == ""){
-        setEUDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountEU = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setEUDisPercent(e.target.value)
-  
-      setEUNetPrice((parseFloat(EUListPrice) - parseFloat(EUListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-        // Calculate Discount Amount
-        setEUDisAmt((Number.parseFloat(EUListPrice) - ((parseFloat(EUListPrice) - parseFloat(EUListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setEUDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(EUListPrice) - parseFloat(EUListPrice) * discountValue / 100).toFixed(2);
+    setEUNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(EUListPrice) - parseFloat(netPrice)).toFixed(2);
+    setEUDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
   // ---------------------
@@ -1493,22 +1500,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount GBP
-    const handleDefaultPercentageDiscountGBP = (e) =>{
-
-      if(e.target.value == ""){
-        setGBPDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountGBP = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setGBPDisPercent(e.target.value)
-  
-      setGBPNetPrice((parseFloat(GBPListPrice) - parseFloat(GBPListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setGBPDisAmt((Number.parseFloat(GBPListPrice) - ((parseFloat(GBPListPrice) - parseFloat(GBPListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setGBPDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(GBPListPrice) - parseFloat(GBPListPrice) * discountValue / 100).toFixed(2);
+    setGBPNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(GBPListPrice) - parseFloat(netPrice)).toFixed(2);
+    setGBPDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
   // ---------------------
