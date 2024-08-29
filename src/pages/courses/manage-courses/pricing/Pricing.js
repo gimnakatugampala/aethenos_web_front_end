@@ -1971,23 +1971,37 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Japan
-    const handleDefaultPercentageDiscountJapan = (e) =>{
-
-      if(e.target.value == ""){
-        setJapanDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountJapan = (e) => {
+    // Parse the discount value from the input as an integer
+    let discountValue = parseInt(e.target.value, 10);
   
-  
-      setJapanDisPercent(e.target.value)
-  
-      setJapanNetPrice((parseInt(JapanListPrice) - parseInt(JapanListPrice) * parseInt(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-       // Calculate Discount Amount
-       setJapanDisAmt((Number.parseInt(JapanListPrice) - ((parseInt(JapanListPrice) - parseInt(JapanListPrice) * parseInt(e.target.value == "" ? 0 : e.target.value)/100))))
-  
+    // Ensure the discount value is valid and within range
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Default to 0 if invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Cap the discount at 100%
+    }
+  
+    // Update the discount percentage state
+    setJapanDisPercent(discountValue);
+  
+    // Parse the list price and ensure it's a valid integer
+    const listPrice = parseInt(JapanListPrice, 10) || 0;
+  
+    // Calculate the net price after applying the discount
+    const netPrice = listPrice - (listPrice * discountValue / 100);
+    setJapanNetPrice(netPrice.toFixed(2)); // Round to 2 decimal places
+  
+    // Calculate the discount amount as an integer
+    const discountAmount = Math.round(listPrice - netPrice);
+    setJapanDisAmt(discountAmount);
+  
+    // Log the discount value for debugging
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
