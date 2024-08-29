@@ -2789,11 +2789,20 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                                <Form.Control disabled readOnly value={NorwayDiscountAmount} type="text" />
-                                <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                    Minimum: {getSymbolFromCurrency("NOK")} {parseFloat(NorwayminValue).toFixed(2)}
-                                </Form.Label>
-                            </td>
+                          <Form.Control
+                            isInvalid={NorwayDiscountAmount != 0 && NorwayDiscountAmount < parseFloat(NorwayminValue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={NorwayDiscountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("NOK")} {parseFloat(NorwayminValue).toFixed(2)}
+                          </Form.Label>
+                        </td>
 
                       
                         
