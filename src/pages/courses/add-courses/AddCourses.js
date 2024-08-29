@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from "react";
 
-import StepOne from './step-one/StepOne';
-import StepTwo from './step-two/StepTwo';
-import StepThree from './step-three/StepThree';
-import StepFour from './step-four/StepFour';
+import StepOne from "./step-one/StepOne";
+import StepTwo from "./step-two/StepTwo";
+import StepThree from "./step-three/StepThree";
+import StepFour from "./step-four/StepFour";
 
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -22,13 +22,9 @@ import MainLoaderCourse from '../../../commonFunctions/loaders/MainLoader/MainLo
 import { v4 as uuidv4 } from 'uuid';
 
 
-const steps = ['Basic Details', 'Keywords Tags', 'Course Image', 'Test Video'];
-
-
+const steps = ["Basic Details", "Keywords Tags", "Course Image", "Test Video"];
 
 const AddCourses = () => {
-
-
   // File Upload
   let fieUploadUUID = uuidv4();
   let uploadType = "test-video"
@@ -37,17 +33,16 @@ const AddCourses = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
-  const [course_title, setcourse_title] = useState("")
-  const [course_category, setcourse_category] = useState("")
+  const [course_title, setcourse_title] = useState("");
+  const [course_category, setcourse_category] = useState("");
 
-  const [course_keywords, setcourse_keywords] = useState([])
+  const [course_keywords, setcourse_keywords] = useState([]);
 
-  const [course_image, setcourse_image] = useState("")
+  const [course_image, setcourse_image] = useState("");
 
-  const [course_test_video, setcourse_test_video] = useState("")
+  const [course_test_video, setcourse_test_video] = useState("");
 
-  const [loading, setloading] = useState(false)
-
+  const [loading, setloading] = useState(false);
 
   const isStepOptional = (step) => {
     return step === 0;
@@ -60,84 +55,65 @@ const AddCourses = () => {
   const handleNext = () => {
     let newSkipped = skipped;
 
-    if(activeStep == 0){
-
-      if(course_title == ""){
-
+    if (activeStep == 0) {
+      if (course_title == "") {
         Swal.fire({
-          title: 'Empty Field!',
-          text: 'Please Fill Course Title!',
-          icon: 'error'
-        })
+          title: "Empty Field!",
+          text: "Please Fill Course Title!",
+          icon: "error",
+        });
 
-        return
-
-      }else if(course_category == ""){
-
+        return;
+      } else if (course_category == "") {
         Swal.fire({
-          title: 'Empty Field!',
-          text: 'Please Select a Course Category!',
-          icon: 'error'
-        })
+          title: "Empty Field!",
+          text: "Please Select a Course Category!",
+          icon: "error",
+        });
 
-        return
-
+        return;
       }
-
-    }else if(activeStep == 1){
-
-      if(course_keywords.length != 5){
+    } else if (activeStep == 1) {
+      if (course_keywords.length != 5) {
         Swal.fire({
-          title: ' Keywords Error!',
-          text: 'Please enter a minimum of 5 Keywords!',
-          icon: 'error'
-        })
+          title: " Keywords Error!",
+          text: "Please enter a minimum of 5 Keywords!",
+          icon: "error",
+        });
 
-        return
-
+        return;
       }
-
-    }else if(activeStep == 2){
-
-      if(course_image == ""){
+    } else if (activeStep == 2) {
+      if (course_image == "") {
         Swal.fire({
-          title: ' Image Error!',
-          text: 'Please Upload an Image!',
-          icon: 'error'
-        })
+          title: " Image Error!",
+          text: "Please Upload an Image!",
+          icon: "error",
+        });
 
-        return
-
+        return;
       }
-    }else if(activeStep == 3){
-
-      if(course_test_video == ""){
+    } else if (activeStep == 3) {
+      if (course_test_video == "") {
         Swal.fire({
-          title: ' Video Error!',
-          text: 'Please Upload a Video!',
-          icon: 'error'
-        })
+          title: " Video Error!",
+          text: "Please Upload a Video!",
+          icon: "error",
+        });
 
-        return
-
+        return;
       }
-
-   
     }
-    
+
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
 
-
-    if(activeStep < 3){
+    if (activeStep < 3) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
     }
-
-  
-
 
     // console.log(activeStep)
   };
@@ -161,23 +137,21 @@ const AddCourses = () => {
     });
   };
 
- 
   const [uploading, setUploading] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const progressBarRef = useRef(null);
 
+  const handleClick = (e) => {
+    e.preventDefault();
 
-  const handleClick = (e) =>{
-    e.preventDefault()
-
-    setloading(true)
+    setloading(true);
 
     if (course_test_video != "") {
       const maxSize = 3 * 1024 * 1024 * 1024;
       if (course_test_video.size > maxSize) {
         setVideoFile(null);
-        setloading(false)
-        ErrorAlert('Error','File size exceeds 3.0GB.');
+        setloading(false);
+        ErrorAlert("Error", "File size exceeds 3.0GB.");
         return;
       } else {
         setVideoFile(course_test_video);
@@ -190,11 +164,9 @@ const AddCourses = () => {
         );
       }
     } else {
-      ErrorAlert('Error', 'No file selected.');
-      setloading(false)
+      ErrorAlert("Error", "No file selected.");
+      setloading(false);
     }
-
-   
 
     // addCourse(
     //   course_title,
@@ -208,40 +180,38 @@ const AddCourses = () => {
     // console.log(course_title)
     // console.log(course_category)
     // console.log(course_keywords)
-    // console.log(course_image) 
-    console.log(course_test_video)
-  }
+    // console.log(course_image)
+    console.log(course_test_video);
+  };
 
   const updateProgressBar = (progress) => {
     if (progressBarRef.current) {
-      progressBarRef.current.style.width = progress + '%';
-      progressBarRef.current.textContent = progress + '%';
+      progressBarRef.current.style.width = progress + "%";
+      progressBarRef.current.textContent = progress + "%";
     }
 
-    if(progress == 100){
-        addCourse(
-      fieUploadUUID,
-      course_title,
-      course_category,
-      course_keywords,
-      course_image,
-      course_test_video,
-      setloading
-    )
+    if (progress == 100) {
+      addCourse(
+        fieUploadUUID,
+        course_title,
+        course_category,
+        course_keywords,
+        course_image,
+        course_test_video,
+        setloading
+      );
     }
 
-    console.log(progress)
+    console.log(progress);
   };
 
   return (
-   <div className='all-courses-container'>
+    <div className="all-courses-container">
+      {loading && <MainLoaderCourse />}
 
-    {loading && <MainLoaderCourse /> }
-    
-      <Card bordered={false}>  
-      <Box direction='vertical' sx={{ width: '100%'}}>
-            
-          <Stepper className='my-2' activeStep={activeStep}>
+      <Card bordered={false}>
+        <Box direction="vertical" sx={{ width: "100%" }}>
+          <Stepper className="my-2" activeStep={activeStep}>
             {steps.map((label, index) => {
               const stepProps = {};
               const labelProps = {};
@@ -250,15 +220,15 @@ const AddCourses = () => {
                 labelProps.optional = (
                   <Typography variant="caption">Step One</Typography>
                 );
-              }else if(index == 1){
+              } else if (index == 1) {
                 labelProps.optional = (
                   <Typography variant="caption">Step Two</Typography>
                 );
-              }else if(index == 2){
+              } else if (index == 2) {
                 labelProps.optional = (
                   <Typography variant="caption">Step Three</Typography>
                 );
-              }else if(index == 3){
+              } else if (index == 3) {
                 labelProps.optional = (
                   <Typography variant="caption">Step Four</Typography>
                 );
@@ -274,30 +244,37 @@ const AddCourses = () => {
                 </Step>
               );
             })}
-
           </Stepper>
-          
-            <React.Fragment>
 
-
-            <div className='my-5'>
+          <React.Fragment>
+            <div className="my-5">
               {activeStep == 0 ? (
-                <StepOne setcourse_category={setcourse_category} setcourse_title={setcourse_title} />
+                <StepOne
+                  setcourse_category={setcourse_category}
+                  setcourse_title={setcourse_title}
+                />
               ) : activeStep == 1 ? (
-                <StepTwo course_keywords={course_keywords} setcourse_keywords={setcourse_keywords} />
+                <StepTwo
+                  course_keywords={course_keywords}
+                  setcourse_keywords={setcourse_keywords}
+                />
               ) : activeStep == 2 ? (
                 <StepThree setcourse_image={setcourse_image} />
-              ) : activeStep == 3 && (
-                <StepFour course_test_video={course_test_video} setcourse_test_video={setcourse_test_video} />
-              ) }
+              ) : (
+                activeStep == 3 && (
+                  <StepFour
+                    course_test_video={course_test_video}
+                    setcourse_test_video={setcourse_test_video}
+                  />
+                )
+              )}
             </div>
 
-          
-              <Box  sx={{ display: 'flex',flex: '1 1 auto'}}>
-          
+            <div className="row col-12">
+              <div className="col-6">
                 <Button
-                variant="contained"
-                  className='mt-5 p-0'
+                  variant="contained"
+                  className="mt-5"
                   color="primary"
                   disabled={activeStep === 0}
                   onClick={handleBack}
@@ -305,29 +282,30 @@ const AddCourses = () => {
                 >
                   Back
                 </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-
-                <Button className='mt-5' onClick={handleNext}>
-                  {activeStep === steps.length -1 ? <Button onClick={handleClick} variant="contained" color='primary'>Send For Approval</Button> : <Button variant="contained" color='primary'>Next</Button>}
+              </div>
+              <div className="col-6 text-end p-0" >
+                <Button className="mt-5" onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      onClick={handleClick}
+                      variant="contained"
+                      color="primary"
+                    >
+                      Send For Approval
+                    </Button>
+                  ) : (
+                    <Button variant="contained" color="primary">
+                      Next
+                    </Button>
+                  )}
                 </Button>
-
-              </Box>
-              
-
-            </React.Fragment>
-        
-    
-
-      
+              </div>
+            </div>
+          </React.Fragment>
         </Box>
-    </Card>
-    
+      </Card>
+    </div>
+  );
+};
 
-    
-
-
-   </div>
-  )
-}
-
-export default AddCourses
+export default AddCourses;

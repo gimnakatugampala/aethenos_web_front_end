@@ -74,7 +74,7 @@ const StepFour = ({course_test_video, setcourse_test_video}) => {
        {/* <ReactPlayer width={URL != "" ? "320" : "0"} height={URL != "" ? "240" : "0"}  url={course_test_video} /> */}
 
        {URL && (
-        <div className='m-4'>
+        <div className='m-4 d-flex justify-content-center'>
           <ReactPlayer  width='380px' height='240px' url={URL} controls />
         </div>
         )}

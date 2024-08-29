@@ -408,7 +408,7 @@ const handleFileChange = (event) => {
               <h6>
                 <b>Course image <span className="text-danger">*</span></b>
               </h6>
-              {preview_img == "" ? <img style={{objectFit:'cover'}} height={200} width={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img  height={150} width={200} src={preview_img} /> : <img  height={150} width={200} src={`${FILE_PATH}${preview_img}`} /> }
+              {preview_img == "" ? <img style={{objectFit:'cover', width: "auto"}} height={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img  height={150} src={preview_img} /> : <img  height={150}  src={`${FILE_PATH}${preview_img}`} /> }
             
 
      
@@ -452,7 +452,7 @@ const handleFileChange = (event) => {
                 />
               ) : (
                 <video
-                  width={200}
+                  style={{width: "auto"}} 
                   height={200}
                   controls
                   src={isDataURI(videoSrc) ? videoSrc : `${FILE_PATH}${videoSrc}`}
