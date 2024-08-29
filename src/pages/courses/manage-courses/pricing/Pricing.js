@@ -2928,22 +2928,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Poland
-      const handleDefaultPercentageDiscountPoland = (e) =>{
-
-        if(e.target.value == ""){
-          setPolandDisPercent(0)
-        }
+    const handleDefaultPercentageDiscountPoland = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        setPolandDisPercent(e.target.value)
-    
-        setPolandNetPrice((parseFloat(PolandListPrice) - parseFloat(PolandListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-        // Calculate Discount Amount
-        setPolandDisAmt((Number.parseFloat(PolandListPrice) - ((parseFloat(PolandListPrice) - parseFloat(PolandListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setPolandDisPercent(discountValue);
+    
+      setPolandNetPrice((parseFloat(PolandListPrice) - parseFloat(PolandListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setPolandDisAmt((Number.parseFloat(PolandListPrice) - ((parseFloat(PolandListPrice) - parseFloat(PolandListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
