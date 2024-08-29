@@ -709,7 +709,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setBrazilDiscountValue(e.target.value)
-      setBrazilDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(BrazilListPrice).toFixed(2)) * 100).toFixed(2))
+      setBrazilDiscountPercent((((Number.parseFloat(BrazilListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(BrazilListPrice).toFixed(2)) * 100).toFixed(2))
       setBrazilDiscountAmount((Number.parseFloat(BrazilListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setBrazilDiscountValue("")
