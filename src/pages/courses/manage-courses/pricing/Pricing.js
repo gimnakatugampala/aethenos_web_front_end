@@ -1853,22 +1853,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount India
-    const handleDefaultPercentageDiscountIndia = (e) =>{
-
-      if(e.target.value == ""){
-        setIndiaDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountIndia = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setIndiaDisPercent(e.target.value)
-  
-      setIndiaNetPrice((parseFloat(IndiaListPrice) - parseFloat(IndiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-       // Calculate Discount Amount
-       setIndiaDisAmt((Number.parseFloat(IndiaListPrice) - ((parseFloat(IndiaListPrice) - parseFloat(IndiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setIndiaDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(IndiaListPrice) - parseFloat(IndiaListPrice) * discountValue / 100).toFixed(2);
+    setIndiaNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(IndiaListPrice) - parseFloat(netPrice)).toFixed(2);
+    setIndiaDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
