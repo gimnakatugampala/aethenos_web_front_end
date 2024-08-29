@@ -1525,7 +1525,7 @@ const AddCoupon = ({code}) => {
   
       if(numberOnlyRegex.test(e.target.value)){
         setRomaniaDiscountValue(e.target.value)
-        setRomaniaDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(RomaniaListPrice).toFixed(2)) * 100).toFixed(2))
+        setRomaniaDiscountPercent((((Number.parseFloat(RomaniaListPrice) - Number.parseFloat(e.target.value))/ Number.parseFloat(RomaniaListPrice).toFixed(2)) * 100).toFixed(2))
         setRomaniaDiscountAmount((Number.parseFloat(RomaniaListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
         setRomaniaDiscountValue("")
