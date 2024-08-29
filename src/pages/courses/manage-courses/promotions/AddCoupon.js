@@ -1607,7 +1607,7 @@ const AddCoupon = ({code}) => {
   
       if(numberOnlyRegex.test(e.target.value)){
         setSingaporeDiscountValue(e.target.value)
-        setSingaporeDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(SingaporeListPrice).toFixed(2)) * 100).toFixed(2))
+        setSingaporeDiscountPercent((((Number.parseFloat(SingaporeListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(SingaporeListPrice).toFixed(2)) * 100).toFixed(2))
         setSingaporeDiscountAmount((Number.parseFloat(SingaporeListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
         setSingaporeDiscountValue("")
