@@ -2234,7 +2234,16 @@ const AddCoupon = ({code}) => {
                               <Form.Control disabled readOnly value={ChileDiscountPercent}  type="text" />
                           </td>
                           <td>
-                        <Form.Control disabled readOnly value={ChileDiscountAmount} type="text" />
+                        <Form.Control
+                          isInvalid={ChileDiscountAmount != 0 && ChileDiscountAmount < parseFloat(ChileminValue).toFixed(2)}
+                          disabled
+                          readOnly
+                          value={ChileDiscountAmount}
+                          type="text"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
                         </Form.Label>
