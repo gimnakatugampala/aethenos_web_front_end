@@ -151,6 +151,7 @@ const Promotion = ({code}) => {
                   <th>Code</th>
                   <th>Global Price</th>
                   <th>Created date</th>
+                  <th>Start date</th>
                   <th>Expiry date</th>
                   <th>Redemptions</th>
                   <th>Status</th>
@@ -162,6 +163,7 @@ const Promotion = ({code}) => {
                 <tr key={key}>
                   <td>{coupon.couponCode}</td>
                   <td>{coupon.couponType.id == 1 ? "Free" : 'Discount'}</td>
+                  <td>{coupon.createdDate == "" ? "N/A" : moment(coupon.createdDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
                   <td>{coupon.couponType.id == 1 ? '0/1000' : '0/Unlimited' }</td>
