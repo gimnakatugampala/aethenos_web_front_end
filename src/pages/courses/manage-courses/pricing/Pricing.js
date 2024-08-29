@@ -4568,10 +4568,12 @@ const handleDefaultPercentageDiscount = (e) => {
                                 Not within range
                                 </Form.Control.Feedback>
 
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum: {getSymbolFromCurrency(("USD"))}{MinDefaultValue}</Form.Label>
+                                <tr>
+                              <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                Minimum: {getSymbolFromCurrency("USD")} {parseFloat(MinDefaultValue).toFixed(2)}
+                              </Form.Label>
+                            </tr>
 
-                        </tr>
                           </td>
                         
                         </tr>
