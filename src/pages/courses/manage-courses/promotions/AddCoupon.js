@@ -1982,7 +1982,10 @@ const AddCoupon = ({code}) => {
               <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Global Discount Price (USD)</b></Form.Label>
               <Form.Control onChange={handleChangeGlobalPrice} value={DDiscountValue} type="text" />
-              <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Tip : Pricing around ${DTip} may optimise sales</i></Form.Label>
+              <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
+                            <i>Tip: Pricing around ${parseFloat(DTip).toFixed(2)} may optimise sales</i>
+                    </Form.Label>
+
               </div>
 
               
@@ -1997,7 +2000,10 @@ const AddCoupon = ({code}) => {
               <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Discount (USD)</b></Form.Label>
               <Form.Control disabled readOnly value={DDiscountAmount}  type="text" />
-              <Form.Label style={{fontSize:'13px',whiteSpace:'nowrap'}}><i>Minimum : ${MinDefaultValue}</i></Form.Label>
+              <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
+                  <i>Minimum: ${parseFloat(MinDefaultValue).toFixed(2)}</i>
+              </Form.Label>
+
               </div>
                
 
