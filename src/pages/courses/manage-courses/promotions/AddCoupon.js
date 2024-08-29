@@ -2449,11 +2449,21 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                        <Form.Control disabled readOnly value={IndonesiaDiscountAmount} type="text" />
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
+                          <Form.Control
+                            isInvalid={IndonesiaDiscountAmount != 0 && IndonesiaDiscountAmount < parseFloat(IndonesiaminValue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={IndonesiaDiscountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
-                        </Form.Label>
-                    </td>
+                          </Form.Label>
+                        </td>
+
 
                         
                         </tr>
