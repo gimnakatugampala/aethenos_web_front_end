@@ -1269,7 +1269,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setMalaysiaDiscountValue(e.target.value)
-      setMalaysiaDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(MalaysiaListPrice).toFixed(2)) * 100).toFixed(2))
+      setMalaysiaDiscountPercent((((Number.parseFloat(MalaysiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(MalaysiaListPrice).toFixed(2)) * 100).toFixed(2))
       setMalaysiaDiscountAmount((Number.parseFloat(MalaysiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setMalaysiaDiscountValue("")
