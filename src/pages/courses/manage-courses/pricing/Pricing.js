@@ -905,22 +905,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Canada
-    const handleDefaultPercentageDiscountCanada = (e) =>{
-
-      if(e.target.value == ""){
-        setCanadaDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountCanada = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setCanadaDisPercent(e.target.value)
-  
-      setCanadaNetPrice((parseFloat(CanadaListPrice) - parseFloat(CanadaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setCanadaDisAmt((Number.parseFloat(CanadaListPrice) - ((parseFloat(CanadaListPrice) - parseFloat(CanadaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setCanadaDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(CanadaListPrice) - parseFloat(CanadaListPrice) * discountValue / 100).toFixed(2);
+    setCanadaNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(CanadaListPrice) - parseFloat(netPrice)).toFixed(2);
+    setCanadaDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
 
