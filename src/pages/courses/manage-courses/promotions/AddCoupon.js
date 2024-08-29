@@ -87,9 +87,15 @@ const AddCoupon = ({code}) => {
       const startDate = new Date(start);
       const endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + 7);
-      return endDate.toISOString().split('T')[0];
+    
+      // Format the date as DD/MM/YYYY
+      const day = String(endDate.getDate()).padStart(2, '0');
+      const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
+      const year = endDate.getFullYear();
+    
+      return `${day}/${month}/${year}`;
     };
-
+    
 
     useEffect(() => {
       setEndDate(calculateEndDate(currentDate));
@@ -118,8 +124,15 @@ const AddCoupon = ({code}) => {
       const startDate = new Date(start);
       const endDate = new Date(startDate);
       endDate.setDate(startDate.getDate() + 30);
-      return endDate.toISOString().split('T')[0];
+    
+      // Format the date as DD/MM/YYYY
+      const day = String(endDate.getDate()).padStart(2, '0');
+      const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
+      const year = endDate.getFullYear();
+    
+      return `${day}/${month}/${year}`;
     };
+    
 
 
     useEffect(() => {
