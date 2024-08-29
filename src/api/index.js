@@ -5050,6 +5050,7 @@ export const AddWalletDetails = async (
         return;
       } else {
         ErrorAlert("Error", result.message);
+        setbtn_loading_payment_details(false);
       }
     })
     .catch((error) => console.error(error));
@@ -5088,7 +5089,7 @@ export const GetWalletDetails = async (
       setpaypalEmail(result.paypalEmail);
       setpaypalUsername(result.paypalUserName);
       setpayoneerEmail(result.payoneerEmail);
-      setpayoneerUsername(result.payoneerUserName);
+      // setpayoneerUsername(result.payoneerUserName);
 
       setbankSortNoOne(result.sort1);
       setbankSortNoTwo(result.sort2);

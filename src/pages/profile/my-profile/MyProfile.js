@@ -191,7 +191,7 @@ const MyProfile = () => {
   const [paypalUsername, setpaypalUsername] = useState("");
 
   const [payoneerEmail, setpayoneerEmail] = useState("");
-  const [payoneerUsername, setpayoneerUsername] = useState("");
+  const [payoneerUsername, setpayoneerUsername] = useState("NA");
 
   const [bankAccountNumber, setbankAccountNumber] = useState("");
   const [bankSortNoOne, setbankSortNoOne] = useState("");
@@ -781,7 +781,7 @@ const MyProfile = () => {
                         </div>
 
                         <div className="row">
-                          <div className="col-md-6">
+                          <div className="col-md-12">
                             <Form>
                               <Form.Group controlId="exampleForm.ControlInput1">
                                 <Form.Control
@@ -796,7 +796,7 @@ const MyProfile = () => {
                               </Form.Group>
                             </Form>
                           </div>
-                          <div className="col-md-6">
+                          {/* <div className="col-md-6">
                             <Form>
                               <Form.Group controlId="exampleForm.ControlInput1">
                                 <Form.Control
@@ -810,7 +810,7 @@ const MyProfile = () => {
                                 />
                               </Form.Group>
                             </Form>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
