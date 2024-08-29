@@ -1104,7 +1104,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setIndiaDiscountValue(e.target.value)
-      setIndiaDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(IndiaListPrice).toFixed(2)) * 100).toFixed(2))
+      setIndiaDiscountPercent((((Number.parseFloat(IndiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(IndiaListPrice).toFixed(2)) * 100).toFixed(2))
       setIndiaDiscountAmount((Number.parseFloat(IndiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setIndiaDiscountValue("")
