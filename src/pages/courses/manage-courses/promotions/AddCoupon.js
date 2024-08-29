@@ -2035,8 +2035,12 @@ const AddCoupon = ({code}) => {
                     
                   <tr>
                     <td >America
-                  <td className="col-12 font-italic mt-5">  
-                    <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("USD"))}{USATip} may maximise sales.</Form.Label></td>
+                    <td className="col-12 font-italic mt-5">  
+                      <Form.Label className="mt-3 tit fst-italic">
+                          Tip: Pricing around {getSymbolFromCurrency("USD")}{parseFloat(USATip).toFixed(2)} may maximise sales.
+                      </Form.Label>
+                  </td>
+
                   </td>
                   
                     <td>USD</td>
@@ -2066,8 +2070,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Australia
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("AUD"))}{AusTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                              <Form.Label className="mt-3 tit fst-italic">
+                                  Tip: Pricing around {getSymbolFromCurrency("AUD")}{parseFloat(AusTip).toFixed(2)} may maximise sales.
+                              </Form.Label>
+                          </td>
+
                         </td>
 
                           <td>AUD</td>
@@ -2096,8 +2104,12 @@ const AddCoupon = ({code}) => {
                         
                         <tr>
                           <td>Brazil
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("BRL"))}{BrazilTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("BRL")}{parseFloat(BrazilTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>BRL</td>
@@ -2125,8 +2137,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Canada
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("CAD"))}{CanadaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("CAD")}{parseFloat(CanadaTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>CAD</td>
@@ -2157,8 +2173,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Chile
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("CLP"))}{ChileTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                        <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("CLP")}{parseFloat(ChileTip).toFixed(2)} may maximise sales.
+                        </Form.Label>
+                    </td>
+
                         </td>
 
                           <td>CLP</td>
@@ -2185,8 +2205,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Columbia
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("COP"))}{ColumbiaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                          <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("COP")}{parseFloat(ColumbiaTip).toFixed(2)} may maximise sales.
+                          </Form.Label>
+                      </td>
+
                         </td>
 
                           <td>COP</td>
@@ -2213,8 +2237,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Egypt
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("EGP"))}{EgyptTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                                <Form.Label className="mt-3 tit fst-italic">
+                                    Tip: Pricing around {getSymbolFromCurrency("EGP")}{parseFloat(EgyptTip).toFixed(2)} may maximise sales.
+                                </Form.Label>
+                            </td>
+
                         </td>
 
                           <td>EGP</td>
@@ -2243,8 +2271,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>European Union
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("EUR"))}{EUTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                        <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("EUR")}{parseFloat(EUTip).toFixed(2)} may maximise sales.
+                        </Form.Label>
+                    </td>
+
                         </td>
 
                           <td>EUR</td>
@@ -2272,9 +2304,13 @@ const AddCoupon = ({code}) => {
                         </tr>
                         
                         <tr>
-                          <td>Great Britain
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("GBP"))}{GBPTip} may maximise sales.</Form.Label></td>
+                          <td>United Kingdom
+                          <td className="col-12 font-italic mt-5">  
+                              <Form.Label className="mt-3 tit fst-italic">
+                                  Tip: Pricing around {getSymbolFromCurrency("GBP")}{parseFloat(GBPTip).toFixed(2)} may maximise sales.
+                              </Form.Label>
+                          </td>
+
                         </td>
 
                           <td>GBP</td>
@@ -2303,8 +2339,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Indonesia
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("IDR"))}{IndonesiaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("IDR")}{parseFloat(IndonesiaTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>IDR</td>
@@ -2332,8 +2372,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Israel
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("ILS"))}{IsrealTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("ILS")}{parseFloat(IsrealTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>ILS</td>
@@ -2361,8 +2405,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>India
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("INR"))}{IndiaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                          <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("INR")}{parseFloat(IndiaTip).toFixed(2)} may maximise sales.
+                          </Form.Label>
+                      </td>
+
                         </td>
 
                           <td>INR</td>
@@ -2421,8 +2469,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>South Korea
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("KRW"))}{SKTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("KRW")}{parseFloat(SKTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>KRW</td>
@@ -2450,8 +2502,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Mexico
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("MXN"))}{MexicoTip} may maximise sales. </Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                          <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("MXN")}{parseFloat(MexicoTip).toFixed(2)} may maximise sales.
+                          </Form.Label>
+                      </td>
+
                         </td>
 
                           <td>MXN</td>
@@ -2480,8 +2536,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Malaysia
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("MYR"))}{MalaysiaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                        <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("MYR")}{parseFloat(MalaysiaTip).toFixed(2)} may maximise sales.
+                        </Form.Label>
+                    </td>
+
                         </td>
 
                           <td>MYR</td>
@@ -2510,8 +2570,12 @@ const AddCoupon = ({code}) => {
                         
                         <tr>
                           <td>Nigeria
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("NGN"))}{NigeriaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                          <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("NGN")}{parseFloat(NigeriaTip).toFixed(2)} may maximise sales.
+                          </Form.Label>
+                      </td>
+
                         </td>
 
                           <td>NGN</td>
@@ -2538,8 +2602,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Norway
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("NOK"))}{NorwayTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("NOK")}{parseFloat(NorwayTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>NOK</td>
@@ -2568,8 +2636,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Peru
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("PEN"))}{PeruTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("PEN")}{parseFloat(PeruTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>PEN</td>
@@ -2600,8 +2672,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Philippines
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("PHP"))}{PhilipinesTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                          <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("PHP")}{parseFloat(PhilipinesTip).toFixed(2)} may maximise sales.
+                          </Form.Label>
+                      </td>
+
                         </td>
 
                           <td>PHP</td>
@@ -2629,8 +2705,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Poland
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("PLN"))}{PolandTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("PLN")}{parseFloat(PolandTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>PLN</td>
@@ -2659,8 +2739,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Romania
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip: Pricing around {getSymbolFromCurrency(("RON"))}{RomaniaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                              <Form.Label className="mt-3 tit fst-italic">
+                                  Tip: Pricing around {getSymbolFromCurrency("RON")}{parseFloat(RomaniaTip).toFixed(2)} may maximise sales.
+                              </Form.Label>
+                          </td>
+
                         </td>
 
                           <td>RON</td>
@@ -2689,8 +2773,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Russia
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("RUB"))}{RussiaTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                      <Form.Label className="mt-3 tit fst-italic">
+                          Tip: Pricing around {getSymbolFromCurrency("RUB")}{parseFloat(RussiaTip).toFixed(2)} may maximise sales.
+                      </Form.Label>
+                  </td>
+
                         </td>
 
                           <td>RUB</td>
@@ -2719,8 +2807,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Singapore
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("SGD"))}{SingaporeTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("SGD")}{parseFloat(SingaporeTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>SGD</td>
@@ -2749,8 +2841,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>Thailand
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("THB"))}{ThailandTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                        <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("THB")}{parseFloat(ThailandTip).toFixed(2)} may maximise sales.
+                        </Form.Label>
+                    </td>
+
                         </td>
 
                           <td>THB</td>
@@ -2809,8 +2905,12 @@ const AddCoupon = ({code}) => {
 
                           <tr>
                           <td>Taiwan
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("TWD"))}{TaiwanTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("TWD")}{parseFloat(TaiwanTip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>TWD</td>
@@ -2839,8 +2939,12 @@ const AddCoupon = ({code}) => {
 
                           <tr>
                           <td>Vietnam
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("VND"))}{VietnamTip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                        <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("VND")}{parseFloat(VietnamTip).toFixed(2)} may maximise sales.
+                        </Form.Label>
+                    </td>
+
                         </td>
 
                           <td>VND</td>
@@ -2870,8 +2974,12 @@ const AddCoupon = ({code}) => {
 
                         <tr>
                           <td>South Africa
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic"> Tip:  Pricing around {getSymbolFromCurrency(("KRW"))}{SATip} may maximise sales.</Form.Label></td>
+                          <td className="col-12 font-italic mt-5">  
+                            <Form.Label className="mt-3 tit fst-italic">
+                                Tip: Pricing around {getSymbolFromCurrency("KRW")}{parseFloat(SATip).toFixed(2)} may maximise sales.
+                            </Form.Label>
+                        </td>
+
                         </td>
 
                           <td>KRW</td>
