@@ -1642,6 +1642,8 @@ const Curriculum = ({ code }) => {
     const reorderedQuizIds = reorderedQuizzes.map((q) => q.id);
 
     updateQuizOrder(id, reorderedQuizIds, code, setsectionData, setLoading);
+
+    handleQuestionsAnswerUpdateCancel();
  
   };
 
