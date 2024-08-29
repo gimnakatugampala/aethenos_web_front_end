@@ -164,7 +164,7 @@ const Promotion = ({code}) => {
                   <td>{coupon.couponType.id == 1 ? "Free" : 'Discount'}</td>
                   <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
-                  <td>0/1000</td>
+                  <td>{coupon.couponType.id == 1 ? '0/1000' : '0/Unlimited' }</td>
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
                   <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td>
                 </tr>
