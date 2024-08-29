@@ -1061,7 +1061,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setIsrealDiscountValue(e.target.value)
-      setIsrealDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(IsrealListPrice).toFixed(2)) * 100).toFixed(2))
+      setIsrealDiscountPercent((((Number.parseFloat(IsrealListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(IsrealListPrice).toFixed(2)) * 100).toFixed(2))
       setIsrealDiscountAmount((Number.parseFloat(IsrealListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setIsrealDiscountValue("")
