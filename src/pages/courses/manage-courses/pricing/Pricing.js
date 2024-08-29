@@ -2692,29 +2692,29 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Peru
-    const handleDefaultPercentageDiscountPeru = (e) => {
-      let discountValue = parseFloat(e.target.value);
-    
-      if (isNaN(discountValue) || discountValue < 0) {
-        discountValue = 0; // Ensure the discount is not negative or invalid
-      }
-    
-      if (discountValue > 100) {
-        discountValue = 100; // Limit the discount to a maximum of 100%
-      }
-    
-      setPeruDisPercent(discountValue);
-    
-      const netPrice = (parseFloat(PeruListPrice) - parseFloat(PeruListPrice) * discountValue / 100).toFixed(2);
-      setPeruNetPrice(netPrice);
-    
-      // Calculate Discount Amount
-      const discountAmount = (parseFloat(PeruListPrice) - parseFloat(netPrice)).toFixed(2);
-      setPeruDisAmt(discountAmount);
-    
-      console.log(discountValue);
-    }
-    
+     const handleDefaultPercentageDiscountPeru = (e) => {
+  let discountValue = parseFloat(e.target.value);
+
+  if (isNaN(discountValue) || discountValue < 0) {
+    discountValue = 0; // Ensure the discount is not negative or invalid
+  }
+
+  if (discountValue > 100) {
+    discountValue = 100; // Limit the discount to a maximum of 100%
+  }
+
+  setPeruDisPercent(discountValue);
+
+  const netPrice = (parseFloat(PeruListPrice) - parseFloat(PeruListPrice) * discountValue / 100).toFixed(2);
+  setPeruNetPrice(netPrice);
+
+  // Calculate Discount Amount
+  const discountAmount = (parseFloat(PeruListPrice) - parseFloat(netPrice)).toFixed(2);
+  setPeruDisAmt(discountAmount);
+
+  console.log(discountValue);
+}
+
 
     // -------------------
 
@@ -2810,22 +2810,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Philipines
-      const handleDefaultPercentageDiscountPhilipines = (e) =>{
-
-        if(e.target.value == ""){
-          setPhilipinesDisPercent(0)
-        }
+    const handleDefaultPercentageDiscountPhilipines = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        setPhilipinesDisPercent(e.target.value)
-    
-        setPhilipinesNetPrice((parseFloat(PhilipinesListPrice) - parseFloat(PhilipinesListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setPhiliphinesDisAmt((Number.parseFloat(PhilipinesListPrice) - ((parseFloat(PhilipinesListPrice) - parseFloat(PhilipinesListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setPhilipinesDisPercent(discountValue);
+    
+      setPhilipinesNetPrice((parseFloat(PhilipinesListPrice) - parseFloat(PhilipinesListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setPhiliphinesDisAmt((Number.parseFloat(PhilipinesListPrice) - ((parseFloat(PhilipinesListPrice) - parseFloat(PhilipinesListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
