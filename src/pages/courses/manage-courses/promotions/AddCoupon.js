@@ -2535,10 +2535,19 @@ const AddCoupon = ({code}) => {
                            
                           </td>
                           <td>
-                          <Form.Control disabled readOnly value={IndiaDiscountAmount} type="text" />
-                          <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("INR")} {parseFloat(IndiaminValue).toFixed(2)}
-                          </Form.Label>
+                        <Form.Control
+                          isInvalid={IndiaDiscountAmount != 0 && IndiaDiscountAmount < parseFloat(IndiaminValue).toFixed(2)}
+                          disabled
+                          readOnly
+                          value={IndiaDiscountAmount}
+                          type="text"
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                          Minimum: {getSymbolFromCurrency("INR")} {parseFloat(IndiaminValue).toFixed(2)}
+                        </Form.Label>
                       </td>
 
                     
@@ -2564,13 +2573,21 @@ const AddCoupon = ({code}) => {
                             
                           </td>
                           <td>
-                           
-
-                        <Form.Control disabled readOnly value={JapanDiscountAmount}  type="text" />
-
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("JPY"))} {JapanminValue}</Form.Label>
-                             
+                            <Form.Control
+                              isInvalid={JapanDiscountAmount != 0 && JapanDiscountAmount < JapanminValue}
+                              disabled
+                              readOnly
+                              value={JapanDiscountAmount}
+                              type="text"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              Not within range
+                            </Form.Control.Feedback>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("JPY")} {JapanminValue}
+                            </Form.Label>
                           </td>
+
                      
                         
                         </tr>
