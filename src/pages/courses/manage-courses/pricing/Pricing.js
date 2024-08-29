@@ -2096,22 +2096,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount SK
-    const handleDefaultPercentageDiscountSK = (e) =>{
-
-      if(e.target.value == ""){
-        setSKDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountSK = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setSKDisPercent(e.target.value)
-  
-      setSKNetPrice((parseFloat(SKListPrice) - parseFloat(SKListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setSKDisAmt((Number.parseFloat(SKListPrice) - ((parseFloat(SKListPrice) - parseFloat(SKListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setSKDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(SKListPrice) - parseFloat(SKListPrice) * discountValue / 100).toFixed(2);
+    setSKNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(SKListPrice) - parseFloat(netPrice)).toFixed(2);
+    setSKDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
 
     // -------------------
 
