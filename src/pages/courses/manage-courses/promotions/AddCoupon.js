@@ -2833,11 +2833,21 @@ const AddCoupon = ({code}) => {
                           
                           </td>
                           <td>
-                    <Form.Control disabled readOnly value={PeruDiscountAmount} type="text" />
-                    <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                        Minimum: {getSymbolFromCurrency("PEN")} {parseFloat(Peruminvalue).toFixed(2)}
+                    <Form.Control
+                      isInvalid={PeruDiscountAmount != 0 && PeruDiscountAmount < parseFloat(Peruminvalue).toFixed(2)}
+                      disabled
+                      readOnly
+                      value={PeruDiscountAmount}
+                      type="text"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Not within range
+                    </Form.Control.Feedback>
+                    <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                      Minimum: {getSymbolFromCurrency("PEN")} {parseFloat(Peruminvalue).toFixed(2)}
                     </Form.Label>
-                </td>
+                  </td>
+
 
                      
                         
