@@ -1617,22 +1617,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount GBP
-    const handleDefaultPercentageDiscountIndo = (e) =>{
-
-      if(e.target.value == ""){
-        setIndonesiaDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountIndo = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-      setIndonesiaDisPercent(e.target.value)
-  
-      setIndonesiaNetPrice((parseFloat(IndonesiaListPrice) - parseFloat(IndonesiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setIndonesiaDisAmt((Number.parseFloat(IndonesiaListPrice) - ((parseFloat(IndonesiaListPrice) - parseFloat(IndonesiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setIndonesiaDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(IndonesiaListPrice) - parseFloat(IndonesiaListPrice) * discountValue / 100).toFixed(2);
+    setIndonesiaNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(IndonesiaListPrice) - parseFloat(netPrice)).toFixed(2);
+    setIndonesiaDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
   // ---------------------
