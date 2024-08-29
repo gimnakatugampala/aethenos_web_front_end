@@ -1261,23 +1261,29 @@ const handleDefaultPercentageDiscount = (e) => {
     }
     
   // Percentage Discount Egypt
-    const handleDefaultPercentageDiscountEgypt = (e) =>{
-
-      if(e.target.value == ""){
-        setEgyptDisPercent(0)
-      }
+  const handleDefaultPercentageDiscountEgypt = (e) => {
+    let discountValue = parseFloat(e.target.value);
   
-  
-      setEgyptDisPercent(e.target.value)
-  
-      setEgyptNetPrice((parseFloat(EgyptListPrice) - parseFloat(EgyptListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-      console.log(e.target.value)
-
-      // Calculate Discount Amount
-      setEgyptDisAmt((Number.parseFloat(EgyptListPrice) - ((parseFloat(EgyptListPrice) - parseFloat(EgyptListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-  
+    if (isNaN(discountValue) || discountValue < 0) {
+      discountValue = 0; // Ensure the discount is not negative or invalid
     }
+  
+    if (discountValue > 100) {
+      discountValue = 100; // Limit the discount to a maximum of 100%
+    }
+  
+    setEgyptDisPercent(discountValue);
+  
+    const netPrice = (parseFloat(EgyptListPrice) - parseFloat(EgyptListPrice) * discountValue / 100).toFixed(2);
+    setEgyptNetPrice(netPrice);
+  
+    // Calculate Discount Amount
+    const discountAmount = (parseFloat(EgyptListPrice) - parseFloat(netPrice)).toFixed(2);
+    setEgyptDisAmt(discountAmount);
+  
+    console.log(discountValue);
+  }
+  
   
 
   // ---------------------
