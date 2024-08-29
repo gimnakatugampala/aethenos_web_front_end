@@ -5220,24 +5220,23 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control disabled={IndonesiaDisType == 2 || IndonesiaDisType == 1} value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
                             {/* )} */}
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
+                          <td style={{whiteSpace: 'nowrap'}}>
+                                <Form.Control 
+                                    isInvalid={formatNumber(IndonesiaNetPrice) != "0.00" && (parseFloat(IndonesiaNetPrice) < parseFloat(IndonesiaminValue))} 
+                                    readOnly 
+                                    disabled 
+                                    value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Not within range
+                                </Form.Control.Feedback>
+                                <tr>
+                                    <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                        Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
+                                    </Form.Label>
+                                </tr>
+                            </td>
 
-                          <Form.Control 
-                          isInvalid={formatNumber(IndonesiaNetPrice) != "0.00" && (formatNumber(IndonesiaNetPrice) < IndonesiaminValue) ? true : false} 
-                          readOnly disabled 
-                          value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-
-  
-                            <tr>
-                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
-                          </Form.Label>
-                        </tr>
-
-                          </td>
                         
                         </tr>
 
@@ -5475,24 +5474,23 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             {/* )} */}
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
+                          <td style={{whiteSpace: 'nowrap'}}>
+                                    <Form.Control 
+                                        isInvalid={formatNumber(SKNetPrice) != "0.00" && parseFloat(SKNetPrice) < parseFloat(SKminValue)} 
+                                        readOnly 
+                                        disabled 
+                                        value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Not within range
+                                    </Form.Control.Feedback>
+                                    <tr>
+                                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
+                                        </Form.Label>
+                                    </tr>
+                                </td>
 
-                          <Form.Control 
-                          isInvalid={formatNumber(SKNetPrice) != "0.00" && (formatNumber(SKNetPrice) < SKminValue) ? true : false} 
-                          readOnly disabled 
-                          value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-
-                            <tr>
-                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
-                            </Form.Label>
-                          </tr>
-
-                          </td>
-                        
                         </tr>
 
                         <tr>
