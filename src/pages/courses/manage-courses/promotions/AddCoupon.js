@@ -1771,7 +1771,7 @@ const AddCoupon = ({code}) => {
   
       if(numberOnlyRegex.test(e.target.value)){
         setVietnamDiscountValue(e.target.value)
-        setVietnamDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(VietnamListPrice).toFixed(2)) * 100).toFixed(2))
+        setVietnamDiscountPercent((((Number.parseFloat(VietnamListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(VietnamListPrice).toFixed(2)) * 100).toFixed(2))
         setVietnamDisocuntAmount((Number.parseFloat(VietnamListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
         setVietnamDiscountValue("")
