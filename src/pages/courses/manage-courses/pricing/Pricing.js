@@ -3626,23 +3626,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Taiwan
-      const handleDefaultPercentageDiscountTaiwan = (e) =>{
-
-        if(e.target.value == ""){
-          setTaiwanDisPercent(0)
-        }
+    const handleDefaultPercentageDiscountTaiwan = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-    
-        setTaiwanDisPercent(e.target.value)
-    
-        setTaiwanNetPrice((parseFloat(TaiwanListPrice) - parseFloat(TaiwanListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-         // Calculate Discount Amount
-         setTaiwanDisAmt((Number.parseFloat(TaiwanListPrice) - ((parseFloat(TaiwanListPrice) - parseFloat(TaiwanListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setTaiwanDisPercent(discountValue);
+    
+      setTaiwanNetPrice((parseFloat(TaiwanListPrice) - parseFloat(TaiwanListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setTaiwanDisAmt((Number.parseFloat(TaiwanListPrice) - ((parseFloat(TaiwanListPrice) - parseFloat(TaiwanListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
@@ -3737,23 +3741,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Vietnam
-      const handleDefaultPercentageDiscountVietnam = (e) =>{
+    const handleDefaultPercentageDiscountVietnam = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        if(e.target.value == ""){
-          setVietnamDisPercent(0)
-        }
-
-        setVietnamDisPercent(e.target.value)
-    
-        setVietnamNetPrice((parseFloat(VietnamListPrice) - parseFloat(VietnamListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-        // Calculate Discount Amount
-        setVietnamDisAmt((Number.parseFloat(VietnamListPrice) - ((parseFloat(VietnamListPrice) - parseFloat(VietnamListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
-
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setVietnamDisPercent(discountValue);
+    
+      setVietnamNetPrice((parseFloat(VietnamListPrice) - parseFloat(VietnamListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setVietnamDisAmt((Number.parseFloat(VietnamListPrice) - ((parseFloat(VietnamListPrice) - parseFloat(VietnamListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
     // -------------------
 
   const [SAListPrice, setSAListPrice] = useState("")
