@@ -67,7 +67,7 @@ const StepThree = ({setcourse_image}) => {
               <div key={index} className="image-item">
                 <img className='m-2' src={image['data_url']} alt="" width="100" />
                 <div className="image-item__btn-wrapper">
-                <Button size="small" className='m-2' onClick={() => onImageUpdate(index)} variant="contained" color="info">
+                <Button size="small" className='m-2' onClick={() => onImageUpdate(index)} variant="contained" color="error">
               <CreateIcon />  Update
                 </Button>
               
