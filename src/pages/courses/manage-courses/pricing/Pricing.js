@@ -3164,22 +3164,27 @@ const handleDefaultPercentageDiscount = (e) => {
       }
       
     // Percentage Discount Russia
-      const handleDefaultPercentageDiscountRussia = (e) =>{
-
-        if(e.target.value == ""){
-          setRussiaDisDisPercent(0)
-        }
+    const handleDefaultPercentageDiscountRussia = (e) => {
+      let discountValue = parseFloat(e.target.value);
     
-        setRussiaDisDisPercent(e.target.value)
-    
-        setRussiaNetPrice((parseFloat(RussiaListPrice) - parseFloat(RussiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))
-
-        console.log(e.target.value)
-
-        // Calculate Discount Amount
-        setRussiaDisAmt((Number.parseFloat(RussiaListPrice) - ((parseFloat(RussiaListPrice) - parseFloat(RussiaListPrice) * parseFloat(e.target.value == "" ? 0 : e.target.value)/100).toFixed(2))).toFixed(2))
-    
+      if (isNaN(discountValue) || discountValue < 0) {
+        discountValue = 0; // Ensure the discount is not negative or invalid
       }
+    
+      if (discountValue > 100) {
+        discountValue = 100; // Limit the discount to a maximum of 100%
+      }
+    
+      setRussiaDisDisPercent(discountValue);
+    
+      setRussiaNetPrice((parseFloat(RussiaListPrice) - parseFloat(RussiaListPrice) * discountValue / 100).toFixed(2));
+    
+      console.log(e.target.value);
+    
+      // Calculate Discount Amount
+      setRussiaDisAmt((Number.parseFloat(RussiaListPrice) - ((parseFloat(RussiaListPrice) - parseFloat(RussiaListPrice) * discountValue / 100).toFixed(2))).toFixed(2));
+    }
+    
 
     // -------------------
 
