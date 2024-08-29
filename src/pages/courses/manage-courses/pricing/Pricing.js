@@ -6360,22 +6360,23 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control disabled={VietmanDisType == 2 || VietmanDisType == 1} value={VietnamDisAmt} onChange={handleDefaultDiscountAmtVietnam} type="text" />
                             {/* )} */}
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-
+                          <td style={{whiteSpace: 'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(VietnamNetPrice) != "0.00" && (formatNumber(VietnamNetPrice) < VietnamminValue)? true : false} 
-                          readOnly disabled 
-                          value={VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}  />
+                              isInvalid={formatNumber(VietnamNetPrice) != "0.00" && parseFloat(VietnamNetPrice) < parseFloat(VietnamminValue)} 
+                              readOnly 
+                              disabled 
+                              value={VietnamNetPrice == "" ? "0.00" : formatNumber(VietnamNetPrice)}  
+                          />
                           <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-                            <tr>
+                              Not within range
+                          </Form.Control.Feedback>
+                          <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("VND")} {parseFloat(VietnamminValue).toFixed(2)}
+                                  Minimum: {getSymbolFromCurrency("VND")} {parseFloat(VietnamminValue).toFixed(2)}
                               </Form.Label>
-                            </tr>
+                          </tr>
+                      </td>
 
-                          </td>
                         
                         </tr> 
 
