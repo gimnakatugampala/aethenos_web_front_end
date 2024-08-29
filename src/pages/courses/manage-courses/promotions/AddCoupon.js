@@ -2615,11 +2615,21 @@ const AddCoupon = ({code}) => {
                               
                           </td>
                           <td>
-                            <Form.Control disabled readOnly value={SKDiscountAmount} type="text" />
-                            <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
-                            </Form.Label>
+                          <Form.Control
+                            isInvalid={SKDiscountAmount != 0 && SKDiscountAmount < parseFloat(SKminValue).toFixed(2)}
+                            disabled
+                            readOnly
+                            value={SKDiscountAmount}
+                            type="text"
+                          />
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
+                          </Form.Label>
                         </td>
+
 
                        
                         
