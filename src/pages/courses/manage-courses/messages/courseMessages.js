@@ -62,7 +62,7 @@ const CourseMessages = ({code}) => {
 
       <div className='d-flex justify-content-between'>
         <Typography className="p-3" variant="h4">
-          Course Messages
+        Add Course Messages
         </Typography>
         {loading_btn ? <ButtonMaterial  variant="contained"> <ButtonSpinner /> </ButtonMaterial> : <ButtonMaterial onClick={handleClick} variant="contained"><AddIcon /> SAVE</ButtonMaterial>}
         
