@@ -1186,7 +1186,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setSKDiscountValue(e.target.value)
-      setSKDiscountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(SKListPrice).toFixed(2)) * 100).toFixed(2))
+      setSKDiscountPercent((((Number.parseFloat(SKListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(SKListPrice).toFixed(2)) * 100).toFixed(2))
       setSKDiscountAmount((Number.parseFloat(SKListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setSKDiscountValue("")
@@ -1226,7 +1226,7 @@ const AddCoupon = ({code}) => {
 
     if(numberOnlyRegex.test(e.target.value)){
       setMexicoDiscountValue(e.target.value)
-      setMexicoDicountPercent(((Number.parseFloat(e.target.value).toFixed(2) / Number.parseFloat(MexicoListPrice).toFixed(2)) * 100).toFixed(2))
+      setMexicoDicountPercent((((Number.parseFloat(MexicoListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(MexicoListPrice).toFixed(2)) * 100).toFixed(2))
       setMexicoDisountAmount((Number.parseFloat(MexicoListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
       setMexicoDiscountValue("")
