@@ -4965,22 +4965,23 @@ const handleDefaultPercentageDiscount = (e) => {
                           <Form.Control disabled={ColumbiaDisType == 2 || ColumbiaDisType == 1} value={ColumbiaDisAmt} onChange={handleDefaultDiscountAmtColumbia} type="text" />
                             {/* // )} */}
                           </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-
+                          <td style={{whiteSpace: 'nowrap'}}>
                           <Form.Control 
-                          isInvalid={formatNumber(ColumbiaNetPrice) != "0.00" && (formatNumber(ColumbiaNetPrice) < ColumbiaminValue) ? true : false} 
-                          readOnly disabled 
-                          value={ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}  />
+                              isInvalid={formatNumber(ColumbiaNetPrice) != "0.00" && (parseFloat(ColumbiaNetPrice) < parseFloat(ColumbiaminValue))} 
+                              readOnly 
+                              disabled 
+                              value={ColumbiaNetPrice == "" ? "0.00" : formatNumber(ColumbiaNetPrice)}  
+                          />
                           <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-
-                            <tr>
+                              Not within range
+                          </Form.Control.Feedback>
+                          <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
+                                  Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
                               </Form.Label>
-                                </tr>
-                          </td>
+                          </tr>
+                      </td>
+
                         
                         </tr>
 
