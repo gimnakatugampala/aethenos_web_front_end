@@ -3,7 +3,7 @@ import { Typography, Paper, Container, Box, Button, Grid } from "@mui/material";
 import { Card } from "antd";
 import { GetAdminDisApproveComment, UnpublishCourse } from "../../../../api";
 
-function App({code}) {
+function App({status_type, code}) {
 
   const [comment, setcomment] = useState("")
 
@@ -46,6 +46,8 @@ function App({code}) {
             </Paper>
             )}
           </Box>
+          {status_type == "Approved" && (
+
           <Box my={4}>
             <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
               <Typography variant="h6" gutterBottom>
@@ -65,6 +67,7 @@ function App({code}) {
               </Grid>
             </Paper>
           </Box>
+          )}
         </Container>
       </Card>
     </div>

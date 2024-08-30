@@ -461,6 +461,7 @@ const ManageCourses = () => {
     CheckOwnershipOfContent(code, setcourseOwnership);
     // console.log(checkInstructorVerification)
     // console.log(courseOwnership)
+    
 
     GetCheckPricingAllStatus(setcheckPricingStatus);
   }, [code, checkInstructorVerification, options, courseOwnership]);
@@ -488,6 +489,11 @@ const ManageCourses = () => {
   }, [code]);
 
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(status_type)
+  }, [status_type])
+  
 
   const toggleDiv = () => {
     setIsOpen(!isOpen);
@@ -684,7 +690,7 @@ const ManageCourses = () => {
         ) : selectTab == "promotions" ? (
           <Promotion code={code} />
         ) : selectTab == "settings" ? (
-          <Settings code={code} />
+          <Settings status_type={status_type} code={code} />
         ) : selectTab == "add-coupon" ? (
           <AddCoupon code={code} />
         ) : (
