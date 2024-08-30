@@ -2613,6 +2613,7 @@ const Curriculum = ({ code }) => {
                               item.id && uploadingVideoProgress != 100 ?
                               (<Badge bg="info">
                               {uploadingVideoProgress} %
+                              <p>uploading..</p>
                             </Badge>) : (
                               <Badge bg="success">
                               Completed
@@ -3464,6 +3465,8 @@ const Curriculum = ({ code }) => {
                             {uploadingVideoProgress !== 100 ? (
                               <Badge bg="info">
                                 {uploadingVideoProgress} %
+
+                                <p>uploading..</p>
                               </Badge>
                             ) : (
                               <Badge bg="success">Completed</Badge>
