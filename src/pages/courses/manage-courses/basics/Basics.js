@@ -452,7 +452,7 @@ const handleFileChange = (event) => {
                 />
               ) : (
                 <video
-                  style={{width: "auto"}} 
+                  style={{width: "300px"}} 
                   height={200}
                   controls
                   src={isDataURI(videoSrc) ? videoSrc : `${FILE_PATH}${videoSrc}`}
