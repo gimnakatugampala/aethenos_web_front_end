@@ -191,7 +191,7 @@ const MyProfile = () => {
   const [paypalUsername, setpaypalUsername] = useState("");
 
   const [payoneerEmail, setpayoneerEmail] = useState("");
-  const [payoneerUsername, setpayoneerUsername] = useState("NA");
+  const [payoneerUsername, setpayoneerUsername] = useState("");
 
   const [bankAccountNumber, setbankAccountNumber] = useState("");
   const [bankSortNoOne, setbankSortNoOne] = useState("");
@@ -242,6 +242,8 @@ const MyProfile = () => {
         return;
       }
 
+      
+
       if (paypalUsername == "") {
         ErrorAlert("Empty Field", "Please Fill Username");
         return;
@@ -265,10 +267,12 @@ const MyProfile = () => {
         return;
       }
 
-      if (payoneerUsername == "") {
-        ErrorAlert("Empty Field", "Please Fill Username");
-        return;
-      }
+      setpayoneerUsername("NA")
+
+      // if (payoneerUsername == "") {
+      //   ErrorAlert("Empty Field", "Please Fill Username");
+      //   return;
+      // }
 
       AddWalletDetails(
         paypalEmail,

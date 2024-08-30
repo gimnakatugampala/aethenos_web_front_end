@@ -5016,7 +5016,7 @@ export const AddWalletDetails = async (
   const formdata = new FormData();
   formdata.append("paypalUserName", `${paypalUsername}`);
   formdata.append("paypalEmail", `${paypalEmail}`);
-  formdata.append("payoneerUserName", `${payoneerUsername}`);
+  formdata.append("payoneerUserName", `NA`);
   formdata.append("payoneerEmail", `${payoneerEmail}`);
   selectedValue == "paypal"
     ? formdata.append("paymentMethodId", "2")
