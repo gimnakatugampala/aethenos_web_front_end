@@ -176,8 +176,11 @@ const AddCoupon = ({code}) => {
     const handleDiscountCouponCreate = (e) =>{
       setloading_btn(true)
 
-      console.log(startDateDiscount)
-      console.log(endDateDiscount)
+      // console.log(startDateDiscount)
+      // Format the End date
+      const [month, day, year] = endDateDiscount.split('/');
+
+      // console.log(`${year}-${month}-${day}`)
 
 
       if(DDiscountValue == "" || DDiscountPercent == "" || DDiscountPercent == 0 || DDiscountAmount == "" || DDiscountAmount == 0){
@@ -186,8 +189,8 @@ const AddCoupon = ({code}) => {
           return
       }
 
-      console.log(startDateDiscount)
-      console.log(endDateDiscount)
+      // console.log(startDateDiscount)
+      // console.log(endDateDiscount)
 
      
 
@@ -195,7 +198,7 @@ const AddCoupon = ({code}) => {
       var raw = {
         "code":`${couponCodeDiscount}`,
         "start_date":`${moment(startDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
-        "end_date":`${moment(endDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
+        "end_date":`${moment(`${year}-${month}-${day}`).format("YYYY-MM-DD h:mm:ss")}`,
         "course_code":`${code}`,
         "global_list_price":`${DGlobalPricing == "" ? 0 : DGlobalPricing}`,
         "global_discount_price":`${DDiscountValue == "" ? 0 : DDiscountValue}`,
@@ -411,7 +414,7 @@ const AddCoupon = ({code}) => {
         
 
         console.log(raw)
-        // SaveDiscountDouponsAPI(code,raw,setloading_btn)
+        SaveDiscountDouponsAPI(code,raw,setloading_btn)
  
     }
     
@@ -1938,7 +1941,7 @@ const AddCoupon = ({code}) => {
 
            <div className='row my-5'>
             <div className='mb-3'>
-              <h6><b>Start date:</b></h6>
+              <h6><b>Start date (MM/DD/YYYY):</b></h6>
               <input
               className='form-control'
               type="date"
@@ -1950,7 +1953,7 @@ const AddCoupon = ({code}) => {
             
             <div className='mb-3'>
             
-              <h6><b>End date:</b> <input class="form-control" type="text" value={endDateDiscount} aria-label="readonly input example" readonly /></h6>
+              <h6><b>End date (MM/DD/YYYY):</b> <input class="form-control" type="text" value={endDateDiscount} aria-label="readonly input example" readonly /></h6>
             </div>
           </div>
 
