@@ -83,6 +83,7 @@ const AddCoupon = ({code}) => {
       calculateEndDate(startDate)
     };
   
+
     const calculateEndDate = (start) => {
       const startDate = new Date(start);
       const endDate = new Date(startDate);
@@ -93,7 +94,7 @@ const AddCoupon = ({code}) => {
       const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
       const year = endDate.getFullYear();
     
-      return `${day}/${month}/${year}`;
+      return `${month}/${day}/${year}`;
     };
     
 
@@ -130,7 +131,7 @@ const AddCoupon = ({code}) => {
       const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
       const year = endDate.getFullYear();
     
-      return `${day}/${month}/${year}`;
+      return `${month}/${day}/${year}`;
     };
     
 
@@ -154,6 +155,13 @@ const AddCoupon = ({code}) => {
           console.log(moment(new Date(endDate)).format('yyyy-MM-DD HH:mm:ss'))
           console.log(couponCodeFree)
 
+          console.log(SD)
+          console.log(ED)
+
+          console.log("---------")
+          console.log(endDate)
+        
+
           setloading_btn(true)
 
           AddFreeCouponAPI(code,SD,ED,couponCodeFree,setloading_btn)
@@ -168,8 +176,12 @@ const AddCoupon = ({code}) => {
     const handleDiscountCouponCreate = (e) =>{
       setloading_btn(true)
 
+      console.log(startDateDiscount)
+      console.log(endDateDiscount)
+
+
       if(DDiscountValue == "" || DDiscountPercent == "" || DDiscountPercent == 0 || DDiscountAmount == "" || DDiscountAmount == 0){
-          ErrorAlert("Error","Global Proce cannot be empty")
+          ErrorAlert("Error","Global Price cannot be empty")
           setloading_btn(false)
           return
       }
@@ -177,14 +189,13 @@ const AddCoupon = ({code}) => {
       console.log(startDateDiscount)
       console.log(endDateDiscount)
 
-      const [day, month, year] = endDateDiscount.split("/");
-     const formattedEndDate = `${year}-${month}-${day}`;
+     
 
 
       var raw = {
         "code":`${couponCodeDiscount}`,
         "start_date":`${moment(startDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
-        "end_date":`${moment(formattedEndDate).format("YYYY-MM-DD h:mm:ss")}`,
+        "end_date":`${moment(endDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
         "course_code":`${code}`,
         "global_list_price":`${DGlobalPricing == "" ? 0 : DGlobalPricing}`,
         "global_discount_price":`${DDiscountValue == "" ? 0 : DDiscountValue}`,
@@ -400,7 +411,7 @@ const AddCoupon = ({code}) => {
         
 
         console.log(raw)
-        SaveDiscountDouponsAPI(code,raw,setloading_btn)
+        // SaveDiscountDouponsAPI(code,raw,setloading_btn)
  
     }
     
@@ -1886,7 +1897,7 @@ const AddCoupon = ({code}) => {
     <div className='container'>
     <div className='row my-5'>
       <div className='mb-3'>
-        <h6><b>Start date:</b></h6>
+        <h6><b>Start date (MM/DD/YYYY):</b></h6>
         <input
         className='form-control'
         type="date"
@@ -1898,7 +1909,7 @@ const AddCoupon = ({code}) => {
       
       <div className='mb-3'>
       
-        <h6><b>End date:</b> <input class="form-control" type="text" value={endDate} aria-label="readonly input example" readonly /></h6>
+        <h6><b>End date (MM/DD/YYYY):</b> <input class="form-control" type="text" value={endDate} aria-label="readonly input example" readonly /></h6>
       </div>
     </div>
 
