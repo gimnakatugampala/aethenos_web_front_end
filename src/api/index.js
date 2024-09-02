@@ -61,12 +61,14 @@ export const LoginInstructor = async (email, password, url, setloading) => {
 
         if (ENV_STATUS == "dev") {
           Cookies.set("aethenos", result.token, { expires: 7, path: "" });
+          Cookies.set('aethenos_user_country', `${result.country}`)
         } else {
           Cookies.set("aethenos", result.token, {
             expires: 7,
             path: "",
             domain: ".aethenos.com",
           });
+          Cookies.set('aethenos_user_country', `${result.country}`, { domain: '.aethenos.com' });
         }
 
         setloading(false);
