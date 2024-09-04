@@ -377,41 +377,33 @@ const Pricing = ({code}) => {
 const handleChangeGlobalPrice = (e) => {
   const value = e.target.value;
 
-  // Regex to allow numbers with up to two decimal places
-  const decimalRegex = /^\d+(\.\d{0,2})?$/;
-
-  // Check if the input is a valid number with up to two decimal places
-  if (decimalRegex.test(value)) {
+  // Check if input is a valid number
+  if (numberOnlyRegex.test(value)) {
     // Convert value to float for calculations
-    let floatValue = parseFloat(value);
+    const floatValue = parseFloat(value);
 
     // Compute the global net price based on the discount type
     let netPrice = floatValue;
 
-    if (DDisType === '1') {
-      // No discount
+    if (DDisType == '1') {
       netPrice = floatValue;
-    } else if (DDisType === '2') {
+    } else if (DDisType == '2') {
       // Calculate discount price if percentage discount is applied
       netPrice = (floatValue - (floatValue * parseFloat(DDisPercent) / 100)).toFixed(2);
-    } else if (DDisType === '3') {
+    } else if (DDisType == '3') {
       // Calculate discount price if amount discount is applied
       netPrice = (floatValue - parseFloat(DDisAmt)).toFixed(2);
-    } else {
-      // Handle invalid or empty input
-      netPrice = 0;
     }
 
     // Update the state for net price and global pricing
-    setDGlobalNetPrice(value === "" ? 0 : netPrice);
-    setDGlobalPricing(value === "" ? 0 : floatValue);
+    setDGlobalNetPrice(value == "" ? 0 : netPrice);
+    setDGlobalPricing(value == "" ? 0 : floatValue);
   } else {
-    // Handle invalid input by resetting the prices
+    // Handle invalid input or reset if necessary
     setDGlobalNetPrice(0);
     setDGlobalPricing(0);
   }
 };
-
 
   // Discount Amount
   const handleDefaultDiscountAmt = (e) =>{
@@ -506,28 +498,26 @@ const handleDefaultPercentageDiscount = (e) => {
     setUSADisType(value)
   }
 
+  // Enter Global Price USA
   const handleChangeGlobalPriceUSA = (e) => {
     const value = e.target.value;
-    
+  
     // Log the current input value for debugging
     console.log(value);
-    
-    // Regex to allow numbers with up to two decimal places
-    const decimalRegex = /^\d+(\.\d{0,2})?$/;
-    
-    // Check if the input is a valid number with up to two decimal places
-    if (decimalRegex.test(value)) {
+  
+    // Check if the input is a valid number
+    if (numberOnlyRegex.test(value)) {
       let netPrice = parseFloat(value);
-      
+  
       // Calculate net price based on the discount type
-      if (USADisType === '1') {
+      if (USADisType == '1') {
         // No discount
         setUSANetPrice(netPrice);
-      } else if (USADisType === '2') {
+      } else if (USADisType == '2') {
         // Percentage discount
         netPrice -= (netPrice * parseFloat(USADisPercent) / 100);
         setUSANetPrice(netPrice.toFixed(2));
-      } else if (USADisType === '3') {
+      } else if (USADisType == '3') {
         // Fixed amount discount
         netPrice -= parseFloat(USADisAmt);
         setUSANetPrice(netPrice.toFixed(2));
@@ -537,14 +527,13 @@ const handleDefaultPercentageDiscount = (e) => {
       }
   
       // Update the list price state
-      setUSAListPrice(value === "" ? 0 : parseFloat(value));
+      setUSAListPrice(value == "" ? 0 : parseFloat(value));
     } else {
       // Handle invalid input by resetting the prices
       setUSANetPrice(0);
       setUSAListPrice(0);
     }
   };
-  
   
 
     // Discount Amount USA
@@ -641,17 +630,14 @@ const handleDefaultPercentageDiscount = (e) => {
   // Enter Global Price Aus
   const handleChangeGlobalPriceAus = (e) => {
     const value = e.target.value;
-    
+  
     // Log the current input value for debugging
     console.log(value);
   
-    // Regex to allow numbers with up to two decimal places
-    const decimalRegex = /^\d+(\.\d{0,2})?$/;
-  
-    // Check if the input is a valid number with up to two decimal places
-    if (decimalRegex.test(value)) {
+    // Check if the input is a valid number
+    if (numberOnlyRegex.test(value)) {
       let netPrice = parseFloat(value);
-      
+  
       // Calculate net price based on the discount type
       if (AusDisType == '1') {
         // No discount
@@ -677,7 +663,6 @@ const handleDefaultPercentageDiscount = (e) => {
       setAusListPrice(0);
     }
   };
-  
   
 
     // Discount Amount Aus
