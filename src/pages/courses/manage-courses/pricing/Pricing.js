@@ -498,26 +498,28 @@ const handleDefaultPercentageDiscount = (e) => {
     setUSADisType(value)
   }
 
-  // Enter Global Price USA
   const handleChangeGlobalPriceUSA = (e) => {
     const value = e.target.value;
-  
+    
     // Log the current input value for debugging
     console.log(value);
-  
-    // Check if the input is a valid number
-    if (numberOnlyRegex.test(value)) {
+    
+    // Regex to allow numbers with up to two decimal places
+    const decimalRegex = /^\d+(\.\d{0,2})?$/;
+    
+    // Check if the input is a valid number with up to two decimal places
+    if (decimalRegex.test(value)) {
       let netPrice = parseFloat(value);
-  
+      
       // Calculate net price based on the discount type
-      if (USADisType == '1') {
+      if (USADisType === '1') {
         // No discount
         setUSANetPrice(netPrice);
-      } else if (USADisType == '2') {
+      } else if (USADisType === '2') {
         // Percentage discount
         netPrice -= (netPrice * parseFloat(USADisPercent) / 100);
         setUSANetPrice(netPrice.toFixed(2));
-      } else if (USADisType == '3') {
+      } else if (USADisType === '3') {
         // Fixed amount discount
         netPrice -= parseFloat(USADisAmt);
         setUSANetPrice(netPrice.toFixed(2));
@@ -527,13 +529,14 @@ const handleDefaultPercentageDiscount = (e) => {
       }
   
       // Update the list price state
-      setUSAListPrice(value == "" ? 0 : parseFloat(value));
+      setUSAListPrice(value === "" ? 0 : parseFloat(value));
     } else {
       // Handle invalid input by resetting the prices
       setUSANetPrice(0);
       setUSAListPrice(0);
     }
   };
+  
   
 
     // Discount Amount USA
