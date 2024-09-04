@@ -500,30 +500,41 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price USA
   const handleChangeGlobalPriceUSA = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(USADisType == '1'){
-        console.log(e.target.value)
-        setUSANetPrice(e.target.value)
-      }else if(USADisType == '2'){
-        setUSANetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(USADisPercent)/100).toFixed(2))
-      }else if(USADisType == '3'){
-        setUSANetPrice((parseFloat(e.target.value) - parseFloat(USADisAmt)).toFixed(2))
-      }else{
-        setUSANetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value;
+  
+    // Log the current input value for debugging
+    console.log(value);
+  
+    // Check if the input is a valid number
+    if (numberOnlyRegex.test(value)) {
+      let netPrice = parseFloat(value);
+  
+      // Calculate net price based on the discount type
+      if (USADisType == '1') {
+        // No discount
+        setUSANetPrice(netPrice);
+      } else if (USADisType == '2') {
+        // Percentage discount
+        netPrice -= (netPrice * parseFloat(USADisPercent) / 100);
+        setUSANetPrice(netPrice.toFixed(2));
+      } else if (USADisType == '3') {
+        // Fixed amount discount
+        netPrice -= parseFloat(USADisAmt);
+        setUSANetPrice(netPrice.toFixed(2));
+      } else {
+        // Handle invalid or empty input
+        setUSANetPrice(0);
       }
   
-      if(e.target.value == ""){
-        setUSAListPrice(0)
-      }
-  
+      // Update the list price state
+      setUSAListPrice(value == "" ? 0 : parseFloat(value));
+    } else {
+      // Handle invalid input by resetting the prices
+      setUSANetPrice(0);
+      setUSAListPrice(0);
     }
-    setUSAListPrice(e.target.value)
-    
-
-  }
+  };
+  
 
     // Discount Amount USA
     const handleDefaultDiscountAmtUSA = (e) =>{
