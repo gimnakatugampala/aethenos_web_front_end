@@ -160,7 +160,7 @@ const Promotion = ({code}) => {
                   <th>Expiry date</th>
                   <th>Redemptions</th>
                   <th>Status</th>
-                  <th>Link</th>
+                  {/* <th>Link</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -173,7 +173,7 @@ const Promotion = ({code}) => {
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
                   <td>{coupon.couponType.id == 1 ? '0/1000' : '0/Unlimited' }</td>
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
-                  <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td>
+                  {/* <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td> */}
                 </tr>
                 )) : "No Coupons Available"}
         
