@@ -12,43 +12,12 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 import formatNumber from '../../../../commonFunctions/NumberFormat';
 import moment from 'moment';
-import 'react-datetime-picker/dist/DateTimePicker.css';
-import 'react-calendar/dist/Calendar.css';
-import 'react-clock/dist/Clock.css';
+
 import ButtonSpinner from '../../../../commonFunctions/loaders/Spinner/ButtonSpinner';
 
+import { DatePicker, Space } from 'antd';
 
-const countries = [
-    { country: "America", currency: "USD" },
-    { country: "Australia", currency: "AUD" },
-    { country: "Brazil", currency: "BRL" },
-    { country: "Canada", currency: "CAD" },
-    { country: "Chile", currency: "CLP" },
-    { country: "Colombia", currency: "COP" },
-    { country: "Egypt", currency: "EGP" },
-    { country: "Great Britain", currency: "GBP" },
-    { country: "India", currency: "INR" },
-    { country: "Indonesia", currency: "IDR" },
-    { country: "Israel", currency: "ILS" },
-    { country: "Japan", currency: "JPY" },
-    { country: "Malaysia", currency: "MYR" },
-    { country: "Mexico", currency: "MXN" },
-    { country: "Nigeria", currency: "NGN" },
-    { country: "Norway", currency: "NOK" },
-    { country: "Peru", currency: "PEN" },
-    { country: "Philippines", currency: "PHP" },
-    { country: "Poland", currency: "PLN" },
-    { country: "Romania", currency: "RON" },
-    { country: "Russia", currency: "RUB" },
-    { country: "Singapore", currency: "SGD" },
-    { country: "South Africa", currency: "ZAR" },
-    { country: "South Korea", currency: "KRW" },
-    { country: "Taiwan", currency: "TWD" },
-    { country: "Thailand", currency: "THB" },
-    { country: "Turkey", currency: "TRY" },
-    { country: "Vietnam", currency: "VND" },
-    { country: "European Union", currency: "EUR" }
-  ];
+
 
 const AddCoupon = ({code}) => {
 
@@ -64,43 +33,36 @@ const AddCoupon = ({code}) => {
    
 
     //  ------------------------ Start Date ---------------------
-    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+    const currentDate = moment().startOf('day'); // Get current date
     const [startDate, setStartDate] = useState(currentDate);
-    const [endDate, setEndDate] = useState("");
-    const [couponCodeFree, setcouponCodeFree] = useState("")
-
-
+    const [endDate, setEndDate] = useState(moment().add(7, 'days'));
+    const [couponCodeFree, setcouponCodeFree] = useState('');
+    // const [loading_btn, setLoadingBtn] = useState(false);
   
-    const handleStartDateChange = (event) => {
-      const newStartDate = event.target.value;
-  
-      // Check if the new start date is not before the current date
-      if (new Date(newStartDate) >= new Date(currentDate)) {
-        setStartDate(newStartDate);
-        setEndDate(calculateEndDate(newStartDate));
-      }
-
-      calculateEndDate(startDate)
-    };
-  
-
-    const calculateEndDate = (start) => {
-      const startDate = new Date(start);
-      const endDate = new Date(startDate);
-      endDate.setDate(startDate.getDate() + 7);
-    
-      // Format the date as DD/MM/YYYY
-      const day = String(endDate.getDate()).padStart(2, '0');
-      const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
-      const year = endDate.getFullYear();
-    
-      return `${month}/${day}/${year}`;
-    };
-    
-
     useEffect(() => {
-      setEndDate(calculateEndDate(currentDate));
-    }, [])
+      if (startDate) {
+        setEndDate(moment(startDate).add(7, 'days'));
+      }
+    }, [startDate]);
+  
+    const handleStartDateChange = (date) => {
+      if (date && date.isSameOrAfter(currentDate, 'day')) {
+        setStartDate(date);
+      }
+    };
+  
+    const calculateEndDate = (start) => {
+      const startDate = moment(start, 'DD-MM-YYYY'); // Parse start date in DD-MM-YYYY format
+      const endDate = startDate.add(7, 'days'); // Add 7 days to the start date
+  
+      return endDate.format('DD-MM-YYYY'); // Format the end date as DD-MM-YYYY
+    };
+  
+    
+
+    // useEffect(() => {
+    //   setEndDate(calculateEndDate(currentDate));
+    // }, [])
 
     //  -------------- DISCOUNT COUPONS ----------
     const currentDateDiscount = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
@@ -1897,41 +1859,49 @@ const AddCoupon = ({code}) => {
     </div>
 
     {selectedValue == "free-coupon" && (
-    <div className='container'>
-    <div className='row my-5'>
-      <div className='mb-3'>
-        <h6><b>Start date (MM/DD/YYYY):</b></h6>
-        <input
-        className='form-control'
-        type="date"
-        id="startDate"
-        value={startDate}
-        onChange={handleStartDateChange}
-      />
-      </div>
-      
-      <div className='mb-3'>
-      
-        <h6><b>End date (MM/DD/YYYY):</b> <input class="form-control" type="text" value={endDate} aria-label="readonly input example" readonly /></h6>
-      </div>
-    </div>
+      <div className='container'>
+      <div className='row my-5'>
+        <div className='mb-3'>
+          <h6><b>Start date (DD-MM-YYYY):</b></h6>
+          <DatePicker
+            format="DD-MM-YYYY"
+            size="large"
+            value={startDate}
+            onChange={handleStartDateChange}
+          />
+        </div>
 
-    
-      <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
+        <div className='mb-3'>
+          <h6><b>End date (DD-MM-YYYY):</b></h6>
+          <DatePicker
+            format="DD-MM-YYYY"
+            size="large"
+            value={endDate}
+            disabled
+          />
+        </div>
+      </div>
+
+      <Form.Group className='d-flex' controlId="exampleForm.ControlInput1">
         <Form.Label><b>Enter coupon code (optional)</b></Form.Label>
-        <Form.Control value={couponCodeFree} onChange={(e) => setcouponCodeFree(e.target.value.toUpperCase())} type="text" placeholder="Enter Coupon" />
+        <Form.Control
+          value={couponCodeFree}
+          onChange={(e) => setcouponCodeFree(e.target.value.toUpperCase())}
+          type="text"
+          placeholder="Enter Coupon"
+        />
       </Form.Group>
 
-      <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
-      
-      
+      <p>
+        The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.
+      </p>
 
       <div className='my-2'>
-        {loading_btn ? <Button variant='contained'><ButtonSpinner /></Button> : <Button onClick={handleFreeCouponCreate} variant='contained'>Create Coupon</Button>}
-        
-        
-     </div>
-
+        {loading_btn
+          ? <Button variant='contained' disabled>Loading...</Button>
+          : <Button onClick={handleFreeCouponCreate} variant='contained'>Create Coupon</Button>
+        }
+      </div>
     </div>
     )}
 
