@@ -1037,29 +1037,46 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Chile
   const handleChangeGlobalPriceChile = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(ChileDisType == '1'){
-        console.log(e.target.value)
-        setChileNetPrice(e.target.value)
-      }else if(ChileDisType == '2'){
-        setChileNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(ChileDisPercent)/100).toFixed(2))
-      }else if(ChileDisType == '3'){
-        setChileNetPrice((parseFloat(e.target.value) - parseFloat(ChileDisAmt)).toFixed(2))
-      }else{
-        setChileNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value;
+  
+    // Log the current input value for debugging
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const decimalRegex = /^\d+(\.\d{0,2})?$/;
+  
+    // Check if the input is a valid number with up to two decimal places
+    if (decimalRegex.test(value)) {
+      let floatValue = parseFloat(value);
+      let netPrice = floatValue;
+  
+      // Calculate net price based on the discount type
+      if (ChileDisType == '1') {
+        // No discount
+        netPrice = floatValue;
+      } else if (ChileDisType == '2') {
+        // Percentage discount
+        netPrice -= (floatValue * parseFloat(ChileDisPercent) / 100);
+        netPrice = netPrice.toFixed(2);
+      } else if (ChileDisType == '3') {
+        // Fixed amount discount
+        netPrice -= parseFloat(ChileDisAmt);
+        netPrice = netPrice.toFixed(2);
+      } else {
+        // Handle invalid discount type
+        netPrice = 0;
       }
   
-      if(e.target.value == ""){
-        setChileListPrice(0)
-      }
+      // Update the state for net price and list price
+      setChileNetPrice(value == "" ? 0 : netPrice);
+      setChileListPrice(value == "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setChileNetPrice(0);
+      setChileListPrice(0);
     }
-
-    setChileListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Chile
     const handleDefaultDiscountAmtChile = (e) =>{
