@@ -1037,7 +1037,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Chile
   const handleChangeGlobalPriceChile = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
   
     // Log the current input value for debugging
     console.log(value);
@@ -1171,30 +1171,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Columbia
   const handleChangeGlobalPriceColumbia = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(ColumbiaDisType == '1'){
-        console.log(e.target.value)
-        setColumbiaNetPrice(e.target.value)
-      }else if(ColumbiaDisType == '2'){
-        setColumbiaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(ColumbiaDisPercent)/100).toFixed(2))
-      }else if(ColumbiaDisType == '3'){
-        setColumbiaNetPrice((parseFloat(e.target.value) - parseFloat(ColumbiaDisAmt)).toFixed(2))
-      }else{
-        setColumbiaNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (ColumbiaDisType == '1') {
+        console.log(value);
+        setColumbiaNetPrice(value);
+      } else if (ColumbiaDisType == '2') {
+        setColumbiaNetPrice((floatValue - (floatValue * parseFloat(ColumbiaDisPercent) / 100)).toFixed(2));
+      } else if (ColumbiaDisType == '3') {
+        setColumbiaNetPrice((floatValue - parseFloat(ColumbiaDisAmt)).toFixed(2));
+      } else {
+        setColumbiaNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setColumbiaListPrice(0)
-      }
+      setColumbiaListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input
+      setColumbiaNetPrice(0);
+      setColumbiaListPrice(0);
     }
-
-
-    setColumbiaListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Columbia
     const handleDefaultDiscountAmtColumbia = (e) =>{
