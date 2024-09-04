@@ -762,30 +762,46 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Aus
   const handleChangeGlobalPriceBrazil = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(BrazilDisType == '1'){
-        console.log(e.target.value)
-        setBrazilNetPrice(e.target.value)
-      }else if(BrazilDisType == '2'){
-        setBrazilNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(BrazilDisPercent)/100).toFixed(2))
-      }else if(BrazilDisType == '3'){
-        setBrazilNetPrice((parseFloat(e.target.value) - parseFloat(BrazilDisAmt)).toFixed(2))
-      }else{
-        setBrazilNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value;
+  
+    // Log the current input value for debugging
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const decimalRegex = /^\d+(\.\d{0,2})?$/;
+  
+    // Check if the input is a valid number with up to two decimal places
+    if (decimalRegex.test(value)) {
+      let floatValue = parseFloat(value);
+      let netPrice = floatValue;
+  
+      // Calculate net price based on the discount type
+      if (BrazilDisType == '1') {
+        // No discount
+        netPrice = floatValue;
+      } else if (BrazilDisType == '2') {
+        // Percentage discount
+        netPrice -= (floatValue * parseFloat(BrazilDisPercent) / 100);
+        netPrice = netPrice.toFixed(2);
+      } else if (BrazilDisType == '3') {
+        // Fixed amount discount
+        netPrice -= parseFloat(BrazilDisAmt);
+        netPrice = netPrice.toFixed(2);
+      } else {
+        // Handle invalid discount type
+        netPrice = 0;
       }
   
-      if(e.target.value == ""){
-        setBrazilListPrice(0)
-      }
+      // Update the state for net price and list price
+      setBrazilNetPrice(value == "" ? 0 : netPrice);
+      setBrazilListPrice(value == "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setBrazilNetPrice(0);
+      setBrazilListPrice(0);
     }
-
-
-    setBrazilListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Aus
     const handleDefaultDiscountAmtBrazil = (e) =>{
