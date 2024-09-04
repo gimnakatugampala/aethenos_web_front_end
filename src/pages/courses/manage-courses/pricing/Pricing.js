@@ -629,32 +629,45 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Aus
   const handleChangeGlobalPriceAus = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-
-      if(AusDisType == '1'){
-        console.log(e.target.value)
-        setAusNetPrice(e.target.value)
-      }else if(AusDisType == '2'){
-        setAusNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(AusDisPercent)/100).toFixed(2))
-      }else if(AusDisType == '3'){
-        setAusNetPrice((parseFloat(e.target.value) - parseFloat(AusDisAmt)).toFixed(2))
-      }else{
-        setAusNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value;
+    
+    // Log the current input value for debugging
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const decimalRegex = /^\d+(\.\d{0,2})?$/;
+  
+    // Check if the input is a valid number with up to two decimal places
+    if (decimalRegex.test(value)) {
+      let netPrice = parseFloat(value);
+      
+      // Calculate net price based on the discount type
+      if (AusDisType == '1') {
+        // No discount
+        setAusNetPrice(netPrice);
+      } else if (AusDisType == '2') {
+        // Percentage discount
+        netPrice -= (netPrice * parseFloat(AusDisPercent) / 100);
+        setAusNetPrice(netPrice.toFixed(2));
+      } else if (AusDisType == '3') {
+        // Fixed amount discount
+        netPrice -= parseFloat(AusDisAmt);
+        setAusNetPrice(netPrice.toFixed(2));
+      } else {
+        // Handle invalid or empty input
+        setAusNetPrice(0);
       }
   
-      if(e.target.value == ""){
-        setAusListPrice(0)
-      }
+      // Update the list price state
+      setAusListPrice(value == "" ? 0 : parseFloat(value));
+    } else {
+      // Handle invalid input by resetting the prices
+      setAusNetPrice(0);
+      setAusListPrice(0);
     }
-
-
-
-    setAusListPrice(e.target.value)
-
-  }
+  };
+  
+  
 
     // Discount Amount Aus
     const handleDefaultDiscountAmtAus = (e) =>{
