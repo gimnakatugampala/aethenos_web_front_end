@@ -120,11 +120,16 @@ const AddCoupon = ({code}) => {
     const handleDiscountCouponCreate = (e) =>{
       setloading_btn(true)
 
-      // console.log(startDateDiscount)
-      // Format the End date
-      const [month, day, year] = endDateDiscount.split('/');
+         console.log(startDateDiscount)
+      console.log(endDateDiscount)
 
-      // console.log(`${year}-${month}-${day}`)
+        // Validate coupon code
+          const validationError = validateCouponCode(couponCodeDiscount);
+          if (validationError) {
+            ErrorAlert("Error", validationError);
+            setloading_btn(false);
+            return;
+          }
 
 
       if(DDiscountValue == "" || DDiscountPercent == "" || DDiscountPercent == 0 || DDiscountAmount == "" || DDiscountAmount == 0){
@@ -133,8 +138,7 @@ const AddCoupon = ({code}) => {
           return
       }
 
-      // console.log(startDateDiscount)
-      // console.log(endDateDiscount)
+   
 
      
 
@@ -142,7 +146,7 @@ const AddCoupon = ({code}) => {
       var raw = {
         "code":`${couponCodeDiscount}`,
         "start_date":`${moment(startDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
-        "end_date":`${moment(`${year}-${month}-${day}`).format("YYYY-MM-DD h:mm:ss")}`,
+        "end_date":`${moment(endDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
         "course_code":`${code}`,
         "global_list_price":`${DGlobalPricing == "" ? 0 : DGlobalPricing}`,
         "global_discount_price":`${DDiscountValue == "" ? 0 : DDiscountValue}`,
@@ -358,9 +362,21 @@ const AddCoupon = ({code}) => {
       
 
         console.log(raw)
-        SaveDiscountDouponsAPI(code,raw,setloading_btn)
+        // SaveDiscountDouponsAPI(code,raw,setloading_btn)
  
     }
+
+    const validateCouponCode = (code) => {
+   
+      
+      // Check for allowed characters
+      const allowedCharacters = /^[A-Z0-9._-]+$/;
+      if (!allowedCharacters.test(code)) {
+        return "Coupon code can only contain uppercase letters (A-Z), numbers (0-9), periods (.), dashes (-), and underscores (_).";
+      }
+      
+      return null; // No errors
+    };
     
     
 
@@ -1919,10 +1935,12 @@ const AddCoupon = ({code}) => {
       </div>
 
  
+     
+
         
         <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
             <Form.Label><b>Enter coupon code (Optional):</b></Form.Label>
-            <Form.Control value={couponCodeDiscount} onChange={(e) => setcouponCodeDiscount(e.target.value)} type="text" placeholder="Enter Coupon" />
+            <Form.Control value={couponCodeDiscount} onChange={(e) => setcouponCodeDiscount(e.target.value.toUpperCase())} type="text" placeholder="Enter Coupon" />
         </Form.Group>
   
         <p>The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.</p>
@@ -3271,11 +3289,15 @@ const AddCoupon = ({code}) => {
 
         </div>
 
-
         <div className='my-2'>
-          {loading_btn ? <Button variant='contained'><ButtonSpinner /></Button> : <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>}
-            
-        </div>
+        {loading_btn
+          ? <Button variant='contained' disabled>Loading...</Button>
+          : <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>
+        }
+      </div>
+
+
+       
 
         </div>
         )}
