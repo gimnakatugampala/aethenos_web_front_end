@@ -103,37 +103,28 @@ const AddCoupon = ({code}) => {
     }, [])
 
 
-    const handleFreeCouponCreate = (e) =>{
-        e.preventDefault();
-
-    
-        const isValid = /^[A-Z0-9]+$/.test(couponCodeFree);
-
-        let SD = moment(new Date(startDate)).format('yyyy-MM-DD HH:mm:ss')
-        let ED = moment(new Date(endDate)).format('yyyy-MM-DD HH:mm:ss')
-        
-        if (isValid || couponCodeFree == "") {
-          console.log(moment(new Date(startDate)).format('yyyy-MM-DD HH:mm:ss'))
-          console.log(moment(new Date(endDate)).format('yyyy-MM-DD HH:mm:ss'))
-          console.log(couponCodeFree)
-
-          console.log(SD)
-          console.log(ED)
-
-          console.log("---------")
-          console.log(endDate)
-        
-
-          setloading_btn(true)
-
-          AddFreeCouponAPI(code,SD,ED,couponCodeFree,setloading_btn)
-          
-        } else {
-          ErrorAlert("Error","Please Enter a Valid Coupon Code")
-        }
-        
-
-    }
+    const handleFreeCouponCreate = (e) => {
+      e.preventDefault();
+  
+      // Updated regex to allow periods, dashes, and underscores
+      const isValid = /^[A-Z0-9._-]{6,20}$/.test(couponCodeFree);
+  
+      let SD = moment(new Date(startDate)).format('YYYY-MM-DD HH:mm:ss');
+      let ED = moment(new Date(endDate)).format('YYYY-MM-DD HH:mm:ss');
+  
+      if (isValid || couponCodeFree === "") {
+          console.log(SD);
+          console.log(ED);
+          console.log(couponCodeFree);
+  
+          setloading_btn(true);
+  
+          // AddFreeCouponAPI(code, SD, ED, couponCodeFree, setloading_btn);
+      } else {
+          ErrorAlert("Error", "Please enter a valid coupon code. It must be between 6-20 characters and may include only UPPERCASE letters (A-Z), numbers (0-9), periods (.), dashes (-), and underscores (_).");
+      }
+  };
+  
 
     const handleDiscountCouponCreate = (e) =>{
       setloading_btn(true)
