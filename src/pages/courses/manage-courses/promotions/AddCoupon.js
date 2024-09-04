@@ -113,6 +113,7 @@ const AddCoupon = ({code}) => {
           AddFreeCouponAPI(code, SD, ED, couponCodeFree, setloading_btn);
       } else {
           ErrorAlert("Error", "Please enter a valid coupon code. It must be between 6-20 characters and may include only UPPERCASE letters (A-Z), numbers (0-9), periods (.), dashes (-), and underscores (_).");
+          setloading_btn(false)
       }
   };
   
@@ -360,6 +361,7 @@ const AddCoupon = ({code}) => {
         SaveDiscountDouponsAPI(code,raw,setloading_btn)
        }else{
         ErrorAlert("Error", "Please enter a valid coupon code. It must be between 6-20 characters and may include only UPPERCASE letters (A-Z), numbers (0-9), periods (.), dashes (-), and underscores (_).");
+        setloading_btn(false)
        }
 
  
