@@ -1681,7 +1681,7 @@ const Curriculum = ({ code }) => {
         </p>
         <p>
           Have a clear structure to your course content by following a good
-          course outline and clearly label your sections and lectures.
+          course outline and clearly label your sections and lessons.
         </p>
 
         <p>
@@ -1697,7 +1697,7 @@ const Curriculum = ({ code }) => {
           <li>
             <b>
               For a paid course the minimum video content length should be 45
-              minutes and the minimum number of lectures should be 5.
+              minutes and the minimum number of lessons should be 5.
             </b>
           </li>
           <li>
@@ -1713,7 +1713,7 @@ const Curriculum = ({ code }) => {
         </ul>
 
         <p>
-          Resources can be added to course lectures help students learn more
+          Resources can be added to course lessons help students learn more
           effectively and to enhance the learning experience.
         </p>
 
