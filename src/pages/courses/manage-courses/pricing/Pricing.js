@@ -1667,29 +1667,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Indo
   const handleChangeGlobalPriceIndo = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(IndonesiaDisType == '1'){
-        console.log(e.target.value)
-        setIndonesiaNetPrice(e.target.value)
-      }else if(IndonesiaDisType == '2'){
-        setIndonesiaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(IndonesiaDisPercent)/100).toFixed(2))
-      }else if(IndonesiaDisType == '3'){
-        setIndonesiaNetPrice((parseFloat(e.target.value) - parseFloat(IndonesiaDisAmt)).toFixed(2))
-      }else{
-        setIndonesiaNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (IndonesiaDisType == '1') {
+        console.log(value);
+        setIndonesiaNetPrice(value);
+      } else if (IndonesiaDisType == '2') {
+        setIndonesiaNetPrice((floatValue - (floatValue * parseFloat(IndonesiaDisPercent) / 100)).toFixed(2));
+      } else if (IndonesiaDisType == '3') {
+        setIndonesiaNetPrice((floatValue - parseFloat(IndonesiaDisAmt)).toFixed(2));
+      } else {
+        setIndonesiaNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setIndonesiaListPrice(0)
-      }
+      setIndonesiaListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setIndonesiaNetPrice(0);
+      setIndonesiaListPrice(0);
     }
-
-    setIndonesiaListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Indo
     const handleDefaultDiscountAmtIndo = (e) =>{
@@ -1786,29 +1792,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Isreal
   const handleChangeGlobalPriceIsreal = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(IsrealDisType == '1'){
-        console.log(e.target.value)
-        setIsrealNetPrice(e.target.value)
-      }else if(IsrealDisType == '2'){
-        setIsrealNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(IsrealDisPercent)/100).toFixed(2))
-      }else if(IsrealDisType == '3'){
-        setIsrealNetPrice((parseFloat(e.target.value) - parseFloat(IsrealDisAmt)).toFixed(2))
-      }else{
-        setIsrealNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (IsrealDisType == '1') {
+        console.log(value);
+        setIsrealNetPrice(value);
+      } else if (IsrealDisType == '2') {
+        setIsrealNetPrice((floatValue - (floatValue * parseFloat(IsrealDisPercent) / 100)).toFixed(2));
+      } else if (IsrealDisType == '3') {
+        setIsrealNetPrice((floatValue - parseFloat(IsrealDisAmt)).toFixed(2));
+      } else {
+        setIsrealNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setIsrealListPrice(0)
-      }
+      setIsrealListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setIsrealNetPrice(0);
+      setIsrealListPrice(0);
     }
-
-    setIsrealListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Isreal
     const handleDefaultDiscountAmtIsreal = (e) =>{
@@ -1904,28 +1916,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price India
   const handleChangeGlobalPriceIndia = (e) => {
-
-    console.log(e.target.value)
-    if(numberOnlyRegex.test(e.target.value)){
-      if(IndiaDisType == '1'){
-        console.log(e.target.value)
-        setIndiaNetPrice(e.target.value)
-      }else if(IndiaDisType == '2'){
-        setIndiaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(IndiaDisPercent)/100).toFixed(2))
-      }else if(IndiaDisType == '3'){
-        setIndiaNetPrice((parseFloat(e.target.value) - parseFloat(IndiaDisAmt)).toFixed(2))
-      }else{
-        setIndiaNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (IndiaDisType == '1') {
+        console.log(value);
+        setIndiaNetPrice(value);
+      } else if (IndiaDisType == '2') {
+        setIndiaNetPrice((floatValue - (floatValue * parseFloat(IndiaDisPercent) / 100)).toFixed(2));
+      } else if (IndiaDisType == '3') {
+        setIndiaNetPrice((floatValue - parseFloat(IndiaDisAmt)).toFixed(2));
+      } else {
+        setIndiaNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setIndiaListPrice(0)
-      }
+      setIndiaListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setIndiaNetPrice(0);
+      setIndiaListPrice(0);
     }
-
-    setIndiaListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount India
     const handleDefaultDiscountAmtIndia = (e) =>{
@@ -2147,28 +2166,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price SK
   const handleChangeGlobalPriceSK = (e) => {
-
-    console.log(e.target.value)
-    if(numberOnlyRegex.test(e.target.value)){
-      if(SKDisType == '1'){
-        console.log(e.target.value)
-        setSKNetPrice(e.target.value)
-      }else if(SKDisType == '2'){
-        setSKNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(SKDisPercent)/100).toFixed(2))
-      }else if(SKDisType == '3'){
-        setSKNetPrice((parseFloat(e.target.value) - parseFloat(SKDisAmt)).toFixed(2))
-      }else{
-        setSKNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (SKDisType == '1') {
+        console.log(value);
+        setSKNetPrice(value);
+      } else if (SKDisType == '2') {
+        setSKNetPrice((floatValue - (floatValue * parseFloat(SKDisPercent) / 100)).toFixed(2));
+      } else if (SKDisType == '3') {
+        setSKNetPrice((floatValue - parseFloat(SKDisAmt)).toFixed(2));
+      } else {
+        setSKNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setSKNetPrice(0)
-      }
+      setSKListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setSKNetPrice(0);
+      setSKListPrice(0);
     }
-
-    setSKListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount SK
     const handleDefaultDiscountAmtSK = (e) =>{
@@ -2268,28 +2294,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Mexico
   const handleChangeGlobalPriceMexico = (e) => {
-
-    console.log(e.target.value)
-    if(numberOnlyRegex.test(e.target.value)){
-      if(MexicoDisType == '1'){
-        console.log(e.target.value)
-        setMexicoNetPrice(e.target.value)
-      }else if(MexicoDisType == '2'){
-        setMexicoNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(MexicoDisPercent)/100).toFixed(2))
-      }else if(MexicoDisType == '3'){
-        setMexicoNetPrice((parseFloat(e.target.value) - parseFloat(MexicoDisAmt)).toFixed(2))
-      }else{
-        setMexicoNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (MexicoDisType == '1') {
+        console.log(value);
+        setMexicoNetPrice(value);
+      } else if (MexicoDisType == '2') {
+        setMexicoNetPrice((floatValue - (floatValue * parseFloat(MexicoDisPercent) / 100)).toFixed(2));
+      } else if (MexicoDisType == '3') {
+        setMexicoNetPrice((floatValue - parseFloat(MexicoDisAmt)).toFixed(2));
+      } else {
+        setMexicoNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setMexicoListPrice(0)
-      }
+      setMexicoListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setMexicoNetPrice(0);
+      setMexicoListPrice(0);
     }
-
-    setMexicoListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Mexico
     const handleDefaultDiscountAmtMexico = (e) =>{
@@ -2388,28 +2421,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Malaysia
   const handleChangeGlobalPriceMalaysia = (e) => {
-
-    console.log(e.target.value)
-    if(numberOnlyRegex.test(e.target.value)){
-      if(MalaysiaDisType == '1'){
-        console.log(e.target.value)
-        setMalaysiaNetPrice(e.target.value)
-      }else if(MalaysiaDisType == '2'){
-        setMalaysiaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(MalaysiaDisPercent)/100).toFixed(2))
-      }else if(MalaysiaDisType == '3'){
-        setMalaysiaNetPrice((parseFloat(e.target.value) - parseFloat(MalaysiaDisAmt)).toFixed(2))
-      }else{
-        setMalaysiaNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (MalaysiaDisType == '1') {
+        console.log(value);
+        setMalaysiaNetPrice(value);
+      } else if (MalaysiaDisType == '2') {
+        setMalaysiaNetPrice((floatValue - (floatValue * parseFloat(MalaysiaDisPercent) / 100)).toFixed(2));
+      } else if (MalaysiaDisType == '3') {
+        setMalaysiaNetPrice((floatValue - parseFloat(MalaysiaDisAmt)).toFixed(2));
+      } else {
+        setMalaysiaNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setMalaysiaListPrice(0)
-      }
+      setMalaysiaListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setMalaysiaNetPrice(0);
+      setMalaysiaListPrice(0);
     }
-
-    setMalaysiaListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Malaysia
     const handleDefaultDiscountAmtMalaysia = (e) =>{
@@ -2506,29 +2546,30 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Nigeria
   const handleChangeGlobalPriceNigeria = (e) => {
-
-    console.log(e.target.value)
-    if(numberOnlyRegex.test(e.target.value)){
-
-      if(NigeriaDisType == '1'){
-        console.log(e.target.value)
-        setNIgeriaNetPrice(e.target.value)
-      }else if(NigeriaDisType == '2'){
-        setNIgeriaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(NigeriaDisPercent)/100).toFixed(2))
-      }else if(NigeriaDisType == '3'){
-        setNIgeriaNetPrice((parseFloat(e.target.value) - parseFloat(NigeriaDisAmt)).toFixed(2))
-      }else{
-        setNIgeriaNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    if (numberOnlyRegex.test(value)) {
+      if (NigeriaDisType == '1') {
+        console.log(value);
+        setNIgeriaNetPrice(value);
+      } else if (NigeriaDisType == '2') {
+        setNIgeriaNetPrice((parseFloat(value) - (parseFloat(value) * parseFloat(NigeriaDisPercent) / 100)).toFixed(2));
+      } else if (NigeriaDisType == '3') {
+        setNIgeriaNetPrice((parseFloat(value) - parseFloat(NigeriaDisAmt)).toFixed(2));
+      } else {
+        setNIgeriaNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setNigeriaListPrice(0)
-      }
+      setNigeriaListPrice(value === "" ? 0 : parseFloat(value));
+    } else {
+      // Handle invalid input by resetting the prices
+      setNIgeriaNetPrice(0);
+      setNigeriaListPrice(0);
     }
-
-    setNigeriaListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Nigeria
     const handleDefaultDiscountAmtNigeria = (e) =>{
@@ -2626,28 +2667,30 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Norway
   const handleChangeGlobalPriceNorway = (e) => {
-
-    console.log(e.target.value)
-    if(numberOnlyRegex.test(e.target.value)){
-      if(NorwayDisType == '1'){
-        console.log(e.target.value)
-        setNorwayNetPrice(e.target.value)
-      }else if(NorwayDisType == '2'){
-        setNorwayNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(NorwayDisPercent)/100).toFixed(2))
-      }else if(NorwayDisType == '3'){
-        setNorwayNetPrice((parseFloat(e.target.value) - parseFloat(NorwayDisAmt)).toFixed(2))
-      }else{
-        setNorwayNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    if (numberOnlyRegex.test(value)) {
+      if (NorwayDisType == '1') {
+        console.log(value);
+        setNorwayNetPrice(value);
+      } else if (NorwayDisType == '2') {
+        setNorwayNetPrice((parseFloat(value) - (parseFloat(value) * parseFloat(NorwayDisPercent) / 100)).toFixed(2));
+      } else if (NorwayDisType == '3') {
+        setNorwayNetPrice((parseFloat(value) - parseFloat(NorwayDisAmt)).toFixed(2));
+      } else {
+        setNorwayNetPrice(value === "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setNorwayListPrice(0)
-      }
+      setNorwayListPrice(value === "" ? 0 : parseFloat(value));
+    } else {
+      // Handle invalid input by resetting the prices
+      setNorwayNetPrice(0);
+      setNorwayListPrice(0);
     }
-
-    setNorwayListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Norway
     const handleDefaultDiscountAmtNorway = (e) =>{
@@ -2743,29 +2786,31 @@ const handleDefaultPercentageDiscount = (e) => {
     }
 
     // Enter Global Price Peru
-    const handleChangeGlobalPricePeru = (e) => {
+      const handleChangeGlobalPricePeru = (e) => {
+      const value = e.target.value.trim();
 
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(PeruDisType == '1'){
-          console.log(e.target.value)
-          setPeruNetPrice(e.target.value)
-        }else if(PeruDisType == '2'){
-          setPeruNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(PeruDisPercent)/100).toFixed(2))
-        }else if(PeruDisType == '3'){
-          setPeruNetPrice((parseFloat(e.target.value) - parseFloat(PeruDisAmt)).toFixed(2))
-        }else{
-          setPeruNetPrice(e.target.value == "" ? 0 : e.target.value)
+      console.log(value);
+
+      if (numberOnlyRegex.test(value)) {
+        if (PeruDisType == '1') {
+          console.log(value);
+          setPeruNetPrice(value);
+        } else if (PeruDisType == '2') {
+          setPeruNetPrice((parseFloat(value) - (parseFloat(value) * parseFloat(PeruDisPercent) / 100)).toFixed(2));
+        } else if (PeruDisType == '3') {
+          setPeruNetPrice((parseFloat(value) - parseFloat(PeruDisAmt)).toFixed(2));
+        } else {
+          setPeruNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setPeruListPrice(0)
-        }
+
+        setPeruListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting the prices
+        setPeruNetPrice(0);
+        setPeruListPrice(0);
       }
+    };
 
-      setPeruListPrice(e.target.value)
-
-    }
 
       // Discount Amount Peru
       const handleDefaultDiscountAmtPeru = (e) =>{
