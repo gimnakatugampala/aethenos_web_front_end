@@ -120,33 +120,29 @@ const AddCoupon = ({code}) => {
     const handleDiscountCouponCreate = (e) =>{
       setloading_btn(true)
 
-         console.log(startDateDiscount)
+      console.log(startDateDiscount)
       console.log(endDateDiscount)
+   
+       // Updated regex to allow periods, dashes, and underscores
+       const isValid = /^[A-Z0-9._-]{6,20}$/.test(couponCodeDiscount);
 
-        // Validate coupon code
-          const validationError = validateCouponCode(couponCodeDiscount);
-          if (validationError) {
-            ErrorAlert("Error", validationError);
-            setloading_btn(false);
-            return;
-          }
+       // Parse and format start and end dates from DD-MM-YYYY to YYYY-MM-DD HH:mm:ss
+        let SD = moment(startDateDiscount, 'DD-MM-YYYY').format('YYYY-MM-DD HH:mm:ss');
+        let ED = moment(endDateDiscount, 'DD-MM-YYYY').format('YYYY-MM-DD HH:mm:ss');
 
-
-      if(DDiscountValue == "" || DDiscountPercent == "" || DDiscountPercent == 0 || DDiscountAmount == "" || DDiscountAmount == 0){
+       if (isValid || couponCodeDiscount == "") {
+        
+        if(DDiscountValue == "" || DDiscountPercent == "" || DDiscountPercent == 0 || DDiscountAmount == "" || DDiscountAmount == 0){
           ErrorAlert("Error","Global Price cannot be empty")
           setloading_btn(false)
           return
       }
 
    
-
-     
-
-
       var raw = {
         "code":`${couponCodeDiscount}`,
-        "start_date":`${moment(startDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
-        "end_date":`${moment(endDateDiscount).format("YYYY-MM-DD h:mm:ss")}`,
+        "start_date":`${SD}`,
+        "end_date":`${ED}`,
         "course_code":`${code}`,
         "global_list_price":`${DGlobalPricing == "" ? 0 : DGlobalPricing}`,
         "global_discount_price":`${DDiscountValue == "" ? 0 : DDiscountValue}`,
@@ -360,10 +356,16 @@ const AddCoupon = ({code}) => {
         }
 
       
-
         console.log(raw)
-        // SaveDiscountDouponsAPI(code,raw,setloading_btn)
+        SaveDiscountDouponsAPI(code,raw,setloading_btn)
+       }else{
+        ErrorAlert("Error", "Please enter a valid coupon code. It must be between 6-20 characters and may include only UPPERCASE letters (A-Z), numbers (0-9), periods (.), dashes (-), and underscores (_).");
+       }
+
  
+
+
+
     }
 
     const validateCouponCode = (code) => {
