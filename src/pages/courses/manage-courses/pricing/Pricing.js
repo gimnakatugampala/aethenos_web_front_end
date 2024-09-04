@@ -1189,10 +1189,10 @@ const handleDefaultPercentageDiscount = (e) => {
       } else if (ColumbiaDisType == '3') {
         setColumbiaNetPrice((floatValue - parseFloat(ColumbiaDisAmt)).toFixed(2));
       } else {
-        setColumbiaNetPrice(value === "" ? 0 : value);
+        setColumbiaNetPrice(value == "" ? 0 : value);
       }
   
-      setColumbiaListPrice(value === "" ? 0 : floatValue);
+      setColumbiaListPrice(value == "" ? 0 : floatValue);
     } else {
       // Handle invalid input
       setColumbiaNetPrice(0);
@@ -1295,30 +1295,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Egypt
   const handleChangeGlobalPriceEgypt = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(EgyptDisType == '1'){
-        console.log(e.target.value)
-        setEgyptNetPrice(e.target.value)
-      }else if(EgyptDisType == '2'){
-        setEgyptNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(EgyptDisPercent)/100).toFixed(2))
-      }else if(EgyptDisType == '3'){
-        setEgyptNetPrice((parseFloat(e.target.value) - parseFloat(EgyptDisAmt)).toFixed(2))
-      }else{
-        setEgyptNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (EgyptDisType == '1') {
+        console.log(value);
+        setEgyptNetPrice(value);
+      } else if (EgyptDisType == '2') {
+        setEgyptNetPrice((floatValue - (floatValue * parseFloat(EgyptDisPercent) / 100)).toFixed(2));
+      } else if (EgyptDisType == '3') {
+        setEgyptNetPrice((floatValue - parseFloat(EgyptDisAmt)).toFixed(2));
+      } else {
+        setEgyptNetPrice(value == "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setEgyptListPrice(0)
-      }
+      setEgyptListPrice(value == "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setEgyptNetPrice(0);
+      setEgyptListPrice(0);
     }
-
-
-    setEgyptListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Egypt
     const handleDefaultDiscountAmtEgypt = (e) =>{
