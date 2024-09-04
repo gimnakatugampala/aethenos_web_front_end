@@ -900,30 +900,46 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Canada
   const handleChangeGlobalPriceCanada = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(CanadaDisType == '1'){
-        console.log(e.target.value)
-        setCanadaNetPrice(e.target.value)
-      }else if(CanadaDisType == '2'){
-        setCanadaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(CanadaDisPercent)/100).toFixed(2))
-      }else if(CanadaDisType == '3'){
-        setCanadaNetPrice((parseFloat(e.target.value) - parseFloat(CanadaDisAmt)).toFixed(2))
-      }else{
-        setCanadaNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value;
+  
+    // Log the current input value for debugging
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const decimalRegex = /^\d+(\.\d{0,2})?$/;
+  
+    // Check if the input is a valid number with up to two decimal places
+    if (decimalRegex.test(value)) {
+      let floatValue = parseFloat(value);
+      let netPrice = floatValue;
+  
+      // Calculate net price based on the discount type
+      if (CanadaDisType == '1') {
+        // No discount
+        netPrice = floatValue;
+      } else if (CanadaDisType == '2') {
+        // Percentage discount
+        netPrice -= (floatValue * parseFloat(CanadaDisPercent) / 100);
+        netPrice = netPrice.toFixed(2);
+      } else if (CanadaDisType == '3') {
+        // Fixed amount discount
+        netPrice -= parseFloat(CanadaDisAmt);
+        netPrice = netPrice.toFixed(2);
+      } else {
+        // Handle invalid discount type
+        netPrice = 0;
       }
   
-      if(e.target.value == ""){
-        setCanadaListPrice(0)
-      }
+      // Update the state for net price and list price
+      setCanadaNetPrice(value === "" ? 0 : netPrice);
+      setCanadaListPrice(value === "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setCanadaNetPrice(0);
+      setCanadaListPrice(0);
     }
-
-
-    setCanadaListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount Canada
     const handleDefaultDiscountAmtCanada = (e) =>{
