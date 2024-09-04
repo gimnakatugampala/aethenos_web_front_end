@@ -262,6 +262,8 @@ const handleFileChange = (event) => {
   
   const isDataURI = (url) => url.startsWith('data:video');
 
+  const isDataImageURI = (url) => url.startsWith('data:image');
+
   return (
     <div className="col-md-10 px-4 mb-4 course-landing-page-responsive ">
       <Card className="py-2 my-2 p-4">
@@ -408,7 +410,9 @@ const handleFileChange = (event) => {
               <h6>
                 <b>Course image <span className="text-danger">*</span></b>
               </h6>
-              {preview_img == "" ? <img style={{objectFit:'cover', width: "auto"}} height={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" /> : isDataURI(preview_img) ? <img  height={150} src={preview_img} /> : <img  height={150}  src={`${FILE_PATH}${preview_img}`} /> }
+              {preview_img == "" ? 
+              <img style={{objectFit:'cover', width: "auto"}} height={200} src="https://t4.ftcdn.net/jpg/04/81/13/43/360_F_481134373_0W4kg2yKeBRHNEklk4F9UXtGHdub3tYk.jpg" />
+               : isDataImageURI(preview_img) ? <img  height={150} src={preview_img} /> : <img  height={150}  src={`${FILE_PATH}${preview_img}`} /> }
             
 
      
