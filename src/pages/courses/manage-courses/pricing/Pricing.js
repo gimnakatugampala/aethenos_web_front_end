@@ -1421,30 +1421,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price EU
   const handleChangeGlobalPriceEU = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(EUDisType == '1'){
-        console.log(e.target.value)
-        setEUNetPrice(e.target.value)
-      }else if(EUDisType == '2'){
-        setEUNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(EUDisPercent)/100).toFixed(2))
-      }else if(EUDisType == '3'){
-        setEUNetPrice((parseFloat(e.target.value) - parseFloat(EUDisAmt)).toFixed(2))
-      }else{
-        setEUNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (EUDisType == '1') {
+        console.log(value);
+        setEUNetPrice(value);
+      } else if (EUDisType == '2') {
+        setEUNetPrice((floatValue - (floatValue * parseFloat(EUDisPercent) / 100)).toFixed(2));
+      } else if (EUDisType == '3') {
+        setEUNetPrice((floatValue - parseFloat(EUDisAmt)).toFixed(2));
+      } else {
+        setEUNetPrice(value == "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setEUListPrice(0)
-      }
+      setEUListPrice(value == "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setEUNetPrice(0);
+      setEUListPrice(0);
     }
-
-
-    setEUListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount EU
     const handleDefaultDiscountAmtEU = (e) =>{
