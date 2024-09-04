@@ -1544,30 +1544,35 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price GBP
   const handleChangeGlobalPriceGBP = (e) => {
-
-    console.log(e.target.value)
-
-    if(numberOnlyRegex.test(e.target.value)){
-      if(GBPDisType == '1'){
-        console.log(e.target.value)
-        setGBPNetPrice(e.target.value)
-      }else if(GBPDisType == '2'){
-        setGBPNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(GBPDisPercent)/100).toFixed(2))
-      }else if(GBPDisType == '3'){
-        setGBPNetPrice((parseFloat(e.target.value) - parseFloat(GBPDisAmt)).toFixed(2))
-      }else{
-        setGBPNetPrice(e.target.value == "" ? 0 : e.target.value)
+    const value = e.target.value.trim();
+  
+    console.log(value);
+  
+    // Regex to allow numbers with up to two decimal places
+    const numberOnlyRegex = /^\d+(\.\d{0,2})?$/;
+  
+    if (numberOnlyRegex.test(value)) {
+      let floatValue = parseFloat(value);
+  
+      if (GBPDisType == '1') {
+        console.log(value);
+        setGBPNetPrice(value);
+      } else if (GBPDisType == '2') {
+        setGBPNetPrice((floatValue - (floatValue * parseFloat(GBPDisPercent) / 100)).toFixed(2));
+      } else if (GBPDisType == '3') {
+        setGBPNetPrice((floatValue - parseFloat(GBPDisAmt)).toFixed(2));
+      } else {
+        setGBPNetPrice(value == "" ? 0 : value);
       }
   
-      if(e.target.value == ""){
-        setGBPListPrice(0)
-      }
+      setGBPListPrice(value == "" ? 0 : floatValue);
+    } else {
+      // Handle invalid input by resetting the prices
+      setGBPNetPrice(0);
+      setGBPListPrice(0);
     }
-
-
-    setGBPListPrice(e.target.value)
-
-  }
+  };
+  
 
     // Discount Amount GBP
     const handleDefaultDiscountAmtGBP = (e) =>{
