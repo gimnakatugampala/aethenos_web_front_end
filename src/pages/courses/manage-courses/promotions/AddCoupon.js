@@ -65,42 +65,31 @@ const AddCoupon = ({code}) => {
     // }, [])
 
     //  -------------- DISCOUNT COUPONS ----------
-    const currentDateDiscount = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+    const currentDateDiscount = moment().format('DD-MM-YYYY'); // Get current date in "DD-MM-YYYY" format
     const [startDateDiscount, setStartDateDiscount] = useState(currentDateDiscount);
     const [endDateDiscount, setEndDateDiscount] = useState("");
-    const [couponCodeDiscount, setcouponCodeDiscount] = useState("")
+    const [couponCodeDiscount, setcouponCodeDiscount] = useState("");
 
       
-    const handleStartDateChangeDiscount = (event) => {
-      const newStartDate = event.target.value;
-  
-      // Check if the new start date is not before the current date
-      if (new Date(newStartDate) >= new Date(currentDateDiscount)) {
-        setStartDateDiscount(newStartDate);
-        setEndDateDiscount(calculateEndDateDiscount(newStartDate));
+    const handleStartDateChangeDiscount = (date) => {
+      if (date && date.isValid()) {
+        const newStartDate = date.format('DD-MM-YYYY');
+        if (moment(newStartDate, 'DD-MM-YYYY').isSameOrAfter(currentDateDiscount, 'day')) {
+          setStartDateDiscount(newStartDate);
+          setEndDateDiscount(calculateEndDateDiscount(newStartDate));
+        }
       }
-
-      calculateEndDateDiscount(startDateDiscount)
     };
   
     const calculateEndDateDiscount = (start) => {
-      const startDate = new Date(start);
-      const endDate = new Date(startDate);
-      endDate.setDate(startDate.getDate() + 30);
-    
-      // Format the date as DD/MM/YYYY
-      const day = String(endDate.getDate()).padStart(2, '0');
-      const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based in JavaScript
-      const year = endDate.getFullYear();
-    
-      return `${month}/${day}/${year}`;
+      const startDate = moment(start, 'DD-MM-YYYY');
+      const endDate = startDate.clone().add(30, 'days');
+      return endDate.format('DD-MM-YYYY');
     };
-    
-
-
+  
     useEffect(() => {
-      setEndDateDiscount(calculateEndDateDiscount(currentDateDiscount));
-    }, [])
+      setEndDateDiscount(calculateEndDateDiscount(startDateDiscount));
+    }, [startDateDiscount]);
 
 
     const handleFreeCouponCreate = (e) => {
@@ -1810,7 +1799,7 @@ const AddCoupon = ({code}) => {
         <div className='col-md-6'>
         <Card className='border border-dark border-3 h-100'>
             <Radio
-                checked={selectedValue === 'free-coupon'}
+                checked={selectedValue == 'free-coupon'}
                 onChange={handleChange}
                 value="free-coupon"
                 name="radio-buttons"
@@ -1830,7 +1819,7 @@ const AddCoupon = ({code}) => {
         <div className='col-md-6'>
         <Card className='border border-dark border-3 h-100'>
             <Radio
-                checked={selectedValue === 'discount-coupon'}
+                checked={selectedValue == 'discount-coupon'}
                 onChange={handleChange}
                 value="discount-coupon"
                 name="radio-buttons"
@@ -1900,23 +1889,48 @@ const AddCoupon = ({code}) => {
     {selectedValue == "discount-coupon" && (
         <div className='container'>
 
-           <div className='row my-5'>
-            <div className='mb-3'>
-              <h6><b>Start date (MM/DD/YYYY):</b></h6>
-              <input
-              className='form-control'
-              type="date"
-              id="startDate"
-              value={startDateDiscount}
-              onChange={handleStartDateChangeDiscount}
-            />
-            </div>
-            
-            <div className='mb-3'>
-            
-              <h6><b>End date (MM/DD/YYYY):</b> <input class="form-control" type="text" value={endDateDiscount} aria-label="readonly input example" readonly /></h6>
-            </div>
-          </div>
+<div className='row my-5'>
+        <div className='mb-3'>
+          <h6><b>Start date (DD-MM-YYYY):</b></h6>
+          <DatePicker
+            format="DD-MM-YYYY"
+            size="large"
+            value={moment(startDateDiscount, 'DD-MM-YYYY')}
+            onChange={handleStartDateChangeDiscount}
+          />
+        </div>
+
+        <div className='mb-3'>
+          <h6><b>End date (DD-MM-YYYY):</b></h6>
+          <DatePicker
+            format="DD-MM-YYYY"
+            size="large"
+            value={moment(endDateDiscount, 'DD-MM-YYYY')}
+            disabled
+          />
+        </div>
+      </div>
+
+      <Form.Group className='d-flex' controlId="exampleForm.ControlInput1">
+        <Form.Label><b>Enter coupon code (optional)</b></Form.Label>
+        <Form.Control
+          value={couponCodeDiscount}
+          onChange={(e) => setcouponCodeDiscount(e.target.value.toUpperCase())}
+          type="text"
+          placeholder="Enter Coupon"
+        />
+      </Form.Group>
+
+      <p>
+        The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.
+      </p>
+
+      <div className='my-2'>
+        {loading_btn
+          ? <Button variant='contained' disabled>Loading...</Button>
+          : <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>
+        }
+      </div>
 
         
         <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
