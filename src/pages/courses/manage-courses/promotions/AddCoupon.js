@@ -2000,7 +2000,7 @@ const AddCoupon = ({code}) => {
                
 
                 <div className="col-md-3">
-                  <Form.Label className="pricing-label"><b>Discounted Amount (USD)</b></Form.Label>
+                  <Form.Label className="pricing-label"><b>Discount Amount (USD)</b></Form.Label>
                   <Form.Control
                     isInvalid={DDiscountAmount != 0 && DDiscountAmount < parseFloat(MinDefaultValue).toFixed(2)}
                     disabled
@@ -2039,7 +2039,7 @@ const AddCoupon = ({code}) => {
 
                 <th scope="col">Discount Price</th>
                 <th scope="col">Discount %</th>
-                <th scope="col">Discounted Amount</th>
+                <th scope="col">Discount Amount</th>
               
                
               </tr>
