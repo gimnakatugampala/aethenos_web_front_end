@@ -377,33 +377,41 @@ const Pricing = ({code}) => {
 const handleChangeGlobalPrice = (e) => {
   const value = e.target.value;
 
-  // Check if input is a valid number
-  if (numberOnlyRegex.test(value)) {
+  // Regex to allow numbers with up to two decimal places
+  const decimalRegex = /^\d+(\.\d{0,2})?$/;
+
+  // Check if the input is a valid number with up to two decimal places
+  if (decimalRegex.test(value)) {
     // Convert value to float for calculations
-    const floatValue = parseFloat(value);
+    let floatValue = parseFloat(value);
 
     // Compute the global net price based on the discount type
     let netPrice = floatValue;
 
-    if (DDisType == '1') {
+    if (DDisType === '1') {
+      // No discount
       netPrice = floatValue;
-    } else if (DDisType == '2') {
+    } else if (DDisType === '2') {
       // Calculate discount price if percentage discount is applied
       netPrice = (floatValue - (floatValue * parseFloat(DDisPercent) / 100)).toFixed(2);
-    } else if (DDisType == '3') {
+    } else if (DDisType === '3') {
       // Calculate discount price if amount discount is applied
       netPrice = (floatValue - parseFloat(DDisAmt)).toFixed(2);
+    } else {
+      // Handle invalid or empty input
+      netPrice = 0;
     }
 
     // Update the state for net price and global pricing
-    setDGlobalNetPrice(value == "" ? 0 : netPrice);
-    setDGlobalPricing(value == "" ? 0 : floatValue);
+    setDGlobalNetPrice(value === "" ? 0 : netPrice);
+    setDGlobalPricing(value === "" ? 0 : floatValue);
   } else {
-    // Handle invalid input or reset if necessary
+    // Handle invalid input by resetting the prices
     setDGlobalNetPrice(0);
     setDGlobalPricing(0);
   }
 };
+
 
   // Discount Amount
   const handleDefaultDiscountAmt = (e) =>{
