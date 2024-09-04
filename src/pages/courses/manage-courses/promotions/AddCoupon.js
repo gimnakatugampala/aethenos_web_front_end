@@ -28,6 +28,8 @@ const AddCoupon = ({code}) => {
 
     const handleChange = (event) => {
       setSelectedValue(event.target.value);
+
+      console.log(event.target.value)
     };
 
    
@@ -1785,6 +1787,11 @@ const AddCoupon = ({code}) => {
 
     // -------------------
 
+    useEffect(() => {
+      console.log(selectedValue)
+    }, [selectedValue])
+    
+
 
 
 
@@ -1911,27 +1918,7 @@ const AddCoupon = ({code}) => {
         </div>
       </div>
 
-      <Form.Group className='d-flex' controlId="exampleForm.ControlInput1">
-        <Form.Label><b>Enter coupon code (optional)</b></Form.Label>
-        <Form.Control
-          value={couponCodeDiscount}
-          onChange={(e) => setcouponCodeDiscount(e.target.value.toUpperCase())}
-          type="text"
-          placeholder="Enter Coupon"
-        />
-      </Form.Group>
-
-      <p>
-        The coupon code must be between 6 - 20 characters, only UPPERCASE LETTERS (A-Z), numbers (0-9) and these symbols can be used: periods (.), dashes (-), and underscores (_). Coupon codes with lowercase or other symbols cannot be created. A coupon code can only be used once per course.
-      </p>
-
-      <div className='my-2'>
-        {loading_btn
-          ? <Button variant='contained' disabled>Loading...</Button>
-          : <Button onClick={handleDiscountCouponCreate} variant='contained'>Create Coupon</Button>
-        }
-      </div>
-
+ 
         
         <Form.Group className='d-flex'  controlId="exampleForm.ControlInput1">
             <Form.Label><b>Enter coupon code (Optional):</b></Form.Label>
