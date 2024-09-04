@@ -1812,7 +1812,7 @@ const Curriculum = ({ code }) => {
                         <h4>
                           {" "}
                           <OpenWithOutlinedIcon /> You can rearrange the content
-                          simply by dragging
+                          simply by dragging & dropping
                         </h4>{" "}
                       </div>
                     </Card>
@@ -4316,7 +4316,7 @@ const Curriculum = ({ code }) => {
                                     <OpenWithOutlinedIcon />{" "}
                                     You can rearrange the
                                     Answers & Explanations simply by
-                                    dragging
+                                    dragging & dropping
                                   </h4>{" "}
                                 </div>
                               </Card>
