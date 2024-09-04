@@ -374,35 +374,36 @@ const Pricing = ({code}) => {
   }
 
 // Enter Global Price
-  const handleChangeGlobalPrice = (e) => {
+const handleChangeGlobalPrice = (e) => {
+  const value = e.target.value;
 
+  // Check if input is a valid number
+  if (numberOnlyRegex.test(value)) {
+    // Convert value to float for calculations
+    const floatValue = parseFloat(value);
 
+    // Compute the global net price based on the discount type
+    let netPrice = floatValue;
 
-    if(numberOnlyRegex.test(e.target.value)){
-      if(DDisType == '1'){
-        console.log(e.target.value)
-        setDGlobalNetPrice(e.target.value)
-      }else if(DDisType == '2'){
-        setDGlobalNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(DDisPercent)/100).toFixed(2))
-      }else if(DDisType == '3'){
-        setDGlobalNetPrice((parseFloat(e.target.value) - parseFloat(DDisAmt)).toFixed(2))
-      }else{
-        setDGlobalNetPrice(e.target.value == "" ? 0 : e.target.value)
-      }
-  
-      if(e.target.value == ""){
-        setDGlobalPricing(0)
-      }
-  
+    if (DDisType == '1') {
+      netPrice = floatValue;
+    } else if (DDisType == '2') {
+      // Calculate discount price if percentage discount is applied
+      netPrice = (floatValue - (floatValue * parseFloat(DDisPercent) / 100)).toFixed(2);
+    } else if (DDisType == '3') {
+      // Calculate discount price if amount discount is applied
+      netPrice = (floatValue - parseFloat(DDisAmt)).toFixed(2);
     }
-    setDGlobalPricing(e.target.value)
 
-
-  
-
-
-
+    // Update the state for net price and global pricing
+    setDGlobalNetPrice(value == "" ? 0 : netPrice);
+    setDGlobalPricing(value == "" ? 0 : floatValue);
+  } else {
+    // Handle invalid input or reset if necessary
+    setDGlobalNetPrice(0);
+    setDGlobalPricing(0);
   }
+};
 
   // Discount Amount
   const handleDefaultDiscountAmt = (e) =>{
