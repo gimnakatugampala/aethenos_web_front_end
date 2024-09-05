@@ -56,6 +56,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { FormatVideoTimeLength } from "../../../commonFunctions/FormatVideoTimeLength";
+import ExternalRatings from "./external-ratings/ExternalRatings";
+import StarIcon from '@mui/icons-material/Star';
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -327,7 +329,11 @@ const ManageCourses = () => {
       setselectTab("settings");
       setSelectedIndex(6);
       window.history.pushState("settings", "Manage Course", `#settings`);
-    } else {
+    } else if (index == "external-ratings") {
+      setselectTab("external-ratings");
+      setSelectedIndex(7);
+      window.history.pushState("external-ratings", "Manage Course", `#external-ratings`);
+    }else {
       setselectTab("intended-learners");
       setSelectedIndex(0);
       window.history.pushState(
@@ -644,7 +650,7 @@ const ManageCourses = () => {
               )} */}
             </ListItemButton>
 
-            <ListItemButton
+            {/* <ListItemButton
               selected={selectedIndex === 6}
               onClick={(event) => handleListItemClick(event, "settings")}
             >
@@ -652,6 +658,16 @@ const ManageCourses = () => {
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" />
+            </ListItemButton> */}
+
+          <ListItemButton
+              selected={selectedIndex === 7}
+              onClick={(event) => handleListItemClick(event, "external-ratings")}
+            >
+              <ListItemIcon style={{ minWidth: "30px" }}>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText primary="External Ratings (Optional)" />
             </ListItemButton>
 
             <ListItemText
@@ -693,6 +709,8 @@ const ManageCourses = () => {
           <Settings status_type={status_type} code={code} />
         ) : selectTab == "add-coupon" ? (
           <AddCoupon code={code} />
+        ) :selectTab == "external-ratings" ? (
+          <ExternalRatings code={code} />
         ) : (
           ""
         )}
