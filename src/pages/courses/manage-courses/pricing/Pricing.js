@@ -2906,28 +2906,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Philipines
     const handleChangeGlobalPricePhilipines = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(PhilipinesDisType == '1'){
-          console.log(e.target.value)
-          setPhilipinesNetPrice(e.target.value)
-        }else if(PhilipinesDisType == '2'){
-          setPhilipinesNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(PhilipinesDisPercent)/100).toFixed(2))
-        }else if(PhilipinesDisType == '3'){
-          setPhilipinesNetPrice((parseFloat(e.target.value) - parseFloat(PhiliphinesDisAmt)).toFixed(2))
-        }else{
-          setPhilipinesNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim();  // Trim any extra spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (PhilipinesDisType == '1') {
+          console.log(value);
+          setPhilipinesNetPrice(value);
+        } else if (PhilipinesDisType == '2') {
+          setPhilipinesNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(PhilipinesDisPercent) / 100).toFixed(2));
+        } else if (PhilipinesDisType == '3') {
+          setPhilipinesNetPrice((parseFloat(value) - parseFloat(PhiliphinesDisAmt)).toFixed(2));
+        } else {
+          setPhilipinesNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setPhilipinesListPrice(0)
-        }
+    
+        setPhilipinesListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting the prices
+        setPhilipinesNetPrice(0);
+        setPhilipinesListPrice(0);
       }
-
-      setPhilipinesListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Philipines
       const handleDefaultDiscountAmtPhilipines = (e) =>{
@@ -3024,28 +3025,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Poland
     const handleChangeGlobalPricePoland = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(PolandDisType == '1'){
-          console.log(e.target.value)
-          setPolandNetPrice(e.target.value)
-        }else if(PolandDisType == '2'){
-          setPolandNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(PolandDisPercent)/100).toFixed(2))
-        }else if(PolandDisType == '3'){
-          setPolandNetPrice((parseFloat(e.target.value) - parseFloat(PolandDisAmt)).toFixed(2))
-        }else{
-          setPolandNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to avoid leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (PolandDisType == '1') {
+          console.log(value);
+          setPolandNetPrice(value);
+        } else if (PolandDisType == '2') {
+          setPolandNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(PolandDisPercent) / 100).toFixed(2));
+        } else if (PolandDisType == '3') {
+          setPolandNetPrice((parseFloat(value) - parseFloat(PolandDisAmt)).toFixed(2));
+        } else {
+          setPolandNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setPolandListPrice(0)
-        }
+    
+        setPolandListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setPolandNetPrice(0);
+        setPolandListPrice(0);
       }
-
-      setPolandListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Poland
       const handleDefaultDiscountAmtPoland = (e) =>{
@@ -3141,28 +3143,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Romania
     const handleChangeGlobalPriceRomania = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(RomaniaDisType == '1'){
-          console.log(e.target.value)
-          setRomaniaNetPrice(e.target.value)
-        }else if(RomaniaDisType == '2'){
-          setRomaniaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(RomaniaDisPercent)/100).toFixed(2))
-        }else if(RomaniaDisType == '3'){
-          setRomaniaNetPrice((parseFloat(e.target.value) - parseFloat(RomaniaDisAmt)).toFixed(2))
-        }else{
-          setRomaniaNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to avoid leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (RomaniaDisType == '1') {
+          console.log(value);
+          setRomaniaNetPrice(value);
+        } else if (RomaniaDisType == '2') {
+          setRomaniaNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(RomaniaDisPercent) / 100).toFixed(2));
+        } else if (RomaniaDisType == '3') {
+          setRomaniaNetPrice((parseFloat(value) - parseFloat(RomaniaDisAmt)).toFixed(2));
+        } else {
+          setRomaniaNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setRomaniaListPrice(0)
-        }
+    
+        setRomaniaListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setRomaniaNetPrice(0);
+        setRomaniaListPrice(0);
       }
-
-      setRomaniaListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Romania
       const handleDefaultDiscountAmtRomania = (e) =>{
@@ -3257,29 +3260,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Russia
     const handleChangeGlobalPriceRussia = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(RussiaDisType == '1'){
-          console.log(e.target.value)
-          setRussiaNetPrice(e.target.value)
-        }else if(RussiaDisType == '2'){
-          setRussiaNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(RussiaDisDisPercent)/100).toFixed(2))
-        }else if(RussiaDisType == '3'){
-          setRussiaNetPrice((parseFloat(e.target.value) - parseFloat(RussiaDisAmt)).toFixed(2))
-        }else{
-          setRussiaNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to avoid leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (RussiaDisType == '1') {
+          console.log(value);
+          setRussiaNetPrice(value);
+        } else if (RussiaDisType == '2') {
+          setRussiaNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(RussiaDisDisPercent) / 100).toFixed(2));
+        } else if (RussiaDisType == '3') {
+          setRussiaNetPrice((parseFloat(value) - parseFloat(RussiaDisAmt)).toFixed(2));
+        } else {
+          setRussiaNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setRussiaListPrice(0)
-        }
+    
+        setRussiaListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setRussiaNetPrice(0);
+        setRussiaListPrice(0);
       }
-
-
-      setRussiaListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Russia
       const handleDefaultDiscountAmtRussia = (e) =>{
