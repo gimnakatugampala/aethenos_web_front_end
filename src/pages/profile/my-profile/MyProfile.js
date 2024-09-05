@@ -866,30 +866,42 @@ const MyProfile = () => {
                                 <Form.Control
                                   disabled={selectedValue != "uk"}
                                   value={bankSortNoOne}
-                                  onChange={(e) =>
-                                    setbankSortNoOne(e.target.value)
-                                  }
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,2}$/.test(value)) {
+                                      setbankSortNoOne(value);
+                                    }
+                                  }}
                                   type="text"
+                                  maxLength="2"
                                 />
                               </div>
                               <div className="col-md-3">
                                 <Form.Control
                                   disabled={selectedValue != "uk"}
                                   value={bankSortNoTwo}
-                                  onChange={(e) =>
-                                    setbankSortNoTwo(e.target.value)
-                                  }
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,2}$/.test(value)) {
+                                      setbankSortNoTwo(value);
+                                    }
+                                  }}
                                   type="text"
+                                  maxLength="2"
                                 />
                               </div>
                               <div className="col-md-3">
                                 <Form.Control
                                   disabled={selectedValue != "uk"}
                                   value={bankSortNoThree}
-                                  onChange={(e) =>
-                                    setbankSortNoThree(e.target.value)
-                                  }
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,2}$/.test(value)) {
+                                      setbankSortNoThree(value);
+                                    }
+                                  }}
                                   type="text"
+                                  maxLength="2"
                                 />
                               </div>
                             </div>
@@ -904,10 +916,14 @@ const MyProfile = () => {
                                 <Form.Control
                                   disabled={selectedValue != "uk"}
                                   value={bankAccountNumber}
-                                  onChange={(e) =>
-                                    setbankAccountNumber(e.target.value)
-                                  }
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d{0,8}$/.test(value)) {
+                                      setbankAccountNumber(value);
+                                    }
+                                  }}
                                   type="text"
+                                  maxLength="8"
                                   placeholder="Account Number"
                                 />
                               </Form.Group>
