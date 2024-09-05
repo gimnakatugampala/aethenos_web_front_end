@@ -501,8 +501,8 @@ const Curriculum = ({ code }) => {
 
     if (PracticeTestMinPassMark <= 0 || PracticeTestMinPassMark >= 100) {
       ErrorAlert(
-        "Invalid value",
-        "The pass mark must be above 0 and below 100"
+        "Invalid Pass mark",
+        "The pass mark must be in the range 0 and 100."
       );
       return;
     }
