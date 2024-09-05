@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography, Paper, Container, Box, Button, Grid } from "@mui/material";
 import { Card } from "antd";
 import Form from "react-bootstrap/Form";
+import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
 
 const ExternalRatings = () => {
     
@@ -10,6 +11,16 @@ const ExternalRatings = () => {
     const [external_ratings, setexternal_ratings] = useState("");
     const [external_number_of_number, setexternal_number_of_number] = useState("");
     const [any_comment, setany_comment] = useState("");
+
+    const handleExternalRatings = () =>{
+
+
+        const rating = parseFloat(external_ratings);
+        if (rating < 0 || rating > 5) {
+          ErrorAlert("Error", "External rating should be between 1 to 5");
+          return;
+        }
+    }
   
 
   return (
@@ -21,7 +32,7 @@ const ExternalRatings = () => {
           External Ratings
         </Typography>
 
-        <Button  variant="contained">SAVE</Button>
+        <Button onClick={handleExternalRatings}  variant="contained">SAVE</Button>
      </div>
 
         <hr />

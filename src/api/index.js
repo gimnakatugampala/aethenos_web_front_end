@@ -4693,7 +4693,7 @@ export const checkCourseCompletionStatus = async (
   )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result)
+      // console.log(result)
 
       Unauthorized(result.status, "courses");
 

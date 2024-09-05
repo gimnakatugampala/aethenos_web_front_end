@@ -553,7 +553,7 @@ const MyProfile = () => {
                 </div>
               </div>
 
-              <Card className="col-md-11  border border-secondary p-4 m-3">
+              {/* <Card className="col-md-11  border border-secondary p-4 m-3">
                 <div>
                   <Form.Label>
                     <b>External course link and ratings (optional):</b>
@@ -651,7 +651,7 @@ const MyProfile = () => {
                     </b>
                   </p>
                 </div>
-              </Card>
+              </Card> */}
             </div>
 
         
