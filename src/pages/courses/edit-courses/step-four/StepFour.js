@@ -6,6 +6,10 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { Input } from 'antd';
 import { FILE_PATH } from '../../../../commonFunctions/FilePaths';
+import ReactPlayer from 'react-player/lazy'
+
+
+
 
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
@@ -61,9 +65,13 @@ const StepFour = ({preview_video, setcourse_video}) => {
        <p>Please Upload a Test Video to See Your Quality of Filming.</p>
        <Input onChange={onAddVideo} type='file' accept="video/*" placeholder="Basic usage" />
 
-             <video className='mt-3' id='add-course-test-video' width={240} src={preview_video == "" ? "" : `${FILE_PATH}${preview_video}`} autoPlay>
+       <ReactPlayer className='mt-1' id='add-course-test-video' width={400}  controls={true} url={preview_video == "" ? "" : `${FILE_PATH}${preview_video}`} />
+
+      
+{/* 
+             <video className='mt-2' id='add-course-test-video' width={240} src={preview_video == "" ? "" : `${FILE_PATH}${preview_video}`} autoPlay>
                 Your browser does not support the video tag.
-            </video>
+            </video> */}
        
     </div>
 
