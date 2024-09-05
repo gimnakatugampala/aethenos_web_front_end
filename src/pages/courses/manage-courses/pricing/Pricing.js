@@ -375,7 +375,7 @@ const Pricing = ({code}) => {
 
 // Enter Global Price
 const handleChangeGlobalPrice = (e) => {
-  const value = e.target.value;
+  const value = e.target.value.trim();
 
   // Check if input is a valid number
   if (numberOnlyRegex.test(value)) {
@@ -500,7 +500,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price USA
   const handleChangeGlobalPriceUSA = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
   
     // Log the current input value for debugging
     console.log(value);
@@ -629,7 +629,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Aus
   const handleChangeGlobalPriceAus = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
   
     // Log the current input value for debugging
     console.log(value);
@@ -762,7 +762,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Aus
   const handleChangeGlobalPriceBrazil = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
   
     // Log the current input value for debugging
     console.log(value);
@@ -900,7 +900,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
   // Enter Global Price Canada
   const handleChangeGlobalPriceCanada = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.trim();
   
     // Log the current input value for debugging
     console.log(value);
