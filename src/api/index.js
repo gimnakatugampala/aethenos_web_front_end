@@ -5772,3 +5772,75 @@ fetch(`${BACKEND_LINK}/course/getAvailableCouponCountForThisMonth/${code}`, requ
   .catch((error) => console.error(error));
 
 }
+
+export const AddExternalRatings = async (code,link_to_course,external_ratings,external_number_of_number,any_comment,setbtn_loading) => {
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  setbtn_loading(true)
+
+const formdata = new FormData();
+formdata.append("courseCode", `${code}`);
+formdata.append("linkToCourse", `${link_to_course}`);
+formdata.append("externalRating", `${external_ratings == "" ? 0 : external_ratings}`);
+formdata.append("externalNumberOfStudents", `${external_number_of_number == "" ? 0 : external_number_of_number}`);
+formdata.append("anyComments", `${any_comment}`);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: formdata,
+  redirect: "follow"
+};
+
+fetch(`${BACKEND_LINK}/course/addExternalCourseLinkAndRatings`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+
+    console.log(result)
+    Unauthorized(result.status, `courses/manage/${code}/#external-ratings`);
+
+    if(result.variable == "404"){
+      ErrorAlert("Error",result.message)
+      setbtn_loading(false)
+      return
+    }else{
+      SuccessAlert("Success",result.message)
+      setbtn_loading(false)
+    }
+
+
+  })
+  .catch((error) => console.error(error));
+
+}
+
+export const GetExternalRatings = async (code, setlink_to_course,
+  setexternal_ratings,
+  setexternal_number_of_number,
+  setany_comment) => {
+
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+const requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow"
+};
+
+fetch(`${BACKEND_LINK}/course/getExternalCourseLinkAndRatings/${code}`, requestOptions)
+  .then((response) => response.json())
+  .then((result) => {
+    console.log(result)
+    Unauthorized(result.status, `courses/manage/${code}/#external-ratings`);
+
+    setlink_to_course(result.linkToCourse)
+    setexternal_ratings(result.externalRating == 0 ? "" : result.externalRating)
+    setexternal_number_of_number(result.externalNumberOfStudents == 0 ? "" : result.externalNumberOfStudents)
+    setany_comment(result.anyComments)
+  })
+  .catch((error) => console.error(error));
+
+}

@@ -3,8 +3,10 @@ import { Typography, Paper, Container, Box, Button, Grid } from "@mui/material";
 import { Card } from "antd";
 import Form from "react-bootstrap/Form";
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
+import { AddExternalRatings, GetExternalRatings } from "../../../../api";
+import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
 
-const ExternalRatings = () => {
+const ExternalRatings = ({code}) => {
     
 
     const [link_to_course, setlink_to_course] = useState("");
@@ -12,15 +14,34 @@ const ExternalRatings = () => {
     const [external_number_of_number, setexternal_number_of_number] = useState("");
     const [any_comment, setany_comment] = useState("");
 
+    const [btn_loading, setbtn_loading] = useState(false);
+
     const handleExternalRatings = () =>{
 
 
         const rating = parseFloat(external_ratings);
         if (rating < 0 || rating > 5) {
           ErrorAlert("Error", "External rating should be between 1 to 5");
+          setbtn_loading(false)
           return;
         }
+
+        AddExternalRatings(code,link_to_course,external_ratings,external_number_of_number,any_comment,setbtn_loading)
     }
+
+
+    useEffect(() => {
+
+        GetExternalRatings(
+            code,
+            setlink_to_course,
+            setexternal_ratings,
+            setexternal_number_of_number,
+            setany_comment
+        )
+      
+    }, [code])
+    
   
 
   return (
@@ -32,7 +53,7 @@ const ExternalRatings = () => {
           External Ratings
         </Typography>
 
-        <Button onClick={handleExternalRatings}  variant="contained">SAVE</Button>
+        {btn_loading ?  <Button variant="contained"><ButtonSpinner /></Button> : <Button onClick={handleExternalRatings}  variant="contained">SAVE</Button>}
      </div>
 
         <hr />
