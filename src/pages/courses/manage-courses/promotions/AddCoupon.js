@@ -211,7 +211,7 @@ const AddCoupon = ({code}) => {
              "discount_amount":`${GBPDiscountAmount == "" ? 0 : GBPDiscountAmount}`,
              "discount_price":`${GBPDiscountValue == "" ? 0 : GBPDiscountValue}`,
              "list_price":`${GBPListPrice == ""? 0 : GBPListPrice}`,
-             "country_name":"Great Britain"
+             "country_name":"United Kingdom"
             },
             {
              "discount":`${IndonesiaDiscountPercent == "" ? 0 : IndonesiaDiscountPercent}`,

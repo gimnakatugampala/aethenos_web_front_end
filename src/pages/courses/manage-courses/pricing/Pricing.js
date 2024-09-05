@@ -4349,7 +4349,7 @@ const handleDefaultPercentageDiscount = (e) => {
             "netPrice":`${Number.parseFloat(GBPNetPrice).toFixed(2)}`,
             "listPrice": `${Number.parseFloat(GBPListPrice).toFixed(2)}`,
             "discountType":`${GBPDisType}`,
-            "country": "Great Britain",
+            "country": "United Kingdom",
             "discount": `${Number.parseFloat(GBPDisPercent).toFixed(2)}`,
             "discountAmount": `${Number.parseFloat(GBPDisAmt).toFixed(2)}`,
         },
