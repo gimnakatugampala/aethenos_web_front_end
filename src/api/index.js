@@ -259,7 +259,7 @@ export const EditCourses = async (
 
       console.log(result);
       if (result.variable == "200") {
-        SuccessAlert("Course Updated!", result.message);
+        SuccessAlert("Test video updated!", result.message);
 
         setloading(false)
 
