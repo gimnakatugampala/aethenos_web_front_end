@@ -2244,7 +2244,7 @@ export const RequestSubmitReview = async (code, setbtn_loading) => {
 
         setTimeout(() => {
           window.location.href = "/courses";
-        }, 2000);
+        }, 3000);
 
         return;
       } else {
