@@ -3377,29 +3377,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Singapore
     const handleChangeGlobalPriceSingapore = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-
-        if(SingaporeDisType == '1'){
-          console.log(e.target.value)
-          setSingaporeNetPrice(e.target.value)
-        }else if(SingaporeDisType == '2'){
-          setSingaporeNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(SingaporeDisPercent)/100).toFixed(2))
-        }else if(SingaporeDisType == '3'){
-          setSingaporeNetPrice((parseFloat(e.target.value) - parseFloat(SingaporeDisAmt)).toFixed(2))
-        }else{
-          setSingaporeNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to avoid leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (SingaporeDisType == '1') {
+          console.log(value);
+          setSingaporeNetPrice(value);
+        } else if (SingaporeDisType == '2') {
+          setSingaporeNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(SingaporeDisPercent) / 100).toFixed(2));
+        } else if (SingaporeDisType == '3') {
+          setSingaporeNetPrice((parseFloat(value) - parseFloat(SingaporeDisAmt)).toFixed(2));
+        } else {
+          setSingaporeNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setSingaporeListPrice(0)
-        }
+    
+        setSingaporeListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setSingaporeNetPrice(0);
+        setSingaporeListPrice(0);
       }
-
-      setSingaporeListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Singapore
       const handleDefaultDiscountAmtSingapore = (e) =>{
@@ -3494,28 +3494,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Thailand
     const handleChangeGlobalPriceThailand = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(ThailandDisType == '1'){
-          console.log(e.target.value)
-          setThailandNetPrice(e.target.value)
-        }else if(ThailandDisType == '2'){
-          setThailandNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(ThailandDisPercent)/100).toFixed(2))
-        }else if(ThailandDisType == '3'){
-          setThailandNetPrice((parseFloat(e.target.value) - parseFloat(ThailandDisAmt)).toFixed(2))
-        }else{
-          setThailandNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to avoid leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (ThailandDisType == '1') {
+          console.log(value);
+          setThailandNetPrice(value);
+        } else if (ThailandDisType == '2') {
+          setThailandNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(ThailandDisPercent) / 100).toFixed(2));
+        } else if (ThailandDisType == '3') {
+          setThailandNetPrice((parseFloat(value) - parseFloat(ThailandDisAmt)).toFixed(2));
+        } else {
+          setThailandNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setThailandListPrice(0)
-        }
+    
+        setThailandListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setThailandNetPrice(0);
+        setThailandListPrice(0);
       }
-
-      setThailandListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Thailand
       const handleDefaultDiscountAmtThailand = (e) =>{
@@ -3721,31 +3722,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Taiwan
     const handleChangeGlobalPriceTaiwan = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-
-        if(TaiwanDisType == '1'){
-          console.log(e.target.value)
-          setTaiwanNetPrice(e.target.value)
-        }else if(TaiwanDisType == '2'){
-          setTaiwanNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(TaiwanDisPercent)/100).toFixed(2))
-        }else if(TaiwanDisType == '3'){
-          setTaiwanNetPrice((parseFloat(e.target.value) - parseFloat(TaiwanDisAmt)).toFixed(2))
-        }else{
-          setTaiwanNetPrice(e.target.value == "" ? 0 : e.target.value)
-        }
-  
-        if(e.target.value == ""){
-          setTaiwanListPrice(0)
-        }
-
-      }
+      const value = e.target.value.trim(); // Trim input to avoid leading/trailing spaces
+      console.log(value);
     
-
-      setTaiwanListPrice(e.target.value)
-
-    }
+      if (numberOnlyRegex.test(value)) {
+        if (TaiwanDisType == '1') {
+          console.log(value);
+          setTaiwanNetPrice(value);
+        } else if (TaiwanDisType == '2') {
+          setTaiwanNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(TaiwanDisPercent) / 100).toFixed(2));
+        } else if (TaiwanDisType == '3') {
+          setTaiwanNetPrice((parseFloat(value) - parseFloat(TaiwanDisAmt)).toFixed(2));
+        } else {
+          setTaiwanNetPrice(value === "" ? 0 : value);
+        }
+    
+        setTaiwanListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setTaiwanNetPrice(0);
+        setTaiwanListPrice(0);
+      }
+    };
+    
 
       // Discount Amount Taiwan
       const handleDefaultDiscountAmtTaiwan = (e) =>{
@@ -3840,28 +3839,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price Vietnam
     const handleChangeGlobalPriceVietnam = (e) => {
-
-      console.log(e.target.value)
-      if(numberOnlyRegex.test(e.target.value)){
-        if(VietmanDisType == '1'){
-          console.log(e.target.value)
-          setVietnamNetPrice(e.target.value)
-        }else if(VietmanDisType == '2'){
-          setVietnamNetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(VietnamDisPercent)/100).toFixed(2))
-        }else if(VietmanDisType == '3'){
-          setVietnamNetPrice((parseFloat(e.target.value) - parseFloat(VietnamDisAmt)).toFixed(2))
-        }else{
-          setVietnamNetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to remove leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (VietmanDisType == '1') {
+          console.log(value);
+          setVietnamNetPrice(value);
+        } else if (VietmanDisType == '2') {
+          setVietnamNetPrice((parseFloat(value) - parseFloat(value) * parseFloat(VietnamDisPercent) / 100).toFixed(2));
+        } else if (VietmanDisType == '3') {
+          setVietnamNetPrice((parseFloat(value) - parseFloat(VietnamDisAmt)).toFixed(2));
+        } else {
+          setVietnamNetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setVietnamListPrice(0)
-        }
+    
+        setVietnamListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setVietnamNetPrice(0);
+        setVietnamListPrice(0);
       }
-
-      setVietnamListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount Vietnam
       const handleDefaultDiscountAmtVietnam = (e) =>{
@@ -3953,30 +3953,29 @@ const handleDefaultPercentageDiscount = (e) => {
 
     // Enter Global Price SA
     const handleChangeGlobalPriceSA = (e) => {
-
-      console.log(e.target.value)
-
-      if(numberOnlyRegex.test(e.target.value)){
-        if(SADisType == '1'){
-          console.log(e.target.value)
-          setSANetPrice(e.target.value)
-        }else if(SADisType == '2'){
-          setSANetPrice((parseFloat(e.target.value) - parseFloat(e.target.value) * parseFloat(SADisPercent)/100).toFixed(2))
-        }else if(SADisType == '3'){
-          setSANetPrice((parseFloat(e.target.value) - parseFloat(SADisAmt)).toFixed(2))
-        }else{
-          setSANetPrice(e.target.value == "" ? 0 : e.target.value)
+      const value = e.target.value.trim(); // Trim input to remove leading/trailing spaces
+      console.log(value);
+    
+      if (numberOnlyRegex.test(value)) {
+        if (SADisType == '1') {
+          console.log(value);
+          setSANetPrice(value);
+        } else if (SADisType == '2') {
+          setSANetPrice((parseFloat(value) - parseFloat(value) * parseFloat(SADisPercent) / 100).toFixed(2));
+        } else if (SADisType == '3') {
+          setSANetPrice((parseFloat(value) - parseFloat(SADisAmt)).toFixed(2));
+        } else {
+          setSANetPrice(value === "" ? 0 : value);
         }
-  
-        if(e.target.value == ""){
-          setSAListPrice(0)
-        }
+    
+        setSAListPrice(value === "" ? 0 : parseFloat(value));
+      } else {
+        // Handle invalid input by resetting prices
+        setSANetPrice(0);
+        setSAListPrice(0);
       }
-
-
-      setSAListPrice(e.target.value)
-
-    }
+    };
+    
 
       // Discount Amount SA
       const handleDefaultDiscountAmtSA = (e) =>{
