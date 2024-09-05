@@ -635,13 +635,13 @@ const ManageCourses = () => {
               <ListItemIcon style={{ minWidth: "30px" }}>
                 <TrendingUpIcon />
               </ListItemIcon>
-              <ListItemText primary="Promotions" />
+              <ListItemText primary="Promotions (Optional)" />
 
-              {PromotionsCheck ? (
+              {/* {PromotionsCheck ? (
                 <CheckCircleOutlineIcon />
               ) : (
                 <RadioButtonUncheckedIcon />
-              )}
+              )} */}
             </ListItemButton>
 
             <ListItemButton
