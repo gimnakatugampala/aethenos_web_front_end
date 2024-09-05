@@ -4277,7 +4277,7 @@ const handleDefaultPercentageDiscount = (e) => {
             "netPrice": `${Number.parseFloat(USANetPrice).toFixed(2)}`,
             "listPrice": `${Number.parseFloat(USAListPrice).toFixed(2)}`,
             "discountType": `${USADisType}`,
-            "country": "America",
+            "country": "United States",
             "discount": `${Number.parseFloat(USADisPercent).toFixed(2)}`,
             "discountAmount": `${Number.parseFloat(USADisAmt).toFixed(2)}`
         },

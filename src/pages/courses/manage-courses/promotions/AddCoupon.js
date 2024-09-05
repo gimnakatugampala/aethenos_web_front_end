@@ -155,7 +155,7 @@ const AddCoupon = ({code}) => {
              "discount_amount":`${USADiscountAmount == "" ? 0 : USADiscountAmount}`,
              "discount_price":`${USADiscountValue == "" ? 0 : USADiscountValue}`,
              "list_price":`${USAListPrice == "" ? 0 : USAListPrice}`,
-             "country_name":"America"
+             "country_name":"United States"
             },
             {
              "discount":`${AusDiscountPercent == "" ? 0 : AusDiscountPercent}`,
@@ -2050,7 +2050,7 @@ const AddCoupon = ({code}) => {
             <tbody>
                     
                   <tr>
-                    <td >America
+                    <td >United States
                     <td className="col-12 font-italic mt-5">  
                       <Form.Label className="mt-3 tit fst-italic">
                           Tip: Pricing around {getSymbolFromCurrency("USD")}{parseFloat(USATip).toFixed(2)} may maximise sales.

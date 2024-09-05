@@ -1489,7 +1489,7 @@ export const GetCountriesListPricing = async (
       setcountriesData(result);
       console.log(result);
 
-      // ---------- AMERICA
+      // ---------- United States
 
       setUSADisType(result.prices[0].discountTypeId);
       setUSADisPercent(result.prices[0].discount);
@@ -1497,7 +1497,7 @@ export const GetCountriesListPricing = async (
       setUSANetPrice(result.prices[0].netPrice);
       setUSADisAmt(result.prices[0].discountAmount);
 
-      // ---------- AMERICA
+      // ---------- United States
 
       // ---------- AUSTRALIA
       setAusDisType(result.prices[1].discountTypeId);
