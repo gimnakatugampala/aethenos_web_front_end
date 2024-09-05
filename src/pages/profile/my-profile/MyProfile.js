@@ -288,32 +288,32 @@ const MyProfile = () => {
       );
     } else if (selectedValue == "uk") {
       if (bankSortNoOne === "") {
-        ErrorAlert("Empty Field", "Enter Sort No one");
+        ErrorAlert("Empty Field", "Sort code must be in xx-xx-xx format.");
         return;
     }
     
     if (bankSortNoOne.length !== 2) {
-        ErrorAlert("Invalid Entry", "Sort No one must be exactly 2 digits");
+        ErrorAlert("Error", "Sort code must be in xx-xx-xx format.");
         return;
     }
     
     if (bankSortNoTwo === "") {
-        ErrorAlert("Empty Field", "Enter Sort No two");
+        ErrorAlert("Empty Field", "Sort code must be in xx-xx-xx format.");
         return;
     }
     
     if (bankSortNoTwo.length !== 2) {
-        ErrorAlert("Invalid Entry", "Sort No two must be exactly 2 digits");
+        ErrorAlert("Error", "Sort code must be in xx-xx-xx format.");
         return;
     }
     
     if (bankSortNoThree === "") {
-        ErrorAlert("Empty Field", "Enter Sort No three");
+        ErrorAlert("Empty Field", "Sort code must be in xx-xx-xx format.");
         return;
     }
     
     if (bankSortNoThree.length !== 2) {
-        ErrorAlert("Invalid Entry", "Sort No three must be exactly 2 digits");
+        ErrorAlert("Error", "Sort code must be in xx-xx-xx format.");
         return;
     }
     
@@ -324,7 +324,7 @@ const MyProfile = () => {
       }
 
       if (bankAccountNumber.length != 8) {
-        ErrorAlert("Empty Field", "Only enter 8 characters for account number");
+        ErrorAlert("Error", "Enter 8 digits for account number.");
         return;
       }
 
