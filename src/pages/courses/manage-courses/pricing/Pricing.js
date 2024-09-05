@@ -4140,7 +4140,7 @@ const handleDefaultPercentageDiscount = (e) => {
       }
 
       if (formatNumber(GBPNetPrice) != "0.00" && (formatNumber(GBPNetPrice) < GBPminValue)) {
-        ErrorAlert("Error","Great Britain net price should be greater than minimum price");
+        ErrorAlert("Error","United Kingdom net price should be greater than minimum price");
         setloading_button(false)
         return
       }
@@ -4582,7 +4582,7 @@ const handleDefaultPercentageDiscount = (e) => {
         {VideoLength > 9000 && Paid_Type == 1 && (
         <div className="container m-2">
         <Alert variant="outlined" severity="warning">
-               The maximum video content length on a free course is 2.5 hours. Please reduce your total video length to comply.
+        The maximum video content length on a free course is 2.5 hours. Please reduce your total video length to comply if your course is intended to be a free course.
         </Alert>
         </div>
         )}
