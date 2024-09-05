@@ -508,9 +508,9 @@ const MyProfile = () => {
                   />
                 </div>
 
-                <label class="form-label">Twitter</label>
+                <label class="form-label"><i className="fa-brands fa-square-x-twitter"></i> X</label>
                 <div class="input-group mb-3">
-                  <span class="input-group-text">http://www.twitter.com/</span>
+                  {/* <span class="input-group-text">http://www.twitter.com/</span> */}
                   <input
                     value={twitter}
                     onChange={(e) => settwitter(e.target.value)}
@@ -519,9 +519,9 @@ const MyProfile = () => {
                   />
                 </div>
 
-                <label class="form-label">Facebook</label>
+                <label class="form-label"><i className="fa-brands fa-facebook"></i> Facebook</label>
                 <div class="input-group mb-3">
-                  <span class="input-group-text">http://www.facebook.com/</span>
+                  {/* <span class="input-group-text">http://www.facebook.com/</span> */}
                   <input
                     value={facebook}
                     onChange={(e) => setfacebook(e.target.value)}
@@ -530,9 +530,9 @@ const MyProfile = () => {
                   />
                 </div>
 
-                <label class="form-label">LinkedIn</label>
+                <label class="form-label"><i className="fa-brands fa-linkedin"></i> LinkedIn</label>
                 <div class="input-group mb-3">
-                  <span class="input-group-text">http://www.linkedin.com/</span>
+                  {/* <span class="input-group-text">http://www.linkedin.com/</span> */}
                   <input
                     value={linkedin}
                     onChange={(e) => setlinkedin(e.target.value)}
@@ -541,9 +541,9 @@ const MyProfile = () => {
                   />
                 </div>
 
-                <label class="form-label">Youtube</label>
+                <label class="form-label"><i className="fa-brands fa-youtube"></i> Youtube</label>
                 <div class="input-group mb-3">
-                  <span class="input-group-text">http://www.youtube.com/</span>
+                  {/* <span class="input-group-text">http://www.youtube.com/</span> */}
                   <input
                     value={youtube}
                     onChange={(e) => setyoutube(e.target.value)}
