@@ -43,6 +43,10 @@ const StepFour = ({preview_video, setcourse_video}) => {
           });
           return;
         }
+
+        console.log(file)
+
+        setURL(blobURL)
     
         // If the video duration is sufficient, proceed with setting the video file and blob URL
         setcourse_video(file);
@@ -65,7 +69,7 @@ const StepFour = ({preview_video, setcourse_video}) => {
        <p>Please Upload a Test Video to See Your Quality of Filming.</p>
        <Input onChange={onAddVideo} type='file' accept="video/*" placeholder="Basic usage" />
 
-       <ReactPlayer className='mt-1' id='add-course-test-video' width={400}  controls={true} url={preview_video == "" ? "" : `${FILE_PATH}${preview_video}`} />
+       <ReactPlayer className='mt-1' id='add-course-test-video' width={400}  controls={true} url={preview_video == "" ? "" : URL == "" ? `${FILE_PATH}${preview_video}` : URL} />
 
       
 {/* 
