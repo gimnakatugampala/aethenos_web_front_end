@@ -90,11 +90,22 @@ const ExternalRatings = () => {
                 </Form.Label>
                 <Form.Control
                     value={external_ratings}
-                    onChange={(e) => setexternal_ratings(e.target.value)}
-                    type="text"
+                    onChange={(e) => {
+                    const value = parseFloat(e.target.value);
+                    if (value >= 0 && value <= 5) {
+                        setexternal_ratings(e.target.value);
+                    } else if (e.target.value === '') {
+                        setexternal_ratings(''); // Allows clearing the input
+                    }
+                    }}
+                    type="number"
                     placeholder="Enter a Number"
+                    min="0"
+                    max="5"
+                    step="0.1" // Allows for decimal values such as 4.5
                 />
                 </Form.Group>
+
 
                 <Form.Group
                 className="mb-3"
