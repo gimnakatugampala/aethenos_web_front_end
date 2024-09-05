@@ -6135,12 +6135,15 @@ const Curriculum = ({ code }) => {
                                         value={
                                           PracticeTestMinPassMark
                                         }
-                                        onChange={(e) =>
-                                          setPracticeTestMinPassMark(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="number"
+                                        onChange={(e) => {
+                                          const value = Number(e.target.value);
+                                          if (value >= 0 && value <= 100) {
+                                            setPracticeTestMinPassMark(value);
+                                          }
+                                        }}
+                                         min="0"
+                                        max="100"
+                                        type="text"
                                       />
                                     </Form.Group>
 
@@ -7516,10 +7519,17 @@ const Curriculum = ({ code }) => {
                             </Form.Label>
                             <Form.Control
                               value={PracticeTestMinPassMark}
-                              onChange={(e) =>
-                                setPracticeTestMinPassMark(e.target.value)
-                              }
+                              onChange={(e) => {
+                                const value = Number(e.target.value);
+                                if (value >= 0 && value <= 100) {
+                                  setPracticeTestMinPassMark(value);
+                                } else if (e.target.value === '') {
+                                  setPracticeTestMinPassMark('');
+                                }
+                              }}
                               type="text"
+                              min="0"
+                              max="100"
                             />
                           </Form.Group>
 
