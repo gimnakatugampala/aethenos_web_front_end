@@ -5171,7 +5171,7 @@ export const GetCheckPricingStatus = async (code, setInstructorTermsCheck) => {
     .catch((error) => console.error(error));
 };
 
-export const GetCheckPricingAllStatus = async (code, setcheckPricingStatus) => {
+export const GetCheckPricingAllStatus = async (code, setcheckPricingStatus, setisPaid) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -5185,15 +5185,14 @@ export const GetCheckPricingAllStatus = async (code, setcheckPricingStatus) => {
     `${BACKEND_LINK}/instructorPayment/checkAllInstructorPaymentDetailsComplete/${code}`,
     requestOptions
   )
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => {
       console.log(result);
       Unauthorized(result.status, "courses");
-      if (result == "true") {
-        setcheckPricingStatus(true);
-      } else {
-        setcheckPricingStatus(false);
-      }
+    
+        setcheckPricingStatus(result.paymentDetails);
+        setisPaid(result.paidCourse);
+    
     })
     .catch((error) => console.error(error));
 };

@@ -63,13 +63,7 @@ const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
 const { Text, Link, Title } = Typography;
 
-const headerStyle = {
-  color: "#fff",
-  height: 64,
-  paddingInline: 50,
-  lineHeight: "normal",
-  backgroundColor: "#000",
-};
+
 
 const ManageCourses = () => {
   // course code
@@ -112,14 +106,13 @@ const ManageCourses = () => {
     templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk",
   });
 
-  // tmpl_JAZjHuAT738Q63BdgCuEJQre
 
-  const [flowType, setFlowType] = useState("embedded");
 
   const embeddedClientRef = useRef(null);
 
   // ==================== INSTRUCTOR =================
   const [checkPricingStatus, setcheckPricingStatus] = useState(false);
+  const [isPaid, setisPaid] = useState(false)
 
   const handleClose = () => setShow(false);
 
@@ -178,7 +171,7 @@ const ManageCourses = () => {
         showCancelButton: false,
         focusConfirm: false,
         confirmButtonText: `
-          <a  style="color:white" href="/profile?code=${code}&isPaid=true"><b>Go to My Profile</b></a>
+          <a  style="color:white" href="/profile?code=${code}&isPaid=${isPaid}"><b>Go to My Profile</b></a>
         `,
         confirmButtonAriaLabel: "Thumbs up, great!",
         cancelButtonText: `
@@ -469,7 +462,7 @@ const ManageCourses = () => {
     // console.log(courseOwnership)
     
 
-    GetCheckPricingAllStatus(code, setcheckPricingStatus);
+    GetCheckPricingAllStatus(code, setcheckPricingStatus, setisPaid);
   }, [code, checkInstructorVerification, options, courseOwnership]);
 
   useEffect(() => {

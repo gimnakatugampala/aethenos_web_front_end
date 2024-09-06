@@ -741,7 +741,7 @@ const MyProfile = () => {
           </Tab>
           )}
 
-            {isPaid == "true" && (
+            {isPaid != "false" && (
           <Tab eventKey="payout-tax-details" title="Payment Details">
             <div className="container">
               <h3>Payment Method</h3>
