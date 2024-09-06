@@ -5107,13 +5107,17 @@ export const GetWalletDetails = async (
     .catch((error) => console.error(error));
 };
 
-export const SubmitInstructorTerms = async () => {
+export const SubmitInstructorTerms = async (code) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+    const formdata = new FormData();
+    formdata.append("courseCode", code);
 
   const requestOptions = {
     method: "PUT",
     headers: myHeaders,
+    body: formdata,
     redirect: "follow",
   };
 
@@ -5140,7 +5144,7 @@ export const SubmitInstructorTerms = async () => {
     .catch((error) => console.error(error));
 };
 
-export const GetCheckPricingStatus = async (setInstructorTermsCheck) => {
+export const GetCheckPricingStatus = async (code, setInstructorTermsCheck) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -5151,7 +5155,7 @@ export const GetCheckPricingStatus = async (setInstructorTermsCheck) => {
   };
 
   fetch(
-    `${BACKEND_LINK}/instructorPayment/checkInstructorPaymentDetails`,
+    `${BACKEND_LINK}/instructorPayment/checkInstructorPaymentDetails/${code}`,
     requestOptions
   )
     .then((response) => response.text())

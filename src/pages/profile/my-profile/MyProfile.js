@@ -69,18 +69,22 @@ const MyProfile = () => {
   // ===================== CHECK INTSURTCOR TERMS ===============
   const [InstructorTermsCheck, setInstructorTermsCheck] = useState(false);
 
+
+   // ============== GET THE QUERY ========
+   const query = useQuery();
+   const code = query.get("code");
+   const isPaid = query.get("isPaid");
+
   const handleSubmitInstructorTerms = (e) => {
     if (InstructorTermsCheck == false) {
       ErrorAlert("Please Select", "Please Accept Instructor Terms");
       return;
     }
 
-    SubmitInstructorTerms();
+    SubmitInstructorTerms(code);
   };
 
-  // ============== GET THE QUERY ========
-  const query = useQuery();
-  const code = query.get("code");
+ 
 
   function isValidEmail(email) {
     // Regular expression for basic email validation
@@ -211,7 +215,7 @@ const MyProfile = () => {
       setSelectedValue
     );
 
-    GetCheckPricingStatus(setInstructorTermsCheck);
+    GetCheckPricingStatus(code, setInstructorTermsCheck);
   }, []);
 
   useEffect(() => {
@@ -687,6 +691,7 @@ const MyProfile = () => {
 
           </Tab>
 
+          {code != null && (
           <Tab eventKey="instructor-terms" title="Instructor Terms">
             <div className="row mt-5 mx-auto ">
               <div className="col-md-12 text-center">
@@ -716,10 +721,27 @@ const MyProfile = () => {
                 >
                   Save
                 </Button>
+
+
+                {code != null && isPaid == "false" && (
+                    <div className="mx-auto my-4 text-center">
+                      <Button className="mx-auto " variant="contained">
+                        <a
+                          className="text-white"
+                          href={`/courses/manage/${code}/`}
+                        >
+                          Go back to course
+                        </a>
+                      </Button>
+                    </div>
+                  )}
+
               </div>
             </div>
           </Tab>
+          )}
 
+            {isPaid == "true" && (
           <Tab eventKey="payout-tax-details" title="Payment Details">
             <div className="container">
               <h3>Payment Method</h3>
@@ -969,6 +991,8 @@ const MyProfile = () => {
               </Card>
             </div>
           </Tab>
+            )}
+
         </Tabs>
       </Card>
     </div>
