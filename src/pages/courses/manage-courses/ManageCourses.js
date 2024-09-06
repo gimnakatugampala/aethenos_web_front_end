@@ -164,7 +164,7 @@ const ManageCourses = () => {
 
     //  == Fill the Section ===
 
-    // === Check if the Intructor details are filled =====
+    // === Check if the Instructor details are filled =====
 
     if (checkPricingStatus == false) {
       // ErrorAlert("Error","Please fill instructor details and payment details")
@@ -178,7 +178,7 @@ const ManageCourses = () => {
         showCancelButton: false,
         focusConfirm: false,
         confirmButtonText: `
-          <a  style="color:white" href="/profile?code=${code}"><b>Go to My Profile</b></a>
+          <a  style="color:white" href="/profile?code=${code}&isPaid=true"><b>Go to My Profile</b></a>
         `,
         confirmButtonAriaLabel: "Thumbs up, great!",
         cancelButtonText: `
@@ -469,11 +469,12 @@ const ManageCourses = () => {
     // console.log(courseOwnership)
     
 
-    GetCheckPricingAllStatus(setcheckPricingStatus);
+    GetCheckPricingAllStatus(code, setcheckPricingStatus);
   }, [code, checkInstructorVerification, options, courseOwnership]);
 
   useEffect(() => {
     setInterval(() => {
+      // Check the Manage Course Items Completed
       checkCourseCompletionStatus(
         code,
         setIntendedLearnersCheck,

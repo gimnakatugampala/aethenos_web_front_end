@@ -5167,7 +5167,7 @@ export const GetCheckPricingStatus = async (setInstructorTermsCheck) => {
     .catch((error) => console.error(error));
 };
 
-export const GetCheckPricingAllStatus = async (setcheckPricingStatus) => {
+export const GetCheckPricingAllStatus = async (code, setcheckPricingStatus) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -5178,7 +5178,7 @@ export const GetCheckPricingAllStatus = async (setcheckPricingStatus) => {
   };
 
   fetch(
-    `${BACKEND_LINK}/instructorPayment/checkAllInstructorPaymentDetailsComplete`,
+    `${BACKEND_LINK}/instructorPayment/checkAllInstructorPaymentDetailsComplete/${code}`,
     requestOptions
   )
     .then((response) => response.text())
