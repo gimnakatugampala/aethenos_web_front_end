@@ -5155,7 +5155,7 @@ export const GetCheckPricingStatus = async (code, setInstructorTermsCheck) => {
   };
 
   fetch(
-    `${BACKEND_LINK}/instructorPayment/checkInstructorPaymentDetails/${code}`,
+    `${BACKEND_LINK}/instructorPayment/checkInstructorTerms/${code}`,
     requestOptions
   )
     .then((response) => response.text())

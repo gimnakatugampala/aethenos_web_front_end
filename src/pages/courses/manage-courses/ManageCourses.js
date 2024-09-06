@@ -462,7 +462,7 @@ const ManageCourses = () => {
     // console.log(courseOwnership)
     
 
-    GetCheckPricingAllStatus(code, setcheckPricingStatus, setisPaid);
+    // GetCheckPricingAllStatus(code, setcheckPricingStatus, setisPaid);
   }, [code, checkInstructorVerification, options, courseOwnership]);
 
   useEffect(() => {
@@ -485,6 +485,9 @@ const ManageCourses = () => {
         setcourseVideoLength,
         settitle_loading
       );
+
+      GetCheckPricingAllStatus(code, setcheckPricingStatus, setisPaid);
+
     }, 3000);
   }, [code]);
 
