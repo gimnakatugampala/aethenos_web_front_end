@@ -138,10 +138,10 @@ const Promotion = ({code}) => {
     <div className='my-5'>
         <h5><b>Coupons</b></h5>
           <div className='card p-3'>
-            <h6><b>{monthName} Coupons</b></h6>
+            {/* <h6><b>{monthName} Coupons</b></h6> */}
 
-            <div className='d-flex justify-content-between align-items-center'>
-                <p>You can create {3 - couponsCount} more {3 - couponsCount == 1 ? 'coupon' : 'coupons'} this month</p>
+            <div className='d-flex justify-content-between align-items-center my-3'>
+                <h6>You can create {3 - couponsCount} more {3 - couponsCount == 1 ? 'coupon' : 'coupons'} this month <b>({monthName})</b></h6>
 
                 <Button onClick={() => {
                   window.location.href = `/courses/manage/${code}/#add-coupon`
