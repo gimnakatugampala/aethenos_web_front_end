@@ -85,7 +85,7 @@ const CourseItem = ({ course, filledPercent }) => {
                     className="mx-2"
                     href={`edit-course?code=${course.course.code}`}
                   >
-                    <EditIcon />
+                    <EditIcon style={{color: "black"}}/>
                   </a>
                 )}{" "}
               </h5>

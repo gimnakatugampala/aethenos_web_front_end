@@ -93,18 +93,8 @@ function Header({
 
   useEffect(() => {
     GetNotificationsLatest(setNotifications);
-    console.log(notifications)
   }, [notifications]);
 
-
-
-  // const handleNotification = () => {
-  //   const newNotification = {
-  //     id: Date.now(),
-  //     message: "New notification message",
-  //   };
-  //   setNotifications([...notifications, newNotification]);
-  // };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -115,11 +105,13 @@ function Header({
     setAnchorEl(null);
   };
 
-  const handleNotificationClick = (notificationCode) => {
+  const handleNotificationClick = (notificationCode, notification) => {
+
+    console.log(notification)
 
     UpdateNotifications(notificationCode);
     GetNotificationsLatest(setNotifications);
-    window.location.href = "/performance/notifications";
+    // window.location.href = "/performance/notifications";
   
 
   };
@@ -252,7 +244,7 @@ function Header({
                         <MenuItem
                           onClick={() => {
                             handleNotificationClick(
-                              notification.notificationCode
+                              notification.notificationCode, notification
                             );
                             handleClose();
                           }}

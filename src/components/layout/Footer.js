@@ -23,9 +23,9 @@ function Footer() {
               </span>
             </div> */}
 
-            <div className="float-right" style={{ marginLeft: "10px" ,  marginRight: "3%"}}>
+            {/* <div className="float-right" style={{ marginLeft: "10px" ,  marginRight: "3%"}}>
               <img width="40" src={exonlogo} alt="LOGO" />
-            </div>
+            </div> */}
           </div>
         </Col>
       </Row>
