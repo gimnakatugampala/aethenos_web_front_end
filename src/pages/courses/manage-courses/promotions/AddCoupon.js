@@ -555,7 +555,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setDDiscountValue(e.target.value)
+      setDDiscountValue(Number.parseFloat(e.target.value))
       setDDiscountPercent((((Number.parseFloat(DGlobalPricing) - Number.parseFloat(e.target.value)) / Number.parseFloat(DGlobalPricing).toFixed(2)) * 100).toFixed(2))
       setDDiscountAmount((Number.parseFloat(DGlobalPricing) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -598,7 +598,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setUSADiscountValue(e.target.value)
+      setUSADiscountValue(Number.parseFloat(e.target.value))
       setUSADiscountPercent((((Number.parseFloat(USAListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(USAListPrice).toFixed(2)) * 100).toFixed(2))
       setUSADiscountAmount((Number.parseFloat(USAListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -644,7 +644,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setAusDiscountValue(e.target.value)
+      setAusDiscountValue(Number.parseFloat(e.target.value))
       setAusDiscountPercent((((Number.parseFloat(AusListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(AusListPrice).toFixed(2)) * 100).toFixed(2))
       setAusDiscountAmount((Number.parseFloat(AusListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -691,7 +691,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setBrazilDiscountValue(e.target.value)
+      setBrazilDiscountValue(Number.parseFloat(e.target.value))
       setBrazilDiscountPercent((((Number.parseFloat(BrazilListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(BrazilListPrice).toFixed(2)) * 100).toFixed(2))
       setBrazilDiscountAmount((Number.parseFloat(BrazilListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -735,7 +735,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setCanadaDiscountValue(e.target.value)
+      setCanadaDiscountValue(Number.parseFloat(e.target.value))
       setCanadaDiscountPercent((((Number.parseFloat(CanadaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(CanadaListPrice).toFixed(2)) * 100).toFixed(2))
       setCanadaDiscountAmount((Number.parseFloat(CanadaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -780,7 +780,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setChileDiscountValue(e.target.value)
+      setChileDiscountValue(Number.parseFloat(e.target.value))
       setChileDiscountPercent((((Number.parseFloat(ChileListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(ChileListPrice).toFixed(2)) * 100).toFixed(2))
       setChileDiscountAmount((Number.parseFloat(ChileListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -825,7 +825,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setColumbiaDiscountValue(e.target.value)
+      setColumbiaDiscountValue(Number.parseFloat(e.target.value))
       setColumbiaDiscountPercent((((Number.parseFloat(ColumbiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(ColumbiaListPrice).toFixed(2)) * 100).toFixed(2))
       setColumbiaDiscountAmount((Number.parseFloat(ColumbiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -871,7 +871,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setEgyptDiscountValue(e.target.value)
+      setEgyptDiscountValue(Number.parseFloat(e.target.value))
       setEgyptDiscountPercent((((Number.parseFloat(EgyptListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(EgyptListPrice).toFixed(2)) * 100).toFixed(2))
       setEgyptDiscountAmount((Number.parseFloat(EgyptListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -915,7 +915,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setEUDiscountValue(e.target.value)
+      setEUDiscountValue(Number.parseFloat(e.target.value))
       setEUDiscountPercent((((Number.parseFloat(EUListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(EUListPrice).toFixed(2)) * 100).toFixed(2))
       setEUDiscountAmount((Number.parseFloat(EUListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -957,7 +957,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setGBPDiscountValue(e.target.value)
+      setGBPDiscountValue(Number.parseFloat(e.target.value))
       setGBPDiscountPercent((((Number.parseFloat(GBPListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(GBPListPrice).toFixed(2)) * 100).toFixed(2))
       setGBPDiscountAmount((Number.parseFloat(GBPListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1000,7 +1000,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setIndonesiaDiscountValue(e.target.value)
+      setIndonesiaDiscountValue(Number.parseFloat(e.target.value))
       setIndonesiaDiscountPercent((((Number.parseFloat(IndonesiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(IndonesiaListPrice).toFixed(2)) * 100).toFixed(2))
       setIndonesiaDiscountAmount((Number.parseFloat(IndonesiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1043,7 +1043,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setIsrealDiscountValue(e.target.value)
+      setIsrealDiscountValue(Number.parseFloat(e.target.value))
       setIsrealDiscountPercent((((Number.parseFloat(IsrealListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(IsrealListPrice).toFixed(2)) * 100).toFixed(2))
       setIsrealDiscountAmount((Number.parseFloat(IsrealListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1086,7 +1086,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setIndiaDiscountValue(e.target.value)
+      setIndiaDiscountValue(Number.parseFloat(e.target.value))
       setIndiaDiscountPercent((((Number.parseFloat(IndiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(IndiaListPrice).toFixed(2)) * 100).toFixed(2))
       setIndiaDiscountAmount((Number.parseFloat(IndiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1128,7 +1128,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setJapanDiscountValue(e.target.value)
+      setJapanDiscountValue(Number.parseInt(e.target.value))
       setJapanDiscountPercent((((Number.parseInt(JapanListPrice) - Number.parseInt(e.target.value)) / Number.parseInt(JapanListPrice)) * 100))
       setJapanDiscountAmount((Number.parseInt(JapanListPrice) - Number.parseInt(e.target.value)))
     }else if(e.target.value == ""){
@@ -1168,7 +1168,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setSKDiscountValue(e.target.value)
+      setSKDiscountValue(Number.parseFloat(e.target.value))
       setSKDiscountPercent((((Number.parseFloat(SKListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(SKListPrice).toFixed(2)) * 100).toFixed(2))
       setSKDiscountAmount((Number.parseFloat(SKListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1208,7 +1208,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setMexicoDiscountValue(e.target.value)
+      setMexicoDiscountValue(Number.parseFloat(e.target.value))
       setMexicoDicountPercent((((Number.parseFloat(MexicoListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(MexicoListPrice).toFixed(2)) * 100).toFixed(2))
       setMexicoDisountAmount((Number.parseFloat(MexicoListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1251,7 +1251,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setMalaysiaDiscountValue(e.target.value)
+      setMalaysiaDiscountValue(Number.parseFloat(e.target.value))
       setMalaysiaDiscountPercent((((Number.parseFloat(MalaysiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(MalaysiaListPrice).toFixed(2)) * 100).toFixed(2))
       setMalaysiaDiscountAmount((Number.parseFloat(MalaysiaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1293,7 +1293,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setNigeriaDiscountValue(e.target.value)
+      setNigeriaDiscountValue(Number.parseFloat(e.target.value))
       setNigeriaDiscountPercent((((Number.parseFloat(NigeriaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(NigeriaListPrice).toFixed(2)) * 100).toFixed(2))
       setNigeriaDiscountAmount((Number.parseFloat(NigeriaListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1337,7 +1337,7 @@ const AddCoupon = ({code}) => {
 
 
     if(numberOnlyRegex.test(e.target.value)){
-      setNorwayDiscountValue(e.target.value)
+      setNorwayDiscountValue(Number.parseFloat(e.target.value))
       setNorwayDiscountPercent((((Number.parseFloat(NorwayListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(NorwayListPrice).toFixed(2)) * 100).toFixed(2))
       setNorwayDiscountAmount((Number.parseFloat(NorwayListPrice) - Number.parseFloat(e.target.value)))
     }else if(e.target.value == ""){
@@ -1380,7 +1380,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setPeruDiscountValue(e.target.value)
+        setPeruDiscountValue(Number.parseFloat(e.target.value))
         setPeruDiscountPercent((((Number.parseFloat(PeruListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(PeruListPrice).toFixed(2)) * 100).toFixed(2))
         setPeruDiscountAmount((Number.parseFloat(PeruListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1425,7 +1425,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setPhiliphinesDiscountValue(e.target.value)
+        setPhiliphinesDiscountValue(Number.parseFloat(e.target.value))
         setPhilipinesDiscountPercent((((Number.parseFloat(PhilipinesListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(PhilipinesListPrice).toFixed(2)) * 100).toFixed(2))
         setPhilipinesAmount((Number.parseFloat(PhilipinesListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1466,7 +1466,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setPolandDiscountValue(e.target.value)
+        setPolandDiscountValue(Number.parseFloat(e.target.value))
         setPolandDiscountPercent((((Number.parseFloat(PolandListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(PolandListPrice).toFixed(2)) * 100).toFixed(2))
         setPolandDiscountAmount((Number.parseFloat(PolandListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1507,7 +1507,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setRomaniaDiscountValue(e.target.value)
+        setRomaniaDiscountValue(Number.parseFloat(e.target.value))
         setRomaniaDiscountPercent((((Number.parseFloat(RomaniaListPrice) - Number.parseFloat(e.target.value))/ Number.parseFloat(RomaniaListPrice).toFixed(2)) * 100).toFixed(2))
         setRomaniaDiscountAmount((Number.parseFloat(RomaniaListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1548,7 +1548,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setRussiaDiscountValue(e.target.value)
+        setRussiaDiscountValue(Number.parseFloat(e.target.value))
         setRussiaDiscountPercent((((Number.parseFloat(RussiaListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(RussiaListPrice).toFixed(2)) * 100).toFixed(2))
         setRussiaDiscountAmount((Number.parseFloat(RussiaListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1589,7 +1589,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setSingaporeDiscountValue(e.target.value)
+        setSingaporeDiscountValue(Number.parseFloat(e.target.value))
         setSingaporeDiscountPercent((((Number.parseFloat(SingaporeListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(SingaporeListPrice).toFixed(2)) * 100).toFixed(2))
         setSingaporeDiscountAmount((Number.parseFloat(SingaporeListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1629,7 +1629,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setThailandDiscountValue(e.target.value)
+        setThailandDiscountValue(Number.parseFloat(e.target.value))
         setThailandDiscountPercent((((Number.parseFloat(ThailandListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(ThailandListPrice).toFixed(2)) * 100).toFixed(2))
         setThailandDiscountAmount((Number.parseFloat(ThailandListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1711,7 +1711,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setTaiwanDiscountValue(e.target.value)
+        setTaiwanDiscountValue(Number.parseFloat(e.target.value))
         setTaiwanDiscountPercent((((Number.parseFloat(TaiwanListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(TaiwanListPrice).toFixed(2)) * 100).toFixed(2))
         setTaiwanDiscountAmount((Number.parseFloat(TaiwanListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1753,7 +1753,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setVietnamDiscountValue(e.target.value)
+        setVietnamDiscountValue(Number.parseFloat(e.target.value))
         setVietnamDiscountPercent((((Number.parseFloat(VietnamListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(VietnamListPrice).toFixed(2)) * 100).toFixed(2))
         setVietnamDisocuntAmount((Number.parseFloat(VietnamListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1793,7 +1793,7 @@ const AddCoupon = ({code}) => {
   
   
       if(numberOnlyRegex.test(e.target.value)){
-        setSADiscountValue(e.target.value)
+        setSADiscountValue(Number.parseFloat(e.target.value))
         setSADiscountPercent((((Number.parseFloat(SAListPrice) - Number.parseFloat(e.target.value)) / Number.parseFloat(SAListPrice).toFixed(2)) * 100).toFixed(2))
         setSADiscountAmount((Number.parseFloat(SAListPrice) - Number.parseFloat(e.target.value)))
       }else if(e.target.value == ""){
@@ -1984,10 +1984,19 @@ const AddCoupon = ({code}) => {
 
               <div className="col-md-3">
               <Form.Label className="pricing-label"><b>Global Discount Price (USD)</b></Form.Label>
-              <Form.Control onChange={handleChangeGlobalPrice} value={DDiscountValue} type="text" />
+              <Form.Control 
+               isInvalid={DDiscountValue != 0 && DDiscountValue < parseFloat(MinDefaultValue).toFixed(2)} 
+               onChange={handleChangeGlobalPrice} 
+               value={DDiscountValue} type="text" />
+
+              <Form.Control.Feedback type="invalid">
+                    Not within range
+              </Form.Control.Feedback>
+
+
               <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
-                            <i>Tip: Pricing around ${parseFloat(DTip).toFixed(2)} may optimise sales</i>
-                    </Form.Label>
+                    <i>Tip: Pricing around ${parseFloat(DTip).toFixed(2)} may optimise sales</i>
+                </Form.Label>
 
               </div>
 
@@ -2002,15 +2011,16 @@ const AddCoupon = ({code}) => {
                 <div className="col-md-3">
                   <Form.Label className="pricing-label"><b>Discount Amount (USD)</b></Form.Label>
                   <Form.Control
-                    isInvalid={DDiscountAmount != 0 && DDiscountAmount < parseFloat(MinDefaultValue).toFixed(2)}
+                    // isInvalid={DDiscountAmount != 0 && DDiscountAmount < parseFloat(MinDefaultValue).toFixed(2)}
                     disabled
                     readOnly
                     value={DDiscountAmount}
                     type="text"
                   />
-                  <Form.Control.Feedback type="invalid">
+                  {/* <Form.Control.Feedback type="invalid">
                     Not within range
-                  </Form.Control.Feedback>
+                  </Form.Control.Feedback> */}
+
                   <Form.Label style={{fontSize: '13px', whiteSpace: 'nowrap'}}>
                     <i>Minimum: ${parseFloat(MinDefaultValue).toFixed(2)}</i>
                   </Form.Label>
@@ -2065,7 +2075,14 @@ const AddCoupon = ({code}) => {
                       <Form.Control style={{width:'80px'}} disabled readOnly value={USAListPrice}   type="text" />
                     </td>
                     <td>
-                    <Form.Control value={USADiscountValue}  onChange={handleChangeGlobalPriceUSA} type="text" />
+                    <Form.Control 
+                    isInvalid={USADiscountValue != 0 && USADiscountValue < parseFloat(USAMinValue).toFixed(2)} 
+                    value={USADiscountValue}  
+                    onChange={handleChangeGlobalPriceUSA} 
+                    type="text" />
+                    <Form.Control.Feedback type="invalid">
+                              Not within range
+                      </Form.Control.Feedback>
                     </td>
                     <td>
                     
@@ -2073,7 +2090,9 @@ const AddCoupon = ({code}) => {
                       
                     </td>
                     <td>
-                        <Form.Control isInvalid={USADiscountAmount != 0 && USADiscountAmount < parseFloat(USAMinValue).toFixed(2)} disabled readOnly value={USADiscountAmount} type="text" />
+                        <Form.Control 
+                        isInvalid={USADiscountAmount != 0 && USADiscountAmount < parseFloat(USAMinValue).toFixed(2)} 
+                        disabled readOnly value={USADiscountAmount} type="text" />
 
                         <Form.Control.Feedback type="invalid">
                               Not within range
@@ -2105,7 +2124,15 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={AusListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={AusDiscountValue} onChange={handleChangeGlobalPriceAus} type="text" />
+                          <Form.Control 
+                          isInvalid={AusDiscountValue != 0 && AusDiscountValue < parseFloat(AusminValue).toFixed(2)} 
+                          value={AusDiscountValue} 
+                          onChange={handleChangeGlobalPriceAus} 
+                          type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                        
@@ -2113,7 +2140,7 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control 
-                            isInvalid={AusDiscountAmount != 0 && AusDiscountAmount < parseFloat(AusminValue).toFixed(2)} 
+                            // isInvalid={AusDiscountAmount != 0 && AusDiscountAmount < parseFloat(AusminValue).toFixed(2)} 
                             disabled 
                             readOnly 
                             value={AusDiscountAmount} 
@@ -2122,6 +2149,7 @@ const AddCoupon = ({code}) => {
                         <Form.Control.Feedback type="invalid">
                             Not within range
                         </Form.Control.Feedback>
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("AUD")} {parseFloat(AusminValue).toFixed(2)}
                         </Form.Label>
@@ -2149,7 +2177,15 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={BrazilListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={BrazilDiscountValue} onChange={handleChangeGlobalPriceBrazil} type="text" />
+                          <Form.Control 
+                          isInvalid={BrazilDiscountValue != 0 && BrazilDiscountValue < parseFloat(BrazilminValue).toFixed(2)}
+                          value={BrazilDiscountValue} 
+                          onChange={handleChangeGlobalPriceBrazil} 
+                          type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                         </Form.Control.Feedback>
                           </td>
                           <td>
                               <Form.Control disabled readOnly value={BrazilDiscountPercent}  type="text" />
@@ -2163,9 +2199,11 @@ const AddCoupon = ({code}) => {
                           value={BrazilDiscountAmount}
                           type="text"
                         />
+
                         <Form.Control.Feedback type="invalid">
                           Not within range
                         </Form.Control.Feedback>
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("BRL")} {parseFloat(BrazilminValue).toFixed(2)}
                         </Form.Label>
@@ -2192,7 +2230,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={CanadaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={CanadaDiscountValue} onChange={handleChangeGlobalPriceCanada} type="text" />
+                          <Form.Control 
+                          isInvalid={CanadaDiscountValue != 0 && CanadaDiscountValue < parseFloat(CanadaminValue).toFixed(2)}
+                          value={CanadaDiscountValue} onChange={handleChangeGlobalPriceCanada} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                         
@@ -2202,15 +2246,17 @@ const AddCoupon = ({code}) => {
 
                           <td>
                         <Form.Control
-                          isInvalid={CanadaDiscountAmount != 0 && CanadaDiscountAmount < parseFloat(CanadaminValue).toFixed(2)}
+                          // isInvalid={CanadaDiscountAmount != 0 && CanadaDiscountAmount < parseFloat(CanadaminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={CanadaDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
+                        
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("CAD")} {parseFloat(CanadaminValue).toFixed(2)}
                         </Form.Label>
@@ -2238,22 +2284,30 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={ChileListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={ChileDiscountValue} onChange={handleChangeGlobalPriceChile} type="text" />
+                          <Form.Control
+                          isInvalid={ChileDiscountValue != 0 && ChileDiscountValue < parseFloat(ChileminValue).toFixed(2)}
+                           value={ChileDiscountValue} onChange={handleChangeGlobalPriceChile} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+
                           </td>
                           <td>
                               <Form.Control disabled readOnly value={ChileDiscountPercent}  type="text" />
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={ChileDiscountAmount != 0 && ChileDiscountAmount < parseFloat(ChileminValue).toFixed(2)}
+                          // isInvalid={ChileDiscountAmount != 0 && ChileDiscountAmount < parseFloat(ChileminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={ChileDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
                         </Form.Label>
@@ -2279,22 +2333,31 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={ColumbiaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={ColumbiaDiscountValue} onChange={handleChangeGlobalPriceColumbia} type="text" />
+
+                          <Form.Control 
+                          isInvalid={ColumbiaDiscountValue != 0 && ColumbiaDiscountValue < parseFloat(ColumbiaminValue).toFixed(2)}
+                          value={ColumbiaDiscountValue} onChange={handleChangeGlobalPriceColumbia} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
                           </td>
                           <td>
                               <Form.Control disabled readOnly value={ColumbiaDiscountPercent}  type="text" />
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={ColumbiaDiscountAmount != 0 && ColumbiaDiscountAmount < parseFloat(ColumbiaminValue).toFixed(2)}
+                            // isInvalid={ColumbiaDiscountAmount != 0 && ColumbiaDiscountAmount < parseFloat(ColumbiaminValue).toFixed(2)}
                             disabled
                             readOnly
                             value={ColumbiaDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
+
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
                           </Form.Label>
@@ -2321,7 +2384,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={EgyptListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={EgyptDiscountValue} onChange={handleChangeGlobalPriceEgypt} type="text" />
+                          <Form.Control 
+                          isInvalid={EgyptDiscountValue != 0 && EgyptDiscountValue < parseFloat(EgyptminValue).toFixed(2)}
+                          value={EgyptDiscountValue} onChange={handleChangeGlobalPriceEgypt} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                          </Form.Control.Feedback>
+
                           </td>
                           <td>
                             
@@ -2330,15 +2400,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={EgyptDiscountAmount != 0 && EgyptDiscountAmount < parseFloat(EgyptminValue).toFixed(2)}
+                          // isInvalid={EgyptDiscountAmount != 0 && EgyptDiscountAmount < parseFloat(EgyptminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={EgyptDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("EGP")} {parseFloat(EgyptminValue).toFixed(2)}
                         </Form.Label>
@@ -2364,7 +2436,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={EUListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={EUDiscountValue} onChange={handleChangeGlobalPriceEU} type="text" />
+                          <Form.Control
+                          isInvalid={EUDiscountValue != 0 && EUDiscountValue < parseFloat(EUminValue).toFixed(2)}
+                           value={EUDiscountValue} onChange={handleChangeGlobalPriceEU} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
                           </td>
                           <td>
                            
@@ -2373,15 +2451,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={EUDiscountAmount != 0 && EUDiscountAmount < parseFloat(EUminValue).toFixed(2)}
+                          // isInvalid={EUDiscountAmount != 0 && EUDiscountAmount < parseFloat(EUminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={EUDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+                        
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("EUR")} {parseFloat(EUminValue).toFixed(2)}
                         </Form.Label>
@@ -2407,7 +2487,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={GBPListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={GBPDiscountValue} onChange={handleChangeGlobalPriceGBP} type="text" />
+                          <Form.Control 
+                          isInvalid={GBPDiscountValue != 0 && GBPDiscountValue < parseFloat(GBPminValue).toFixed(2)}
+                          value={GBPDiscountValue} onChange={handleChangeGlobalPriceGBP} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                         
@@ -2416,15 +2502,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={GBPDiscountAmount != 0 && GBPDiscountAmount < parseFloat(GBPminValue).toFixed(2)}
+                          // isInvalid={GBPDiscountAmount != 0 && GBPDiscountAmount < parseFloat(GBPminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={GBPDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
                         </Form.Label>
@@ -2451,7 +2539,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={IndonesiaListPrice} type="text" />
                           </td>
                           <td>
-                          <Form.Control value={IndonesiaDiscountValue} onChange={handleChangeGlobalPriceIndo} type="text" />
+                          <Form.Control 
+                          isInvalid={IndonesiaDiscountValue != 0 && IndonesiaDiscountValue < parseFloat(IndonesiaminValue).toFixed(2)}
+                          value={IndonesiaDiscountValue} onChange={handleChangeGlobalPriceIndo} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
                           </td>
                           <td>
                            
@@ -2460,15 +2555,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={IndonesiaDiscountAmount != 0 && IndonesiaDiscountAmount < parseFloat(IndonesiaminValue).toFixed(2)}
+                            // isInvalid={IndonesiaDiscountAmount != 0 && IndonesiaDiscountAmount < parseFloat(IndonesiaminValue).toFixed(2)}
                             disabled
                             readOnly
                             value={IndonesiaDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
                           </Form.Label>
@@ -2494,7 +2589,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={IsrealListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={IsrealDiscountValue} onChange={handleChangeGlobalPriceIsreal} type="text" />
+                          <Form.Control
+                          isInvalid={IsrealDiscountValue != 0 && IsrealDiscountValue < parseFloat(IsrealminValue).toFixed(2)}
+                           value={IsrealDiscountValue} onChange={handleChangeGlobalPriceIsreal} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                              Not within range
+                            </Form.Control.Feedback>
                           </td>
                           <td>
                             <Form.Control disabled readOnly value={IsrealDiscountPercent}  type="text" />
@@ -2502,15 +2603,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                             <Form.Control
-                              isInvalid={IsrealDiscountAmount != 0 && IsrealDiscountAmount < parseFloat(IsrealminValue).toFixed(2)}
+                              // isInvalid={IsrealDiscountAmount != 0 && IsrealDiscountAmount < parseFloat(IsrealminValue).toFixed(2)}
                               disabled
                               readOnly
                               value={IsrealDiscountAmount}
                               type="text"
                             />
-                            <Form.Control.Feedback type="invalid">
+                            {/* <Form.Control.Feedback type="invalid">
                               Not within range
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                             <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                               Minimum: {getSymbolFromCurrency("ILS")} {parseFloat(IsrealminValue).toFixed(2)}
                             </Form.Label>
@@ -2537,7 +2638,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={IndiaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={IndiaDiscountValue} onChange={handleChangeGlobalPriceIndia} type="text" />
+                          <Form.Control 
+                          isInvalid={IndiaDiscountValue != 0 && IndiaDiscountValue < parseFloat(IndiaminValue).toFixed(2)}
+                          value={IndiaDiscountValue} onChange={handleChangeGlobalPriceIndia} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+
                           </td>
                           <td>
                           
@@ -2546,15 +2654,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={IndiaDiscountAmount != 0 && IndiaDiscountAmount < parseFloat(IndiaminValue).toFixed(2)}
+                          // isInvalid={IndiaDiscountAmount != 0 && IndiaDiscountAmount < parseFloat(IndiaminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={IndiaDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
+
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("INR")} {parseFloat(IndiaminValue).toFixed(2)}
                         </Form.Label>
@@ -2576,7 +2686,15 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={JapanListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={JapanDiscountValue} onChange={handleChangeGlobalPriceJapan} type="text" />
+                          <Form.Control 
+                          isInvalid={JapanDiscountValue != 0 && JapanDiscountValue < JapanminValue}
+                          value={JapanDiscountValue} onChange={handleChangeGlobalPriceJapan} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                              Not within range
+                            </Form.Control.Feedback>
+
+
                           </td>
                           <td>
                           <Form.Control disabled readOnly value={JapanDiscountPercent}  type="text" />
@@ -2584,15 +2702,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                             <Form.Control
-                              isInvalid={JapanDiscountAmount != 0 && JapanDiscountAmount < JapanminValue}
+                              // isInvalid={JapanDiscountAmount != 0 && JapanDiscountAmount < JapanminValue}
                               disabled
                               readOnly
                               value={JapanDiscountAmount}
                               type="text"
                             />
-                            <Form.Control.Feedback type="invalid">
+
+                            {/* <Form.Control.Feedback type="invalid">
                               Not within range
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
+
                             <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                               Minimum: {getSymbolFromCurrency("JPY")} {JapanminValue}
                             </Form.Label>
@@ -2618,7 +2738,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={SKListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={SKDiscountValue} onChange={handleChangeGlobalPriceSK} type="text" />
+                          <Form.Control 
+                          isInvalid={SKDiscountValue != 0 && SKDiscountValue < parseFloat(SKminValue).toFixed(2)}
+                          value={SKDiscountValue} onChange={handleChangeGlobalPriceSK} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
                           </td>
                           <td>
                           <Form.Control disabled readOnly value={SKDiscountPercent}  type="text" />
@@ -2626,15 +2753,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={SKDiscountAmount != 0 && SKDiscountAmount < parseFloat(SKminValue).toFixed(2)}
+                            // isInvalid={SKDiscountAmount != 0 && SKDiscountAmount < parseFloat(SKminValue).toFixed(2)}
                             disabled
                             readOnly
                             value={SKDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
+
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
                           </Form.Label>
@@ -2661,7 +2790,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={MexicoListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={MexicoDiscountValue} onChange={handleChangeGlobalPriceMexico} type="text" />
+                          <Form.Control 
+                        isInvalid={MexicoDiscountValue != 0 && MexicoDiscountValue < parseFloat(MexicominValue).toFixed(2)}
+                          value={MexicoDiscountValue} onChange={handleChangeGlobalPriceMexico} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                             
@@ -2670,15 +2805,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={MexicoDisountAmount != 0 && MexicoDisountAmount < parseFloat(MexicominValue).toFixed(2)}
+                            // isInvalid={MexicoDisountAmount != 0 && MexicoDisountAmount < parseFloat(MexicominValue).toFixed(2)}
                             disabled
                             readOnly
                             value={MexicoDisountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
+
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
                           </Form.Label>
@@ -2705,7 +2842,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={MalaysiaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={MalaysiaDiscountValue} onChange={handleChangeGlobalPriceMalaysia} type="text" />
+                          <Form.Control 
+                          isInvalid={MalaysiaDiscountValue != 0 && MalaysiaDiscountValue < parseFloat(MalaysiaminValue).toFixed(2)}
+                          value={MalaysiaDiscountValue} onChange={handleChangeGlobalPriceMalaysia} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                           
@@ -2714,15 +2857,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={MalaysiaDiscountAmount != 0 && MalaysiaDiscountAmount < parseFloat(MalaysiaminValue).toFixed(2)}
+                            // isInvalid={MalaysiaDiscountAmount != 0 && MalaysiaDiscountAmount < parseFloat(MalaysiaminValue).toFixed(2)}
                             disabled
                             readOnly
                             value={MalaysiaDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
+
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("MYR")} {parseFloat(MalaysiaminValue).toFixed(2)}
                           </Form.Label>
@@ -2749,22 +2894,29 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={NigeriaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control onChange={handleChangeGlobalPriceNigeria} value={NigeriaDiscountValue} type="text" />
+                          <Form.Control 
+                          isInvalid={NigeriaDiscountValue != 0 && NigeriaDiscountValue < parseFloat(NigeriaminValue).toFixed(2)}
+                          onChange={handleChangeGlobalPriceNigeria} value={NigeriaDiscountValue} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+
                           </td>
                           <td>
                           <Form.Control disabled readOnly value={NigeriaDiscountPercent}  type="text" />
                           </td>
                           <td>
                       <Form.Control
-                        isInvalid={NigeriaDiscountAmount != 0 && NigeriaDiscountAmount < parseFloat(NigeriaminValue).toFixed(2)}
+                        // isInvalid={NigeriaDiscountAmount != 0 && NigeriaDiscountAmount < parseFloat(NigeriaminValue).toFixed(2)}
                         disabled
                         readOnly
                         value={NigeriaDiscountAmount}
                         type="text"
                       />
-                      <Form.Control.Feedback type="invalid">
+                      {/* <Form.Control.Feedback type="invalid">
                         Not within range
-                      </Form.Control.Feedback>
+                      </Form.Control.Feedback> */}
                       <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                         Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
                       </Form.Label>
@@ -2791,7 +2943,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={NorwayListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={NorwayDiscountValue} onChange={handleChangeGlobalPriceNorway} type="text" />
+                          <Form.Control 
+                          isInvalid={NorwayDiscountValue != 0 && NorwayDiscountValue < parseFloat(NorwayminValue).toFixed(2)}
+                          value={NorwayDiscountValue} onChange={handleChangeGlobalPriceNorway} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
                           </td>
                           <td>
                            
@@ -2806,9 +2965,9 @@ const AddCoupon = ({code}) => {
                             value={NorwayDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("NOK")} {parseFloat(NorwayminValue).toFixed(2)}
                           </Form.Label>
@@ -2834,7 +2993,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={PeruListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control onChange={handleChangeGlobalPricePeru} value={PeruDiscountValue} type="text" />
+                          <Form.Control 
+                          isInvalid={PeruDiscountValue != 0 && PeruDiscountValue < parseFloat(Peruminvalue).toFixed(2)}
+                          onChange={handleChangeGlobalPricePeru} value={PeruDiscountValue} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+
                           </td>
                           <td>
                           
@@ -2844,15 +3010,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                     <Form.Control
-                      isInvalid={PeruDiscountAmount != 0 && PeruDiscountAmount < parseFloat(Peruminvalue).toFixed(2)}
+                      // isInvalid={PeruDiscountAmount != 0 && PeruDiscountAmount < parseFloat(Peruminvalue).toFixed(2)}
                       disabled
                       readOnly
                       value={PeruDiscountAmount}
                       type="text"
                     />
-                    <Form.Control.Feedback type="invalid">
+                    {/* <Form.Control.Feedback type="invalid">
                       Not within range
-                    </Form.Control.Feedback>
+                    </Form.Control.Feedback> */}
                     <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                       Minimum: {getSymbolFromCurrency("PEN")} {parseFloat(Peruminvalue).toFixed(2)}
                     </Form.Label>
@@ -2880,7 +3046,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={PhilipinesListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={PhiliphinesDiscountValue} onChange={handleChangeGlobalPricePhilipines} type="text" />
+                          <Form.Control 
+                          isInvalid={PhiliphinesDiscountValue != 0 && PhiliphinesDiscountValue < parseFloat(PhilipinesminValue).toFixed(2)}
+                          value={PhiliphinesDiscountValue} onChange={handleChangeGlobalPricePhilipines} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+
                           </td>
                           <td>                       
                             <Form.Control disabled readOnly value={PhilipinesDiscountPercent}  type="text" />
@@ -2888,15 +3061,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                     <Form.Control
-                      isInvalid={PhilipinesAmount != 0 && PhilipinesAmount < parseFloat(PhilipinesminValue).toFixed(2)}
+                      // isInvalid={PhilipinesAmount != 0 && PhilipinesAmount < parseFloat(PhilipinesminValue).toFixed(2)}
                       disabled
                       readOnly
                       value={PhilipinesAmount}
                       type="text"
                     />
-                    <Form.Control.Feedback type="invalid">
+                    {/* <Form.Control.Feedback type="invalid">
                       Not within range
-                    </Form.Control.Feedback>
+                    </Form.Control.Feedback> */}
                     <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                       Minimum: {getSymbolFromCurrency("PHP")} {parseFloat(PhilipinesminValue).toFixed(2)}
                     </Form.Label>
@@ -2923,7 +3096,15 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={PolandListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={PolandDiscountValue} onChange={handleChangeGlobalPricePoland} type="text" />
+                          <Form.Control 
+                           isInvalid={PolandDiscountValue != 0 && PolandDiscountValue < parseFloat(PolandminValue).toFixed(2)}
+                          value={PolandDiscountValue} onChange={handleChangeGlobalPricePoland} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
+
                           </td>
                           <td>
 
@@ -2932,15 +3113,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={PolandDiscountAmount != 0 && PolandDiscountAmount < parseFloat(PolandminValue).toFixed(2)}
+                          // isInvalid={PolandDiscountAmount != 0 && PolandDiscountAmount < parseFloat(PolandminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={PolandDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("PLN")} {parseFloat(PolandminValue).toFixed(2)}
                         </Form.Label>
@@ -2966,7 +3147,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control value={RomaniaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={RomaniaDiscountValue} onChange={handleChangeGlobalPriceRomania} type="text" />
+                          <Form.Control 
+                           isInvalid={RomaniaDiscountValue != 0 && RomaniaDiscountValue < parseFloat(Romaniaminvalue).toFixed(2)}
+                          value={RomaniaDiscountValue} onChange={handleChangeGlobalPriceRomania} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                             
@@ -2975,15 +3162,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={RomaniaDiscountAmount != 0 && RomaniaDiscountAmount < parseFloat(Romaniaminvalue).toFixed(2)}
+                            // isInvalid={RomaniaDiscountAmount != 0 && RomaniaDiscountAmount < parseFloat(Romaniaminvalue).toFixed(2)}
                             disabled
                             readOnly
                             value={RomaniaDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("RON")} {parseFloat(Romaniaminvalue).toFixed(2)}
                           </Form.Label>
@@ -3010,7 +3197,14 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={RussiaListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={RussiaDiscountValue} onChange={handleChangeGlobalPriceRussia} type="text" />
+                          <Form.Control 
+                          isInvalid={RussiaDiscountValue != 0 && RussiaDiscountValue < parseFloat(RussiaminValue).toFixed(2)}
+                          value={RussiaDiscountValue} onChange={handleChangeGlobalPriceRussia} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
                           </td>
                           <td>
 
@@ -3019,15 +3213,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                       <Form.Control
-                        isInvalid={RussiaDiscountAmount != 0 && RussiaDiscountAmount < parseFloat(RussiaminValue).toFixed(2)}
+                        // isInvalid={RussiaDiscountAmount != 0 && RussiaDiscountAmount < parseFloat(RussiaminValue).toFixed(2)}
                         disabled
                         readOnly
                         value={RussiaDiscountAmount}
                         type="text"
                       />
-                      <Form.Control.Feedback type="invalid">
+                      {/* <Form.Control.Feedback type="invalid">
                         Not within range
-                      </Form.Control.Feedback>
+                      </Form.Control.Feedback> */}
                       <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                         Minimum: {getSymbolFromCurrency("RUB")} {parseFloat(RussiaminValue).toFixed(2)}
                       </Form.Label>
@@ -3054,7 +3248,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={SingaporeListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={SingaporeDiscountValue} onChange={handleChangeGlobalPriceSingapore} type="text" />
+                          <Form.Control 
+                          isInvalid={SingaporeDiscountValue != 0 && SingaporeDiscountValue < parseFloat(SingaporeminValue).toFixed(2)}
+                          value={SingaporeDiscountValue} onChange={handleChangeGlobalPriceSingapore} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
                           </td>
                           <td>
                             
@@ -3063,15 +3263,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={SingaporeDiscountAmount != 0 && SingaporeDiscountAmount < parseFloat(SingaporeminValue).toFixed(2)}
+                          // isInvalid={SingaporeDiscountAmount != 0 && SingaporeDiscountAmount < parseFloat(SingaporeminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={SingaporeDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("SGD")} {parseFloat(SingaporeminValue).toFixed(2)}
                         </Form.Label>
@@ -3097,7 +3297,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={ThailandListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={ThailandDiscountValue} onChange={handleChangeGlobalPriceThailand} type="text" />
+                          <Form.Control 
+                          isInvalid={ThailandDiscountValue != 0 && ThailandDiscountValue < parseFloat(ThailandminValue).toFixed(2)}
+                          value={ThailandDiscountValue} onChange={handleChangeGlobalPriceThailand} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
                           </td>
                           <td>
                            
@@ -3106,15 +3312,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={ThailandDiscountAmount != 0 && ThailandDiscountAmount < parseFloat(ThailandminValue).toFixed(2)}
+                          // isInvalid={ThailandDiscountAmount != 0 && ThailandDiscountAmount < parseFloat(ThailandminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={ThailandDiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("THB")} {parseFloat(ThailandminValue).toFixed(2)}
                         </Form.Label>
@@ -3171,7 +3377,13 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={TaiwanListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control onChange={handleChangeGlobalPriceTaiwan} value={TaiwanDiscountValue} type="text" />
+                          <Form.Control 
+                          isInvalid={TaiwanDiscountValue != 0 && TaiwanDiscountValue < parseFloat(TaiwanminValue).toFixed(2)}
+                          onChange={handleChangeGlobalPriceTaiwan} value={TaiwanDiscountValue} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
                           </td>
                           <td>
                             
@@ -3180,15 +3392,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                           <Form.Control
-                            isInvalid={TaiwanDiscountAmount != 0 && TaiwanDiscountAmount < parseFloat(TaiwanminValue).toFixed(2)}
+                            // isInvalid={TaiwanDiscountAmount != 0 && TaiwanDiscountAmount < parseFloat(TaiwanminValue).toFixed(2)}
                             disabled
                             readOnly
                             value={TaiwanDiscountAmount}
                             type="text"
                           />
-                          <Form.Control.Feedback type="invalid">
+                          {/* <Form.Control.Feedback type="invalid">
                             Not within range
-                          </Form.Control.Feedback>
+                          </Form.Control.Feedback> */}
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                             Minimum: {getSymbolFromCurrency("TWD")} {parseFloat(TaiwanminValue).toFixed(2)}
                           </Form.Label>
@@ -3214,7 +3426,15 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={VietnamListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control onChange={handleChangeGlobalPriceVietnam} value={VietnamDiscountValue} type="text" />
+                          <Form.Control 
+                           isInvalid={VietnamDiscountValue != 0 && VietnamDiscountValue < parseFloat(VietnamminValue).toFixed(2)}
+                          onChange={handleChangeGlobalPriceVietnam} value={VietnamDiscountValue} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                            Not within range
+                          </Form.Control.Feedback>
+
+
                           </td>
                           <td>
                           
@@ -3223,15 +3443,17 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                       <Form.Control
-                        isInvalid={VietnamDisocuntAmount != 0 && VietnamDisocuntAmount < parseFloat(VietnamminValue).toFixed(2)}
+                        // isInvalid={VietnamDisocuntAmount != 0 && VietnamDisocuntAmount < parseFloat(VietnamminValue).toFixed(2)}
                         disabled
                         readOnly
                         value={VietnamDisocuntAmount}
                         type="text"
                       />
-                      <Form.Control.Feedback type="invalid">
+
+                      {/* <Form.Control.Feedback type="invalid">
                         Not within range
-                      </Form.Control.Feedback>
+                      </Form.Control.Feedback> */}
+
                       <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                         Minimum: {getSymbolFromCurrency("VND")} {parseFloat(VietnamminValue).toFixed(2)}
                       </Form.Label>
@@ -3259,7 +3481,15 @@ const AddCoupon = ({code}) => {
                             <Form.Control disabled readOnly value={SAListPrice}  type="text" />
                           </td>
                           <td>
-                          <Form.Control value={SADiscountValue} onChange={handleChangeGlobalPriceSA} type="text" />
+                          <Form.Control 
+                          isInvalid={SADiscountValue != 0 && SADiscountValue < parseFloat(SAminValue).toFixed(2)}
+                          value={SADiscountValue} onChange={handleChangeGlobalPriceSA} type="text" />
+
+                          <Form.Control.Feedback type="invalid">
+                          Not within range
+                        </Form.Control.Feedback>
+
+
                           </td>
                           <td>
                             
@@ -3268,15 +3498,15 @@ const AddCoupon = ({code}) => {
                           </td>
                           <td>
                         <Form.Control
-                          isInvalid={SADiscountAmount != 0 && SADiscountAmount < parseFloat(SAminValue).toFixed(2)}
+                          // isInvalid={SADiscountAmount != 0 && SADiscountAmount < parseFloat(SAminValue).toFixed(2)}
                           disabled
                           readOnly
                           value={SADiscountAmount}
                           type="text"
                         />
-                        <Form.Control.Feedback type="invalid">
+                        {/* <Form.Control.Feedback type="invalid">
                           Not within range
-                        </Form.Control.Feedback>
+                        </Form.Control.Feedback> */}
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
                           Minimum: {getSymbolFromCurrency("ZAR")} {parseFloat(SAminValue).toFixed(2)}
                         </Form.Label>
