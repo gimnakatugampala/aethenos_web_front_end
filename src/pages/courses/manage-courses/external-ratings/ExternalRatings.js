@@ -137,9 +137,17 @@ const ExternalRatings = ({code}) => {
                 </Form.Label>
                 <Form.Control
                     value={external_number_of_number}
-                    onChange={(e) =>
-                    setexternal_number_of_number(e.target.value)
-                    }
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^\d*$/.test(value)) {
+                            setexternal_number_of_number(value);
+                        }
+                    }}
+                    onKeyPress={(e) => {
+                        if (!/[0-9]/.test(e.key)) {
+                            e.preventDefault();
+                        }
+                    }}
                     type="text"
                     placeholder="Enter the No of Students"
                 />
