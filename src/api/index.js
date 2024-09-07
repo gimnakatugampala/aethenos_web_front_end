@@ -4801,7 +4801,7 @@ export const CodingExerciseDelete = async (code, Ccode, setsectionData) => {
         //     window.location.reload()
         // },2000)
 
-        GetCurriculum(code, setsectionData);
+        GetCurriculum(Ccode, setsectionData);
         return;
       } else {
         ErrorAlert("Error", result.message);
