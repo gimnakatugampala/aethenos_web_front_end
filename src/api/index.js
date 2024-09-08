@@ -2239,14 +2239,18 @@ export const RequestSubmitReview = async (code, setbtn_loading) => {
       Unauthorized(result.status, `courses/manage/${code}/#syllabus`);
 
       if (result.variable == "200") {
-        SuccessAlert("Success", result.message);
-        setbtn_loading(false);
-
-        setTimeout(() => {
+        Swal.fire({
+          title: "Success",
+          text: result.message,
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(() => {
           window.location.href = "/courses";
-        }, 3000);
+        });
 
+        setbtn_loading(false);
         return;
+
       } else {
         if (
           result.message ==
@@ -2282,6 +2286,8 @@ export const RequestSubmitReview = async (code, setbtn_loading) => {
     })
     .catch((error) => console.log("error", error));
 };
+
+
 export const UpdateSectionName = async (code, section, updateSectionName) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
