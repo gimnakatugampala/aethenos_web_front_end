@@ -74,7 +74,7 @@ const AddCoupon = ({code}) => {
 
       
     const handleStartDateChangeDiscount = (date) => {
-      if (date && date.isValid()) {
+      if (date && date.isSameOrAfter(currentDate, 'day')) {
         const newStartDate = date.format('DD-MM-YYYY');
         if (moment(newStartDate, 'DD-MM-YYYY').isSameOrAfter(currentDateDiscount, 'day')) {
           setStartDateDiscount(newStartDate);
