@@ -194,7 +194,7 @@ const IntendedLearners = ({ code }) => {
     if (studentsLearn.length < 3) {
       ErrorAlert(
         "Empty Field!",
-        "Please at least 3 inputs for what will be taught in the course"
+        "Please enter at least 3 inputs for what will be taught in the course"
       );
       setloadingBtn(false);
       return;
@@ -206,7 +206,7 @@ const IntendedLearners = ({ code }) => {
     } else if (requirements.length < 3) {
       ErrorAlert(
         "Empty Field!",
-        "Please at least 3 inputs in requirements or prerequisites"
+        "Please enter at least 3 inputs in requirements or prerequisites"
       );
       setloadingBtn(false);
       return;
@@ -218,7 +218,7 @@ const IntendedLearners = ({ code }) => {
     } else if (whos.length < 1) {
       ErrorAlert(
         "Empty Field!",
-        "Please at least 1 input in Who is this course for"
+        "Please enter at least 1 input in Who is this course for"
       );
       setloadingBtn(false);
       return;
