@@ -24,12 +24,10 @@ import StarRatings from "react-star-ratings";
 import moment from "moment";
 import { Paper } from "@mui/material";
 import { Select, Space } from 'antd';
+import CalculateTimeAgo from "../../../commonFunctions/CalculateTimeAgo";
 
 const Reviews = () => {
-  const handleRate = (rating) => {
-    // Handle rating logic here (e.g., send it to the server).
-    console.log(`Rated with ${rating} stars`);
-  };
+ 
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -45,12 +43,15 @@ const Reviews = () => {
   useEffect(() => {
     GetCousesOfInstructror(setcmbCourses);
   }, [courseCode]);
-
+  
   const handleSelectReviews = (value) => {
     console.log(value);
     setcourseCode(value);
     GetReviewByCourse(value, setSelectedCourse);
   };
+  
+
+  
 
   return (
     <div>
@@ -147,7 +148,7 @@ const Reviews = () => {
                                   {review.fullName}
                                 </h6>
                                 <p className="m-0 p-0">
-                                  {moment(review.date, "YYYYMMDD").fromNow()}
+                                  {CalculateTimeAgo(review.date)}
                                 </p>
                                 <Rating
                                   size={20}

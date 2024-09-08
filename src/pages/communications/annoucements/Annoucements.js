@@ -42,6 +42,11 @@ const Annoucements = () => {
       return;
     }
 
+    if (announcementTitle.length < 54) {
+      ErrorAlert("Error", "Annoucement title should be less than 55 characters");
+      return;
+    }
+
     if (selectedCourse == "") {
       ErrorAlert("Error", "Please Select Course");
       return;
@@ -167,6 +172,7 @@ const Annoucements = () => {
                         <Form.Group className="mb-3">
                           <Form.Label>Content</Form.Label>
                           <Form.Control
+                             maxLength={55}
                             onChange={(e) =>
                               setannouncementTitle(e.target.value)
                             }
