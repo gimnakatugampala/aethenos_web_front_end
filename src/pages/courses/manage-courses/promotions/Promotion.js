@@ -97,12 +97,27 @@ const Promotion = ({code}) => {
 
  const copyLinkToClipboard = (couponCode) =>{
   console.log(couponCode)
-    navigator.clipboard.writeText(`https://aethenos.com/${couponCode}`)
+    navigator.clipboard.writeText(`https://aethenos.com/course-details/${code}?couponCode=${couponCode}`)
 
     InfoToast("Link Copied")
 
 
  }
+
+ const [currentCoupon, setCurrentCoupon] = useState(null);
+const [isModalOpen, setModalOpen] = useState(false);
+
+const openModal = (coupon) => {
+  setCurrentCoupon(coupon);
+  setModalOpen(true);
+};
+
+const closeModal = () => {
+  setModalOpen(false);
+  setCurrentCoupon(null);
+};
+
+
 
 
   return ( 
@@ -154,13 +169,15 @@ const Promotion = ({code}) => {
               <thead>
                 <tr>
                   <th>Code</th>
+                  <th>Discount type</th>
                   <th>Global Price</th>
                   <th>Created date</th>
                   <th>Start date</th>
                   <th>Expiry date</th>
                   <th>Redemptions</th>
                   <th>Status</th>
-                  {/* <th>Link</th> */}
+                  <th>Link</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,14 +185,20 @@ const Promotion = ({code}) => {
                 <tr key={key}>
                   <td>{coupon.couponCode}</td>
                   <td>{coupon.couponType.id == 1 ? "Free" : 'Discount'}</td>
+                  <td>45</td>
                   <td>{coupon.createdDate == "" ? "N/A" : moment(coupon.createdDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
                   <td>{coupon.couponType.id == 1 ? '0/1000' : '0/Unlimited' }</td>
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
-                  {/* <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td> */}
+                  <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td>
+                  <td> 
+                  <Button variant="contained" onClick={() => openModal(coupon)}>
+                  <i className="fa-solid fa-eye"></i>
+                  </Button>
+                  </td>
                 </tr>
-                )) : "No Coupons Available"}
+                )).reverse() : "No Coupons Available"}
         
               </tbody>
             </Table>
@@ -190,6 +213,43 @@ const Promotion = ({code}) => {
 
 
     </Card>
+
+    {/* Modal to view coupon details */}
+{currentCoupon && (
+  <Dialog open={isModalOpen} onClose={closeModal} fullWidth maxWidth="sm">
+    <DialogTitle>Coupon Details</DialogTitle>
+    <DialogContent>
+      <Table striped bordered responsive>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Currency</th>
+            <th>List Price</th>
+            <th>Discount Amount</th>
+            <th>Discount %</th>
+            <th>Discount Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>USA</td>
+            <td>USD</td>
+            <td>56.00</td>
+            <td>526.00</td>
+            <td>4.00</td>
+            <td>499.00</td>
+          </tr>
+        </tbody>
+      </Table>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={closeModal} color="primary">
+        Close
+      </Button>
+    </DialogActions>
+  </Dialog>
+)}
+
 
     <Snackbar
       anchorOrigin={{ vertical, horizontal }}
