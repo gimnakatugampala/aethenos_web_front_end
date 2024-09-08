@@ -4152,6 +4152,9 @@ export const StudentsEnrolled = async (setstudents, courseCode) => {
 
       const updatedResult = result.map((student) => ({
         ...student,
+        enrolledDate : moment(student.enrolledDate).format('DD-MM-YYYY'),
+        lastVisited : moment(student.lastVisited).format('DD-MM-YYYY'),
+        progress: Number.parseFloat(student.progress).toFixed(2),
         profileImgTag:
           student.profileImg != "" ? (
             <img
