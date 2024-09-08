@@ -46,6 +46,8 @@ import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
 import logoFull from "../../assets/images/utils/aethenos_logo.jpg";
 import logoSmall from "../../assets/images/utils/aethenos_logo_small.png";
+import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { ButtonBase } from "@mui/material";
 
 
@@ -79,6 +81,7 @@ function Header({
 }) {
   const [notifications, setNotifications] = useState([]);
 
+  const [Primary_Email, setPrimary_Email] = useState("")
   const [first_Name, setfirst_Name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [headline, setheadline] = useState("");
@@ -88,8 +91,17 @@ function Header({
   const [facebook, setfacebook] = useState("");
   const [linkedin, setlinkedin] = useState("");
   const [youtube, setyoutube] = useState("");
+  const [email, setemail] = useState("");
   const [profile_img, setprofile_img] = useState("");
   const [uploadImage, setuploadImage] = useState("");
+  const [preview_img, setpreview_img] = useState("");
+
+
+  const [link_to_course, setlink_to_course] = useState("");
+  const [external_ratings, setexternal_ratings] = useState("");
+  const [external_number_of_number, setexternal_number_of_number] =
+    useState("");
+  const [any_comment, setany_comment] = useState("");
 
   useEffect(() => {
     GetNotificationsLatest(setNotifications);
@@ -127,6 +139,7 @@ function Header({
 
   useEffect(() => {
     GetInstructorProfileDetails(
+      setPrimary_Email,
       setfirst_Name,
       setlast_name,
       setheadline,
@@ -136,6 +149,11 @@ function Header({
       setfacebook,
       setlinkedin,
       setyoutube,
+      setlink_to_course,
+      setexternal_ratings,
+      setexternal_number_of_number,
+      setany_comment,
+      setemail,
       setprofile_img
     );
   }, []);
@@ -341,6 +359,22 @@ function Header({
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
+
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                  <Avatar
+                    src="/static/images/avatar/1.jpg"
+                    alt={`${first_Name} ${last_name}`}
+                    sx={{ width: 35, height: 35 }}
+                  >{`${first_Name[0]}${last_name[0]}`}</Avatar>
+                  </ListItemIcon>
+                  {first_Name} {last_name}
+                  <br />
+                  {Primary_Email} 
+                </MenuItem>
+
+                <Divider />
+
               <a href="/profile">
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
@@ -350,7 +384,7 @@ function Header({
                 </MenuItem>
               </a>
 
-              <Divider />
+            
 
               <a href="/account-settings">
                 <MenuItem onClick={handleClose}>
@@ -361,7 +395,25 @@ function Header({
                 </MenuItem>
               </a>
 
-              <Divider />
+              <a href="https://www.aethenos.com">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <WifiProtectedSetupIcon fontSize="medium" />
+                  </ListItemIcon>
+                  Switch To Student
+                </MenuItem>
+              </a>
+
+              <a href="/performance/overview">
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <AttachMoneyIcon fontSize="medium" />
+                  </ListItemIcon>
+                  Revenue Report
+                </MenuItem>
+              </a>
+
+           
 
               <a href="/verification">
                 <MenuItem onClick={handleClose}>
@@ -372,7 +424,7 @@ function Header({
                 </MenuItem>
               </a>
 
-              <Divider />
+         
 
               <Divider />
 
