@@ -177,7 +177,7 @@ const Reviews = () => {
                           </div>
                         </CardContent>
                       </Card>
-                    ))
+                    )).reverse()
                   ) : (
                     <Card className="p-2">
                       <CardContent>
