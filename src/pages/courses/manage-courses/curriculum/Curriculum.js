@@ -5123,7 +5123,7 @@ const Curriculum = ({ code }) => {
                               <CheckCircleIcon fontSize="small" />
                               {i + 1}. Assignment:{" "}
                               {counters.Assignment}{" "}
-                              <ListAltIcon
+                              <AssignmentIcon
                                 sx={{ fontSize: 15 }}
                               />{" "}
                               {item.title}
@@ -5887,7 +5887,7 @@ const Curriculum = ({ code }) => {
                                 <CheckCircleIcon fontSize="small" />
                                 {i + 1}. Practice Test:{" "}
                                 {counters.PracticeTest}{" "}
-                                <AssignmentIcon
+                                <ListAltIcon
                                   sx={{ fontSize: 15 }}
                                 />{" "}
                                 {item.title}
