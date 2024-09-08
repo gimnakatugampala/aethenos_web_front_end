@@ -51,6 +51,10 @@ const Reviews = () => {
   };
   
 
+  useEffect(() => {
+    GetReviewByCourse(courseCode, setSelectedCourse);
+  }, [courseCode])
+  
   
 
   return (
