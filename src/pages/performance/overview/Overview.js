@@ -101,7 +101,7 @@ function RevenueReport() {
             title={
               <div className="tab-title">
                 <div>Instructor Rating</div>
-                <div className="font-bold fs-5">{parseFloat(overViewStatus.instructorRating).toFixed(2)}</div>
+                <div className="font-bold fs-5">{overViewStatus.instructorRating == 'NaN' ? 0.0 :  parseFloat(overViewStatus.instructorRating).toFixed(2)}</div>
                 <div>{overViewStatus.thisMonthRating} rating this month</div>
               </div>
             }
