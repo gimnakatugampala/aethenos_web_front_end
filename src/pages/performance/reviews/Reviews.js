@@ -35,7 +35,7 @@ const Reviews = () => {
 
   const page = parseInt(query.get("page") || "1", 10);
 
-  const [courseCode, setcourseCode] = useState("");
+  const [courseCode, setcourseCode] = useState("all");
   const [cmbCourses, setcmbCourses] = useState([]);
 
   const [SelectedCourses, setSelectedCourse] = useState(null);
@@ -51,9 +51,9 @@ const Reviews = () => {
   };
   
 
-  // useEffect(() => {
-  //   GetReviewByCourse(courseCode, setSelectedCourse);
-  // }, [])
+  useEffect(() => {
+    GetReviewByCourse(courseCode, setSelectedCourse);
+  }, [])
   
   
 
