@@ -38,7 +38,7 @@ const Reviews = () => {
   const [courseCode, setcourseCode] = useState("");
   const [cmbCourses, setcmbCourses] = useState([]);
 
-  const [SelectedCourse, setSelectedCourse] = useState(null);
+  const [SelectedCourses, setSelectedCourse] = useState(null);
 
   useEffect(() => {
     GetCousesOfInstructror(setcmbCourses);
@@ -51,9 +51,9 @@ const Reviews = () => {
   };
   
 
-  useEffect(() => {
-    GetReviewByCourse(courseCode, setSelectedCourse);
-  }, [courseCode])
+  // useEffect(() => {
+  //   GetReviewByCourse(courseCode, setSelectedCourse);
+  // }, [])
   
   
 
@@ -77,7 +77,7 @@ const Reviews = () => {
                   size='large'
                   style={{width:'100%'}}>
                   
-                  {/* <option value={""}>All Courses</option> */}
+                  <option value={"all"}>All Courses</option>
                   {cmbCourses.length > 0 &&
                     cmbCourses.map((course, index) => (
                       <option key={index} value={course.code}> 
@@ -90,119 +90,124 @@ const Reviews = () => {
 
             {/* second column */}
             <div className="col-md-9">
-              {/* 1st card */}
-              {SelectedCourse != null ? (
-                <>
-                  <Card>
-                    <CardContent>
-                      <div className="row p-1 ml-5 mr-5">
-                        <div className="col-3">
-                          <img
-                            src={`${FILE_PATH}${SelectedCourse.courseImg}`}
-                            className="card-img"
-                            alt="Sample"
-                          />
-                        </div>
-                        <div className="col-md-9">
-                          <div className="card-body">
-                            <h6 className="card-title m-0 p-0">
-                              {SelectedCourse.courseTitle}
-                            </h6>
-                            <p
-                              style={{ fontSize: "13px" }}
-                              className="my-2 p-0"
-                            >
-                              {parseFloat(SelectedCourse.rating).toFixed(2)}{" "}
-                              Course Rating
-                            </p>
-                            <StarRatings
-                              starDimension="30px"
-                              rating={SelectedCourse.rating}
-                              starRatedColor="rgb(255, 188, 11)"
-                              numberOfStars={5}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+  {/* 1st card */}
+  {SelectedCourses != null ? (
+    <>
+      {SelectedCourses.map((SelectedCourse) => (
+        <>
 
-                  {SelectedCourse.reviewResponses.length > 0 ? (
-                    SelectedCourse.reviewResponses.map((review, index) => (
-                      <Card key={index} className="p-1 my-1 mb-3">
-                        <CardContent>
-                          <div className="row mr-5">
-                            <div className="col-9 d-flex justify-content-start">
-                              <img
-                                src={
-                                  review.userProfile == null
-                                    ? "../images/user-profile.png"
-                                    : `${FILE_PATH}${SelectedCourse.courseImg}`
-                                }
-                                style={{
-                                  width: "70px",
-                                  borderRadius: 50,
-                                  height: "70px",
-                                  marginRight: 20,
-                                }}
-                                alt="Sample"
-                              />
-                              <div>
-                                <h6 className="text-primary m-0 p-0">
-                                  {review.fullName}
-                                </h6>
-                                <p className="m-0 p-0">
-                                  {CalculateTimeAgo(review.date)}
-                                </p>
-                                <Rating
-                                  size={20}
-                                  iconsCount={5}
-                                  readonly
-                                  initialValue={review.rating}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="row  ml-5 mr-5">
-                            <div className="col-md-12 p-2">
-                              {review.comment}
-                            </div>
-                          </div>
-                          <div className="pl-5">
-                            <CommentBox
-                              setcmbCourses={setcmbCourses}
-                              replies={review.replies}
-                              reviewCode={review.reviewCode}
-                            />
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )).reverse()
-                  ) : (
-                    <Card className="p-2">
-                      <CardContent>
-                        <h3>No Reviews Found</h3>
-                      </CardContent>
-                    </Card>
-                  )}
-                </>
-              ) : (
-                <Paper
-                  elevation={1}
-                  className="p-3 d-flex justify-content-center align-items-center"
-                  style={{ minHeight: "70vh", overflowY: "auto" }}
-                >
-                  <div className="text-center">
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <i className="fas fa-star"></i>
-                    <h3 className="m-0">Select course to see reviews</h3>
+        {SelectedCourses.length == 1 && (
+
+          <Card>
+            <CardContent>
+              <div className="row p-1 ml-5 mr-5">
+                <div className="col-3">
+                  <img
+                    src={`${FILE_PATH}${SelectedCourse.courseImg}`}
+                    className="card-img"
+                    alt="Sample"
+                  />
+                </div>
+                <div className="col-md-9">
+                  <div className="card-body">
+                    <h6 className="card-title m-0 p-0">
+                      {SelectedCourse.courseTitle}
+                    </h6>
+                    <p style={{ fontSize: "13px" }} className="my-2 p-0">
+                      {Number.parseFloat(SelectedCourse.rating)} Course Rating
+                    </p>
+                    <StarRatings
+                      starDimension="30px"
+                      rating={SelectedCourse.rating}
+                      starRatedColor="rgb(255, 188, 11)"
+                      numberOfStars={5}
+                    />
                   </div>
-                </Paper>
-              )}
-            </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+          {SelectedCourse.reviewResponses &&
+          SelectedCourse.reviewResponses.length > 0 ? (
+            SelectedCourse.reviewResponses.map((review, index) => (
+              <Card key={index} className="p-1 my-1 mb-3">
+                <CardContent>
+                  <div className="row mr-5">
+                    <div className="col-9 d-flex justify-content-start">
+                      
+                      <img
+                        src={
+                          review.userProfile == null
+                            ? "../images/user-profile.png"
+                            : `${FILE_PATH}${review.userProfile}`
+                        }
+                        style={{
+                          width: "70px",
+                          borderRadius: 50,
+                          height: "70px",
+                          marginRight: 20,
+                        }}
+                        alt="Sample"
+                      />
+                      <div>
+                        <h6 className="text-primary m-0 p-0">{review.fullName} {SelectedCourses.length != 1 && <>- <b>{SelectedCourse.courseTitle}</b></> } </h6>
+                        <p className="m-0 p-0">{CalculateTimeAgo(review.date)}</p>
+                        <Rating
+                          size={20}
+                          iconsCount={5}
+                          readonly
+                          initialValue={review.rating}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row ml-5 mr-5">
+                    <div className="col-md-12 p-2">{review.comment}</div>
+                  </div>
+                  <div className="pl-5">
+                    <CommentBox
+                      setcmbCourses={setcmbCourses}
+                      replies={review.replies}
+                      reviewCode={review.reviewCode}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )).reverse()
+          ) : (
+
+            SelectedCourses.length == 1 && (
+
+            <Card className="p-2">
+              <CardContent>
+                <h3>No Reviews Found</h3>
+              </CardContent>
+            </Card>
+            )
+          )}
+        </>
+      ))}
+    </>
+  ) : (
+    <Paper
+      elevation={1}
+      className="p-3 d-flex justify-content-center align-items-center"
+      style={{ minHeight: "70vh", overflowY: "auto" }}
+    >
+      <div className="text-center">
+        <i className="fas fa-star"></i>
+        <i className="fas fa-star"></i>
+        <i className="fas fa-star"></i>
+        <i className="fas fa-star"></i>
+        <i className="fas fa-star"></i>
+        <h3 className="m-0">Select course to see reviews</h3>
+      </div>
+    </Paper>
+  )}
+</div>
+
           </div>
         </Card>
       </div>
