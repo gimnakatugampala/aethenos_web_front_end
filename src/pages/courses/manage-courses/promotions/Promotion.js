@@ -170,7 +170,7 @@ const closeModal = () => {
                 <tr>
                   <th>Code</th>
                   <th>Discount type</th>
-                  <th>Global Price</th>
+                  <th>Global Price (USD)</th>
                   <th>Created date</th>
                   <th>Start date</th>
                   <th>Expiry date</th>
@@ -185,7 +185,7 @@ const closeModal = () => {
                 <tr key={key}>
                   <td>{coupon.couponCode}</td>
                   <td>{coupon.couponType.id == 1 ? "Free" : 'Discount'}</td>
-                  <td>45</td>
+                  <td>{Number.parseFloat(coupon.globalDiscountPrice).toFixed(2)}</td>
                   <td>{coupon.createdDate == "" ? "N/A" : moment(coupon.createdDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
@@ -215,15 +215,16 @@ const closeModal = () => {
     </Card>
 
     {/* Modal to view coupon details */}
-{currentCoupon && (
+    {currentCoupon && (
   <Dialog open={isModalOpen} onClose={closeModal} fullWidth maxWidth="sm">
     <DialogTitle>Coupon Details</DialogTitle>
     <DialogContent>
       <Table striped bordered responsive>
         <thead>
           <tr>
-            <th>Country</th>
-            <th>Currency</th>
+            <th colSpan={5}>Global Pricing</th>
+          </tr>
+          <tr>
             <th>List Price</th>
             <th>Discount Amount</th>
             <th>Discount %</th>
@@ -232,13 +233,34 @@ const closeModal = () => {
         </thead>
         <tbody>
           <tr>
-            <td>USA</td>
-            <td>USD</td>
-            <td>56.00</td>
-            <td>526.00</td>
-            <td>4.00</td>
-            <td>499.00</td>
+            <td>{Number.parseFloat(currentCoupon.globalListPrice).toFixed(2)}</td>
+            <td>{Number.parseFloat(currentCoupon.globalDiscount).toFixed(2)}</td>
+            <td>{Number.parseFloat(currentCoupon.globalDiscountPercentage).toFixed(2)}</td>
+            <td>{Number.parseFloat(currentCoupon.globalDiscountPrice).toFixed(2)}</td>
           </tr>
+        </tbody>
+      </Table>
+
+      <Table striped bordered responsive>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>List Price</th>
+            <th>Discount Amount</th>
+            <th>Discount %</th>
+            <th>Discount Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentCoupon.couponPrices.map((price, index) => (
+            <tr key={index}>
+              <td>{price.country}</td>
+              <td>{Number.parseFloat(price.listPrice).toFixed(2)}</td>
+              <td>{Number.parseFloat(price.discountAmount).toFixed(2)}</td>
+              <td>{Number.parseFloat(price.discount).toFixed(2)}</td>
+              <td>{Number.parseFloat(price.discountPrice).toFixed(2)}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </DialogContent>
@@ -249,6 +271,8 @@ const closeModal = () => {
     </DialogActions>
   </Dialog>
 )}
+
+
 
 
     <Snackbar
