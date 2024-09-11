@@ -42,7 +42,6 @@ const Students = () => {
   // Get Courses
   useEffect(() => {
     GetCousesOfInstructror(setcmbCourses);
-    console.log(cmbCourses);
   }, [cmbCourses]);
  
   useEffect(() => {
@@ -115,6 +114,11 @@ const Students = () => {
               headerStyle: headerCellStyle,
             },
             {
+              title: "Course Title",
+              field: "courseTitle",
+              headerStyle: headerCellStyle,
+            },
+            {
               title: "Last Visited",
               field: "lastVisited",
               headerStyle: headerCellStyle,
@@ -156,6 +160,13 @@ const Students = () => {
           options={{
             sorting: true,
             exportButton: true,
+            rowStyle: {
+              fontSize: 'calc(12px + 0.2vw)',  
+            },
+            headerStyle: {
+              fontSize: 'calc(14px + 0.2vw)',
+              fontWeight: 'bold',
+            },
           }}
         />
     </>
