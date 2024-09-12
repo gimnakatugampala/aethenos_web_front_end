@@ -109,15 +109,16 @@ const Students = () => {
               headerStyle: headerCellStyle,
             },
             {
-              title: "Enrolled",
-              field: "enrolledDate",
-              headerStyle: headerCellStyle,
-            },
-            {
               title: "Course Title",
               field: "courseTitle",
               headerStyle: headerCellStyle,
             },
+            {
+              title: "Enrolled",
+              field: "enrolledDate",
+              headerStyle: headerCellStyle,
+            },
+       
             {
               title: "Last Visited",
               field: "lastVisited",
