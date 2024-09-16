@@ -52,8 +52,8 @@ function RevenueReport() {
             title={
               <div className="tab-title">
                 <div>Total Revenue</div>
-                <div className="font-bold fs-5">${overViewStatus.totalRevenue}</div>
-                <div>${overViewStatus.thisMonthRevenue} this month</div>
+                <div className="font-bold fs-5">${Number.parseFloat(overViewStatus.totalRevenue).toFixed(2)}</div>
+                <div>${Number.parseFloat(overViewStatus.thisMonthRevenue).toFixed(2)} this month</div>
               </div>
             }
           >
