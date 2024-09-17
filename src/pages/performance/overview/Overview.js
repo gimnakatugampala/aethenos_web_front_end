@@ -43,8 +43,8 @@ function RevenueReport() {
         <span className="p-0 m-0">Get top insights about your performance</span>
       </div>
 
-      {/* <Card className="border-rad-20"> */}
-      <div className="row outer-shadow-box m-3" >
+      <Card className="border-rad-20">
+      <div className="row  m-3" >
         <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
           {/* Total Revenue */}
           <Tab
@@ -128,7 +128,7 @@ function RevenueReport() {
           </Card>
         </div>
         </div>
-      {/* </Card> */}
+      </Card>
     </div>
   );
 }
