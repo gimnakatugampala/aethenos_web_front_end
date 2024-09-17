@@ -5639,7 +5639,10 @@ export const GetChartOverviewData = async (setChartData) => {
     requestOptions
   )
     .then((response) => response.json())
-    .then((result) => setChartData(result))
+    .then((result) =>{
+      setChartData(result)
+      console.log(result)
+    })
     .catch((error) => console.error(error));
 };
 
