@@ -134,7 +134,7 @@ const SingleRevenueReport = () => {
             />
           </Tab>
 
-          <Tab
+          {/* <Tab
             eventKey="refunds"
             title={
               <div className="tab-title">
@@ -174,7 +174,8 @@ const SingleRevenueReport = () => {
                 exportButton: true,
               }}
             />
-          </Tab>
+          </Tab> */}
+
         </Tabs>
       </Card>
     </div>
