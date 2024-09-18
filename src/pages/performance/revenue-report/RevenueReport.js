@@ -144,7 +144,7 @@ function RevenueReport() {
                 title: "Month",
                 field: "month",
                 render: (rowData) => (
-                  <a href={`/performance/revenue-report/${rowData.id}`}>
+                  <a href={`/performance/revenue-report/${rowData.month}`}>
                     {rowData.month}
                   </a>
                 ),
