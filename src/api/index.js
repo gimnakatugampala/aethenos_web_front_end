@@ -14,7 +14,7 @@ import SuccessToast from "../commonFunctions/Toasts/SuccessToast";
 import SyllabusToastSuccess from "../commonFunctions/Toasts/SyllabusToastSuccess";
 
 const CURRENT_USER = Cookies.get("aethenos");
-const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api";
+const BACKEND_LINK = "https://aethenos.com:2053/aethenos-api";
 
 // Unauthorized
 const Unauthorized = (result, rediect_url) => {
