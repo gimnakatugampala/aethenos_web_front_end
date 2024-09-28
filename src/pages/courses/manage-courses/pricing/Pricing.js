@@ -4743,7 +4743,7 @@ const handleDefaultPercentageDiscount = (e) => {
                     <tbody>
                     
                         <tr>
-                          <td >United States + other USD countries*
+                          <td >United States + other USD countries**
                           <td className="col-12 font-italic mt-5">
                             <Form.Label className="mt-3 tit fst-italic">
                               Tip: Pricing around {getSymbolFromCurrency("USD")}{parseFloat(USATip).toFixed(2)} may optimize sales.
@@ -6586,6 +6586,14 @@ const handleDefaultPercentageDiscount = (e) => {
                 )
         )}
         </>}
+
+        <div className="p-3">
+
+        <p><b>* Other EUR countries: Bulgaria, Czech Republic, Hungary, Poland, Romania, Sweden, Andorra, Monaco, Montenegro, San Marino, Vatican City, Kosovo.</b></p>
+
+        <p><b>** Other USD countries: Puerto Rico, Guam, America Samoa, U.S. Virgin Islands, Northern Marina Islands, Ecuador, El Salvador, Zimbabwe, The British Virgin Islands, The Turks and Caicos, Timor and Leste, Bonaire, Micronesia, Palau, Marshall Islands.</b></p>
+        </div>
+
    
  
 
