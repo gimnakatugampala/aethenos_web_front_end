@@ -4741,73 +4741,9 @@ const handleDefaultPercentageDiscount = (e) => {
                       </tr>
                     </thead>
                     <tbody>
-                    
-                        <tr>
-                          <td >United States + other USD countries**
-                          <td className="col-12 font-italic mt-5">
-                            <Form.Label className="mt-3 tit fst-italic">
-                              Tip: Pricing around {getSymbolFromCurrency("USD")}{parseFloat(USATip).toFixed(2)} may optimize sales.
-                            </Form.Label>
-                          </td>
 
-                        </td>
-
-                          <td>USD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].maxPrice}`}</td>
-                          <td>
-                            <Form.Control  
-                            style={{width:100}}
-                           isInvalid={USAListPrice != 0 && (USAListPrice < countriesData.priceRange[0].minPrice || USAListPrice > countriesData.priceRange[0].maxPrice)}
-                            value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
-                              <Form.Control.Feedback type="invalid">
-                                Not within range
-                              </Form.Control.Feedback>
-                          </td>
-                          <td>
-                            <Select
-                            // 
-                              value={USADisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeUSA}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {/* {showInputPercentUSA && ( */}
-                          <Form.Control disabled={USADisType == 3 || USADisType == 1}  value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
-                            {/* )} */}
-                          </td>
-                          <td>
-                          {/* {showInputDisAmtUSA && ( */}
-                          <Form.Control disabled={USADisType == 2 || USADisType == 1} value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
-                          {/* )} */}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-
-                          <Form.Control 
-                            isInvalid={formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < USAMinValue) ? true : false} 
-                            readOnly disabled 
-                            value={USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}  />
-                                <Form.Control.Feedback type="invalid">
-                                Not within range
-                                </Form.Control.Feedback>
-
-                                <tr>
-                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("USD")}{parseFloat(USAMinValue).toFixed(2)}
-                          </Form.Label>
-                        </tr>
-
-                          </td>
-                        
-                        </tr>
-
-                        <tr>
+                    {/* australia */}
+                    <tr>
                           <td>Australia
                           <td className="col-12 font-italic mt-5">
                           <Form.Label className="mt-3 tit fst-italic">
@@ -4868,8 +4804,8 @@ const handleDefaultPercentageDiscount = (e) => {
                           </td>
                         
                         </tr>
-
-                        
+                    
+                        {/* brazil */}  
                         <tr>
                           <td>Brazil
                           <td className="col-12 font-italic mt-5">
@@ -4933,7 +4869,8 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
-                        <tr>
+                      {/* canada */}
+                      <tr>
                           <td>Canada
                           <td className="col-12 font-italic mt-5">
                               <Form.Label className="mt-3 tit fst-italic">
@@ -4994,7 +4931,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
-
+                        {/* chile */}
                         <tr>
                           <td>Chile
                           <td className="col-12 font-italic mt-5">
@@ -5058,6 +4995,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
+                        {/* columbia */}
                         <tr>
                           <td>Columbia
                           <td className="col-12 font-italic mt-5">
@@ -5122,6 +5060,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
+                        {/* egpyt */}
                         <tr>
                           <td>Egypt
                           <td className="col-12 font-italic mt-5">
@@ -5185,6 +5124,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
+                        {/* eu */}
                         <tr>
                           <td>European Union (EU) + other EUR conuntries*
                           <td className="col-12 font-italic mt-5">
@@ -5248,199 +5188,8 @@ const handleDefaultPercentageDiscount = (e) => {
                           </td>
                         
                         </tr>
-                        
-                        <tr>
-                          <td>United Kingdom
-                          <td className="col-12 font-italic mt-5">
-                          <Form.Label className="mt-3 tit fst-italic">
-                            Tip: Pricing around {getSymbolFromCurrency("GBP")}{parseFloat(GBPTip).toFixed(2)} may optimize sales.
-                          </Form.Label>
-                        </td>
 
-                        </td>
-
-                          <td>GBP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].maxPrice}`}</td>
-                          <td>
-                            <Form.Control
-                            isInvalid={GBPListPrice != 0 &&  (GBPListPrice < countriesData.priceRange[8].minPrice || GBPListPrice > countriesData.priceRange[8].maxPrice) ?  true : false}
-                            value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
-                            <Form.Control.Feedback type="invalid">
-                                Not within range
-                              </Form.Control.Feedback>
-
-                          </td>
-                          <td>
-                            <Select
-                              value={GBPDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeGBP}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {/* {showInputPercentGBP && ( */}
-                          <Form.Control disabled={GBPDisType == 3 || GBPDisType == 1} value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td>
-                            {/* {showInputDisAmtGBP && ( */}
-                              <Form.Control disabled={GBPDisType == 2 || GBPDisType == 1}  value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-
-                          <Form.Control 
-                          isInvalid={formatNumber(GBPNetPrice) != "0.00" && (formatNumber(GBPNetPrice) < GBPminValue) ? true : false} 
-                          readOnly disabled 
-                          value={GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-
-
-                            <tr>
-                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
-                          </Form.Label>
-                        </tr>
-
-                          </td>
-                        
-                        </tr>
-
-                        <tr>
-                          <td>Indonesia
-                          <td className="col-12 font-italic mt-5">
-                            <Form.Label className="mt-3 tit fst-italic">
-                              Tip: Pricing around {getSymbolFromCurrency("IDR")}{parseFloat(IndonesiaTip).toFixed(2)} may optimize sales.
-                            </Form.Label>
-                          </td>
-
-                        </td>
-
-                          <td>IDR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].maxPrice}`}</td>
-                          <td>
-                            <Form.Control
-                               isInvalid={IndonesiaListPrice != 0 && (IndonesiaListPrice < countriesData.priceRange[9].minPrice || IndonesiaListPrice > countriesData.priceRange[9].maxPrice) ?  true : false}
-                            value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
-                              <Form.Control.Feedback type="invalid">
-                                Not within range
-                              </Form.Control.Feedback>
-                          </td>
-                          <td>
-                            <Select
-                              value={IndonesiaDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeIndo}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {/* {showInputPercentIndonesia && ( */}
-                          <Form.Control disabled={IndonesiaDisType == 3 || IndonesiaDisType == 1} value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td>
-                            {/* {showInputDisAmtIndonesia && ( */}
-                          <Form.Control disabled={IndonesiaDisType == 2 || IndonesiaDisType == 1} value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td style={{whiteSpace: 'nowrap'}}>
-                                <Form.Control 
-                                    isInvalid={formatNumber(IndonesiaNetPrice) != "0.00" && (parseFloat(IndonesiaNetPrice) < parseFloat(IndonesiaminValue))} 
-                                    readOnly 
-                                    disabled 
-                                    value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                    Not within range
-                                </Form.Control.Feedback>
-                                <tr>
-                                    <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                        Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
-                                    </Form.Label>
-                                </tr>
-                            </td>
-
-                        
-                        </tr>
-
-                        <tr>
-                          <td>Israel
-                          <td className="col-12 font-italic mt-5">
-                          <Form.Label className="mt-3 tit fst-italic">
-                            Tip: Pricing around {getSymbolFromCurrency("ILS")}{parseFloat(IsrealTip).toFixed(2)} may optimize sales.
-                          </Form.Label>
-                        </td>
-
-                        </td>
-
-                          <td>ILS</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].maxPrice}`}</td>
-                          <td>
-                            <Form.Control
-                               isInvalid={IsrealListPrice != 0 && (IsrealListPrice < countriesData.priceRange[10].minPrice || IsrealListPrice > countriesData.priceRange[10].maxPrice) ?  true : false}
-                            value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
-                            <Form.Control.Feedback type="invalid">
-                                Not within range
-                              </Form.Control.Feedback>
-                          </td>
-                          <td>
-                            <Select
-                              value={IsrealDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeIsreal}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {/* {showInputPercentIsreal && ( */}
-
-                            <Form.Control disabled={IsrealDisType == 3 || IsrealDisType == 1} value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td>
-                            {/* {showInputDisAmtIsreal && ( */}
-
-                          <Form.Control disabled={IsrealDisType == 2 || IsrealDisType == 1} value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-
-                          <Form.Control 
-                          isInvalid={formatNumber(IsrealNetPrice) != "0.00" && (formatNumber(IsrealNetPrice) < IsrealminValue)? true : false} 
-                          readOnly disabled 
-                          value={IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-                            <tr>
-                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("ILS")} {parseFloat(IsrealminValue).toFixed(2)}
-                            </Form.Label>
-                          </tr>
-
-                          </td>
-                        
-                        </tr>
-
+                        {/* india */}
                         <tr>
                           <td>India
                           <td className="col-12 font-italic mt-5">
@@ -5505,6 +5254,136 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
+                        {/* indonesia */}
+                        <tr>
+                          <td>Indonesia
+                          <td className="col-12 font-italic mt-5">
+                            <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("IDR")}{parseFloat(IndonesiaTip).toFixed(2)} may optimize sales.
+                            </Form.Label>
+                          </td>
+
+                        </td>
+
+                          <td>IDR</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].maxPrice}`}</td>
+                          <td>
+                            <Form.Control
+                               isInvalid={IndonesiaListPrice != 0 && (IndonesiaListPrice < countriesData.priceRange[9].minPrice || IndonesiaListPrice > countriesData.priceRange[9].maxPrice) ?  true : false}
+                            value={IndonesiaListPrice} onChange={handleChangeGlobalPriceIndo} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Not within range
+                              </Form.Control.Feedback>
+                          </td>
+                          <td>
+                            <Select
+                              value={IndonesiaDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeIndo}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {/* {showInputPercentIndonesia && ( */}
+                          <Form.Control disabled={IndonesiaDisType == 3 || IndonesiaDisType == 1} value={IndonesiaDisPercent} onChange={handleDefaultPercentageDiscountIndo} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td>
+                            {/* {showInputDisAmtIndonesia && ( */}
+                          <Form.Control disabled={IndonesiaDisType == 2 || IndonesiaDisType == 1} value={IndonesiaDisAmt} onChange={handleDefaultDiscountAmtIndo} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td style={{whiteSpace: 'nowrap'}}>
+                                <Form.Control 
+                                    isInvalid={formatNumber(IndonesiaNetPrice) != "0.00" && (parseFloat(IndonesiaNetPrice) < parseFloat(IndonesiaminValue))} 
+                                    readOnly 
+                                    disabled 
+                                    value={IndonesiaNetPrice == "" ? "0.00" : formatNumber(IndonesiaNetPrice)}  
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    Not within range
+                                </Form.Control.Feedback>
+                                <tr>
+                                    <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                        Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
+                                    </Form.Label>
+                                </tr>
+                            </td>
+
+                        
+                        </tr>
+
+                        {/* israel */}
+                        <tr>
+                          <td>Israel
+                          <td className="col-12 font-italic mt-5">
+                          <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("ILS")}{parseFloat(IsrealTip).toFixed(2)} may optimize sales.
+                          </Form.Label>
+                        </td>
+
+                        </td>
+
+                          <td>ILS</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].maxPrice}`}</td>
+                          <td>
+                            <Form.Control
+                               isInvalid={IsrealListPrice != 0 && (IsrealListPrice < countriesData.priceRange[10].minPrice || IsrealListPrice > countriesData.priceRange[10].maxPrice) ?  true : false}
+                            value={IsrealListPrice} onChange={handleChangeGlobalPriceIsreal} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Not within range
+                              </Form.Control.Feedback>
+                          </td>
+                          <td>
+                            <Select
+                              value={IsrealDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeIsreal}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {/* {showInputPercentIsreal && ( */}
+
+                            <Form.Control disabled={IsrealDisType == 3 || IsrealDisType == 1} value={IsrealDisPercent} onChange={handleDefaultPercentageDiscountIsreal} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td>
+                            {/* {showInputDisAmtIsreal && ( */}
+
+                          <Form.Control disabled={IsrealDisType == 2 || IsrealDisType == 1} value={IsrealDisAmt} onChange={handleDefaultDiscountAmtIsreal} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(IsrealNetPrice) != "0.00" && (formatNumber(IsrealNetPrice) < IsrealminValue)? true : false} 
+                          readOnly disabled 
+                          value={IsrealNetPrice == "" ? "0.00" : formatNumber(IsrealNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Not within range
+                            </Form.Control.Feedback>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("ILS")} {parseFloat(IsrealminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
+
+                          </td>
+                        
+                        </tr>
+
+                        {/* japan */}
                         <tr>
                           <td>Japan
                         <td className="col-12 font-italic mt-5">  
@@ -5565,134 +5444,9 @@ const handleDefaultPercentageDiscount = (e) => {
 
                         
                         </tr>
-
-                        <tr>
-                          <td>South Korea
-                          <td className="col-12 font-italic mt-5">
-                            <Form.Label className="mt-3 tit fst-italic">
-                              Tip: Pricing around {getSymbolFromCurrency("KRW")}{parseFloat(SKTip).toFixed(2)} may optimize sales.
-                            </Form.Label>
-                          </td>
-
-                        </td>
-
-                          <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].maxPrice}`}</td>
-                          <td>
-                            <Form.Control 
-                             isInvalid={SKListPrice != 0 && (SKListPrice < countriesData.priceRange[13].minPrice || SKListPrice > countriesData.priceRange[13].maxPrice) ?  true : false}
-                            value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
-                             <Form.Control.Feedback type="invalid">
-                                Not within range
-                              </Form.Control.Feedback>
-                          </td>
-                          <td>
-                            <Select
-                              value={SKDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeSK}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                              {/* {showInputPercentSK && ( */}
-
-                          <Form.Control disabled={SKDisType == 3 || SKDisType == 1} value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
-                              {/* )} */}
-                          </td>
-                          <td>
-                            {/* {showInputDisAmtSK && ( */}
-                              <Form.Control disabled={SKDisType == 2 || SKDisType == 1} value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
-
-                            {/* )} */}
-                          </td>
-                          <td style={{whiteSpace: 'nowrap'}}>
-                                    <Form.Control 
-                                        isInvalid={formatNumber(SKNetPrice) != "0.00" && parseFloat(SKNetPrice) < parseFloat(SKminValue)} 
-                                        readOnly 
-                                        disabled 
-                                        value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Not within range
-                                    </Form.Control.Feedback>
-                                    <tr>
-                                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
-                                        </Form.Label>
-                                    </tr>
-                                </td>
-
-                        </tr>
-
-                        <tr>
-                          <td>Mexico
-                          <td className="col-12 font-italic mt-5">
-                          <Form.Label className="mt-3 tit fst-italic">
-                            Tip: Pricing around {getSymbolFromCurrency("MXN")}{parseFloat(MexicoTip).toFixed(2)} may optimize sales.
-                          </Form.Label>
-                        </td>
-
-                        </td>
-
-                          <td>MXN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].maxPrice}`}</td>
-                          <td>
-                            <Form.Control 
-                             isInvalid={MexicoListPrice != 0 && (MexicoListPrice < countriesData.priceRange[14].minPrice || MexicoListPrice > countriesData.priceRange[14].maxPrice) ?  true : false}
-                            value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
-                             <Form.Control.Feedback type="invalid">
-                                Not within range
-                              </Form.Control.Feedback>
-                          </td>
-                          <td>
-                            <Select
-                              value={MexicoDisType}
-                              style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeMexico}
-                            >
-                              {dis_types.map((type)=>(
-                              <Select.Option key={type.id} value={type.id}>
-                                {type.name}
-                              </Select.Option>
-                              ))}
-                            </Select>
-                          </td>
-                          <td>
-                            {/* {showInputPercentMexico && ( */}
-                          <Form.Control disabled={MexicoDisType == 3 || MexicoDisType == 1} value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td>
-                            {/* {showInputDisAmtMexico && ( */}
-
-                            <Form.Control  disabled={MexicoDisType == 2 || MexicoDisType == 1} value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
-                            {/* )} */}
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
-
-                          <Form.Control 
-                          isInvalid={formatNumber(MexicoNetPrice) != "0.00" && (formatNumber(MexicoNetPrice) < MexicominValue)? true : false} 
-                          readOnly disabled 
-                          value={MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-                            <tr>
-                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
-                          </Form.Label>
-                        </tr>
-
-                          </td>
                         
-                        </tr>
 
+                        {/* malaysia */}
                         <tr>
                           <td>Malaysia
                           <td className="col-12 font-italic mt-5">
@@ -5760,7 +5514,72 @@ const handleDefaultPercentageDiscount = (e) => {
                           </td>
                         
                         </tr> 
+
+                        {/* mexico */}
+                        <tr>
+                          <td>Mexico
+                          <td className="col-12 font-italic mt-5">
+                          <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("MXN")}{parseFloat(MexicoTip).toFixed(2)} may optimize sales.
+                          </Form.Label>
+                        </td>
+
+                        </td>
+
+                          <td>MXN</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].maxPrice}`}</td>
+                          <td>
+                            <Form.Control 
+                             isInvalid={MexicoListPrice != 0 && (MexicoListPrice < countriesData.priceRange[14].minPrice || MexicoListPrice > countriesData.priceRange[14].maxPrice) ?  true : false}
+                            value={MexicoListPrice} onChange={handleChangeGlobalPriceMexico} type="text" />
+                             <Form.Control.Feedback type="invalid">
+                                Not within range
+                              </Form.Control.Feedback>
+                          </td>
+                          <td>
+                            <Select
+                              value={MexicoDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeMexico}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {/* {showInputPercentMexico && ( */}
+                          <Form.Control disabled={MexicoDisType == 3 || MexicoDisType == 1} value={MexicoDisPercent} onChange={handleDefaultPercentageDiscountMexico} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td>
+                            {/* {showInputDisAmtMexico && ( */}
+
+                            <Form.Control  disabled={MexicoDisType == 2 || MexicoDisType == 1} value={MexicoDisAmt} onChange={handleDefaultDiscountAmtMexico} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(MexicoNetPrice) != "0.00" && (formatNumber(MexicoNetPrice) < MexicominValue)? true : false} 
+                          readOnly disabled 
+                          value={MexicoNetPrice == "" ? "0.00" : formatNumber(MexicoNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Not within range
+                            </Form.Control.Feedback>
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
+                          </Form.Label>
+                        </tr>
+
+                          </td>
                         
+                        </tr>
+
+                        {/* nigeria */}
                         <tr>
                           <td>Nigeria
                           <td className="col-12 font-italic mt-5">
@@ -5825,6 +5644,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr> 
 
+                        {/* norway */}
                         <tr>
                           <td>Norway
                           <td className="col-12 font-italic mt-5">
@@ -5887,6 +5707,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
+                        {/* peru */}
                         <tr>
                           <td>Peru
                           <td className="col-12 font-italic mt-5">
@@ -5950,9 +5771,9 @@ const handleDefaultPercentageDiscount = (e) => {
                           </td>
                         
                         </tr> 
-                          
 
-                          <tr>
+                        {/* philinies */}
+                        <tr>
                           <td>Philippines
                           <td className="col-12 font-italic mt-5">
                             <Form.Label className="mt-3 tit fst-italic">
@@ -6015,6 +5836,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr> 
 
+                        {/* poland */}
                         <tr>
                           <td>Poland
                           <td className="col-12 font-italic mt-5">
@@ -6081,6 +5903,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr> 
 
+                        {/* romania */}
                         <tr>
                           <td>Romania
                           <td className="col-12 font-italic mt-5">
@@ -6144,6 +5967,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr> 
 
+                        {/* russian */}
                         <tr>
                           <td>Russia
                           <td className="col-12 font-italic mt-5">
@@ -6207,6 +6031,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
+                        {/* singapore */}
                         <tr>
                           <td>Singapore
                           <td className="col-12 font-italic mt-5">
@@ -6271,31 +6096,32 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr> 
 
+                        {/* south africa */}
                         <tr>
-                          <td>Thailand
+                          <td>South Africa
                           <td className="col-12 font-italic mt-5">
-                          <Form.Label className="mt-3 tit fst-italic">
-                            Tip: Pricing around {getSymbolFromCurrency("THB")}{parseFloat(ThailandTip).toFixed(2)} may optimize sales.
-                          </Form.Label>
-                        </td>
+                            <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("KRW")}{parseFloat(SATip).toFixed(2)} may optimize sales.
+                            </Form.Label>
+                          </td>
 
                         </td>
 
-                          <td>THB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].maxPrice}`}</td>
+                          <td>KRW</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].maxPrice}`}</td>
                           <td>
-                            <Form.Control
-                            isInvalid={ThailandListPrice != 0 && (ThailandListPrice < countriesData.priceRange[24].minPrice || ThailandListPrice > countriesData.priceRange[24].maxPrice) ?  true : false}
-                             value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
+                            <Form.Control 
+                              isInvalid={SAListPrice != 0 &&  (SAListPrice < countriesData.priceRange[28].minPrice || SAListPrice > countriesData.priceRange[28].maxPrice )?  true : false}
+                            value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
                               <Form.Control.Feedback type="invalid">
                                 Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
-                              value={ThailandDisType}
+                              value={SADisType}
                               style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeThailand}
+                              onChange={handleDefaultDiscountTypeSA}
                             >
                               {dis_types.map((type)=>(
                               <Select.Option key={type.id} value={type.id}>
@@ -6305,54 +6131,60 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Select>
                           </td>
                           <td>
-                            {/* {showInputPercentThailand && ( */}
-                          <Form.Control disabled={ThailandDisType == 3 || ThailandDisType == 1} value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                            {/* {showInputPercentSA && ( */}
+                          <Form.Control disabled={SADisType == 3 || SADisType == 1} value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
                             {/* )} */}
                           </td>
                           <td>
-                            {/* {showInputDisAmtThailand && ( */}
-                          <Form.Control disabled={ThailandDisType == 2 || ThailandDisType == 1} value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
+                            {/* {showInputDisAmtSA && ( */}
+                          <Form.Control disabled={SADisType == 2 || SADisType == 1} value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
                             {/* )} */}
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
+
                           <Form.Control 
-                          isInvalid={formatNumber(ThailandNetPrice) != "0.00" && (formatNumber(ThailandNetPrice) < ThailandminValue)? true : false} 
+                          isInvalid={formatNumber(SANetPrice) != "0.00" && (formatNumber(SANetPrice) < SAminValue) ? true : false} 
                           readOnly disabled 
-                          value={ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}  />
+                          value={SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}  />
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
                             <tr>
-                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("THB")} {parseFloat(ThailandminValue).toFixed(2)}
-                            </Form.Label>
-                          </tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SAminValue).toFixed(2)}
+                          </Form.Label>
+                        </tr>
 
                           </td>
                         
                         </tr> 
-{/* 
+
+                      {/* south korea */}
                         <tr>
-                          <td>Turkey
-                        <td className="col-12 font-italic mt-5">  
-                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("TRY"))}{TurkeyTip} may optimize sales.</Form.Label></td>
+                          <td>South Korea
+                          <td className="col-12 font-italic mt-5">
+                            <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("KRW")}{parseFloat(SKTip).toFixed(2)} may optimize sales.
+                            </Form.Label>
+                          </td>
+
                         </td>
 
-                          <td>TRY</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].maxPrice}`}</td>
+                          <td>KRW</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].maxPrice}`}</td>
                           <td>
-                            <Form.Control
-                            isInvalid={TurkeyListPrice != 0 && (TurkeyListPrice < countriesData.priceRange[25].minPrice || TurkeyListPrice > countriesData.priceRange[25].maxPrice )?  true : false}
-                            value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
-                            <Form.Control.Feedback type="invalid">
+                            <Form.Control 
+                             isInvalid={SKListPrice != 0 && (SKListPrice < countriesData.priceRange[13].minPrice || SKListPrice > countriesData.priceRange[13].maxPrice) ?  true : false}
+                            value={SKListPrice} onChange={handleChangeGlobalPriceSK} type="text" />
+                             <Form.Control.Feedback type="invalid">
                                 Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
-                              value={TurkeyDisType}
+                              value={SKDisType}
                               style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeTurkey}
+                              onChange={handleDefaultDiscountTypeSK}
                             >
                               {dis_types.map((type)=>(
                               <Select.Option key={type.id} value={type.id}>
@@ -6362,32 +6194,37 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Select>
                           </td>
                           <td>
-                          
-                          <Form.Control disabled={TurkeyDisType == 3 || TurkeyDisType == 1} value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
-                          
+                              {/* {showInputPercentSK && ( */}
+
+                          <Form.Control disabled={SKDisType == 3 || SKDisType == 1} value={SKDisPercent} onChange={handleDefaultPercentageDiscountSK} type="text" />
+                              {/* )} */}
                           </td>
                           <td>
-                            
-                          <Form.Control disabled={TurkeyDisType == 2 || TurkeyDisType == 1} value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
-                            
-                          </td>
-                          <td style={{whiteSpace:'nowrap'}}>
+                            {/* {showInputDisAmtSK && ( */}
+                              <Form.Control disabled={SKDisType == 2 || SKDisType == 1} value={SKDisAmt} onChange={handleDefaultDiscountAmtSK} type="text" />
 
-                          <Form.Control 
-                          isInvalid={formatNumber(TurkeyNetPrice) != "0.00" && (formatNumber(TurkeyNetPrice) < TurkeyminValue) ? true : false} 
-                          readOnly disabled 
-                          value={TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}  />
-                          <Form.Control.Feedback type="invalid">
-                                Not within range
-                            </Form.Control.Feedback>
-                        <tr>
-                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
+                            {/* )} */}
+                          </td>
+                          <td style={{whiteSpace: 'nowrap'}}>
+                                    <Form.Control 
+                                        isInvalid={formatNumber(SKNetPrice) != "0.00" && parseFloat(SKNetPrice) < parseFloat(SKminValue)} 
+                                        readOnly 
+                                        disabled 
+                                        value={SKNetPrice == "" ? "0.00" : formatNumber(SKNetPrice)}  
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        Not within range
+                                    </Form.Control.Feedback>
+                                    <tr>
+                                        <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
+                                        </Form.Label>
+                                    </tr>
+                                </td>
 
                         </tr>
-                          </td>
-                        
-                        </tr> */}
 
+                          {/* taiwan */}
                           <tr>
                           <td>Taiwan
                           <td className="col-12 font-italic mt-5">
@@ -6452,7 +6289,203 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr>
 
-                          <tr>
+                        {/* thailand */}
+                        <tr>
+                          <td>Thailand
+                          <td className="col-12 font-italic mt-5">
+                          <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("THB")}{parseFloat(ThailandTip).toFixed(2)} may optimize sales.
+                          </Form.Label>
+                        </td>
+
+                        </td>
+
+                          <td>THB</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].maxPrice}`}</td>
+                          <td>
+                            <Form.Control
+                            isInvalid={ThailandListPrice != 0 && (ThailandListPrice < countriesData.priceRange[24].minPrice || ThailandListPrice > countriesData.priceRange[24].maxPrice) ?  true : false}
+                             value={ThailandListPrice} onChange={handleChangeGlobalPriceThailand} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Not within range
+                              </Form.Control.Feedback>
+                          </td>
+                          <td>
+                            <Select
+                              value={ThailandDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeThailand}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {/* {showInputPercentThailand && ( */}
+                          <Form.Control disabled={ThailandDisType == 3 || ThailandDisType == 1} value={ThailandDisPercent} onChange={handleDefaultPercentageDiscountThailand} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td>
+                            {/* {showInputDisAmtThailand && ( */}
+                          <Form.Control disabled={ThailandDisType == 2 || ThailandDisType == 1} value={ThailandDisAmt} onChange={handleDefaultDiscountAmtThailand} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+                          <Form.Control 
+                          isInvalid={formatNumber(ThailandNetPrice) != "0.00" && (formatNumber(ThailandNetPrice) < ThailandminValue)? true : false} 
+                          readOnly disabled 
+                          value={ThailandNetPrice == "" ? "0.00" : formatNumber(ThailandNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Not within range
+                            </Form.Control.Feedback>
+                            <tr>
+                            <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                              Minimum: {getSymbolFromCurrency("THB")} {parseFloat(ThailandminValue).toFixed(2)}
+                            </Form.Label>
+                          </tr>
+
+                          </td>
+                        
+                        </tr> 
+
+                        {/* uk */}
+                        <tr>
+                          <td>United Kingdom
+                          <td className="col-12 font-italic mt-5">
+                          <Form.Label className="mt-3 tit fst-italic">
+                            Tip: Pricing around {getSymbolFromCurrency("GBP")}{parseFloat(GBPTip).toFixed(2)} may optimize sales.
+                          </Form.Label>
+                        </td>
+
+                        </td>
+
+                          <td>GBP</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].maxPrice}`}</td>
+                          <td>
+                            <Form.Control
+                            isInvalid={GBPListPrice != 0 &&  (GBPListPrice < countriesData.priceRange[8].minPrice || GBPListPrice > countriesData.priceRange[8].maxPrice) ?  true : false}
+                            value={GBPListPrice} onChange={handleChangeGlobalPriceGBP} type="text" />
+                            <Form.Control.Feedback type="invalid">
+                                Not within range
+                              </Form.Control.Feedback>
+
+                          </td>
+                          <td>
+                            <Select
+                              value={GBPDisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeGBP}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {/* {showInputPercentGBP && ( */}
+                          <Form.Control disabled={GBPDisType == 3 || GBPDisType == 1} value={GBPDisPercent} onChange={handleDefaultPercentageDiscountGBP} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td>
+                            {/* {showInputDisAmtGBP && ( */}
+                              <Form.Control disabled={GBPDisType == 2 || GBPDisType == 1}  value={GBPDisAmt} onChange={handleDefaultDiscountAmtGBP} type="text" />
+                            {/* )} */}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+
+                          <Form.Control 
+                          isInvalid={formatNumber(GBPNetPrice) != "0.00" && (formatNumber(GBPNetPrice) < GBPminValue) ? true : false} 
+                          readOnly disabled 
+                          value={GBPNetPrice == "" ? "0.00" : formatNumber(GBPNetPrice)}  />
+                          <Form.Control.Feedback type="invalid">
+                                Not within range
+                            </Form.Control.Feedback>
+
+
+                            <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
+                          </Form.Label>
+                        </tr>
+
+                          </td>
+                        
+                        </tr>
+
+                        {/* usa */}
+
+                        <tr>
+                          <td >United States + other USD countries**
+                          <td className="col-12 font-italic mt-5">
+                            <Form.Label className="mt-3 tit fst-italic">
+                              Tip: Pricing around {getSymbolFromCurrency("USD")}{parseFloat(USATip).toFixed(2)} may optimize sales.
+                            </Form.Label>
+                          </td>
+
+                        </td>
+
+                          <td>USD</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].maxPrice}`}</td>
+                          <td>
+                            <Form.Control  
+                   
+                           isInvalid={USAListPrice != 0 && (USAListPrice < countriesData.priceRange[0].minPrice || USAListPrice > countriesData.priceRange[0].maxPrice)}
+                            value={USAListPrice}  onChange={handleChangeGlobalPriceUSA} type="text" />
+                              <Form.Control.Feedback type="invalid">
+                                Not within range
+                              </Form.Control.Feedback>
+                          </td>
+                          <td>
+                            <Select
+                            // 
+                              value={USADisType}
+                              style={{ width: "100%" }}
+                              onChange={handleDefaultDiscountTypeUSA}
+                            >
+                              {dis_types.map((type)=>(
+                              <Select.Option key={type.id} value={type.id}>
+                                {type.name}
+                              </Select.Option>
+                              ))}
+                            </Select>
+                          </td>
+                          <td>
+                            {/* {showInputPercentUSA && ( */}
+                          <Form.Control disabled={USADisType == 3 || USADisType == 1}  value={USADisPercent} onChange={handleDefaultPercentageDiscountUSA}  type="text" />
+                            {/* )} */}
+                          </td>
+                          <td>
+                          {/* {showInputDisAmtUSA && ( */}
+                          <Form.Control disabled={USADisType == 2 || USADisType == 1} value={USADisAmt}  onChange={handleDefaultDiscountAmtUSA} type="text" />
+                          {/* )} */}
+                          </td>
+                          <td style={{whiteSpace:'nowrap'}}>
+
+                          <Form.Control 
+                            isInvalid={formatNumber(USANetPrice) != "0.00" && (formatNumber(USANetPrice) < USAMinValue) ? true : false} 
+                            readOnly disabled 
+                            value={USANetPrice == "" ? "0.00" : formatNumber(USANetPrice)}  />
+                                <Form.Control.Feedback type="invalid">
+                                Not within range
+                                </Form.Control.Feedback>
+
+                                <tr>
+                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
+                            Minimum: {getSymbolFromCurrency("USD")}{parseFloat(USAMinValue).toFixed(2)}
+                          </Form.Label>
+                        </tr>
+
+                          </td>
+                        
+                        </tr>
+
+                        {/* vietnam  */}
+                        <tr>
                           <td>Vietnam
                           <td className="col-12 font-italic mt-5">
                           <Form.Label className="mt-3 tit fst-italic">
@@ -6517,32 +6550,29 @@ const handleDefaultPercentageDiscount = (e) => {
                         
                         </tr> 
 
-
+                        
+{/* 
                         <tr>
-                          <td>South Africa
-                          <td className="col-12 font-italic mt-5">
-                            <Form.Label className="mt-3 tit fst-italic">
-                              Tip: Pricing around {getSymbolFromCurrency("KRW")}{parseFloat(SATip).toFixed(2)} may optimize sales.
-                            </Form.Label>
-                          </td>
-
+                          <td>Turkey
+                        <td className="col-12 font-italic mt-5">  
+                          <Form.Label  className="mt-3 tit fst-italic">Tip: Pricing around {getSymbolFromCurrency(("TRY"))}{TurkeyTip} may optimize sales.</Form.Label></td>
                         </td>
 
-                          <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].maxPrice}`}</td>
+                          <td>TRY</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].minPrice} - ${getSymbolFromCurrency(("TRY"))} ${countriesData.priceRange[25].maxPrice}`}</td>
                           <td>
-                            <Form.Control 
-                              isInvalid={SAListPrice != 0 &&  (SAListPrice < countriesData.priceRange[28].minPrice || SAListPrice > countriesData.priceRange[28].maxPrice )?  true : false}
-                            value={SAListPrice} onChange={handleChangeGlobalPriceSA} type="text" />
-                              <Form.Control.Feedback type="invalid">
+                            <Form.Control
+                            isInvalid={TurkeyListPrice != 0 && (TurkeyListPrice < countriesData.priceRange[25].minPrice || TurkeyListPrice > countriesData.priceRange[25].maxPrice )?  true : false}
+                            value={TurkeyListPrice} onChange={handleChangeGlobalPriceTurkey} type="text" />
+                            <Form.Control.Feedback type="invalid">
                                 Not within range
                               </Form.Control.Feedback>
                           </td>
                           <td>
                             <Select
-                              value={SADisType}
+                              value={TurkeyDisType}
                               style={{ width: "100%" }}
-                              onChange={handleDefaultDiscountTypeSA}
+                              onChange={handleDefaultDiscountTypeTurkey}
                             >
                               {dis_types.map((type)=>(
                               <Select.Option key={type.id} value={type.id}>
@@ -6552,33 +6582,37 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Select>
                           </td>
                           <td>
-                            {/* {showInputPercentSA && ( */}
-                          <Form.Control disabled={SADisType == 3 || SADisType == 1} value={SADisPercent} onChange={handleDefaultPercentageDiscountSA} type="text" />
-                            {/* )} */}
+                          
+                          <Form.Control disabled={TurkeyDisType == 3 || TurkeyDisType == 1} value={TurkeyDisPercent} onChange={handleDefaultPercentageDiscountTurkey} type="text" />
+                          
                           </td>
                           <td>
-                            {/* {showInputDisAmtSA && ( */}
-                          <Form.Control disabled={SADisType == 2 || SADisType == 1} value={SADisAmt} onChange={handleDefaultDiscountAmtSA} type="text" />
-                            {/* )} */}
+                            
+                          <Form.Control disabled={TurkeyDisType == 2 || TurkeyDisType == 1} value={TurkeyDisAmt} onChange={handleDefaultDiscountAmtTurkey} type="text" />
+                            
                           </td>
                           <td style={{whiteSpace:'nowrap'}}>
 
                           <Form.Control 
-                          isInvalid={formatNumber(SANetPrice) != "0.00" && (formatNumber(SANetPrice) < SAminValue) ? true : false} 
+                          isInvalid={formatNumber(TurkeyNetPrice) != "0.00" && (formatNumber(TurkeyNetPrice) < TurkeyminValue) ? true : false} 
                           readOnly disabled 
-                          value={SANetPrice == "" ? "0.00" : formatNumber(SANetPrice)}  />
+                          value={TurkeyNetPrice == "" ? "0.00" : formatNumber(TurkeyNetPrice)}  />
                           <Form.Control.Feedback type="invalid">
                                 Not within range
                             </Form.Control.Feedback>
-                            <tr>
-                          <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SAminValue).toFixed(2)}
-                          </Form.Label>
-                        </tr>
+                        <tr>
+                        <Form.Label style={{fontSize:'12px',whiteSpace:'nowrap'}}>Minimum:{getSymbolFromCurrency(("TRY"))} {TurkeyminValue}</Form.Label>
 
+                        </tr>
                           </td>
                         
-                        </tr> 
+                        </tr> */}
+
+                         
+
+                       
+
+                        
                           
                     </tbody>
                   </table>

@@ -2053,8 +2053,11 @@ export const OwnThisContent = async (
         if (checkInstructorVerification == 0) {
           // PERSONA
           const client = new Persona.Client({
-            ...options,
-            environment: "sandbox",
+            host: "production", // Host is set to production
+            templateId: "tmpl_X2tfFCvr9nxbgN7FijJ2xPeL", // Make sure this is the production templateId
+            // environmentId: "env_Rv1WdUFq23Lj2DFy9yKMt77L", // Make sure this is the production environmentId
+            environment: "production", // Ensure it's set to "production"
+            onReady: () => client.open(),
             onLoad: (error) => {
               if (error) {
                 setbtn_loading(false);
