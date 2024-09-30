@@ -35,6 +35,8 @@ const SingleRevenueReport = () => {
   //   RevenueChart()
   // })
 
+  console.log(purchasedData)
+
   const data = [
     { id: 0, value: 10, label: "series A" },
     { id: 1, value: 15, label: "series B" },
@@ -43,6 +45,7 @@ const SingleRevenueReport = () => {
   const headerCellStyle = {
     fontWeight: "bold",
   };
+  
   return (
     <div className="all-courses-container mb-4">
       <div className="row mx-2" style={{ justifyContent: "space-between" }}>
@@ -130,6 +133,19 @@ const SingleRevenueReport = () => {
               options={{
                 sorting: true,
                 exportButton: true,
+                rowStyle: {
+                  fontSize: 'calc(12px + 0.2vw)',        
+                  paddingLeft: "0px"                     
+                },
+                headerStyle: {
+                  fontSize: 'calc(14px + 0.2vw)',
+                  fontWeight: 'bold',
+                   
+                },
+                cellStyle: {
+                  paddingLeft: '0.6rem',  
+                  paddingRight : '0.4rem'
+                },
               }}
             />
           </Tab>
