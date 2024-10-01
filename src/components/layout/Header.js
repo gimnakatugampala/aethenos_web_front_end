@@ -165,7 +165,8 @@ function Header({
       window.location.reload();
     } else {
       Cookies.remove("aethenos", { domain: ".aethenos.com" });
-      window.location.href = "aethenos.com";
+      // window.location.href = "https://www.aethenos.com";
+      window.location.reload();
     }
   };
 
