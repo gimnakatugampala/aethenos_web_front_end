@@ -2883,7 +2883,7 @@ const Curriculum = ({ code }) => {
                                     fontSize: 11,
                                   }}
                                 >
-                                  <b>Note:</b> A
+                                  {/* <b>Note:</b> A
                                   resource is for
                                   any type of
                                   document that
@@ -2897,7 +2897,7 @@ const Curriculum = ({ code }) => {
                                   everything is
                                   legible and the
                                   file size is
-                                  less than 1 GiB.
+                                  less than 1 GiB. */}
                                 </Form.Label>
                               </Form.Group>
                             </Tab>
@@ -3197,7 +3197,7 @@ const Curriculum = ({ code }) => {
                                   fontSize: 11,
                                 }}
                               >
-                                <b>Note:</b> A
+                                {/* <b>Note:</b> A
                                 resource is for
                                 any type of
                                 document that
@@ -3211,7 +3211,7 @@ const Curriculum = ({ code }) => {
                                 everything is
                                 legible and the
                                 file size is
-                                less than 1 GiB.
+                                less than 1 GiB. */}
                               </Form.Label>
                             </Form.Group>
                           </Tab>
@@ -3728,7 +3728,7 @@ const Curriculum = ({ code }) => {
                                     fontSize: 11,
                                   }}
                                 >
-                                  <b>Note:</b> A
+                                  {/* <b>Note:</b> A
                                   resource is for
                                   any type of
                                   document that can
@@ -3741,7 +3741,7 @@ const Curriculum = ({ code }) => {
                                   everything is
                                   legible and the
                                   file size is less
-                                  than 1 GiB.
+                                  than 1 GiB. */}
                                 </Form.Label>
                               </Form.Group>
                             </Tab>
@@ -3825,12 +3825,12 @@ const Curriculum = ({ code }) => {
                                     fontSize: 11,
                                   }}
                                 >
-                                  <b>Note:</b> Only
+                                  {/* <b>Note:</b> Only
                                   available for
                                   Python and Ruby
                                   for now. You can
                                   upload .py and .rb
-                                  files.
+                                  files. */}
                                 </Form.Label>
                               </Form.Group>
                             </Tab>
