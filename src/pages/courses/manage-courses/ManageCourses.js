@@ -198,8 +198,9 @@ const ManageCourses = () => {
     if (checkInstructorVerification == 0) {
       // PERSONA
       const client = new Persona.Client({
-        ...options,
-        environment: "sandbox",
+        templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk", // Make sure this is the production templateId
+        environmentId: 'env_Rv1WdUFq23Lj2DFy9yKMt77L',
+        onReady: () => client.open(),
         onLoad: (error) => {
           if (error) {
             setbtn_loading(false);
