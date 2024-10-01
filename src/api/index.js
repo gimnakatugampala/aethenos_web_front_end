@@ -2054,10 +2054,8 @@ export const OwnThisContent = async (
         if (checkInstructorVerification == 0) {
           // PERSONA
           const client = new Persona.Client({
-            host: "production", // Host is set to production
             templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk", // Make sure this is the production templateId
             environmentId: 'env_Rv1WdUFq23Lj2DFy9yKMt77L',
-            environment: "production", // Ensure it's set to "production"
             onReady: () => client.open(),
             onLoad: (error) => {
               if (error) {
