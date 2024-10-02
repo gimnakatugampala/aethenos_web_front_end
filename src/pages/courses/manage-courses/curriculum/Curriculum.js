@@ -96,6 +96,7 @@ import { uploadSyllabusVideoChunks } from "../../../../commonFunctions/uploadSyl
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { v4 as uuidv4 } from 'uuid';
+import RemoveDisplayPath from "../../../../commonFunctions/RemoveDisplayPath";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -6209,11 +6210,7 @@ const Curriculum = ({ code }) => {
                                           <ListGroup className="my-2">
                                             <ListGroup.Item className="d-flex justify-content-between">
                                               <span>
-                                                {
-                                                  item
-                                                    .getPracticeTests[0]
-                                                    .practiceTestQuestionSheet
-                                                }
+                                                {RemoveDisplayPath(item.getPracticeTests[0].practiceTestQuestionSheet)}
                                               </span>
                                               <span>
                                                 <Button
@@ -6298,11 +6295,7 @@ const Curriculum = ({ code }) => {
                                           <ListGroup className="my-2">
                                             <ListGroup.Item className="d-flex justify-content-between">
                                               <span>
-                                                {
-                                                  item
-                                                    .getPracticeTests[0]
-                                                    .practiceTestSolutionSheet
-                                                }
+                                                {RemoveDisplayPath(item.getPracticeTests[0].practiceTestSolutionSheet)}
                                               </span>
                                               <span>
                                                 <Button
