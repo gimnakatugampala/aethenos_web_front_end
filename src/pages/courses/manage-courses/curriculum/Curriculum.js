@@ -5374,11 +5374,7 @@ const Curriculum = ({ code }) => {
                                           key={index}
                                         >
                                           <span>
-                                            {
-                                              item
-                                                .getAssignment[0]
-                                                .assignmentVideo
-                                            }
+                                            {RemoveDisplayPath(item.getAssignment[0].assignmentVideo)}
                                           </span>
                                           <span>
                                             <Button
@@ -5437,11 +5433,7 @@ const Curriculum = ({ code }) => {
                                           key={index}
                                         >
                                           <span>
-                                            {
-                                              item
-                                                .getAssignment[0]
-                                                .downloadableResource
-                                            }
+                                            {RemoveDisplayPath(item.getAssignment[0].downloadableResource)}
                                           </span>
                                           <span>
                                             <Button
@@ -5544,11 +5536,7 @@ const Curriculum = ({ code }) => {
                                           key={index}
                                         >
                                           <span>
-                                            {
-                                              item
-                                                .getAssignment[0]
-                                                .questionSheet
-                                            }
+                                            {RemoveDisplayPath(item.getAssignment[0].questionSheet)}
                                           </span>
                                           <span>
                                             <Button
@@ -5652,11 +5640,7 @@ const Curriculum = ({ code }) => {
                                           key={index}
                                         >
                                           <span>
-                                            {
-                                              item
-                                                .getAssignment[0]
-                                                .solutionVideo
-                                            }
+                                            {RemoveDisplayPath(item.getAssignment[0].solutionVideo)}
                                           </span>
                                           <span>
                                             <Button
@@ -5714,11 +5698,7 @@ const Curriculum = ({ code }) => {
                                           key={index}
                                         >
                                           <span>
-                                            {
-                                              item
-                                                .getAssignment[0]
-                                                .solutionsSheet
-                                            }
+                                            {RemoveDisplayPath(item.getAssignment[0].solutionsSheet)}
                                           </span>
                                           <span>
                                             <Button
