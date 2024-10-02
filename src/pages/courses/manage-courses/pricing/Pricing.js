@@ -4618,17 +4618,25 @@ const handleDefaultPercentageDiscount = (e) => {
               Paid_Type == 2 && (
                 <div className="pricing-container">
                   <div className="price-range-container p-3">
-                    <p>The Global List Price will be used for all countries unless individual country prices are specified below.</p>
+                    <p>We provide you with an excellent level of control over your course pricing (subject to our min/max values) with freedom to change prices at any time.</p>
+
+                    <p>The <b>Global List Price </b>will be used for all countries unless individual country prices are specified below.</p>
 
                     <p>You have 2 options for Pricing:</p>
-                    <ol>
-                      <li>Provide a <b>Global List Price</b> only.</li>
+                    <ul>
+                      <li>Provide a <b>Global List Price</b> only. (required)</li>
+                      <p className="mt-2">In this case we will convert the Global List Prices into the local currencies for the list of countries at prevailing exchange rates at the time of transaction as we provide local currency payment options for their students. </p>
+
+                      <p><i>In view of the above we strongly recommend providing your own preferred prices for all the countries in the list in their local currency to retain full control over the pricing.</i></p>
+
+
                       <p className="my-2">OR</p>
-                      <li>Provide a <b>Global List Price </b>and individual country prices for select countries below.</li>
-                    </ol>
-                    <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List 
-              Prices include VAT. 
-              For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
+                      <li>Provide a <b>Global List Price</b> and individual country prices for all or select countries below.</li>
+
+                      <p className="mt-2"><i>As noted in option 1 above, we strongly recommend providing your own preferred prices for all the countries in the list in their local currency to retain full control over the pricing.</i></p>
+
+                    </ul>
+                    <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List Prices include VAT. For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
 
               <br />
               <br />
