@@ -4617,7 +4617,7 @@ const handleDefaultPercentageDiscount = (e) => {
         {countriesData != null && (
               Paid_Type == 2 && (
                 <div className="pricing-container">
-                  <div className="price-range-container p-3">
+                    <div className="price-range-container p-3">
                     <p>We provide you with an excellent level of control over your course pricing (subject to our min/max values) with freedom to change prices at any time.</p>
 
                     <p>The <b>Global List Price </b>will be used for all countries unless individual country prices are specified below.</p>
@@ -4637,6 +4637,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                     </ul>
                     <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List Prices include VAT. For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
+
 
               <br />
               <br />
@@ -6628,9 +6629,9 @@ const handleDefaultPercentageDiscount = (e) => {
           {/* pricing rules */}
           <div className="p-3">
 
-<p><b>* Other EUR countries: Bulgaria, Czech Republic, Hungary, Poland, Romania, Sweden, Andorra, Monaco, Montenegro, San Marino, Vatican City, Kosovo.</b></p>
+<p>* Other EUR countries: Bulgaria, Czech Republic, Hungary, Poland, Romania, Sweden, Andorra, Monaco, Montenegro, San Marino, Vatican City, Kosovo.</p>
 
-<p><b>** Other USD countries: Puerto Rico, Guam, America Samoa, U.S. Virgin Islands, Northern Marina Islands, Ecuador, El Salvador, Zimbabwe, The British Virgin Islands, The Turks and Caicos, Timor and Leste, Bonaire, Micronesia, Palau, Marshall Islands.</b></p>
+<p>** Other USD countries: Puerto Rico, Guam, America Samoa, U.S. Virgin Islands, Northern Marina Islands, Ecuador, El Salvador, Zimbabwe, The British Virgin Islands, The Turks and Caicos, Timor and Leste, Bonaire, Micronesia, Palau, Marshall Islands.</p>
 </div>
 
                 </div>
