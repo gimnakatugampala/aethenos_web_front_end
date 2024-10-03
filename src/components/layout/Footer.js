@@ -1,16 +1,16 @@
 import { Layout, Row, Col } from "antd";
-import logo from "../../assets/images/utils/aethenos_logo.jpg";
+import logo from "../../assets/images/utils/aethenos_logo.png";
 import exonlogo from "../../assets/images/utils/exon_icon1.jpg";
 
 function Footer() {
-  const { Footer: AntFooter } = Layout;
+  const { Footer: AntFooter } = Layout; 
 
   return (
     <AntFooter className="footer-ant mt-3" style={{ backgroundColor: "white" }}>
       <Row justify="space-between" align="middle">
         <Col xs={14} md={2} lg={12} className="footer-left-logo">
           <div  style={{zIndex: "999", position: "relative", marginLeft: "25px", float: "left" }}>
-            <img width="150" src={logo} alt="LOGO" />
+            <img style={{marginTop: "10px", marginBottom: "10px"}} width="150" src={logo} alt="LOGO" />
           </div>
         </Col>
         <Col xs={24} md={2} lg={7} className="footer-right-logo">

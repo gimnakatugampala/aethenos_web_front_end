@@ -9,7 +9,7 @@ import signinbg from "../assets/images/img-signin.jpg";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import MainLoader from "../commonFunctions/loaders/MainLoader/MainLoader";
-import logo from "../assets/images/utils/aethenos_logo.jpg";
+import logo from "../assets/images/utils/aethenos_logo.png";
 import { Card } from "react-bootstrap";
 
 const { Title } = Typography;
@@ -86,7 +86,7 @@ const SignIn = () => {
               // md={{ span: 12 }}
             >
               <div className="main-sign-in-logo">
-                <img width="150" height={"100%"} src={logo} alt="LOGO" />
+                <img width="150" height={"100%"} style={{marginBottom: "10px"}} src={logo} alt="LOGO" />
                 {/* <span>Aethenos</span> */}
               </div>
 

@@ -10,7 +10,7 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import logoFull from "../../assets/images/utils/aethenos_logo.jpg";
+import logoFull from "../../assets/images/utils/aethenos_logo.png";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -53,7 +53,7 @@ function Sidenav({ color }) {
               width="150"
               src={logoFull}
               alt="LOGO"
-              style={{ marginRight: "10px" }}
+              style={{ marginRight: "10px", marginTop: "10px", marginBottom: "10px" }}
             />
           </div>
 

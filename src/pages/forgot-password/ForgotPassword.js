@@ -19,7 +19,7 @@ import {
   InstagramOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
-import logo from "../../assets/images/utils/aethenos_logo.jpg";
+import logo from "../../assets/images/utils/aethenos_logo.png";
 import { useState } from "react";
 import ErrorAlert from "../../commonFunctions/Alerts/ErrorAlert";
 import {
@@ -130,9 +130,9 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <Card>
+      <div className="border-0">
         <Toaster />
-        <Layout className="">
+        <Layout className="border-0">
           <Content className="signin">
             <Row gutter={[24, 0]} justify="space-around">
               {/* <Header>
@@ -155,6 +155,7 @@ const ForgotPassword = () => {
                             width="150"
                             height={"100%"}
                             src={logo}
+                            style={{marginBottom: "10px"}}
                             alt="LOGO"
                           />
                           {/* <span>Aethenos</span> */}
@@ -372,7 +373,7 @@ const ForgotPassword = () => {
             </Row>
           </Content>
         </Layout>
-      </Card>
+      </div>
     </>
   );
 };

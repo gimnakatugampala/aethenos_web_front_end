@@ -87,7 +87,7 @@ const Students = () => {
         <MaterialTable
           className="border-rad-20 mx-5"
           title="Student List"
-          columns={[
+          columns={[ 
             {
               title: "Profile Image",
               field: "profileImgTag",

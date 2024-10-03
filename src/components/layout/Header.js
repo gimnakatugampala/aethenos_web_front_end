@@ -44,7 +44,7 @@ import {
 } from "../../api";
 import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
-import logoFull from "../../assets/images/utils/aethenos_logo.jpg";
+import logoFull from "../../assets/images/utils/aethenos_logo.png";
 import logoSmall from "../../assets/images/utils/aethenos_logo_small.png";
 import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -179,10 +179,10 @@ function Header({
               width="25"
               src={logoSmall}
               alt="LOGO"
-              style={{ marginRight: "10px", marginLeft: "20px" }}
+              style={{ marginRight: "10px", marginLeft: "20px"}}
             />
           </div>
-        </Col>
+        </Col> 
         <Col span={24} md={18} className="header-control">
           <React.Fragment>
             <Box
