@@ -2072,7 +2072,7 @@ const AddCoupon = ({code}) => {
                     <td>USD</td>
                     <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData[0] != null && countriesData[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData[0] != null && countriesData[0].maxPrice}`}</td>
                     <td>
-                      <Form.Control style={{width:'80px'}} disabled readOnly value={USAListPrice}   type="text" />
+                      <Form.Control  disabled readOnly value={USAListPrice}   type="text" />
                     </td>
                     <td>
 
