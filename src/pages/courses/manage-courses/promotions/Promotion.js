@@ -170,7 +170,7 @@ const closeModal = () => {
                 <tr>
                   <th>Code</th>
                   <th>Discount type</th>
-                  <th>Global Price (USD)</th>
+                  <th>Global Discounted Price (USD)</th>
                   <th>Created date</th>
                   <th>Start date</th>
                   <th>Expiry date</th>
@@ -193,9 +193,11 @@ const closeModal = () => {
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
                   <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td>
                   <td> 
+                    {coupon.couponType.id != 1 && (
                   <Button variant="contained" onClick={() => openModal(coupon)}>
                   <i className="fa-solid fa-eye"></i>
                   </Button>
+                    )}
                   </td>
                 </tr>
                 )).reverse() : "No Coupons Available"}
