@@ -9,7 +9,7 @@ function Footer() {
     <AntFooter className="footer-ant mt-3" style={{ backgroundColor: "white" }}>
       <Row justify="space-between" align="middle">
         <Col xs={14} md={2} lg={12} className="footer-left-logo">
-          <div  style={{zIndex: "999", position: "relative", marginLeft: "25px", float: "left" }}>
+          <div  style={{zIndex: "999", position: "fixed", marginLeft: "25px", float: "left" }}>
             <img style={{marginTop: "10px", marginBottom: "10px"}} width="150" src={logo} alt="LOGO" />
           </div>
         </Col>
