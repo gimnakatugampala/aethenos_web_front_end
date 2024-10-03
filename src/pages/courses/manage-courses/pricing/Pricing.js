@@ -6629,10 +6629,10 @@ const handleDefaultPercentageDiscount = (e) => {
           {/* pricing rules */}
           <div className="p-3">
 
-<p>* Other EUR countries: Bulgaria, Czech Republic, Hungary, Poland, Romania, Sweden, Andorra, Monaco, Montenegro, San Marino, Vatican City, Kosovo.</p>
+          <p>* Other EUR countries: Bulgaria, Czech Republic, Hungary, Poland, Romania, Sweden, Andorra, Monaco, Montenegro, San Marino, Vatican City, Kosovo.</p>
 
-<p>** Other USD countries: Puerto Rico, Guam, America Samoa, U.S. Virgin Islands, Northern Marina Islands, Ecuador, El Salvador, Zimbabwe, The British Virgin Islands, The Turks and Caicos, Timor and Leste, Bonaire, Micronesia, Palau, Marshall Islands.</p>
-</div>
+          <p>** Other USD countries: Puerto Rico, Guam, America Samoa, U.S. Virgin Islands, Northern Marina Islands, Ecuador, El Salvador, Zimbabwe, The British Virgin Islands, The Turks and Caicos, Timor and Leste, Bonaire, Micronesia, Palau, Marshall Islands.</p>
+          </div>
 
                 </div>
                 )
