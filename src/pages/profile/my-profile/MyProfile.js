@@ -698,7 +698,7 @@ const MyProfile = () => {
                 <p>
                   When you are signing up to become an instructor on the
                   Aethenos platform, you are required to agree to abide by the{" "}
-                  <a href="/instructor-terms">Instructor Terms.</a>
+                  <a target="_blank" href="https://terms.aethenos.com/instructor-terms/">Instructor Terms.</a>
                 </p>
                 <p>
                   It is important to read them as they cover details about the
