@@ -4623,7 +4623,7 @@ const handleDefaultPercentageDiscount = (e) => {
                     <p>The <b>Global List Price </b>will be used for all countries unless individual country prices are specified below.</p>
 
                     <p>You have 2 options for Pricing:</p>
-                    <ul>
+                    <ol>
                       <li>Provide a <b>Global List Price</b> only. (required)</li>
                       <p className="mt-2">In this case we will convert the Global List Prices into the local currencies for the list of countries at prevailing exchange rates at the time of transaction as we provide local currency payment options for their students. </p>
 
@@ -4635,7 +4635,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                       <p className="mt-2"><i>As noted in option 1 above, we strongly recommend providing your own preferred prices for all the countries in the list in their local currency to retain full control over the pricing.</i></p>
 
-                    </ul>
+                    </ol>
                     <p>Please note that UK and EU sales are liable for VAT and you should take that in to consideration when pricing. Our List Prices include VAT. For example if a UK List Price is £12 then Net amount is £10 and VAT is £2 (£10 x 20%)</p>
 
 
