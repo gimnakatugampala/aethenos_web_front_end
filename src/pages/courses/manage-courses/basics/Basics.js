@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./basics.css";
 import { Space } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import ButtonMaterial from '@mui/material/Button';
 import { TagsInput } from "react-tag-input-component";
-import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress, GetTopics } from "../../../../api";
+import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress, GetTopics, VideoStreaming } from "../../../../api";
 import ImageUploader from 'react-images-upload';
 import ReactPlayer from 'react-player'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -19,6 +19,9 @@ import { AddCourseLandingPage } from "../../../../api";
 import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
+import { v4 as uuidv4 } from 'uuid';
+import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChunks";
+
 
 
 
@@ -37,6 +40,10 @@ const headerStyle = {
 
 
 const Basics = ({code}) => {
+
+   // File Upload
+   let fieUploadUUID = uuidv4();
+   let uploadType = "promotional-videos"
 
   const [course_title, setcourse_title] = useState("")
   const [course_subtitle, setcourse_subtitle] = useState("")
@@ -63,6 +70,11 @@ const Basics = ({code}) => {
   const [topicsData, settopicsData] = useState([])
 
   const [loading_btn, setloading_btn] = useState(false)
+
+  const progressBarRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [videoFile, setVideoFile] = useState(null);
+
 
 
 
@@ -129,26 +141,60 @@ const Basics = ({code}) => {
 
     setloading_btn(true)
 
-    AddCourseLandingPage(
-      code,
-      course_title,
-      course_subtitle,
-      course_desc,
-      lang,
-      level,
-      course_cat,
-      course_sub_cat,
-      course_topic,
-      keywords,
-      promo_vid,
-      course_image,
-      videoSrc,
-      own_topic,
-      setloading_btn
-      )
+      // Run the upload
+      const maxSize = 3 * 1024 * 1024 * 1024;
+      if (promo_vid.size > maxSize) {
+        setVideoFile(null);
+        setloading_btn(true)
+        ErrorAlert('Error','File size exceeds 3.0GB.');
+        return;
+      } else {
+        setVideoFile(videoSrc);
+        uploadFileInChunks(
+          fieUploadUUID,
+          uploadType,
+          promo_vid,
+          updateProgressBar,
+          setUploading
+        );
+      }
 
+   
   
 
+  };
+
+  const updateProgressBar = (progress) => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = progress + '%';
+      progressBarRef.current.textContent = progress + '%';
+    }
+
+    if(progress == 100){
+
+      AddCourseLandingPage(
+        code,
+        course_title,
+        course_subtitle,
+        course_desc,
+        lang,
+        level,
+        course_cat,
+        course_sub_cat,
+        course_topic,
+        keywords,
+        promo_vid,
+        course_image,
+        videoSrc,
+        own_topic,
+        fieUploadUUID,
+        setloading_btn
+        )
+  
+    
+    }
+
+    console.log(progress)
   };
 
 
@@ -158,31 +204,22 @@ const Basics = ({code}) => {
     if (selectedFile) {
       // Check if the file is a video
       if (selectedFile.type.startsWith('video/')) {
-        // Check if the file size is less than 100MB (100 * 1024 * 1024 bytes)
-        const maxSizeInBytes = 100 * 1024 * 1024;
+        // File is valid, set the promo video state
+        setpromo_vid(selectedFile);
   
-        if (selectedFile.size <= maxSizeInBytes) {
-          // File is valid, set the promo video state
-          setpromo_vid(selectedFile);
-  
-          // Create a preview of the video file
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            seVideoSrc(reader.result);
-          };
-          reader.readAsDataURL(selectedFile);
-        } else {
-          // File size is too large
-          ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller video.");
-
-          return
-        }
+        // Create a preview of the video file
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          seVideoSrc(reader.result);
+        };
+        reader.readAsDataURL(selectedFile);
       } else {
         // File is not a video
         ErrorAlert("Error", "Please enter a valid video file.");
       }
     }
   };
+  
 
 const handleFileChange = (event) => {
   const selectedFile = event.target.files[0];
@@ -263,6 +300,26 @@ const handleFileChange = (event) => {
   const isDataURI = (url) => url.startsWith('data:video');
 
   const isDataImageURI = (url) => url.startsWith('data:image');
+
+  const [streamingSrc, setStreamingSrc] = useState(""); // To store the final video source
+
+
+  useEffect(() => {
+    const handleVideoSource = async () => {
+      if (videoSrc && !isDataURI(videoSrc)) {
+        try {
+          const streamedSrc = await VideoStreaming(videoSrc);
+          setStreamingSrc(streamedSrc);
+        } catch (error) {
+          console.error("Video streaming error: ", error);
+        }
+      } else {
+        setStreamingSrc(videoSrc);
+      }
+    };
+
+    handleVideoSource();
+  }, [videoSrc]);
 
   return (
     <div className="col-md-10 px-4 mb-4 course-landing-page-responsive ">
@@ -459,7 +516,7 @@ const handleFileChange = (event) => {
                   style={{width: "300px"}} 
                   height={200}
                   controls
-                  src={isDataURI(videoSrc) ? videoSrc : `${FILE_PATH}${videoSrc}`}
+                  src={isDataURI(videoSrc) ? videoSrc : streamingSrc}
                   onError={(e) => console.error("Video Playback Error: ", e)}
                 >
                   Your browser does not support the video tag.

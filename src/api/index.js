@@ -793,6 +793,7 @@ export const AddCourseLandingPage = async (
   course_image,
   videoSrc,
   own_topic,
+  fieUploadUUID,
   setloading_btn
 ) => {
   var myHeaders = new Headers();
@@ -816,9 +817,9 @@ export const AddCourseLandingPage = async (
 
   typeof course_image == "object" &&
     formdata.append("course_image", course_image);
-  typeof promo_vid == "object" &&
-    formdata.append("promotional_video", promo_vid);
-
+  typeof promo_vid == "object" && 
+    formdata.append("promotional_video", fieUploadUUID + "_" + promo_vid.name);
+    
   var requestOptions = {
     method: "POST",
     body: formdata,
