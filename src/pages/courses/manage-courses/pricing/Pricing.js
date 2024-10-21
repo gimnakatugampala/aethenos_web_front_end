@@ -416,7 +416,7 @@ const handleChangeGlobalPrice = (e) => {
     setDGlobalNetPrice((parseFloat(DGlobalPricing) - parseFloat(e.target.value == "" ? 0 : e.target.value)).toFixed(2))
 
     // Calculate Discount %
-    setDDisPercent(((parseFloat(DGlobalPricing) - parseFloat(e.target.value))/parseFloat(DGlobalPricing) * 100).toFixed(2))
+    setDDisPercent(((parseFloat(e.target.value))/parseFloat(DGlobalPricing) * 100).toFixed(2))
     
   }
   
@@ -548,7 +548,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
         // Calculate Discount %
-        setUSADisPercent(((parseFloat(USAListPrice) - parseFloat(e.target.value))/parseFloat(USAListPrice) * 100).toFixed(2))
+        setUSADisPercent(((parseFloat(e.target.value))/parseFloat(USAListPrice) * 100).toFixed(2))
 
     }
     
@@ -677,7 +677,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setAusDisPercent(((parseFloat(AusListPrice) - parseFloat(e.target.value))/parseFloat(AusListPrice) * 100).toFixed(2))
+      setAusDisPercent(((parseFloat(e.target.value))/parseFloat(AusListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount Aus
@@ -816,7 +816,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
 
       // Calculate Discount %
-      setBrazilDisPercent(((parseFloat(BrazilListPrice) - parseFloat(e.target.value))/parseFloat(BrazilListPrice) * 100).toFixed(2))
+      setBrazilDisPercent(((parseFloat(e.target.value))/parseFloat(BrazilListPrice) * 100).toFixed(2))
 
     }
     
@@ -954,7 +954,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
     // Calculate Discount %
-    setCanadaDisPercent(((parseFloat(CanadaListPrice) - parseFloat(e.target.value))/parseFloat(CanadaListPrice) * 100).toFixed(2))
+    setCanadaDisPercent(((parseFloat(e.target.value))/parseFloat(CanadaListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount Canada
@@ -1090,7 +1090,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setChileDisPercent(((parseFloat(ChileListPrice) - parseFloat(e.target.value))/parseFloat(ChileListPrice) * 100).toFixed(2))
+      setChileDisPercent(((parseFloat(e.target.value))/parseFloat(ChileListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount Chile
@@ -1213,7 +1213,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setColumbiaDisPercent(((parseFloat(ColumbiaListPrice) - parseFloat(e.target.value))/parseFloat(ColumbiaListPrice) * 100).toFixed(2))
+      setColumbiaDisPercent(((parseFloat(e.target.value))/parseFloat(ColumbiaListPrice) * 100).toFixed(2))
 
     }
     
@@ -1337,7 +1337,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setEgyptDisPercent(((parseFloat(EgyptListPrice) - parseFloat(e.target.value))/parseFloat(EgyptListPrice) * 100).toFixed(2))
+      setEgyptDisPercent(((parseFloat(e.target.value))/parseFloat(EgyptListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount Egypt
@@ -1463,7 +1463,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
        // Calculate Discount %
-       setEUDisPercent(((parseFloat(EUListPrice) - parseFloat(e.target.value))/parseFloat(EUListPrice) * 100).toFixed(2))
+       setEUDisPercent(((parseFloat(e.target.value))/parseFloat(EUListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount EU
@@ -1586,7 +1586,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
     // Calculate Discount %
-    setGBPDisPercent(((parseFloat(GBPListPrice) - parseFloat(e.target.value))/parseFloat(GBPListPrice) * 100).toFixed(2))
+    setGBPDisPercent(((parseFloat(e.target.value))/parseFloat(GBPListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount GBP
@@ -1709,7 +1709,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setIndonesiaDisPercent(((parseFloat(IndonesiaListPrice) - parseFloat(e.target.value))/parseFloat(IndonesiaListPrice) * 100).toFixed(2))
+      setIndonesiaDisPercent(((parseFloat(e.target.value))/parseFloat(IndonesiaListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount GBP
@@ -1834,7 +1834,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
        // Calculate Discount %
-       setIsrealDisPercent(((parseFloat(IsrealListPrice) - parseFloat(e.target.value))/parseFloat(IsrealListPrice) * 100).toFixed(2))
+       setIsrealDisPercent(((parseFloat(e.target.value))/parseFloat(IsrealListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount Isreal
@@ -1958,7 +1958,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setIndiaDisPercent(((parseFloat(IndiaListPrice) - parseFloat(e.target.value))/parseFloat(IndiaListPrice) * 100).toFixed(2))
+      setIndiaDisPercent(((parseFloat(e.target.value))/parseFloat(IndiaListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount India
@@ -2076,7 +2076,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
        // Calculate Discount %
-       setJapanDisPercent(((parseInt(JapanListPrice) - parseInt(e.target.value))/parseInt(JapanListPrice) * 100))
+       setJapanDisPercent(((parseInt(e.target.value))/parseInt(JapanListPrice) * 100))
     }
     
   // Percentage Discount Japan
@@ -2208,7 +2208,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setSKDisPercent(((parseFloat(SKListPrice) - parseFloat(e.target.value))/parseFloat(SKListPrice) * 100).toFixed(2))
+      setSKDisPercent(((parseFloat(e.target.value))/parseFloat(SKListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount SK
@@ -2337,7 +2337,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setMexicoDisPercent(((parseFloat(MexicoListPrice) - parseFloat(e.target.value))/parseFloat(MexicoListPrice) * 100).toFixed(2))
+      setMexicoDisPercent(((parseFloat(e.target.value))/parseFloat(MexicoListPrice) * 100).toFixed(2))
 
     }
     
@@ -2464,7 +2464,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
        // Calculate Discount %
-       setMalaysiaDisPercent(((parseFloat(MalaysiaListPrice) - parseFloat(e.target.value))/parseFloat(MalaysiaListPrice) * 100).toFixed(2))
+       setMalaysiaDisPercent(((parseFloat(e.target.value))/parseFloat(MalaysiaListPrice) * 100).toFixed(2))
 
     }
     
@@ -2583,7 +2583,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
       // Calculate Discount %
-      setNigeriaDisPercent(((parseFloat(NigeriaListPrice) - parseFloat(e.target.value))/parseFloat(NigeriaListPrice) * 100).toFixed(2))
+      setNigeriaDisPercent(((parseFloat(e.target.value))/parseFloat(NigeriaListPrice) * 100).toFixed(2))
 
     }
     
@@ -2704,7 +2704,7 @@ const handleDefaultPercentageDiscount = (e) => {
       console.log(e.target.value)
 
        // Calculate Discount %
-       setNorwayDisPercent(((parseFloat(NorwayListPrice) - parseFloat(e.target.value))/parseFloat(NorwayListPrice) * 100).toFixed(2))
+       setNorwayDisPercent(((parseFloat(e.target.value))/parseFloat(NorwayListPrice) * 100).toFixed(2))
     }
     
   // Percentage Discount Norway
@@ -2823,7 +2823,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
         // Calculate Discount %
-        setPeruDisPercent(((parseFloat(PeruListPrice) - parseFloat(e.target.value))/parseFloat(PeruListPrice) * 100).toFixed(2))
+        setPeruDisPercent(((parseFloat(e.target.value))/parseFloat(PeruListPrice) * 100).toFixed(2))
       }
       
     // Percentage Discount Peru
@@ -2942,7 +2942,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setPhilipinesDisPercent(((parseFloat(PhilipinesListPrice) - parseFloat(e.target.value))/parseFloat(PhilipinesListPrice) * 100).toFixed(2))
+         setPhilipinesDisPercent(((parseFloat(e.target.value))/parseFloat(PhilipinesListPrice) * 100).toFixed(2))
       }
       
     // Percentage Discount Philipines
@@ -3061,7 +3061,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
         // Calculate Discount %
-        setPolandDisPercent(((parseFloat(PolandListPrice) - parseFloat(e.target.value))/parseFloat(PolandListPrice) * 100).toFixed(2))
+        setPolandDisPercent(((parseFloat(e.target.value))/parseFloat(PolandListPrice) * 100).toFixed(2))
       }
       
     // Percentage Discount Poland
@@ -3179,7 +3179,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setRomaniaDisPercent(((parseFloat(RomaniaListPrice) - parseFloat(e.target.value))/parseFloat(RomaniaListPrice) * 100).toFixed(2))
+         setRomaniaDisPercent(((parseFloat(e.target.value))/parseFloat(RomaniaListPrice) * 100).toFixed(2))
 
       }
       
@@ -3297,7 +3297,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
 
          // Calculate Discount %
-         setRussiaDisDisPercent(((parseFloat(RussiaListPrice) - parseFloat(e.target.value))/parseFloat(RussiaListPrice) * 100).toFixed(2))
+         setRussiaDisDisPercent(((parseFloat(e.target.value))/parseFloat(RussiaListPrice) * 100).toFixed(2))
 
       }
       
@@ -3413,7 +3413,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
           // Calculate Discount %
-          setSingaporeDisPercent(((parseFloat(SingaporeListPrice) - parseFloat(e.target.value))/parseFloat(SingaporeListPrice) * 100).toFixed(2))
+          setSingaporeDisPercent(((parseFloat(e.target.value))/parseFloat(SingaporeListPrice) * 100).toFixed(2))
 
       }
       
@@ -3530,7 +3530,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setThailandDisPercent(((parseFloat(ThailandListPrice) - parseFloat(e.target.value))/parseFloat(ThailandListPrice) * 100).toFixed(2))
+         setThailandDisPercent(((parseFloat(e.target.value))/parseFloat(ThailandListPrice) * 100).toFixed(2))
 
       }
       
@@ -3649,7 +3649,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setTurkeyDisPercent(((parseFloat(TurkeyListPrice) - parseFloat(e.target.value))/parseFloat(TurkeyListPrice) * 100).toFixed(2))
+         setTurkeyDisPercent(((parseFloat(e.target.value))/parseFloat(TurkeyListPrice) * 100).toFixed(2))
       }
       
     // Percentage Discount Turkey
@@ -3758,7 +3758,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setTaiwanDisPercent(((parseFloat(TaiwanListPrice) - parseFloat(e.target.value))/parseFloat(TaiwanListPrice) * 100).toFixed(2))
+         setTaiwanDisPercent(((parseFloat(e.target.value))/parseFloat(TaiwanListPrice) * 100).toFixed(2))
 
       }
       
@@ -3875,7 +3875,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setVietnamDisPercent(((parseFloat(VietnamListPrice) - parseFloat(e.target.value))/parseFloat(VietnamListPrice) * 100).toFixed(2))
+         setVietnamDisPercent(((parseFloat(e.target.value))/parseFloat(VietnamListPrice) * 100).toFixed(2))
       }
       
     // Percentage Discount Vietnam
@@ -3989,7 +3989,7 @@ const handleDefaultPercentageDiscount = (e) => {
         console.log(e.target.value)
 
          // Calculate Discount %
-         setSADisPercent(((parseFloat(SAListPrice) - parseFloat(e.target.value))/parseFloat(SAListPrice) * 100).toFixed(2))
+         setSADisPercent(((parseFloat(e.target.value))/parseFloat(SAListPrice) * 100).toFixed(2))
 
       }
       

@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import ButtonMaterial from '@mui/material/Button';
 import { TagsInput } from "react-tag-input-component";
-import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress, GetTopics } from "../../../../api";
+import { GetCourseLandingPage , GetLanguages , GetLevel , GetCategories , GetSubCategories, UpdateCourseCompleteProgress, GetTopics, VideoStreaming } from "../../../../api";
 import ImageUploader from 'react-images-upload';
 import ReactPlayer from 'react-player'
 import ErrorAlert from "../../../../commonFunctions/Alerts/ErrorAlert";
@@ -301,6 +301,26 @@ const handleFileChange = (event) => {
 
   const isDataImageURI = (url) => url.startsWith('data:image');
 
+  const [streamingSrc, setStreamingSrc] = useState(""); // To store the final video source
+
+
+  useEffect(() => {
+    const handleVideoSource = async () => {
+      if (videoSrc && !isDataURI(videoSrc)) {
+        try {
+          const streamedSrc = await VideoStreaming(videoSrc);
+          setStreamingSrc(streamedSrc);
+        } catch (error) {
+          console.error("Video streaming error: ", error);
+        }
+      } else {
+        setStreamingSrc(videoSrc);
+      }
+    };
+
+    handleVideoSource();
+  }, [videoSrc]);
+
   return (
     <div className="col-md-10 px-4 mb-4 course-landing-page-responsive ">
       <Card className="py-2 my-2 p-4">
@@ -496,7 +516,7 @@ const handleFileChange = (event) => {
                   style={{width: "300px"}} 
                   height={200}
                   controls
-                  src={isDataURI(videoSrc) ? videoSrc : `${FILE_PATH}${videoSrc}`}
+                  src={isDataURI(videoSrc) ? videoSrc : streamingSrc}
                   onError={(e) => console.error("Video Playback Error: ", e)}
                 >
                   Your browser does not support the video tag.
