@@ -21,6 +21,7 @@ import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingS
 import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
 import { v4 as uuidv4 } from 'uuid';
 import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChunks";
+import JoditEditor from "jodit-react";
 
 
 
