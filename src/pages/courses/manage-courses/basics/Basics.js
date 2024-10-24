@@ -91,7 +91,7 @@ const Basics = ({code}) => {
     
     // console.log(course_title)
     // console.log(course_subtitle)
-    // console.log(course_desc)
+    console.log(course_desc)
     // console.log(lang)
     // console.log(level)
     // console.log(course_cat)
@@ -380,7 +380,8 @@ const handleFileChange = (event) => {
 
           <div className="my-3">
             <h6>Course description <span className="text-danger">*</span></h6>
-            <textarea value={course_desc} onChange={(e) => setcourse_desc(e.target.value)} class="form-control" rows="3"></textarea>
+            <JoditEditor value={course_desc} onChange={(content) => setcourse_desc(content)} />
+            {/* <textarea  class="form-control" rows="3"></textarea> */}
           </div>
 
           <div className="row my-3">
