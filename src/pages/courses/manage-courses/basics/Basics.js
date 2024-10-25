@@ -98,8 +98,8 @@ const Basics = ({code}) => {
     // console.log(course_sub_cat)
     // console.log(keywords)
     // console.log(course_image)
-    // console.log(promo_vid) 
-    // console.log(videoSrc)
+    console.log(promo_vid) 
+    console.log(videoSrc)
     // console.log(course_topic)
 
     if(course_title == ""){
@@ -151,13 +151,59 @@ const Basics = ({code}) => {
         return;
       } else {
         setVideoFile(videoSrc);
-        uploadFileInChunks(
-          fieUploadUUID,
-          uploadType,
-          promo_vid,
-          updateProgressBar,
-          setUploading
-        );
+
+        // if video no added
+        if(promo_vid == "" && videoSrc == ""){
+
+        
+          uploadFileInChunks(
+            fieUploadUUID,
+            uploadType,
+            promo_vid,
+            updateProgressBar,
+            setUploading
+          );
+
+          return
+
+        }else if(promo_vid != "" && videoSrc != ""){
+
+          uploadFileInChunks(
+            fieUploadUUID,
+            uploadType,
+            promo_vid,
+            updateProgressBar,
+            setUploading
+          );
+
+          return
+
+        }else{
+
+
+          AddCourseLandingPage(
+            code,
+            course_title,
+            course_subtitle,
+            course_desc,
+            lang,
+            level,
+            course_cat,
+            course_sub_cat,
+            course_topic,
+            keywords,
+            promo_vid,
+            course_image,
+            videoSrc,
+            own_topic,
+            fieUploadUUID,
+            setloading_btn
+            )
+
+            return
+
+        }
+
       }
 
    
