@@ -122,7 +122,7 @@ const ManageCourses = () => {
 
     //  == Fill the Section ===
     if (IntendedLearnersCheck == false) {
-      ErrorAlert("Empty section", "Please Complete Intended Learners");
+      ErrorAlert("Empty section", "Please Complete Target Audience");
       setbtn_loading(false);
       return;
     }

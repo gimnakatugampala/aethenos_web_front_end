@@ -154,6 +154,7 @@ const Basics = ({code}) => {
 
         // if video no added
         if(promo_vid == "" && videoSrc == ""){
+          console.log("1")
 
         
           uploadFileInChunks(
@@ -167,6 +168,8 @@ const Basics = ({code}) => {
           return
 
         }else if(promo_vid != "" && videoSrc != ""){
+          console.log("2")
+
 
           uploadFileInChunks(
             fieUploadUUID,
