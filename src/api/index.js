@@ -161,7 +161,7 @@ export const addCourse = async (
       if (result.variable == "200") {
         setloading(false);
         SuccessAlert(
-          "Test video sent For approval!",
+          "Test video sent for approval!",
           "Please await our feedback to proceed"
         );
 
