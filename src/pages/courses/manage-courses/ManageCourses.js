@@ -668,6 +668,7 @@ const ManageCourses = () => {
               <ListItemText primary="External Ratings (Optional)" />
             </ListItemButton>
 
+            {(status_type !== "Approved" && status_type !== "") && (
             <ListItemText
               className="submit-for-review-text"
               style={{ textAlign: "center" }}
@@ -686,6 +687,8 @@ const ManageCourses = () => {
                 </Button>
               )}
             </ListItemText>
+            )}
+
           </List>
         </div>
 
