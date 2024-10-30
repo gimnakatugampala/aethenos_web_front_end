@@ -396,6 +396,9 @@ function Header({
                 </MenuItem>
               </a>
 
+              <Divider />
+
+
             
 
               <a href="/account-settings">
@@ -407,6 +410,9 @@ function Header({
                 </MenuItem>
               </a>
 
+              <Divider />
+
+
               <a href="https://www.aethenos.com">
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
@@ -416,6 +422,9 @@ function Header({
                 </MenuItem>
               </a>
 
+              <Divider />
+
+
               <a href="/performance/overview">
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
@@ -424,6 +433,9 @@ function Header({
                   Revenue Report
                 </MenuItem>
               </a>
+
+              <Divider />
+
 
            
 
@@ -441,14 +453,14 @@ function Header({
               <Divider />
 
 
-              
+              <a href="#">
                 <MenuItem onClick={handlePayout}>
                   <ListItemIcon>
                     <PaymentIcon fontSize="medium" />
                   </ListItemIcon>
                   Payout settings
                 </MenuItem>
-             
+                </a>
          
 
               <Divider />
