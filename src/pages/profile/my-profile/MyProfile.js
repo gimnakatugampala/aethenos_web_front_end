@@ -736,9 +736,9 @@ const MyProfile = () => {
           )}
 
             {isPaid != "false" && (
-          <Tab eventKey="payout-tax-details" title="Payment Details">
+          <Tab eventKey="payout-tax-details" title="Payout">
             <div className="container">
-              <h3>Payment Method</h3>
+              <h3>Payout</h3>
 
               <Alert variant="secondary">
                 <div className="d-flex justify-content-start align-items-start">
