@@ -50,6 +50,10 @@ import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { ButtonBase } from "@mui/material";
 
+import PaymentIcon from '@mui/icons-material/Payment';
+import { useHistory } from 'react-router-dom';
+
+
 
 const calculateTimeAgo = (dateString) => {
   const now = new Date();
@@ -79,6 +83,7 @@ function Header({
   handleSidenavType,
   handleFixedNavbar,
 }) {
+  const history = useHistory();
   const [notifications, setNotifications] = useState([]);
 
   const [Primary_Email, setPrimary_Email] = useState("")
@@ -169,6 +174,12 @@ function Header({
       window.location.reload();
     }
   };
+
+  const handlePayout = () =>{
+    history.push('/profile?tab=payout-tax-details');
+
+
+  }
 
   return (
     <>
@@ -425,6 +436,19 @@ function Header({
                 </MenuItem>
               </a>
 
+         
+
+              <Divider />
+
+
+              
+                <MenuItem onClick={handlePayout}>
+                  <ListItemIcon>
+                    <PaymentIcon fontSize="medium" />
+                  </ListItemIcon>
+                  Payout settings
+                </MenuItem>
+             
          
 
               <Divider />

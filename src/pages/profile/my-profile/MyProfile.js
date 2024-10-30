@@ -34,6 +34,15 @@ function useQuery() {
 }
 
 const MyProfile = () => {
+
+  const location = useLocation();
+  
+  // Create URLSearchParams from the query string
+  const queryParams = new URLSearchParams(location.search);
+  
+  // Get the 'tab' parameter value
+  const activeTab = queryParams.get('tab') || 'up'; // Fallback to a default tab if not found
+
   const [Primary_Email, setPrimary_Email] = useState("")
   const [first_Name, setfirst_Name] = useState("");
   const [last_name, setlast_name] = useState("");
@@ -362,7 +371,7 @@ const MyProfile = () => {
 
       <Card className="p-3">
         <Tabs
-          defaultActiveKey="up"
+          defaultActiveKey={activeTab}
           id="uncontrolled-tab-example"
           className="my-3 mx-5"
         >
@@ -672,22 +681,7 @@ const MyProfile = () => {
               )}
             </div>
 
-            {/* {code != null && (
-                    <div className="mx-auto text-center">
-                      <br />
-                      <br />
-                      <br />
-                      <br />
-                      <Button className="mx-auto " variant="contained">
-                        <a
-                          className="text-white"
-                          href={`/courses/manage/${code}/`}
-                        >
-                          Go back to course
-                        </a>
-                      </Button>
-                    </div>
-                  )} */}
+        
 
           </Tab>
 
