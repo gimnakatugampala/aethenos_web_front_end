@@ -465,12 +465,14 @@ function Header({
 
               <Divider />
 
+              <a href="#">
               <MenuItem onClick={handleLogout}>
                 <ListItemIcon>
                   <Logout fontSize="medium" />
                 </ListItemIcon>
                 Logout
               </MenuItem>
+              </a>
             </Menu>
           </React.Fragment>
         </Col>
