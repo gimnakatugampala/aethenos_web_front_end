@@ -40,10 +40,12 @@ const Verification = () => {
     // PERSONA
     if (checkInstructorVerification == 0) {
       const client = new Persona.Client({
-        ...options,
-        environment: "sandbox",
+        templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk", // Make sure this is the production templateId
+        environmentId: 'env_Rv1WdUFq23Lj2DFy9yKMt77L',
+        onReady: () => client.open(),
         onLoad: (error) => {
           if (error) {
+            setloading(false);
             console.error(
               `Failed with code: ${error.code} and message ${error.message}`
             );
@@ -53,7 +55,6 @@ const Verification = () => {
         },
         onStart: (inquiryId) => {
           console.log(`Started inquiry ${inquiryId}`);
-          setloading(false);
         },
         onComplete: (inquiryId) => {
           console.log(`Sending finished inquiry ${inquiryId} to backend`);
