@@ -4717,7 +4717,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                                 <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("USD")} {parseFloat(MinDefaultValue).toFixed(2)}
+                                Minimum: {getSymbolFromCurrency("USD")} {FormatNumbers(parseFloat(MinDefaultValue).toFixed(2))}
                               </Form.Label>
                             </tr>
 
@@ -4807,7 +4807,7 @@ const handleDefaultPercentageDiscount = (e) => {
                               </Form.Control.Feedback>
                               <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("AUD")} {parseFloat(AusminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("AUD")} {FormatNumbers(parseFloat(AusminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -4871,7 +4871,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                               <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("BRL")} {parseFloat(BrazilminValue).toFixed(2)}
+                                Minimum: {getSymbolFromCurrency("BRL")} {FormatNumbers(parseFloat(BrazilminValue).toFixed(2))}
                               </Form.Label>
                             </tr>
 
@@ -4934,7 +4934,7 @@ const handleDefaultPercentageDiscount = (e) => {
                               </Form.Control.Feedback>
                               <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("CAD")} {parseFloat(CanadaminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("CAD")} {FormatNumbers(parseFloat(CanadaminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
                           </td>
@@ -4997,7 +4997,7 @@ const handleDefaultPercentageDiscount = (e) => {
                           </Form.Control.Feedback>
                           <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                  Minimum: {getSymbolFromCurrency("CLP")} {parseFloat(ChileminValue).toFixed(2)}
+                                  Minimum: {getSymbolFromCurrency("CLP")} {FormatNumbers(parseFloat(ChileminValue).toFixed(2))}
                               </Form.Label>
                           </tr>
                       </td>
@@ -5062,7 +5062,7 @@ const handleDefaultPercentageDiscount = (e) => {
                           </Form.Control.Feedback>
                           <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                  Minimum: {getSymbolFromCurrency("COP")} {parseFloat(ColumbiaminValue).toFixed(2)}
+                                  Minimum: {getSymbolFromCurrency("COP")} {FormatNumbers(parseFloat(ColumbiaminValue).toFixed(2))}
                               </Form.Label>
                           </tr>
                       </td>
@@ -5126,7 +5126,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("EGP")} {parseFloat(EgyptminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("EGP")} {FormatNumbers(parseFloat(EgyptminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -5191,7 +5191,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("EUR")} {parseFloat(EUminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("EUR")} {FormatNumbers(parseFloat(EUminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -5256,7 +5256,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("INR")} {parseFloat(IndiaminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("INR")} {FormatNumbers(parseFloat(IndiaminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -5320,7 +5320,7 @@ const handleDefaultPercentageDiscount = (e) => {
                                 </Form.Control.Feedback>
                                 <tr>
                                     <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                        Minimum: {getSymbolFromCurrency("IDR")} {parseFloat(IndonesiaminValue).toFixed(2)}
+                                        Minimum: {getSymbolFromCurrency("IDR")} {FormatNumbers(parseFloat(IndonesiaminValue).toFixed(2))}
                                     </Form.Label>
                                 </tr>
                             </td>
@@ -5385,7 +5385,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
                             <tr>
                             <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("ILS")} {parseFloat(IsrealminValue).toFixed(2)}
+                              Minimum: {getSymbolFromCurrency("ILS")} {FormatNumbers(parseFloat(IsrealminValue).toFixed(2))}
                             </Form.Label>
                           </tr>
 
@@ -5517,7 +5517,7 @@ const handleDefaultPercentageDiscount = (e) => {
   
                             <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("MYR")} {parseFloat(MalaysiaminValue).toFixed(2)}
+                                Minimum: {getSymbolFromCurrency("MYR")} {FormatNumbers(parseFloat(MalaysiaminValue).toFixed(2))}
                               </Form.Label>
                             </tr>
 
@@ -5581,7 +5581,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("MXN")} {parseFloat(MexicominValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("MXN")} {FormatNumbers(parseFloat(MexicominValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -5646,7 +5646,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </Form.Control.Feedback>
                         <tr>
                             <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("NGN")} {parseFloat(NigeriaminValue).toFixed(2)}
+                                Minimum: {getSymbolFromCurrency("NGN")} {FormatNumbers(parseFloat(NigeriaminValue).toFixed(2))}
                             </Form.Label>
                         </tr>
                     </td>
@@ -5709,7 +5709,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("NOK")} {parseFloat(NorwayminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("NOK")} {FormatNumbers(parseFloat(NorwayminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -5774,7 +5774,7 @@ const handleDefaultPercentageDiscount = (e) => {
      
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("PEN")} {parseFloat(Peruminvalue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("PEN")} {FormatNumbers(parseFloat(Peruminvalue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -5838,7 +5838,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
                             <tr>
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                          Minimum: {getSymbolFromCurrency("PHP")} {parseFloat(PhilipinesminValue).toFixed(2)}
+                          Minimum: {getSymbolFromCurrency("PHP")} {FormatNumbers(parseFloat(PhilipinesminValue).toFixed(2))}
                         </Form.Label>
                       </tr>
 
@@ -5905,7 +5905,7 @@ const handleDefaultPercentageDiscount = (e) => {
     
                             <tr>
                   <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                    Minimum: {getSymbolFromCurrency("PLN")} {parseFloat(PolandminValue).toFixed(2)}
+                    Minimum: {getSymbolFromCurrency("PLN")} {FormatNumbers(parseFloat(PolandminValue).toFixed(2))}
                   </Form.Label>
                 </tr>
 
@@ -5969,7 +5969,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             <tr>
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                          Minimum: {getSymbolFromCurrency("RON")} {parseFloat(Romaniaminvalue).toFixed(2)}
+                          Minimum: {getSymbolFromCurrency("RON")} {FormatNumbers(parseFloat(Romaniaminvalue).toFixed(2))}
                         </Form.Label>
                       </tr>
 
@@ -6033,7 +6033,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             
                             <tr>
                             <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("RUB")} {parseFloat(RussiaminValue).toFixed(2)}
+                              Minimum: {getSymbolFromCurrency("RUB")} {FormatNumbers(parseFloat(RussiaminValue).toFixed(2))}
                             </Form.Label>
                           </tr>
 
@@ -6098,7 +6098,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                Minimum: {getSymbolFromCurrency("SGD")} {parseFloat(SingaporeminValue).toFixed(2)}
+                                Minimum: {getSymbolFromCurrency("SGD")} {FormatNumbers(parseFloat(SingaporeminValue).toFixed(2))}
                               </Form.Label>
                             </tr>
 
@@ -6161,7 +6161,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SAminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("KRW")} {FormatNumbers(parseFloat(SAminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -6227,7 +6227,7 @@ const handleDefaultPercentageDiscount = (e) => {
                                     </Form.Control.Feedback>
                                     <tr>
                                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                            Minimum: {getSymbolFromCurrency("KRW")} {parseFloat(SKminValue).toFixed(2)}
+                                            Minimum: {getSymbolFromCurrency("KRW")} {FormatNumbers(parseFloat(SKminValue).toFixed(2))}
                                         </Form.Label>
                                     </tr>
                                 </td>
@@ -6291,7 +6291,7 @@ const handleDefaultPercentageDiscount = (e) => {
             
                             <tr>
                         <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                          Minimum: {getSymbolFromCurrency("TWD")} {parseFloat(TaiwanminValue).toFixed(2)}
+                          Minimum: {getSymbolFromCurrency("TWD")} {FormatNumbers(parseFloat(TaiwanminValue).toFixed(2))}
                         </Form.Label>
                       </tr>
 
@@ -6353,7 +6353,7 @@ const handleDefaultPercentageDiscount = (e) => {
                             </Form.Control.Feedback>
                             <tr>
                             <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                              Minimum: {getSymbolFromCurrency("THB")} {parseFloat(ThailandminValue).toFixed(2)}
+                              Minimum: {getSymbolFromCurrency("THB")} {FormatNumbers(parseFloat(ThailandminValue).toFixed(2))}
                             </Form.Label>
                           </tr>
 
@@ -6419,7 +6419,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                             <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("GBP")} {parseFloat(GBPminValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("GBP")} {FormatNumbers(parseFloat(GBPminValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -6486,7 +6486,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                                 <tr>
                           <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                            Minimum: {getSymbolFromCurrency("USD")}{parseFloat(USAMinValue).toFixed(2)}
+                            Minimum: {getSymbolFromCurrency("USD")}{FormatNumbers(parseFloat(USAMinValue).toFixed(2))}
                           </Form.Label>
                         </tr>
 
@@ -6552,7 +6552,7 @@ const handleDefaultPercentageDiscount = (e) => {
                           </Form.Control.Feedback>
                           <tr>
                               <Form.Label style={{fontSize: '12px', whiteSpace: 'nowrap'}}>
-                                  Minimum: {getSymbolFromCurrency("VND")} {parseFloat(VietnamminValue).toFixed(2)}
+                                  Minimum: {getSymbolFromCurrency("VND")} {FormatNumbers(parseFloat(VietnamminValue).toFixed(2))}
                               </Form.Label>
                           </tr>
                       </td>
