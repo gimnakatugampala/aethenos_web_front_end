@@ -17,6 +17,7 @@ import formatNumber from "../../../../commonFunctions/NumberFormat";
 import LoadingSpinner from "../../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 import ButtonSpinner from "../../../../commonFunctions/loaders/Spinner/ButtonSpinner";
 import formatNumInt from "../../../../commonFunctions/formatNumInt";
+import FormatNumbers from "../../../../commonFunctions/FormatNumbers";
 
 
  
@@ -4675,7 +4676,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>USD</td>
-                          <td style={{whiteSpace:'nowrap'}}>${PriceRangeMinDefault} – ${PriceRangeMaxDefault}</td>
+                          <td style={{whiteSpace:'nowrap'}}>${FormatNumbers(PriceRangeMinDefault)} – ${FormatNumbers(PriceRangeMaxDefault)}</td>
                           <td>
                           <Form.Control  
                             style={{width:100}}
@@ -4763,7 +4764,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>AUD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${countriesData.priceRange[1].minPrice} - ${getSymbolFromCurrency(("AUD"))} ${countriesData.priceRange[1].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("AUD"))} ${FormatNumbers(countriesData.priceRange[1].minPrice)} - ${getSymbolFromCurrency(("AUD"))} ${FormatNumbers(countriesData.priceRange[1].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={AusListPrice != 0 && (AusListPrice < countriesData.priceRange[1].minPrice || AusListPrice > countriesData.priceRange[1].maxPrice) ?  true : false} 
@@ -4826,7 +4827,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>BRL</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${countriesData.priceRange[2].minPrice} - ${getSymbolFromCurrency(("BRL"))} ${countriesData.priceRange[2].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("BRL"))} ${FormatNumbers(countriesData.priceRange[2].minPrice)} - ${getSymbolFromCurrency(("BRL"))} ${FormatNumbers(countriesData.priceRange[2].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                               isInvalid={BrazilListPrice != 0 && (BrazilListPrice < countriesData.priceRange[2].minPrice || BrazilListPrice > countriesData.priceRange[2].maxPrice) ?  true : false} 
@@ -4890,7 +4891,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>CAD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${countriesData.priceRange[3].minPrice} - ${getSymbolFromCurrency(("CAD"))} ${countriesData.priceRange[3].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CAD"))} ${FormatNumbers(countriesData.priceRange[3].minPrice)} - ${getSymbolFromCurrency(("CAD"))} ${FormatNumbers(countriesData.priceRange[3].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={CanadaListPrice != 0 &&  (CanadaListPrice < countriesData.priceRange[3].minPrice || CanadaListPrice > countriesData.priceRange[3].maxPrice) ?  true : false} 
@@ -4952,7 +4953,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>CLP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${countriesData.priceRange[4].minPrice} - ${getSymbolFromCurrency(("CLP"))} ${countriesData.priceRange[4].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("CLP"))} ${FormatNumbers(countriesData.priceRange[4].minPrice)} - ${getSymbolFromCurrency(("CLP"))} ${FormatNumbers(countriesData.priceRange[4].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                             isInvalid={ChileListPrice != 0 &&  (ChileListPrice < countriesData.priceRange[4].minPrice || ChileListPrice > countriesData.priceRange[4].maxPrice) ?  true : false} 
@@ -5016,7 +5017,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>COP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${countriesData.priceRange[5].minPrice} - ${getSymbolFromCurrency(("COP"))} ${countriesData.priceRange[5].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("COP"))} ${FormatNumbers(countriesData.priceRange[5].minPrice)} - ${getSymbolFromCurrency(("COP"))} ${FormatNumbers(countriesData.priceRange[5].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={ColumbiaListPrice != 0 && (ColumbiaListPrice < countriesData.priceRange[5].minPrice || ColumbiaListPrice > countriesData.priceRange[5].maxPrice )?  true : false}
@@ -5081,7 +5082,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>EGP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${countriesData.priceRange[6].minPrice} - ${getSymbolFromCurrency(("EGP"))} ${countriesData.priceRange[6].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EGP"))} ${FormatNumbers(countriesData.priceRange[6].minPrice)} - ${getSymbolFromCurrency(("EGP"))} ${FormatNumbers(countriesData.priceRange[6].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                             isInvalid={EgyptListPrice != 0 &&  (EgyptListPrice < countriesData.priceRange[6].minPrice || EgyptListPrice > countriesData.priceRange[6].maxPrice) ?  true : false}
@@ -5145,7 +5146,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>EUR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${countriesData.priceRange[7].minPrice}  - ${getSymbolFromCurrency(("EUR"))} ${countriesData.priceRange[7].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("EUR"))} ${FormatNumbers(countriesData.priceRange[7].minPrice)}  - ${getSymbolFromCurrency(("EUR"))} ${FormatNumbers(countriesData.priceRange[7].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                               isInvalid={EUListPrice != 0 && (EUListPrice < countriesData.priceRange[7].minPrice || EUListPrice > countriesData.priceRange[7].maxPrice) ?  true : false}
@@ -5210,7 +5211,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>INR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${countriesData.priceRange[11].minPrice} - ${getSymbolFromCurrency(("INR"))} ${countriesData.priceRange[11].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("INR"))} ${FormatNumbers(countriesData.priceRange[11].minPrice)} - ${getSymbolFromCurrency(("INR"))} ${FormatNumbers(countriesData.priceRange[11].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                              isInvalid={IndiaListPrice != 0 && (IndiaListPrice < countriesData.priceRange[11].minPrice || IndiaListPrice > countriesData.priceRange[11].maxPrice) ?  true : false}
@@ -5275,7 +5276,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>IDR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].minPrice} - ${getSymbolFromCurrency(("IDR"))} ${countriesData.priceRange[9].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("IDR"))} ${FormatNumbers(countriesData.priceRange[9].minPrice)} - ${getSymbolFromCurrency(("IDR"))} ${FormatNumbers(countriesData.priceRange[9].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                                isInvalid={IndonesiaListPrice != 0 && (IndonesiaListPrice < countriesData.priceRange[9].minPrice || IndonesiaListPrice > countriesData.priceRange[9].maxPrice) ?  true : false}
@@ -5339,7 +5340,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>ILS</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].minPrice} - ${getSymbolFromCurrency(("ILS"))} ${countriesData.priceRange[10].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("ILS"))} ${FormatNumbers(countriesData.priceRange[10].minPrice)} - ${getSymbolFromCurrency(("ILS"))} ${FormatNumbers(countriesData.priceRange[10].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                                isInvalid={IsrealListPrice != 0 && (IsrealListPrice < countriesData.priceRange[10].minPrice || IsrealListPrice > countriesData.priceRange[10].maxPrice) ?  true : false}
@@ -5467,7 +5468,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>MYR</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${countriesData.priceRange[15].minPrice} - ${getSymbolFromCurrency(("MYR"))} ${countriesData.priceRange[15].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MYR"))} ${FormatNumbers(countriesData.priceRange[15].minPrice)} - ${getSymbolFromCurrency(("MYR"))} ${FormatNumbers(countriesData.priceRange[15].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                             isInvalid={MalaysiaListPrice != 0 && (MalaysiaListPrice < countriesData.priceRange[15].minPrice || MalaysiaListPrice > countriesData.priceRange[15].maxPrice) ?  true : false}
@@ -5536,7 +5537,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>MXN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].minPrice} - ${getSymbolFromCurrency(("MXN"))} ${countriesData.priceRange[14].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("MXN"))} ${FormatNumbers(countriesData.priceRange[14].minPrice)} - ${getSymbolFromCurrency(("MXN"))} ${FormatNumbers(countriesData.priceRange[14].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={MexicoListPrice != 0 && (MexicoListPrice < countriesData.priceRange[14].minPrice || MexicoListPrice > countriesData.priceRange[14].maxPrice) ?  true : false}
@@ -5600,7 +5601,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>NGN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${countriesData.priceRange[16].minPrice} - ${getSymbolFromCurrency(("NGN"))} ${countriesData.priceRange[16].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NGN"))} ${FormatNumbers(countriesData.priceRange[16].minPrice)} - ${getSymbolFromCurrency(("NGN"))} ${FormatNumbers(countriesData.priceRange[16].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={NigeriaListPrice != 0 && (NigeriaListPrice < countriesData.priceRange[16].minPrice || NigeriaListPrice > countriesData.priceRange[16].maxPrice) ?  true : false}
@@ -5665,7 +5666,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>NOK</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${countriesData.priceRange[17].minPrice} - ${getSymbolFromCurrency(("NOK"))} ${countriesData.priceRange[17].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("NOK"))} ${FormatNumbers(countriesData.priceRange[17].minPrice)} - ${getSymbolFromCurrency(("NOK"))} ${FormatNumbers(countriesData.priceRange[17].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                             isInvalid={NorwayListPrice != 0 &&  (NorwayListPrice < countriesData.priceRange[17].minPrice || NorwayListPrice > countriesData.priceRange[17].maxPrice) ?  true : false}
@@ -5728,7 +5729,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>PEN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${countriesData.priceRange[18].minPrice} - ${getSymbolFromCurrency(("PEN"))} ${countriesData.priceRange[18].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PEN"))} ${FormatNumbers(countriesData.priceRange[18].minPrice)} - ${getSymbolFromCurrency(("PEN"))} ${FormatNumbers(countriesData.priceRange[18].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={PeruListPrice != 0 &&  (PeruListPrice < countriesData.priceRange[18].minPrice || PeruListPrice > countriesData.priceRange[18].maxPrice) ?  true : false}
@@ -5793,7 +5794,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>PHP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${countriesData.priceRange[19].minPrice} - ${getSymbolFromCurrency(("PHP"))} ${countriesData.priceRange[19].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PHP"))} ${FormatNumbers(countriesData.priceRange[19].minPrice)} - ${getSymbolFromCurrency(("PHP"))} ${FormatNumbers(countriesData.priceRange[19].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                               isInvalid={PhilipinesListPrice != 0 && (PhilipinesListPrice < countriesData.priceRange[19].minPrice || PhilipinesListPrice > countriesData.priceRange[19].maxPrice) ?  true : false}
@@ -5857,7 +5858,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>PLN</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${countriesData.priceRange[20].minPrice} - ${getSymbolFromCurrency(("PLN"))} ${countriesData.priceRange[20].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("PLN"))} ${FormatNumbers(countriesData.priceRange[20].minPrice)} - ${getSymbolFromCurrency(("PLN"))} ${FormatNumbers(countriesData.priceRange[20].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                              isInvalid={PolandListPrice != 0 && (PolandListPrice < countriesData.priceRange[20].minPrice || PolandListPrice > countriesData.priceRange[20].maxPrice) ?  true : false}
@@ -5924,7 +5925,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>RON</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${countriesData.priceRange[21].minPrice} - ${getSymbolFromCurrency(("RON"))} ${countriesData.priceRange[21].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RON"))} ${FormatNumbers(countriesData.priceRange[21].minPrice)} - ${getSymbolFromCurrency(("RON"))} ${FormatNumbers(countriesData.priceRange[21].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                             isInvalid={RomaniaListPrice != 0 && (RomaniaListPrice < countriesData.priceRange[21].minPrice || RomaniaListPrice > countriesData.priceRange[21].maxPrice) ?  true : false}
@@ -5988,7 +5989,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>RUB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${countriesData.priceRange[22].minPrice} - ${getSymbolFromCurrency(("RUB"))} ${countriesData.priceRange[22].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("RUB"))} ${FormatNumbers(countriesData.priceRange[22].minPrice)} - ${getSymbolFromCurrency(("RUB"))} ${FormatNumbers(countriesData.priceRange[22].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={RussiaListPrice != 0 &&  (RussiaListPrice < countriesData.priceRange[22].minPrice || RussiaListPrice > countriesData.priceRange[22].maxPrice) ?  true : false}
@@ -6052,7 +6053,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>SGD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${countriesData.priceRange[23].minPrice} - ${getSymbolFromCurrency(("SGD"))} ${countriesData.priceRange[23].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("SGD"))} ${FormatNumbers(countriesData.priceRange[23].minPrice)} - ${getSymbolFromCurrency(("SGD"))} ${FormatNumbers(countriesData.priceRange[23].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={SingaporeListPrice != 0 &&  (SingaporeListPrice < countriesData.priceRange[23].minPrice || SingaporeListPrice > countriesData.priceRange[23].maxPrice) ?  true : false}
@@ -6117,7 +6118,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].minPrice}  - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[28].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${FormatNumbers(countriesData.priceRange[28].minPrice)}  - ${getSymbolFromCurrency(("KRW"))} ${FormatNumbers(countriesData.priceRange[28].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                               isInvalid={SAListPrice != 0 &&  (SAListPrice < countriesData.priceRange[28].minPrice || SAListPrice > countriesData.priceRange[28].maxPrice )?  true : false}
@@ -6180,7 +6181,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>KRW</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].minPrice} - ${getSymbolFromCurrency(("KRW"))} ${countriesData.priceRange[13].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("KRW"))} ${FormatNumbers(countriesData.priceRange[13].minPrice)} - ${getSymbolFromCurrency(("KRW"))} ${FormatNumbers(countriesData.priceRange[13].maxPrice)}`}</td>
                           <td>
                             <Form.Control 
                              isInvalid={SKListPrice != 0 && (SKListPrice < countriesData.priceRange[13].minPrice || SKListPrice > countriesData.priceRange[13].maxPrice) ?  true : false}
@@ -6245,7 +6246,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>TWD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${countriesData.priceRange[26].minPrice} - ${getSymbolFromCurrency(("TWD"))} ${countriesData.priceRange[26].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("TWD"))} ${FormatNumbers(countriesData.priceRange[26].minPrice)} - ${getSymbolFromCurrency(("TWD"))} ${FormatNumbers(countriesData.priceRange[26].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                             isInvalid={TaiwanListPrice != 0 && (TaiwanListPrice < countriesData.priceRange[26].minPrice || TaiwanListPrice > countriesData.priceRange[26].maxPrice )?  true : false}
@@ -6310,7 +6311,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>THB</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].minPrice} - ${getSymbolFromCurrency(("THB"))} ${countriesData.priceRange[24].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("THB"))} ${FormatNumbers(countriesData.priceRange[24].minPrice)} - ${getSymbolFromCurrency(("THB"))} ${FormatNumbers(countriesData.priceRange[24].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                             isInvalid={ThailandListPrice != 0 && (ThailandListPrice < countriesData.priceRange[24].minPrice || ThailandListPrice > countriesData.priceRange[24].maxPrice) ?  true : false}
@@ -6372,7 +6373,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>GBP</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].minPrice} - ${getSymbolFromCurrency(("GBP"))} ${countriesData.priceRange[8].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("GBP"))} ${FormatNumbers(countriesData.priceRange[8].minPrice)} - ${getSymbolFromCurrency(("GBP"))} ${FormatNumbers(countriesData.priceRange[8].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                             isInvalid={GBPListPrice != 0 &&  (GBPListPrice < countriesData.priceRange[8].minPrice || GBPListPrice > countriesData.priceRange[8].maxPrice) ?  true : false}
@@ -6439,7 +6440,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>USD</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].minPrice} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && countriesData.priceRange[0].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("USD"))} ${countriesData != null && FormatNumbers(countriesData.priceRange[0].minPrice)} - ${getSymbolFromCurrency(("USD"))} ${countriesData != null && FormatNumbers(countriesData.priceRange[0].maxPrice)}`}</td>
                           <td>
                             <Form.Control  
                    
@@ -6505,7 +6506,7 @@ const handleDefaultPercentageDiscount = (e) => {
                         </td>
 
                           <td>VND</td>
-                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${countriesData.priceRange[27].minPrice} - ${getSymbolFromCurrency(("VND"))} ${countriesData.priceRange[27].maxPrice}`}</td>
+                          <td style={{whiteSpace:'nowrap'}}>{`${getSymbolFromCurrency(("VND"))} ${FormatNumbers(countriesData.priceRange[27].minPrice)} - ${getSymbolFromCurrency(("VND"))} ${FormatNumbers(countriesData.priceRange[27].maxPrice)}`}</td>
                           <td>
                             <Form.Control
                              isInvalid={VietnamListPrice != 0 && (VietnamListPrice < countriesData.priceRange[27].minPrice || VietnamListPrice > countriesData.priceRange[27].maxPrice) ?  true : false}
