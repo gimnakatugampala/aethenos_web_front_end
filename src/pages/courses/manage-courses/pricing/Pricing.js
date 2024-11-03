@@ -4323,7 +4323,7 @@ const handleDefaultPercentageDiscount = (e) => {
             "netPrice":`${Number.parseFloat(ColumbiaNetPrice).toFixed(2)}`,
             "listPrice": `${Number.parseFloat(ColumbiaListPrice).toFixed(2)}`,
             "discountType": `${ColumbiaDisType}`,
-            "country": "Columbia",
+            "country": "Colombia",
             "discount": `${Number.parseFloat(ColumbiaDisPercent).toFixed(2)}`,
             "discountAmount": `${Number.parseFloat(ColumbiaDisAmt).toFixed(2)}`,
         },
@@ -5007,7 +5007,7 @@ const handleDefaultPercentageDiscount = (e) => {
 
                         {/* columbia */}
                         <tr>
-                          <td>Columbia
+                          <td>Colombia
                           <td className="col-12 font-italic mt-5">
                             <Form.Label className="mt-3 tit fst-italic">
                               Tip: Pricing around {getSymbolFromCurrency("COP")}{parseFloat(ColumbiaTip).toFixed(2)} may optimize sales.

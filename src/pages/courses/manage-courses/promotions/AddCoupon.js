@@ -191,7 +191,7 @@ const AddCoupon = ({code}) => {
              "discount_amount":`${ColumbiaDiscountAmount == "" ? 0 : ColumbiaDiscountAmount}`,
              "discount_price":`${ColumbiaDiscountValue == "" ? 0 : ColumbiaDiscountValue}`,
              "list_price":`${ColumbiaListPrice == "" ? 0 : ColumbiaListPrice}`,
-             "country_name":"Columbia"
+             "country_name":"Colombia"
             },
             {
              "discount":`${EgyptDiscountPercent == "" ? 0 : EgyptDiscountPercent}`,
@@ -2282,7 +2282,7 @@ const AddCoupon = ({code}) => {
 
             {/* columbia */}
             <tr>
-                          <td>Columbia
+                          <td>Colombia
                           <td className="col-12 font-italic mt-5">  
                           <Form.Label className="mt-3 tit fst-italic">
                               Tip: Pricing around {getSymbolFromCurrency("COP")}{parseFloat(ColumbiaTip).toFixed(2)} may maximise sales.
