@@ -51,6 +51,7 @@ import {
   DeleteResourcesFile,
   ExternalResoucesDelete,
   GetCurriculum,
+  HandleSectionMove,
   LectureDelete,
   PracticeTestDelete,
   PracticeTestSave,
@@ -86,16 +87,16 @@ import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { Switch } from "antd";
 import Badge from "react-bootstrap/Badge";
-import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/flatpickr.min.css';
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 import SyllabusFormatTime from "../../../../commonFunctions/SyllabusFormatTime";
 import "sweetalert2/src/sweetalert2.scss";
 import { FILE_PATH } from "../../../../commonFunctions/FilePaths";
 import { uploadFileInChunks } from "../../../../commonFunctions/uploadFileInChunks";
 import { uploadSyllabusVideoChunks } from "../../../../commonFunctions/uploadSyllabusVideoChunks";
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import { v4 as uuidv4 } from 'uuid';
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import { v4 as uuidv4 } from "uuid";
 import RemoveDisplayPath from "../../../../commonFunctions/RemoveDisplayPath";
 
 const syllabusIcon = {
@@ -106,9 +107,10 @@ const Curriculum = ({ code }) => {
   let counter = 1;
 
   let fieUploadUUID = uuidv4();
-  let uploadType = "lesson-video"
+  let uploadType = "lesson-video";
 
   const [loading, setLoading] = useState(false);
+  const [sectionLoading, setSectionLoading] = useState(false);
 
   const [showContentAdd, setshowContentAdd] = useState(null);
   const [showMain, setshowMain] = useState(null);
@@ -124,10 +126,10 @@ const Curriculum = ({ code }) => {
   const [uploading, setUploading] = useState(false);
   const [videoFile, setVideoFile] = useState(null);
   const progressBarRef = useRef(null);
-  const [uploadingVideoProgress, setuploadingVideoProgress] = useState(0)
-  const [videoUploadingDuration, setvideoUploadingDuration] = useState(0)
-  const [videoUploadingID, setvideoUploadingID] = useState("")
-// ============= VIDEO =================
+  const [uploadingVideoProgress, setuploadingVideoProgress] = useState(0);
+  const [videoUploadingDuration, setvideoUploadingDuration] = useState(0);
+  const [videoUploadingID, setvideoUploadingID] = useState("");
+  // ============= VIDEO =================
 
   const [showSectionInput, setshowSectionInput] = useState(false);
 
@@ -166,6 +168,10 @@ const Curriculum = ({ code }) => {
 
   // Get Section data
   const [sectionData, setsectionData] = useState([]);
+
+  useEffect(() => {
+    console.log(sectionData);
+  }, [sectionData]);
 
   // Curriculum Item Data
   const [article, setarticle] = useState("");
@@ -843,12 +849,6 @@ const Curriculum = ({ code }) => {
     GetCurriculum(code, setsectionData);
   }, []);
 
-  useEffect(() => {
-    sectionData.forEach((f) => {
-      console.log(f);
-    });
-  }, []);
-
   // Save Description in Lecture
   const handleSaveDescription = (ID) => {
     console.log(ID);
@@ -938,7 +938,7 @@ const Curriculum = ({ code }) => {
   const abortControllerRef = useRef(null); // Define abortControllerRef
 
   useEffect(() => {
-    console.log('Updated videoUploadingDuration:', videoUploadingDuration);
+    console.log("Updated videoUploadingDuration:", videoUploadingDuration);
   }, [videoUploadingDuration]);
 
   const handleSaveVideo = async (video, ID) => {
@@ -946,33 +946,33 @@ const Curriculum = ({ code }) => {
     setuploadingVideoName(video.name);
     console.log(ID);
     setvideoUploadingID(ID);
-  
+
     if (!video) {
-      ErrorAlert('Error', 'No file selected.');
+      ErrorAlert("Error", "No file selected.");
       return;
     }
-  
+
     setuploadingVideoProgress(0);
-  
+
     // Get duration
-    const videoElement = document.createElement('video');
-    videoElement.preload = 'metadata';
+    const videoElement = document.createElement("video");
+    videoElement.preload = "metadata";
     videoElement.onloadedmetadata = async function () {
       const duration = Math.round(videoElement.duration);
-      console.log('Video duration:', duration, 'seconds');
+      console.log("Video duration:", duration, "seconds");
       setvideoUploadingDuration(duration);
-  
+
       const maxSize = 3 * 1024 * 1024 * 1024; // 3GB limit
       if (video.size > maxSize) {
         setVideoFile(null);
-        ErrorAlert('Error', 'File size exceeds 3.0GB.');
+        ErrorAlert("Error", "File size exceeds 3.0GB.");
         return;
       }
-  
+
       setVideoFile(video);
-  
+
       abortControllerRef.current = new AbortController(); // Initialize AbortController
-  
+
       try {
         await uploadSyllabusVideoChunks(
           fieUploadUUID,
@@ -1002,29 +1002,26 @@ const Curriculum = ({ code }) => {
           abortControllerRef.current // Pass the controller to the upload function
         );
       } catch (error) {
-        if (error.name === 'AbortError') {
-          console.log('Upload canceled');
+        if (error.name === "AbortError") {
+          console.log("Upload canceled");
         } else {
-          console.error('Error during file upload:', error);
-          ErrorAlert('Error', 'Error uploading file.');
+          console.error("Error during file upload:", error);
+          ErrorAlert("Error", "Error uploading file.");
         }
       }
     };
     videoElement.src = URL.createObjectURL(video);
   };
 
-
   // ===============================
-
 
   const updateProgressBar = (progress, video, ID) => {
     if (progressBarRef.current) {
       progressBarRef.current.style.width = `${progress}%`;
       progressBarRef.current.textContent = `${progress}%`;
     }
-  
-    setuploadingVideoProgress(progress);
 
+    setuploadingVideoProgress(progress);
   };
 
   const handleCancelUpload = () => {
@@ -1032,8 +1029,6 @@ const Curriculum = ({ code }) => {
       abortControllerRef.current.abort(); // Cancel the upload
     }
   };
-  
-  
 
   // const handleVideoSubmit = (e) => {
   //   const selectedFile = e.target.files[0];
@@ -1422,9 +1417,13 @@ const Curriculum = ({ code }) => {
     PracticeTest: 0,
   };
 
+  const [setUpCounters, setSetUpCounters] = useState(true);
+  const [hideSectionData, sethideSectionData] = useState(true);
+
   const [curriculumSections, setCurriculumSections] = useState(sectionData);
   const [draggingIndex, setDraggingIndex] = useState(null);
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [canDrag, setCanDrag] = useState(false);
 
   const dragItem = useRef();
   const dragOverItem = useRef();
@@ -1467,9 +1466,8 @@ const Curriculum = ({ code }) => {
   };
 
   async function showVideoModal(videoUrl, title) {
-
-      // Fetch the URL using VideoStreaming function
-  const videoSourceUrl = await VideoStreaming(videoUrl);
+    // Fetch the URL using VideoStreaming function
+    const videoSourceUrl = await VideoStreaming(videoUrl);
 
     Swal.fire({
       title: title,
@@ -1548,11 +1546,10 @@ const Curriculum = ({ code }) => {
     setanswerExplainFive(reorderedItems[4].explanation);
   };
 
-
   // ============================ VIDEO UPLAODING ========================
 
   // const [videoFile, setVideoFile] = useState(null);
- 
+
   // const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunk size
   // const progressBarRef = useRef(null);
 
@@ -1598,7 +1595,6 @@ const Curriculum = ({ code }) => {
   //       formData.append("totalChunks", totalChunks);
   //       formData.append("fileName", file.name);
   //       formData.append("fileSize", file.size);
-    
 
   //       await UpdateLessonVideo(formData);
 
@@ -1629,14 +1625,12 @@ const Curriculum = ({ code }) => {
   // };
 
   // =================================================================
-  
-
 
   const onDragEndOfQuizTable = (result, quizzes, id) => {
     if (!result.destination) return;
 
     setLoading(true);
-    
+
     const reorderedQuizzes = Array.from(quizzes);
     const [moved] = reorderedQuizzes.splice(result.source.index, 1);
     reorderedQuizzes.splice(result.destination.index, 0, moved);
@@ -1646,13 +1640,38 @@ const Curriculum = ({ code }) => {
     updateQuizOrder(id, reorderedQuizIds, code, setsectionData, setLoading);
 
     handleQuestionsAnswerUpdateCancel();
- 
   };
 
+  const startDrag = (result) => {
+    setSetUpCounters(false);
 
+    sethideSectionData(false);
 
+  };
 
-  
+  const handleDragEnd = (result) => {
+    const { source, destination } = result;
+
+    if (!result.destination) return;
+    setSectionLoading(true);
+
+    const reorderedSections = Array.from(sectionData);
+
+    const [removed] = reorderedSections.splice(source.index, 1);
+
+    reorderedSections.splice(destination.index, 0, removed);
+
+    const reorderedIds = reorderedSections.map(
+      (sections) => sections.courseSection.sectionId
+    );
+
+    HandleSectionMove(code, reorderedIds, setsectionData, setSectionLoading);
+
+    setSetUpCounters(true);
+    sethideSectionData(true);
+
+    // setSectionLoading(false);
+  };
 
   return (
     <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
@@ -1707,9 +1726,7 @@ const Curriculum = ({ code }) => {
             </b>
           </li>
           <li>
-            <b>
-            The maximum file size allowed per video file is 3.0 GB.
-            </b>
+            <b>The maximum file size allowed per video file is 3.0 GB.</b>
           </li>
         </ul>
 
@@ -1731,1119 +1748,1386 @@ const Curriculum = ({ code }) => {
         </ol>
 
         {/* Section 1 */}
-        {sectionData != null ? (
-          sectionData.length > 0 ? (
-            sectionData.map((section, index) => (
-              <div key={index} className="card p-2 my-3">
-                <CardContent>
-                  <div className="d-flex justify-content-between section-container">
-                    <Typography variant="subtitle1">
-                      <b>{index + 1}. Section:</b>{" "}
-                      <DnsIcon sx={{ fontSize: 15 }} />{" "}
-                      {showSectionEditInput == index ? (
-                        <div className="d-flex">
-                          <Form.Control
-                            className="mx-1"
-                            value={updateSectionName}
-                            onChange={(e) =>
-                              setupdateSectionName(e.target.value)
-                            }
-                            type="text"
-                            placeholder="Large text"
-                          />
 
-                          <Button
-                            onClick={(e) => {
-                              if (showSectionEditInput == index) {
-                                setshowSectionEditInput(null);
-                                setupdateSectionName(
-                                  section.courseSection.sectionName
-                                );
-                              } else {
-                                setshowSectionEditInput(index);
-                                setupdateSectionName(
-                                  section.courseSection.sectionName
-                                );
-                              }
+        <DragDropContext
+          onDragEnd={handleDragEnd}
+          type="PARENT"
+          onDragStart={startDrag}
+        >
+          <Droppable droppableId="sections">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {sectionData && sectionData.length > 0 ? (
+                  sectionData.map((section, index) => (
+                    <Draggable
+                      key={section.courseSection.sectionId}
+                      draggableId={section.courseSection.sectionId.toString()}
+                      index={index}
+                      isDragDisabled={canDrag}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="card p-2 my-3"
+                        >
+                          <CardContent
+                            style={{
+                              pointerEvents: sectionLoading ? "none" : "auto",
+                              opacity: sectionLoading ? 0.1 : 1,
+
+                              transition:
+                                "opacity 0.3s ease-in-out, filter 0.3s ease-in-out",
                             }}
-                            className="mx-1"
-                            variant="outlined"
                           >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              handleUpdateSection(section.courseSection);
-                            }}
-                            className="mx-1"
-                            variant="contained"
-                          >
-                            Save
-                          </Button>
-                        </div>
-                      ) : (
-                        <>
-                          <span>{section.courseSection.sectionName}</span>
-                          <EditIcon
-                            style={syllabusIcon}
-                            onClick={(e) => {
-                              if (showSectionEditInput == index) {
-                                setshowSectionEditInput(null);
-                                setupdateSectionName("");
-                              } else {
-                                setshowSectionEditInput(index);
-                                setupdateSectionName(
-                                  section.courseSection.sectionName
-                                );
-                              }
-                            }}
-                            className="mx-1"
-                          />
-                          <DeleteIcon
-                            style={syllabusIcon}
-                            className="mx-1"
-                            onClick={() => handleSectionDelete(section)}
-                          />
-                        </>
-                      )}
-                    </Typography>
-                    <Card className="p-3">
-                      <div className="mx-5">
-                        {" "}
-                        <h4>
-                          {" "}
-                          <OpenWithOutlinedIcon /> You can rearrange the content
-                          simply by dragging & dropping
-                        </h4>{" "}
-                      </div>
-                    </Card>
-                  </div>
+                            <div className="d-flex justify-content-between section-container">
+                              <Typography variant="subtitle1">
+                                <b>{index + 1}. Section:</b>{" "}
+                                <DnsIcon sx={{ fontSize: 15 }} />{" "}
+                                {showSectionEditInput == index ? (
+                                  <div className="d-flex">
+                                    <Form.Control
+                                      className="mx-1"
+                                      value={updateSectionName}
+                                      onChange={(e) =>
+                                        setupdateSectionName(e.target.value)
+                                      }
+                                      type="text"
+                                      placeholder="Large text"
+                                    />
 
-                  <div className="my-2">
-                    {/* Lecture > Quiz > Assignment */}
-                    {section.courseSection.sectionCurriculumItem.length > 0 &&
-                      section.courseSection.sectionCurriculumItem.map(
-                        (item, i) => {
-                          if (item.type == "Lecture") {
-                            counters.Lecture += 1;
-                          } else if (item.type == "Quiz") {
-                            counters.Quiz += 1;
-                          } else if (item.type == "Assignment") {
-                            counters.Assignment += 1;
-                          } else if (item.type == "Coding Exercise") {
-                            counters.CodingExercise += 1;
-                          } else if (item.type == "Practice Test") {
-                            counters.PracticeTest += 1;
-                          }
-
-                          const isExpanded =
-                            expandedIndex === index + i + item.id;
-                          return (
-                            // Lecture
-                            <div
-                              className={`my-2 ${
-                                draggingIndex === i ? "dragging" : "draggable"
-                              }`}
-                              key={i}
-                              draggable
-                              onDragStart={(e) => {
-                                dragItem.current = i;
-                                setDraggingIndex(i);
-                                handledragStart(e);
-                              }}
-                              onDragEnter={(e) => {
-                                dragOverItem.current = i;
-                                setDragOverNo(i);
-                              }}
-                              onDragEnd={(e) =>
-                                handleSort(e, index, section, item.id)
-                              }
-                              onDragOver={(e) => {
-                                e.preventDefault();
-                              }}
-                             
-                            >
-                              <>
-                                {item.type == "Lecture" && (
-                                  <>
-                                    {/* Edit Lecture */}
-
-                                    {showEditTitleInput ==
-                                    index + i + item.id ? (
-                                      <div className="d-flex">
-                                        <Form.Control
-                                          className="mx-1"
-                                          value={updateLectureName}
-                                          onChange={(e) =>
-                                            setupdateLectureName(e.target.value)
-                                          }
-                                          type="text"
-                                          placeholder="Large text"
-                                        />
-                                        <Button
-                                          onClick={(e) => {
-                                            if (
-                                              showEditTitleInput ==
-                                              index + i + item.id
-                                            ) {
-                                              setshowEditTitleInput(null);
-                                              setupdateLectureName("");
-                                            } else {
-                                              setshowEditTitleInput(
-                                                index + i + item.id
-                                              );
-                                              setupdateLectureName(item.title);
-                                            }
-                                          }}
-                                          className="mx-1"
-                                          variant="outlined"
-                                        >
-                                          Cancel
-                                        </Button>
-                                        <Button
-                                          onClick={(e) => {
-                                            handleUpdateLectureName(
-                                              item,
-                                              section
-                                            );
-                                          }}
-                                          className="mx-1"
-                                          variant="contained"
-                                        >
-                                          Save
-                                        </Button>
-                                      </div>
-                                    ) : (
-                                      <>
-                              {/* Get Lecture */}
-                              <Card
-                                key={index + i + item.id}
-                                className="my-3"
-                              >
-                              <div className="d-flex justify-content-between align-items-center p-2"  style={{
-                              cursor: isExpanded ? "default" : "move",
-                            }}>
-                                <span>
-                                  <Typography>
-                                    <CheckCircleIcon fontSize="small" />
-                                    {i + 1}. Lesson:{" "}
-                                    {counters.Lecture}{" "}
-                                    {item.article != "N/A" ? (
-                                      <FileCopyIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    ) : (
-                                      <PlayCircleIcon
-                                        sx={{ fontSize: 15 }}
-                                      />
-                                    )}{" "}
-                                    {item.title}
-                                    <span className="mx-5">
-                                      <EditIcon
-                                        style={syllabusIcon}
-                                        onClick={(e) => {
-                                          if (
-                                            showEditTitleInput ==
-                                            index + i + item.id
-                                          ) {
-                                            setshowEditTitleInput(
-                                              null
-                                            );
-                                            setupdateLectureName(
-                                              ""
-                                            );
-                                          } else {
-                                            setshowEditTitleInput(
-                                              index + i + item.id
-                                            );
-                                            setupdateLectureName(
-                                              item.title
-                                            );
-                                          }
-                                        }}
-                                      />
-                                      <DeleteIcon
-                                        style={syllabusIcon}
-                                        onClick={() =>
-                                          handleLectureDelete(item)
+                                    <Button
+                                      onClick={(e) => {
+                                        if (showSectionEditInput == index) {
+                                          setshowSectionEditInput(null);
+                                          setupdateSectionName(
+                                            section.courseSection.sectionName
+                                          );
+                                        } else {
+                                          setshowSectionEditInput(index);
+                                          setupdateSectionName(
+                                            section.courseSection.sectionName
+                                          );
                                         }
-                                      />
+                                      }}
+                                      className="mx-1"
+                                      variant="outlined"
+                                    >
+                                      Cancel
+                                    </Button>
+                                    <Button
+                                      onClick={() => {
+                                        handleUpdateSection(
+                                          section.courseSection
+                                        );
+                                      }}
+                                      className="mx-1"
+                                      variant="contained"
+                                    >
+                                      Save
+                                    </Button>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <span>
+                                      {section.courseSection.sectionName}
                                     </span>
-                                  </Typography>
-                                </span>
-
-                              {/* + Content Action Card */}
-                              <span>
-                                {showContentAdd ==
-                                index + i + item.id ? (
-                                  <Button
-                                    onClick={() => {
-                                      setshowDescRes(true);
-                                      setshowMain(null);
-                                      console.log(
-                                        index + i + item.id
-                                      );
-                                      setshowContentAdd(null);
-                                      setcurriculumvisiblity("");
-                                    }}
-                                    className="mx-2"
-                                    size="small"
-                                    variant="contained"
-                                  >
-                                    <CloseIcon />
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    onClick={() => {
-                                      setshowDescRes(false);
-                                      setshowMain(
-                                        showMain ==
-                                          index + i + item.id
-                                          ? null
-                                          : index + i + item.id
-                                      );
-                                      console.log(
-                                        index + i + item.id
-                                      );
-                                      console.log(item);
-                                      setarticle(
-                                        item.article == "N/A"
-                                          ? ""
-                                          : item.article
-                                      );
-                                      setcurriculum_desc(
-                                        item.description == "N/A"
-                                          ? ""
-                                          : item.description
-                                      );
-                                      setshowContentAdd(
-                                        showContentAdd ==
-                                          index + i + item.id
-                                          ? null
-                                          : index + i + item.id
-                                      );
-                                    }}
-                                    className="mx-2"
-                                    size="small"
-                                    variant="outlined"
-                                  >
-                                    <AddIcon /> Content
-                                  </Button>
-                                )}
-                              </span>
-                              {/* + Content Action Card */}
-                            </div>
-
-                {/* Show the Articles If Filled */}
-                {item.article != "N/A" &&
-                  showMain == index + i + item.id && (
-                  <div className="p-3">
-                    <div className="my-3">
-                      <JoditEditor
-                        value={article}
-                        onChange={(content) =>
-                          setarticle(content)
-                        }
-                      />
-                      <div className="d-flex flex-start my-2">
-                        <Button
-                          onClick={() =>
-                            handleSaveArticle(
-                              item.id
-                            )
-                          }
-                          variant="contained"
-                        >
-                          SAVE
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="my-3">
-                      {/* List of Resources / External Link */}
-                      {item.description !=
-                        "N/A" && (
-                        <p className="m-0 p-0">
-                          <b>Description</b>
-                        </p>
-                      )}
-                      <p>
-                        {item.description !=
-                          "N/A" &&
-                          removeHtmlTags(
-                            item.description
-                          )}
-                      </p>
-
-                      <>
-                        {showDescription == index + i + item.id && (
-                          <>
-                            {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
-                            <Button
-                              onClick={() => {
-                                setcurriculum_desc(
-                                  item.description ==
-                                    "N/A"
-                                    ? ""
-                                    : item.description
-                                );
-                                setshowDescription(
-                                  showDescription ==
-                                    index +
-                                      i +
-                                      item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                );
-                              }}
-                              className="m-2"
-                              variant="contained"
-                            >
-                              <CloseIcon />{" "}
-                              Close Description
-                            </Button>
-
-                        {showResources == index + i + item.id ? (
-                              <Button
-                                onClick={() => setshowResources(null)}
-                                className="m-2"
-                                variant="contained"
-                              >
-                                <CloseIcon /> Close Resources
-                              </Button>
-                            ) : (
-                              <Button
-                                onClick={() => 
-                                  setshowResources(
-                                    showResources === index + i + item.id
-                                      ? null
-                                      : index + i + item.id
-                                  )
-                                }
-                                className="m-2"
-                                variant="outlined"
-                              >
-                                <AddIcon /> Resources
-                              </Button>
-                            )}
-
-                            
-                            <JoditEditor
-                              value={
-                                curriculum_desc
-                              }
-                              onChange={(value) =>
-                                setcurriculum_desc(
-                                  value
-                                )
-                              }
-                            />
-
-                            <div className="d-flex my-2">
-                              <Button
-                                onClick={() =>
-                                  setshowDescription(
-                                    null
-                                  )
-                                }
-                                className="mx-1"
-                                variant="outlined"
-                              >
-                                Cancel
-                              </Button>
-                              <Button
-                                onClick={() =>
-                                  handleSaveDescription(
-                                    item.id
-                                  )
-                                }
-                                className="mx-1"
-                                variant="contained"
-                              >
-                                Save
-                              </Button>
-                            </div>
-                          </>
-                        )}
-
-                        {/* Add Description & Resourses */}
-                        {showMain ==
-                          index + i + item.id &&
-                          showDescription !=
-                            index + i + item.id && (
-                            <div className="d-flex justify-content-center p-2">
-                              <Button
-                                onClick={() => {
-                                  setcurriculum_desc(
-                                    item.description ==
-                                      "N/A"
-                                      ? ""
-                                      : item.description
-                                  );
-                                  setshowDescription(
-                                    showDescription ==
-                                      index +
-                                        i +
-                                        item.id
-                                      ? null
-                                      : index +
-                                          i +
-                                          item.id
-                                  );
-                                }}
-                                className="m-2"
-                                variant="outlined"
-                              >
-                                <AddIcon />{" "}
-                                Description
-                              </Button>
-
-                              {showResources ==
-                              index +
-                                i +
-                                item.id ? (
-                                <Button
-                                  onClick={() =>
-                                    setshowResources(
-                                      null
-                                    )
-                                  }
-                                  className="m-2"
-                                  variant="contained"
-                                >
-                                  <CloseIcon />{" "}
-                                  Close Resourses
-                                </Button>
-                              ) : (
-                                <Button
-                                  onClick={() =>
-                                    setshowResources(
-                                      showResources ==
-                                        index +
-                                          i +
-                                          item.id
-                                        ? null
-                                        : index +
-                                            i +
-                                            item.id
-                                    )
-                                  }
-                                  className="m-2"
-                                  variant="outlined"
-                                >
-                                  <AddIcon />{" "}
-                                  Resourses
-                                </Button>
-                              )}
-                            </div>
-                          )}
-
-                        {showResources ==
-                          index + i + item.id && (
-                          <div>
-                            {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
-
-                            {/* Tabs */}
-                            <Tabs
-                              defaultActiveKey="d-file"
-                              id="uncontrolled-tab-example"
-                              className="my-3"
-                            >
-                              <Tab
-                                eventKey="d-file"
-                                title="Downloadable File"
-                              >
-                                <Form.Group
-                                  controlId="formFile"
-                                  className="mb-3"
-                                >
-                                  {/* (e) =>  */}
-                                  <Form.Control
-                                    onChange={(e) =>
-                                      handleDownloadbaleFile(
-                                        e,
-                                        item.id
-                                      )
-                                    }
-                                    type="file"
-                                  />
-                                  <Form.Label
-                                    style={{
-                                      fontSize: 11,
-                                    }}
-                                  >
-                                    <b>Note:</b>{" "}
-                                    Resource files
-                                    can be any file
-                                    type that will
-                                    help students
-                                    with their
-                                    learning.
-                                  </Form.Label>
-                                </Form.Group>
-                              </Tab>
-                              <Tab
-                                eventKey="e-r"
-                                title="External Resources"
-                              >
-                                <Form>
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      Title
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={
-                                        curriclum_ex_res_tile
-                                      }
-                                      onChange={(
-                                        e
-                                      ) =>
-                                        setcurriclum_ex_res_tile(
-                                          e.target
-                                            .value
-                                        )
-                                      }
-                                      type="text"
-                                      placeholder="A Descriptive Title"
+                                    <EditIcon
+                                      style={syllabusIcon}
+                                      onClick={(e) => {
+                                        if (showSectionEditInput == index) {
+                                          setshowSectionEditInput(null);
+                                          setupdateSectionName("");
+                                        } else {
+                                          setshowSectionEditInput(index);
+                                          setupdateSectionName(
+                                            section.courseSection.sectionName
+                                          );
+                                        }
+                                      }}
+                                      className="mx-1"
                                     />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      URL
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={
-                                        curriculum_ex_res_link
+                                    <DeleteIcon
+                                      style={syllabusIcon}
+                                      className="mx-1"
+                                      onClick={() =>
+                                        handleSectionDelete(section)
                                       }
-                                      onChange={(
-                                        e
-                                      ) =>
-                                        setcurriculum_ex_res_link(
-                                          e.target
-                                            .value
-                                        )
-                                      }
-                                      type="text"
-                                      placeholder="https://externallink.com"
                                     />
-                                  </Form.Group>
-                                  <Button
-                                    onClick={() =>
-                                      handleExternalResources(
-                                        item.id
-                                      )
-                                    }
-                                    variant="contained"
-                                  >
-                                    Add Link
-                                  </Button>
-                                </Form>
-                              </Tab>
-                              <Tab
-                                eventKey="source-code"
-                                title="Source Code"
-                              >
-                                <Form.Group
-                                  onChange={(e) =>
-                                    handleSaveSourceCode(
-                                      item.id,
-                                      e
-                                    )
-                                  }
-                                  controlId="formFile"
-                                  className="mb-3"
-                                >
-                                  <Form.Control type="file" />
-                                  {/* <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label> */}
-                                </Form.Group>
-                              </Tab>
-                            </Tabs>
-                          </div>
-                        )}
-                      </>
-
-                          {/* Downloadable Files */}
-                          {item.curriculumItemFiles.some(
-                            (downloaditem) =>
-                              downloaditem.filetype ==
-                              "Downloadable Items"
-                          ) && (
-                            <div className="p-2">
-                              <h6>
-                                <b>
-                                  Downloadable Files
-                                </b>
-                              </h6>
-                              <ListGroup>
-                                {item.curriculumItemFiles.some(
-                                  (downloaditem) =>
-                                    downloaditem.filetype ==
-                                    "Downloadable Items"
-                                ) ? (
-                                  item.curriculumItemFiles
-                                    .filter(
-                                      (downloaditem) =>
-                                        downloaditem.filetype ==
-                                        "Downloadable Items"
-                                    )
-                                    .map(
-                                      (
-                                        downloaditem,
-                                        index
-                                      ) => (
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
-                                        >
-                                          <span>
-                                            {
-                                              downloaditem.title
-                                            }
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                handleDeleteDownloableFilesLecture(
-                                                  downloaditem
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      )
-                                    )
-                                ) : (
-                                  // <p>No Downloadable Items</p>
-                                  <></>
+                                  </>
                                 )}
-                              </ListGroup>
+                              </Typography>
+                              <Card className="p-3">
+                                <div className="mx-5">
+                                  {" "}
+                                  <h4>
+                                    {" "}
+                                    <OpenWithOutlinedIcon /> You can rearrange
+                                    the content simply by dragging & dropping
+                                  </h4>{" "}
+                                </div>
+                              </Card>
                             </div>
-                          )}
 
-                          {/* External Resources */}
-                          {item.curriculumItemFiles.some(
-                            (link) =>
-                              link.filetype ===
-                              "External Resourses"
-                          ) && (
-                            <div className="p-2">
-                              <h6>
-                                <b>
-                                  External Resources
-                                </b>
-                              </h6>
-                              <ListGroup>
-                                {item.curriculumItemFiles
-                                  .filter(
-                                    (link) =>
-                                      link.filetype ===
-                                      "External Resourses"
-                                  )
-                                  .map(
-                                    (link, index) => (
-                                      <ListGroup.Item
-                                        className="d-flex justify-content-between"
-                                        key={index}
-                                      >
-                                        <span>
-                                          <a
-                                            target="_blank"
-                                            href={
-                                              link.url
-                                            }
-                                          >
-                                            <LaunchIcon fontSize="10" />
-                                            {link.title}
-                                          </a>
-                                        </span>
-                                        <span>
-                                          <Button
-                                            className="p-0"
-                                            variant=""
-                                          >
-                                            <DeleteIcon />
-                                          </Button>
-                                        </span>
-                                      </ListGroup.Item>
-                                    )
-                                  )}
-                              </ListGroup>
-                            </div>
-                          )}
+                            <div className="my-2">
+                              {/* Lecture > Quiz > Assignment */}
 
-                          {/* Source Code */}
-                          {item.curriculumItemFiles.some(
-                            (source) =>
-                              source.filetype ===
-                              "Source Code"
-                          ) && (
-                            <div className="p-2">
-                              <h6>
-                                <b>Source Code</b>
-                              </h6>
-                              <ListGroup>
-                                {item.curriculumItemFiles.some(
-                                  (source) =>
-                                    source.filetype ===
-                                    "Source Code"
-                                ) ? (
-                                  item.curriculumItemFiles
-                                    .filter(
-                                      (source) =>
-                                        source.filetype ===
-                                        "Source Code"
-                                    )
-                                    .map(
-                                      (
-                                        source,
-                                        index
-                                      ) => (
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
+                              {section.courseSection.sectionCurriculumItem
+                                .length > 0 &&
+                                hideSectionData &&
+                                section.courseSection.sectionCurriculumItem.map(
+                                  (item, i) => {
+                                    if (setUpCounters) {
+                                      if (item.type == "Lecture") {
+                                        counters.Lecture += 1;
+                                      } else if (item.type == "Quiz") {
+                                        counters.Quiz += 1;
+                                      } else if (item.type == "Assignment") {
+                                        counters.Assignment += 1;
+                                      } else if (
+                                        item.type == "Coding Exercise"
+                                      ) {
+                                        counters.CodingExercise += 1;
+                                      } else if (item.type == "Practice Test") {
+                                        counters.PracticeTest += 1;
+                                      }
+
+                                      const isExpanded =
+                                        expandedIndex === index + i + item.id;
+
+                                      return (
+                                        // Lecture
+                                        <div
+                                          className={`my-2 ${
+                                            draggingIndex === i
+                                              ? "dragging"
+                                              : "draggable"
+                                          }`}
+                                          key={i}
+                                          draggable
+                                          onMouseEnter={() => setCanDrag(true)}
+                                          onMouseLeave={() => setCanDrag(false)}
+                                          // style={{
+                                          //   cursor: canDrag ? "grab" : "default",
+                                          // }}
+                                          onDragStart={(e) => {
+                                            dragItem.current = i;
+                                            setDraggingIndex(i);
+                                            handledragStart(e);
+                                          }}
+                                          onDragEnter={(e) => {
+                                            dragOverItem.current = i;
+                                            setDragOverNo(i);
+                                          }}
+                                          onDragEnd={(e) =>
+                                            handleSort(
+                                              e,
+                                              index,
+                                              section,
+                                              item.id
+                                            )
+                                          }
+                                          onDragOver={(e) => {
+                                            e.preventDefault();
+                                          }}
                                         >
-                                          <span>
-                                            {
-                                              source.title
-                                            }
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                handleDeleteDownloableFilesLecture(
-                                                  source
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      )
-                                    )
-                                ) : (
-                                  // <p>No Source Code</p>
-                                  <></>
-                                )}
-                              </ListGroup>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
+                                          <>
+                                            {item.type == "Lecture" && (
+                                              <>
+                                                {/* Edit Lecture */}
 
-        {/* Main Video Card & Text Based Card */}
-        {item.article == "N/A" &&
-          item.curriculumItemFiles.length ==
-            0 &&
-          (showMain == index + i + item.id ? (
-            curriculumvisiblity == "video" ? (
-              <div className="p-3">
-                {/* Upload Input */}
-                <Form.Group
-                  controlId="formFile"
-                  className="my-3"
-                >
-                  <Form.Control
-                    accept="video/*"
-                    disabled={uploading}
-                    onChange={(e) => {
-                      setUploadingVideo(
-                        index + i + item.id
-                      );
-                      handleSaveVideo(
-                        e.target.files[0],
-                        item.id
-                      );
-                    }}
-                    placeholder="Add a Video"
-                    type="file"
-                  />
-                  <Form.Label
-                    style={{ fontSize: 11 }}
-                  >
-                    <b>Note:</b> Video file
-                    should be High Definition
-                    (HD) quality, with a
-                    minimum resolution of 720p
-                    and maximum resolution of
-                    1080p.
-                  </Form.Label>
-                </Form.Group>
+                                                {showEditTitleInput ==
+                                                index + i + item.id ? (
+                                                  <div className="d-flex">
+                                                    <Form.Control
+                                                      className="mx-1"
+                                                      value={updateLectureName}
+                                                      onChange={(e) =>
+                                                        setupdateLectureName(
+                                                          e.target.value
+                                                        )
+                                                      }
+                                                      type="text"
+                                                      placeholder="Large text"
+                                                    />
+                                                    <Button
+                                                      onClick={(e) => {
+                                                        if (
+                                                          showEditTitleInput ==
+                                                          index + i + item.id
+                                                        ) {
+                                                          setshowEditTitleInput(
+                                                            null
+                                                          );
+                                                          setupdateLectureName(
+                                                            ""
+                                                          );
+                                                        } else {
+                                                          setshowEditTitleInput(
+                                                            index + i + item.id
+                                                          );
+                                                          setupdateLectureName(
+                                                            item.title
+                                                          );
+                                                        }
+                                                      }}
+                                                      className="mx-1"
+                                                      variant="outlined"
+                                                    >
+                                                      Cancel
+                                                    </Button>
+                                                    <Button
+                                                      onClick={(e) => {
+                                                        handleUpdateLectureName(
+                                                          item,
+                                                          section
+                                                        );
+                                                      }}
+                                                      className="mx-1"
+                                                      variant="contained"
+                                                    >
+                                                      Save
+                                                    </Button>
+                                                  </div>
+                                                ) : (
+                                                  <>
+                                                    {/* Get Lecture */}
+                                                    <Card
+                                                      key={index + i + item.id}
+                                                      className="my-3"
+                                                    >
+                                                      <div
+                                                        className="d-flex justify-content-between align-items-center p-2"
+                                                        style={{
+                                                          cursor: isExpanded
+                                                            ? "default"
+                                                            : "move",
+                                                        }}
+                                                      >
+                                                        <span>
+                                                          <Typography>
+                                                            <CheckCircleIcon fontSize="small" />
+                                                            {i + 1}. Lesson:{" "}
+                                                            {counters.Lecture}{" "}
+                                                            {item.article !=
+                                                            "N/A" ? (
+                                                              <FileCopyIcon
+                                                                sx={{
+                                                                  fontSize: 15,
+                                                                }}
+                                                              />
+                                                            ) : (
+                                                              <PlayCircleIcon
+                                                                sx={{
+                                                                  fontSize: 15,
+                                                                }}
+                                                              />
+                                                            )}{" "}
+                                                            {item.title}
+                                                            <span className="mx-5">
+                                                              <EditIcon
+                                                                style={
+                                                                  syllabusIcon
+                                                                }
+                                                                onClick={(
+                                                                  e
+                                                                ) => {
+                                                                  if (
+                                                                    showEditTitleInput ==
+                                                                    index +
+                                                                      i +
+                                                                      item.id
+                                                                  ) {
+                                                                    setshowEditTitleInput(
+                                                                      null
+                                                                    );
+                                                                    setupdateLectureName(
+                                                                      ""
+                                                                    );
+                                                                  } else {
+                                                                    setshowEditTitleInput(
+                                                                      index +
+                                                                        i +
+                                                                        item.id
+                                                                    );
+                                                                    setupdateLectureName(
+                                                                      item.title
+                                                                    );
+                                                                  }
+                                                                }}
+                                                              />
+                                                              <DeleteIcon
+                                                                style={
+                                                                  syllabusIcon
+                                                                }
+                                                                onClick={() =>
+                                                                  handleLectureDelete(
+                                                                    item
+                                                                  )
+                                                                }
+                                                              />
+                                                            </span>
+                                                          </Typography>
+                                                        </span>
 
-                {/* Before Video Upload */}
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
-                      <th>Filename</th>
-                      <th>Status</th>
-                      <th>Type</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {uploadingVideo == index + i + item.id &&  uploading && (
-                    
-                      <tr>
-                        <td>
-                          {uploadingVideo ==
-                          index + i + item.id
-                            ? uploadingVideoName
-                            : ""}
-                        </td>
-                        <td>
-                          <td>
-                            {uploadingVideo ==
-                            index +
-                              i +
-                              item.id && uploadingVideoProgress != 100 ?
-                              (<Badge bg="info">
-                              {uploadingVideoProgress} %
-                              <p>uploading..</p>
-                            </Badge>) : (
-                              <Badge bg="success">
-                              Completed
-                            </Badge>
-                            )
-                            }
-                          </td>
-                        </td>
-                        <td>Video</td>
-                        <td> 
-                            <Button
-                              onClick={() => {
-                                Swal.fire({
-                                  title: 'Are you sure?',
-                                  text: "Do you want to cancel the upload?",
-                                  icon: 'warning',
-                                  showCancelButton: true,
-                                  confirmButtonText: 'Yes, cancel it!',
-                                  cancelButtonText: 'No, keep uploading'
-                                }).then((result) => {
-                                  if (result.isConfirmed) {
-                                    abortControllerRef.current.abort(); // Cancel the upload
-                                    // setUploading(false)
-                                    // GetCurriculum(code, setsectionData)
-                                    Swal.fire(
-                                      'Cancelled!',
-                                      'Your upload has been cancelled.',
-                                      'success'
-                                    );
-                                  }
-                                });
-                              }}
-                              size="small"
-                              variant=""
-                            >
-                              <CloseIcon />
-                              Cancel
-                            </Button>
+                                                        {/* + Content Action Card */}
+                                                        <span>
+                                                          {showContentAdd ==
+                                                          index +
+                                                            i +
+                                                            item.id ? (
+                                                            <Button
+                                                              onClick={() => {
+                                                                setshowDescRes(
+                                                                  true
+                                                                );
+                                                                setshowMain(
+                                                                  null
+                                                                );
+                                                                // console.log(
+                                                                //   index + i + item.id
+                                                                // );
+                                                                setshowContentAdd(
+                                                                  null
+                                                                );
+                                                                setcurriculumvisiblity(
+                                                                  ""
+                                                                );
+                                                              }}
+                                                              className="mx-2"
+                                                              size="small"
+                                                              variant="contained"
+                                                            >
+                                                              <CloseIcon />
+                                                            </Button>
+                                                          ) : (
+                                                            <Button
+                                                              onClick={() => {
+                                                                setshowDescRes(
+                                                                  false
+                                                                );
+                                                                setshowMain(
+                                                                  showMain ==
+                                                                    index +
+                                                                      i +
+                                                                      item.id
+                                                                    ? null
+                                                                    : index +
+                                                                        i +
+                                                                        item.id
+                                                                );
+                                                                console.log(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                console.log(
+                                                                  item
+                                                                );
+                                                                setarticle(
+                                                                  item.article ==
+                                                                    "N/A"
+                                                                    ? ""
+                                                                    : item.article
+                                                                );
+                                                                setcurriculum_desc(
+                                                                  item.description ==
+                                                                    "N/A"
+                                                                    ? ""
+                                                                    : item.description
+                                                                );
+                                                                setshowContentAdd(
+                                                                  showContentAdd ==
+                                                                    index +
+                                                                      i +
+                                                                      item.id
+                                                                    ? null
+                                                                    : index +
+                                                                        i +
+                                                                        item.id
+                                                                );
+                                                              }}
+                                                              className="mx-2"
+                                                              size="small"
+                                                              variant="outlined"
+                                                            >
+                                                              <AddIcon />{" "}
+                                                              Content
+                                                            </Button>
+                                                          )}
+                                                        </span>
+                                                        {/* + Content Action Card */}
+                                                      </div>
 
-                            </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
+                                                      {/* Show the Articles If Filled */}
+                                                      {item.article != "N/A" &&
+                                                        showMain ==
+                                                          index +
+                                                            i +
+                                                            item.id && (
+                                                          <div className="p-3">
+                                                            <div className="my-3">
+                                                              <JoditEditor
+                                                                value={article}
+                                                                onChange={(
+                                                                  content
+                                                                ) =>
+                                                                  setarticle(
+                                                                    content
+                                                                  )
+                                                                }
+                                                              />
+                                                              <div className="d-flex flex-start my-2">
+                                                                <Button
+                                                                  onClick={() =>
+                                                                    handleSaveArticle(
+                                                                      item.id
+                                                                    )
+                                                                  }
+                                                                  variant="contained"
+                                                                >
+                                                                  SAVE
+                                                                </Button>
+                                                              </div>
+                                                            </div>
 
-                {/* List of Resources / External Link */}
-                <>
+                                                            <div className="my-3">
+                                                              {/* List of Resources / External Link */}
+                                                              {item.description !=
+                                                                "N/A" && (
+                                                                <p className="m-0 p-0">
+                                                                  <b>
+                                                                    Description
+                                                                  </b>
+                                                                </p>
+                                                              )}
+                                                              <p>
+                                                                {item.description !=
+                                                                  "N/A" &&
+                                                                  removeHtmlTags(
+                                                                    item.description
+                                                                  )}
+                                                              </p>
 
-                <div className="my-3">
-                {item.description !=
-                        "N/A" && (
-                        <p className="m-0 p-0">
-                          <b>Description</b>
-                        </p>
-                      )}
-                      <p>
-                        {item.description !=
-                          "N/A" &&
-                          removeHtmlTags(
-                            item.description
-                          )}
-                      </p>
-                </div>
+                                                              <>
+                                                                {showDescription ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <>
+                                                                    {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+                                                                    <Button
+                                                                      onClick={() => {
+                                                                        setcurriculum_desc(
+                                                                          item.description ==
+                                                                            "N/A"
+                                                                            ? ""
+                                                                            : item.description
+                                                                        );
+                                                                        setshowDescription(
+                                                                          showDescription ==
+                                                                            index +
+                                                                              i +
+                                                                              item.id
+                                                                            ? null
+                                                                            : index +
+                                                                                i +
+                                                                                item.id
+                                                                        );
+                                                                      }}
+                                                                      className="m-2"
+                                                                      variant="contained"
+                                                                    >
+                                                                      <CloseIcon />{" "}
+                                                                      Close
+                                                                      Description
+                                                                    </Button>
 
-                 {showDescription == index + i + item.id && (
-                          <>
-                            {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
-                            <Button
-                              onClick={() => {
-                                setcurriculum_desc(
-                                  item.description ==
-                                    "N/A"
-                                    ? ""
-                                    : item.description
-                                );
-                                setshowDescription(
-                                  showDescription ==
-                                    index +
-                                      i +
-                                      item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                );
-                              }}
-                              className="m-2"
-                              variant="contained"
-                            >
-                              <CloseIcon />{" "}
-                              Close Description
-                            </Button>
+                                                                    {showResources ==
+                                                                    index +
+                                                                      i +
+                                                                      item.id ? (
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowResources(
+                                                                            null
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="contained"
+                                                                      >
+                                                                        <CloseIcon />{" "}
+                                                                        Close
+                                                                        Resources
+                                                                      </Button>
+                                                                    ) : (
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowResources(
+                                                                            showResources ===
+                                                                              index +
+                                                                                i +
+                                                                                item.id
+                                                                              ? null
+                                                                              : index +
+                                                                                  i +
+                                                                                  item.id
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        <AddIcon />{" "}
+                                                                        Resources
+                                                                      </Button>
+                                                                    )}
 
-                        {showResources == index + i + item.id ? (
-                              <Button
-                                onClick={() => setshowResources(null)}
-                                className="m-2"
-                                variant="contained"
-                              >
-                                <CloseIcon /> Close Resources
-                              </Button>
-                            ) : (
-                              <Button
-                                onClick={() => 
-                                  setshowResources(
-                                    showResources === index + i + item.id
-                                      ? null
-                                      : index + i + item.id
-                                  )
-                                }
-                                className="m-2"
-                                variant="outlined"
-                              >
-                                <AddIcon /> Resources
-                              </Button>
-                            )}
+                                                                    <JoditEditor
+                                                                      value={
+                                                                        curriculum_desc
+                                                                      }
+                                                                      onChange={(
+                                                                        value
+                                                                      ) =>
+                                                                        setcurriculum_desc(
+                                                                          value
+                                                                        )
+                                                                      }
+                                                                    />
 
+                                                                    <div className="d-flex my-2">
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowDescription(
+                                                                            null
+                                                                          )
+                                                                        }
+                                                                        className="mx-1"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        Cancel
+                                                                      </Button>
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          handleSaveDescription(
+                                                                            item.id
+                                                                          )
+                                                                        }
+                                                                        className="mx-1"
+                                                                        variant="contained"
+                                                                      >
+                                                                        Save
+                                                                      </Button>
+                                                                    </div>
+                                                                  </>
+                                                                )}
 
-                      <JoditEditor
-                        value={
-                          curriculum_desc
-                        }
-                        onChange={(value) =>
-                          setcurriculum_desc(
-                            value
-                          )
-                        }
-                      />
+                                                                {/* Add Description & Resourses */}
+                                                                {showMain ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id &&
+                                                                  showDescription !=
+                                                                    index +
+                                                                      i +
+                                                                      item.id && (
+                                                                    <div className="d-flex justify-content-center p-2">
+                                                                      <Button
+                                                                        onClick={() => {
+                                                                          setcurriculum_desc(
+                                                                            item.description ==
+                                                                              "N/A"
+                                                                              ? ""
+                                                                              : item.description
+                                                                          );
+                                                                          setshowDescription(
+                                                                            showDescription ==
+                                                                              index +
+                                                                                i +
+                                                                                item.id
+                                                                              ? null
+                                                                              : index +
+                                                                                  i +
+                                                                                  item.id
+                                                                          );
+                                                                        }}
+                                                                        className="m-2"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        <AddIcon />{" "}
+                                                                        Description
+                                                                      </Button>
 
-                      <div className="d-flex my-2">
-                        <Button
-                          onClick={() =>
-                            setshowDescription(
-                              null
-                            )
-                          }
-                          className="mr-1"
-                          variant="outlined"
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            handleSaveDescription(
-                              item.id
-                            )
-                          }
-                          className="ml-1"
-                          variant="contained"
-                        >
-                          Save
-                        </Button>
-                      </div>
-                    </>
-                  )}
+                                                                      {showResources ==
+                                                                      index +
+                                                                        i +
+                                                                        item.id ? (
+                                                                        <Button
+                                                                          onClick={() =>
+                                                                            setshowResources(
+                                                                              null
+                                                                            )
+                                                                          }
+                                                                          className="m-2"
+                                                                          variant="contained"
+                                                                        >
+                                                                          <CloseIcon />{" "}
+                                                                          Close
+                                                                          Resourses
+                                                                        </Button>
+                                                                      ) : (
+                                                                        <Button
+                                                                          onClick={() =>
+                                                                            setshowResources(
+                                                                              showResources ==
+                                                                                index +
+                                                                                  i +
+                                                                                  item.id
+                                                                                ? null
+                                                                                : index +
+                                                                                    i +
+                                                                                    item.id
+                                                                            )
+                                                                          }
+                                                                          className="m-2"
+                                                                          variant="outlined"
+                                                                        >
+                                                                          <AddIcon />{" "}
+                                                                          Resourses
+                                                                        </Button>
+                                                                      )}
+                                                                    </div>
+                                                                  )}
 
-                      {/* Add Description & Resourses */}
-                      {showMain ==
-                        index + i + item.id &&
-                        showDescription !=
-                          index + i + item.id && (
-                          <div className="d-flex justify-content-center p-2">
+                                                                {showResources ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <div>
+                                                                    {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
 
+                                                                    {/* Tabs */}
+                                                                    <Tabs
+                                                                      defaultActiveKey="d-file"
+                                                                      id="uncontrolled-tab-example"
+                                                                      className="my-3"
+                                                                    >
+                                                                      <Tab
+                                                                        eventKey="d-file"
+                                                                        title="Downloadable File"
+                                                                      >
+                                                                        <Form.Group
+                                                                          controlId="formFile"
+                                                                          className="mb-3"
+                                                                        >
+                                                                          {/* (e) =>  */}
+                                                                          <Form.Control
+                                                                            onChange={(
+                                                                              e
+                                                                            ) =>
+                                                                              handleDownloadbaleFile(
+                                                                                e,
+                                                                                item.id
+                                                                              )
+                                                                            }
+                                                                            type="file"
+                                                                          />
+                                                                          <Form.Label
+                                                                            style={{
+                                                                              fontSize: 11,
+                                                                            }}
+                                                                          >
+                                                                            <b>
+                                                                              Note:
+                                                                            </b>{" "}
+                                                                            Resource
+                                                                            files
+                                                                            can
+                                                                            be
+                                                                            any
+                                                                            file
+                                                                            type
+                                                                            that
+                                                                            will
+                                                                            help
+                                                                            students
+                                                                            with
+                                                                            their
+                                                                            learning.
+                                                                          </Form.Label>
+                                                                        </Form.Group>
+                                                                      </Tab>
+                                                                      <Tab
+                                                                        eventKey="e-r"
+                                                                        title="External Resources"
+                                                                      >
+                                                                        <Form>
+                                                                          <Form.Group
+                                                                            className="mb-3"
+                                                                            controlId="exampleForm.ControlInput1"
+                                                                          >
+                                                                            <Form.Label>
+                                                                              Title
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                              value={
+                                                                                curriclum_ex_res_tile
+                                                                              }
+                                                                              onChange={(
+                                                                                e
+                                                                              ) =>
+                                                                                setcurriclum_ex_res_tile(
+                                                                                  e
+                                                                                    .target
+                                                                                    .value
+                                                                                )
+                                                                              }
+                                                                              type="text"
+                                                                              placeholder="A Descriptive Title"
+                                                                            />
+                                                                          </Form.Group>
 
-                            <Button
-                              onClick={() =>
-                                setshowDescription(
-                                  showDescription ==
-                                    index +
-                                      i +
-                                      item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                )
-                              }
-                              className="m-2"
-                              variant="outlined"
-                            >
-                              <AddIcon />{" "}
-                              Description
-                            </Button>
+                                                                          <Form.Group
+                                                                            className="mb-3"
+                                                                            controlId="exampleForm.ControlInput1"
+                                                                          >
+                                                                            <Form.Label>
+                                                                              URL
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                              value={
+                                                                                curriculum_ex_res_link
+                                                                              }
+                                                                              onChange={(
+                                                                                e
+                                                                              ) =>
+                                                                                setcurriculum_ex_res_link(
+                                                                                  e
+                                                                                    .target
+                                                                                    .value
+                                                                                )
+                                                                              }
+                                                                              type="text"
+                                                                              placeholder="https://externallink.com"
+                                                                            />
+                                                                          </Form.Group>
+                                                                          <Button
+                                                                            onClick={() =>
+                                                                              handleExternalResources(
+                                                                                item.id
+                                                                              )
+                                                                            }
+                                                                            variant="contained"
+                                                                          >
+                                                                            Add
+                                                                            Link
+                                                                          </Button>
+                                                                        </Form>
+                                                                      </Tab>
+                                                                      <Tab
+                                                                        eventKey="source-code"
+                                                                        title="Source Code"
+                                                                      >
+                                                                        <Form.Group
+                                                                          onChange={(
+                                                                            e
+                                                                          ) =>
+                                                                            handleSaveSourceCode(
+                                                                              item.id,
+                                                                              e
+                                                                            )
+                                                                          }
+                                                                          controlId="formFile"
+                                                                          className="mb-3"
+                                                                        >
+                                                                          <Form.Control type="file" />
+                                                                          {/* <Form.Label style={{fontSize:11}}><b>Note:</b>  Only available for Python and Ruby for now. You can upload .py and .rb files.</Form.Label> */}
+                                                                        </Form.Group>
+                                                                      </Tab>
+                                                                    </Tabs>
+                                                                  </div>
+                                                                )}
+                                                              </>
 
+                                                              {/* Downloadable Files */}
+                                                              {item.curriculumItemFiles.some(
+                                                                (
+                                                                  downloaditem
+                                                                ) =>
+                                                                  downloaditem.filetype ==
+                                                                  "Downloadable Items"
+                                                              ) && (
+                                                                <div className="p-2">
+                                                                  <h6>
+                                                                    <b>
+                                                                      Downloadable
+                                                                      Files
+                                                                    </b>
+                                                                  </h6>
+                                                                  <ListGroup>
+                                                                    {item.curriculumItemFiles.some(
+                                                                      (
+                                                                        downloaditem
+                                                                      ) =>
+                                                                        downloaditem.filetype ==
+                                                                        "Downloadable Items"
+                                                                    ) ? (
+                                                                      item.curriculumItemFiles
+                                                                        .filter(
+                                                                          (
+                                                                            downloaditem
+                                                                          ) =>
+                                                                            downloaditem.filetype ==
+                                                                            "Downloadable Items"
+                                                                        )
+                                                                        .map(
+                                                                          (
+                                                                            downloaditem,
+                                                                            index
+                                                                          ) => (
+                                                                            <ListGroup.Item
+                                                                              className="d-flex justify-content-between"
+                                                                              key={
+                                                                                index
+                                                                              }
+                                                                            >
+                                                                              <span>
+                                                                                {
+                                                                                  downloaditem.title
+                                                                                }
+                                                                              </span>
+                                                                              <span>
+                                                                                <Button
+                                                                                  onClick={() => {
+                                                                                    handleDeleteDownloableFilesLecture(
+                                                                                      downloaditem
+                                                                                    );
+                                                                                  }}
+                                                                                  className="p-0"
+                                                                                  variant=""
+                                                                                >
+                                                                                  <DeleteIcon />
+                                                                                </Button>
+                                                                              </span>
+                                                                            </ListGroup.Item>
+                                                                          )
+                                                                        )
+                                                                    ) : (
+                                                                      // <p>No Downloadable Items</p>
+                                                                      <></>
+                                                                    )}
+                                                                  </ListGroup>
+                                                                </div>
+                                                              )}
 
-                          {showResources ==
-                              index +
-                                i +
-                                item.id ? (
-                                <Button
-                                  onClick={() =>
-                                    setshowResources(
-                                      null
-                                    )
-                                  }
-                                  className="m-2"
-                                  variant="contained"
-                                >
-                                  <CloseIcon />{" "}
-                                  Close Resourses
-                                </Button>
-                              ) : (
-                                <Button
-                                  onClick={() =>
-                                    setshowResources(
-                                      showResources ==
-                                        index +
-                                          i +
-                                          item.id
-                                        ? null
-                                        : index +
-                                            i +
-                                            item.id
-                                    )
-                                  }
-                                  className="m-2"
-                                  variant="outlined"
-                                >
-                                  <AddIcon />{" "}
-                                  Resourses
-                                </Button>
-                              )}
-                            </div>
-                          )}
+                                                              {/* External Resources */}
+                                                              {item.curriculumItemFiles.some(
+                                                                (link) =>
+                                                                  link.filetype ===
+                                                                  "External Resourses"
+                                                              ) && (
+                                                                <div className="p-2">
+                                                                  <h6>
+                                                                    <b>
+                                                                      External
+                                                                      Resources
+                                                                    </b>
+                                                                  </h6>
+                                                                  <ListGroup>
+                                                                    {item.curriculumItemFiles
+                                                                      .filter(
+                                                                        (
+                                                                          link
+                                                                        ) =>
+                                                                          link.filetype ===
+                                                                          "External Resourses"
+                                                                      )
+                                                                      .map(
+                                                                        (
+                                                                          link,
+                                                                          index
+                                                                        ) => (
+                                                                          <ListGroup.Item
+                                                                            className="d-flex justify-content-between"
+                                                                            key={
+                                                                              index
+                                                                            }
+                                                                          >
+                                                                            <span>
+                                                                              <a
+                                                                                target="_blank"
+                                                                                href={
+                                                                                  link.url
+                                                                                }
+                                                                              >
+                                                                                <LaunchIcon fontSize="10" />
+                                                                                {
+                                                                                  link.title
+                                                                                }
+                                                                              </a>
+                                                                            </span>
+                                                                            <span>
+                                                                              <Button
+                                                                                className="p-0"
+                                                                                variant=""
+                                                                              >
+                                                                                <DeleteIcon />
+                                                                              </Button>
+                                                                            </span>
+                                                                          </ListGroup.Item>
+                                                                        )
+                                                                      )}
+                                                                  </ListGroup>
+                                                                </div>
+                                                              )}
 
-                      {showResources ==
-                        index + i + item.id && (
-                        <div>
-                          {/* <Button
+                                                              {/* Source Code */}
+                                                              {item.curriculumItemFiles.some(
+                                                                (source) =>
+                                                                  source.filetype ===
+                                                                  "Source Code"
+                                                              ) && (
+                                                                <div className="p-2">
+                                                                  <h6>
+                                                                    <b>
+                                                                      Source
+                                                                      Code
+                                                                    </b>
+                                                                  </h6>
+                                                                  <ListGroup>
+                                                                    {item.curriculumItemFiles.some(
+                                                                      (
+                                                                        source
+                                                                      ) =>
+                                                                        source.filetype ===
+                                                                        "Source Code"
+                                                                    ) ? (
+                                                                      item.curriculumItemFiles
+                                                                        .filter(
+                                                                          (
+                                                                            source
+                                                                          ) =>
+                                                                            source.filetype ===
+                                                                            "Source Code"
+                                                                        )
+                                                                        .map(
+                                                                          (
+                                                                            source,
+                                                                            index
+                                                                          ) => (
+                                                                            <ListGroup.Item
+                                                                              className="d-flex justify-content-between"
+                                                                              key={
+                                                                                index
+                                                                              }
+                                                                            >
+                                                                              <span>
+                                                                                {
+                                                                                  source.title
+                                                                                }
+                                                                              </span>
+                                                                              <span>
+                                                                                <Button
+                                                                                  onClick={() => {
+                                                                                    handleDeleteDownloableFilesLecture(
+                                                                                      source
+                                                                                    );
+                                                                                  }}
+                                                                                  className="p-0"
+                                                                                  variant=""
+                                                                                >
+                                                                                  <DeleteIcon />
+                                                                                </Button>
+                                                                              </span>
+                                                                            </ListGroup.Item>
+                                                                          )
+                                                                        )
+                                                                    ) : (
+                                                                      // <p>No Source Code</p>
+                                                                      <></>
+                                                                    )}
+                                                                  </ListGroup>
+                                                                </div>
+                                                              )}
+                                                            </div>
+                                                          </div>
+                                                        )}
+
+                                                      {/* Main Video Card & Text Based Card */}
+                                                      {item.article == "N/A" &&
+                                                        item.curriculumItemFiles
+                                                          .length == 0 &&
+                                                        (showMain ==
+                                                        index + i + item.id ? (
+                                                          curriculumvisiblity ==
+                                                          "video" ? (
+                                                            <div className="p-3">
+                                                              {/* Upload Input */}
+                                                              <Form.Group
+                                                                controlId="formFile"
+                                                                className="my-3"
+                                                              >
+                                                                <Form.Control
+                                                                  accept="video/*"
+                                                                  disabled={
+                                                                    uploading
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) => {
+                                                                    setUploadingVideo(
+                                                                      index +
+                                                                        i +
+                                                                        item.id
+                                                                    );
+                                                                    handleSaveVideo(
+                                                                      e.target
+                                                                        .files[0],
+                                                                      item.id
+                                                                    );
+                                                                  }}
+                                                                  placeholder="Add a Video"
+                                                                  type="file"
+                                                                />
+                                                                <Form.Label
+                                                                  style={{
+                                                                    fontSize: 11,
+                                                                  }}
+                                                                >
+                                                                  <b>Note:</b>{" "}
+                                                                  Video file
+                                                                  should be High
+                                                                  Definition
+                                                                  (HD) quality,
+                                                                  with a minimum
+                                                                  resolution of
+                                                                  720p and
+                                                                  maximum
+                                                                  resolution of
+                                                                  1080p.
+                                                                </Form.Label>
+                                                              </Form.Group>
+
+                                                              {/* Before Video Upload */}
+                                                              <Table
+                                                                striped
+                                                                bordered
+                                                                hover
+                                                              >
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>
+                                                                      Filename
+                                                                    </th>
+                                                                    <th>
+                                                                      Status
+                                                                    </th>
+                                                                    <th>
+                                                                      Type
+                                                                    </th>
+                                                                    <th>
+                                                                      Actions
+                                                                    </th>
+                                                                  </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                  {uploadingVideo ==
+                                                                    index +
+                                                                      i +
+                                                                      item.id &&
+                                                                    uploading && (
+                                                                      <tr>
+                                                                        <td>
+                                                                          {uploadingVideo ==
+                                                                          index +
+                                                                            i +
+                                                                            item.id
+                                                                            ? uploadingVideoName
+                                                                            : ""}
+                                                                        </td>
+                                                                        <td>
+                                                                          <td>
+                                                                            {uploadingVideo ==
+                                                                              index +
+                                                                                i +
+                                                                                item.id &&
+                                                                            uploadingVideoProgress !=
+                                                                              100 ? (
+                                                                              <Badge bg="info">
+                                                                                {
+                                                                                  uploadingVideoProgress
+                                                                                }{" "}
+                                                                                %
+                                                                                <p>
+                                                                                  uploading..
+                                                                                </p>
+                                                                              </Badge>
+                                                                            ) : (
+                                                                              <Badge bg="success">
+                                                                                Completed
+                                                                              </Badge>
+                                                                            )}
+                                                                          </td>
+                                                                        </td>
+                                                                        <td>
+                                                                          Video
+                                                                        </td>
+                                                                        <td>
+                                                                          <Button
+                                                                            onClick={() => {
+                                                                              Swal.fire(
+                                                                                {
+                                                                                  title:
+                                                                                    "Are you sure?",
+                                                                                  text: "Do you want to cancel the upload?",
+                                                                                  icon: "warning",
+                                                                                  showCancelButton: true,
+                                                                                  confirmButtonText:
+                                                                                    "Yes, cancel it!",
+                                                                                  cancelButtonText:
+                                                                                    "No, keep uploading",
+                                                                                }
+                                                                              ).then(
+                                                                                (
+                                                                                  result
+                                                                                ) => {
+                                                                                  if (
+                                                                                    result.isConfirmed
+                                                                                  ) {
+                                                                                    abortControllerRef.current.abort(); // Cancel the upload
+                                                                                    // setUploading(false)
+                                                                                    // GetCurriculum(code, setsectionData)
+                                                                                    Swal.fire(
+                                                                                      "Cancelled!",
+                                                                                      "Your upload has been cancelled.",
+                                                                                      "success"
+                                                                                    );
+                                                                                  }
+                                                                                }
+                                                                              );
+                                                                            }}
+                                                                            size="small"
+                                                                            variant=""
+                                                                          >
+                                                                            <CloseIcon />
+                                                                            Cancel
+                                                                          </Button>
+                                                                        </td>
+                                                                      </tr>
+                                                                    )}
+                                                                </tbody>
+                                                              </Table>
+
+                                                              {/* List of Resources / External Link */}
+                                                              <>
+                                                                <div className="my-3">
+                                                                  {item.description !=
+                                                                    "N/A" && (
+                                                                    <p className="m-0 p-0">
+                                                                      <b>
+                                                                        Description
+                                                                      </b>
+                                                                    </p>
+                                                                  )}
+                                                                  <p>
+                                                                    {item.description !=
+                                                                      "N/A" &&
+                                                                      removeHtmlTags(
+                                                                        item.description
+                                                                      )}
+                                                                  </p>
+                                                                </div>
+
+                                                                {showDescription ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <>
+                                                                    {/* <Button onClick={() => setshowDescription(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
+                                                                    <Button
+                                                                      onClick={() => {
+                                                                        setcurriculum_desc(
+                                                                          item.description ==
+                                                                            "N/A"
+                                                                            ? ""
+                                                                            : item.description
+                                                                        );
+                                                                        setshowDescription(
+                                                                          showDescription ==
+                                                                            index +
+                                                                              i +
+                                                                              item.id
+                                                                            ? null
+                                                                            : index +
+                                                                                i +
+                                                                                item.id
+                                                                        );
+                                                                      }}
+                                                                      className="m-2"
+                                                                      variant="contained"
+                                                                    >
+                                                                      <CloseIcon />{" "}
+                                                                      Close
+                                                                      Description
+                                                                    </Button>
+
+                                                                    {showResources ==
+                                                                    index +
+                                                                      i +
+                                                                      item.id ? (
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowResources(
+                                                                            null
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="contained"
+                                                                      >
+                                                                        <CloseIcon />{" "}
+                                                                        Close
+                                                                        Resources
+                                                                      </Button>
+                                                                    ) : (
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowResources(
+                                                                            showResources ===
+                                                                              index +
+                                                                                i +
+                                                                                item.id
+                                                                              ? null
+                                                                              : index +
+                                                                                  i +
+                                                                                  item.id
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        <AddIcon />{" "}
+                                                                        Resources
+                                                                      </Button>
+                                                                    )}
+
+                                                                    <JoditEditor
+                                                                      value={
+                                                                        curriculum_desc
+                                                                      }
+                                                                      onChange={(
+                                                                        value
+                                                                      ) =>
+                                                                        setcurriculum_desc(
+                                                                          value
+                                                                        )
+                                                                      }
+                                                                    />
+
+                                                                    <div className="d-flex my-2">
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowDescription(
+                                                                            null
+                                                                          )
+                                                                        }
+                                                                        className="mr-1"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        Cancel
+                                                                      </Button>
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          handleSaveDescription(
+                                                                            item.id
+                                                                          )
+                                                                        }
+                                                                        className="ml-1"
+                                                                        variant="contained"
+                                                                      >
+                                                                        Save
+                                                                      </Button>
+                                                                    </div>
+                                                                  </>
+                                                                )}
+
+                                                                {/* Add Description & Resourses */}
+                                                                {showMain ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id &&
+                                                                  showDescription !=
+                                                                    index +
+                                                                      i +
+                                                                      item.id && (
+                                                                    <div className="d-flex justify-content-center p-2">
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowDescription(
+                                                                            showDescription ==
+                                                                              index +
+                                                                                i +
+                                                                                item.id
+                                                                              ? null
+                                                                              : index +
+                                                                                  i +
+                                                                                  item.id
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        <AddIcon />{" "}
+                                                                        Description
+                                                                      </Button>
+
+                                                                      {showResources ==
+                                                                      index +
+                                                                        i +
+                                                                        item.id ? (
+                                                                        <Button
+                                                                          onClick={() =>
+                                                                            setshowResources(
+                                                                              null
+                                                                            )
+                                                                          }
+                                                                          className="m-2"
+                                                                          variant="contained"
+                                                                        >
+                                                                          <CloseIcon />{" "}
+                                                                          Close
+                                                                          Resourses
+                                                                        </Button>
+                                                                      ) : (
+                                                                        <Button
+                                                                          onClick={() =>
+                                                                            setshowResources(
+                                                                              showResources ==
+                                                                                index +
+                                                                                  i +
+                                                                                  item.id
+                                                                                ? null
+                                                                                : index +
+                                                                                    i +
+                                                                                    item.id
+                                                                            )
+                                                                          }
+                                                                          className="m-2"
+                                                                          variant="outlined"
+                                                                        >
+                                                                          <AddIcon />{" "}
+                                                                          Resourses
+                                                                        </Button>
+                                                                      )}
+                                                                    </div>
+                                                                  )}
+
+                                                                {showResources ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <div>
+                                                                    {/* <Button
                             onClick={() =>
                               setshowResources(
                                 null
@@ -2855,36 +3139,38 @@ const Curriculum = ({ code }) => {
                             <CloseIcon />{" "}
                           </Button> */}
 
-                          {/* Tabs */}
-                          <Tabs
-                            defaultActiveKey="d-file"
-                            id="uncontrolled-tab-example"
-                            className="my-3"
-                          >
-                            <Tab
-                              eventKey="d-file"
-                              title="Downloadable File"
-                            >
-                              <Form.Group
-                                controlId="formFile"
-                                className="mb-3"
-                              >
-                                {/* (e) =>  */}
-                                <Form.Control
-                                  onChange={(e) =>
-                                    handleDownloadbaleFile(
-                                      e,
-                                      item.id
-                                    )
-                                  }
-                                  type="file"
-                                />
-                                <Form.Label
-                                  style={{
-                                    fontSize: 11,
-                                  }}
-                                >
-                                  {/* <b>Note:</b> A
+                                                                    {/* Tabs */}
+                                                                    <Tabs
+                                                                      defaultActiveKey="d-file"
+                                                                      id="uncontrolled-tab-example"
+                                                                      className="my-3"
+                                                                    >
+                                                                      <Tab
+                                                                        eventKey="d-file"
+                                                                        title="Downloadable File"
+                                                                      >
+                                                                        <Form.Group
+                                                                          controlId="formFile"
+                                                                          className="mb-3"
+                                                                        >
+                                                                          {/* (e) =>  */}
+                                                                          <Form.Control
+                                                                            onChange={(
+                                                                              e
+                                                                            ) =>
+                                                                              handleDownloadbaleFile(
+                                                                                e,
+                                                                                item.id
+                                                                              )
+                                                                            }
+                                                                            type="file"
+                                                                          />
+                                                                          <Form.Label
+                                                                            style={{
+                                                                              fontSize: 11,
+                                                                            }}
+                                                                          >
+                                                                            {/* <b>Note:</b> A
                                   resource is for
                                   any type of
                                   document that
@@ -2899,135 +3185,159 @@ const Curriculum = ({ code }) => {
                                   legible and the
                                   file size is
                                   less than 1 GiB. */}
-                                </Form.Label>
-                              </Form.Group>
-                            </Tab>
-                            <Tab
-                              eventKey="e-r"
-                              title="External Resources"
-                            >
-                              <Form>
-                                <Form.Group
-                                  className="mb-3"
-                                  controlId="exampleForm.ControlInput1"
-                                >
-                                  <Form.Label>
-                                    Title
-                                  </Form.Label>
-                                  <Form.Control
-                                    value={
-                                      curriclum_ex_res_tile
-                                    }
-                                    onChange={(
-                                      e
-                                    ) =>
-                                      setcurriclum_ex_res_tile(
-                                        e.target
-                                          .value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="A Descriptive Title"
-                                  />
-                                </Form.Group>
+                                                                          </Form.Label>
+                                                                        </Form.Group>
+                                                                      </Tab>
+                                                                      <Tab
+                                                                        eventKey="e-r"
+                                                                        title="External Resources"
+                                                                      >
+                                                                        <Form>
+                                                                          <Form.Group
+                                                                            className="mb-3"
+                                                                            controlId="exampleForm.ControlInput1"
+                                                                          >
+                                                                            <Form.Label>
+                                                                              Title
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                              value={
+                                                                                curriclum_ex_res_tile
+                                                                              }
+                                                                              onChange={(
+                                                                                e
+                                                                              ) =>
+                                                                                setcurriclum_ex_res_tile(
+                                                                                  e
+                                                                                    .target
+                                                                                    .value
+                                                                                )
+                                                                              }
+                                                                              type="text"
+                                                                              placeholder="A Descriptive Title"
+                                                                            />
+                                                                          </Form.Group>
 
-                                <Form.Group
-                                  className="mb-3"
-                                  controlId="exampleForm.ControlInput1"
-                                >
-                                  <Form.Label>
-                                    URL
-                                  </Form.Label>
-                                  <Form.Control
-                                    value={
-                                      curriculum_ex_res_link
-                                    }
-                                    onChange={(
-                                      e
-                                    ) =>
-                                      setcurriculum_ex_res_link(
-                                        e.target
-                                          .value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="https://externallink.com"
-                                  />
-                                </Form.Group>
-                                <Button
-                                  onClick={() =>
-                                    handleExternalResources(
-                                      item.id
-                                    )
-                                  }
-                                  variant="contained"
-                                >
-                                  Add Link
-                                </Button>
-                              </Form>
-                            </Tab>
-                            <Tab
-                              eventKey="source-code"
-                              title="Source Code"
-                            >
-                              <Form.Group
-                                onChange={(e) =>
-                                  handleSaveSourceCode(
-                                    item.id,
-                                    e
-                                  )
-                                }
-                                controlId="formFile"
-                                className="mb-3"
-                              >
-                                <Form.Control type="file" />
-                                <Form.Label
-                                  style={{
-                                    fontSize: 11,
-                                  }}
-                                >
-                                  <b>Note:</b>{" "}
-                                  Only available
-                                  for Python and
-                                  Ruby for now.
-                                  You can upload
-                                  .py and .rb
-                                  files.
-                                </Form.Label>
-                              </Form.Group>
-                            </Tab>
-                          </Tabs>
-                        </div>
-                      )}
-                    </>
-                  </div>
-              ) : curriculumvisiblity ==
-                "article" ? (
-                <div className="p-3">
-                  <div className="my-3">
-                    <JoditEditor
-                      value={article}
-                      onChange={(e) =>
-                        setarticle(e)
-                      }
-                    />
-                    <div className="d-flex flex-start my-2">
-                      <Button
-                        onClick={(e) =>
-                          handleSaveArticle(
-                            item.id
-                          )
-                        }
-                        variant="contained"
-                      >
-                        SAVE
-                      </Button>
-                    </div>
-                  </div>
+                                                                          <Form.Group
+                                                                            className="mb-3"
+                                                                            controlId="exampleForm.ControlInput1"
+                                                                          >
+                                                                            <Form.Label>
+                                                                              URL
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                              value={
+                                                                                curriculum_ex_res_link
+                                                                              }
+                                                                              onChange={(
+                                                                                e
+                                                                              ) =>
+                                                                                setcurriculum_ex_res_link(
+                                                                                  e
+                                                                                    .target
+                                                                                    .value
+                                                                                )
+                                                                              }
+                                                                              type="text"
+                                                                              placeholder="https://externallink.com"
+                                                                            />
+                                                                          </Form.Group>
+                                                                          <Button
+                                                                            onClick={() =>
+                                                                              handleExternalResources(
+                                                                                item.id
+                                                                              )
+                                                                            }
+                                                                            variant="contained"
+                                                                          >
+                                                                            Add
+                                                                            Link
+                                                                          </Button>
+                                                                        </Form>
+                                                                      </Tab>
+                                                                      <Tab
+                                                                        eventKey="source-code"
+                                                                        title="Source Code"
+                                                                      >
+                                                                        <Form.Group
+                                                                          onChange={(
+                                                                            e
+                                                                          ) =>
+                                                                            handleSaveSourceCode(
+                                                                              item.id,
+                                                                              e
+                                                                            )
+                                                                          }
+                                                                          controlId="formFile"
+                                                                          className="mb-3"
+                                                                        >
+                                                                          <Form.Control type="file" />
+                                                                          <Form.Label
+                                                                            style={{
+                                                                              fontSize: 11,
+                                                                            }}
+                                                                          >
+                                                                            <b>
+                                                                              Note:
+                                                                            </b>{" "}
+                                                                            Only
+                                                                            available
+                                                                            for
+                                                                            Python
+                                                                            and
+                                                                            Ruby
+                                                                            for
+                                                                            now.
+                                                                            You
+                                                                            can
+                                                                            upload
+                                                                            .py
+                                                                            and
+                                                                            .rb
+                                                                            files.
+                                                                          </Form.Label>
+                                                                        </Form.Group>
+                                                                      </Tab>
+                                                                    </Tabs>
+                                                                  </div>
+                                                                )}
+                                                              </>
+                                                            </div>
+                                                          ) : curriculumvisiblity ==
+                                                            "article" ? (
+                                                            <div className="p-3">
+                                                              <div className="my-3">
+                                                                <JoditEditor
+                                                                  value={
+                                                                    article
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setarticle(
+                                                                      e
+                                                                    )
+                                                                  }
+                                                                />
+                                                                <div className="d-flex flex-start my-2">
+                                                                  <Button
+                                                                    onClick={(
+                                                                      e
+                                                                    ) =>
+                                                                      handleSaveArticle(
+                                                                        item.id
+                                                                      )
+                                                                    }
+                                                                    variant="contained"
+                                                                  >
+                                                                    SAVE
+                                                                  </Button>
+                                                                </div>
+                                                              </div>
 
-                  {/* List of Resources / External Link */}
+                                                              {/* List of Resources / External Link */}
 
-                  {/* <div className="my-3">
+                                                              {/* <div className="my-3">
                 {item.description !=
                         "N/A" && (
                         <p className="m-0 p-0">
@@ -3043,162 +3353,175 @@ const Curriculum = ({ code }) => {
                       </p>
                 </div> */}
 
-                  <>
-                    {showDescription ==
-                      index + i + item.id && (
-                      <>
-                        <Button
-                          onClick={() =>
-                            setshowDescription(
-                              null
-                            )
-                          }
-                          className="m-2"
-                          variant="contained"
-                        >
-                          <CloseIcon />{" "}
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            setshowResources(
-                              null
-                            )
-                          }
-                          className="m-2"
-                          variant="outlined"
-                        >
-                          <AddIcon /> Resourses
-                        </Button>
-                        <JoditEditor
-                          value={
-                            curriculum_desc
-                          }
-                          onChange={(value) =>
-                            setcurriculum_desc(
-                              value
-                            )
-                          }
-                        />
+                                                              <>
+                                                                {showDescription ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <>
+                                                                    <Button
+                                                                      onClick={() =>
+                                                                        setshowDescription(
+                                                                          null
+                                                                        )
+                                                                      }
+                                                                      className="m-2"
+                                                                      variant="contained"
+                                                                    >
+                                                                      <CloseIcon />{" "}
+                                                                    </Button>
+                                                                    <Button
+                                                                      onClick={() =>
+                                                                        setshowResources(
+                                                                          null
+                                                                        )
+                                                                      }
+                                                                      className="m-2"
+                                                                      variant="outlined"
+                                                                    >
+                                                                      <AddIcon />{" "}
+                                                                      Resourses
+                                                                    </Button>
+                                                                    <JoditEditor
+                                                                      value={
+                                                                        curriculum_desc
+                                                                      }
+                                                                      onChange={(
+                                                                        value
+                                                                      ) =>
+                                                                        setcurriculum_desc(
+                                                                          value
+                                                                        )
+                                                                      }
+                                                                    />
 
-                        <div className="d-flex my-2">
-                          <Button
-                            onClick={() =>
-                              setshowDescription(
-                                null
-                              )
-                            }
-                            className="mr-1"
-                            variant="outlined"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={() =>
-                              handleSaveDescription(
-                                item.id
-                              )
-                            }
-                            className="ml-1"
-                            variant="contained"
-                          >
-                            Save
-                          </Button>
-                        </div>
-                      </>
-                    )}
+                                                                    <div className="d-flex my-2">
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowDescription(
+                                                                            null
+                                                                          )
+                                                                        }
+                                                                        className="mr-1"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        Cancel
+                                                                      </Button>
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          handleSaveDescription(
+                                                                            item.id
+                                                                          )
+                                                                        }
+                                                                        className="ml-1"
+                                                                        variant="contained"
+                                                                      >
+                                                                        Save
+                                                                      </Button>
+                                                                    </div>
+                                                                  </>
+                                                                )}
 
-                    {/* Add Description & Resourses */}
-                    {showMain ==
-                      index + i + item.id &&
-                      showDescription !=
-                        index + i + item.id && (
-                        <div className="d-flex justify-content-center p-2">
-                          <Button
-                            onClick={() =>
-                              setshowDescription(
-                                showDescription ==
-                                  index +
-                                    i +
-                                    item.id
-                                  ? null
-                                  : index +
-                                      i +
-                                      item.id
-                              )
-                            }
-                            className="m-2"
-                            variant="outlined"
-                          >
-                            <AddIcon />{" "}
-                            Description
-                          </Button>
-                          <Button
-                            onClick={() =>
-                              setshowResources(
-                                showResources ==
-                                  index +
-                                    i +
-                                    item.id
-                                  ? null
-                                  : index +
-                                      i +
-                                      item.id
-                              )
-                            }
-                            className="m-2"
-                            variant="outlined"
-                          >
-                            <AddIcon />{" "}
-                            Resourses
-                          </Button>
-                        </div>
-                      )}
+                                                                {/* Add Description & Resourses */}
+                                                                {showMain ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id &&
+                                                                  showDescription !=
+                                                                    index +
+                                                                      i +
+                                                                      item.id && (
+                                                                    <div className="d-flex justify-content-center p-2">
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowDescription(
+                                                                            showDescription ==
+                                                                              index +
+                                                                                i +
+                                                                                item.id
+                                                                              ? null
+                                                                              : index +
+                                                                                  i +
+                                                                                  item.id
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        <AddIcon />{" "}
+                                                                        Description
+                                                                      </Button>
+                                                                      <Button
+                                                                        onClick={() =>
+                                                                          setshowResources(
+                                                                            showResources ==
+                                                                              index +
+                                                                                i +
+                                                                                item.id
+                                                                              ? null
+                                                                              : index +
+                                                                                  i +
+                                                                                  item.id
+                                                                          )
+                                                                        }
+                                                                        className="m-2"
+                                                                        variant="outlined"
+                                                                      >
+                                                                        <AddIcon />{" "}
+                                                                        Resourses
+                                                                      </Button>
+                                                                    </div>
+                                                                  )}
 
-                    {showResources ==
-                      index + i + item.id && (
-                      <div>
-                        <Button
-                          onClick={() =>
-                            setshowResources(
-                              null
-                            )
-                          }
-                          className="m-2"
-                          variant="contained"
-                        >
-                          <CloseIcon />{" "}
-                        </Button>
+                                                                {showResources ==
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <div>
+                                                                    <Button
+                                                                      onClick={() =>
+                                                                        setshowResources(
+                                                                          null
+                                                                        )
+                                                                      }
+                                                                      className="m-2"
+                                                                      variant="contained"
+                                                                    >
+                                                                      <CloseIcon />{" "}
+                                                                    </Button>
 
-                        {/* Tabs */}
-                        <Tabs
-                          defaultActiveKey="d-file"
-                          id="uncontrolled-tab-example"
-                          className="my-3"
-                        >
-                          <Tab
-                            eventKey="d-file"
-                            title="Downloadable File"
-                          >
-                            <Form.Group
-                              controlId="formFile"
-                              className="mb-3"
-                            >
-                              {/* (e) =>  */}
-                              <Form.Control
-                                onChange={(e) =>
-                                  handleDownloadbaleFile(
-                                    e,
-                                    item.id
-                                  )
-                                }
-                                type="file"
-                              />
-                              <Form.Label
-                                style={{
-                                  fontSize: 11,
-                                }}
-                              >
-                                {/* <b>Note:</b> A
+                                                                    {/* Tabs */}
+                                                                    <Tabs
+                                                                      defaultActiveKey="d-file"
+                                                                      id="uncontrolled-tab-example"
+                                                                      className="my-3"
+                                                                    >
+                                                                      <Tab
+                                                                        eventKey="d-file"
+                                                                        title="Downloadable File"
+                                                                      >
+                                                                        <Form.Group
+                                                                          controlId="formFile"
+                                                                          className="mb-3"
+                                                                        >
+                                                                          {/* (e) =>  */}
+                                                                          <Form.Control
+                                                                            onChange={(
+                                                                              e
+                                                                            ) =>
+                                                                              handleDownloadbaleFile(
+                                                                                e,
+                                                                                item.id
+                                                                              )
+                                                                            }
+                                                                            type="file"
+                                                                          />
+                                                                          <Form.Label
+                                                                            style={{
+                                                                              fontSize: 11,
+                                                                            }}
+                                                                          >
+                                                                            {/* <b>Note:</b> A
                                 resource is for
                                 any type of
                                 document that
@@ -3213,523 +3536,681 @@ const Curriculum = ({ code }) => {
                                 legible and the
                                 file size is
                                 less than 1 GiB. */}
-                              </Form.Label>
-                            </Form.Group>
-                          </Tab>
-                          <Tab
-                            eventKey="e-r"
-                            title="External Resources"
-                          >
-                            <Form>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  Title
-                                </Form.Label>
-                                <Form.Control
-                                  value={
-                                    curriclum_ex_res_tile
-                                  }
-                                  onChange={(
-                                    e
-                                  ) =>
-                                    setcurriclum_ex_res_tile(
-                                      e.target
-                                        .value
-                                    )
-                                  }
-                                  type="text"
-                                  placeholder="A Descriptive Title"
-                                />
-                              </Form.Group>
+                                                                          </Form.Label>
+                                                                        </Form.Group>
+                                                                      </Tab>
+                                                                      <Tab
+                                                                        eventKey="e-r"
+                                                                        title="External Resources"
+                                                                      >
+                                                                        <Form>
+                                                                          <Form.Group
+                                                                            className="mb-3"
+                                                                            controlId="exampleForm.ControlInput1"
+                                                                          >
+                                                                            <Form.Label>
+                                                                              Title
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                              value={
+                                                                                curriclum_ex_res_tile
+                                                                              }
+                                                                              onChange={(
+                                                                                e
+                                                                              ) =>
+                                                                                setcurriclum_ex_res_tile(
+                                                                                  e
+                                                                                    .target
+                                                                                    .value
+                                                                                )
+                                                                              }
+                                                                              type="text"
+                                                                              placeholder="A Descriptive Title"
+                                                                            />
+                                                                          </Form.Group>
 
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  URL
-                                </Form.Label>
-                                <Form.Control
-                                  value={
-                                    curriculum_ex_res_link
-                                  }
-                                  onChange={(
-                                    e
-                                  ) =>
-                                    setcurriculum_ex_res_link(
-                                      e.target
-                                        .value
-                                    )
-                                  }
-                                  type="text"
-                                  placeholder="https://externallink.com"
-                                />
-                              </Form.Group>
-                              <Button
-                                onClick={() =>
-                                  handleExternalResources(
-                                    item.id
-                                  )
-                                }
-                                variant="contained"
-                              >
-                                Add Link
-                              </Button>
-                            </Form>
-                          </Tab>
-                          <Tab
-                            eventKey="source-code"
-                            title="Source Code"
-                          >
-                            <Form.Group
-                              onChange={(e) =>
-                                handleSaveSourceCode(
-                                  item.id,
-                                  e
-                                )
-                              }
-                              controlId="formFile"
-                              className="mb-3"
-                            >
-                              <Form.Control type="file" />
-                              <Form.Label
-                                style={{
-                                  fontSize: 11,
-                                }}
-                              >
-                                <b>Note:</b>{" "}
-                                Only available
-                                for Python and
-                                Ruby for now.
-                                You can upload
-                                .py and .rb
-                                files.
-                              </Form.Label>
-                            </Form.Group>
-                          </Tab>
-                        </Tabs>
-                      </div>
-                    )}
-                  </>
-                </div>
-                  ) : (
-                    <div className="d-flex justify-content-center my-2">
-                      <div className="mx-2">
-                        <Card
-                          sx={{ width: 120 , height :100 }}
-                          elevation={3}
-                        >
-                          <CardActionArea
-                            onClick={() => {
-                              setshowDescRes(true);
-                              setcurriculumvisiblity(
-                                "video"
-                              );
-                            }}
-                            className="d-flex justify-content-center align-items-center text-center"
-                          >
-                            <CardContent>
-                              <PlayCircleIcon fontSize="large" />
+                                                                          <Form.Group
+                                                                            className="mb-3"
+                                                                            controlId="exampleForm.ControlInput1"
+                                                                          >
+                                                                            <Form.Label>
+                                                                              URL
+                                                                            </Form.Label>
+                                                                            <Form.Control
+                                                                              value={
+                                                                                curriculum_ex_res_link
+                                                                              }
+                                                                              onChange={(
+                                                                                e
+                                                                              ) =>
+                                                                                setcurriculum_ex_res_link(
+                                                                                  e
+                                                                                    .target
+                                                                                    .value
+                                                                                )
+                                                                              }
+                                                                              type="text"
+                                                                              placeholder="https://externallink.com"
+                                                                            />
+                                                                          </Form.Group>
+                                                                          <Button
+                                                                            onClick={() =>
+                                                                              handleExternalResources(
+                                                                                item.id
+                                                                              )
+                                                                            }
+                                                                            variant="contained"
+                                                                          >
+                                                                            Add
+                                                                            Link
+                                                                          </Button>
+                                                                        </Form>
+                                                                      </Tab>
+                                                                      <Tab
+                                                                        eventKey="source-code"
+                                                                        title="Source Code"
+                                                                      >
+                                                                        <Form.Group
+                                                                          onChange={(
+                                                                            e
+                                                                          ) =>
+                                                                            handleSaveSourceCode(
+                                                                              item.id,
+                                                                              e
+                                                                            )
+                                                                          }
+                                                                          controlId="formFile"
+                                                                          className="mb-3"
+                                                                        >
+                                                                          <Form.Control type="file" />
+                                                                          <Form.Label
+                                                                            style={{
+                                                                              fontSize: 11,
+                                                                            }}
+                                                                          >
+                                                                            <b>
+                                                                              Note:
+                                                                            </b>{" "}
+                                                                            Only
+                                                                            available
+                                                                            for
+                                                                            Python
+                                                                            and
+                                                                            Ruby
+                                                                            for
+                                                                            now.
+                                                                            You
+                                                                            can
+                                                                            upload
+                                                                            .py
+                                                                            and
+                                                                            .rb
+                                                                            files.
+                                                                          </Form.Label>
+                                                                        </Form.Group>
+                                                                      </Tab>
+                                                                    </Tabs>
+                                                                  </div>
+                                                                )}
+                                                              </>
+                                                            </div>
+                                                          ) : (
+                                                            <div className="d-flex justify-content-center my-2">
+                                                              <div className="mx-2">
+                                                                <Card
+                                                                  sx={{
+                                                                    width: 120,
+                                                                    height: 100,
+                                                                  }}
+                                                                  elevation={3}
+                                                                >
+                                                                  <CardActionArea
+                                                                    onClick={() => {
+                                                                      setshowDescRes(
+                                                                        true
+                                                                      );
+                                                                      setcurriculumvisiblity(
+                                                                        "video"
+                                                                      );
+                                                                    }}
+                                                                    className="d-flex justify-content-center align-items-center text-center"
+                                                                  >
+                                                                    <CardContent>
+                                                                      <PlayCircleIcon fontSize="large" />
 
-                              <p className="my-2">
-                                Video Lecture
-                              </p>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </div>
+                                                                      <p className="my-2">
+                                                                        Video
+                                                                        Lecture
+                                                                      </p>
+                                                                    </CardContent>
+                                                                  </CardActionArea>
+                                                                </Card>
+                                                              </div>
 
-                      <div className="mx-2">
-                        <Card
-                          sx={{ width: 120  , height :100 }}
-                          elevation={3}
-                        >
-                          <CardActionArea
-                            onClick={() => {
-                              setshowDescRes(true);
-                              setcurriculumvisiblity(
-                                "article"
-                              );
-                            }}
-                            className="d-flex justify-content-center align-items-center text-center"
-                          >
-                            <CardContent>
-                              <ArticleIcon fontSize="large" />
+                                                              <div className="mx-2">
+                                                                <Card
+                                                                  sx={{
+                                                                    width: 120,
+                                                                    height: 100,
+                                                                  }}
+                                                                  elevation={3}
+                                                                >
+                                                                  <CardActionArea
+                                                                    onClick={() => {
+                                                                      setshowDescRes(
+                                                                        true
+                                                                      );
+                                                                      setcurriculumvisiblity(
+                                                                        "article"
+                                                                      );
+                                                                    }}
+                                                                    className="d-flex justify-content-center align-items-center text-center"
+                                                                  >
+                                                                    <CardContent>
+                                                                      <ArticleIcon fontSize="large" />
 
-                              <p className="my-2">
-                                Text-based Lecture
-                              </p>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </div>
-                    </div>
-                  )
-                ) : (
-                  <></>
-                ))}
+                                                                      <p className="my-2">
+                                                                        Text-based
+                                                                        Lecture
+                                                                      </p>
+                                                                    </CardContent>
+                                                                  </CardActionArea>
+                                                                </Card>
+                                                              </div>
+                                                            </div>
+                                                          )
+                                                        ) : (
+                                                          <></>
+                                                        ))}
 
-              {/* Main Video Card & Text Based Card */}
-              {item.article == "N/A" && item.curriculumItemFiles.length !=
-                0 &&
-                showMain == index + i + item.id && (
-                  <div className="my-3">
-                    {/* Display Video After Upload Video */}
+                                                      {/* Main Video Card & Text Based Card */}
+                                                      {item.article == "N/A" &&
+                                                        item.curriculumItemFiles
+                                                          .length != 0 &&
+                                                        showMain ==
+                                                          index +
+                                                            i +
+                                                            item.id && (
+                                                          <div className="my-3">
+                                                            {/* Display Video After Upload Video */}
 
-                    <div className="p-3">
-                      {/* Upload Input */}
-                      <Form.Group
-                        controlId="formFile"
-                        className="my-3"
-                      >
-                        <Form.Control
-                          accept="video/*"
-                          disabled={uploading}
-                          onChange={(e) => {
-                            setUploadingVideo(
-                              index + i + item.id
-                            );
-                            handleSaveVideo(
-                              e.target.files[0],
-                              item.id
-                            );
-                          }}
-                          placeholder="Add a Video"
-                          type="file"
-                        />
-                        <Form.Label
-                          style={{ fontSize: 11 }}
-                        >
-                          <b>Note:</b> Video file
-                          should be High Definition
-                          (HD) quality, with a
-                          minimum resolution of 720p
-                          and maximum resolution of
-                          1080p.
-                        </Form.Label>
-                      </Form.Group>
+                                                            <div className="p-3">
+                                                              {/* Upload Input */}
+                                                              <Form.Group
+                                                                controlId="formFile"
+                                                                className="my-3"
+                                                              >
+                                                                <Form.Control
+                                                                  accept="video/*"
+                                                                  disabled={
+                                                                    uploading
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) => {
+                                                                    setUploadingVideo(
+                                                                      index +
+                                                                        i +
+                                                                        item.id
+                                                                    );
+                                                                    handleSaveVideo(
+                                                                      e.target
+                                                                        .files[0],
+                                                                      item.id
+                                                                    );
+                                                                  }}
+                                                                  placeholder="Add a Video"
+                                                                  type="file"
+                                                                />
+                                                                <Form.Label
+                                                                  style={{
+                                                                    fontSize: 11,
+                                                                  }}
+                                                                >
+                                                                  <b>Note:</b>{" "}
+                                                                  Video file
+                                                                  should be High
+                                                                  Definition
+                                                                  (HD) quality,
+                                                                  with a minimum
+                                                                  resolution of
+                                                                  720p and
+                                                                  maximum
+                                                                  resolution of
+                                                                  1080p.
+                                                                </Form.Label>
+                                                              </Form.Group>
 
-                      
-                    
-                      {item.curriculumItemFiles
-                        .length > 0 &&
-                        item.curriculumItemFiles.some(
-                          (video) =>
-                            video.filetype ===
-                            "Video"
-                        ) &&
-                        item.curriculumItemFiles
-                          .filter(
-                            (video) =>
-                              video.filetype ===
-                              "Video"
-                          )
-                          .map((video) => (
-                            <div className="d-flex justify-content-end m-2">
-                              <p>
-                                <span className="mx-2">
-                                 Free Preview Video :
-                                </span>
-                                <Switch
-                                  checked={
-                                    video.previewVideo
-                                  }
-                                  onChange={(e) =>
-                                    handleSetVideoPreview(
-                                      e,
-                                      item
-                                    )
-                                  }
-                                />
-                              </p>
-                            </div>
-                          ))}
-                      {/* After Video Upload */}
-                  <Table striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>Filename</th>
-                        <th>Status</th>
-                        <th>Type</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* Re-upload */}
-                      {uploading && uploadingVideo === index + i + item.id && (
-                        <tr>
-                          <td>{uploadingVideoName}</td>
-                          <td>
-                            {uploadingVideoProgress !== 100 ? (
-                              <Badge bg="info">
-                                {uploadingVideoProgress} %
+                                                              {item
+                                                                .curriculumItemFiles
+                                                                .length > 0 &&
+                                                                item.curriculumItemFiles.some(
+                                                                  (video) =>
+                                                                    video.filetype ===
+                                                                    "Video"
+                                                                ) &&
+                                                                item.curriculumItemFiles
+                                                                  .filter(
+                                                                    (video) =>
+                                                                      video.filetype ===
+                                                                      "Video"
+                                                                  )
+                                                                  .map(
+                                                                    (video) => (
+                                                                      <div className="d-flex justify-content-end m-2">
+                                                                        <p>
+                                                                          <span className="mx-2">
+                                                                            Free
+                                                                            Preview
+                                                                            Video
+                                                                            :
+                                                                          </span>
+                                                                          <Switch
+                                                                            checked={
+                                                                              video.previewVideo
+                                                                            }
+                                                                            onChange={(
+                                                                              e
+                                                                            ) =>
+                                                                              handleSetVideoPreview(
+                                                                                e,
+                                                                                item
+                                                                              )
+                                                                            }
+                                                                          />
+                                                                        </p>
+                                                                      </div>
+                                                                    )
+                                                                  )}
+                                                              {/* After Video Upload */}
+                                                              <Table
+                                                                striped
+                                                                bordered
+                                                                hover
+                                                              >
+                                                                <thead>
+                                                                  <tr>
+                                                                    <th>
+                                                                      Filename
+                                                                    </th>
+                                                                    <th>
+                                                                      Status
+                                                                    </th>
+                                                                    <th>
+                                                                      Type
+                                                                    </th>
+                                                                    <th>
+                                                                      Actions
+                                                                    </th>
+                                                                  </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                  {/* Re-upload */}
+                                                                  {uploading &&
+                                                                    uploadingVideo ===
+                                                                      index +
+                                                                        i +
+                                                                        item.id && (
+                                                                      <tr>
+                                                                        <td>
+                                                                          {
+                                                                            uploadingVideoName
+                                                                          }
+                                                                        </td>
+                                                                        <td>
+                                                                          {uploadingVideoProgress !==
+                                                                          100 ? (
+                                                                            <Badge bg="info">
+                                                                              {
+                                                                                uploadingVideoProgress
+                                                                              }{" "}
+                                                                              %
+                                                                              <p>
+                                                                                uploading..
+                                                                              </p>
+                                                                            </Badge>
+                                                                          ) : (
+                                                                            <Badge bg="success">
+                                                                              Completed
+                                                                            </Badge>
+                                                                          )}
+                                                                        </td>
+                                                                        <td>
+                                                                          Video
+                                                                        </td>
+                                                                        <td>
+                                                                          <Button
+                                                                            onClick={() => {
+                                                                              Swal.fire(
+                                                                                {
+                                                                                  title:
+                                                                                    "Are you sure?",
+                                                                                  text: "Do you want to cancel the upload?",
+                                                                                  icon: "warning",
+                                                                                  showCancelButton: true,
+                                                                                  confirmButtonText:
+                                                                                    "Yes, cancel it!",
+                                                                                  cancelButtonText:
+                                                                                    "No, keep uploading",
+                                                                                }
+                                                                              ).then(
+                                                                                (
+                                                                                  result
+                                                                                ) => {
+                                                                                  if (
+                                                                                    result.isConfirmed
+                                                                                  ) {
+                                                                                    abortControllerRef.current.abort(); // Cancel the upload
+                                                                                    Swal.fire(
+                                                                                      "Cancelled!",
+                                                                                      "Your upload has been cancelled.",
+                                                                                      "success"
+                                                                                    );
+                                                                                    // Additional actions if needed
+                                                                                  }
+                                                                                }
+                                                                              );
+                                                                            }}
+                                                                            size="small"
+                                                                            variant=""
+                                                                            className="m-2"
+                                                                          >
+                                                                            <CloseIcon />{" "}
+                                                                            Cancel
+                                                                          </Button>
+                                                                        </td>
+                                                                      </tr>
+                                                                    )}
 
-                                <p>uploading..</p>
-                              </Badge>
-                            ) : (
-                              <Badge bg="success">Completed</Badge>
-                            )}
-                          </td>
-                          <td>Video</td>
-                          <td>
-                            <Button
-                              onClick={() => {
-                                Swal.fire({
-                                  title: 'Are you sure?',
-                                  text: "Do you want to cancel the upload?",
-                                  icon: 'warning',
-                                  showCancelButton: true,
-                                  confirmButtonText: 'Yes, cancel it!',
-                                  cancelButtonText: 'No, keep uploading'
-                                }).then((result) => {
-                                  if (result.isConfirmed) {
-                                    abortControllerRef.current.abort(); // Cancel the upload
-                                    Swal.fire(
-                                      'Cancelled!',
-                                      'Your upload has been cancelled.',
-                                      'success'
-                                    );
-                                    // Additional actions if needed
-                                  }
-                                });
-                              }}
-                              size="small"
-                              variant=""
-                              className="m-2"
-                            >
-                              <CloseIcon /> Cancel
-                            </Button>
-                          </td>
-                        </tr>
-                      )}
+                                                                  {/* Existing Uploaded Files */}
+                                                                  {/* Only render existing files if not uploading this specific item */}
+                                                                  {!(
+                                                                    uploading &&
+                                                                    uploadingVideo ===
+                                                                      index +
+                                                                        i +
+                                                                        item.id
+                                                                  ) &&
+                                                                    item
+                                                                      .curriculumItemFiles
+                                                                      .length >
+                                                                      0 &&
+                                                                    (item.curriculumItemFiles.some(
+                                                                      (video) =>
+                                                                        video.filetype ===
+                                                                        "Video"
+                                                                    ) ? (
+                                                                      item.curriculumItemFiles
+                                                                        .filter(
+                                                                          (
+                                                                            video
+                                                                          ) =>
+                                                                            video.filetype ===
+                                                                            "Video"
+                                                                        )
+                                                                        .map(
+                                                                          (
+                                                                            video,
+                                                                            vidIndex
+                                                                          ) => (
+                                                                            <tr
+                                                                              key={
+                                                                                vidIndex
+                                                                              }
+                                                                            >
+                                                                              <td>
+                                                                                {
+                                                                                  video.title
+                                                                                }
+                                                                              </td>
+                                                                              <td>
+                                                                                <Badge bg="success">
+                                                                                  Completed
+                                                                                </Badge>
+                                                                              </td>
+                                                                              <td>
+                                                                                Video
+                                                                              </td>
+                                                                              <td>
+                                                                                <Button
+                                                                                  onClick={() => {
+                                                                                    handleVideoDelete(
+                                                                                      video
+                                                                                    );
+                                                                                  }}
+                                                                                  size="small"
+                                                                                  variant=""
+                                                                                >
+                                                                                  <DeleteIcon />
+                                                                                </Button>
 
-                      {/* Existing Uploaded Files */}
-                      {/* Only render existing files if not uploading this specific item */}
-                      {! (uploading && uploadingVideo === index + i + item.id) && item.curriculumItemFiles.length > 0 && (
-                        item.curriculumItemFiles.some(video => video.filetype === "Video") ? (
-                          item.curriculumItemFiles
-                            .filter(video => video.filetype === "Video")
-                            .map((video, vidIndex) => (
-                              <tr key={vidIndex}>
-                                <td>{video.title}</td>
-                                <td>
-                                  <Badge bg="success">Completed</Badge>
-                                </td>
-                                <td>Video</td>
-                                <td>
-                    <Button
-                      onClick={() => {
-                        handleVideoDelete(video);
-                      }}
-                      size="small"
-                      variant=""
-                    >
-                      <DeleteIcon />
-                    </Button>
+                                                                                <Button
+                                                                                  onClick={() => {
+                                                                                    showVideoModal(
+                                                                                      `${video.url}`,
+                                                                                      video.title
+                                                                                    );
+                                                                                  }}
+                                                                                  size="small"
+                                                                                  variant="secondary"
+                                                                                >
+                                                                                  <RemoveRedEyeIcon />
+                                                                                </Button>
+                                                                              </td>
+                                                                            </tr>
+                                                                          )
+                                                                        )
+                                                                    ) : (
+                                                                      <tr>
+                                                                        <td colSpan="4">
+                                                                          No
+                                                                          Video
+                                                                        </td>
+                                                                      </tr>
+                                                                    ))}
+                                                                </tbody>
+                                                              </Table>
+                                                            </div>
 
-                    <Button
-                      onClick={() => {
-                        showVideoModal(`${video.url}`, video.title);
-                      }}
-                      size="small"
-                      variant="secondary"
-                    >
-                      <RemoveRedEyeIcon />
-                    </Button>
-                  </td>
-                              </tr>
-                            ))
-                        ) : (
-                          <tr>
-                            <td colSpan="4">No Video</td>
-                          </tr>
-                        )
-                      )}
-                    </tbody>
-                  </Table>
+                                                            {/* <h3>video</h3> */}
 
-                    </div>
+                                                            {/*  Inputs of External Links / Resouces  */}
 
-                      {/* <h3>video</h3> */}
+                                                            {/* List of Resources / External Link */}
 
-                      {/*  Inputs of External Links / Resouces  */}
+                                                            <div className="my-3">
+                                                              {item.description !=
+                                                                "N/A" && (
+                                                                <p className="m-0 p-0">
+                                                                  <b>
+                                                                    Description
+                                                                  </b>
+                                                                </p>
+                                                              )}
+                                                              <p>
+                                                                {item.description !=
+                                                                  "N/A" &&
+                                                                  removeHtmlTags(
+                                                                    item.description
+                                                                  )}
+                                                              </p>
+                                                            </div>
 
-                      {/* List of Resources / External Link */}
+                                                            <>
+                                                              {showDescription ==
+                                                                index +
+                                                                  i +
+                                                                  item.id && (
+                                                                <>
+                                                                  <Button
+                                                                    onClick={() =>
+                                                                      setshowDescription(
+                                                                        null
+                                                                      )
+                                                                    }
+                                                                    className="m-2"
+                                                                    variant="contained"
+                                                                  >
+                                                                    <CloseIcon />{" "}
+                                                                  </Button>
+                                                                  <Button
+                                                                    onClick={() =>
+                                                                      setshowResources(
+                                                                        null
+                                                                      )
+                                                                    }
+                                                                    className="m-2"
+                                                                    variant="outlined"
+                                                                  >
+                                                                    <AddIcon />{" "}
+                                                                    Resourses
+                                                                  </Button>
+                                                                  <JoditEditor
+                                                                    value={
+                                                                      curriculum_desc
+                                                                    }
+                                                                    onChange={(
+                                                                      value
+                                                                    ) =>
+                                                                      setcurriculum_desc(
+                                                                        value
+                                                                      )
+                                                                    }
+                                                                  />
 
-                      <div className="my-3">
-                {item.description !=
-                        "N/A" && (
-                        <p className="m-0 p-0">
-                          <b>Description</b>
-                        </p>
-                      )}
-                      <p>
-                        {item.description !=
-                          "N/A" &&
-                          removeHtmlTags(
-                            item.description
-                          )}
-                      </p>
-                </div>
+                                                                  <div className="d-flex my-2">
+                                                                    <Button
+                                                                      onClick={() =>
+                                                                        setshowDescription(
+                                                                          null
+                                                                        )
+                                                                      }
+                                                                      className="mx-1"
+                                                                      variant="outlined"
+                                                                    >
+                                                                      Cancel
+                                                                    </Button>
+                                                                    <Button
+                                                                      onClick={() =>
+                                                                        handleSaveDescription(
+                                                                          item.id
+                                                                        )
+                                                                      }
+                                                                      className="mx-1"
+                                                                      variant="contained"
+                                                                    >
+                                                                      Save
+                                                                    </Button>
+                                                                  </div>
+                                                                </>
+                                                              )}
 
-                    <>
-                      {showDescription ==
-                        index + i + item.id && (
-                        <>
-                          <Button
-                            onClick={() =>
-                              setshowDescription(
-                                null
-                              )
-                            }
-                            className="m-2"
-                            variant="contained"
-                          >
-                            <CloseIcon />{" "}
-                          </Button>
-                          <Button
-                            onClick={() =>
-                              setshowResources(null)
-                            }
-                            className="m-2"
-                            variant="outlined"
-                          >
-                            <AddIcon /> Resourses
-                          </Button>
-                          <JoditEditor
-                            value={curriculum_desc}
-                            onChange={(value) =>
-                              setcurriculum_desc(
-                                value
-                              )
-                            }
-                          />
+                                                              {/* Add Description & Resourses */}
+                                                              {showMain ==
+                                                                index +
+                                                                  i +
+                                                                  item.id &&
+                                                                showDescription !=
+                                                                  index +
+                                                                    i +
+                                                                    item.id && (
+                                                                  <div className="d-flex justify-content-center p-2">
+                                                                    <Button
+                                                                      onClick={() => {
+                                                                        setcurriculum_desc(
+                                                                          item.description ==
+                                                                            "N/A"
+                                                                            ? ""
+                                                                            : item.description
+                                                                        );
+                                                                        setshowDescription(
+                                                                          showDescription ==
+                                                                            index +
+                                                                              i +
+                                                                              item.id
+                                                                            ? null
+                                                                            : index +
+                                                                                i +
+                                                                                item.id
+                                                                        );
+                                                                      }}
+                                                                      className="m-2"
+                                                                      variant="outlined"
+                                                                    >
+                                                                      <AddIcon />{" "}
+                                                                      Description
+                                                                    </Button>
+                                                                    <Button
+                                                                      onClick={() =>
+                                                                        setshowResources(
+                                                                          showResources ==
+                                                                            index +
+                                                                              i +
+                                                                              item.id
+                                                                            ? null
+                                                                            : index +
+                                                                                i +
+                                                                                item.id
+                                                                        )
+                                                                      }
+                                                                      className="m-2"
+                                                                      variant="outlined"
+                                                                    >
+                                                                      <AddIcon />{" "}
+                                                                      Resourses
+                                                                    </Button>
+                                                                  </div>
+                                                                )}
 
-                          <div className="d-flex my-2">
-                            <Button
-                              onClick={() =>
-                                setshowDescription(
-                                  null
-                                )
-                              }
-                              className="mx-1"
-                              variant="outlined"
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              onClick={() =>
-                                handleSaveDescription(
-                                  item.id
-                                )
-                              }
-                              className="mx-1"
-                              variant="contained"
-                            >
-                              Save
-                            </Button>
-                          </div>
-                        </>
-                      )}
+                                                              {showResources ==
+                                                                index +
+                                                                  i +
+                                                                  item.id && (
+                                                                <div>
+                                                                  <Button
+                                                                    onClick={() =>
+                                                                      setshowResources(
+                                                                        null
+                                                                      )
+                                                                    }
+                                                                    className="m-2"
+                                                                    variant="contained"
+                                                                  >
+                                                                    <CloseIcon />{" "}
+                                                                  </Button>
 
-                      {/* Add Description & Resourses */}
-                      {showMain ==
-                        index + i + item.id &&
-                        showDescription !=
-                          index + i + item.id && (
-                          <div className="d-flex justify-content-center p-2">
-                            <Button
-                              onClick={() => {
-                                setcurriculum_desc(
-                                  item.description ==
-                                    "N/A"
-                                    ? ""
-                                    : item.description
-                                );
-                                setshowDescription(
-                                  showDescription ==
-                                    index +
-                                      i +
-                                      item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                );
-                              }}
-                              className="m-2"
-                              variant="outlined"
-                            >
-                              <AddIcon />{" "}
-                              Description
-                            </Button>
-                            <Button
-                              onClick={() =>
-                                setshowResources(
-                                  showResources ==
-                                    index +
-                                      i +
-                                      item.id
-                                    ? null
-                                    : index +
-                                        i +
-                                        item.id
-                                )
-                              }
-                              className="m-2"
-                              variant="outlined"
-                            >
-                              <AddIcon /> Resourses
-                            </Button>
-                          </div>
-                        )}
-
-                      {showResources ==
-                        index + i + item.id && (
-                        <div>
-                          <Button
-                            onClick={() =>
-                              setshowResources(null)
-                            }
-                            className="m-2"
-                            variant="contained"
-                          >
-                            <CloseIcon />{" "}
-                          </Button>
-
-                          {/* Tabs */}
-                          <Tabs
-                            defaultActiveKey="d-file"
-                            id="uncontrolled-tab-example"
-                            className="my-3"
-                          >
-                            <Tab
-                              eventKey="d-file"
-                              title="Downloadable File"
-                            >
-                              <Form.Group
-                                controlId="formFile"
-                                className="mb-3"
-                              >
-                                {/* (e) =>  */}
-                                <Form.Control
-                                  onChange={(e) =>
-                                    handleDownloadbaleFile(
-                                      e,
-                                      item.id
-                                    )
-                                  }
-                                  type="file"
-                                />
-                                <Form.Label
-                                  style={{
-                                    fontSize: 11,
-                                  }}
-                                >
-                                  {/* <b>Note:</b> A
+                                                                  {/* Tabs */}
+                                                                  <Tabs
+                                                                    defaultActiveKey="d-file"
+                                                                    id="uncontrolled-tab-example"
+                                                                    className="my-3"
+                                                                  >
+                                                                    <Tab
+                                                                      eventKey="d-file"
+                                                                      title="Downloadable File"
+                                                                    >
+                                                                      <Form.Group
+                                                                        controlId="formFile"
+                                                                        className="mb-3"
+                                                                      >
+                                                                        {/* (e) =>  */}
+                                                                        <Form.Control
+                                                                          onChange={(
+                                                                            e
+                                                                          ) =>
+                                                                            handleDownloadbaleFile(
+                                                                              e,
+                                                                              item.id
+                                                                            )
+                                                                          }
+                                                                          type="file"
+                                                                        />
+                                                                        <Form.Label
+                                                                          style={{
+                                                                            fontSize: 11,
+                                                                          }}
+                                                                        >
+                                                                          {/* <b>Note:</b> A
                                   resource is for
                                   any type of
                                   document that can
@@ -3743,1569 +4224,1930 @@ const Curriculum = ({ code }) => {
                                   legible and the
                                   file size is less
                                   than 1 GiB. */}
-                                </Form.Label>
-                              </Form.Group>
-                            </Tab>
-                            <Tab
-                              eventKey="e-r"
-                              title="External Resources"
-                            >
-                              <Form>
-                                <Form.Group
-                                  className="mb-3"
-                                  controlId="exampleForm.ControlInput1"
-                                >
-                                  <Form.Label>
-                                    Title
-                                  </Form.Label>
-                                  <Form.Control
-                                    value={
-                                      curriclum_ex_res_tile
-                                    }
-                                    onChange={(e) =>
-                                      setcurriclum_ex_res_tile(
-                                        e.target
-                                          .value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="A Descriptive Title"
-                                  />
-                                </Form.Group>
+                                                                        </Form.Label>
+                                                                      </Form.Group>
+                                                                    </Tab>
+                                                                    <Tab
+                                                                      eventKey="e-r"
+                                                                      title="External Resources"
+                                                                    >
+                                                                      <Form>
+                                                                        <Form.Group
+                                                                          className="mb-3"
+                                                                          controlId="exampleForm.ControlInput1"
+                                                                        >
+                                                                          <Form.Label>
+                                                                            Title
+                                                                          </Form.Label>
+                                                                          <Form.Control
+                                                                            value={
+                                                                              curriclum_ex_res_tile
+                                                                            }
+                                                                            onChange={(
+                                                                              e
+                                                                            ) =>
+                                                                              setcurriclum_ex_res_tile(
+                                                                                e
+                                                                                  .target
+                                                                                  .value
+                                                                              )
+                                                                            }
+                                                                            type="text"
+                                                                            placeholder="A Descriptive Title"
+                                                                          />
+                                                                        </Form.Group>
 
-                                <Form.Group
-                                  className="mb-3"
-                                  controlId="exampleForm.ControlInput1"
-                                >
-                                  <Form.Label>
-                                    URL
-                                  </Form.Label>
-                                  <Form.Control
-                                    value={
-                                      curriculum_ex_res_link
-                                    }
-                                    onChange={(e) =>
-                                      setcurriculum_ex_res_link(
-                                        e.target
-                                          .value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="https://externallink.com"
-                                  />
-                                </Form.Group>
-                                <Button
-                                  onClick={() =>
-                                    handleExternalResources(
-                                      item.id
-                                    )
-                                  }
-                                  variant="contained"
-                                >
-                                  Add Link
-                                </Button>
-                              </Form>
-                            </Tab>
-                            <Tab
-                              eventKey="source-code"
-                              title="Source Code"
-                            >
-                              <Form.Group
-                                onChange={(e) =>
-                                  handleSaveSourceCode(
-                                    item.id,
-                                    e
-                                  )
-                                }
-                                controlId="formFile"
-                                className="mb-3"
-                              >
-                                <Form.Control type="file" />
-                                <Form.Label
-                                  style={{
-                                    fontSize: 11,
-                                  }}
-                                >
-                                  {/* <b>Note:</b> Only
+                                                                        <Form.Group
+                                                                          className="mb-3"
+                                                                          controlId="exampleForm.ControlInput1"
+                                                                        >
+                                                                          <Form.Label>
+                                                                            URL
+                                                                          </Form.Label>
+                                                                          <Form.Control
+                                                                            value={
+                                                                              curriculum_ex_res_link
+                                                                            }
+                                                                            onChange={(
+                                                                              e
+                                                                            ) =>
+                                                                              setcurriculum_ex_res_link(
+                                                                                e
+                                                                                  .target
+                                                                                  .value
+                                                                              )
+                                                                            }
+                                                                            type="text"
+                                                                            placeholder="https://externallink.com"
+                                                                          />
+                                                                        </Form.Group>
+                                                                        <Button
+                                                                          onClick={() =>
+                                                                            handleExternalResources(
+                                                                              item.id
+                                                                            )
+                                                                          }
+                                                                          variant="contained"
+                                                                        >
+                                                                          Add
+                                                                          Link
+                                                                        </Button>
+                                                                      </Form>
+                                                                    </Tab>
+                                                                    <Tab
+                                                                      eventKey="source-code"
+                                                                      title="Source Code"
+                                                                    >
+                                                                      <Form.Group
+                                                                        onChange={(
+                                                                          e
+                                                                        ) =>
+                                                                          handleSaveSourceCode(
+                                                                            item.id,
+                                                                            e
+                                                                          )
+                                                                        }
+                                                                        controlId="formFile"
+                                                                        className="mb-3"
+                                                                      >
+                                                                        <Form.Control type="file" />
+                                                                        <Form.Label
+                                                                          style={{
+                                                                            fontSize: 11,
+                                                                          }}
+                                                                        >
+                                                                          {/* <b>Note:</b> Only
                                   available for
                                   Python and Ruby
                                   for now. You can
                                   upload .py and .rb
                                   files. */}
-                                </Form.Label>
-                              </Form.Group>
-                            </Tab>
-                          </Tabs>
-                        </div>
-                      )}
-                    </>
+                                                                        </Form.Label>
+                                                                      </Form.Group>
+                                                                    </Tab>
+                                                                  </Tabs>
+                                                                </div>
+                                                              )}
+                                                            </>
 
-                                {/* Downloadable Files */}
-                                {item.curriculumItemFiles.some(
-                                  (downloaditem) =>
-                                    downloaditem.filetype ==
-                                    "Downloadable Items"
-                                ) && (
-                                  <div className="p-2">
-                                    <h6>
-                                      <b>Downloadable Files</b>
-                                    </h6>
-                                    <ListGroup>
-                                      {item.curriculumItemFiles.some(
-                                        (downloaditem) =>
-                                          downloaditem.filetype ==
-                                          "Downloadable Items"
-                                      ) ? (
-                                        item.curriculumItemFiles
-                                          .filter(
-                                            (downloaditem) =>
-                                              downloaditem.filetype ==
-                                              "Downloadable Items"
-                                          )
-                                          .map(
-                                            (
-                                              downloaditem,
-                                              index
-                                            ) => (
-                                              <ListGroup.Item
-                                                className="d-flex justify-content-between"
-                                                key={index}
-                                              >
-                                                <span>
-                                                  {
-                                                    downloaditem.title
-                                                  }
-                                                </span>
-                                                <span>
-                                                  <Button
-                                                    onClick={() => {
-                                                      handleDeleteDownloableFilesLecture(
-                                                        downloaditem
-                                                      );
-                                                    }}
-                                                    className="p-0"
-                                                    variant=""
-                                                  >
-                                                    <DeleteIcon />
-                                                  </Button>
-                                                </span>
-                                              </ListGroup.Item>
-                                            )
-                                          )
-                                      ) : (
-                                        <></>
-                                      )}
-                                    </ListGroup>
-                                  </div>
-                                )}
+                                                            {/* Downloadable Files */}
+                                                            {item.curriculumItemFiles.some(
+                                                              (downloaditem) =>
+                                                                downloaditem.filetype ==
+                                                                "Downloadable Items"
+                                                            ) && (
+                                                              <div className="p-2">
+                                                                <h6>
+                                                                  <b>
+                                                                    Downloadable
+                                                                    Files
+                                                                  </b>
+                                                                </h6>
+                                                                <ListGroup>
+                                                                  {item.curriculumItemFiles.some(
+                                                                    (
+                                                                      downloaditem
+                                                                    ) =>
+                                                                      downloaditem.filetype ==
+                                                                      "Downloadable Items"
+                                                                  ) ? (
+                                                                    item.curriculumItemFiles
+                                                                      .filter(
+                                                                        (
+                                                                          downloaditem
+                                                                        ) =>
+                                                                          downloaditem.filetype ==
+                                                                          "Downloadable Items"
+                                                                      )
+                                                                      .map(
+                                                                        (
+                                                                          downloaditem,
+                                                                          index
+                                                                        ) => (
+                                                                          <ListGroup.Item
+                                                                            className="d-flex justify-content-between"
+                                                                            key={
+                                                                              index
+                                                                            }
+                                                                          >
+                                                                            <span>
+                                                                              {
+                                                                                downloaditem.title
+                                                                              }
+                                                                            </span>
+                                                                            <span>
+                                                                              <Button
+                                                                                onClick={() => {
+                                                                                  handleDeleteDownloableFilesLecture(
+                                                                                    downloaditem
+                                                                                  );
+                                                                                }}
+                                                                                className="p-0"
+                                                                                variant=""
+                                                                              >
+                                                                                <DeleteIcon />
+                                                                              </Button>
+                                                                            </span>
+                                                                          </ListGroup.Item>
+                                                                        )
+                                                                      )
+                                                                  ) : (
+                                                                    <></>
+                                                                  )}
+                                                                </ListGroup>
+                                                              </div>
+                                                            )}
 
-                                {/* External Resources */}
-                                {item.curriculumItemFiles.some(
-                                  (link) =>
-                                    link.filetype ===
-                                    "External Resourses"
-                                ) && (
-                                  <div className="p-2">
-                                    <h6>
-                                      <b>External Resources</b>
-                                    </h6>
-                                    <ListGroup>
-                                      {item.curriculumItemFiles
-                                        .filter(
-                                          (link) =>
-                                            link.filetype ===
-                                            "External Resourses"
-                                        )
-                                        .map((link, index) => (
-                                          <ListGroup.Item
-                                            className="d-flex justify-content-between"
-                                            key={index}
-                                          >
-                                            <span>
-                                              <a
-                                                target="_blank"
-                                                href={link.url}
-                                              >
-                                                <LaunchIcon fontSize="10" />
-                                                {link.title}
-                                              </a>
-                                            </span>
-                                            <span
-                                              onClick={() =>
-                                                handleDeleteExternalResources(
-                                                  link
-                                                )
-                                              }
-                                            >
-                                              <Button
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        ))}
-                                    </ListGroup>
-                                  </div>
-                                )}
+                                                            {/* External Resources */}
+                                                            {item.curriculumItemFiles.some(
+                                                              (link) =>
+                                                                link.filetype ===
+                                                                "External Resourses"
+                                                            ) && (
+                                                              <div className="p-2">
+                                                                <h6>
+                                                                  <b>
+                                                                    External
+                                                                    Resources
+                                                                  </b>
+                                                                </h6>
+                                                                <ListGroup>
+                                                                  {item.curriculumItemFiles
+                                                                    .filter(
+                                                                      (link) =>
+                                                                        link.filetype ===
+                                                                        "External Resourses"
+                                                                    )
+                                                                    .map(
+                                                                      (
+                                                                        link,
+                                                                        index
+                                                                      ) => (
+                                                                        <ListGroup.Item
+                                                                          className="d-flex justify-content-between"
+                                                                          key={
+                                                                            index
+                                                                          }
+                                                                        >
+                                                                          <span>
+                                                                            <a
+                                                                              target="_blank"
+                                                                              href={
+                                                                                link.url
+                                                                              }
+                                                                            >
+                                                                              <LaunchIcon fontSize="10" />
+                                                                              {
+                                                                                link.title
+                                                                              }
+                                                                            </a>
+                                                                          </span>
+                                                                          <span
+                                                                            onClick={() =>
+                                                                              handleDeleteExternalResources(
+                                                                                link
+                                                                              )
+                                                                            }
+                                                                          >
+                                                                            <Button
+                                                                              className="p-0"
+                                                                              variant=""
+                                                                            >
+                                                                              <DeleteIcon />
+                                                                            </Button>
+                                                                          </span>
+                                                                        </ListGroup.Item>
+                                                                      )
+                                                                    )}
+                                                                </ListGroup>
+                                                              </div>
+                                                            )}
 
-                          {/* Source Code */}
-                          {item.curriculumItemFiles.some(
-                                  (source) =>
-                                    source.filetype ===
-                                    "Source Code"
-                                ) && (
-                                  <div className="p-2">
-                                    <h6>
-                                      <b>Source Code</b>
-                                    </h6>
-                                    <ListGroup>
-                                      {item.curriculumItemFiles.some(
-                                        (source) =>
-                                          source.filetype ===
-                                          "Source Code"
-                                      ) ? (
-                                        item.curriculumItemFiles
-                                          .filter(
-                                            (source) =>
-                                              source.filetype ===
-                                              "Source Code"
-                                          )
-                                          .map(
-                                            (source, index) => (
-                                              <ListGroup.Item
-                                                className="d-flex justify-content-between"
-                                                key={index}
-                                              >
-                                                <span>
-                                                  {source.title}
-                                                </span>
-                                                <span>
-                                                  <Button
-                                                    onClick={() => {
-                                                      handleDeleteDownloableFilesLecture(
-                                                        source
-                                                      );
-                                                    }}
-                                                    className="p-0"
-                                                    variant=""
-                                                  >
-                                                    <DeleteIcon />
-                                                  </Button>
-                                                </span>
-                                              </ListGroup.Item>
-                                            )
-                                          )
-                                      ) : (
-                                        // <p>No Source Code</p>
-                                        <></>
-                                      )}
-                                    </ListGroup>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                            </Card>
-                          </>
-                        )}
-                      </>
-                    )}
+                                                            {/* Source Code */}
+                                                            {item.curriculumItemFiles.some(
+                                                              (source) =>
+                                                                source.filetype ===
+                                                                "Source Code"
+                                                            ) && (
+                                                              <div className="p-2">
+                                                                <h6>
+                                                                  <b>
+                                                                    Source Code
+                                                                  </b>
+                                                                </h6>
+                                                                <ListGroup>
+                                                                  {item.curriculumItemFiles.some(
+                                                                    (source) =>
+                                                                      source.filetype ===
+                                                                      "Source Code"
+                                                                  ) ? (
+                                                                    item.curriculumItemFiles
+                                                                      .filter(
+                                                                        (
+                                                                          source
+                                                                        ) =>
+                                                                          source.filetype ===
+                                                                          "Source Code"
+                                                                      )
+                                                                      .map(
+                                                                        (
+                                                                          source,
+                                                                          index
+                                                                        ) => (
+                                                                          <ListGroup.Item
+                                                                            className="d-flex justify-content-between"
+                                                                            key={
+                                                                              index
+                                                                            }
+                                                                          >
+                                                                            <span>
+                                                                              {
+                                                                                source.title
+                                                                              }
+                                                                            </span>
+                                                                            <span>
+                                                                              <Button
+                                                                                onClick={() => {
+                                                                                  handleDeleteDownloableFilesLecture(
+                                                                                    source
+                                                                                  );
+                                                                                }}
+                                                                                className="p-0"
+                                                                                variant=""
+                                                                              >
+                                                                                <DeleteIcon />
+                                                                              </Button>
+                                                                            </span>
+                                                                          </ListGroup.Item>
+                                                                        )
+                                                                      )
+                                                                  ) : (
+                                                                    // <p>No Source Code</p>
+                                                                    <></>
+                                                                  )}
+                                                                </ListGroup>
+                                                              </div>
+                                                            )}
+                                                          </div>
+                                                        )}
+                                                    </Card>
+                                                  </>
+                                                )}
+                                              </>
+                                            )}
 
-            {/* Quiz */}
-            {item.type == "Quiz" &&
-              (showEditQuizInput == index + i + item.id ? (
-                <div>
-                  <div>
-                    <Form.Control
-                      className="mx-1"
-                      value={updateQuizName}
-                      onChange={(e) =>
-                        setupdateQuizName(e.target.value)
-                      }
-                      type="text"
-                      placeholder="Quiz Name"
-                    />
+                                            {/* Quiz */}
+                                            {item.type == "Quiz" &&
+                                              (showEditQuizInput ==
+                                              index + i + item.id ? (
+                                                <div>
+                                                  <div>
+                                                    <Form.Control
+                                                      className="mx-1"
+                                                      value={updateQuizName}
+                                                      onChange={(e) =>
+                                                        setupdateQuizName(
+                                                          e.target.value
+                                                        )
+                                                      }
+                                                      type="text"
+                                                      placeholder="Quiz Name"
+                                                    />
 
-                    <Form.Group
-                      className="my-3"
-                      controlId="exampleForm.ControlTextarea1"
-                    >
-                      <Form.Control
-                        value={updateQuizDescription}
-                        onChange={(e) =>
-                          setupdateQuizDescription(
-                            e.target.value
-                          )
-                        }
-                        as="textarea"
-                        rows={3}
-                      />
-                    </Form.Group>
-                  </div>
-
-                  <Button
-                    onClick={(e) => {
-                      if (
-                        showEditQuizInput ==
-                        index + i + item.id
-                      ) {
-                        setshowEditQuizInput(null);
-                        setupdateQuizName("");
-                      } else {
-                        setshowEditQuizInput(
-                          index + i + item.id
-                        );
-                        setupdateQuizName(
-                          section.courseSection.sectionName
-                        );
-                      }
-                    }}
-                    className="mx-1"
-                    variant="outlined"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={(e) => {
-                      handleUpdateQuizName(item, section);
-                    }}
-                    className="mx-1"
-                    variant="contained"
-                  >
-                    Save
-                  </Button>
-                </div>
-              ) : (
-                <Card
-                  key={index + i + item.id}
-                  className="my-3"
-                >
-                  <div className="d-flex justify-content-between align-items-center p-2" style={{
-            cursor: isExpanded ? "default" : "move",
-          }}>
-                    <span>
-                      <Typography>
-                        <CheckCircleIcon fontSize="small" />
-                        {i + 1}. Quiz: {counters.Quiz}{" "}
-                        <QuizIcon sx={{ fontSize: 15 }} />{" "}
-                        {item.title}
-                        <span className="mx-5">
-                          <EditIcon
-                            style={syllabusIcon}
-                            onClick={(e) => {
-                              if (
-                                showEditQuizInput ==
-                                index + i + item.id
-                              ) {
-                                setshowEditQuizInput(null);
-                                setupdateQuizName("");
-                                setupdateQuizDescription(
-                                  ""
-                                );
-                              } else {
-                                setshowEditQuizInput(
-                                  index + i + item.id
-                                );
-                                setupdateQuizName(
-                                  item.title
-                                );
-                                setupdateQuizDescription(
-                                  item.description
-                                );
-                                console.log(item);
-                              }
-                            }}
-                          />
-                          <DeleteIcon
-                            style={syllabusIcon}
-                            onClick={() =>
-                              handleQuizDelete(item)
-                            }
-                          />
-                        </span>
-                      </Typography>
-                    </span>
-                    <span>
-                      {showContentAdd ==
-                      index + i + item.id ? (
-                        <Button
-                          onClick={() => {
-                            setshowDescRes(true);
-                            setshowMain(null);
-                            console.log(
-                              index + i + item.id
-                            );
-                            setshowContentAdd(null);
-                            setcurriculumvisiblitymc("");
-                            // handleContentshow()
-                            handleQuestionsAnswerUpdateCancel();
-                          }}
-                          className="mx-2"
-                          size="small"
-                          variant="contained"
-                        >
-                          <CloseIcon />
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() => {
-                            setshowMain(
-                              showMain ==
-                                index + i + item.id
-                                ? null
-                                : index + i + item.id
-                            );
-                            setshowContentAdd(
-                              showContentAdd ==
-                                index + i + item.id
-                                ? null
-                                : index + i + item.id
-                            );
-                            handleFillQuiz(item);
-                          }}
-                          className="mx-2"
-                          size="small"
-                          variant="outlined"
-                        >
-                          {item.getQuizs[0] == null ? (
-                            <>
-                              <AddIcon /> Question(s)
-                            </>
-                          ) : (
-                            <>
-                              <EditIcon /> Edit
-                            </>
-                          )}
-                        </Button>
-                      )}
-                    </span>
-                  </div>
-
-                  {/* Landing Content */}
-                  {showContentAdd == index + i + item.id &&
-                                        (item.getQuizs.length != 0 ? (
-                                          <div>
-                                            <div className="container m-4">
-                                              <DragDropContext
-                                                onDragEnd={(result) =>
-                                                  onDragEndOfQuizTable(
-                                                    result,
-                                                    item.getQuizs,
-                                                    item.id 
-                                                  )
-                                                }
-                                              >
-                                                <Droppable droppableId="quizList">
-                                                  {(provided) => (
-                                                    <Table
-                                                      striped
-                                                      bordered
-                                                      hover
-                                                      {...provided.droppableProps}
-                                                      ref={provided.innerRef}
-                                                      style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.5 : 1 }}
+                                                    <Form.Group
+                                                      className="my-3"
+                                                      controlId="exampleForm.ControlTextarea1"
                                                     >
-                                                      <thead>
-                                                        <tr>
-                                                          <th>#</th>
-                                                          <th>Quiz</th>
-                                                          <th>Action</th>
-                                                          {/* <th><Button onClick={viewData}>hello</Button></th> */}
-                                                        </tr>
-                                                      </thead>
-                                                      <tbody>
-                                                        {item.getQuizs !=
-                                                          null &&
-                                                          item.getQuizs.length >
-                                                            0 &&
-                                                          item.getQuizs.map(
-                                                            (q, inz) => (
-                                                              <Draggable
-                                                                key={q.id}
-                                                                draggableId={
-                                                                  q.id
-                                                                }
-                                                                index={inz}
+                                                      <Form.Control
+                                                        value={
+                                                          updateQuizDescription
+                                                        }
+                                                        onChange={(e) =>
+                                                          setupdateQuizDescription(
+                                                            e.target.value
+                                                          )
+                                                        }
+                                                        as="textarea"
+                                                        rows={3}
+                                                      />
+                                                    </Form.Group>
+                                                  </div>
+
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      if (
+                                                        showEditQuizInput ==
+                                                        index + i + item.id
+                                                      ) {
+                                                        setshowEditQuizInput(
+                                                          null
+                                                        );
+                                                        setupdateQuizName("");
+                                                      } else {
+                                                        setshowEditQuizInput(
+                                                          index + i + item.id
+                                                        );
+                                                        setupdateQuizName(
+                                                          section.courseSection
+                                                            .sectionName
+                                                        );
+                                                      }
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="outlined"
+                                                  >
+                                                    Cancel
+                                                  </Button>
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      handleUpdateQuizName(
+                                                        item,
+                                                        section
+                                                      );
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="contained"
+                                                  >
+                                                    Save
+                                                  </Button>
+                                                </div>
+                                              ) : (
+                                                <Card
+                                                  key={index + i + item.id}
+                                                  className="my-3"
+                                                >
+                                                  <div
+                                                    className="d-flex justify-content-between align-items-center p-2"
+                                                    style={{
+                                                      cursor: isExpanded
+                                                        ? "default"
+                                                        : "move",
+                                                    }}
+                                                  >
+                                                    <span>
+                                                      <Typography>
+                                                        <CheckCircleIcon fontSize="small" />
+                                                        {i + 1}. Quiz:{" "}
+                                                        {counters.Quiz}{" "}
+                                                        <QuizIcon
+                                                          sx={{ fontSize: 15 }}
+                                                        />{" "}
+                                                        {item.title}
+                                                        <span className="mx-5">
+                                                          <EditIcon
+                                                            style={syllabusIcon}
+                                                            onClick={(e) => {
+                                                              if (
+                                                                showEditQuizInput ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                              ) {
+                                                                setshowEditQuizInput(
+                                                                  null
+                                                                );
+                                                                setupdateQuizName(
+                                                                  ""
+                                                                );
+                                                                setupdateQuizDescription(
+                                                                  ""
+                                                                );
+                                                              } else {
+                                                                setshowEditQuizInput(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setupdateQuizName(
+                                                                  item.title
+                                                                );
+                                                                setupdateQuizDescription(
+                                                                  item.description
+                                                                );
+                                                                console.log(
+                                                                  item
+                                                                );
+                                                              }
+                                                            }}
+                                                          />
+                                                          <DeleteIcon
+                                                            style={syllabusIcon}
+                                                            onClick={() =>
+                                                              handleQuizDelete(
+                                                                item
+                                                              )
+                                                            }
+                                                          />
+                                                        </span>
+                                                      </Typography>
+                                                    </span>
+                                                    <span>
+                                                      {showContentAdd ==
+                                                      index + i + item.id ? (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowDescRes(
+                                                              true
+                                                            );
+                                                            setshowMain(null);
+                                                            console.log(
+                                                              index +
+                                                                i +
+                                                                item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              null
+                                                            );
+                                                            setcurriculumvisiblitymc(
+                                                              ""
+                                                            );
+                                                            // handleContentshow()
+                                                            handleQuestionsAnswerUpdateCancel();
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="contained"
+                                                        >
+                                                          <CloseIcon />
+                                                        </Button>
+                                                      ) : (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowMain(
+                                                              showMain ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              showContentAdd ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+                                                            handleFillQuiz(
+                                                              item
+                                                            );
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="outlined"
+                                                        >
+                                                          {item.getQuizs[0] ==
+                                                          null ? (
+                                                            <>
+                                                              <AddIcon />{" "}
+                                                              Question(s)
+                                                            </>
+                                                          ) : (
+                                                            <>
+                                                              <EditIcon /> Edit
+                                                            </>
+                                                          )}
+                                                        </Button>
+                                                      )}
+                                                    </span>
+                                                  </div>
+
+                                                  {/* Landing Content */}
+                                                  {showContentAdd ==
+                                                    index + i + item.id &&
+                                                    (item.getQuizs.length !=
+                                                    0 ? (
+                                                      <div>
+                                                        <div className="container m-4">
+                                                          <DragDropContext
+                                                            onDragEnd={(
+                                                              result
+                                                            ) =>
+                                                              onDragEndOfQuizTable(
+                                                                result,
+                                                                item.getQuizs,
+                                                                item.id
+                                                              )
+                                                            }
+                                                          >
+                                                            <Droppable droppableId="quizList">
+                                                              {(provided) => (
+                                                                <Table
+                                                                  striped
+                                                                  bordered
+                                                                  hover
+                                                                  {...provided.droppableProps}
+                                                                  ref={
+                                                                    provided.innerRef
+                                                                  }
+                                                                  style={{
+                                                                    pointerEvents:
+                                                                      loading
+                                                                        ? "none"
+                                                                        : "auto",
+                                                                    opacity:
+                                                                      loading
+                                                                        ? 0.5
+                                                                        : 1,
+                                                                  }}
+                                                                >
+                                                                  <thead>
+                                                                    <tr>
+                                                                      <th>#</th>
+                                                                      <th>
+                                                                        Quiz
+                                                                      </th>
+                                                                      <th>
+                                                                        Action
+                                                                      </th>
+                                                                      {/* <th><Button onClick={viewData}>hello</Button></th> */}
+                                                                    </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                    {item.getQuizs !=
+                                                                      null &&
+                                                                      item
+                                                                        .getQuizs
+                                                                        .length >
+                                                                        0 &&
+                                                                      item.getQuizs.map(
+                                                                        (
+                                                                          q,
+                                                                          inz
+                                                                        ) => (
+                                                                          <Draggable
+                                                                            key={
+                                                                              q.id
+                                                                            }
+                                                                            draggableId={
+                                                                              q.id
+                                                                            }
+                                                                            index={
+                                                                              inz
+                                                                            }
+                                                                          >
+                                                                            {(
+                                                                              provided
+                                                                            ) => (
+                                                                              <tr
+                                                                                ref={
+                                                                                  provided.innerRef
+                                                                                }
+                                                                                {...provided.draggableProps}
+                                                                                {...provided.dragHandleProps}
+                                                                              >
+                                                                                <td>
+                                                                                  {inz +
+                                                                                    1}
+                                                                                </td>
+                                                                                <td>
+                                                                                  {q
+                                                                                    .question
+                                                                                    .length >
+                                                                                  40
+                                                                                    ? q.question.slice(
+                                                                                        0,
+                                                                                        40
+                                                                                      ) +
+                                                                                      "..."
+                                                                                    : q.question}
+                                                                                </td>
+                                                                                <td>
+                                                                                  <Button
+                                                                                    onClick={() =>
+                                                                                      handleShowEditQuizListItem(
+                                                                                        q
+                                                                                      )
+                                                                                    }
+                                                                                    color="info"
+                                                                                    variant=""
+                                                                                  >
+                                                                                    <EditIcon />
+                                                                                  </Button>{" "}
+                                                                                  <Button
+                                                                                    onClick={() =>
+                                                                                      handleQuizListItemDelete(
+                                                                                        q
+                                                                                      )
+                                                                                    }
+                                                                                    variant=""
+                                                                                  >
+                                                                                    <DeleteIcon />
+                                                                                  </Button>
+                                                                                </td>
+                                                                              </tr>
+                                                                            )}
+                                                                          </Draggable>
+                                                                        )
+                                                                      )}
+                                                                    {
+                                                                      provided.placeholder
+                                                                    }
+                                                                  </tbody>
+                                                                </Table>
+                                                              )}
+                                                            </Droppable>
+                                                          </DragDropContext>
+                                                        </div>
+
+                                                        {/* MCQ FORM */}
+                                                        {/* test show */}
+
+                                                        {quizUpdateEnabled ? (
+                                                          <Form className="p-2">
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Question
+                                                              </Form.Label>
+                                                              <Card
+                                                                className="p-3 my-2 float-right"
+                                                                style={{
+                                                                  textAlign:
+                                                                    "center",
+                                                                  float:
+                                                                    "right",
+                                                                  width:
+                                                                    "calc(35% - 100px)",
+                                                                }}
                                                               >
+                                                                <div className="mx-5">
+                                                                  {" "}
+                                                                  <h4>
+                                                                    {" "}
+                                                                    <OpenWithOutlinedIcon />{" "}
+                                                                    You can
+                                                                    rearrange
+                                                                    the Answers
+                                                                    &
+                                                                    Explanations
+                                                                    simply by
+                                                                    dragging &
+                                                                    dropping
+                                                                  </h4>{" "}
+                                                                </div>
+                                                              </Card>
+                                                              <Form.Control
+                                                                value={question}
+                                                                onChange={(e) =>
+                                                                  setquestion(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={3}
+                                                              />{" "}
+                                                            </Form.Group>
+
+                                                            <Form.Label>
+                                                              Answers (Please
+                                                              select correct
+                                                              answer)
+                                                            </Form.Label>
+
+                                                            <DragDropContext
+                                                              onDragEnd={
+                                                                onDragEnd
+                                                              }
+                                                            >
+                                                              <Droppable droppableId="answers">
                                                                 {(provided) => (
-                                                                  <tr
+                                                                  <div
+                                                                    className="row"
+                                                                    {...provided.droppableProps}
                                                                     ref={
                                                                       provided.innerRef
                                                                     }
-                                                                    {...provided.draggableProps}
-                                                                    {...provided.dragHandleProps}
                                                                   >
-                                                                    <td>
-                                                                      {inz + 1}
-                                                                    </td>
-                                                                    <td>
-                                                                      {q
-                                                                        .question
-                                                                        .length >
-                                                                      40
-                                                                        ? q.question.slice(
-                                                                            0,
-                                                                            40
-                                                                          ) +
-                                                                          "..."
-                                                                        : q.question}
-                                                                    </td>
-                                                                    <td>
-                                                                      <Button
-                                                                        onClick={() =>
-                                                                          handleShowEditQuizListItem(
-                                                                            q
-                                                                          )
-                                                                        }
-                                                                        color="info"
-                                                                        variant=""
-                                                                      >
-                                                                        <EditIcon />
-                                                                      </Button>{" "}
-                                                                      <Button
-                                                                        onClick={() =>
-                                                                          handleQuizListItemDelete(
-                                                                            q
-                                                                          )
-                                                                        }
-                                                                        variant=""
-                                                                      >
-                                                                        <DeleteIcon />
-                                                                      </Button>
-                                                                    </td>
-                                                                  </tr>
+                                                                    {answerOptions.map(
+                                                                      (
+                                                                        answer,
+                                                                        index
+                                                                      ) => (
+                                                                        <Draggable
+                                                                          key={
+                                                                            answer.id
+                                                                          }
+                                                                          draggableId={
+                                                                            answer.id
+                                                                          }
+                                                                          index={
+                                                                            index
+                                                                          }
+                                                                        >
+                                                                          {(
+                                                                            provided
+                                                                          ) => (
+                                                                            <div
+                                                                              className="col-md-12 mb-3"
+                                                                              ref={
+                                                                                provided.innerRef
+                                                                              }
+                                                                              {...provided.draggableProps}
+                                                                              {...provided.dragHandleProps}
+                                                                            >
+                                                                              <div className="row">
+                                                                                {/* Radio Button */}
+                                                                                <div className="col-md-1">
+                                                                                  <Radio
+                                                                                    value={
+                                                                                      answer.option
+                                                                                    }
+                                                                                    onChange={() =>
+                                                                                      setanswerOption(
+                                                                                        answer.option
+                                                                                      )
+                                                                                    }
+                                                                                    checked={
+                                                                                      answer.option ===
+                                                                                      answerOption
+                                                                                    }
+                                                                                  />
+                                                                                </div>
+
+                                                                                {/* Answer Text and Explanation */}
+                                                                                <div className="col-md-11">
+                                                                                  <Form.Group
+                                                                                    className="mb-3"
+                                                                                    controlId={`answer-${
+                                                                                      index +
+                                                                                      1
+                                                                                    }`}
+                                                                                  >
+                                                                                    <Form.Control
+                                                                                      value={
+                                                                                        answer.text
+                                                                                      }
+                                                                                      onChange={(
+                                                                                        e
+                                                                                      ) =>
+                                                                                        updateAnswer(
+                                                                                          index,
+                                                                                          e
+                                                                                            .target
+                                                                                            .value,
+                                                                                          answer.explanation
+                                                                                        )
+                                                                                      }
+                                                                                      as="textarea"
+                                                                                      rows={
+                                                                                        3
+                                                                                      }
+                                                                                    />
+                                                                                  </Form.Group>
+                                                                                  <Form.Control
+                                                                                    value={
+                                                                                      answer.explanation ===
+                                                                                      "null"
+                                                                                        ? ""
+                                                                                        : answer.explanation
+                                                                                    }
+                                                                                    onChange={(
+                                                                                      e
+                                                                                    ) =>
+                                                                                      updateAnswer(
+                                                                                        index,
+                                                                                        answer.text,
+                                                                                        e
+                                                                                          .target
+                                                                                          .value
+                                                                                      )
+                                                                                    }
+                                                                                    type="text"
+                                                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                                  />
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          )}
+                                                                        </Draggable>
+                                                                      )
+                                                                    )}
+                                                                    {
+                                                                      provided.placeholder
+                                                                    }
+                                                                  </div>
                                                                 )}
-                                                              </Draggable>
-                                                            )
-                                                          )}
-                                                        {provided.placeholder}
-                                                      </tbody>
-                                                    </Table>
-                                                  )}
-                                                </Droppable>
-                                              </DragDropContext>
-                                            </div>
+                                                              </Droppable>
+                                                            </DragDropContext>
 
+                                                            <div className="d-flex justify-content-end">
+                                                              <Button
+                                                                className="m-1"
+                                                                onClick={() =>
+                                                                  handleQuestionsAnswerUpdateCancel()
+                                                                }
+                                                                variant="outlined"
+                                                              >
+                                                                CANCEL
+                                                              </Button>
+                                                              <Button
+                                                                className="m-1"
+                                                                onClick={() =>
+                                                                  handleQuestionsAnswerUpdate(
+                                                                    item
+                                                                  )
+                                                                }
+                                                                variant="contained"
+                                                              >
+                                                                UPDATE
+                                                              </Button>
+                                                            </div>
+                                                          </Form>
+                                                        ) : (
+                                                          <Form className="p-2">
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Question
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={question}
+                                                                onChange={(e) =>
+                                                                  setquestion(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={3}
+                                                              />
+                                                            </Form.Group>
 
+                                                            <Form.Label>
+                                                              Answers (Please
+                                                              select correct
+                                                              answer)
+                                                            </Form.Label>
+                                                            <RadioGroup
+                                                              name="group1"
+                                                              onChange={(e) =>
+                                                                setanswerOption(
+                                                                  e.target.value
+                                                                )
+                                                              }
+                                                              value={
+                                                                answerOption
+                                                              }
+                                                            >
+                                                              <div className="row">
+                                                                {/* 1 */}
+                                                                <div className="col-md-1">
+                                                                  <Radio
+                                                                    value={
+                                                                      answerOptionOne
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerOptionOne(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  />
+                                                                </div>
+                                                                <div className="col-md-11 mb-3">
+                                                                  <Form.Group
+                                                                    className="mb-3"
+                                                                    controlId="exampleForm.ControlTextarea1"
+                                                                  >
+                                                                    <Form.Control
+                                                                      value={
+                                                                        answerOne
+                                                                      }
+                                                                      onChange={(
+                                                                        e
+                                                                      ) =>
+                                                                        setanswerOne(
+                                                                          e
+                                                                            .target
+                                                                            .value
+                                                                        )
+                                                                      }
+                                                                      as="textarea"
+                                                                      rows={3}
+                                                                    />
+                                                                  </Form.Group>
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerExplainOne ==
+                                                                      "null"
+                                                                        ? ""
+                                                                        : answerExplainOne
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerExplainOne(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    type="text"
+                                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                  />
+                                                                </div>
 
-                        {/* MCQ FORM */}
-                        {/* test show */}
+                                                                {/* 2 */}
+                                                                <div className="col-md-1">
+                                                                  <Radio
+                                                                    value={
+                                                                      answerOptionTwo
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerOptionTwo(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  />
+                                                                </div>
+                                                                <div className="col-md-11 mb-3">
+                                                                  <Form.Group
+                                                                    className="mb-3"
+                                                                    controlId="exampleForm.ControlTextarea1"
+                                                                  >
+                                                                    <Form.Control
+                                                                      value={
+                                                                        answerTwo
+                                                                      }
+                                                                      onChange={(
+                                                                        e
+                                                                      ) =>
+                                                                        setanswerTwo(
+                                                                          e
+                                                                            .target
+                                                                            .value
+                                                                        )
+                                                                      }
+                                                                      as="textarea"
+                                                                      rows={3}
+                                                                    />
+                                                                  </Form.Group>
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerExplainTwo ==
+                                                                      "null"
+                                                                        ? ""
+                                                                        : answerExplainTwo
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerExplainTwo(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    type="text"
+                                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                  />
+                                                                </div>
 
-                        {quizUpdateEnabled ? (
-                          <Form className="p-2">
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlTextarea1"
-                            >
-                              <Form.Label>
-                                Question
-                              </Form.Label>
-                              <Card
-                                className="p-3 my-2 float-right"
-                                style={{
-                                  textAlign: "center",
-                                  float: "right",
-                                  width:
-                                    "calc(35% - 100px)",
-                                }}
-                              >
-                                <div className="mx-5">
-                                  {" "}
-                                  <h4>
-                                    {" "}
-                                    <OpenWithOutlinedIcon />{" "}
-                                    You can rearrange the
-                                    Answers & Explanations simply by
-                                    dragging & dropping
-                                  </h4>{" "}
-                                </div>
-                              </Card>
-                              <Form.Control
-                                value={question}
-                                onChange={(e) =>
-                                  setquestion(
-                                    e.target.value
-                                  )
-                                }
-                                as="textarea"
-                                rows={3}
-                              />{" "}
-                            </Form.Group>
+                                                                {/* 3 */}
+                                                                <div className="col-md-1">
+                                                                  <Radio
+                                                                    value={
+                                                                      answerOptionThree
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerOptionThree(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  />
+                                                                </div>
 
-                            <Form.Label>
-                              Answers (Please select correct
-                              answer)
-                            </Form.Label>
+                                                                <div className="col-md-11 mb-3">
+                                                                  <Form.Group
+                                                                    className="mb-3"
+                                                                    controlId="exampleForm.ControlTextarea1"
+                                                                  >
+                                                                    <Form.Control
+                                                                      value={
+                                                                        answerThree
+                                                                      }
+                                                                      onChange={(
+                                                                        e
+                                                                      ) =>
+                                                                        setanswerThree(
+                                                                          e
+                                                                            .target
+                                                                            .value
+                                                                        )
+                                                                      }
+                                                                      as="textarea"
+                                                                      rows={3}
+                                                                    />
+                                                                  </Form.Group>
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerExplainThree ==
+                                                                      "null"
+                                                                        ? ""
+                                                                        : answerExplainThree
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerExplainThree(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    type="text"
+                                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                  />
+                                                                </div>
 
-                            <DragDropContext
-                              onDragEnd={onDragEnd}
-                            >
-                              <Droppable droppableId="answers">
-                                {(provided) => (
-                                  <div
-                                    className="row"
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}
-                                  >
-                                    {answerOptions.map(
-                                      (answer, index) => (
-                                        <Draggable
-                                          key={answer.id}
-                                          draggableId={
-                                            answer.id
-                                          }
-                                          index={index}
-                                        >
-                                          {(provided) => (
-                                            <div
-                                              className="col-md-12 mb-3"
-                                              ref={
-                                                provided.innerRef
-                                              }
-                                              {...provided.draggableProps}
-                                              {...provided.dragHandleProps}
-                                            >
-                                              <div className="row">
-                                                {/* Radio Button */}
-                                                <div className="col-md-1">
-                                                  <Radio
-                                                    value={
-                                                      answer.option
-                                                    }
-                                                    onChange={() =>
-                                                      setanswerOption(
-                                                        answer.option
+                                                                {/* 4 */}
+                                                                <div className="col-md-1">
+                                                                  <Radio
+                                                                    value={
+                                                                      answerOptionFour
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerOptionFour(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  />
+                                                                </div>
+
+                                                                <div className="col-md-11 mb-3">
+                                                                  <Form.Group
+                                                                    className="mb-3"
+                                                                    controlId="exampleForm.ControlTextarea1"
+                                                                  >
+                                                                    <Form.Control
+                                                                      value={
+                                                                        answerFour
+                                                                      }
+                                                                      onChange={(
+                                                                        e
+                                                                      ) =>
+                                                                        setanswerFour(
+                                                                          e
+                                                                            .target
+                                                                            .value
+                                                                        )
+                                                                      }
+                                                                      as="textarea"
+                                                                      rows={3}
+                                                                    />
+                                                                  </Form.Group>
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerExplainFour ==
+                                                                      "null"
+                                                                        ? ""
+                                                                        : answerExplainFour
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerExplainFour(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    type="text"
+                                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                  />
+                                                                </div>
+
+                                                                {/* 5*/}
+                                                                <div className="col-md-1">
+                                                                  <Radio
+                                                                    value={
+                                                                      answerOptionFive
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerOptionFive(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                  />
+                                                                </div>
+
+                                                                <div className="col-md-11 mb-3">
+                                                                  <Form.Group
+                                                                    className="mb-3"
+                                                                    controlId="exampleForm.ControlTextarea1"
+                                                                  >
+                                                                    <Form.Control
+                                                                      value={
+                                                                        answerFive
+                                                                      }
+                                                                      onChange={(
+                                                                        e
+                                                                      ) =>
+                                                                        setanswerFive(
+                                                                          e
+                                                                            .target
+                                                                            .value
+                                                                        )
+                                                                      }
+                                                                      as="textarea"
+                                                                      rows={3}
+                                                                    />
+                                                                  </Form.Group>
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerExplainFive ==
+                                                                      "null"
+                                                                        ? ""
+                                                                        : answerExplainFive
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerExplainFive(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    type="text"
+                                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                  />
+                                                                </div>
+                                                              </div>
+                                                            </RadioGroup>
+
+                                                            <div className="d-flex justify-content-end">
+                                                              <Button
+                                                                className="m-1"
+                                                                onClick={() =>
+                                                                  handleQuestionsAnswer(
+                                                                    item
+                                                                  )
+                                                                }
+                                                                variant="contained"
+                                                              >
+                                                                SAVE
+                                                              </Button>
+                                                            </div>
+                                                          </Form>
+                                                        )}
+                                                      </div>
+                                                    ) : (
+                                                      curriculumvisiblitymc !=
+                                                        "mc" && (
+                                                        <div className="d-flex justify-content-center">
+                                                          <div className="mx-2 my-3">
+                                                            <Card
+                                                              sx={{
+                                                                width: 140,
+                                                              }}
+                                                              elevation={3}
+                                                            >
+                                                              <CardActionArea
+                                                                onClick={() => {
+                                                                  setshowDescRes(
+                                                                    true
+                                                                  );
+                                                                  setcurriculumvisiblitymc(
+                                                                    "mc"
+                                                                  );
+                                                                  setshowMain(
+                                                                    index +
+                                                                      i +
+                                                                      item.id
+                                                                  );
+                                                                  setshowContentAdd(
+                                                                    index +
+                                                                      i +
+                                                                      item.id
+                                                                  );
+                                                                  // handleFillQuiz(item)
+                                                                }}
+                                                                className="d-flex justify-content-center align-items-center text-center"
+                                                              >
+                                                                <CardContent>
+                                                                  <HelpIcon fontSize="large" />
+                                                                  <p className="my-2">
+                                                                    Multiple
+                                                                    Choice
+                                                                  </p>
+                                                                </CardContent>
+                                                              </CardActionArea>
+                                                            </Card>
+                                                          </div>
+                                                        </div>
                                                       )
-                                                    }
-                                                    checked={
-                                                      answer.option ===
-                                                      answerOption
-                                                    }
-                                                  />
-                                                </div>
+                                                    ))}
 
-                                                {/* Answer Text and Explanation */}
-                                                <div className="col-md-11">
-                                                  <Form.Group
-                                                    className="mb-3"
-                                                    controlId={`answer-${
-                                                      index +
-                                                      1
-                                                    }`}
-                                                  >
-                                                    <Form.Control
-                                                      value={
-                                                        answer.text
-                                                      }
-                                                      onChange={(
-                                                        e
-                                                      ) =>
-                                                        updateAnswer(
-                                                          index,
-                                                          e
-                                                            .target
-                                                            .value,
-                                                          answer.explanation
-                                                        )
-                                                      }
-                                                      as="textarea"
-                                                      rows={
-                                                        3
-                                                      }
-                                                    />
-                                                  </Form.Group>
+                                                  {showMain ==
+                                                    index + i + item.id &&
+                                                    curriculumvisiblitymc ==
+                                                      "mc" && (
+                                                      <div>
+                                                        {/* MCQ FORM */}
+                                                        <Form className="p-2">
+                                                          <Form.Group
+                                                            className="mb-3"
+                                                            controlId="exampleForm.ControlTextarea1"
+                                                          >
+                                                            <Form.Label>
+                                                              Question
+                                                            </Form.Label>
+                                                            <Form.Control
+                                                              value={question}
+                                                              onChange={(e) =>
+                                                                setquestion(
+                                                                  e.target.value
+                                                                )
+                                                              }
+                                                              as="textarea"
+                                                              rows={3}
+                                                            />
+                                                          </Form.Group>
+
+                                                          <Form.Label>
+                                                            Answers
+                                                          </Form.Label>
+                                                          <RadioGroup
+                                                            name="group1"
+                                                            onChange={(e) =>
+                                                              setanswerOption(
+                                                                e.target.value
+                                                              )
+                                                            }
+                                                            value={answerOption}
+                                                          >
+                                                            <div className="row">
+                                                              {/* 1 */}
+                                                              <div className="col-md-1">
+                                                                <Radio
+                                                                  value={
+                                                                    answerOptionOne
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerOptionOne(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                />
+                                                              </div>
+                                                              <div className="col-md-11 mb-3">
+                                                                <Form.Group
+                                                                  className="mb-3"
+                                                                  controlId="exampleForm.ControlTextarea1"
+                                                                >
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerOne
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerOne(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    as="textarea"
+                                                                    rows={3}
+                                                                  />
+                                                                </Form.Group>
+                                                                <Form.Control
+                                                                  value={
+                                                                    answerExplainOne ==
+                                                                    "null"
+                                                                      ? ""
+                                                                      : answerExplainOne
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerExplainOne(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                  type="text"
+                                                                  placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                />
+                                                              </div>
+
+                                                              {/* 2 */}
+                                                              <div className="col-md-1">
+                                                                <Radio
+                                                                  value={
+                                                                    answerOptionTwo
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerOptionTwo(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                />
+                                                              </div>
+                                                              <div className="col-md-11 mb-3">
+                                                                <Form.Group
+                                                                  className="mb-3"
+                                                                  controlId="exampleForm.ControlTextarea1"
+                                                                >
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerTwo
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerTwo(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    as="textarea"
+                                                                    rows={3}
+                                                                  />
+                                                                </Form.Group>
+                                                                <Form.Control
+                                                                  value={
+                                                                    answerExplainTwo ==
+                                                                    "null"
+                                                                      ? ""
+                                                                      : answerExplainTwo
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerExplainTwo(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                  type="text"
+                                                                  placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                />
+                                                              </div>
+
+                                                              {/* 3 */}
+                                                              <div className="col-md-1">
+                                                                <Radio
+                                                                  value={
+                                                                    answerOptionThree
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerOptionThree(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                />
+                                                              </div>
+
+                                                              <div className="col-md-11 mb-3">
+                                                                <Form.Group
+                                                                  className="mb-3"
+                                                                  controlId="exampleForm.ControlTextarea1"
+                                                                >
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerThree
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerThree(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    as="textarea"
+                                                                    rows={3}
+                                                                  />
+                                                                </Form.Group>
+                                                                <Form.Control
+                                                                  value={
+                                                                    answerExplainThree ==
+                                                                    "null"
+                                                                      ? ""
+                                                                      : answerExplainThree
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerExplainThree(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                  type="text"
+                                                                  placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                />
+                                                              </div>
+
+                                                              {/* 4 */}
+                                                              <div className="col-md-1">
+                                                                <Radio
+                                                                  value={
+                                                                    answerOptionFour
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerOptionFour(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                />
+                                                              </div>
+
+                                                              <div className="col-md-11 mb-3">
+                                                                <Form.Group
+                                                                  className="mb-3"
+                                                                  controlId="exampleForm.ControlTextarea1"
+                                                                >
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerFour
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerFour(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    as="textarea"
+                                                                    rows={3}
+                                                                  />
+                                                                </Form.Group>
+                                                                <Form.Control
+                                                                  value={
+                                                                    answerExplainFour ==
+                                                                    "null"
+                                                                      ? ""
+                                                                      : answerExplainFour
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerExplainFour(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                  type="text"
+                                                                  placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                />
+                                                              </div>
+
+                                                              {/* 5*/}
+                                                              <div className="col-md-1">
+                                                                <Radio
+                                                                  value={
+                                                                    answerOptionFive
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerOptionFive(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                />
+                                                              </div>
+
+                                                              <div className="col-md-11 mb-3">
+                                                                <Form.Group
+                                                                  className="mb-3"
+                                                                  controlId="exampleForm.ControlTextarea1"
+                                                                >
+                                                                  <Form.Control
+                                                                    value={
+                                                                      answerFive
+                                                                    }
+                                                                    onChange={(
+                                                                      e
+                                                                    ) =>
+                                                                      setanswerFive(
+                                                                        e.target
+                                                                          .value
+                                                                      )
+                                                                    }
+                                                                    as="textarea"
+                                                                    rows={3}
+                                                                  />
+                                                                </Form.Group>
+                                                                <Form.Control
+                                                                  value={
+                                                                    answerExplainFive ==
+                                                                    "null"
+                                                                      ? ""
+                                                                      : answerExplainFive
+                                                                  }
+                                                                  onChange={(
+                                                                    e
+                                                                  ) =>
+                                                                    setanswerExplainFive(
+                                                                      e.target
+                                                                        .value
+                                                                    )
+                                                                  }
+                                                                  type="text"
+                                                                  placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                                />
+                                                              </div>
+                                                            </div>
+                                                          </RadioGroup>
+
+                                                          <div className="d-flex justify-content-end">
+                                                            <Button
+                                                              onClick={() =>
+                                                                handleQuestionsAnswer(
+                                                                  item
+                                                                )
+                                                              }
+                                                              variant="outlined"
+                                                            >
+                                                              SAVE
+                                                            </Button>
+                                                          </div>
+                                                        </Form>
+                                                      </div>
+                                                    )}
+                                                </Card>
+                                              ))}
+
+                                            {/* Assignment */}
+                                            {item.type == "Assignment" &&
+                                              (showEditAssignmentInput ==
+                                              index + i + item.id ? (
+                                                <div className="d-flex">
                                                   <Form.Control
-                                                    value={
-                                                      answer.explanation ===
-                                                      "null"
-                                                        ? ""
-                                                        : answer.explanation
-                                                    }
-                                                    onChange={(
-                                                      e
-                                                    ) =>
-                                                      updateAnswer(
-                                                        index,
-                                                        answer.text,
-                                                        e
-                                                          .target
-                                                          .value
+                                                    className="mx-1"
+                                                    value={updateAssignmentName}
+                                                    onChange={(e) =>
+                                                      setupdateAssignmentName(
+                                                        e.target.value
                                                       )
                                                     }
                                                     type="text"
-                                                    placeholder="Describe why the answer is correct/incorrect (optional)"
+                                                    placeholder="Assignment Name"
                                                   />
+
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      if (
+                                                        showEditAssignmentInput ==
+                                                        index + i + item.id
+                                                      ) {
+                                                        setshowEditAssignmentInput(
+                                                          null
+                                                        );
+                                                        setupdateAssignmentName(
+                                                          ""
+                                                        );
+                                                      } else {
+                                                        setshowEditAssignmentInput(
+                                                          index + i + item.id
+                                                        );
+                                                        setupdateAssignmentName(
+                                                          item.title
+                                                        );
+                                                      }
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="outlined"
+                                                  >
+                                                    Cancel
+                                                  </Button>
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      handleUpdateAssignmentName(
+                                                        item,
+                                                        section
+                                                      );
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="contained"
+                                                  >
+                                                    Save
+                                                  </Button>
                                                 </div>
-                                              </div>
-                                            </div>
-                                          )}
-                                        </Draggable>
-                                      )
-                                    )}
-                                    {provided.placeholder}
-                                  </div>
-                                )}
-                              </Droppable>
-                            </DragDropContext>
+                                              ) : (
+                                                <Card
+                                                  key={index + i + item.id}
+                                                  className="my-3"
+                                                >
+                                                  <div
+                                                    className="d-flex justify-content-between align-items-center p-2"
+                                                    style={{
+                                                      cursor: isExpanded
+                                                        ? "default"
+                                                        : "move",
+                                                    }}
+                                                  >
+                                                    <span>
+                                                      <Typography>
+                                                        <CheckCircleIcon fontSize="small" />
+                                                        {i + 1}. Assignment:{" "}
+                                                        {counters.Assignment}{" "}
+                                                        <AssignmentIcon
+                                                          sx={{ fontSize: 15 }}
+                                                        />{" "}
+                                                        {item.title}
+                                                        <span className="mx-5">
+                                                          <EditIcon
+                                                            style={syllabusIcon}
+                                                            onClick={(e) => {
+                                                              if (
+                                                                showEditAssignmentInput ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                              ) {
+                                                                setshowEditAssignmentInput(
+                                                                  null
+                                                                );
+                                                                setupdateAssignmentName(
+                                                                  ""
+                                                                );
+                                                              } else {
+                                                                setshowEditAssignmentInput(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setupdateAssignmentName(
+                                                                  item.title
+                                                                );
+                                                              }
+                                                            }}
+                                                          />
+                                                          <DeleteIcon
+                                                            style={syllabusIcon}
+                                                            onClick={() =>
+                                                              handleAssignmentDelete(
+                                                                item
+                                                              )
+                                                            }
+                                                          />
+                                                        </span>
+                                                      </Typography>
+                                                    </span>
 
-                            <div className="d-flex justify-content-end">
-                              <Button
-                                className="m-1"
-                                onClick={() =>
-                                  handleQuestionsAnswerUpdateCancel()
-                                }
-                                variant="outlined"
-                              >
-                                CANCEL
-                              </Button>
-                              <Button
-                                className="m-1"
-                                onClick={() =>
-                                  handleQuestionsAnswerUpdate(
-                                    item
-                                  )
-                                }
-                                variant="contained"
-                              >
-                                UPDATE
-                              </Button>
-                            </div>
-                          </Form>
-                        ) : (
-                          <Form className="p-2">
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlTextarea1"
-                            >
-                              <Form.Label>
-                                Question
-                              </Form.Label>
-                              <Form.Control
-                                value={question}
-                                onChange={(e) =>
-                                  setquestion(
-                                    e.target.value
-                                  )
-                                }
-                                as="textarea"
-                                rows={3}
-                              />
-                            </Form.Group>
+                                                    <span>
+                                                      {showContentAdd ==
+                                                      index + i + item.id ? (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowDescRes(
+                                                              true
+                                                            );
+                                                            setshowMain(null);
+                                                            console.log(
+                                                              index +
+                                                                i +
+                                                                item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              null
+                                                            );
+                                                            setcurriculumvisiblitymc(
+                                                              ""
+                                                            );
+                                                            // handleContentshow()
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="contained"
+                                                        >
+                                                          <CloseIcon />
+                                                        </Button>
+                                                      ) : (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowMain(
+                                                              showMain ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              showContentAdd ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
 
-                            <Form.Label>
-                              Answers (Please select correct
-                              answer)
-                            </Form.Label>
-                            <RadioGroup
-                              name="group1"
-                              onChange={(e) =>
-                                setanswerOption(
-                                  e.target.value
-                                )
-                              }
-                              value={answerOption}
-                            >
-                              <div className="row">
-                                {/* 1 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionOne}
-                                    onChange={(e) =>
-                                      setanswerOptionOne(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerOne}
-                                      onChange={(e) =>
-                                        setanswerOne(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainOne ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainOne
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainOne(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
+                                                            console.log(item);
+                                                            setmainSectionID(
+                                                              section
+                                                                .courseSection
+                                                                .sectionId
+                                                            );
 
-                                {/* 2 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionTwo}
-                                    onChange={(e) =>
-                                      setanswerOptionTwo(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerTwo}
-                                      onChange={(e) =>
-                                        setanswerTwo(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainTwo ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainTwo
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainTwo(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
+                                                            // Fill Data
+                                                            setAssignmentCode(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .assignmentCode
+                                                            );
+                                                            setAssignmentTitle(
+                                                              item.title
+                                                            );
+                                                            setAssignmentDesc(
+                                                              item.description
+                                                            );
+                                                            setAssignmentDuration(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .duration
+                                                            );
+                                                            setAssignmentInstructors(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .instructions
+                                                            );
+                                                            setAssignmentExLink(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .solutionsExternalLink
+                                                            );
 
-                                {/* 3 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={
-                                      answerOptionThree
-                                    }
-                                    onChange={(e) =>
-                                      setanswerOptionThree(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
+                                                            setAssignmentQuestion(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .question
+                                                            );
+                                                            setAssignmentQuestionLink(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .questionExternalLink
+                                                            );
 
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerThree}
-                                      onChange={(e) =>
-                                        setanswerThree(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainThree ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainThree
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainThree(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
+                                                            setAssignmentSolutions(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .solutions
+                                                            );
+                                                            setAssignmentSolutionsExLink(
+                                                              item
+                                                                .getAssignment[0]
+                                                                .solutionsExternalLink
+                                                            );
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="outlined"
+                                                        >
+                                                          <CreateIcon /> Edit
+                                                        </Button>
+                                                      )}
+                                                    </span>
+                                                  </div>
 
-                                {/* 4 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionFour}
-                                    onChange={(e) =>
-                                      setanswerOptionFour(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
+                                                  {showMain ==
+                                                    index + i + item.id && (
+                                                    <div className="p-3">
+                                                      <Tabs
+                                                        defaultActiveKey="assignment"
+                                                        id="uncontrolled-tab-example"
+                                                        className="mb-3"
+                                                      >
+                                                        <Tab
+                                                          eventKey="assignment"
+                                                          title="Assignment information and Instructions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Title
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentTitle
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentTitle(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="Assignment Title"
+                                                              />
+                                                            </Form.Group>
 
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerFour}
-                                      onChange={(e) =>
-                                        setanswerFour(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainFour ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainFour
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainFour(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Description
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentDesc
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentDesc(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={2}
+                                                              />
+                                                            </Form.Group>
 
-                                {/* 5*/}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionFive}
-                                    onChange={(e) =>
-                                      setanswerOptionFive(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerFive}
-                                      onChange={(e) =>
-                                        setanswerFive(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainFive ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainFive
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainFive(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
-                              </div>
-                            </RadioGroup>
-
-                            <div className="d-flex justify-content-end">
-                              <Button
-                                className="m-1"
-                                onClick={() =>
-                                  handleQuestionsAnswer(
-                                    item
-                                  )
-                                }
-                                variant="contained"
-                              >
-                                SAVE
-                              </Button>
-                            </div>
-                          </Form>
-                        )}
-                      </div>
-                    ) : (
-                      curriculumvisiblitymc != "mc" && (
-                        <div className="d-flex justify-content-center">
-                          <div className="mx-2 my-3">
-                            <Card
-                              sx={{ width: 140 }}
-                              elevation={3}
-                            >
-                              <CardActionArea
-                                onClick={() => {
-                                  setshowDescRes(true);
-                                  setcurriculumvisiblitymc(
-                                    "mc"
-                                  );
-                                  setshowMain(
-                                    index + i + item.id
-                                  );
-                                  setshowContentAdd(
-                                    index + i + item.id
-                                  );
-                                  // handleFillQuiz(item)
-                                }}
-                                className="d-flex justify-content-center align-items-center text-center"
-                              >
-                                <CardContent>
-                                  <HelpIcon fontSize="large" />
-                                  <p className="my-2">
-                                    Multiple Choice
-                                  </p>
-                                </CardContent>
-                              </CardActionArea>
-                            </Card>
-                          </div>
-                        </div>
-                      )
-                    ))}
-
-                    {showMain == index + i + item.id &&
-                      curriculumvisiblitymc == "mc" && (
-                        <div>
-                          {/* MCQ FORM */}
-                          <Form className="p-2">
-                            <Form.Group
-                              className="mb-3"
-                              controlId="exampleForm.ControlTextarea1"
-                            >
-                              <Form.Label>
-                                Question
-                              </Form.Label>
-                              <Form.Control
-                                value={question}
-                                onChange={(e) =>
-                                  setquestion(e.target.value)
-                                }
-                                as="textarea"
-                                rows={3}
-                              />
-                            </Form.Group>
-
-                            <Form.Label>Answers</Form.Label>
-                            <RadioGroup
-                              name="group1"
-                              onChange={(e) =>
-                                setanswerOption(
-                                  e.target.value
-                                )
-                              }
-                              value={answerOption}
-                            >
-                              <div className="row">
-                                {/* 1 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionOne}
-                                    onChange={(e) =>
-                                      setanswerOptionOne(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerOne}
-                                      onChange={(e) =>
-                                        setanswerOne(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainOne ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainOne
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainOne(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
-
-                                {/* 2 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionTwo}
-                                    onChange={(e) =>
-                                      setanswerOptionTwo(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerTwo}
-                                      onChange={(e) =>
-                                        setanswerTwo(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainTwo ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainTwo
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainTwo(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
-
-                                {/* 3 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionThree}
-                                    onChange={(e) =>
-                                      setanswerOptionThree(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerThree}
-                                      onChange={(e) =>
-                                        setanswerThree(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainThree ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainThree
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainThree(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
-
-                                {/* 4 */}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionFour}
-                                    onChange={(e) =>
-                                      setanswerOptionFour(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerFour}
-                                      onChange={(e) =>
-                                        setanswerFour(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainFour ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainFour
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainFour(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
-
-                                {/* 5*/}
-                                <div className="col-md-1">
-                                  <Radio
-                                    value={answerOptionFive}
-                                    onChange={(e) =>
-                                      setanswerOptionFive(
-                                        e.target.value
-                                      )
-                                    }
-                                  />
-                                </div>
-
-                                <div className="col-md-11 mb-3">
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Control
-                                      value={answerFive}
-                                      onChange={(e) =>
-                                        setanswerFive(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={3}
-                                    />
-                                  </Form.Group>
-                                  <Form.Control
-                                    value={
-                                      answerExplainFive ==
-                                      "null"
-                                        ? ""
-                                        : answerExplainFive
-                                    }
-                                    onChange={(e) =>
-                                      setanswerExplainFive(
-                                        e.target.value
-                                      )
-                                    }
-                                    type="text"
-                                    placeholder="Describe why the answer is correct/incorrect (optional)"
-                                  />
-                                </div>
-                              </div>
-                            </RadioGroup>
-
-                            <div className="d-flex justify-content-end">
-                              <Button
-                                onClick={() =>
-                                  handleQuestionsAnswer(item)
-                                }
-                                variant="outlined"
-                              >
-                                SAVE
-                              </Button>
-                            </div>
-                          </Form>
-                        </div>
-                      )}
-                  </Card>
-                ))}
-
-                  {/* Assignment */}
-                  {item.type == "Assignment" &&
-                    (showEditAssignmentInput ==
-                    index + i + item.id ? (
-                      <div className="d-flex">
-                        <Form.Control
-                          className="mx-1"
-                          value={updateAssignmentName}
-                          onChange={(e) =>
-                            setupdateAssignmentName(
-                              e.target.value
-                            )
-                          }
-                          type="text"
-                          placeholder="Assignment Name"
-                        />
-
-                        <Button
-                          onClick={(e) => {
-                            if (
-                              showEditAssignmentInput ==
-                              index + i + item.id
-                            ) {
-                              setshowEditAssignmentInput(null);
-                              setupdateAssignmentName("");
-                            } else {
-                              setshowEditAssignmentInput(
-                                index + i + item.id
-                              );
-                              setupdateAssignmentName(item.title);
-                            }
-                          }}
-                          className="mx-1"
-                          variant="outlined"
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          onClick={(e) => {
-                            handleUpdateAssignmentName(
-                              item,
-                              section
-                            );
-                          }}
-                          className="mx-1"
-                          variant="contained"
-                        >
-                          Save
-                        </Button>
-                      </div>
-                    ) : (
-                      <Card
-                        key={index + i + item.id}
-                        className="my-3"
-                      >
-                        <div className="d-flex justify-content-between align-items-center p-2" style={{
-                  cursor: isExpanded ? "default" : "move",
-                }}>
-                          <span>
-                            <Typography>
-                              <CheckCircleIcon fontSize="small" />
-                              {i + 1}. Assignment:{" "}
-                              {counters.Assignment}{" "}
-                              <AssignmentIcon
-                                sx={{ fontSize: 15 }}
-                              />{" "}
-                              {item.title}
-                              <span className="mx-5">
-                                <EditIcon
-                                  style={syllabusIcon}
-                                  onClick={(e) => {
-                                    if (
-                                      showEditAssignmentInput ==
-                                      index + i + item.id
-                                    ) {
-                                      setshowEditAssignmentInput(
-                                        null
-                                      );
-                                      setupdateAssignmentName("");
-                                    } else {
-                                      setshowEditAssignmentInput(
-                                        index + i + item.id
-                                      );
-                                      setupdateAssignmentName(
-                                        item.title
-                                      );
-                                    }
-                                  }}
-                                />
-                                <DeleteIcon
-                                  style={syllabusIcon}
-                                  onClick={() =>
-                                    handleAssignmentDelete(item)
-                                  }
-                                />
-                              </span>
-                            </Typography>
-                          </span>
-
-                          <span>
-                            {showContentAdd ==
-                            index + i + item.id ? (
-                              <Button
-                                onClick={() => {
-                                  setshowDescRes(true);
-                                  setshowMain(null);
-                                  console.log(
-                                    index + i + item.id
-                                  );
-                                  setshowContentAdd(null);
-                                  setcurriculumvisiblitymc("");
-                                  // handleContentshow()
-                                }}
-                                className="mx-2"
-                                size="small"
-                                variant="contained"
-                              >
-                                <CloseIcon />
-                              </Button>
-                            ) : (
-                              <Button
-                                onClick={() => {
-                                  setshowMain(
-                                    showMain ==
-                                      index + i + item.id
-                                      ? null
-                                      : index + i + item.id
-                                  );
-                                  setshowContentAdd(
-                                    showContentAdd ==
-                                      index + i + item.id
-                                      ? null
-                                      : index + i + item.id
-                                  );
-
-                                  console.log(item);
-                                  setmainSectionID(
-                                    section.courseSection
-                                      .sectionId
-                                  );
-
-                                  // Fill Data
-                                  setAssignmentCode(
-                                    item.getAssignment[0]
-                                      .assignmentCode
-                                  );
-                                  setAssignmentTitle(item.title);
-                                  setAssignmentDesc(
-                                    item.description
-                                  );
-                                  setAssignmentDuration(
-                                    item.getAssignment[0].duration
-                                  );
-                                  setAssignmentInstructors(
-                                    item.getAssignment[0]
-                                      .instructions
-                                  );
-                                  setAssignmentExLink(
-                                    item.getAssignment[0]
-                                      .solutionsExternalLink
-                                  );
-
-                                  setAssignmentQuestion(
-                                    item.getAssignment[0].question
-                                  );
-                                  setAssignmentQuestionLink(
-                                    item.getAssignment[0]
-                                      .questionExternalLink
-                                  );
-
-                                  setAssignmentSolutions(
-                                    item.getAssignment[0]
-                                      .solutions
-                                  );
-                                  setAssignmentSolutionsExLink(
-                                    item.getAssignment[0]
-                                      .solutionsExternalLink
-                                  );
-                                }}
-                                className="mx-2"
-                                size="small"
-                                variant="outlined"
-                              >
-                                <CreateIcon /> Edit
-                              </Button>
-                            )}
-                          </span>
-                        </div>
-
-                        {showMain == index + i + item.id && (
-                          <div className="p-3">
-                            <Tabs
-                              defaultActiveKey="assignment"
-                              id="uncontrolled-tab-example"
-                              className="mb-3"
-                            >
-                              <Tab
-                                eventKey="assignment"
-                                title="Assignment information and Instructions"
-                              >
-                                <Form>
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>Title</Form.Label>
-                                    <Form.Control
-                                      value={AssignmentTitle}
-                                      onChange={(e) =>
-                                        setAssignmentTitle(
-                                          e.target.value
-                                        )
-                                      }
-                                      type="text"
-                                      placeholder="Assignment Title"
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Label>
-                                      Description
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={AssignmentDesc}
-                                      onChange={(e) =>
-                                        setAssignmentDesc(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={2}
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      Duration (HH:MM)
-                                    </Form.Label>
-                                    {/* <Form.Control
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Duration (HH:MM)
+                                                              </Form.Label>
+                                                              {/* <Form.Control
                                       value={AssignmentDuration}
                                       onChange={(e) =>
                                         setAssignmentDuration(
@@ -5316,709 +6158,2646 @@ const Curriculum = ({ code }) => {
                                       step="300" // Optional: 5-minute intervals
                                       placeholder="00:00"
                                     /> */}
-                                   
-                                   <Flatpickr
-                                    data-enable-time
-                                    options={{
-                                      noCalendar: true,
-                                      enableTime: true,
-                                      dateFormat: 'H:i',
-                                      time_24hr: true,
+
+                                                              <Flatpickr
+                                                                data-enable-time
+                                                                options={{
+                                                                  noCalendar: true,
+                                                                  enableTime: true,
+                                                                  dateFormat:
+                                                                    "H:i",
+                                                                  time_24hr: true,
+                                                                }}
+                                                                value={
+                                                                  AssignmentDuration
+                                                                }
+                                                                onChange={([
+                                                                  date,
+                                                                ]) => {
+                                                                  // Format the date to HH:MM
+                                                                  const formattedTime =
+                                                                    SyllabusFormatTime(
+                                                                      date
+                                                                    );
+                                                                  setAssignmentDuration(
+                                                                    formattedTime
+                                                                  );
+                                                                  console.log(
+                                                                    formattedTime
+                                                                  );
+                                                                }}
+                                                                className="form-control"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Instructions
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentInstructors
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentInstructors(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={3}
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Video
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getAssignment[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getAssignment[0]
+                                                                  .assignmentVideo !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item
+                                                                      className="d-flex justify-content-between"
+                                                                      key={
+                                                                        index
+                                                                      }
+                                                                    >
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getAssignment[0]
+                                                                            .assignmentVideo
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let video =
+                                                                              {
+                                                                                url: item
+                                                                                  .getAssignment[0]
+                                                                                  .assignmentVideo,
+                                                                              };
+                                                                            handleVideoDelete(
+                                                                              video
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                accept="video/*"
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setAssignmentVideo(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Downloadable
+                                                                Resourses
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getAssignment[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getAssignment[0]
+                                                                  .downloadableResource !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item
+                                                                      className="d-flex justify-content-between"
+                                                                      key={
+                                                                        index
+                                                                      }
+                                                                    >
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getAssignment[0]
+                                                                            .downloadableResource
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getAssignment[0]
+                                                                                  .downloadableResource,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setAssignmentDResourses(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentExLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentExLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+                                                          </Form>
+                                                        </Tab>
+
+                                                        <Tab
+                                                          eventKey="questions"
+                                                          title="Questions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Questions
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentQuestion
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentQuestion(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={2}
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Questions
+                                                              </Form.Label>
+                                                              {item
+                                                                .getAssignment[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getAssignment[0]
+                                                                  .questionSheet !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item
+                                                                      className="d-flex justify-content-between"
+                                                                      key={
+                                                                        index
+                                                                      }
+                                                                    >
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getAssignment[0]
+                                                                            .questionSheet
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getAssignment[0]
+                                                                                  .questionSheet,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setAssignmentQuestionFile(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentQuestionLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentQuestionLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+                                                          </Form>
+                                                        </Tab>
+                                                        <Tab
+                                                          eventKey="solutions"
+                                                          title="Solutions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Solutions
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentSolutions
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentSolutions(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={2}
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Video
+                                                              </Form.Label>
+                                                              {item
+                                                                .getAssignment[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getAssignment[0]
+                                                                  .solutionVideo !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item
+                                                                      className="d-flex justify-content-between"
+                                                                      key={
+                                                                        index
+                                                                      }
+                                                                    >
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getAssignment[0]
+                                                                            .solutionVideo
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let video =
+                                                                              {
+                                                                                url: item
+                                                                                  .getAssignment[0]
+                                                                                  .solutionVideo,
+                                                                              };
+                                                                            handleVideoDelete(
+                                                                              video
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                accept="video/*"
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setAssignmentSolutionsVideo(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Solutions
+                                                              </Form.Label>
+                                                              {item
+                                                                .getAssignment[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getAssignment[0]
+                                                                  .solutionsSheet !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item
+                                                                      className="d-flex justify-content-between"
+                                                                      key={
+                                                                        index
+                                                                      }
+                                                                    >
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getAssignment[0]
+                                                                            .solutionsSheet
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getAssignment[0]
+                                                                                  .solutionsSheet,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setAssignmentSolutionsFile(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  AssignmentSolutionsExLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setAssignmentSolutionsExLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Button
+                                                              onClick={() => {
+                                                                setshowDescRes(
+                                                                  true
+                                                                );
+                                                                setshowMain(
+                                                                  null
+                                                                );
+                                                                console.log(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setshowContentAdd(
+                                                                  null
+                                                                );
+                                                                setcurriculumvisiblitymc(
+                                                                  ""
+                                                                );
+                                                                // handleContentshow()
+                                                              }}
+                                                              variant="outlined"
+                                                            >
+                                                              Cancel
+                                                            </Button>
+                                                            {btnLoadingAssignment ? (
+                                                              <Button
+                                                                className="mx-1"
+                                                                variant="contained"
+                                                              >
+                                                                Loading..
+                                                              </Button>
+                                                            ) : (
+                                                              <Button
+                                                                onClick={
+                                                                  handleAssignmentSave
+                                                                }
+                                                                className="mx-1"
+                                                                variant="contained"
+                                                              >
+                                                                Save Assignment
+                                                              </Button>
+                                                            )}
+                                                          </Form>
+                                                        </Tab>
+                                                      </Tabs>
+                                                    </div>
+                                                  )}
+                                                </Card>
+                                              ))}
+
+                                            {/* Practice test */}
+                                            {item.type == "Practice Test" &&
+                                              (showEditPraticeTestInput ==
+                                              index + i + item.id ? (
+                                                <div className="d-flex">
+                                                  <Form.Control
+                                                    className="mx-1"
+                                                    value={
+                                                      updatePraticeTestName
+                                                    }
+                                                    onChange={(e) =>
+                                                      setupdatePraticeTestName(
+                                                        e.target.value
+                                                      )
+                                                    }
+                                                    type="text"
+                                                    placeholder="Pratice test Name"
+                                                  />
+
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      if (
+                                                        showEditPraticeTestInput ==
+                                                        index + i + item.id
+                                                      ) {
+                                                        setshowEditPraticeTestInput(
+                                                          null
+                                                        );
+                                                        setupdatePraticeTestName(
+                                                          ""
+                                                        );
+                                                      } else {
+                                                        setshowEditPraticeTestInput(
+                                                          index + i + item.id
+                                                        );
+                                                        setupdatePraticeTestName(
+                                                          item.title
+                                                        );
+                                                      }
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="outlined"
+                                                  >
+                                                    Cancel
+                                                  </Button>
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      handleUpdatePraticeTestName(
+                                                        item,
+                                                        section
+                                                      );
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="contained"
+                                                  >
+                                                    Save
+                                                  </Button>
+                                                </div>
+                                              ) : (
+                                                <Card
+                                                  key={index + i + item.id}
+                                                  className="my-3"
+                                                >
+                                                  <div
+                                                    className="d-flex justify-content-between align-items-center p-2"
+                                                    style={{
+                                                      cursor: isExpanded
+                                                        ? "default"
+                                                        : "move",
+                                                    }}
+                                                  >
+                                                    <span>
+                                                      <Typography>
+                                                        <CheckCircleIcon fontSize="small" />
+                                                        {i + 1}. Practice Test:{" "}
+                                                        {counters.PracticeTest}{" "}
+                                                        <ListAltIcon
+                                                          sx={{ fontSize: 15 }}
+                                                        />{" "}
+                                                        {item.title}
+                                                        <span className="mx-5">
+                                                          <EditIcon
+                                                            style={syllabusIcon}
+                                                            onClick={(e) => {
+                                                              if (
+                                                                showEditPraticeTestInput ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                              ) {
+                                                                setshowEditPraticeTestInput(
+                                                                  null
+                                                                );
+                                                                setupdatePraticeTestName(
+                                                                  ""
+                                                                );
+                                                              } else {
+                                                                setshowEditPraticeTestInput(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setupdatePraticeTestName(
+                                                                  item.title
+                                                                );
+                                                              }
+                                                            }}
+                                                          />
+                                                          <DeleteIcon
+                                                            style={syllabusIcon}
+                                                            onClick={() =>
+                                                              handlePracticeTestDelete(
+                                                                item
+                                                              )
+                                                            }
+                                                          />
+                                                        </span>
+                                                      </Typography>
+                                                    </span>
+                                                    <span>
+                                                      {showContentAdd ==
+                                                      index + i + item.id ? (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowDescRes(
+                                                              true
+                                                            );
+                                                            setshowMain(null);
+                                                            console.log(
+                                                              index +
+                                                                i +
+                                                                item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              null
+                                                            );
+                                                            setcurriculumvisiblitymc(
+                                                              ""
+                                                            );
+                                                            // handleContentshow()
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="contained"
+                                                        >
+                                                          <CloseIcon />
+                                                        </Button>
+                                                      ) : (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowMain(
+                                                              showMain ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              showContentAdd ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+
+                                                            console.log(item);
+                                                            setmainSectionID(
+                                                              section
+                                                                .courseSection
+                                                                .sectionId
+                                                            );
+
+                                                            // Fill Data
+                                                            setPraticeTestCode(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .practiceTestCode
+                                                            );
+                                                            setPracticeTestTitle(
+                                                              item == null
+                                                                ? ""
+                                                                : item.title
+                                                            );
+                                                            setPracticeTestDesc(
+                                                              item == null
+                                                                ? ""
+                                                                : item.description
+                                                            );
+                                                            setPracticeTestDuration(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .duration
+                                                            );
+                                                            setPracticeTestInstructions(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .instructions
+                                                            );
+                                                            setPracticeTestMinPassMark(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .minimumuPassMark
+                                                            );
+
+                                                            setPracticeTestExLink(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .externalLink
+                                                            );
+                                                            setPracticeTestQuestionExLink(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .questionLink
+                                                            );
+
+                                                            setPraticeTestSolutionsExLink(
+                                                              item
+                                                                .getPracticeTests[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getPracticeTests[0]
+                                                                    .solutionLink
+                                                            );
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="outlined"
+                                                        >
+                                                          <CreateIcon /> Edit
+                                                        </Button>
+                                                      )}
+                                                    </span>
+                                                  </div>
+                                                  {showMain ==
+                                                    index + i + item.id && (
+                                                    <div className="p-3">
+                                                      <Tabs
+                                                        defaultActiveKey="practice"
+                                                        id="uncontrolled-tab-example"
+                                                        className="mb-3"
+                                                      >
+                                                        <Tab
+                                                          eventKey="practice"
+                                                          title="Practice Test information and Instructions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Title
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PracticeTestTitle
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setPracticeTestTitle(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="Practice Test Title"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Description
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PracticeTestDesc
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setPracticeTestDesc(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={2}
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Duration (HH:MM)
+                                                              </Form.Label>
+                                                              {/* <Form.Control
+                                        value={PracticeTestDuration}
+                                        onChange={(e) =>
+                                          setPracticeTestDuration(
+                                            e.target.value
+                                          )
+                                        }
+                                        type="time" // Use time input type for 24-hour format
+                                        step="300" // Optional: 5-minute intervals
+                                        placeholder="00:00"
+                                      /> */}
+
+                                                              <Flatpickr
+                                                                data-enable-time
+                                                                options={{
+                                                                  noCalendar: true,
+                                                                  enableTime: true,
+                                                                  dateFormat:
+                                                                    "H:i",
+                                                                  time_24hr: true,
+                                                                }}
+                                                                value={
+                                                                  PracticeTestDuration
+                                                                }
+                                                                onChange={([
+                                                                  date,
+                                                                ]) => {
+                                                                  // Format the date to HH:MM
+                                                                  const formattedTime =
+                                                                    SyllabusFormatTime(
+                                                                      date
+                                                                    );
+                                                                  setPracticeTestDuration(
+                                                                    formattedTime
+                                                                  );
+                                                                  console.log(
+                                                                    formattedTime
+                                                                  );
+                                                                }}
+                                                                className="form-control"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Minimum pass
+                                                                mark
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PracticeTestMinPassMark
+                                                                }
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const value =
+                                                                    Number(
+                                                                      e.target
+                                                                        .value
+                                                                    );
+                                                                  if (
+                                                                    value >=
+                                                                      0 &&
+                                                                    value <= 100
+                                                                  ) {
+                                                                    setPracticeTestMinPassMark(
+                                                                      value
+                                                                    );
+                                                                  }
+                                                                }}
+                                                                min="0"
+                                                                max="100"
+                                                                type="text"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Instructions
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PracticeTestInstructions
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setPracticeTestInstructions(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={3}
+                                                              />
+                                                            </Form.Group>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PracticeTestExLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setPracticeTestExLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+                                                          </Form>
+                                                        </Tab>
+
+                                                        <Tab
+                                                          eventKey="questions"
+                                                          title="Questions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Questions
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getPracticeTests[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getPracticeTests[0]
+                                                                  .practiceTestQuestionSheet !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getPracticeTests[0]
+                                                                            .practiceTestQuestionSheet
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getPracticeTests[0]
+                                                                                  .practiceTestQuestionSheet,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setPracticeTestQuestionFile(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PracticeTestQuestionExLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setPracticeTestQuestionExLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+                                                          </Form>
+                                                        </Tab>
+                                                        <Tab
+                                                          eventKey="solutions"
+                                                          title="Solutions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Solutions
+                                                              </Form.Label>
+                                                              {item
+                                                                .getPracticeTests[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getPracticeTests[0]
+                                                                  .practiceTestSolutionSheet !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getPracticeTests[0]
+                                                                            .practiceTestSolutionSheet
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getPracticeTests[0]
+                                                                                  .practiceTestSolutionSheet,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setPracticeTestSolutionsFile(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  PraticeTestSolutionsExLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setPraticeTestSolutionsExLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Button
+                                                              onClick={() => {
+                                                                setshowDescRes(
+                                                                  true
+                                                                );
+                                                                setshowMain(
+                                                                  null
+                                                                );
+                                                                console.log(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setshowContentAdd(
+                                                                  null
+                                                                );
+                                                                setcurriculumvisiblitymc(
+                                                                  ""
+                                                                );
+                                                                // handleContentshow()
+                                                              }}
+                                                              className="mx-1"
+                                                              variant="outlined"
+                                                            >
+                                                              Cancel
+                                                            </Button>
+                                                            {btnLoadingPracticeTest ? (
+                                                              <Button variant="contained">
+                                                                Loading..
+                                                              </Button>
+                                                            ) : (
+                                                              <Button
+                                                                onClick={
+                                                                  handlePracticetestSave
+                                                                }
+                                                                variant="contained"
+                                                              >
+                                                                Save Practice
+                                                                Test
+                                                              </Button>
+                                                            )}
+                                                          </Form>
+                                                        </Tab>
+                                                      </Tabs>
+                                                    </div>
+                                                  )}
+                                                </Card>
+                                              ))}
+
+                                            {/* Coding Exercise */}
+                                            {item.type == "Coding Exercise" &&
+                                              (showEditCodingExerciseInput ==
+                                              index + i + item.id ? (
+                                                <div className="d-flex">
+                                                  <Form.Control
+                                                    className="mx-1"
+                                                    value={
+                                                      updateCodingExerciseName
+                                                    }
+                                                    onChange={(e) =>
+                                                      setupdateCodingExerciseName(
+                                                        e.target.value
+                                                      )
+                                                    }
+                                                    type="text"
+                                                    placeholder="Coding Excercise Name"
+                                                  />
+
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      if (
+                                                        showEditCodingExerciseInput ==
+                                                        index + i + item.id
+                                                      ) {
+                                                        setshowEditCodingExerciseInput(
+                                                          null
+                                                        );
+                                                        setupdateCodingExerciseName(
+                                                          ""
+                                                        );
+                                                      } else {
+                                                        setshowEditCodingExerciseInput(
+                                                          index + i + item.id
+                                                        );
+                                                        setupdateCodingExerciseName(
+                                                          item.title
+                                                        );
+                                                      }
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="outlined"
+                                                  >
+                                                    Cancel
+                                                  </Button>
+                                                  <Button
+                                                    onClick={(e) => {
+                                                      handleUpdateExerciseName(
+                                                        item,
+                                                        section
+                                                      );
+                                                    }}
+                                                    className="mx-1"
+                                                    variant="contained"
+                                                  >
+                                                    Save
+                                                  </Button>
+                                                </div>
+                                              ) : (
+                                                <Card
+                                                  key={index + i + item.id}
+                                                  className="my-3"
+                                                >
+                                                  <div
+                                                    className="d-flex justify-content-between align-items-center p-2"
+                                                    style={{
+                                                      cursor: isExpanded
+                                                        ? "default"
+                                                        : "move",
+                                                    }}
+                                                  >
+                                                    <span>
+                                                      <Typography>
+                                                        <CheckCircleIcon fontSize="small" />
+                                                        {i + 1}. Coding
+                                                        Exercise:{" "}
+                                                        {
+                                                          counters.CodingExercise
+                                                        }{" "}
+                                                        <CodeIcon
+                                                          sx={{ fontSize: 15 }}
+                                                        />{" "}
+                                                        {item.title}
+                                                        <span className="mx-5">
+                                                          <EditIcon
+                                                            style={syllabusIcon}
+                                                            onClick={(e) => {
+                                                              if (
+                                                                showEditCodingExerciseInput ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                              ) {
+                                                                setshowEditCodingExerciseInput(
+                                                                  null
+                                                                );
+                                                                setupdateCodingExerciseName(
+                                                                  ""
+                                                                );
+                                                              } else {
+                                                                setshowEditCodingExerciseInput(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setupdateCodingExerciseName(
+                                                                  item.title
+                                                                );
+                                                              }
+                                                            }}
+                                                          />
+                                                          <DeleteIcon
+                                                            style={syllabusIcon}
+                                                            onClick={() =>
+                                                              handleCodingExercisesDelete(
+                                                                item
+                                                              )
+                                                            }
+                                                          />
+                                                        </span>
+                                                      </Typography>
+                                                    </span>
+                                                    <span>
+                                                      {showContentAdd ==
+                                                      index + i + item.id ? (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowDescRes(
+                                                              true
+                                                            );
+                                                            setshowMain(null);
+                                                            console.log(
+                                                              index +
+                                                                i +
+                                                                item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              null
+                                                            );
+                                                            setcurriculumvisiblitymc(
+                                                              ""
+                                                            );
+                                                            // handleContentshow()
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="contained"
+                                                        >
+                                                          <CloseIcon />
+                                                        </Button>
+                                                      ) : (
+                                                        <Button
+                                                          onClick={() => {
+                                                            setshowMain(
+                                                              showMain ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+                                                            setshowContentAdd(
+                                                              showContentAdd ==
+                                                                index +
+                                                                  i +
+                                                                  item.id
+                                                                ? null
+                                                                : index +
+                                                                    i +
+                                                                    item.id
+                                                            );
+
+                                                            console.log(item);
+                                                            setmainSectionID(
+                                                              section
+                                                                .courseSection
+                                                                .sectionId
+                                                            );
+
+                                                            // Fill Data
+                                                            setCodingExerciseCode(
+                                                              item
+                                                                .getCodingExercises[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getCodingExercises[0]
+                                                                    .codingExerciseCode
+                                                            );
+                                                            setCodingExerciseTitle(
+                                                              item == null
+                                                                ? ""
+                                                                : item.title
+                                                            );
+                                                            setCodingExerciseDesc(
+                                                              item == null
+                                                                ? ""
+                                                                : item.description
+                                                            );
+                                                            setCodingExerciseInstructions(
+                                                              item
+                                                                .getCodingExercises[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getCodingExercises[0]
+                                                                    .instructions
+                                                            );
+                                                            setCodingExerciseExLink(
+                                                              item
+                                                                .getCodingExercises[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getCodingExercises[0]
+                                                                    .externalLink
+                                                            );
+
+                                                            setCodingExerciseExternalLink(
+                                                              item
+                                                                .getCodingExercises[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getCodingExercises[0]
+                                                                    .codingExternalLink
+                                                            );
+                                                            setCodingExercisesExLinkSolutions(
+                                                              item
+                                                                .getCodingExercises[0] ==
+                                                                null
+                                                                ? ""
+                                                                : item
+                                                                    .getCodingExercises[0]
+                                                                    .solutionsExternalLink
+                                                            );
+                                                          }}
+                                                          className="mx-2"
+                                                          size="small"
+                                                          variant="outlined"
+                                                        >
+                                                          <CreateIcon /> Edit
+                                                        </Button>
+                                                      )}
+                                                    </span>
+                                                  </div>
+
+                                                  {showMain ==
+                                                    index + i + item.id && (
+                                                    <div className="p-3">
+                                                      <Tabs
+                                                        defaultActiveKey="coding"
+                                                        id="uncontrolled-tab-example"
+                                                        className="mb-3"
+                                                      >
+                                                        <Tab
+                                                          eventKey="coding"
+                                                          title="Coding Exercise information and Instructions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Title{" "}
+                                                                <span className="text-danger">
+                                                                  *
+                                                                </span>
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  CodingExerciseTitle
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setCodingExerciseTitle(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="Coding Excercise"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Description{" "}
+                                                                <span className="text-danger">
+                                                                  *
+                                                                </span>
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  CodingExerciseDesc
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setCodingExerciseDesc(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={2}
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Instructions{" "}
+                                                                <span className="text-danger">
+                                                                  *
+                                                                </span>
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  CodingExerciseInstructions
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setCodingExerciseInstructions(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                as="textarea"
+                                                                rows={2}
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Video
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getCodingExercises[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getCodingExercises[0]
+                                                                  .codingVideo !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getCodingExercises[0]
+                                                                            .codingVideo
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let video =
+                                                                              {
+                                                                                url: item
+                                                                                  .getCodingExercises[0]
+                                                                                  .codingVideo,
+                                                                              };
+                                                                            handleVideoDelete(
+                                                                              video
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                accept="video/*"
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setCodingExerciseVideo(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlTextarea1"
+                                                            >
+                                                              <Form.Label>
+                                                                Downloadable
+                                                                Resourses
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getCodingExercises[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getCodingExercises[0]
+                                                                  .downloadableResource !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getCodingExercises[0]
+                                                                            .downloadableResource
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getCodingExercises[0]
+                                                                                  .downloadableResource,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setCodingExerciseDResourses(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                                multiple
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  CodingExerciseExLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setCodingExerciseExLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+                                                          </Form>
+                                                        </Tab>
+
+                                                        <Tab
+                                                          eventKey="coding-exercises"
+                                                          title="Coding exercises"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload coding
+                                                                exercise
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getCodingExercises[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getCodingExercises[0]
+                                                                  .codingExerciseSheet !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getCodingExercises[0]
+                                                                            .codingExerciseSheet
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getCodingExercises[0]
+                                                                                  .codingExerciseSheet,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setCodingExerciseUploadEx(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  CodingExerciseExternalLink
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setCodingExerciseExternalLink(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Video
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getCodingExercises[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getCodingExercises[0]
+                                                                  .codingExerciseVideo !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getCodingExercises[0]
+                                                                            .codingExerciseVideo
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let video =
+                                                                              {
+                                                                                url: item
+                                                                                  .getCodingExercises[0]
+                                                                                  .codingExerciseVideo,
+                                                                              };
+                                                                            handleVideoDelete(
+                                                                              video
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                accept="video/*"
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setCodingExerciseQVideo(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+                                                          </Form>
+                                                        </Tab>
+                                                        <Tab
+                                                          eventKey="solutions"
+                                                          title="Solutions"
+                                                        >
+                                                          <Form>
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Solutions
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getCodingExercises[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getCodingExercises[0]
+                                                                  .codingSolutionsSheet !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getCodingExercises[0]
+                                                                            .codingSolutionsSheet
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let Resourceitem =
+                                                                              {
+                                                                                url: item
+                                                                                  .getCodingExercises[0]
+                                                                                  .codingSolutionsSheet,
+                                                                              };
+                                                                            handleDeleteDownloableFilesLecture(
+                                                                              Resourceitem
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setCodingExercisesSolutionsFile(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                                multiple
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                External Link
+                                                              </Form.Label>
+                                                              <Form.Control
+                                                                value={
+                                                                  CodingExercisesExLinkSolutions
+                                                                }
+                                                                onChange={(e) =>
+                                                                  setCodingExercisesExLinkSolutions(
+                                                                    e.target
+                                                                      .value
+                                                                  )
+                                                                }
+                                                                type="text"
+                                                                placeholder="https://externallink.com"
+                                                              />
+                                                            </Form.Group>
+
+                                                            <Form.Group
+                                                              className="mb-3"
+                                                              controlId="exampleForm.ControlInput1"
+                                                            >
+                                                              <Form.Label>
+                                                                Upload Video
+                                                              </Form.Label>
+
+                                                              {item
+                                                                .getCodingExercises[0] !=
+                                                                null &&
+                                                                item
+                                                                  .getCodingExercises[0]
+                                                                  .codingSolutionsVideo !=
+                                                                  "" && (
+                                                                  <ListGroup className="my-2">
+                                                                    <ListGroup.Item className="d-flex justify-content-between">
+                                                                      <span>
+                                                                        {RemoveDisplayPath(
+                                                                          item
+                                                                            .getCodingExercises[0]
+                                                                            .codingSolutionsVideo
+                                                                        )}
+                                                                      </span>
+                                                                      <span>
+                                                                        <Button
+                                                                          onClick={() => {
+                                                                            let video =
+                                                                              {
+                                                                                url: item
+                                                                                  .getCodingExercises[0]
+                                                                                  .codingSolutionsVideo,
+                                                                              };
+                                                                            handleVideoDelete(
+                                                                              video
+                                                                            );
+                                                                          }}
+                                                                          className="p-0"
+                                                                          variant=""
+                                                                        >
+                                                                          <DeleteIcon />
+                                                                        </Button>
+                                                                      </span>
+                                                                    </ListGroup.Item>
+                                                                  </ListGroup>
+                                                                )}
+
+                                                              <Form.Control
+                                                                accept="video/*"
+                                                                onChange={(
+                                                                  e
+                                                                ) => {
+                                                                  const selectedFile =
+                                                                    e.target
+                                                                      .files[0];
+
+                                                                  if (
+                                                                    selectedFile
+                                                                  ) {
+                                                                    const maxSizeInBytes =
+                                                                      100 *
+                                                                      1024 *
+                                                                      1024; // 100MB in bytes
+
+                                                                    if (
+                                                                      selectedFile.size <
+                                                                      maxSizeInBytes
+                                                                    ) {
+                                                                      setCodingExercisesSolutionsVideo(
+                                                                        selectedFile
+                                                                      );
+                                                                    } else {
+                                                                      ErrorAlert(
+                                                                        "Error",
+                                                                        "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                                      );
+                                                                    }
+                                                                  }
+                                                                }}
+                                                                type="file"
+                                                              />
+                                                            </Form.Group>
+                                                            <Button
+                                                              onClick={() => {
+                                                                setshowDescRes(
+                                                                  true
+                                                                );
+                                                                setshowMain(
+                                                                  null
+                                                                );
+                                                                console.log(
+                                                                  index +
+                                                                    i +
+                                                                    item.id
+                                                                );
+                                                                setshowContentAdd(
+                                                                  null
+                                                                );
+                                                                setcurriculumvisiblitymc(
+                                                                  ""
+                                                                );
+                                                                // handleContentshow()
+                                                              }}
+                                                              variant="outlined"
+                                                            >
+                                                              Cancel Coding
+                                                              Exercise
+                                                            </Button>
+                                                            {btnLoadingCodingExcercise ? (
+                                                              <Button
+                                                                className="mx-1"
+                                                                variant="contained"
+                                                              >
+                                                                Saving..
+                                                              </Button>
+                                                            ) : (
+                                                              <Button
+                                                                onClick={
+                                                                  handleCodingExecSave
+                                                                }
+                                                                className="mx-1"
+                                                                variant="contained"
+                                                              >
+                                                                Save Coding
+                                                                Exercise
+                                                              </Button>
+                                                            )}
+                                                          </Form>
+                                                        </Tab>
+                                                      </Tabs>
+                                                    </div>
+                                                  )}
+                                                </Card>
+                                              ))}
+                                          </>
+                                        </div>
+                                      );
+                                    }
+                                  }
+                                )}
+                            </div>
+
+                            {/* Curriculum Item ACTION */}
+                            <div className="m-2">
+                              {showCurriculumItem == index && (
+                                <div className="border border-danger p-1">
+                                  <Button
+                                    onClick={() => {
+                                      // handleshowCurriculumItems()
+                                      setshowQuizInput(null);
+                                      setshowLecInput(null);
+                                      setshowCurriculumItem(null);
+                                      setshowPracticeTestInput(null);
+                                      setshowCodingExecInput(null);
+                                      setshowAssignmentInput(null);
                                     }}
-                                    value={AssignmentDuration}
-                                    onChange={([date]) => {
-                                       // Format the date to HH:MM
-                                      const formattedTime = SyllabusFormatTime(date);
-                                      setAssignmentDuration(formattedTime)
-                                      console.log(formattedTime); 
+                                    variant="text"
+                                  >
+                                    <CloseIcon />
+                                  </Button>
+
+                                  <Button
+                                    onClick={() => {
+                                      setshowLecInput(
+                                        showLecInput == index ? null : index
+                                      );
+
+                                      setshowAssignmentInput(null);
+                                      setshowQuizInput(null);
+                                      setshowCodingExecInput(null);
+                                      setshowPracticeTestInput(null);
                                     }}
-                                    className="form-control"
+                                    variant="text"
+                                  >
+                                    <AddCircleIcon className="mx-1" />
+                                    Lesson
+                                  </Button>
+
+                                  <Button
+                                    onClick={() => {
+                                      setshowQuizInput(
+                                        showQuizInput == index ? null : index
+                                      );
+                                      setshowLecInput(null);
+                                      setshowAssignmentInput(null);
+                                      setshowCodingExecInput(null);
+                                      setshowPracticeTestInput(null);
+                                    }}
+                                    variant="text"
+                                  >
+                                    <AddCircleIcon className="mx-1" />
+                                    Quiz
+                                  </Button>
+
+                                  <Button
+                                    onClick={() => {
+                                      setshowPracticeTestInput(
+                                        showPracticeTestInput == index
+                                          ? null
+                                          : index
+                                      );
+                                      setshowLecInput(null);
+                                      setshowQuizInput(null);
+                                      setshowAssignmentInput(null);
+                                      setshowCodingExecInput(null);
+
+                                      // Empty the PT Inputs
+                                      setPraticeTestCode("");
+
+                                      setPracticeTestTitle("");
+                                      setPracticeTestDesc("");
+                                      setPracticeTestDuration("");
+                                      setPracticeTestInstructions("");
+                                      setPracticeTestMinPassMark("");
+                                      setPracticeTestExLink("");
+
+                                      setPracticeTestQuestionFile(null);
+                                      setPracticeTestQuestionExLink("");
+
+                                      setPracticeTestSolutionsFile(null);
+                                      setPraticeTestSolutionsExLink("");
+                                    }}
+                                    variant="text"
+                                  >
+                                    <AddCircleIcon className="mx-1" />
+                                    Pratice Test
+                                  </Button>
+
+                                  <Button
+                                    onClick={() => {
+                                      setshowAssignmentInput(
+                                        showAssignmentInput == index
+                                          ? null
+                                          : index
+                                      );
+                                      setshowLecInput(null);
+                                      setshowQuizInput(null);
+                                      setshowPracticeTestInput(null);
+                                      setshowCodingExecInput(null);
+
+                                      // Empty all the Assignment Inputs
+
+                                      setAssignmentCode("");
+
+                                      setAssignmentTitle("");
+                                      setAssignmentDesc("");
+                                      setAssignmentDuration("");
+                                      setAssignmentInstructors("");
+                                      setAssignmentVideo(null);
+                                      setAssignmentDResourses(null);
+                                      setAssignmentExLink("");
+
+                                      setAssignmentQuestion("");
+                                      setAssignmentQuestionFile(null);
+                                      setAssignmentQuestionLink("");
+
+                                      setAssignmentSolutions("");
+                                      setAssignmentSolutionsVideo(null);
+                                      setAssignmentSolutionsFile(null);
+                                      setAssignmentSolutionsExLink("");
+                                    }}
+                                    variant="text"
+                                  >
+                                    <AddCircleIcon className="mx-1" />
+                                    Assignment
+                                  </Button>
+
+                                  <Button
+                                    onClick={() => {
+                                      setshowCodingExecInput(
+                                        showCodingExecInput == index
+                                          ? null
+                                          : index
+                                      );
+                                      setshowLecInput(null);
+                                      setshowQuizInput(null);
+                                      setshowPracticeTestInput(null);
+                                      setshowAssignmentInput(null);
+
+                                      // Empty all the CE Inputs
+                                      setCodingExerciseCode("");
+
+                                      setCodingExerciseTitle("");
+                                      setCodingExerciseDesc("");
+                                      setCodingExerciseInstructions("");
+
+                                      setCodingExerciseVideo(null);
+                                      setCodingExerciseDResourses(null);
+                                      setCodingExerciseExLink(null);
+
+                                      setCodingExerciseUploadEx(null);
+                                      setCodingExerciseExternalLink("");
+
+                                      setCodingExerciseQVideo(null);
+
+                                      setCodingExercisesSolutionsFile(null);
+                                      setCodingExercisesExLinkSolutions("");
+                                      setCodingExercisesSolutionsVideo(null);
+                                    }}
+                                    variant="text"
+                                  >
+                                    <AddCircleIcon className="mx-1" />
+                                    Coding Excercise
+                                  </Button>
+                                </div>
+                              )}
+
+                              {showCurriculumItem != index && (
+                                <Button
+                                  onClick={() => {
+                                    setmainSectionID(
+                                      section.courseSection.sectionId
+                                    );
+                                    setshowCurriculumItem(
+                                      showCurriculumItem == index ? null : index
+                                    );
+                                  }}
+                                  variant="contained"
+                                >
+                                  <AddIcon /> Syllabus Item
+                                </Button>
+                              )}
+                            </div>
+
+                            {/* Curriculum Item ACTION */}
+
+                            {/* Curriculum Item > Lectures */}
+
+                            {showLecInput == index && (
+                              <>
+                                <Form.Group
+                                  className="mb-3"
+                                  controlId="exampleForm.ControlInput1"
+                                >
+                                  <Form.Label>Add Lesson</Form.Label>
+                                  <Form.Control
+                                    onChange={(e) =>
+                                      setlecturetitle(e.target.value)
+                                    }
+                                    type="text"
+                                    placeholder="Type Lesson Name"
                                   />
+                                </Form.Group>
 
+                                <Button
+                                  onClick={() =>
+                                    handleSaveLecture(
+                                      section.courseSection.sectionId
+                                    )
+                                  }
+                                  className="mx-1"
+                                  variant="outlined"
+                                >
+                                  ADD
+                                </Button>
+                                {/* handleCancelLectureInput */}
+                                <Button
+                                  onClick={() => setshowLecInput(null)}
+                                  variant="contained"
+                                >
+                                  Cancel
+                                </Button>
+                              </>
+                            )}
+                            {/* Syllabus Item > Lectures */}
+
+                            {/* Syllabus Item > Quiz */}
+
+                            {showQuizInput == index && (
+                              <div className="p-4 m-2">
+                                <Form>
+                                  <Form.Group
+                                    className="mb-3"
+                                    controlId="exampleForm.ControlInput1"
+                                  >
+                                    <Form.Label>Quiz Title</Form.Label>
+                                    <Form.Control
+                                      value={quizTitle}
+                                      onChange={(e) =>
+                                        setquizTitle(e.target.value)
+                                      }
+                                      type="text"
+                                      placeholder="Enter a Title"
+                                    />
                                   </Form.Group>
-
                                   <Form.Group
                                     className="mb-3"
                                     controlId="exampleForm.ControlTextarea1"
                                   >
-                                    <Form.Label>
-                                      Instructions
-                                    </Form.Label>
+                                    <Form.Label>Quiz Description</Form.Label>
                                     <Form.Control
-                                      value={
-                                        AssignmentInstructors
-                                      }
+                                      value={quizDesc}
                                       onChange={(e) =>
-                                        setAssignmentInstructors(
-                                          e.target.value
-                                        )
+                                        setquizDesc(e.target.value)
                                       }
                                       as="textarea"
                                       rows={3}
                                     />
                                   </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      Upload Video
-                                    </Form.Label>
-
-                                    {item.getAssignment[0] != null && (
-                                      item.getAssignment[0].assignmentVideo != "" && 
-                                      <ListGroup className="my-2">
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
-                                        >
-                                          <span>
-                                            {RemoveDisplayPath(item.getAssignment[0].assignmentVideo)}
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                let video = {
-                                                  url: item
-                                                    .getAssignment[0]
-                                                    .assignmentVideo,
-                                                };
-                                                handleVideoDelete(
-                                                  video
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      </ListGroup>
-                                    )}
-
-                                    <Form.Control
-                                      accept="video/*"
-                                      onChange={(e) => {
-                                        const selectedFile = e.target.files[0];
-                                    
-                                        if (selectedFile) {
-                                          const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                    
-                                          if (selectedFile.size < maxSizeInBytes) {
-                                            setAssignmentVideo(selectedFile);
-                                          } else {
-                                            ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                          }
-                                        }
-                                      }}
-                                      type="file"
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Label>
-                                      Downloadable Resourses
-                                    </Form.Label>
-
-                                    {item.getAssignment[0] != null && (
-                                      item.getAssignment[0].downloadableResource != "" &&
-                                      <ListGroup className="my-2">
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
-                                        >
-                                          <span>
-                                            {RemoveDisplayPath(item.getAssignment[0].downloadableResource)}
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                let Resourceitem =
-                                                  {
-                                                    url: item
-                                                      .getAssignment[0]
-                                                      .downloadableResource,
-                                                  };
-                                                handleDeleteDownloableFilesLecture(
-                                                  Resourceitem
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      </ListGroup>
-                                    )}
-
-                                    <Form.Control
-                                      onChange={(e) => {
-                                        const selectedFile = e.target.files[0];
-                                  
-                                        if (selectedFile) {
-                                          const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                  
-                                          if (selectedFile.size < maxSizeInBytes) {
-                                            setAssignmentDResourses(selectedFile);
-                                          } else {
-                                            ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                          }
-                                        }
-                                      }}
-                                      type="file"
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      External Link
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={AssignmentExLink}
-                                      onChange={(e) =>
-                                        setAssignmentExLink(
-                                          e.target.value
-                                        )
-                                      }
-                                      type="text"
-                                      placeholder="https://externallink.com"
-                                    />
-                                  </Form.Group>
                                 </Form>
-                              </Tab>
 
-                              <Tab
-                                eventKey="questions"
-                                title="Questions"
-                              >
-                                <Form>
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Label>
-                                      Questions
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={AssignmentQuestion}
-                                      onChange={(e) =>
-                                        setAssignmentQuestion(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={2}
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      Upload Questions
-                                    </Form.Label>
-                                    {item.getAssignment[0] != null && (
-                                      item.getAssignment[0].questionSheet != "" &&
-                                      <ListGroup className="my-2">
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
-                                        >
-                                          <span>
-                                            {RemoveDisplayPath(item.getAssignment[0].questionSheet)}
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                let Resourceitem =
-                                                  {
-                                                    url: item
-                                                      .getAssignment[0]
-                                                      .questionSheet,
-                                                  };
-                                                handleDeleteDownloableFilesLecture(
-                                                  Resourceitem
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      </ListGroup>
-                                    )}
-
-                                    <Form.Control
-                                       onChange={(e) => {
-                                        const selectedFile = e.target.files[0];
-                                    
-                                        if (selectedFile) {
-                                          const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                    
-                                          if (selectedFile.size < maxSizeInBytes) {
-                                            setAssignmentQuestionFile(selectedFile);
-                                          } else {
-                                            ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                          }
-                                        }
-                                      }}
-                                      type="file"
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      External Link
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={
-                                        AssignmentQuestionLink
-                                      }
-                                      onChange={(e) =>
-                                        setAssignmentQuestionLink(
-                                          e.target.value
-                                        )
-                                      }
-                                      type="text"
-                                      placeholder="https://externallink.com"
-                                    />
-                                  </Form.Group>
-                                </Form>
-                              </Tab>
-                              <Tab
-                                eventKey="solutions"
-                                title="Solutions"
-                              >
-                                <Form>
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlTextarea1"
-                                  >
-                                    <Form.Label>
-                                      Solutions
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={AssignmentSolutions}
-                                      onChange={(e) =>
-                                        setAssignmentSolutions(
-                                          e.target.value
-                                        )
-                                      }
-                                      as="textarea"
-                                      rows={2}
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      Upload Video
-                                    </Form.Label>
-                                    {item.getAssignment[0] != null && (
-                                        item.getAssignment[0].solutionVideo != "" && 
-                                      <ListGroup className="my-2">
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
-                                        >
-                                          <span>
-                                            {RemoveDisplayPath(item.getAssignment[0].solutionVideo)}
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                let video = {
-                                                  url: item
-                                                    .getAssignment[0]
-                                                    .solutionVideo,
-                                                };
-                                                handleVideoDelete(
-                                                  video
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      </ListGroup>
-                                    )}
-
-                                    <Form.Control
-                                      accept="video/*"
-                                      onChange={(e) => {
-                                        const selectedFile = e.target.files[0];
-                                    
-                                        if (selectedFile) {
-                                          const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                    
-                                          if (selectedFile.size < maxSizeInBytes) {
-                                            setAssignmentSolutionsVideo(selectedFile);
-                                          } else {
-                                            ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                          }
-                                        }
-                                      }}
-                                      type="file"
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      Upload Solutions
-                                    </Form.Label>
-                                    {item.getAssignment[0] != null && (
-                                        item.getAssignment[0].solutionsSheet != "" &&
-                                      <ListGroup className="my-2">
-                                        <ListGroup.Item
-                                          className="d-flex justify-content-between"
-                                          key={index}
-                                        >
-                                          <span>
-                                            {RemoveDisplayPath(item.getAssignment[0].solutionsSheet)}
-                                          </span>
-                                          <span>
-                                            <Button
-                                              onClick={() => {
-                                                let Resourceitem =
-                                                  {
-                                                    url: item
-                                                      .getAssignment[0]
-                                                      .solutionsSheet,
-                                                  };
-                                                handleDeleteDownloableFilesLecture(
-                                                  Resourceitem
-                                                );
-                                              }}
-                                              className="p-0"
-                                              variant=""
-                                            >
-                                              <DeleteIcon />
-                                            </Button>
-                                          </span>
-                                        </ListGroup.Item>
-                                      </ListGroup>
-                                    )}
-
-                                    <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
-                                          if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setAssignmentSolutionsFile(selectedFile);
-                                            } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                            }
-                                          }
-                                        }}
-                                      type="file"
-                                    />
-                                  </Form.Group>
-
-                                  <Form.Group
-                                    className="mb-3"
-                                    controlId="exampleForm.ControlInput1"
-                                  >
-                                    <Form.Label>
-                                      External Link
-                                    </Form.Label>
-                                    <Form.Control
-                                      value={
-                                        AssignmentSolutionsExLink
-                                      }
-                                      onChange={(e) =>
-                                        setAssignmentSolutionsExLink(
-                                          e.target.value
-                                        )
-                                      }
-                                      type="text"
-                                      placeholder="https://externallink.com"
-                                    />
-                                  </Form.Group>
-
-                                  <Button
-                                      onClick={() => {
-                                        setshowDescRes(true);
-                                        setshowMain(null);
-                                        console.log(
-                                          index + i + item.id
-                                        );
-                                        setshowContentAdd(null);
-                                        setcurriculumvisiblitymc("");
-                                        // handleContentshow()
-                                      }}
-                                    variant="outlined"
-                                  >
-                                    Cancel
-                                  </Button>
-                                  {btnLoadingAssignment ? (
-                                    <Button
-                                      className="mx-1"
-                                      variant="contained"
-                                    >
-                                      Loading..
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      onClick={
-                                        handleAssignmentSave
-                                      }
-                                      className="mx-1"
-                                      variant="contained"
-                                    >
-                                      Save Assignment
-                                    </Button>
-                                  )}
-                                </Form>
-                              </Tab>
-                            </Tabs>
-                          </div>
-                        )}
-                      </Card>
-                    ))}
-
-                    {/* Practice test */}
-                    {item.type == "Practice Test" &&
-                      (showEditPraticeTestInput ==
-                      index + i + item.id ? (
-                        <div className="d-flex">
-                          <Form.Control
-                            className="mx-1"
-                            value={updatePraticeTestName}
-                            onChange={(e) =>
-                              setupdatePraticeTestName(
-                                e.target.value
-                              )
-                            }
-                            type="text"
-                            placeholder="Pratice test Name"
-                          />
-
-                          <Button
-                            onClick={(e) => {
-                              if (
-                                showEditPraticeTestInput ==
-                                index + i + item.id
-                              ) {
-                                setshowEditPraticeTestInput(null);
-                                setupdatePraticeTestName("");
-                              } else {
-                                setshowEditPraticeTestInput(
-                                  index + i + item.id
-                                );
-                                setupdatePraticeTestName(
-                                  item.title
-                                );
-                              }
-                            }}
-                            className="mx-1"
-                            variant="outlined"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={(e) => {
-                              handleUpdatePraticeTestName(
-                                item,
-                                section
-                              );
-                            }}
-                            className="mx-1"
-                            variant="contained"
-                          >
-                            Save
-                          </Button>
-                        </div>
-                      ) : (
-                        <Card
-                          key={index + i + item.id}
-                          className="my-3"
-                        >
-                          <div className="d-flex justify-content-between align-items-center p-2" style={{
-                    cursor: isExpanded ? "default" : "move",
-                  }}>
-                            <span>
-                              <Typography>
-                                <CheckCircleIcon fontSize="small" />
-                                {i + 1}. Practice Test:{" "}
-                                {counters.PracticeTest}{" "}
-                                <ListAltIcon
-                                  sx={{ fontSize: 15 }}
-                                />{" "}
-                                {item.title}
-                                <span className="mx-5">
-                                  <EditIcon
-                                    style={syllabusIcon}
-                                    onClick={(e) => {
-                                      if (
-                                        showEditPraticeTestInput ==
-                                        index + i + item.id
-                                      ) {
-                                        setshowEditPraticeTestInput(
-                                          null
-                                        );
-                                        setupdatePraticeTestName(
-                                          ""
-                                        );
-                                      } else {
-                                        setshowEditPraticeTestInput(
-                                          index + i + item.id
-                                        );
-                                        setupdatePraticeTestName(
-                                          item.title
-                                        );
-                                      }
-                                    }}
-                                  />
-                                  <DeleteIcon
-                                    style={syllabusIcon}
-                                    onClick={() =>
-                                      handlePracticeTestDelete(item)
-                                    }
-                                  />
-                                </span>
-                              </Typography>
-                            </span>
-                            <span>
-                              {showContentAdd ==
-                              index + i + item.id ? (
                                 <Button
-                                  onClick={() => {
-                                    setshowDescRes(true);
-                                    setshowMain(null);
-                                    console.log(
-                                      index + i + item.id
-                                    );
-                                    setshowContentAdd(null);
-                                    setcurriculumvisiblitymc("");
-                                    // handleContentshow()
-                                  }}
-                                  className="mx-2"
-                                  size="small"
-                                  variant="contained"
-                                >
-                                  <CloseIcon />
-                                </Button>
-                              ) : (
-                                <Button
-                                  onClick={() => {
-                                    setshowMain(
-                                      showMain ==
-                                        index + i + item.id
-                                        ? null
-                                        : index + i + item.id
-                                    );
-                                    setshowContentAdd(
-                                      showContentAdd ==
-                                        index + i + item.id
-                                        ? null
-                                        : index + i + item.id
-                                    );
-
-                                    console.log(item);
-                                    setmainSectionID(
-                                      section.courseSection
-                                        .sectionId
-                                    );
-
-                                    // Fill Data
-                                    setPraticeTestCode(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .practiceTestCode
-                                    );
-                                    setPracticeTestTitle(
-                                      item == null ? "" : item.title
-                                    );
-                                    setPracticeTestDesc(
-                                      item == null
-                                        ? ""
-                                        : item.description
-                                    );
-                                    setPracticeTestDuration(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .duration
-                                    );
-                                    setPracticeTestInstructions(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .instructions
-                                    );
-                                    setPracticeTestMinPassMark(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .minimumuPassMark
-                                    );
-
-                                    setPracticeTestExLink(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .externalLink
-                                    );
-                                    setPracticeTestQuestionExLink(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .questionLink
-                                    );
-
-                                    setPraticeTestSolutionsExLink(
-                                      item.getPracticeTests[0] ==
-                                        null
-                                        ? ""
-                                        : item.getPracticeTests[0]
-                                            .solutionLink
-                                    );
-                                  }}
-                                  className="mx-2"
-                                  size="small"
+                                  onClick={() =>
+                                    handleSaveQuiz(
+                                      section.courseSection.sectionId
+                                    )
+                                  }
+                                  className="mx-1"
                                   variant="outlined"
                                 >
-                                  <CreateIcon /> Edit
+                                  ADD
                                 </Button>
-                              )}
-                            </span>
-                          </div>
-                          {showMain == index + i + item.id && (
-                            <div className="p-3">
+
+                                <Button
+                                  onClick={() => setshowQuizInput(null)}
+                                  variant="contained"
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            )}
+
+                            {/* Syllabus Item > Quiz */}
+
+                            {/* Syllabus Item > Practice Test */}
+                            {showPracticeTestInput == index && (
                               <Tabs
                                 defaultActiveKey="practice"
                                 id="uncontrolled-tab-example"
@@ -6026,20 +8805,21 @@ const Curriculum = ({ code }) => {
                               >
                                 <Tab
                                   eventKey="practice"
-                                  title="Practice Test information and Instructions"
+                                  title="Practice Test information and instructions"
                                 >
                                   <Form>
                                     <Form.Group
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>Title</Form.Label>
+                                      <Form.Label>
+                                        Title{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
                                       <Form.Control
                                         value={PracticeTestTitle}
                                         onChange={(e) =>
-                                          setPracticeTestTitle(
-                                            e.target.value
-                                          )
+                                          setPracticeTestTitle(e.target.value)
                                         }
                                         type="text"
                                         placeholder="Practice Test Title"
@@ -6052,13 +8832,12 @@ const Curriculum = ({ code }) => {
                                     >
                                       <Form.Label>
                                         Description
+                                        <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
                                         value={PracticeTestDesc}
                                         onChange={(e) =>
-                                          setPracticeTestDesc(
-                                            e.target.value
-                                          )
+                                          setPracticeTestDesc(e.target.value)
                                         }
                                         as="textarea"
                                         rows={2}
@@ -6071,38 +8850,39 @@ const Curriculum = ({ code }) => {
                                     >
                                       <Form.Label>
                                         Duration (HH:MM)
+                                        <span className="text-danger">*</span>
                                       </Form.Label>
+
                                       {/* <Form.Control
+                              value={PracticeTestDuration}
+                              onChange={(e) =>
+                                setPracticeTestDuration(e.target.value)
+                              }
+                              type="time" // Use time input type for 24-hour format
+                              step="300" // Optional: 5-minute intervals
+                              placeholder="00:00"
+                            /> */}
+
+                                      <Flatpickr
+                                        data-enable-time
+                                        options={{
+                                          noCalendar: true,
+                                          enableTime: true,
+                                          dateFormat: "H:i",
+                                          time_24hr: true,
+                                        }}
                                         value={PracticeTestDuration}
-                                        onChange={(e) =>
+                                        onChange={([date]) => {
+                                          // Format the date to HH:MM
+                                          const formattedTime =
+                                            SyllabusFormatTime(date);
                                           setPracticeTestDuration(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="time" // Use time input type for 24-hour format
-                                        step="300" // Optional: 5-minute intervals
-                                        placeholder="00:00"
-                                      /> */}
-
-
-                                  <Flatpickr
-                                    data-enable-time
-                                    options={{
-                                      noCalendar: true,
-                                      enableTime: true,
-                                      dateFormat: 'H:i',
-                                      time_24hr: true,
-                                    }}
-                                    value={PracticeTestDuration}
-                                    onChange={([date]) => {
-                                       // Format the date to HH:MM
-                                      const formattedTime = SyllabusFormatTime(date);
-                                      setPracticeTestDuration(formattedTime)
-                                      console.log(formattedTime); 
-                                    }}
-                                    className="form-control"
-                                  />
-
+                                            formattedTime
+                                          );
+                                          console.log(formattedTime);
+                                        }}
+                                        className="form-control"
+                                      />
                                     </Form.Group>
 
                                     <Form.Group
@@ -6110,21 +8890,22 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlInput1"
                                     >
                                       <Form.Label>
-                                        Minimum pass mark
+                                        Minimum pass mark (%)
+                                        <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
-                                        value={
-                                          PracticeTestMinPassMark
-                                        }
+                                        value={PracticeTestMinPassMark}
                                         onChange={(e) => {
                                           const value = Number(e.target.value);
                                           if (value >= 0 && value <= 100) {
                                             setPracticeTestMinPassMark(value);
+                                          } else if (e.target.value === "") {
+                                            setPracticeTestMinPassMark("");
                                           }
                                         }}
-                                         min="0"
-                                        max="100"
                                         type="text"
+                                        min="0"
+                                        max="100"
                                       />
                                     </Form.Group>
 
@@ -6134,11 +8915,10 @@ const Curriculum = ({ code }) => {
                                     >
                                       <Form.Label>
                                         Instructions
+                                        <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
-                                        value={
-                                          PracticeTestInstructions
-                                        }
+                                        value={PracticeTestInstructions}
                                         onChange={(e) =>
                                           setPracticeTestInstructions(
                                             e.target.value
@@ -6152,15 +8932,11 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        External Link
-                                      </Form.Label>
+                                      <Form.Label>External Link</Form.Label>
                                       <Form.Control
                                         value={PracticeTestExLink}
                                         onChange={(e) =>
-                                          setPracticeTestExLink(
-                                            e.target.value
-                                          )
+                                          setPracticeTestExLink(e.target.value)
                                         }
                                         type="text"
                                         placeholder="https://externallink.com"
@@ -6169,63 +8945,34 @@ const Curriculum = ({ code }) => {
                                   </Form>
                                 </Tab>
 
-                                <Tab
-                                  eventKey="questions"
-                                  title="Questions"
-                                >
+                                <Tab eventKey="questions" title="Questions">
                                   <Form>
                                     <Form.Group
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        Upload Questions
-                                      </Form.Label>
-
-                                      {item.getPracticeTests[0] !=
-                                        null &&
-                                        item.getPracticeTests[0]
-                                          .practiceTestQuestionSheet !=
-                                          "" && (
-                                          <ListGroup className="my-2">
-                                            <ListGroup.Item className="d-flex justify-content-between">
-                                              <span>
-                                                {RemoveDisplayPath(item.getPracticeTests[0].practiceTestQuestionSheet)}
-                                              </span>
-                                              <span>
-                                                <Button
-                                                  onClick={() => {
-                                                    let Resourceitem =
-                                                      {
-                                                        url: item
-                                                          .getPracticeTests[0]
-                                                          .practiceTestQuestionSheet,
-                                                      };
-                                                    handleDeleteDownloableFilesLecture(
-                                                      Resourceitem
-                                                    );
-                                                  }}
-                                                  className="p-0"
-                                                  variant=""
-                                                >
-                                                  <DeleteIcon />
-                                                </Button>
-                                              </span>
-                                            </ListGroup.Item>
-                                          </ListGroup>
-                                        )}
-
+                                      <Form.Label>Upload Questions</Form.Label>
                                       <Form.Control
                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setPracticeTestQuestionFile(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size <=
+                                              maxSizeInBytes
+                                            ) {
+                                              setPracticeTestQuestionFile(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
@@ -6237,13 +8984,9 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        External Link
-                                      </Form.Label>
+                                      <Form.Label>External Link</Form.Label>
                                       <Form.Control
-                                        value={
-                                          PracticeTestQuestionExLink
-                                        }
+                                        value={PracticeTestQuestionExLink}
                                         onChange={(e) =>
                                           setPracticeTestQuestionExLink(
                                             e.target.value
@@ -6255,65 +8998,36 @@ const Curriculum = ({ code }) => {
                                     </Form.Group>
                                   </Form>
                                 </Tab>
-                                <Tab
-                                  eventKey="solutions"
-                                  title="Solutions"
-                                >
+                                <Tab eventKey="solutions" title="Solutions">
                                   <Form>
                                     <Form.Group
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        Upload Solutions
-                                      </Form.Label>
-                                      {item.getPracticeTests[0] !=
-                                        null &&
-                                        item.getPracticeTests[0]
-                                          .practiceTestSolutionSheet !=
-                                          "" && (
-                                          <ListGroup className="my-2">
-                                            <ListGroup.Item className="d-flex justify-content-between">
-                                              <span>
-                                                {RemoveDisplayPath(item.getPracticeTests[0].practiceTestSolutionSheet)}
-                                              </span>
-                                              <span>
-                                                <Button
-                                                  onClick={() => {
-                                                    let Resourceitem =
-                                                      {
-                                                        url: item
-                                                          .getPracticeTests[0]
-                                                          .practiceTestSolutionSheet,
-                                                      };
-                                                    handleDeleteDownloableFilesLecture(
-                                                      Resourceitem
-                                                    );
-                                                  }}
-                                                  className="p-0"
-                                                  variant=""
-                                                >
-                                                  <DeleteIcon />
-                                                </Button>
-                                              </span>
-                                            </ListGroup.Item>
-                                          </ListGroup>
-                                        )}
-
+                                      <Form.Label>Upload Solutions</Form.Label>
                                       <Form.Control
-                                          onChange={(e) => {
-                                            const selectedFile = e.target.files[0];
-                                        
-                                            if (selectedFile) {
-                                              const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                        
-                                              if (selectedFile.size < maxSizeInBytes) {
-                                                setPracticeTestSolutionsFile(selectedFile);
-                                              } else {
-                                                ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                              }
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
+
+                                          if (selectedFile) {
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setPracticeTestSolutionsFile(
+                                                selectedFile
+                                              );
+                                            } else {
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
-                                          }}
+                                          }
+                                        }}
                                         type="file"
                                       />
                                     </Form.Group>
@@ -6322,13 +9036,9 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        External Link
-                                      </Form.Label>
+                                      <Form.Label>External Link</Form.Label>
                                       <Form.Control
-                                        value={
-                                          PraticeTestSolutionsExLink
-                                        }
+                                        value={PraticeTestSolutionsExLink}
                                         onChange={(e) =>
                                           setPraticeTestSolutionsExLink(
                                             e.target.value
@@ -6340,30 +9050,21 @@ const Curriculum = ({ code }) => {
                                     </Form.Group>
 
                                     <Button
-                                        onClick={() => {
-                                        setshowDescRes(true);
-                                        setshowMain(null);
-                                        console.log(
-                                          index + i + item.id
-                                        );
-                                        setshowContentAdd(null);
-                                        setcurriculumvisiblitymc("");
-                                        // handleContentshow()
-                                      }}
+                                      onClick={() =>
+                                        setshowPracticeTestInput(null)
+                                      }
                                       className="mx-1"
                                       variant="outlined"
                                     >
-                                      Cancel
+                                      Cancel Practice Test
                                     </Button>
                                     {btnLoadingPracticeTest ? (
                                       <Button variant="contained">
-                                        Loading..
+                                        Saving..
                                       </Button>
                                     ) : (
                                       <Button
-                                        onClick={
-                                          handlePracticetestSave
-                                        }
+                                        onClick={handlePracticetestSave}
                                         variant="contained"
                                       >
                                         Save Practice Test
@@ -6372,214 +9073,12 @@ const Curriculum = ({ code }) => {
                                   </Form>
                                 </Tab>
                               </Tabs>
-                            </div>
-                          )}
-                        </Card>
-                      ))}
+                            )}
 
-                    {/* Coding Exercise */}
-                    {item.type == "Coding Exercise" &&
-                      (showEditCodingExerciseInput ==
-                      index + i + item.id ? (
-                        <div className="d-flex">
-                          <Form.Control
-                            className="mx-1"
-                            value={updateCodingExerciseName}
-                            onChange={(e) =>
-                              setupdateCodingExerciseName(
-                                e.target.value
-                              )
-                            }
-                            type="text"
-                            placeholder="Coding Excercise Name"
-                          />
+                            {/* Syllabus Item > Practice Test */}
 
-                          <Button
-                            onClick={(e) => {
-                              if (
-                                showEditCodingExerciseInput ==
-                                index + i + item.id
-                              ) {
-                                setshowEditCodingExerciseInput(
-                                  null
-                                );
-                                setupdateCodingExerciseName("");
-                              } else {
-                                setshowEditCodingExerciseInput(
-                                  index + i + item.id
-                                );
-                                setupdateCodingExerciseName(
-                                  item.title
-                                );
-                              }
-                            }}
-                            className="mx-1"
-                            variant="outlined"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            onClick={(e) => {
-                              handleUpdateExerciseName(
-                                item,
-                                section
-                              );
-                            }}
-                            className="mx-1"
-                            variant="contained"
-                          >
-                            Save
-                          </Button>
-                        </div>
-                      ) : (
-                        <Card
-                          key={index + i + item.id}
-                          className="my-3"
-                        >
-                          <div className="d-flex justify-content-between align-items-center p-2" style={{
-                    cursor: isExpanded ? "default" : "move",
-                  }}>
-                            <span>
-                              <Typography>
-                                <CheckCircleIcon fontSize="small" />
-                                {i + 1}. Coding Exercise:{" "}
-                                {counters.CodingExercise}{" "}
-                                <CodeIcon sx={{ fontSize: 15 }} />{" "}
-                                {item.title}
-                                <span className="mx-5">
-                                  <EditIcon
-                                    style={syllabusIcon}
-                                    onClick={(e) => {
-                                      if (
-                                        showEditCodingExerciseInput ==
-                                        index + i + item.id
-                                      ) {
-                                        setshowEditCodingExerciseInput(
-                                          null
-                                        );
-                                        setupdateCodingExerciseName(
-                                          ""
-                                        );
-                                      } else {
-                                        setshowEditCodingExerciseInput(
-                                          index + i + item.id
-                                        );
-                                        setupdateCodingExerciseName(
-                                          item.title
-                                        );
-                                      }
-                                    }}
-                                  />
-                                  <DeleteIcon
-                                    style={syllabusIcon}
-                                    onClick={() =>
-                                      handleCodingExercisesDelete(
-                                        item
-                                      )
-                                    }
-                                  />
-                                </span>
-                              </Typography>
-                            </span>
-                            <span>
-                              {showContentAdd ==
-                              index + i + item.id ? (
-                                <Button
-                                  onClick={() => {
-                                    setshowDescRes(true);
-                                    setshowMain(null);
-                                    console.log(
-                                      index + i + item.id
-                                    );
-                                    setshowContentAdd(null);
-                                    setcurriculumvisiblitymc("");
-                                    // handleContentshow()
-                                  }}
-                                  className="mx-2"
-                                  size="small"
-                                  variant="contained"
-                                >
-                                  <CloseIcon />
-                                </Button>
-                              ) : (
-                                <Button
-                                  onClick={() => {
-                                    setshowMain(
-                                      showMain ==
-                                        index + i + item.id
-                                        ? null
-                                        : index + i + item.id
-                                    );
-                                    setshowContentAdd(
-                                      showContentAdd ==
-                                        index + i + item.id
-                                        ? null
-                                        : index + i + item.id
-                                    );
-
-                                    console.log(item);
-                                    setmainSectionID(
-                                      section.courseSection
-                                        .sectionId
-                                    );
-
-                                    // Fill Data
-                                    setCodingExerciseCode(
-                                      item.getCodingExercises[0] ==
-                                        null
-                                        ? ""
-                                        : item.getCodingExercises[0]
-                                            .codingExerciseCode
-                                    );
-                                    setCodingExerciseTitle(
-                                      item == null ? "" : item.title
-                                    );
-                                    setCodingExerciseDesc(
-                                      item == null
-                                        ? ""
-                                        : item.description
-                                    );
-                                    setCodingExerciseInstructions(
-                                      item.getCodingExercises[0] ==
-                                        null
-                                        ? ""
-                                        : item.getCodingExercises[0]
-                                            .instructions
-                                    );
-                                    setCodingExerciseExLink(
-                                      item.getCodingExercises[0] == null
-                                        ? ""
-                                        : item.getCodingExercises[0]
-                                            .externalLink
-                                    );
-
-                                    setCodingExerciseExternalLink(
-                                      item.getCodingExercises[0] ==
-                                        null
-                                        ? ""
-                                        : item.getCodingExercises[0]
-                                            .codingExternalLink
-                                    );
-                                    setCodingExercisesExLinkSolutions(
-                                      item.getCodingExercises[0] ==
-                                        null
-                                        ? ""
-                                        : item.getCodingExercises[0]
-                                            .solutionsExternalLink
-                                    );
-                                  }}
-                                  className="mx-2"
-                                  size="small"
-                                  variant="outlined"
-                                >
-                                  <CreateIcon /> Edit
-                                </Button>
-                              )}
-                            </span>
-                          </div>
-
-                          {showMain == index + i + item.id && (
-                            <div className="p-3">
+                            {/* Syllabus Item > Coding Excersise */}
+                            {showCodingExecInput == index && (
                               <Tabs
                                 defaultActiveKey="coding"
                                 id="uncontrolled-tab-example"
@@ -6587,20 +9086,21 @@ const Curriculum = ({ code }) => {
                               >
                                 <Tab
                                   eventKey="coding"
-                                  title="Coding Exercise information and Instructions"
+                                  title="Coding Exercise information and instructions"
                                 >
                                   <Form>
                                     <Form.Group
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>Title <span className="text-danger">*</span></Form.Label>
+                                      <Form.Label>
+                                        Title{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
                                       <Form.Control
                                         value={CodingExerciseTitle}
                                         onChange={(e) =>
-                                          setCodingExerciseTitle(
-                                            e.target.value
-                                          )
+                                          setCodingExerciseTitle(e.target.value)
                                         }
                                         type="text"
                                         placeholder="Coding Excercise"
@@ -6612,14 +9112,13 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlTextarea1"
                                     >
                                       <Form.Label>
-                                        Description <span className="text-danger">*</span>
+                                        Description{" "}
+                                        <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
                                         value={CodingExerciseDesc}
                                         onChange={(e) =>
-                                          setCodingExerciseDesc(
-                                            e.target.value
-                                          )
+                                          setCodingExerciseDesc(e.target.value)
                                         }
                                         as="textarea"
                                         rows={2}
@@ -6631,12 +9130,11 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlTextarea1"
                                     >
                                       <Form.Label>
-                                        Instructions <span className="text-danger">*</span>
+                                        Instructions{" "}
+                                        <span className="text-danger">*</span>
                                       </Form.Label>
                                       <Form.Control
-                                        value={
-                                          CodingExerciseInstructions
-                                        }
+                                        value={CodingExerciseInstructions}
                                         onChange={(e) =>
                                           setCodingExerciseInstructions(
                                             e.target.value
@@ -6651,51 +9149,28 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        Upload Video
-                                      </Form.Label>
-
-                                      {item.getCodingExercises[0] != null && (
-                                        item.getCodingExercises[0].codingVideo != "" &&
-                                        <ListGroup className="my-2">
-                                          <ListGroup.Item className="d-flex justify-content-between">
-                                            <span>
-                                              {RemoveDisplayPath(item.getCodingExercises[0].codingVideo)}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  let video = {
-                                                    url: item
-                                                      .getCodingExercises[0]
-                                                      .codingVideo,
-                                                  };
-                                                  handleVideoDelete(
-                                                    video
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                      )}
-
+                                      <Form.Label>Upload Video</Form.Label>
                                       <Form.Control
                                         accept="video/*"
                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setCodingExerciseVideo(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setCodingExerciseVideo(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
@@ -6710,48 +9185,26 @@ const Curriculum = ({ code }) => {
                                       <Form.Label>
                                         Downloadable Resourses
                                       </Form.Label>
-
-                                      {item.getCodingExercises[0] != null && (
-                                        item.getCodingExercises[0].downloadableResource != "" &&
-                                        <ListGroup className="my-2">
-                                          <ListGroup.Item className="d-flex justify-content-between">
-                                            <span>
-                                              {RemoveDisplayPath(item.getCodingExercises[0].downloadableResource)}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  let Resourceitem =
-                                                    {
-                                                      url: item
-                                                        .getCodingExercises[0]
-                                                        .downloadableResource,
-                                                    };
-                                                  handleDeleteDownloableFilesLecture(
-                                                    Resourceitem
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                      )}
-
                                       <Form.Control
-                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setCodingExerciseDResourses(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setCodingExerciseDResourses(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
@@ -6764,9 +9217,7 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        External Link
-                                      </Form.Label>
+                                      <Form.Label>External Link</Form.Label>
                                       <Form.Control
                                         value={CodingExerciseExLink}
                                         onChange={(e) =>
@@ -6791,54 +9242,33 @@ const Curriculum = ({ code }) => {
                                       controlId="exampleForm.ControlInput1"
                                     >
                                       <Form.Label>
-                                        Upload coding exercise
+                                        Upload coding Exercises
                                       </Form.Label>
-
-                                      {item.getCodingExercises[0] != null && (
-                                        item.getCodingExercises[0].codingExerciseSheet != "" &&
-                                        <ListGroup className="my-2">
-                                          <ListGroup.Item className="d-flex justify-content-between">
-                                            <span>
-                                              {RemoveDisplayPath(item.getCodingExercises[0].codingExerciseSheet)}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  let Resourceitem =
-                                                    {
-                                                      url: item
-                                                        .getCodingExercises[0]
-                                                        .codingExerciseSheet,
-                                                    };
-                                                  handleDeleteDownloableFilesLecture(
-                                                    Resourceitem
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                      )}
-
                                       <Form.Control
                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setCodingExerciseUploadEx(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setCodingExerciseUploadEx(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
                                         type="file"
+                                        multiple
                                       />
                                     </Form.Group>
 
@@ -6846,13 +9276,9 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        External Link
-                                      </Form.Label>
+                                      <Form.Label>External Link</Form.Label>
                                       <Form.Control
-                                        value={
-                                          CodingExerciseExternalLink
-                                        }
+                                        value={CodingExerciseExternalLink}
                                         onChange={(e) =>
                                           setCodingExerciseExternalLink(
                                             e.target.value
@@ -6867,51 +9293,28 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        Upload Video
-                                      </Form.Label>
-
-                                      {item.getCodingExercises[0] != null && (
-                                        item.getCodingExercises[0].codingExerciseVideo != "" &&
-                                        <ListGroup className="my-2">
-                                          <ListGroup.Item className="d-flex justify-content-between">
-                                            <span>
-                                              {RemoveDisplayPath(item.getCodingExercises[0].codingExerciseVideo)}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  let video = {
-                                                    url: item
-                                                      .getCodingExercises[0]
-                                                      .codingExerciseVideo,
-                                                  };
-                                                  handleVideoDelete(
-                                                    video
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                      )}
-
+                                      <Form.Label>Upload Video</Form.Label>
                                       <Form.Control
                                         accept="video/*"
                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setCodingExerciseQVideo(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setCodingExerciseQVideo(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
@@ -6920,60 +9323,33 @@ const Curriculum = ({ code }) => {
                                     </Form.Group>
                                   </Form>
                                 </Tab>
-                                <Tab
-                                  eventKey="solutions"
-                                  title="Solutions"
-                                >
+                                <Tab eventKey="solutions" title="Solutions">
                                   <Form>
                                     <Form.Group
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        Upload Solutions
-                                      </Form.Label>
-
-                                      {item.getCodingExercises[0] != null && (
-                                        item.getCodingExercises[0].codingSolutionsSheet != "" &&
-                                        <ListGroup className="my-2">
-                                          <ListGroup.Item className="d-flex justify-content-between">
-                                            <span>
-                                              {RemoveDisplayPath(item.getCodingExercises[0].codingSolutionsSheet)}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  let Resourceitem =
-                                                    {
-                                                      url: item
-                                                        .getCodingExercises[0]
-                                                        .codingSolutionsSheet,
-                                                    };
-                                                  handleDeleteDownloableFilesLecture(
-                                                    Resourceitem
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                      )}
-
+                                      <Form.Label>Upload solutions</Form.Label>
                                       <Form.Control
-                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setCodingExercisesSolutionsFile(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setCodingExercisesSolutionsFile(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
@@ -6986,13 +9362,9 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        External Link
-                                      </Form.Label>
+                                      <Form.Label>External Link</Form.Label>
                                       <Form.Control
-                                        value={
-                                          CodingExercisesExLinkSolutions
-                                        }
+                                        value={CodingExercisesExLinkSolutions}
                                         onChange={(e) =>
                                           setCodingExercisesExLinkSolutions(
                                             e.target.value
@@ -7007,51 +9379,28 @@ const Curriculum = ({ code }) => {
                                       className="mb-3"
                                       controlId="exampleForm.ControlInput1"
                                     >
-                                      <Form.Label>
-                                        Upload Video
-                                      </Form.Label>
-
-                                      {item.getCodingExercises[0] != null && (
-                                        item.getCodingExercises[0].codingSolutionsVideo != "" &&
-                                        <ListGroup className="my-2">
-                                          <ListGroup.Item className="d-flex justify-content-between">
-                                            <span>
-                                              {RemoveDisplayPath(item.getCodingExercises[0].codingSolutionsVideo)}
-                                            </span>
-                                            <span>
-                                              <Button
-                                                onClick={() => {
-                                                  let video = {
-                                                    url: item
-                                                      .getCodingExercises[0]
-                                                      .codingSolutionsVideo,
-                                                  };
-                                                  handleVideoDelete(
-                                                    video
-                                                  );
-                                                }}
-                                                className="p-0"
-                                                variant=""
-                                              >
-                                                <DeleteIcon />
-                                              </Button>
-                                            </span>
-                                          </ListGroup.Item>
-                                        </ListGroup>
-                                      )}
-
+                                      <Form.Label>Upload Video</Form.Label>
                                       <Form.Control
                                         accept="video/*"
                                         onChange={(e) => {
-                                          const selectedFile = e.target.files[0];
-                                      
+                                          const selectedFile =
+                                            e.target.files[0];
+
                                           if (selectedFile) {
-                                            const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                                      
-                                            if (selectedFile.size < maxSizeInBytes) {
-                                              setCodingExercisesSolutionsVideo(selectedFile);
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setCodingExercisesSolutionsVideo(
+                                                selectedFile
+                                              );
                                             } else {
-                                              ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
                                             }
                                           }
                                         }}
@@ -7059,16 +9408,9 @@ const Curriculum = ({ code }) => {
                                       />
                                     </Form.Group>
                                     <Button
-                                       onClick={() => {
-                                        setshowDescRes(true);
-                                        setshowMain(null);
-                                        console.log(
-                                          index + i + item.id
-                                        );
-                                        setshowContentAdd(null);
-                                        setcurriculumvisiblitymc("");
-                                        // handleContentshow()
-                                      }}
+                                      onClick={() =>
+                                        setshowCodingExecInput(null)
+                                      }
                                       variant="outlined"
                                     >
                                       Cancel Coding Exercise
@@ -7082,9 +9424,7 @@ const Curriculum = ({ code }) => {
                                       </Button>
                                     ) : (
                                       <Button
-                                        onClick={
-                                          handleCodingExecSave
-                                        }
+                                        onClick={handleCodingExecSave}
                                         className="mx-1"
                                         variant="contained"
                                       >
@@ -7094,866 +9434,66 @@ const Curriculum = ({ code }) => {
                                   </Form>
                                 </Tab>
                               </Tabs>
-                            </div>
-                          )}
-                        </Card>
-                      ))}
-                              </>
-                            </div>
-                          );
-                        }
-                      )}
-                  </div>
+                            )}
+                            {/* Syllabus Item > Coding Excersise */}
 
-                  {/* Curriculum Item ACTION */}
-                  <div className="m-2">
-                    {showCurriculumItem == index && (
-                      <div className="border border-danger p-1">
-                        <Button
-                          onClick={() => {
-                            // handleshowCurriculumItems()
-                            setshowQuizInput(null);
-                            setshowLecInput(null);
-                            setshowCurriculumItem(null);
-                            setshowPracticeTestInput(null);
-                            setshowCodingExecInput(null);
-                            setshowAssignmentInput(null);
-                          }}
-                          variant="text"
-                        >
-                          <CloseIcon />
-                        </Button>
+                            {/* Syllabus Item > Assignment */}
+                            {showAssignmentInput == index && (
+                              <Tabs
+                                defaultActiveKey="assignment"
+                                id="uncontrolled-tab-example"
+                                className="mb-3"
+                              >
+                                <Tab
+                                  eventKey="assignment"
+                                  title="Assignment information and instructions"
+                                >
+                                  <Form>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>
+                                        Title{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        value={AssignmentTitle}
+                                        onChange={(e) =>
+                                          setAssignmentTitle(e.target.value)
+                                        }
+                                        type="text"
+                                        placeholder="Assignment Title"
+                                      />
+                                    </Form.Group>
 
-                        <Button
-                          onClick={() => {
-                            setshowLecInput(
-                              showLecInput == index ? null : index
-                            );
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlTextarea1"
+                                    >
+                                      <Form.Label>
+                                        Description{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        value={AssignmentDesc}
+                                        onChange={(e) =>
+                                          setAssignmentDesc(e.target.value)
+                                        }
+                                        as="textarea"
+                                        rows={2}
+                                      />
+                                    </Form.Group>
 
-                            setshowAssignmentInput(null);
-                            setshowQuizInput(null);
-                            setshowCodingExecInput(null);
-                            setshowPracticeTestInput(null);
-                          }}
-                          variant="text"
-                        >
-                          <AddCircleIcon className="mx-1" />
-                          Lesson
-                        </Button>
-
-                        <Button
-                          onClick={() => {
-                            setshowQuizInput(
-                              showQuizInput == index ? null : index
-                            );
-                            setshowLecInput(null);
-                            setshowAssignmentInput(null);
-                            setshowCodingExecInput(null);
-                            setshowPracticeTestInput(null);
-                          }}
-                          variant="text"
-                        >
-                          <AddCircleIcon className="mx-1" />
-                          Quiz
-                        </Button>
-
-                        <Button
-                          onClick={() => {
-                            setshowPracticeTestInput(
-                              showPracticeTestInput == index ? null : index
-                            );
-                            setshowLecInput(null);
-                            setshowQuizInput(null);
-                            setshowAssignmentInput(null);
-                            setshowCodingExecInput(null);
-
-                            // Empty the PT Inputs
-                            setPraticeTestCode("");
-
-                            setPracticeTestTitle("");
-                            setPracticeTestDesc("");
-                            setPracticeTestDuration("");
-                            setPracticeTestInstructions("");
-                            setPracticeTestMinPassMark("");
-                            setPracticeTestExLink("");
-
-                            setPracticeTestQuestionFile(null);
-                            setPracticeTestQuestionExLink("");
-
-                            setPracticeTestSolutionsFile(null);
-                            setPraticeTestSolutionsExLink("");
-
-                          }}
-                          variant="text"
-                        >
-                          <AddCircleIcon className="mx-1" />
-                          Pratice Test
-                        </Button>
-
-                        <Button
-                          onClick={() => {
-                            setshowAssignmentInput(
-                              showAssignmentInput == index ? null : index
-                            );
-                            setshowLecInput(null);
-                            setshowQuizInput(null);
-                            setshowPracticeTestInput(null);
-                            setshowCodingExecInput(null);
-
-                            // Empty all the Assignment Inputs
-                            
-
-                            setAssignmentCode("");
-
-                            setAssignmentTitle("");
-                            setAssignmentDesc("");
-                            setAssignmentDuration("");
-                            setAssignmentInstructors("");
-                            setAssignmentVideo(null);
-                            setAssignmentDResourses(null);
-                            setAssignmentExLink("");
-
-                            setAssignmentQuestion("");
-                            setAssignmentQuestionFile(null);
-                            setAssignmentQuestionLink("");
-
-                            setAssignmentSolutions("");
-                            setAssignmentSolutionsVideo(null);
-                            setAssignmentSolutionsFile(null);
-                            setAssignmentSolutionsExLink("");
-
-                          }}
-                          variant="text"
-                        >
-                          <AddCircleIcon className="mx-1" />
-                          Assignment
-                        </Button>
-
-                        <Button
-                          onClick={() => {
-                            setshowCodingExecInput(
-                              showCodingExecInput == index ? null : index
-                            );
-                            setshowLecInput(null);
-                            setshowQuizInput(null);
-                            setshowPracticeTestInput(null);
-                            setshowAssignmentInput(null);
-
-                            // Empty all the CE Inputs
-                            setCodingExerciseCode("");
-
-                            setCodingExerciseTitle("");
-                            setCodingExerciseDesc("");
-                            setCodingExerciseInstructions("");
-
-                            setCodingExerciseVideo(null);
-                            setCodingExerciseDResourses(null);
-                            setCodingExerciseExLink(null);
-
-                            setCodingExerciseUploadEx(null);
-                            setCodingExerciseExternalLink("");
-
-                            setCodingExerciseQVideo(null);
-
-                            setCodingExercisesSolutionsFile(null);
-                            setCodingExercisesExLinkSolutions("");
-                            setCodingExercisesSolutionsVideo(null);
-
-
-                          }}
-                          variant="text"
-                        >
-                          <AddCircleIcon className="mx-1" />
-                          Coding Excercise
-                        </Button>
-                      </div>
-                    )}
-
-                    {showCurriculumItem != index && (
-                      <Button
-                        onClick={() => {
-                          setmainSectionID(section.courseSection.sectionId);
-                          setshowCurriculumItem(
-                            showCurriculumItem == index ? null : index
-                          );
-                        }}
-                        variant="contained"
-                      >
-                        <AddIcon /> Syllabus Item
-                      </Button>
-                    )}
-                  </div>
-
-                  {/* Curriculum Item ACTION */}
-
-                  {/* Curriculum Item > Lectures */}
-
-                  {showLecInput == index && (
-                    <>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="exampleForm.ControlInput1"
-                      >
-                        <Form.Label>Add Lesson</Form.Label>
-                        <Form.Control
-                          onChange={(e) => setlecturetitle(e.target.value)}
-                          type="text"
-                          placeholder="Type Lesson Name"
-                        />
-                      </Form.Group>
-
-                      <Button
-                        onClick={() =>
-                          handleSaveLecture(section.courseSection.sectionId)
-                        }
-                        className="mx-1"
-                        variant="outlined"
-                      >
-                        ADD
-                      </Button>
-                      {/* handleCancelLectureInput */}
-                      <Button
-                        onClick={() => setshowLecInput(null)}
-                        variant="contained"
-                      >
-                        Cancel
-                      </Button>
-                    </>
-                  )}
-                  {/* Syllabus Item > Lectures */}
-
-                  {/* Syllabus Item > Quiz */}
-
-                  {showQuizInput == index && (
-                    <div className="p-4 m-2">
-                      <Form>
-                        <Form.Group
-                          className="mb-3"
-                          controlId="exampleForm.ControlInput1"
-                        >
-                          <Form.Label>Quiz Title</Form.Label>
-                          <Form.Control
-                            value={quizTitle}
-                            onChange={(e) => setquizTitle(e.target.value)}
-                            type="text"
-                            placeholder="Enter a Title"
-                          />
-                        </Form.Group>
-                        <Form.Group
-                          className="mb-3"
-                          controlId="exampleForm.ControlTextarea1"
-                        >
-                          <Form.Label>Quiz Description</Form.Label>
-                          <Form.Control
-                            value={quizDesc}
-                            onChange={(e) => setquizDesc(e.target.value)}
-                            as="textarea"
-                            rows={3}
-                          />
-                        </Form.Group>
-                      </Form>
-
-                      <Button
-                        onClick={() =>
-                          handleSaveQuiz(section.courseSection.sectionId)
-                        }
-                        className="mx-1"
-                        variant="outlined"
-                      >
-                        ADD
-                      </Button>
-
-                      <Button
-                        onClick={() => setshowQuizInput(null)}
-                        variant="contained"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  )}
-
-                  {/* Syllabus Item > Quiz */}
-
-                  {/* Syllabus Item > Practice Test */}
-                  {showPracticeTestInput == index && (
-                    <Tabs
-                      defaultActiveKey="practice"
-                      id="uncontrolled-tab-example"
-                      className="mb-3"
-                    >
-                      <Tab
-                        eventKey="practice"
-                        title="Practice Test information and instructions"
-                      >
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              Title <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={PracticeTestTitle}
-                              onChange={(e) =>
-                                setPracticeTestTitle(e.target.value)
-                              }
-                              type="text"
-                              placeholder="Practice Test Title"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>
-                              Description<span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={PracticeTestDesc}
-                              onChange={(e) =>
-                                setPracticeTestDesc(e.target.value)
-                              }
-                              as="textarea"
-                              rows={2}
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              Duration (HH:MM)
-                              <span className="text-danger">*</span>
-                            </Form.Label>
-
-                            {/* <Form.Control
-                              value={PracticeTestDuration}
-                              onChange={(e) =>
-                                setPracticeTestDuration(e.target.value)
-                              }
-                              type="time" // Use time input type for 24-hour format
-                              step="300" // Optional: 5-minute intervals
-                              placeholder="00:00"
-                            /> */}
-
-                                <Flatpickr
-                                    data-enable-time
-                                    options={{
-                                      noCalendar: true,
-                                      enableTime: true,
-                                      dateFormat: 'H:i',
-                                      time_24hr: true,
-                                    }}
-                                    value={PracticeTestDuration}
-                                    onChange={([date]) => {
-                                       // Format the date to HH:MM
-                                      const formattedTime = SyllabusFormatTime(date);
-                                      setPracticeTestDuration(formattedTime)
-                                      console.log(formattedTime); 
-                                    }}
-                                    className="form-control"
-                                  />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              Minimum pass mark (%)
-                              <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={PracticeTestMinPassMark}
-                              onChange={(e) => {
-                                const value = Number(e.target.value);
-                                if (value >= 0 && value <= 100) {
-                                  setPracticeTestMinPassMark(value);
-                                } else if (e.target.value === '') {
-                                  setPracticeTestMinPassMark('');
-                                }
-                              }}
-                              type="text"
-                              min="0"
-                              max="100"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>
-                              Instructions<span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={PracticeTestInstructions}
-                              onChange={(e) =>
-                                setPracticeTestInstructions(e.target.value)
-                              }
-                              as="textarea"
-                              rows={3}
-                            />
-                          </Form.Group>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={PracticeTestExLink}
-                              onChange={(e) =>
-                                setPracticeTestExLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Tab>
-
-                      <Tab eventKey="questions" title="Questions">
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Questions</Form.Label>
-                            <Form.Control
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                                
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                          
-                                  if (selectedFile.size <= maxSizeInBytes) {
-                                    setPracticeTestQuestionFile(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={PracticeTestQuestionExLink}
-                              onChange={(e) =>
-                                setPracticeTestQuestionExLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Tab>
-                      <Tab eventKey="solutions" title="Solutions">
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Solutions</Form.Label>
-                            <Form.Control
-                             onChange={(e) => {
-                              const selectedFile = e.target.files[0];
-                              
-                              if (selectedFile) {
-                                const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                        
-                                if (selectedFile.size < maxSizeInBytes) {
-                                  setPracticeTestSolutionsFile(selectedFile);
-                                } else {
-                                  ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                }
-                              }
-                            }}
-                              type="file"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={PraticeTestSolutionsExLink}
-                              onChange={(e) =>
-                                setPraticeTestSolutionsExLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-
-                          <Button
-                            onClick={() => setshowPracticeTestInput(null)}
-                            className="mx-1"
-                            variant="outlined"
-                          >
-                            Cancel Practice Test
-                          </Button>
-                          {btnLoadingPracticeTest ? (
-                            <Button variant="contained">Saving..</Button>
-                          ) : (
-                            <Button
-                              onClick={handlePracticetestSave}
-                              variant="contained"
-                            >
-                              Save Practice Test
-                            </Button>
-                          )}
-                        </Form>
-                      </Tab>
-                    </Tabs>
-                  )}
-
-                  {/* Syllabus Item > Practice Test */}
-
-                  {/* Syllabus Item > Coding Excersise */}
-                  {showCodingExecInput == index && (
-                    <Tabs
-                      defaultActiveKey="coding"
-                      id="uncontrolled-tab-example"
-                      className="mb-3"
-                    >
-                      <Tab
-                        eventKey="coding"
-                        title="Coding Exercise information and instructions"
-                      >
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Title <span className="text-danger">*</span></Form.Label>
-                            <Form.Control
-                              value={CodingExerciseTitle}
-                              onChange={(e) =>
-                                setCodingExerciseTitle(e.target.value)
-                              }
-                              type="text"
-                              placeholder="Coding Excercise"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>Description <span className="text-danger">*</span></Form.Label>
-                            <Form.Control
-                              value={CodingExerciseDesc}
-                              onChange={(e) =>
-                                setCodingExerciseDesc(e.target.value)
-                              }
-                              as="textarea"
-                              rows={2}
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>Instructions <span className="text-danger">*</span></Form.Label>
-                            <Form.Control
-                              value={CodingExerciseInstructions}
-                              onChange={(e) =>
-                                setCodingExerciseInstructions(e.target.value)
-                              }
-                              as="textarea"
-                              rows={2}
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Video</Form.Label>
-                            <Form.Control
-                              accept="video/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setCodingExerciseVideo(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>Downloadable Resourses</Form.Label>
-                            <Form.Control
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setCodingExerciseDResourses(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                              multiple
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={CodingExerciseExLink}
-                              onChange={(e) =>
-                                setCodingExerciseExLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Tab>
-
-                      <Tab eventKey="coding-exercises" title="Coding exercises">
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload coding Exercises</Form.Label>
-                            <Form.Control
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setCodingExerciseUploadEx(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                              multiple
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={CodingExerciseExternalLink}
-                              onChange={(e) =>
-                                setCodingExerciseExternalLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Video</Form.Label>
-                            <Form.Control
-                              accept="video/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setCodingExerciseQVideo(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Tab>
-                      <Tab eventKey="solutions" title="Solutions">
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload solutions</Form.Label>
-                            <Form.Control
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setCodingExercisesSolutionsFile(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                              multiple
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={CodingExercisesExLinkSolutions}
-                              onChange={(e) =>
-                                setCodingExercisesExLinkSolutions(
-                                  e.target.value
-                                )
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Video</Form.Label>
-                            <Form.Control
-                              accept="video/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setCodingExercisesSolutionsVideo(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
-                          <Button
-                            onClick={() => setshowCodingExecInput(null)}
-                            variant="outlined"
-                          >
-                            Cancel Coding Exercise
-                          </Button>
-                          {btnLoadingCodingExcercise ? (
-                            <Button className="mx-1" variant="contained">
-                              Saving..
-                            </Button>
-                          ) : (
-                            <Button
-                              onClick={handleCodingExecSave}
-                              className="mx-1"
-                              variant="contained"
-                            >
-                              Save Coding Exercise
-                            </Button>
-                          )}
-                        </Form>
-                      </Tab>
-                    </Tabs>
-                  )}
-                  {/* Syllabus Item > Coding Excersise */}
-
-                  {/* Syllabus Item > Assignment */}
-                  {showAssignmentInput == index && (
-                    <Tabs
-                      defaultActiveKey="assignment"
-                      id="uncontrolled-tab-example"
-                      className="mb-3"
-                    >
-                      <Tab
-                        eventKey="assignment"
-                        title="Assignment information and instructions"
-                      >
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              Title <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={AssignmentTitle}
-                              onChange={(e) =>
-                                setAssignmentTitle(e.target.value)
-                              }
-                              type="text"
-                              placeholder="Assignment Title"
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>
-                              Description <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={AssignmentDesc}
-                              onChange={(e) =>
-                                setAssignmentDesc(e.target.value)
-                              }
-                              as="textarea"
-                              rows={2}
-                            />
-                          </Form.Group>
-
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>
-                              Duration (HH:MM)
-                              <span className="text-danger">*</span>
-                            </Form.Label>
-                            {/* <Form.Control
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>
+                                        Duration (HH:MM)
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      {/* <Form.Control
                               value={AssignmentDuration}
                               onChange={(e) =>
                                 setAssignmentDuration(e.target.value)
@@ -7963,280 +9503,341 @@ const Curriculum = ({ code }) => {
                               placeholder="00:00"
                             /> */}
 
+                                      <Flatpickr
+                                        data-enable-time
+                                        options={{
+                                          noCalendar: true,
+                                          enableTime: true,
+                                          dateFormat: "H:i",
+                                          time_24hr: true,
+                                        }}
+                                        value={AssignmentDuration}
+                                        onChange={([date]) => {
+                                          // Format the date to HH:MM
+                                          const formattedTime =
+                                            SyllabusFormatTime(date);
+                                          setAssignmentDuration(formattedTime);
+                                          console.log(formattedTime);
+                                        }}
+                                        className="form-control"
+                                      />
+                                    </Form.Group>
 
-                              <Flatpickr
-                                    data-enable-time
-                                    options={{
-                                      noCalendar: true,
-                                      enableTime: true,
-                                      dateFormat: 'H:i',
-                                      time_24hr: true,
-                                    }}
-                                    value={AssignmentDuration}
-                                    onChange={([date]) => {
-                                       // Format the date to HH:MM
-                                      const formattedTime = SyllabusFormatTime(date);
-                                      setAssignmentDuration(formattedTime)
-                                      console.log(formattedTime); 
-                                    }}
-                                    className="form-control"
-                                  />
-                          </Form.Group>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlTextarea1"
+                                    >
+                                      <Form.Label>
+                                        Instructions{" "}
+                                        <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control
+                                        value={AssignmentInstructors}
+                                        onChange={(e) =>
+                                          setAssignmentInstructors(
+                                            e.target.value
+                                          )
+                                        }
+                                        as="textarea"
+                                        rows={3}
+                                      />
+                                    </Form.Group>
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>
-                              Instructions{" "}
-                              <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                              value={AssignmentInstructors}
-                              onChange={(e) =>
-                                setAssignmentInstructors(e.target.value)
-                              }
-                              as="textarea"
-                              rows={3}
-                            />
-                          </Form.Group>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>Upload Video</Form.Label>
+                                      <Form.Control
+                                        accept="video/*"
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Video</Form.Label>
-                            <Form.Control
-                              accept="video/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setAssignmentVideo(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
+                                          if (selectedFile) {
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>Downloadable Resourses</Form.Label>
-                            <Form.Control
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setAssignmentDResourses(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                              multiple
-                            />
-                          </Form.Group>
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setAssignmentVideo(selectedFile);
+                                            } else {
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
+                                            }
+                                          }
+                                        }}
+                                        type="file"
+                                      />
+                                    </Form.Group>
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={AssignmentExLink}
-                              onChange={(e) =>
-                                setAssignmentExLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Tab>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlTextarea1"
+                                    >
+                                      <Form.Label>
+                                        Downloadable Resourses
+                                      </Form.Label>
+                                      <Form.Control
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
 
-                      <Tab eventKey="questions" title="Questions">
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>Questions</Form.Label>
-                            <Form.Control
-                              value={AssignmentQuestion}
-                              onChange={(e) =>
-                                setAssignmentQuestion(e.target.value)
-                              }
-                              as="textarea"
-                              rows={2}
-                            />
-                          </Form.Group>
+                                          if (selectedFile) {
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Questions</Form.Label>
-                            <Form.Control
-                             onChange={(e) => {
-                              const selectedFile = e.target.files[0];
-                          
-                              if (selectedFile) {
-                                const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                          
-                                if (selectedFile.size < maxSizeInBytes) {
-                                  setAssignmentQuestionFile(selectedFile);
-                                } else {
-                                  ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                }
-                              }
-                            }}
-                              type="file"
-                            />
-                          </Form.Group>
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setAssignmentDResourses(
+                                                selectedFile
+                                              );
+                                            } else {
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
+                                            }
+                                          }
+                                        }}
+                                        type="file"
+                                        multiple
+                                      />
+                                    </Form.Group>
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={AssignmentQuestionLink}
-                              onChange={(e) =>
-                                setAssignmentQuestionLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Tab>
-                      <Tab eventKey="solutions" title="Solutions">
-                        <Form>
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlTextarea1"
-                          >
-                            <Form.Label>Solutions</Form.Label>
-                            <Form.Control
-                              value={AssignmentSolutions}
-                              onChange={(e) => {
-                                setAssignmentSolutions(e.target.value)
-                              }}
-                              as="textarea"
-                              rows={2}
-                            />
-                          </Form.Group>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>External Link</Form.Label>
+                                      <Form.Control
+                                        value={AssignmentExLink}
+                                        onChange={(e) =>
+                                          setAssignmentExLink(e.target.value)
+                                        }
+                                        type="text"
+                                        placeholder="https://externallink.com"
+                                      />
+                                    </Form.Group>
+                                  </Form>
+                                </Tab>
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Video</Form.Label>
-                            <Form.Control
-                              accept="video/*"
-                              onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size < maxSizeInBytes) {
-                                    setAssignmentSolutionsVideo(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
+                                <Tab eventKey="questions" title="Questions">
+                                  <Form>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlTextarea1"
+                                    >
+                                      <Form.Label>Questions</Form.Label>
+                                      <Form.Control
+                                        value={AssignmentQuestion}
+                                        onChange={(e) =>
+                                          setAssignmentQuestion(e.target.value)
+                                        }
+                                        as="textarea"
+                                        rows={2}
+                                      />
+                                    </Form.Group>
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>Upload Solutions</Form.Label>
-                            <Form.Control
-                               onChange={(e) => {
-                                const selectedFile = e.target.files[0];
-                            
-                                if (selectedFile) {
-                                  const maxSizeInBytes = 100 * 1024 * 1024; // 100MB in bytes
-                            
-                                  if (selectedFile.size <= maxSizeInBytes) {
-                                    setAssignmentSolutionsFile(selectedFile);
-                                  } else {
-                                    ErrorAlert("Error", "The file size exceeds the 100MB limit. Please select a smaller file.");
-                                  }
-                                }
-                              }}
-                              type="file"
-                            />
-                          </Form.Group>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>Upload Questions</Form.Label>
+                                      <Form.Control
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
 
-                          <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                          >
-                            <Form.Label>External Link</Form.Label>
-                            <Form.Control
-                              value={AssignmentSolutionsExLink}
-                              onChange={(e) =>
-                                setAssignmentSolutionsExLink(e.target.value)
-                              }
-                              type="text"
-                              placeholder="https://externallink.com"
-                            />
-                          </Form.Group>
+                                          if (selectedFile) {
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
 
-                          <Button
-                            onClick={() => setshowAssignmentInput(null)}
-                            variant="outlined"
-                          >
-                            Cancel Assignment
-                          </Button>
-                          {btnLoadingAssignment ? (
-                            <Button className="mx-1" variant="contained">
-                              Saving..
-                            </Button>
-                          ) : (
-                            <Button
-                              onClick={handleAssignmentSave}
-                              className="mx-1"
-                              variant="contained"
-                            >
-                              Save Assignment
-                            </Button>
-                          )}
-                        </Form>
-                      </Tab>
-                    </Tabs>
-                  )}
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setAssignmentQuestionFile(
+                                                selectedFile
+                                              );
+                                            } else {
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
+                                            }
+                                          }
+                                        }}
+                                        type="file"
+                                      />
+                                    </Form.Group>
 
-                  {/* Syllabus Item > Assignment */}
-                </CardContent>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>External Link</Form.Label>
+                                      <Form.Control
+                                        value={AssignmentQuestionLink}
+                                        onChange={(e) =>
+                                          setAssignmentQuestionLink(
+                                            e.target.value
+                                          )
+                                        }
+                                        type="text"
+                                        placeholder="https://externallink.com"
+                                      />
+                                    </Form.Group>
+                                  </Form>
+                                </Tab>
+                                <Tab eventKey="solutions" title="Solutions">
+                                  <Form>
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlTextarea1"
+                                    >
+                                      <Form.Label>Solutions</Form.Label>
+                                      <Form.Control
+                                        value={AssignmentSolutions}
+                                        onChange={(e) => {
+                                          setAssignmentSolutions(
+                                            e.target.value
+                                          );
+                                        }}
+                                        as="textarea"
+                                        rows={2}
+                                      />
+                                    </Form.Group>
+
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>Upload Video</Form.Label>
+                                      <Form.Control
+                                        accept="video/*"
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
+
+                                          if (selectedFile) {
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size < maxSizeInBytes
+                                            ) {
+                                              setAssignmentSolutionsVideo(
+                                                selectedFile
+                                              );
+                                            } else {
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
+                                            }
+                                          }
+                                        }}
+                                        type="file"
+                                      />
+                                    </Form.Group>
+
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>Upload Solutions</Form.Label>
+                                      <Form.Control
+                                        onChange={(e) => {
+                                          const selectedFile =
+                                            e.target.files[0];
+
+                                          if (selectedFile) {
+                                            const maxSizeInBytes =
+                                              100 * 1024 * 1024; // 100MB in bytes
+
+                                            if (
+                                              selectedFile.size <=
+                                              maxSizeInBytes
+                                            ) {
+                                              setAssignmentSolutionsFile(
+                                                selectedFile
+                                              );
+                                            } else {
+                                              ErrorAlert(
+                                                "Error",
+                                                "The file size exceeds the 100MB limit. Please select a smaller file."
+                                              );
+                                            }
+                                          }
+                                        }}
+                                        type="file"
+                                      />
+                                    </Form.Group>
+
+                                    <Form.Group
+                                      className="mb-3"
+                                      controlId="exampleForm.ControlInput1"
+                                    >
+                                      <Form.Label>External Link</Form.Label>
+                                      <Form.Control
+                                        value={AssignmentSolutionsExLink}
+                                        onChange={(e) =>
+                                          setAssignmentSolutionsExLink(
+                                            e.target.value
+                                          )
+                                        }
+                                        type="text"
+                                        placeholder="https://externallink.com"
+                                      />
+                                    </Form.Group>
+
+                                    <Button
+                                      onClick={() =>
+                                        setshowAssignmentInput(null)
+                                      }
+                                      variant="outlined"
+                                    >
+                                      Cancel Assignment
+                                    </Button>
+                                    {btnLoadingAssignment ? (
+                                      <Button
+                                        className="mx-1"
+                                        variant="contained"
+                                      >
+                                        Saving..
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        onClick={handleAssignmentSave}
+                                        className="mx-1"
+                                        variant="contained"
+                                      >
+                                        Save Assignment
+                                      </Button>
+                                    )}
+                                  </Form>
+                                </Tab>
+                              </Tabs>
+                            )}
+
+                            {/* Syllabus Item > Assignment */}
+                          </CardContent>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))
+                ) : (
+                  <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
+                )}
+                {provided.placeholder}
               </div>
-            ))
-          ) : (
-            <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
-          )
-        ) : (
-          <div className="d-flex justify-content-center">
-            <h4></h4>
-          </div>
-        )}
+            )}
+          </Droppable>
+        </DragDropContext>
 
         <div className="m-2">
           {/*  */}
