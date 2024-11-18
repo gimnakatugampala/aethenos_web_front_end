@@ -359,7 +359,15 @@ const Curriculum = ({ code }) => {
 
   // Update Section
   const handleUpdateSection = (section) => {
-    UpdateSectionName(code, section, updateSectionName);
+    UpdateSectionName(code, section, updateSectionName,  
+      setshowSectionEditInput,  
+      setcurriculumvisiblitymc,
+      setshowMain,
+      setsectionData,
+      setshowDescRes,
+      setshowContentAdd,
+      setcurriculumvisiblity
+    );
   };
 
   // update lecture

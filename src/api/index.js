@@ -2294,7 +2294,15 @@ export const RequestSubmitReview = async (code, setbtn_loading) => {
 };
 
 
-export const UpdateSectionName = async (code, section, updateSectionName) => {
+export const UpdateSectionName = async (code, section, updateSectionName,
+  setshowSectionEditInput,
+  setcurriculumvisiblitymc,
+  setshowMain,
+  setsectionData,
+  setshowDescRes,
+  setshowContentAdd,
+  setcurriculumvisiblity
+) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
@@ -2320,9 +2328,13 @@ export const UpdateSectionName = async (code, section, updateSectionName) => {
       if (result.variable == "200") {
         SyllabusToastSuccess(result.message);
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1500);
+
+        setshowSectionEditInput(null)
+
+        GetCurriculum(code, setsectionData);
 
         return;
       } else {
