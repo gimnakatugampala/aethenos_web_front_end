@@ -2462,7 +2462,14 @@ export const UpdateAssignmentName = async (
   code,
   assignment,
   updateAssignmentName,
-  section
+  section,
+  setshowEditAssignmentInput,  
+  setcurriculumvisiblitymc,
+  setshowMain,
+  setsectionData,
+  setshowDescRes,
+  setshowContentAdd,
+  setcurriculumvisiblity
 ) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -2490,9 +2497,13 @@ export const UpdateAssignmentName = async (
       if (result.variable == "200") {
         SuccessAlert("Updated", result.message);
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
+
+        GetCurriculum(code, setsectionData);
+
+        setshowEditAssignmentInput(null)
 
         return;
       } else {

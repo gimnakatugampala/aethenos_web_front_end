@@ -401,7 +401,15 @@ const Curriculum = ({ code }) => {
 
   // update Assignment Name
   const handleUpdateAssignmentName = (assignment, section) => {
-    UpdateAssignmentName(code, assignment, updateAssignmentName, section);
+    UpdateAssignmentName(code, assignment, updateAssignmentName, section,
+      setshowEditAssignmentInput,  
+      setcurriculumvisiblitymc,
+      setshowMain,
+      setsectionData,
+      setshowDescRes,
+      setshowContentAdd,
+      setcurriculumvisiblity
+    );
   };
 
   // update Pratice test Name
