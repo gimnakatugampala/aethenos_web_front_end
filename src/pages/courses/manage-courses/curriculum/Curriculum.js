@@ -372,7 +372,15 @@ const Curriculum = ({ code }) => {
 
   // update lecture
   const handleUpdateLectureName = (lecture, section) => {
-    UpdateLectureName(code, lecture, updateLectureName, section);
+    UpdateLectureName(code, lecture, updateLectureName, section,
+      setshowEditTitleInput,  
+      setcurriculumvisiblitymc,
+      setshowMain,
+      setsectionData,
+      setshowDescRes,
+      setshowContentAdd,
+      setcurriculumvisiblity
+    );
   };
   // update Quiz Name
   const handleUpdateQuizName = (quiz, section) => {
