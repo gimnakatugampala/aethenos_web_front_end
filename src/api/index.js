@@ -2405,7 +2405,14 @@ export const UpdateQuizName = async (
   quiz,
   updateQuizName,
   updateQuizDescription,
-  section
+  section,
+  setshowEditQuizInput,  
+  setcurriculumvisiblitymc,
+  setshowMain,
+  setsectionData,
+  setshowDescRes,
+  setshowContentAdd,
+  setcurriculumvisiblity
 ) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -2434,9 +2441,13 @@ export const UpdateQuizName = async (
       if (result.variable == "200") {
         SuccessAlert("Updated", result.message);
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
+
+        GetCurriculum(code, setsectionData);
+
+        setshowEditQuizInput(null)
 
         return;
       } else {

@@ -385,7 +385,15 @@ const Curriculum = ({ code }) => {
   // update Quiz Name
   const handleUpdateQuizName = (quiz, section) => {
     console.log(updateQuizDescription);
-    UpdateQuizName(code, quiz, updateQuizName, updateQuizDescription, section);
+    UpdateQuizName(code, quiz, updateQuizName, updateQuizDescription, section,
+      setshowEditQuizInput,  
+      setcurriculumvisiblitymc,
+      setshowMain,
+      setsectionData,
+      setshowDescRes,
+      setshowContentAdd,
+      setcurriculumvisiblity
+    );
 
     // console.log(section)
     // console.log(quiz)
