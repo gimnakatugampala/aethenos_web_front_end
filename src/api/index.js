@@ -2561,7 +2561,14 @@ export const UpdatePraticeTestName = async (
   code,
   pt,
   updatePraticeTestName,
-  section
+  section,
+  setshowEditPraticeTestInput,  
+  setcurriculumvisiblitymc,
+  setshowMain,
+  setsectionData,
+  setshowDescRes,
+  setshowContentAdd,
+  setcurriculumvisiblity
 ) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -2589,9 +2596,13 @@ export const UpdatePraticeTestName = async (
       if (result.variable == "200") {
         SuccessAlert("Updated", result.message);
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
+
+        GetCurriculum(code, setsectionData);
+
+        setshowEditPraticeTestInput(null)
 
         return;
       } else {

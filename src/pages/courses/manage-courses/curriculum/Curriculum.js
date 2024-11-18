@@ -414,7 +414,15 @@ const Curriculum = ({ code }) => {
 
   // update Pratice test Name
   const handleUpdatePraticeTestName = (pt, section) => {
-    UpdatePraticeTestName(code, pt, updatePraticeTestName, section);
+    UpdatePraticeTestName(code, pt, updatePraticeTestName, section,
+      setshowEditPraticeTestInput,  
+      setcurriculumvisiblitymc,
+      setshowMain,
+      setsectionData,
+      setshowDescRes,
+      setshowContentAdd,
+      setcurriculumvisiblity
+    );
   };
 
   // update Coding Exercise Name
