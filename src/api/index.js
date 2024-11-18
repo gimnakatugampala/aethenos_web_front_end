@@ -1060,14 +1060,12 @@ export const GetCurriculum = async (code, setsectionData) => {
 
       result.forEach((section) => {
         section.courseSection.sectionCurriculumItem.sort((a, b) => {
-          // Handle case where both are null
+         
           if (a.arrangeNo === null && b.arrangeNo === null) return 0;
-
-          // Handle case where one is null and the other is not
+         
           if (a.arrangeNo === null) return 1;
           if (b.arrangeNo === null) return -1;
 
-          // Convert to numbers and sort numerically
           const aArrangeNo = parseInt(a.arrangeNo, 10);
           const bArrangeNo = parseInt(b.arrangeNo, 10);
 
@@ -1075,7 +1073,11 @@ export const GetCurriculum = async (code, setsectionData) => {
         });
       });
 
-      setsectionData(result);
+   
+
+      setsectionData(result); 
+
+  
     })
     .catch((error) => console.log("error", error));
 };
@@ -5201,7 +5203,7 @@ export const GetCheckPricingAllStatus = async (code, setcheckPricingStatus, seti
   )
     .then((response) => response.json())
     .then((result) => {
-      console.log(result);
+     
       Unauthorized(result.status, "courses");
     
         setcheckPricingStatus(result.paymentDetails);
@@ -5864,3 +5866,50 @@ fetch(`${BACKEND_LINK}/course/getExternalCourseLinkAndRatings/${code}`, requestO
   .catch((error) => console.error(error));
 
 }
+
+
+export const HandleSectionMove = async (code, reorderedIds, setsectionData, setSectionLoading) => {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  const formdata = new FormData();
+formdata.append("courseCode", `${code}`);
+formdata.append("courseSectionOrder", `${reorderedIds}`);
+
+
+  const requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch(
+    `${BACKEND_LINK}/managecourse/updateCourseSectionOrder`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+
+      Unauthorized(result.status, "courses");
+
+      if (result.variable == "200") {
+        // SuccessAlert("Deleted", result.message);
+        // setTimeout(() => {
+           
+        // },2000)
+        GetCurriculum(code, setsectionData)
+        .finally(() => {
+        
+          setTimeout(() => {
+            setSectionLoading(false);
+          }, 500); 
+        });
+  return;
+       
+      } else {
+        ErrorAlert("Error", result.message);
+      }
+    })
+    .catch((error) => console.error(error));
+};
