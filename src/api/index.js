@@ -2517,7 +2517,14 @@ export const UpdateCodingExerciseName = async (
   code,
   codingExercise,
   updateCodingExerciseName,
-  section
+  section,
+  setshowEditCodingExerciseInput,  
+  setcurriculumvisiblitymc,
+  setshowMain,
+  setsectionData,
+  setshowDescRes,
+  setshowContentAdd,
+  setcurriculumvisiblity
 ) => {
   const myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
@@ -2545,9 +2552,13 @@ export const UpdateCodingExerciseName = async (
       if (result.variable == "200") {
         SuccessAlert("Updated", result.message);
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1000);
+
+        GetCurriculum(code, setsectionData);
+
+        setshowEditCodingExerciseInput(null)
 
         return;
       } else {

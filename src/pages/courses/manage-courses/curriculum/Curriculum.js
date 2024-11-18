@@ -431,7 +431,14 @@ const Curriculum = ({ code }) => {
       code,
       codingExercise,
       updateCodingExerciseName,
-      section
+      section,
+      setshowEditCodingExerciseInput,  
+      setcurriculumvisiblitymc,
+      setshowMain,
+      setsectionData,
+      setshowDescRes,
+      setshowContentAdd,
+      setcurriculumvisiblity
     );
   };
 
