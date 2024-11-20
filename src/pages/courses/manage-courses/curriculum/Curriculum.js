@@ -7343,11 +7343,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getPracticeTests[0]
-                                                                            .practiceTestQuestionSheet
-                                                                        )}
+                                                                            .practiceTestQuestionSheetTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -7452,11 +7452,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getPracticeTests[0]
-                                                                            .practiceTestSolutionSheet
-                                                                        )}
+                                                                            .practiceTestSolutionSheetTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
