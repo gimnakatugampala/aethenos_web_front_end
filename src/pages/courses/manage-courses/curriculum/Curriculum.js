@@ -6282,11 +6282,11 @@ const Curriculum = ({ code }) => {
                                                                       }
                                                                     >
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getAssignment[0]
-                                                                            .assignmentVideo
-                                                                        )}
+                                                                            .assignmentVideoTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -6371,11 +6371,11 @@ const Curriculum = ({ code }) => {
                                                                       }
                                                                     >
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getAssignment[0]
-                                                                            .downloadableResource
-                                                                        )}
+                                                                            .downloadableResourceTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -6508,11 +6508,11 @@ const Curriculum = ({ code }) => {
                                                                       }
                                                                     >
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getAssignment[0]
-                                                                            .questionSheet
-                                                                        )}
+                                                                            .questionSheetTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -6644,11 +6644,11 @@ const Curriculum = ({ code }) => {
                                                                       }
                                                                     >
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getAssignment[0]
-                                                                            .solutionVideo
-                                                                        )}
+                                                                            .solutionVideoTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -6731,11 +6731,11 @@ const Curriculum = ({ code }) => {
                                                                       }
                                                                     >
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getAssignment[0]
-                                                                            .solutionsSheet
-                                                                        )}
+                                                                            .solutionsSheetTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
