@@ -7942,11 +7942,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
-                                                                          item
+                                                                        {
+                                                                          RemoveDisplayPath(item
                                                                             .getCodingExercises[0]
-                                                                            .codingVideo
-                                                                        )}
+                                                                            .codingVideo)
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -8026,11 +8026,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getCodingExercises[0]
-                                                                            .downloadableResource
-                                                                        )}
+                                                                            .downloadableResourceTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -8139,11 +8139,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getCodingExercises[0]
-                                                                            .codingExerciseSheet
-                                                                        )}
+                                                                            .codingExerciseSheetTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -8243,11 +8243,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getCodingExercises[0]
-                                                                            .codingExerciseVideo
-                                                                        )}
+                                                                            .codingExerciseVideoTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -8332,11 +8332,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getCodingExercises[0]
-                                                                            .codingSolutionsSheet
-                                                                        )}
+                                                                            .codingSolutionsSheetTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -8437,11 +8437,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {RemoveDisplayPath(
+                                                                        {
                                                                           item
                                                                             .getCodingExercises[0]
-                                                                            .codingSolutionsVideo
-                                                                        )}
+                                                                            .codingSolutionsVideoTitle
+                                                                        }
                                                                       </span>
                                                                       <span>
                                                                         <Button
