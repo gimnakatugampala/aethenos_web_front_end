@@ -65,7 +65,7 @@ const SingleRevenueReport = () => {
             title={
               <div className="tab-title">
                 <div className="font-bold fs-5">Purchases</div>
-                <div>${purchasesNo} this month</div>
+                <div>{purchasesNo} this month</div>
               </div>
             }
           >
@@ -155,7 +155,7 @@ const SingleRevenueReport = () => {
             title={
               <div className="tab-title">
                 <div className="font-bold fs-5">Refunds</div>
-                <div>${refundNo} this month</div>
+                <div>{refundNo} this month</div>
               </div>
             }
           >
