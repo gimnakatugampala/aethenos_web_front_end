@@ -54,6 +54,14 @@ function RevenueReport() {
         <span className="p-0 m-0">Get top insights about your performance</span>
       </div>
 
+      <div className="text-right m-4">
+            {/* <Card className="mb-3 font-bold "> */}
+              <a className="btn btn-danger" href="/performance/revenue-report">
+                Revenue Report <i className="fa-solid fa-angle-right"></i>
+              </a>
+            {/* </Card> */}
+          </div>
+
       <Card className="border-rad-20">
         <div className="row  m-3">
           <Tabs
@@ -165,13 +173,13 @@ function RevenueReport() {
               </Box>
             </Tab>
           </Tabs>
-          <div className="text-center">
+          {/* <div className="text-center">
             <Card className="mb-3 font-bold ">
               <a href="/performance/revenue-report">
                 Revenue Report <i className="fa-solid fa-angle-right"></i>
               </a>
             </Card>
-          </div>
+          </div> */}
         </div>
       </Card>
     </div>
