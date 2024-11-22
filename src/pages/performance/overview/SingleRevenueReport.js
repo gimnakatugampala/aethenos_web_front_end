@@ -89,12 +89,12 @@ const SingleRevenueReport = () => {
                   headerStyle: headerCellStyle,
                 },
                 {
-                  title: "Price Paid ($)",
+                  title: "Price Paid",
                   field: "pricePaid",
                   headerStyle: headerCellStyle,
                 },
                 {
-                  title: "Payment Processing Fees ($)",
+                  title: "Payment Processing Fees",
                   field: "paymentProcessingFees",
                   headerStyle: headerCellStyle,
                 },
@@ -104,17 +104,17 @@ const SingleRevenueReport = () => {
                   headerStyle: headerCellStyle,
                 },
                 {
-                  title: "Tax ($)",
+                  title: "Tax",
                   field: "tax",
                   headerStyle: headerCellStyle,
                 },
                 {
-                  title: "Net Revenue ($)",
+                  title: "Net Revenue",
                   field: "netRevenue",
                   headerStyle: headerCellStyle,
                 },
                 {
-                  title: "Your Revenue ($)",
+                  title: "Your Revenue",
                   field: "yourRevenue",
                   headerStyle: headerCellStyle,
                 },
