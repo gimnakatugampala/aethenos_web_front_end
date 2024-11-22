@@ -46,14 +46,12 @@ import { ENV_STATUS } from "../../commonFunctions/env";
 import bellIcon from "../../assets/images/utils/icons8-notification-50.png";
 import logoFull from "../../assets/images/utils/aethenos_logo.png";
 import logoSmall from "../../assets/images/utils/aethenos_logo_small.png";
-import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import WifiProtectedSetupIcon from "@mui/icons-material/WifiProtectedSetup";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { ButtonBase } from "@mui/material";
 
-import PaymentIcon from '@mui/icons-material/Payment';
-import { useHistory } from 'react-router-dom';
-
-
+import PaymentIcon from "@mui/icons-material/Payment";
+import { useHistory } from "react-router-dom";
 
 const calculateTimeAgo = (dateString) => {
   const now = new Date();
@@ -66,12 +64,13 @@ const calculateTimeAgo = (dateString) => {
   const hours = Math.floor((seconds % 86400) / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
 
-  if (years > 0) return years === 1 ? 'A year ago' : `${years} years ago`;
-  if (months > 0) return months === 1 ? 'A month ago' : `${months} months ago`;
-  if (days > 0) return days === 1 ? 'A day ago' : `${days} days ago`;
-  if (hours > 0) return hours === 1 ? 'An hour ago' : `${hours} hours ago`;
-  if (minutes > 0) return minutes === 1 ? 'A minute ago' : `${minutes} minutes ago`;
-  return 'just now';
+  if (years > 0) return years === 1 ? "A year ago" : `${years} years ago`;
+  if (months > 0) return months === 1 ? "A month ago" : `${months} months ago`;
+  if (days > 0) return days === 1 ? "A day ago" : `${days} days ago`;
+  if (hours > 0) return hours === 1 ? "An hour ago" : `${hours} hours ago`;
+  if (minutes > 0)
+    return minutes === 1 ? "A minute ago" : `${minutes} minutes ago`;
+  return "just now";
 };
 
 function Header({
@@ -86,7 +85,7 @@ function Header({
   const history = useHistory();
   const [notifications, setNotifications] = useState([]);
 
-  const [Primary_Email, setPrimary_Email] = useState("")
+  const [Primary_Email, setPrimary_Email] = useState("");
   const [first_Name, setfirst_Name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [headline, setheadline] = useState("");
@@ -101,7 +100,6 @@ function Header({
   const [uploadImage, setuploadImage] = useState("");
   const [preview_img, setpreview_img] = useState("");
 
-
   const [link_to_course, setlink_to_course] = useState("");
   const [external_ratings, setexternal_ratings] = useState("");
   const [external_number_of_number, setexternal_number_of_number] =
@@ -111,7 +109,6 @@ function Header({
   useEffect(() => {
     GetNotificationsLatest(setNotifications);
   }, [notifications]);
-
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -123,24 +120,16 @@ function Header({
   };
 
   const handleNotificationClick = (notificationCode, notification) => {
-
-    console.log(notification)
+    console.log(notification);
 
     UpdateNotifications(notificationCode);
     GetNotificationsLatest(setNotifications);
     // window.location.href = "/performance/notifications";
-  
-
   };
-
 
   const updateNotificationList = () => {
-
     GetNotificationsLatest(setNotifications);
-
   };
-
-
 
   useEffect(() => {
     GetInstructorProfileDetails(
@@ -175,11 +164,9 @@ function Header({
     }
   };
 
-  const handlePayout = () =>{
-    history.push('/profile?tab=payout-tax-details');
-
-
-  }
+  const handlePayout = () => {
+    history.push("/profile?tab=payout-tax-details");
+  };
 
   return (
     <>
@@ -190,10 +177,10 @@ function Header({
               width="25"
               src={logoSmall}
               alt="LOGO"
-              style={{ marginRight: "10px", marginLeft: "20px"}}
+              style={{ marginRight: "10px", marginLeft: "20px" }}
             />
           </div>
-        </Col> 
+        </Col>
         <Col span={24} md={18} className="header-control">
           <React.Fragment>
             <Box
@@ -203,118 +190,131 @@ function Header({
                 textAlign: "center",
               }}
             >
-              <a href="https://aethenos.com" style={{ minWidth: 100 }} className="font-bold ">
+              <a
+                href="https://aethenos.com"
+                style={{ minWidth: 100 }}
+                className="font-bold "
+              >
                 Student
               </a>
-
               <Dropdown>
                 <Dropdown.Toggle
                   variant="danger"
                   id="dropdown-basic"
                   className="notification-toggle"
                   bsPrefix="custom-toggle"
-                
                 >
                   <img width="20px" src={bellIcon} alt="LOGO" />
                   <span className="notification-count">
-                    {notifications.filter(notification => !notification.isRead).length}
+                    {
+                      notifications.filter(
+                        (notification) => !notification.isRead
+                      ).length
+                    }
                   </span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                {notifications.filter(notification => !notification.isRead).length > 0 && (
-                  <div height="80px">
-                    <span
+                  {notifications.filter((notification) => !notification.isRead)
+                    .length > 0 && (
+                    <div
                       style={{
+                        padding: "10px",
+                        paddingLeft: "25px",
                         display: "flex",
-                        justifyContent: "end",     
-                        color: "#ff4d4f",
+                        justifyContent: "space-between",
                         alignItems: "center",
+                        borderBottom: "1px solid #ddd",
                       }}
                     >
-                      <NotificationsNoneOutlinedIcon
-                        style={{ margin: "auto" }}
-                      />
+                      <NotificationsNoneOutlinedIcon />
 
-                      <span
-                        style={{
-                          fontSize: "14px",
-                          color: "black",
-                          display: "flex",
-                          flexDirection: "row",
-                          fontWeight: "bold",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        You Have Received  {notifications.filter(notification => !notification.isRead).length} New
-                        Notifications
+                      <span style={{ fontSize: "14px", fontWeight: "bold" }}>
+                        You Have{" "}
+                        {
+                          notifications.filter(
+                            (notification) => !notification.isRead
+                          ).length
+                        }{" "}
+                        New Notifications
                       </span>
-
-                      <Button className="m-2" variant="outlined">
-                        <a href="/performance/notifications">View All</a>
+                      <Button variant="outline-danger">
+                        <a
+                          href="/performance/notifications"
+                          style={{ textDecoration: "none", color: "#ff4d4f" }}
+                        >
+                          View All
+                        </a>
                       </Button>
-                    </span>
-                  </div>
-                )}
-                  {notifications
-                    .filter((notification) => !notification.isRead)
-                    .map((notification, index) => (
-                      <Dropdown.Item
-                        key={index}
-                        style={{
-                          justifyContent: "flex-start",
-                          display: "flex",
-                          flexDirection: "column",
-                        
-                          border: "1px solid #e0e0e0",
-                          padding: "10px",
-                          boxSizing: "border-box",
-                        }}
-                      >
-                        <MenuItem
-                          onClick={() => {
-                            handleNotificationClick(
-                              notification.notificationCode, notification
-                            );
-                            handleClose();
-                          }}
+                    </div>
+                  )}
+
+                  <div
+                    style={{
+                      maxHeight: "500px",
+                      overflowY: "auto",
+                      maxWidth: "500px",
+                    }}
+                  >
+                    {notifications
+                      .filter((notification) => !notification.isRead)
+                      .slice(0, 15)
+                      .map((notification, index) => (
+                        <Dropdown.Item
+                          key={index}
                           style={{
-                            width: "400px",
+                            justifyContent: "flex-start",
                             display: "flex",
-                            flexDirection: "row",
-                            textWrap: "balance",
+                            flexDirection: "column",
+                            borderBottom: "1px solid #e0e0e0",
+                            padding: "10px",
                           }}
                         >
-                          <div style={{ display: "flex" }}>
+                          <MenuItem
+                            onClick={() => {
+                              handleNotificationClick(
+                                notification.notificationCode,
+                                notification
+                              );
+                              handleClose();
+                            }}
+                            style={{
+                              display: "flex",
+                              maxWidth: "400px",
+                            }}
+                          >
                             <ListItemIcon>
                               <NotificationsNoneOutlinedIcon />
                             </ListItemIcon>
-                            <span style={{ fontWeight: "bold" }}>
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                width: "800px",
+                                display: "inline-block",
+                                whiteSpace: "normal",
+                              }}
+                            >
                               {notification.notification}
                             </span>
-                          </div>
-                        </MenuItem>
+                          </MenuItem>
+                          <span
+                            style={{
+                              fontSize: "12px",
+                              color: "gray",
+                              textAlign: "right",
+                            }}
+                          >
+                            {calculateTimeAgo(notification.notificationTime)}
+                          </span>
+                        </Dropdown.Item>
+                      ))}
 
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            color: "gray",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          {calculateTimeAgo(notification.notificationTime)}
-                        </span>
-                      </Dropdown.Item>
-                    ))} 
-                      {notifications.filter(notification => !notification.isRead).length == 0 && (
-                      <Dropdown.Item>No New notifications</Dropdown.Item>
+                    {notifications.filter(
+                      (notification) => !notification.isRead
+                    ).length === 0 && (
+                      <Dropdown.Item>No New Notifications</Dropdown.Item>
                     )}
-                    
-          
-                 
-
+                  </div>
                 </Dropdown.Menu>
               </Dropdown>
               <Tooltip title="Account settings">
@@ -371,21 +371,20 @@ function Header({
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
                   <Avatar
                     src="/static/images/avatar/1.jpg"
                     alt={`${first_Name} ${last_name}`}
                     sx={{ width: 35, height: 35 }}
                   >{`${first_Name[0]}${last_name[0]}`}</Avatar>
-                  </ListItemIcon>
-                  {first_Name} {last_name}
-                  <br />
-                  {Primary_Email} 
-                </MenuItem>
+                </ListItemIcon>
+                {first_Name} {last_name}
+                <br />
+                {Primary_Email}
+              </MenuItem>
 
-                <Divider />
+              <Divider />
 
               <a href="/profile">
                 <MenuItem onClick={handleClose}>
@@ -398,9 +397,6 @@ function Header({
 
               <Divider />
 
-
-            
-
               <a href="/account-settings">
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
@@ -411,7 +407,6 @@ function Header({
               </a>
 
               <Divider />
-
 
               <a href="https://www.aethenos.com">
                 <MenuItem onClick={handleClose}>
@@ -424,7 +419,6 @@ function Header({
 
               <Divider />
 
-
               <a href="/performance/overview">
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
@@ -436,9 +430,6 @@ function Header({
 
               <Divider />
 
-
-           
-
               <a href="/verification">
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>
@@ -448,10 +439,7 @@ function Header({
                 </MenuItem>
               </a>
 
-         
-
               <Divider />
-
 
               <a href="#">
                 <MenuItem onClick={handlePayout}>
@@ -460,18 +448,17 @@ function Header({
                   </ListItemIcon>
                   Payout settings
                 </MenuItem>
-                </a>
-         
+              </a>
 
               <Divider />
 
               <a href="#">
-              <MenuItem onClick={handleLogout}>
-                <ListItemIcon>
-                  <Logout fontSize="medium" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <Logout fontSize="medium" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
               </a>
             </Menu>
           </React.Fragment>
