@@ -5364,7 +5364,7 @@ export const GetRevenueReport = async (
 
       setRevenueReportData(result.instructorRevenueReportResponses);
       setrevenueDate(result.date);
-      setrevenueAmount(result.totalLifeTimeEarning);
+      setrevenueAmount(result.totalLifeTimeEarning.replace(/,/g, ''));
     })
     .catch((error) => console.error(error));
 };
