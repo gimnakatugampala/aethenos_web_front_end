@@ -30,30 +30,59 @@ function RevenueReport() {
   const [revenueAmount, setRevenueAmount] = useState(0);
 
   useEffect(() => {
-    // Fetch revenue report data
     GetRevenueReport(setRevenueReportData, setRevenueDate, setRevenueAmount);
-
-    // Fetch chart data
     RevenueChart(setChartData);
   }, []);
 
-  // Convert API response years to Date objects with abbreviated month names and year
   const formatYears = (years) => {
     return years.map((yearStr) => {
       const [year, month] = yearStr.split(" ");
       const monthIndex = new Date(Date.parse(`${month} 1, 2020`)).getMonth();
       return {
         date: new Date(parseInt(year), monthIndex, 1),
-        label: `${monthAbbreviations[month] || month} ${year}`, // Format as "MMM YYYY"
+        label: `${monthAbbreviations[month] || month} ${year}`,
       };
     });
   };
 
-  const AethenosDataSet = chartData?.aethenosDataSets || [];
-  const RefundsDataSet = chartData?.refundsDataSets || [];
-  const ReferalLinkDataSet = chartData?.referalLinkDataSets || [];
-  const CouponDataSet = chartData?.couponDataSets || [];
-  const formattedYears = chartData?.years ? formatYears(chartData.years) : [];
+  // Find the first non-zero data index and use it to set the earliest date
+  const findEarliestIndex = () => {
+    const datasets = [
+      chartData?.aethenosDataSets || [],
+      chartData?.refundsDataSets || [],
+      chartData?.referalLinkDataSets || [],
+      chartData?.couponDataSets || [],
+    ];
+
+    const earliestIndex = datasets.reduce((earliest, dataset) => {
+      const index = dataset.findIndex((value) => value !== 0);
+      return index !== -1 ? Math.min(earliest, index) : earliest;
+    }, chartData?.years.length || 0);
+
+    return earliestIndex;
+  };
+
+  if (!chartData) {
+    return <LoadingSpinner />;
+  }
+
+  const AethenosDataSet = chartData.aethenosDataSets;
+  const RefundsDataSet = chartData.refundsDataSets;
+  const ReferalLinkDataSet = chartData.referalLinkDataSets;
+  const CouponDataSet = chartData.couponDataSets;
+  const formattedYears = formatYears(chartData.years);
+
+  const earliestIndex = findEarliestIndex();
+  const filteredYears = formattedYears.slice(earliestIndex);
+  const filteredAethenosData = AethenosDataSet.slice(earliestIndex);
+  const filteredRefundsData = RefundsDataSet.slice(earliestIndex);
+  const filteredReferalData = ReferalLinkDataSet.slice(earliestIndex);
+  const filteredCouponData = CouponDataSet.slice(earliestIndex);
+
+  console.log("Formatted Years:", formattedYears);
+  console.log("Earliest Index:", earliestIndex);
+  console.log("Filtered Years:", filteredYears);
+  console.log("Filtered Aethenos Data:", filteredAethenosData);
 
   const headerCellStyle = {
     fontWeight: "bold",
@@ -71,70 +100,66 @@ function RevenueReport() {
         </p>
       </div>
       <Card className="p-2">
-        {chartData == null ? (
-          "Loading.."
-        ) : (
-          <Card className="my-3">
-            <LineChart
-              xAxis={[
-                {
-                  id: "Years",
-                  data: formattedYears.map((year) => year.date),
-                  scaleType: "time",
-                  valueFormatter: (date) => {
-                    const yearData = formattedYears.find(
-                      (year) => year.date.getTime() === date.getTime()
-                    );
-                    return yearData ? yearData.label : "";
-                  },
+        <Card className="my-3">
+          <LineChart
+            xAxis={[
+              {
+                id: "Years",
+                data: filteredYears.map((year) => year.date),
+                scaleType: "time",
+                valueFormatter: (date) => {
+                  const yearData = filteredYears.find(
+                    (year) => year.date.getTime() === date.getTime()
+                  );
+                  return yearData ? yearData.label : "";
                 },
-              ]}
-              series={[
-                {
-                  id: "Aethenos",
-                  label: "Aethenos",
-                  data: AethenosDataSet,
-                  stack: "total",
-                  area: true,
-                  showMark: false,
-                  color: "#4caf50", // Green
-                },
-                {
-                  id: "Coupons",
-                  label: "Coupons",
-                  data: CouponDataSet,
-                  stack: "total",
-                  area: true,
-                  showMark: false,
-                  color: "#f44336", // Red
-                },
-                {
-                  id: "Refunds",
-                  label: "Refunds",
-                  data: RefundsDataSet,
-                  stack: "total",
-                  area: true,
-                  showMark: false,
-                  color: "#2196f3", // Blue
-                },
-                {
-                  id: "Referral Links",
-                  label: "Referral Links",
-                  data: ReferalLinkDataSet,
-                  stack: "total",
-                  area: true,
-                  showMark: false,
-                  color: "#ff9800", // Orange
-                },
-              ]}
-              sx={{
-                "--ChartsLegend-itemWidth": "200px",
-              }}
-              height={400}
-              margin={{ left: 70 }}
-            />
-          </Card>
-        )}
+              },
+            ]}
+            series={[
+              {
+                id: "Aethenos",
+                label: "Aethenos",
+                data: filteredAethenosData,
+                stack: "total",
+                area: true,
+                showMark: false,
+                color: "#4caf50", // Green
+              },
+              {
+                id: "Coupons",
+                label: "Coupons",
+                data: filteredCouponData,
+                stack: "total",
+                area: true,
+                showMark: false,
+                color: "#f44336", // Red
+              },
+              {
+                id: "Refunds",
+                label: "Refunds",
+                data: filteredRefundsData,
+                stack: "total",
+                area: true,
+                showMark: false,
+                color: "#2196f3", // Blue
+              },
+              {
+                id: "Referral Links",
+                label: "Referral Links",
+                data: filteredReferalData,
+                stack: "total",
+                area: true,
+                showMark: false,
+                color: "#ff9800", // Orange
+              },
+            ]}
+            sx={{
+              "--ChartsLegend-itemWidth": "200px",
+            }}
+            height={400}
+            margin={{ left: 70 }}
+          />
+        </Card>
 
         {revenueReportData ? (
           <MaterialTable
