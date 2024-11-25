@@ -45,7 +45,6 @@ function RevenueReport() {
     });
   };
 
-  // Find the first non-zero data index and use it to set the earliest date
   const findEarliestIndex = () => {
     const datasets = [
       chartData?.aethenosDataSets || [],
@@ -78,11 +77,6 @@ function RevenueReport() {
   const filteredRefundsData = RefundsDataSet.slice(earliestIndex);
   const filteredReferalData = ReferalLinkDataSet.slice(earliestIndex);
   const filteredCouponData = CouponDataSet.slice(earliestIndex);
-
-  console.log("Formatted Years:", formattedYears);
-  console.log("Earliest Index:", earliestIndex);
-  console.log("Filtered Years:", filteredYears);
-  console.log("Filtered Aethenos Data:", filteredAethenosData);
 
   const headerCellStyle = {
     fontWeight: "bold",
@@ -132,16 +126,7 @@ function RevenueReport() {
                 stack: "total",
                 area: true,
                 showMark: false,
-                color: "#f44336", // Red
-              },
-              {
-                id: "Refunds",
-                label: "Refunds",
-                data: filteredRefundsData,
-                stack: "total",
-                area: true,
-                showMark: false,
-                color: "#2196f3", // Blue
+                color: "#fbc02d", // Dark Yellow
               },
               {
                 id: "Referral Links",
@@ -150,7 +135,16 @@ function RevenueReport() {
                 stack: "total",
                 area: true,
                 showMark: false,
-                color: "#ff9800", // Orange
+                color: "#2196f3", // Blue
+              },
+              {
+                id: "Refunds",
+                label: "Refunds",
+                data: filteredRefundsData,
+                stack: "total",
+                area: true,
+                showMark: false,
+                color: "#f44336", // Red
               },
             ]}
             sx={{
