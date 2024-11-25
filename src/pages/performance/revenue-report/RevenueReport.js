@@ -3,13 +3,9 @@ import { Card } from "antd";
 import MaterialTable from "material-table";
 import { LineChart } from "@mui/x-charts/LineChart";
 import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
+import formatNumber from "../../../commonFunctions/NumberFormat";
 import { GetRevenueReport, RevenueChart } from "../../../api";
 import Typography from "@mui/material/Typography";
-
-// Utility function to format numbers to two decimal places
-const formatNumber = (num) => {
-  return num ? Number(num).toFixed(2) : "0.00";
-};
 
 // Mapping full month names to abbreviated forms
 const monthAbbreviations = {
@@ -69,18 +65,19 @@ function RevenueReport() {
     return <LoadingSpinner />;
   }
 
-  const AethenosDataSet = chartData.aethenosDataSets.map((val) => Number(val).toFixed(2));
-  const RefundsDataSet = chartData.refundsDataSets.map((val) => Number(val).toFixed(2));
-  const ReferalLinkDataSet = chartData.referalLinkDataSets.map((val) => Number(val).toFixed(2));
-  const CouponDataSet = chartData.couponDataSets.map((val) => Number(val).toFixed(2));
-  const formattedYears = formatYears(chartData.years);
-
-  const earliestIndex = findEarliestIndex();
-  const filteredYears = formattedYears.slice(earliestIndex);
-  const filteredAethenosData = AethenosDataSet.slice(earliestIndex);
-  const filteredRefundsData = RefundsDataSet.slice(earliestIndex);
-  const filteredReferalData = ReferalLinkDataSet.slice(earliestIndex);
-  const filteredCouponData = CouponDataSet.slice(earliestIndex);
+    // Round up chart data to 2 decimal places
+    const AethenosDataSet = chartData.aethenosDataSets.map((val) => val ? val.toFixed(2) : "0.00");
+    const RefundsDataSet = chartData.refundsDataSets.map((val) => val ? val.toFixed(2) : "0.00");
+    const ReferalLinkDataSet = chartData.referalLinkDataSets.map((val) => val ? val.toFixed(2) : "0.00");
+    const CouponDataSet = chartData.couponDataSets.map((val) => val ? val.toFixed(2) : "0.00");
+    const formattedYears = formatYears(chartData.years);
+  
+    const earliestIndex = findEarliestIndex();
+    const filteredYears = formattedYears.slice(earliestIndex);
+    const filteredAethenosData = AethenosDataSet.slice(earliestIndex);
+    const filteredRefundsData = RefundsDataSet.slice(earliestIndex);
+    const filteredReferalData = ReferalLinkDataSet.slice(earliestIndex);
+    const filteredCouponData = CouponDataSet.slice(earliestIndex);
 
   const headerCellStyle = {
     fontWeight: "bold",
@@ -100,17 +97,19 @@ function RevenueReport() {
       <Card className="p-2">
         <Card className="my-3">
           <LineChart
-            xAxis={[{
-              id: "Years",
-              data: filteredYears.map((year) => year.date),
-              scaleType: "time",
-              valueFormatter: (date) => {
-                const yearData = filteredYears.find(
-                  (year) => year.date.getTime() === date.getTime()
-                );
-                return yearData ? yearData.label : "";
+            xAxis={[
+              {
+                id: "Years",
+                data: filteredYears.map((year) => year.date),
+                scaleType: "time",
+                valueFormatter: (date) => {
+                  const yearData = filteredYears.find(
+                    (year) => year.date.getTime() === date.getTime()
+                  );
+                  return yearData ? yearData.label : "";
+                },
               },
-            }]}
+            ]}
             series={[
               {
                 id: "Aethenos",
@@ -174,7 +173,6 @@ function RevenueReport() {
               {
                 title: "Your revenue ($)",
                 field: "yourRevenue",
-                render: (rowData) => formatNumber(rowData.yourRevenue),
                 headerStyle: headerCellStyle,
               },
               {
