@@ -98,6 +98,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { v4 as uuidv4 } from "uuid";
 import RemoveDisplayPath from "../../../../commonFunctions/RemoveDisplayPath";
+import { uploadFileInChunksDownloadableResources } from "../../../../commonFunctions/file-uploads/uploadFileInChunksDownloadableResources";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -896,6 +897,18 @@ const Curriculum = ({ code }) => {
     GetCurriculum(code, setsectionData);
   }, []);
 
+  // upload progress
+  const updateProgressBarFiles = (progress) => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = `${progress}%`;
+      progressBarRef.current.textContent = `${progress}%`;
+    }
+
+    console.log(progress)
+
+  };
+  
+
   // Save Description in Lecture
   const handleSaveDescription = (ID) => {
     console.log(ID);
@@ -921,14 +934,28 @@ const Curriculum = ({ code }) => {
   const handleDownloadbaleFile = (e, ID) => {
     console.log(e.target.files[0]);
 
-    // setcurriculum_download_file(e.target.files[0])
-    AddCurriculumDownloadable(
-      code,
-      ID,
+     // File Upload
+     let fieUploadUUID = uuidv4();
+     let uploadType = "downloadable-file"
+
+    // - Break into chunks
+    uploadFileInChunksDownloadableResources(
+      fieUploadUUID,
+      uploadType,
       e.target.files[0],
-      setshowResources,
-      setsectionData
-    );
+      updateProgressBarFiles,
+      setUploading
+    )
+
+
+    // setcurriculum_download_file(e.target.files[0])
+    // AddCurriculumDownloadable(
+    //   code,
+    //   ID,
+    //   e.target.files[0],
+    //   setshowResources,
+    //   setsectionData
+    // );
   };
 
   // Save Resources > External Reourses
