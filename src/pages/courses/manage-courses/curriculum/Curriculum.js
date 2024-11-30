@@ -360,8 +360,11 @@ const Curriculum = ({ code }) => {
 
   // Update Section
   const handleUpdateSection = (section) => {
-    UpdateSectionName(code, section, updateSectionName,  
-      setshowSectionEditInput,  
+    UpdateSectionName(
+      code,
+      section,
+      updateSectionName,
+      setshowSectionEditInput,
       setcurriculumvisiblitymc,
       setshowMain,
       setsectionData,
@@ -373,8 +376,12 @@ const Curriculum = ({ code }) => {
 
   // update lecture
   const handleUpdateLectureName = (lecture, section) => {
-    UpdateLectureName(code, lecture, updateLectureName, section,
-      setshowEditTitleInput,  
+    UpdateLectureName(
+      code,
+      lecture,
+      updateLectureName,
+      section,
+      setshowEditTitleInput,
       setcurriculumvisiblitymc,
       setshowMain,
       setsectionData,
@@ -386,8 +393,13 @@ const Curriculum = ({ code }) => {
   // update Quiz Name
   const handleUpdateQuizName = (quiz, section) => {
     console.log(updateQuizDescription);
-    UpdateQuizName(code, quiz, updateQuizName, updateQuizDescription, section,
-      setshowEditQuizInput,  
+    UpdateQuizName(
+      code,
+      quiz,
+      updateQuizName,
+      updateQuizDescription,
+      section,
+      setshowEditQuizInput,
       setcurriculumvisiblitymc,
       setshowMain,
       setsectionData,
@@ -402,8 +414,12 @@ const Curriculum = ({ code }) => {
 
   // update Assignment Name
   const handleUpdateAssignmentName = (assignment, section) => {
-    UpdateAssignmentName(code, assignment, updateAssignmentName, section,
-      setshowEditAssignmentInput,  
+    UpdateAssignmentName(
+      code,
+      assignment,
+      updateAssignmentName,
+      section,
+      setshowEditAssignmentInput,
       setcurriculumvisiblitymc,
       setshowMain,
       setsectionData,
@@ -415,8 +431,12 @@ const Curriculum = ({ code }) => {
 
   // update Pratice test Name
   const handleUpdatePraticeTestName = (pt, section) => {
-    UpdatePraticeTestName(code, pt, updatePraticeTestName, section,
-      setshowEditPraticeTestInput,  
+    UpdatePraticeTestName(
+      code,
+      pt,
+      updatePraticeTestName,
+      section,
+      setshowEditPraticeTestInput,
       setcurriculumvisiblitymc,
       setshowMain,
       setsectionData,
@@ -433,7 +453,7 @@ const Curriculum = ({ code }) => {
       codingExercise,
       updateCodingExerciseName,
       section,
-      setshowEditCodingExerciseInput,  
+      setshowEditCodingExerciseInput,
       setcurriculumvisiblitymc,
       setshowMain,
       setsectionData,
@@ -904,10 +924,8 @@ const Curriculum = ({ code }) => {
       progressBarRef.current.textContent = `${progress}%`;
     }
 
-    console.log(progress)
-
+    console.log(progress);
   };
-  
 
   // Save Description in Lecture
   const handleSaveDescription = (ID) => {
@@ -934,9 +952,9 @@ const Curriculum = ({ code }) => {
   const handleDownloadbaleFile = (e, ID) => {
     console.log(e.target.files[0]);
 
-     // File Upload
-     let fieUploadUUID = uuidv4();
-     let uploadType = "downloadable-file"
+    // File Upload
+    let fieUploadUUID = uuidv4();
+    let uploadType = "downloadable-file";
 
     // - Break into chunks
     uploadFileInChunksDownloadableResources(
@@ -945,8 +963,7 @@ const Curriculum = ({ code }) => {
       e.target.files[0],
       updateProgressBarFiles,
       setUploading
-    )
-
+    );
 
     // setcurriculum_download_file(e.target.files[0])
     // AddCurriculumDownloadable(
@@ -1493,6 +1510,7 @@ const Curriculum = ({ code }) => {
 
   const [setUpCounters, setSetUpCounters] = useState(true);
   const [hideSectionData, sethideSectionData] = useState(true);
+  const [contentHeight, setcontentHeight] = useState(false);
 
   const [curriculumSections, setCurriculumSections] = useState(sectionData);
   const [draggingIndex, setDraggingIndex] = useState(null);
@@ -1718,9 +1736,9 @@ const Curriculum = ({ code }) => {
 
   const startDrag = (result) => {
     setSetUpCounters(false);
+    setcontentHeight(true);
 
     sethideSectionData(false);
-
   };
 
   const handleDragEnd = (result) => {
@@ -1743,12 +1761,18 @@ const Curriculum = ({ code }) => {
 
     setSetUpCounters(true);
     sethideSectionData(true);
+    setcontentHeight(false);
 
     // setSectionLoading(false);
   };
 
   return (
-    <div className="col-md-10 px-4 mb-4  course-landing-page-responsive">
+    <div
+      className="col-md-10 px-4 mb-4  course-landing-page-responsive"
+      style={{
+        marginBottom: "200px",
+      }}
+    >
       <Card className="py-2 my-2 p-4">
         <div className="d-flex justify-content-between">
           <Typography className="p-3" variant="h4">
@@ -1830,7 +1854,16 @@ const Curriculum = ({ code }) => {
         >
           <Droppable droppableId="sections">
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  minHeight: "200px",
+                  flexGrow: 1,
+                }}
+              >
                 {sectionData && sectionData.length > 0 ? (
                   sectionData.map((section, index) => (
                     <Draggable
@@ -1844,13 +1877,13 @@ const Curriculum = ({ code }) => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="card p-2 my-3"
+                          className="card mt-3"
                         >
                           <CardContent
                             style={{
+                              minHeight: contentHeight ? "200px" : "",
                               pointerEvents: sectionLoading ? "none" : "auto",
                               opacity: sectionLoading ? 0.1 : 1,
-
                               transition:
                                 "opacity 0.3s ease-in-out, filter 0.3s ease-in-out",
                             }}
@@ -7969,11 +8002,11 @@ const Curriculum = ({ code }) => {
                                                                   <ListGroup className="my-2">
                                                                     <ListGroup.Item className="d-flex justify-content-between">
                                                                       <span>
-                                                                        {
-                                                                          RemoveDisplayPath(item
+                                                                        {RemoveDisplayPath(
+                                                                          item
                                                                             .getCodingExercises[0]
-                                                                            .codingVideo)
-                                                                        }
+                                                                            .codingVideo
+                                                                        )}
                                                                       </span>
                                                                       <span>
                                                                         <Button
@@ -9955,12 +9988,18 @@ const Curriculum = ({ code }) => {
               </Button>
             </>
           )}
-
-          {showSectionInput == false && (
-            <Button onClick={showAddSectionInput} variant="contained">
-              <AddIcon /> Section
-            </Button>
-          )}
+          <div
+            className="mt-3"
+            style={{
+              marginBottom: "200px",
+            }}
+          >
+            {showSectionInput == false && (
+              <Button onClick={showAddSectionInput} variant="contained">
+                <AddIcon /> Section
+              </Button>
+            )}
+          </div>
         </div>
       </Card>
     </div>
