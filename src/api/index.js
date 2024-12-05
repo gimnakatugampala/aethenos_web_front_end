@@ -2723,17 +2723,19 @@ export const AddCurriculumDescription = async (
 
 export const AddCurriculumDownloadable = async (
   code,
-  ID,
-  file,
-  setshowResources,
-  setsectionData
+          ID,
+          fieUploadUUID,
+          file,
+          setshowResources,
+          setsectionData
 ) => {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
 
   var formdata = new FormData();
   formdata.append("CurriculumItemId", `${ID}`);
-  formdata.append("downloadableFile", file);
+  formdata.append("downloadableFileGeneratedName", fieUploadUUID + "_" + file.name);
+  formdata.append("downloadableFileOriginalName", file.name);
 
   var requestOptions = {
     method: "POST",

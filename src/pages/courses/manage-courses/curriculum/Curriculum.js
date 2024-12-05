@@ -958,12 +958,27 @@ const Curriculum = ({ code }) => {
 
     // - Break into chunks
     uploadFileInChunksDownloadableResources(
+      code,
+      ID,
       fieUploadUUID,
       uploadType,
       e.target.files[0],
+      setshowResources,
+      setsectionData,
       updateProgressBarFiles,
       setUploading
     );
+
+    // if(uploadingVideoProgress == 100){
+    //    AddCurriculumDownloadable(
+    //   code,
+    //   ID,
+    //   fieUploadUUID,
+    //   e.target.files[0],
+    //   setshowResources,
+    //   setsectionData
+    // );
+    // }
 
     // setcurriculum_download_file(e.target.files[0])
     // AddCurriculumDownloadable(

@@ -1,10 +1,17 @@
 // import { UpdateLessonVideo } from "../api";
+import { AddCurriculumDownloadable } from "../../api";
 import ErrorAlert from "../Alerts/ErrorAlert";
 import { v4 as uuidv4 } from 'uuid';
 
 
 
-export const uploadFileInChunksDownloadableResources = async (fieUploadUUID,uploadType, file, updateProgressBarFiles, setUploading) => {
+export const uploadFileInChunksDownloadableResources = async (code,
+  ID,
+  fieUploadUUID,
+  uploadType,
+  file,
+  setshowResources,
+  setsectionData, updateProgressBarFiles, setUploading) => {
     if (!file) {
       ErrorAlert('Error', 'No file selected.');
       setUploading(false)
@@ -31,8 +38,9 @@ export const uploadFileInChunksDownloadableResources = async (fieUploadUUID,uplo
         formData.append('fileName', fieUploadUUID + "_" + file.name);
         formData.append('fileSize', file.size);
         formData.append('type', uploadType);
-  
-        // await UpdateLessonVideo(formData);
+
+        
+   
   
         uploadedChunks++;
         const progress = Math.floor((uploadedChunks / totalChunks) * 100);
@@ -41,6 +49,16 @@ export const uploadFileInChunksDownloadableResources = async (fieUploadUUID,uplo
   
         start = end;
       }
+
+        // Execute after all chunks are uploaded
+        await AddCurriculumDownloadable(
+          code,
+          ID,
+          fieUploadUUID,
+          file,
+          setshowResources,
+          setsectionData
+        );
   
       const endTime = new Date();
       const timeElapsed = (endTime - startTime) / 1000;
