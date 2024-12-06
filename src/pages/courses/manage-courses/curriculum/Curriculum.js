@@ -100,6 +100,7 @@ import { v4 as uuidv4 } from "uuid";
 import RemoveDisplayPath from "../../../../commonFunctions/RemoveDisplayPath";
 import { uploadFileInChunksDownloadableResources } from "../../../../commonFunctions/file-uploads/uploadFileInChunksDownloadableResources";
 import { uploadFileInChunksSourcesCode } from "../../../../commonFunctions/file-uploads/uploadFileInChunksSourcesCode";
+import { uploadFileInChunksPraticeTest } from "../../../../commonFunctions/file-uploads/uploadFileInChunksPraticeTest";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -549,7 +550,7 @@ const Curriculum = ({ code }) => {
   // ----------------
 
   // ====== SUBMIT PRACTICE TEST ======
-  const handlePracticetestSave = () => {
+  const handlePracticetestSave = async() => {
     if (PracticeTestTitle == "") {
       ErrorAlert("Empty field", "Please fill the title");
       return;
@@ -588,6 +589,46 @@ const Curriculum = ({ code }) => {
       return;
     }
 
+     // Define UUIDs and upload types
+  const questionFileUUID = uuidv4();
+  const solutionsFileUUID = uuidv4();
+  const questionUploadType = "practice-test-question-sheet";
+  const solutionsUploadType = "practice-test-solution-sheet";
+
+  try {
+    setbtnLoadingPracticeTest(true);
+
+    // Upload Question File in Chunks
+    if (PracticeTestQuestionFile) {
+      await uploadFileInChunksPraticeTest(
+        code,
+        mainSectionID,
+        questionFileUUID,
+        questionUploadType, // Specific upload type for question file
+        PracticeTestQuestionFile,
+        setshowResources,
+        setsectionData,
+        updateProgressBarFiles,
+        setbtnLoadingPracticeTest
+      );
+    }
+
+    // Upload Solutions File in Chunks
+    if (PracticeTestSolutionsFile) {
+      await uploadFileInChunksPraticeTest(
+        code,
+        mainSectionID,
+        solutionsFileUUID,
+        solutionsUploadType, // Specific upload type for solutions file
+        PracticeTestSolutionsFile,
+        setshowResources,
+        setsectionData,
+        updateProgressBarFiles,
+        setbtnLoadingPracticeTest
+      );
+    }
+
+    // Call the save function after uploads
     PracticeTestSave(
       mainSectionID,
       PraticeTestCode,
@@ -597,9 +638,9 @@ const Curriculum = ({ code }) => {
       PracticeTestMinPassMark,
       PracticeTestInstructions,
       PracticeTestExLink,
-      PracticeTestQuestionFile,
+      PracticeTestQuestionFile ? questionFileUUID : null,
       PracticeTestQuestionExLink,
-      PracticeTestSolutionsFile,
+      PracticeTestSolutionsFile ? solutionsFileUUID : null,
       PraticeTestSolutionsExLink,
       setshowPracticeTestInput,
       setshowCurriculumItem,
@@ -619,12 +660,54 @@ const Curriculum = ({ code }) => {
       setshowMain,
       code,
       setsectionData,
-
       setshowQuizInput,
       setshowLecInput,
       setshowCodingExecInput,
       setshowAssignmentInput
     );
+  } catch (err) {
+    console.error("Error saving practice test:", err);
+    ErrorAlert("Error", "Failed to save practice test.");
+  } finally {
+    setbtnLoadingPracticeTest(false);
+  }
+
+    // PracticeTestSave(
+    //   mainSectionID,
+    //   PraticeTestCode,
+    //   PracticeTestTitle,
+    //   PracticeTestDesc,
+    //   PracticeTestDuration,
+    //   PracticeTestMinPassMark,
+    //   PracticeTestInstructions,
+    //   PracticeTestExLink,
+    //   PracticeTestQuestionFile,
+    //   PracticeTestQuestionExLink,
+    //   PracticeTestSolutionsFile,
+    //   PraticeTestSolutionsExLink,
+    //   setshowPracticeTestInput,
+    //   setshowCurriculumItem,
+    //   setbtnLoadingPracticeTest,
+    //   setPracticeTestTitle,
+    //   setPracticeTestDesc,
+    //   setPracticeTestDuration,
+    //   setPracticeTestInstructions,
+    //   setPracticeTestMinPassMark,
+    //   setPracticeTestExLink,
+    //   setPracticeTestQuestionFile,
+    //   setPracticeTestQuestionExLink,
+    //   setPracticeTestSolutionsFile,
+    //   setPraticeTestSolutionsExLink,
+    //   setPraticeTestCode,
+    //   setshowContentAdd,
+    //   setshowMain,
+    //   code,
+    //   setsectionData,
+    //   setshowQuizInput,
+    //   setshowLecInput,
+    //   setshowCodingExecInput,
+    //   setshowAssignmentInput
+    // );
   };
 
   // ======= SUBMIT CODING EXEC =======
