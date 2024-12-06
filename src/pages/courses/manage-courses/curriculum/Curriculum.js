@@ -101,6 +101,7 @@ import RemoveDisplayPath from "../../../../commonFunctions/RemoveDisplayPath";
 import { uploadFileInChunksDownloadableResources } from "../../../../commonFunctions/file-uploads/uploadFileInChunksDownloadableResources";
 import { uploadFileInChunksSourcesCode } from "../../../../commonFunctions/file-uploads/uploadFileInChunksSourcesCode";
 import { uploadFileInChunksPraticeTest } from "../../../../commonFunctions/file-uploads/uploadFileInChunksPraticeTest";
+import { uploadFileInChunksCodingExcercise } from "../../../../commonFunctions/file-uploads/uploadFileInChunksCodingExcercise";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -711,59 +712,157 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Empty field", "Please fill the title");
       return;
     }
-
+  
     if (CodingExerciseDesc == "") {
       ErrorAlert("Empty field", "Please fill the description");
       return;
     }
-
+  
     if (CodingExerciseInstructions == "") {
-      ErrorAlert("Empty field", "Please fill the instructors");
+      ErrorAlert("Empty field", "Please fill the instructions");
       return;
     }
-
-    CodingExerciseSave(
-      mainSectionID,
-      CodingExerciseTitle,
-      CodingExerciseCode,
-      CodingExerciseDesc,
-      CodingExerciseInstructions,
-      CodingExerciseVideo,
-      CodingExerciseDResourses,
-      CodingExerciseExLink,
-      CodingExerciseUploadEx,
-      CodingExerciseExternalLink,
-      CodingExerciseQVideo,
-      CodingExercisesSolutionsFile,
-      CodingExercisesExLinkSolutions,
-      CodingExercisesSolutionsVideo,
-      setCodingExerciseTitle,
-      setCodingExerciseDesc,
-      setCodingExerciseInstructions,
-      setCodingExerciseVideo,
-      setCodingExerciseDResourses,
-      setCodingExerciseExLink,
-      setCodingExerciseUploadEx,
-      setCodingExerciseExternalLink,
-      setCodingExerciseQVideo,
-      setCodingExercisesSolutionsFile,
-      setCodingExercisesExLinkSolutions,
-      setCodingExercisesSolutionsVideo,
-      setbtnLoadingCodingExcercise,
-      setshowCodingExecInput,
-      setshowCurriculumItem,
-      setCodingExerciseCode,
-      setshowContentAdd,
-      setshowMain,
-      code,
-      setsectionData,
-
-      setshowQuizInput,
-      setshowLecInput,
-      setshowPracticeTestInput,
-      setshowAssignmentInput
-    );
+  
+    // Prepare for file uploads and save after they complete
+    const codingExerciseFileUUID = uuidv4();
+    
+    const uploadFiles = async () => {
+      setbtnLoadingCodingExcercise(true);
+  
+      // Upload Video (coding-video)
+      await uploadFileInChunksCodingExcercise(
+        code,
+        mainSectionID,
+        codingExerciseFileUUID,
+        "coding-video",
+        CodingExerciseVideo,
+        setshowResources,
+        setsectionData,
+        updateProgressBarFiles,
+        setbtnLoadingCodingExcercise,
+        async () => {
+          // After Video Upload, upload Resources (coding-resource)
+          await uploadFileInChunksCodingExcercise(
+            code,
+            mainSectionID,
+            codingExerciseFileUUID,
+            "coding-resource",
+            CodingExerciseDResourses,
+            setshowResources,
+            setsectionData,
+            updateProgressBarFiles,
+            setbtnLoadingCodingExcercise,
+            async () => {
+              // After Resources Upload, upload the Exercise Sheet (coding-exercise-sheet)
+              await uploadFileInChunksCodingExcercise(
+                code,
+                mainSectionID,
+                codingExerciseFileUUID,
+                "coding-exercise-sheet",
+                CodingExerciseUploadEx,
+                setshowResources,
+                setsectionData,
+                updateProgressBarFiles,
+                setbtnLoadingCodingExcercise,
+                async () => {
+                  // After Exercise Sheet Upload, upload the Solution Sheet (coding-solution-sheet)
+                  await uploadFileInChunksCodingExcercise(
+                    code,
+                    mainSectionID,
+                    codingExerciseFileUUID,
+                    "coding-solution-sheet",
+                    CodingExercisesSolutionsFile,
+                    setshowResources,
+                    setsectionData,
+                    updateProgressBarFiles,
+                    setbtnLoadingCodingExcercise,
+                    async () => {
+                      // After Solution Sheet Upload, upload Question Video (coding-exercise-video)
+                      await uploadFileInChunksCodingExcercise(
+                        code,
+                        mainSectionID,
+                        codingExerciseFileUUID,
+                        "coding-exercise-video",
+                        CodingExerciseQVideo,
+                        setshowResources,
+                        setsectionData,
+                        updateProgressBarFiles,
+                        setbtnLoadingCodingExcercise,
+                        async () => {
+                          // After Question Video Upload, upload Solution Video (coding-solution-video)
+                          await uploadFileInChunksCodingExcercise(
+                            code,
+                            mainSectionID,
+                            codingExerciseFileUUID,
+                            "coding-solution-video",
+                            CodingExercisesSolutionsVideo,
+                            setshowResources,
+                            setsectionData,
+                            updateProgressBarFiles,
+                            setbtnLoadingCodingExcercise,
+                            async () => {
+                              // Once all files are uploaded, proceed with saving the coding exercise
+                              await CodingExerciseSave(
+                                mainSectionID,
+                                CodingExerciseTitle,
+                                CodingExerciseCode,
+                                CodingExerciseDesc,
+                                CodingExerciseInstructions,
+                                CodingExerciseVideo,
+                                CodingExerciseDResourses,
+                                CodingExerciseExLink,
+                                CodingExerciseUploadEx,
+                                CodingExerciseExternalLink,
+                                CodingExerciseQVideo,
+                                CodingExercisesSolutionsFile,
+                                CodingExercisesExLinkSolutions,
+                                CodingExercisesSolutionsVideo,
+                                setCodingExerciseTitle,
+                                setCodingExerciseDesc,
+                                setCodingExerciseInstructions,
+                                setCodingExerciseVideo,
+                                setCodingExerciseDResourses,
+                                setCodingExerciseExLink,
+                                setCodingExerciseUploadEx,
+                                setCodingExerciseExternalLink,
+                                setCodingExerciseQVideo,
+                                setCodingExercisesSolutionsFile,
+                                setCodingExercisesExLinkSolutions,
+                                setCodingExercisesSolutionsVideo,
+                                setbtnLoadingCodingExcercise,
+                                setshowCodingExecInput,
+                                setshowCurriculumItem,
+                                setCodingExerciseCode,
+                                setshowContentAdd,
+                                setshowMain,
+                                code,
+                                setsectionData,
+                                setshowQuizInput,
+                                setshowLecInput,
+                                setshowPracticeTestInput,
+                                setshowAssignmentInput
+                              );
+                            }
+                          );
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          );
+        }
+      );
+    };
+  
+    // Start file upload and then proceed with saving
+    uploadFiles().catch((err) => {
+      console.error("Error during file upload or save:", err);
+      setbtnLoadingCodingExcercise(false);
+    });
   };
+  
 
   // ======== SUBMIT ASSIGNMENT =======
   const handleAssignmentSave = () => {
