@@ -14,7 +14,7 @@ import SuccessToast from "../commonFunctions/Toasts/SuccessToast";
 import SyllabusToastSuccess from "../commonFunctions/Toasts/SyllabusToastSuccess";
 
 const CURRENT_USER = Cookies.get("aethenos");
-const BACKEND_LINK = "https://aethenos.com:2053/aethenos-api";
+export const BACKEND_LINK = "https://aethenos.com:2053/aethenos-api";
 // const BACKEND_LINK = "https://aethenosinstructor.exon.lk:2053/aethenos-api";
 // https://aethenosinstructor.exon.lk:2053/aethenos-api
 
@@ -2723,11 +2723,11 @@ export const AddCurriculumDescription = async (
 
 export const AddCurriculumDownloadable = async (
   code,
-          ID,
-          fieUploadUUID,
-          file,
-          setshowResources,
-          setsectionData
+  ID,
+  fieUploadUUID,
+  file,
+  setshowResources,
+  setsectionData
 ) => {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
