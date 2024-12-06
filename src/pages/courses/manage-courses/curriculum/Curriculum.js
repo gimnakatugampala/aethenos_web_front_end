@@ -99,6 +99,7 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import { v4 as uuidv4 } from "uuid";
 import RemoveDisplayPath from "../../../../commonFunctions/RemoveDisplayPath";
 import { uploadFileInChunksDownloadableResources } from "../../../../commonFunctions/file-uploads/uploadFileInChunksDownloadableResources";
+import { uploadFileInChunksSourcesCode } from "../../../../commonFunctions/file-uploads/uploadFileInChunksSourcesCode";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -1018,7 +1019,22 @@ const Curriculum = ({ code }) => {
     console.log(ID);
     console.log(e.target.files[0]);
 
-    AddCurriculumSourceCode(code, ID, e.target.files[0], setsectionData);
+     // File Upload
+     let fieUploadUUID = uuidv4();
+     let uploadType = "source-code";
+
+     uploadFileInChunksSourcesCode(
+      code,
+      ID,
+      fieUploadUUID,
+      uploadType,
+      e.target.files[0],
+      setsectionData,
+      updateProgressBarFiles,
+      setUploading
+     )
+
+    // AddCurriculumSourceCode(code, ID, e.target.files[0], setsectionData);
   };
 
   //  Save Article > Article

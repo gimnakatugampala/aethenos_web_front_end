@@ -2807,6 +2807,7 @@ export const AddCurriculumExternalResourses = async (
 export const AddCurriculumSourceCode = async (
   code,
   ID,
+  fieUploadUUID,
   file,
   setsectionData
 ) => {
@@ -2815,7 +2816,8 @@ export const AddCurriculumSourceCode = async (
 
   var formdata = new FormData();
   formdata.append("CurriculumItemId", `${ID}`);
-  formdata.append("SourceCode", file);
+  formdata.append("sourceCodeGeneratedName", fieUploadUUID + "_" + file.name);
+  formdata.append("sourceCodeOriginalName", file.name);
 
   var requestOptions = {
     method: "POST",
