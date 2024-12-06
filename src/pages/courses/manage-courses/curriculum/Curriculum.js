@@ -803,6 +803,7 @@ const Curriculum = ({ code }) => {
                             async () => {
                               // Once all files are uploaded, proceed with saving the coding exercise
                               await CodingExerciseSave(
+                                codingExerciseFileUUID,
                                 mainSectionID,
                                 CodingExerciseTitle,
                                 CodingExerciseCode,
