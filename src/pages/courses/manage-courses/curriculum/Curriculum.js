@@ -550,129 +550,119 @@ const Curriculum = ({ code }) => {
   // ----------------
 
   // ====== SUBMIT PRACTICE TEST ======
-  const handlePracticetestSave = async() => {
-    if (PracticeTestTitle == "") {
+  const handlePracticetestSave = async () => {
+    // Validate inputs
+    if (!PracticeTestTitle.trim()) {
       ErrorAlert("Empty field", "Please fill the title");
       return;
     }
-
-    if (PracticeTestDesc == "") {
+    if (!PracticeTestDesc.trim()) {
       ErrorAlert("Empty field", "Please fill the description");
       return;
     }
-
-    if (PracticeTestDuration == "") {
+    if (!PracticeTestDuration.trim()) {
       ErrorAlert("Empty field", "Please fill the duration");
       return;
     }
-
-    if (PracticeTestMinPassMark == "") {
-      ErrorAlert("Empty field", "Please fill the min pass mark");
+    const passMark = Number(PracticeTestMinPassMark);
+    if (isNaN(passMark) || passMark <= 0 || passMark >= 100) {
+      ErrorAlert("Invalid Pass Mark", "Pass mark must be between 1 and 99.");
       return;
     }
-
-    if (isNaN(PracticeTestMinPassMark)) {
-      ErrorAlert("Invalid input", "Please enter a valid number");
+    if (!PracticeTestInstructions.trim()) {
+      ErrorAlert("Empty field", "Please fill the instructions");
       return;
     }
-
-    if (PracticeTestMinPassMark <= 0 || PracticeTestMinPassMark >= 100) {
-      ErrorAlert(
-        "Invalid Pass mark",
-        "The pass mark must be in the range 0 and 100."
-      );
+    if (!PracticeTestQuestionFile) {
+      ErrorAlert("Missing File", "Please upload the question file.");
       return;
     }
-
-    if (PracticeTestInstructions == "") {
-      ErrorAlert("Empty field", "Please fill the instructors");
+    if (!PracticeTestSolutionsFile) {
+      ErrorAlert("Missing File", "Please upload the solutions file.");
       return;
     }
-
-     // Define UUIDs and upload types
-  const questionFileUUID = uuidv4();
-  const solutionsFileUUID = uuidv4();
-  const questionUploadType = "practice-test-question-sheet";
-  const solutionsUploadType = "practice-test-solution-sheet";
-
-  try {
-    setbtnLoadingPracticeTest(true);
-
-    // Upload Question File in Chunks
-    if (PracticeTestQuestionFile) {
+  
+    try {
+      setbtnLoadingPracticeTest(true);
+  
+      const questionFileUUID = uuidv4();
+      const solutionsFileUUID = uuidv4();
+  
+      // Upload Question File
       await uploadFileInChunksPraticeTest(
         code,
         mainSectionID,
         questionFileUUID,
-        questionUploadType, // Specific upload type for question file
+        "practice-test-question-sheet",
         PracticeTestQuestionFile,
         setshowResources,
         setsectionData,
         updateProgressBarFiles,
-        setbtnLoadingPracticeTest
+        setbtnLoadingPracticeTest,
+        async () => {
+          // After Question File Upload
+          await uploadFileInChunksPraticeTest(
+            code,
+            mainSectionID,
+            solutionsFileUUID,
+            "practice-test-solution-sheet",
+            PracticeTestSolutionsFile,
+            setshowResources,
+            setsectionData,
+            updateProgressBarFiles,
+            setbtnLoadingPracticeTest,
+            async () => {
+              // After both files are uploaded, save the practice test
+              await PracticeTestSave(
+                code,
+                mainSectionID,
+                PraticeTestCode,
+                PracticeTestTitle,
+                PracticeTestDesc,
+                PracticeTestDuration,
+                passMark,
+                PracticeTestInstructions,
+                PracticeTestExLink,
+                questionFileUUID,
+                PracticeTestQuestionExLink,
+                solutionsFileUUID,
+                PraticeTestSolutionsExLink,
+                PracticeTestQuestionFile,
+                PracticeTestSolutionsFile,
+                 setshowPracticeTestInput,
+                setshowCurriculumItem,
+                setbtnLoadingPracticeTest,
+                // setPracticeTestTitle,
+                // setPracticeTestDesc,
+                // setPracticeTestDuration,
+                // setPracticeTestInstructions,
+                // setPracticeTestMinPassMark,
+                // setPracticeTestExLink,
+                // setPracticeTestQuestionFile,
+                // setPracticeTestQuestionExLink,
+                // setPracticeTestSolutionsFile,
+                // setPraticeTestSolutionsExLink,
+                // setPraticeTestCode,
+                setsectionData,
+                setshowQuizInput,
+                setshowLecInput,
+                setshowCodingExecInput,
+                setshowAssignmentInput,
+                setshowContentAdd,
+                setshowMain
+              );
+            }
+          );
+        }
       );
+    } catch (err) {
+      console.error("Error saving practice test:", err);
+      ErrorAlert("Error", "Failed to save practice test.");
+    } finally {
+      setbtnLoadingPracticeTest(false);
     }
 
-    // Upload Solutions File in Chunks
-    if (PracticeTestSolutionsFile) {
-      await uploadFileInChunksPraticeTest(
-        code,
-        mainSectionID,
-        solutionsFileUUID,
-        solutionsUploadType, // Specific upload type for solutions file
-        PracticeTestSolutionsFile,
-        setshowResources,
-        setsectionData,
-        updateProgressBarFiles,
-        setbtnLoadingPracticeTest
-      );
-    }
-
-    // Call the save function after uploads
-    PracticeTestSave(
-      mainSectionID,
-      PraticeTestCode,
-      PracticeTestTitle,
-      PracticeTestDesc,
-      PracticeTestDuration,
-      PracticeTestMinPassMark,
-      PracticeTestInstructions,
-      PracticeTestExLink,
-      PracticeTestQuestionFile ? questionFileUUID : null,
-      PracticeTestQuestionExLink,
-      PracticeTestSolutionsFile ? solutionsFileUUID : null,
-      PraticeTestSolutionsExLink,
-      setshowPracticeTestInput,
-      setshowCurriculumItem,
-      setbtnLoadingPracticeTest,
-      setPracticeTestTitle,
-      setPracticeTestDesc,
-      setPracticeTestDuration,
-      setPracticeTestInstructions,
-      setPracticeTestMinPassMark,
-      setPracticeTestExLink,
-      setPracticeTestQuestionFile,
-      setPracticeTestQuestionExLink,
-      setPracticeTestSolutionsFile,
-      setPraticeTestSolutionsExLink,
-      setPraticeTestCode,
-      setshowContentAdd,
-      setshowMain,
-      code,
-      setsectionData,
-      setshowQuizInput,
-      setshowLecInput,
-      setshowCodingExecInput,
-      setshowAssignmentInput
-    );
-  } catch (err) {
-    console.error("Error saving practice test:", err);
-    ErrorAlert("Error", "Failed to save practice test.");
-  } finally {
-    setbtnLoadingPracticeTest(false);
-  }
-
-    // PracticeTestSave(
+     // PracticeTestSave(
     //   mainSectionID,
     //   PraticeTestCode,
     //   PracticeTestTitle,
@@ -708,7 +698,12 @@ const Curriculum = ({ code }) => {
     //   setshowCodingExecInput,
     //   setshowAssignmentInput
     // );
+
   };
+  
+
+   
+  
 
   // ======= SUBMIT CODING EXEC =======
   const handleCodingExecSave = () => {

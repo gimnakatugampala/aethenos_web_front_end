@@ -4373,41 +4373,42 @@ export const getToken = async () => {
 };
 
 export const PracticeTestSave = async (
+  code,
   mainSectionID,
   PraticeTestCode,
   PracticeTestTitle,
   PracticeTestDesc,
   PracticeTestDuration,
-  PracticeTestMinPassMark,
+  passMark,
   PracticeTestInstructions,
   PracticeTestExLink,
-  PracticeTestQuestionFile,
+  questionFileUUID,
   PracticeTestQuestionExLink,
-  PracticeTestSolutionsFile,
+  solutionsFileUUID,
   PraticeTestSolutionsExLink,
-  setshowPracticeTestInput,
+  PracticeTestQuestionFile,
+  PracticeTestSolutionsFile,
+   setshowPracticeTestInput,
   setshowCurriculumItem,
   setbtnLoadingPracticeTest,
-  setPracticeTestTitle,
-  setPracticeTestDesc,
-  setPracticeTestDuration,
-  setPracticeTestInstructions,
-  setPracticeTestMinPassMark,
-  setPracticeTestExLink,
-  setPracticeTestQuestionFile,
-  setPracticeTestQuestionExLink,
-  setPracticeTestSolutionsFile,
-  setPraticeTestSolutionsExLink,
-  setPraticeTestCode,
-  setshowContentAdd,
-  setshowMain,
-  code,
+  // setPracticeTestTitle,
+  // setPracticeTestDesc,
+  // setPracticeTestDuration,
+  // setPracticeTestInstructions,
+  // setPracticeTestMinPassMark,
+  // setPracticeTestExLink,
+  // setPracticeTestQuestionFile,
+  // setPracticeTestQuestionExLink,
+  // setPracticeTestSolutionsFile,
+  // setPraticeTestSolutionsExLink,
+  // setPraticeTestCode,
   setsectionData,
-
-   setshowQuizInput,
+  setshowQuizInput,
   setshowLecInput,
   setshowCodingExecInput,
-  setshowAssignmentInput
+  setshowAssignmentInput,
+  setshowContentAdd,
+  setshowMain
 ) => {
   setbtnLoadingPracticeTest(true);
 
@@ -4420,15 +4421,27 @@ export const PracticeTestSave = async (
   formdata.append("title", `${PracticeTestTitle}`);
   formdata.append("description", `${PracticeTestDesc}`);
   formdata.append("duration", `${PracticeTestDuration}`);
-  formdata.append("minimumPassMark", `${PracticeTestMinPassMark}`);
+  formdata.append("minimumPassMark", `${passMark}`);
   formdata.append("instructions", `${PracticeTestInstructions}`);
   formdata.append("externalLink", `${PracticeTestExLink}`);
-  PracticeTestQuestionFile != null &&
-    formdata.append("questionSheet", PracticeTestQuestionFile);
+
+  if(PracticeTestQuestionFile != null){
+    formdata.append("generatedQuestionSheetName", questionFileUUID + "_" + PracticeTestQuestionFile.name);
+  formdata.append("originalQuestionSheetName", PracticeTestQuestionFile.name);
+  }
+
   formdata.append("questionLink", `${PracticeTestQuestionExLink}`);
-  PracticeTestSolutionsFile != null &&
-    formdata.append("solutionSheet", PracticeTestSolutionsFile);
+
+  // PracticeTestSolutionsFile != null &&
+  //   formdata.append("solutionSheet", PracticeTestSolutionsFile);
+
   formdata.append("solutionLink", `${PraticeTestSolutionsExLink}`);
+
+if(PracticeTestSolutionsFile != null) {
+
+  formdata.append("generatedSolutionSheetName", solutionsFileUUID + "_" + PracticeTestSolutionsFile.name);
+formdata.append("originalSolutionSheetName", PracticeTestSolutionsFile.name);
+}
 
   const requestOptions = {
     method: "POST",
