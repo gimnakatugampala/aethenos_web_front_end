@@ -576,11 +576,11 @@ const Curriculum = ({ code }) => {
       return;
     }
   
-    // Validate file uploads (optional, only check if files exist)
-    if (!PracticeTestQuestionFile && !PracticeTestSolutionsFile) {
-      ErrorAlert("Missing Files", "Please upload at least one file.");
-      return;
-    }
+    // // Validate file uploads (optional, only check if files exist)
+    // if (!PracticeTestQuestionFile && !PracticeTestSolutionsFile) {
+    //   ErrorAlert("Missing Files", "Please upload at least one file.");
+    //   return;
+    // }
   
     try {
       setbtnLoadingPracticeTest(true);
