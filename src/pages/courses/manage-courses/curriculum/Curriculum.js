@@ -575,87 +575,76 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Empty field", "Please fill the instructions");
       return;
     }
-    if (!PracticeTestQuestionFile) {
-      ErrorAlert("Missing File", "Please upload the question file.");
-      return;
-    }
-    if (!PracticeTestSolutionsFile) {
-      ErrorAlert("Missing File", "Please upload the solutions file.");
+  
+    // Validate file uploads (optional, only check if files exist)
+    if (!PracticeTestQuestionFile && !PracticeTestSolutionsFile) {
+      ErrorAlert("Missing Files", "Please upload at least one file.");
       return;
     }
   
     try {
       setbtnLoadingPracticeTest(true);
   
-      const questionFileUUID = uuidv4();
-      const solutionsFileUUID = uuidv4();
+      const questionFileUUID = PracticeTestQuestionFile ? uuidv4() : null;
+      const solutionsFileUUID = PracticeTestSolutionsFile ? uuidv4() : null;
   
-      // Upload Question File
-      await uploadFileInChunksPraticeTest(
+      // Upload Question File if exists
+      if (PracticeTestQuestionFile) {
+        await uploadFileInChunksPraticeTest(
+          code,
+          mainSectionID,
+          questionFileUUID,
+          "practice-test-question-sheet",
+          PracticeTestQuestionFile,
+          setshowResources,
+          setsectionData,
+          updateProgressBarFiles,
+          setbtnLoadingPracticeTest
+        );
+      }
+  
+      // Upload Solutions File if exists
+      if (PracticeTestSolutionsFile) {
+        await uploadFileInChunksPraticeTest(
+          code,
+          mainSectionID,
+          solutionsFileUUID,
+          "practice-test-solution-sheet",
+          PracticeTestSolutionsFile,
+          setshowResources,
+          setsectionData,
+          updateProgressBarFiles,
+          setbtnLoadingPracticeTest
+        );
+      }
+  
+      // Save Practice Test after files are uploaded (if any)
+      await PracticeTestSave(
         code,
         mainSectionID,
+        PraticeTestCode,
+        PracticeTestTitle,
+        PracticeTestDesc,
+        PracticeTestDuration,
+        passMark,
+        PracticeTestInstructions,
+        PracticeTestExLink,
         questionFileUUID,
-        "practice-test-question-sheet",
+        PracticeTestQuestionExLink,
+        solutionsFileUUID,
+        PraticeTestSolutionsExLink,
         PracticeTestQuestionFile,
-        setshowResources,
-        setsectionData,
-        updateProgressBarFiles,
+        PracticeTestSolutionsFile,
+        setshowPracticeTestInput,
+        setshowCurriculumItem,
         setbtnLoadingPracticeTest,
-        async () => {
-          // After Question File Upload
-          await uploadFileInChunksPraticeTest(
-            code,
-            mainSectionID,
-            solutionsFileUUID,
-            "practice-test-solution-sheet",
-            PracticeTestSolutionsFile,
-            setshowResources,
-            setsectionData,
-            updateProgressBarFiles,
-            setbtnLoadingPracticeTest,
-            async () => {
-              // After both files are uploaded, save the practice test
-              await PracticeTestSave(
-                code,
-                mainSectionID,
-                PraticeTestCode,
-                PracticeTestTitle,
-                PracticeTestDesc,
-                PracticeTestDuration,
-                passMark,
-                PracticeTestInstructions,
-                PracticeTestExLink,
-                questionFileUUID,
-                PracticeTestQuestionExLink,
-                solutionsFileUUID,
-                PraticeTestSolutionsExLink,
-                PracticeTestQuestionFile,
-                PracticeTestSolutionsFile,
-                 setshowPracticeTestInput,
-                setshowCurriculumItem,
-                setbtnLoadingPracticeTest,
-                // setPracticeTestTitle,
-                // setPracticeTestDesc,
-                // setPracticeTestDuration,
-                // setPracticeTestInstructions,
-                // setPracticeTestMinPassMark,
-                // setPracticeTestExLink,
-                // setPracticeTestQuestionFile,
-                // setPracticeTestQuestionExLink,
-                // setPracticeTestSolutionsFile,
-                // setPraticeTestSolutionsExLink,
-                // setPraticeTestCode,
-                setsectionData,
-                setshowQuizInput,
-                setshowLecInput,
-                setshowCodingExecInput,
-                setshowAssignmentInput,
-                setshowContentAdd,
-                setshowMain
-              );
-            }
-          );
-        }
+        setsectionData,
+        setshowQuizInput,
+        setshowLecInput,
+        setshowCodingExecInput,
+        setshowAssignmentInput,
+        setshowContentAdd,
+        setshowMain
       );
     } catch (err) {
       console.error("Error saving practice test:", err);
@@ -663,45 +652,8 @@ const Curriculum = ({ code }) => {
     } finally {
       setbtnLoadingPracticeTest(false);
     }
-
-     // PracticeTestSave(
-    //   mainSectionID,
-    //   PraticeTestCode,
-    //   PracticeTestTitle,
-    //   PracticeTestDesc,
-    //   PracticeTestDuration,
-    //   PracticeTestMinPassMark,
-    //   PracticeTestInstructions,
-    //   PracticeTestExLink,
-    //   PracticeTestQuestionFile,
-    //   PracticeTestQuestionExLink,
-    //   PracticeTestSolutionsFile,
-    //   PraticeTestSolutionsExLink,
-    //   setshowPracticeTestInput,
-    //   setshowCurriculumItem,
-    //   setbtnLoadingPracticeTest,
-    //   setPracticeTestTitle,
-    //   setPracticeTestDesc,
-    //   setPracticeTestDuration,
-    //   setPracticeTestInstructions,
-    //   setPracticeTestMinPassMark,
-    //   setPracticeTestExLink,
-    //   setPracticeTestQuestionFile,
-    //   setPracticeTestQuestionExLink,
-    //   setPracticeTestSolutionsFile,
-    //   setPraticeTestSolutionsExLink,
-    //   setPraticeTestCode,
-    //   setshowContentAdd,
-    //   setshowMain,
-    //   code,
-    //   setsectionData,
-    //   setshowQuizInput,
-    //   setshowLecInput,
-    //   setshowCodingExecInput,
-    //   setshowAssignmentInput
-    // );
-
   };
+  
   
 
    
