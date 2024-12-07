@@ -89,25 +89,32 @@ function RevenueReport() {
               }
             >
               <Box sx={{ flexGrow: 1 }}>
-                <LineChart
-                  xAxis={[{ data: formatDays(days) }]}
-                  yAxis={[
-                    {
-                      min: 0,
-                      max: getAdjustedData(revenueData),
-                      interval: 1,
-                      tickFormatter: (value) => Math.round(value),
-                    },
-                  ]}
-                  series={[
-                    {
-                      data: revenueData,
-                      area: true,
-                    },
-                  ]}
-                  height={400}
-                />
-              </Box>
+  <LineChart
+    xAxis={[
+      {
+        data: formatDays(days),
+        label: "Days", // Label for the x-axis
+      },
+    ]}
+    yAxis={[
+      {
+        min: 0,
+        max: getAdjustedData(revenueData),
+        interval: 1,
+        label: "Amount (USD)", // Label for the y-axis
+        tickFormatter: (value) => Math.round(value),
+      },
+    ]}
+    series={[
+      {
+        data: revenueData,
+        area: true,
+      },
+    ]}
+    height={400}
+  />
+</Box>
+
             </Tab>
 
             {/* Total Enrollment */}
@@ -123,25 +130,32 @@ function RevenueReport() {
                 </div>
               }
             >
-              <Box sx={{ flexGrow: 1 }}>
-                <LineChart
-                  xAxis={[{ data: formatDays(days) }]}
-                  yAxis={[
-                    {
-                      min: 0,
-                      max: getAdjustedData(enrollmentData),
-                      interval: 1,
-                      tickFormatter: (value) => Math.round(value),
-                    },
-                  ]}
-                  series={[
-                    {
-                      data: enrollmentData,
-                    },
-                  ]}
-                  height={400}
-                />
-              </Box>
+           <Box sx={{ flexGrow: 1 }}>
+  <LineChart
+    xAxis={[
+      {
+        data: formatDays(days),
+        label: "Days", // Label for the x-axis
+      },
+    ]}
+    yAxis={[
+      {
+        min: 0,
+        max: getAdjustedData(enrollmentData),
+        interval: 1,
+        label: "Count of Students", // Label for the y-axis
+        tickFormatter: (value) => Math.round(value),
+      },
+    ]}
+    series={[
+      {
+        data: enrollmentData,
+      },
+    ]}
+    height={400}
+  />
+</Box>
+
             </Tab>
 
             {/* Instructor Rating */}
@@ -159,18 +173,30 @@ function RevenueReport() {
                 </div>
               }
             >
-              <Box sx={{ flexGrow: 1 }}>
-                <LineChart
-                  xAxis={[{ data: formatDays(days) }]}
-                  series={[
-                    {
-                      data: ratingData,
-                      area: true,
-                    },
-                  ]}
-                  height={400}
-                />
-              </Box>
+             <Box sx={{ flexGrow: 1 }}>
+  <LineChart
+    xAxis={[
+      {
+        data: formatDays(days),
+        label: "Days", // Label for the x-axis
+      },
+    ]}
+    yAxis={[
+      {
+        min: 0, // You may want to set a max value if needed, based on ratings range.
+        label: "Ratings", // Label for the y-axis
+      },
+    ]}
+    series={[
+      {
+        data: ratingData,
+        area: true,
+      },
+    ]}
+    height={400}
+  />
+</Box>
+
             </Tab>
           </Tabs>
           {/* <div className="text-center">
