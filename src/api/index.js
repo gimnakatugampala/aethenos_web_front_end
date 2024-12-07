@@ -4512,15 +4512,15 @@ export const CodingExerciseSave = async (
   CodingExerciseCode,
   CodingExerciseDesc,
   CodingExerciseInstructions,
-  CodingExerciseVideo,
-  CodingExerciseDResourses,
   CodingExerciseExLink,
-  CodingExerciseUploadEx,
   CodingExerciseExternalLink,
-  CodingExerciseQVideo,
-  CodingExercisesSolutionsFile,
   CodingExercisesExLinkSolutions,
-  CodingExercisesSolutionsVideo,
+  CodingExerciseVideo, // Pass the video file (null if not available)
+  CodingExerciseDResourses, // Pass the resources file (null if not available)
+  CodingExerciseUploadEx, // Pass the exercise sheet (null if not available)
+  CodingExerciseQVideo, // Pass the question video (null if not available)
+  CodingExercisesSolutionsFile, // Pass the solution sheet (null if not available)
+  CodingExercisesSolutionsVideo, // Pass the solution video (null if not available)
   setCodingExerciseTitle,
   setCodingExerciseDesc,
   setCodingExerciseInstructions,
@@ -4541,7 +4541,6 @@ export const CodingExerciseSave = async (
   setshowMain,
   code,
   setsectionData,
-
   setshowQuizInput,
   setshowLecInput,
   setshowPracticeTestInput,
