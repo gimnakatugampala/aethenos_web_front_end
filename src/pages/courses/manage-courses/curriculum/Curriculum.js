@@ -102,6 +102,7 @@ import { uploadFileInChunksDownloadableResources } from "../../../../commonFunct
 import { uploadFileInChunksSourcesCode } from "../../../../commonFunctions/file-uploads/uploadFileInChunksSourcesCode";
 import { uploadFileInChunksPraticeTest } from "../../../../commonFunctions/file-uploads/uploadFileInChunksPraticeTest";
 import { uploadFileInChunksCodingExcercise } from "../../../../commonFunctions/file-uploads/uploadFileInChunksCodingExcercise";
+import { uploadFileInChunksAssignment } from "../../../../commonFunctions/file-uploads/uploadFileInChunksAssignment";
 
 const syllabusIcon = {
   fontSize: "17px",
@@ -866,7 +867,7 @@ const Curriculum = ({ code }) => {
   
 
   // ======== SUBMIT ASSIGNMENT =======
-  const handleAssignmentSave = () => {
+  const handleAssignmentSave = async () => {
     console.log(mainSectionID);
     console.log(AssignmentCode);
     console.log(AssignmentTitle);
@@ -883,74 +884,184 @@ const Curriculum = ({ code }) => {
     console.log(AssignmentSolutionsVideo);
     console.log(AssignmentSolutionsFile);
     console.log(AssignmentSolutionsExLink);
-
-    if (AssignmentTitle == "") {
+  
+    if (AssignmentTitle === "") {
       ErrorAlert("Empty field", "Please fill title");
       return;
     }
-
-    if (AssignmentDesc == "") {
+  
+    if (AssignmentDesc === "") {
       ErrorAlert("Empty field", "Please fill description");
       return;
     }
-
-    if (AssignmentDuration == "") {
+  
+    if (AssignmentDuration === "") {
       ErrorAlert("Empty field", "Please fill duration");
       return;
     }
-
-    if (AssignmentInstructors == "") {
+  
+    if (AssignmentInstructors === "") {
       ErrorAlert("Empty field", "Please fill instructions");
       return;
     }
+  
+    // Generate UUIDs for files
+    const questionFileUUID = uuidv4();
+    const solutionFileUUID = uuidv4();
+    const videoUUID = uuidv4();
+    const resourceUUID = uuidv4();
+    const solutionVideoUUID = uuidv4();
+  
+    try {
+      // Upload Assignment Video if provided
+      if (AssignmentVideo) {
+        await uploadFileInChunksAssignment(
+          code,
+          mainSectionID,
+          videoUUID,
+          "assignment-video",
+          AssignmentVideo,
+          null,
+          setsectionData,
+          null, // Optional progress bar update function
+          setbtnLoadingAssignment,
+          (uploadedUUID) => {
+            console.log("Video uploaded with UUID:", uploadedUUID);
+          }
+        );
+      }
+  
+      // Upload Assignment Resource if provided
+      if (AssignmentDResourses) {
+        await uploadFileInChunksAssignment(
+          code,
+          mainSectionID,
+          resourceUUID,
+          "assignment-resource",
+          AssignmentDResourses,
+          null,
+          setsectionData,
+          null,
+          setbtnLoadingAssignment,
+          (uploadedUUID) => {
+            console.log("Resource uploaded with UUID:", uploadedUUID);
+          }
+        );
+      }
+  
+      // Upload Question File if provided
+      if (AssignmentQuestionFile) {
+        await uploadFileInChunksAssignment(
+          code,
+          mainSectionID,
+          questionFileUUID,
+          "assignment-question-sheet",
+          AssignmentQuestionFile,
+          null,
+          setsectionData,
+          null,
+          setbtnLoadingAssignment,
+          (uploadedUUID) => {
+            console.log("Question file uploaded with UUID:", uploadedUUID);
+          }
+        );
+      }
+  
+      // Upload Solution File if provided
+      if (AssignmentSolutionsFile) {
+        await uploadFileInChunksAssignment(
+          code,
+          mainSectionID,
+          solutionFileUUID,
+          "assignment-solution-sheet",
+          AssignmentSolutionsFile,
+          null,
+          setsectionData,
+          null,
+          setbtnLoadingAssignment,
+          (uploadedUUID) => {
+            console.log("Solution file uploaded with UUID:", uploadedUUID);
+          }
+        );
+      }
+  
+      // Upload Solution Video if provided
+      if (AssignmentSolutionsVideo) {
+        await uploadFileInChunksAssignment(
+          code,
+          mainSectionID,
+          solutionVideoUUID,
+          "assignment-solution-video",
+          AssignmentSolutionsVideo,
+          null,
+          setsectionData,
+          null,
+          setbtnLoadingAssignment,
+          (uploadedUUID) => {
+            console.log("Solution video uploaded with UUID:", uploadedUUID);
+          }
+        );
+      }
 
-    AssignmentSave(
-      mainSectionID,
-      AssignmentCode,
-      AssignmentTitle,
-      AssignmentDesc,
-      AssignmentDuration,
-      AssignmentInstructors,
-      AssignmentVideo,
-      AssignmentDResourses,
-      AssignmentExLink,
-      AssignmentQuestion,
-      AssignmentQuestionFile,
-      AssignmentQuestionLink,
-      AssignmentSolutions,
-      AssignmentSolutionsVideo,
-      AssignmentSolutionsFile,
-      AssignmentSolutionsExLink,
-      setshowAssignmentInput,
-      setshowCurriculumItem,
-      setAssignmentTitle,
-      setAssignmentDesc,
-      setAssignmentDuration,
-      setAssignmentInstructors,
-      setAssignmentVideo,
-      setAssignmentDResourses,
-      setAssignmentExLink,
-      setAssignmentQuestion,
-      setAssignmentQuestionFile,
-      setAssignmentQuestionLink,
-      setAssignmentSolutions,
-      setAssignmentSolutionsVideo,
-      setAssignmentSolutionsFile,
-      setAssignmentSolutionsExLink,
-      setbtnLoadingAssignment,
-      setAssignmentCode,
-      setshowContentAdd,
-      setshowMain,
-      code,
-      setsectionData,
 
-      setshowQuizInput,
-      setshowLecInput,
-      setshowPracticeTestInput,
-      setshowCodingExecInput
-    );
+
+  
+      // Proceed with AssignmentSave after uploads
+      AssignmentSave(
+        mainSectionID,
+        AssignmentCode,
+        AssignmentTitle,
+        AssignmentDesc,
+        AssignmentDuration,
+        AssignmentInstructors,
+        videoUUID, // Use uploaded video UUID
+        resourceUUID, // Use uploaded resource UUID
+        AssignmentExLink,
+        AssignmentQuestion,
+        questionFileUUID, // Use uploaded question file UUID
+        AssignmentQuestionLink,
+        AssignmentSolutions,
+        solutionVideoUUID, // Use uploaded solution video UUID
+        solutionFileUUID, // Use uploaded solution file UUID
+        AssignmentSolutionsExLink,
+        AssignmentVideo,
+        AssignmentDResourses,
+        AssignmentQuestionFile,
+        AssignmentSolutionsVideo,
+        AssignmentSolutionsFile,
+        setshowAssignmentInput,
+        setshowCurriculumItem,
+        setAssignmentTitle,
+        setAssignmentDesc,
+        setAssignmentDuration,
+        setAssignmentInstructors,
+        setAssignmentVideo,
+        setAssignmentDResourses,
+        setAssignmentExLink,
+        setAssignmentQuestion,
+        setAssignmentQuestionFile,
+        setAssignmentQuestionLink,
+        setAssignmentSolutions,
+        setAssignmentSolutionsVideo,
+        setAssignmentSolutionsFile,
+        setAssignmentSolutionsExLink,
+        setbtnLoadingAssignment,
+        setAssignmentCode,
+        setshowContentAdd,
+        setshowMain,
+        code,
+        setsectionData,
+        setshowQuizInput,
+        setshowLecInput,
+        setshowPracticeTestInput,
+        setshowCodingExecInput
+      );
+    } catch (error) {
+      console.error("Error handling assignment save:", error);
+      ErrorAlert("Error", "Failed to save assignment.");
+    }
   };
-
+  
   // ============= DELETE ==============
 
   const handleSectionDelete = (section) => {

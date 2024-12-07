@@ -4680,16 +4680,21 @@ export const AssignmentSave = async (
   AssignmentDesc,
   AssignmentDuration,
   AssignmentInstructors,
-  AssignmentVideo,
-  AssignmentDResourses,
+  videoUUID, // Use uploaded video UUID
+  resourceUUID, // Use uploaded resource UUID
   AssignmentExLink,
   AssignmentQuestion,
-  AssignmentQuestionFile,
+  questionFileUUID, // Use uploaded question file UUID
   AssignmentQuestionLink,
   AssignmentSolutions,
+  solutionVideoUUID, // Use uploaded solution video UUID
+  solutionFileUUID, // Use uploaded solution file UUID
+  AssignmentSolutionsExLink,
+  AssignmentVideo,
+  AssignmentDResourses,
+  AssignmentQuestionFile,
   AssignmentSolutionsVideo,
   AssignmentSolutionsFile,
-  AssignmentSolutionsExLink,
   setshowAssignmentInput,
   setshowCurriculumItem,
   setAssignmentTitle,
@@ -4712,7 +4717,6 @@ export const AssignmentSave = async (
   setshowMain,
   code,
   setsectionData,
-
   setshowQuizInput,
   setshowLecInput,
   setshowPracticeTestInput,
@@ -4730,19 +4734,61 @@ export const AssignmentSave = async (
   formdata.append("description", `${AssignmentDesc}`);
   formdata.append("duration", `${AssignmentDuration}`);
   formdata.append("instructions", `${AssignmentInstructors}`);
-  AssignmentVideo != null && formdata.append("video", AssignmentVideo);
-  AssignmentDResourses != null &&
-    formdata.append("resource", AssignmentDResourses);
+
+
+  // AssignmentVideo != null && formdata.append("video", AssignmentVideo);
+
+  if(AssignmentVideo != null){
+    formdata.append("assignmentVideoGeneratedName", videoUUID + "_" + AssignmentVideo.name);
+    formdata.append("assignmentVideoOriginalName", AssignmentVideo.name);
+  }
+
+
+  // AssignmentDResourses != null &&
+  //   formdata.append("resource", AssignmentDResourses);
+
+    if(AssignmentDResourses != null){
+      formdata.append("assignmentResourceGeneratedName", resourceUUID + "_" + AssignmentDResourses.name);
+      formdata.append("assignmentResourceOriginalName", AssignmentDResourses.name);
+    }
+
+
   formdata.append("externalLink", `${AssignmentExLink}`);
+
+
   formdata.append("questions", `${AssignmentQuestion}`);
-  AssignmentQuestionFile != null &&
-    formdata.append("questionSheet", AssignmentQuestionFile);
+
+  // AssignmentQuestionFile != null &&
+  //   formdata.append("questionSheet", AssignmentQuestionFile);
+
+
+
+if(AssignmentQuestionFile != null){
+  formdata.append("assignmentQuestionSheetGeneratedName", questionFileUUID + "_" + AssignmentQuestionFile.name);
+formdata.append("assignmentQuestionSheetOriginalName", AssignmentQuestionFile.name);
+}
+
+
   formdata.append("questionLink", `${AssignmentQuestionLink}`);
   formdata.append("solution", `${AssignmentSolutions}`);
-  AssignmentSolutionsVideo != null &&
-    formdata.append("solutionVideo", AssignmentSolutionsVideo);
-  AssignmentSolutionsFile != null &&
-    formdata.append("solutionSheet", AssignmentSolutionsFile);
+
+  
+if(AssignmentSolutionsVideo != null){
+  formdata.append("assignmentSolutionVideoGeneratedName", solutionVideoUUID + "_" + AssignmentSolutionsVideo.name);
+formdata.append("assignmentSolutionVideoOriginalName", AssignmentSolutionsVideo.name);
+}
+  // AssignmentSolutionsVideo != null &&
+  //   formdata.append("solutionVideo", AssignmentSolutionsVideo);
+
+
+  // AssignmentSolutionsFile != null &&
+  //   formdata.append("solutionSheet", AssignmentSolutionsFile);
+
+    if(AssignmentSolutionsFile != null){
+      formdata.append("assignmentSolutionSheetGeneratedName", solutionFileUUID + "_" + AssignmentSolutionsFile.name);
+      formdata.append("assignmentSolutionSheetOriginalName", AssignmentSolutionsFile.name);
+    }
+
   formdata.append("solutionLink", `${AssignmentSolutionsExLink}`);
 
   const requestOptions = {
