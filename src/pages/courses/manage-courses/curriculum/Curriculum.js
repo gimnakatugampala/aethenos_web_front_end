@@ -772,7 +772,7 @@ const Curriculum = ({ code }) => {
         );
       }
   
-      // Once all files are uploaded, proceed with saving the coding exercise
+      // Once all files are uploaded (or skipped), proceed with saving the coding exercise
       await CodingExerciseSave(
         codingExerciseFileUUID,
         mainSectionID,
@@ -781,14 +781,14 @@ const Curriculum = ({ code }) => {
         CodingExerciseDesc,
         CodingExerciseInstructions,
         CodingExerciseExLink,
-        CodingExerciseUploadEx,
         CodingExerciseExternalLink,
-        CodingExerciseVideo,
-        CodingExerciseDResourses,
-        CodingExerciseQVideo,
-        CodingExercisesSolutionsFile,
         CodingExercisesExLinkSolutions,
-        CodingExercisesSolutionsVideo,
+        CodingExerciseUploadEx || "",
+        CodingExerciseVideo || "",
+        CodingExerciseDResourses || "",
+        CodingExerciseQVideo || "",
+        CodingExercisesSolutionsFile || "",
+        CodingExercisesSolutionsVideo || "",
         setCodingExerciseTitle,
         setCodingExerciseDesc,
         setCodingExerciseInstructions,

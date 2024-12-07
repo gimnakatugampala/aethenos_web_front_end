@@ -4515,9 +4515,9 @@ export const CodingExerciseSave = async (
   CodingExerciseExLink,
   CodingExerciseExternalLink,
   CodingExercisesExLinkSolutions,
-  CodingExerciseVideo, // Pass the video file (null if not available)
-  CodingExerciseDResourses, // Pass the resources file (null if not available)
-  CodingExerciseUploadEx, // Pass the exercise sheet (null if not available)
+  CodingExerciseUploadEx, // Pass the video file (null if not available)
+  CodingExerciseVideo, // Pass the resources file (null if not available)
+  CodingExerciseDResourses, // Pass the exercise sheet (null if not available)
   CodingExerciseQVideo, // Pass the question video (null if not available)
   CodingExercisesSolutionsFile, // Pass the solution sheet (null if not available)
   CodingExercisesSolutionsVideo, // Pass the solution video (null if not available)
@@ -4558,12 +4558,12 @@ export const CodingExerciseSave = async (
   formdata.append("description", `${CodingExerciseDesc}`);
   formdata.append("instructions", `${CodingExerciseInstructions}`);
 
-  if(CodingExerciseVideo != null){
+  if(CodingExerciseVideo != null && CodingExerciseVideo != ""){
     formdata.append("videoGeneratedName", codingExerciseFileUUID + "_" + CodingExerciseVideo.name);
     formdata.append("videoOriginalName", CodingExerciseVideo.name);
   }
   
-if(CodingExerciseDResourses != null){
+if(CodingExerciseDResourses != null && CodingExerciseDResourses != ""){
   formdata.append("codingExerciseResourceGeneratedName", codingExerciseFileUUID + "_" + CodingExerciseDResourses.name);
 formdata.append("codingExerciseResourceOriginalName", CodingExerciseDResourses.name);
 }
@@ -4577,13 +4577,16 @@ formdata.append("codingExerciseResourceOriginalName", CodingExerciseDResourses.n
   // CodingExerciseQVideo != null &&
   //   formdata.append("codingVideo", CodingExerciseQVideo);
 
-    if(CodingExerciseQVideo != null){
+    if(CodingExerciseQVideo != null && CodingExerciseQVideo != ""){
       formdata.append("codingVideoGeneratedName", codingExerciseFileUUID + "_" + CodingExerciseQVideo.name);
       formdata.append("codingVideoOriginalName",  CodingExerciseQVideo.name);
     }
 
-    formdata.append("codingFilesGeneratedName", codingExerciseFileUUID + "_" + CodingExerciseUploadEx.name);
-    formdata.append("codingFilesOriginalName", CodingExerciseUploadEx.name);
+    if(CodingExerciseUploadEx != null && CodingExerciseUploadEx != ""){
+
+      formdata.append("codingFilesGeneratedName", codingExerciseFileUUID + "_" + CodingExerciseUploadEx.name);
+      formdata.append("codingFilesOriginalName", CodingExerciseUploadEx.name);
+    }
 
   // CodingExerciseUploadEx != null &&
   //   formdata.append("codingFiles", CodingExerciseUploadEx);
@@ -4593,7 +4596,7 @@ formdata.append("codingExerciseResourceOriginalName", CodingExerciseDResourses.n
   // CodingExercisesSolutionsVideo != null &&
   //   formdata.append("solutionVideo", CodingExercisesSolutionsVideo);
 
-    if(CodingExercisesSolutionsVideo != null){
+    if(CodingExercisesSolutionsVideo != null && CodingExercisesSolutionsVideo != ""){
       formdata.append("solutionVideoGeneratedName", codingExerciseFileUUID + "_" + CodingExercisesSolutionsVideo.name);
       formdata.append("solutionVideoOriginalName", CodingExercisesSolutionsVideo.name);
     }
@@ -4601,7 +4604,7 @@ formdata.append("codingExerciseResourceOriginalName", CodingExerciseDResourses.n
   // CodingExercisesSolutionsFile != null &&
   //   formdata.append("solutionSheet", CodingExercisesSolutionsFile);
 
-    if(CodingExercisesSolutionsFile != null){
+    if(CodingExercisesSolutionsFile != null && CodingExercisesSolutionsFile!= ""){
       formdata.append("solutionSheetGeneratedName", codingExerciseFileUUID + "_" + CodingExercisesSolutionsFile.name);
       formdata.append("solutionSheetOriginalName", CodingExercisesSolutionsFile.name);
     }
