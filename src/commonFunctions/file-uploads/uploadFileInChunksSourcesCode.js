@@ -13,15 +13,16 @@ export const uploadFileInChunksSourcesCode = async (
   file,
   setsectionData,
   updateProgressBarFiles,
-  setUploading
+  setisUploadSourceFiles,
+  setUploadProgressSFiles
 ) => {
   if (!file) {
     ErrorAlert("Error", "No file selected.");
-    setUploading(false);
+    setisUploadSourceFiles(false);
     return;
   }
 
-  setUploading(true);
+  setisUploadSourceFiles(true);
 
   const CHUNK_SIZE = 5 * 1024 * 1024; // Default to 5MB
   const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
@@ -59,6 +60,7 @@ export const uploadFileInChunksSourcesCode = async (
       const progress = Math.floor((uploadedChunks / totalChunks) * 100);
       updateProgressBarFiles && updateProgressBarFiles(progress); // Update progress
       console.log(progress);
+      setUploadProgressSFiles(progress);
 
       start = end; // Move to the next chunk
     }
@@ -78,9 +80,9 @@ export const uploadFileInChunksSourcesCode = async (
     console.log("Time elapsed:", timeElapsed, "seconds");
   } catch (err) {
     console.error("Error uploading file:", err);
-    setUploading(false);
+    setisUploadSourceFiles(false);
     ErrorAlert("Error", "Error uploading file.");
   } finally {
-    setUploading(false);
+    setisUploadSourceFiles(false);
   }
 };

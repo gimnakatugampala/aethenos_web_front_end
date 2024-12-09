@@ -333,6 +333,10 @@ const Curriculum = ({ code }) => {
   // ====== Progress ======
   const [uploadProgressDFiles, setUploadProgressDFiles] = useState(0);
 
+  // Progress SOurce Code
+  const [uploadProgressSFiles, setUploadProgressSFiles] = useState(0);
+  const [isUploadSourceFiles, setisUploadSourceFiles] = useState(false)
+
 // =====================
 
   // Add Section
@@ -1289,7 +1293,8 @@ const Curriculum = ({ code }) => {
       e.target.files[0],
       setsectionData,
       updateProgressBarFiles,
-      setUploading
+      setisUploadSourceFiles,
+      setUploadProgressSFiles
      )
 
     // AddCurriculumSourceCode(code, ID, e.target.files[0], setsectionData);
@@ -2808,7 +2813,7 @@ const Curriculum = ({ code }) => {
                                                                       {uploading && (
                                                                           <div className="progress my-2">
                                                                               <div
-                                                                                  className="progress-bar"
+                                                                                  className="progress-bar bg-danger"
                                                                                   role="progressbar"
                                                                                   style={{ width: `${uploadProgressDFiles}%` }}
                                                                                   aria-valuenow={uploadProgressDFiles}
@@ -2823,6 +2828,28 @@ const Curriculum = ({ code }) => {
                                                                           <div className="alert alert-success mt-2">Upload Complete!</div>
                                                                       )}
                                                                   </div>
+
+                                                                      {/* Progress */}
+                                                                  <div className="m-2">
+                                                                  {isUploadSourceFiles && (
+                                                                      <div className="progress my-2">
+                                                                          <div
+                                                                              className="progress-bar bg-danger"
+                                                                              role="progressbar"
+                                                                              style={{ width: `${uploadProgressSFiles}%` }}
+                                                                              aria-valuenow={uploadProgressSFiles}
+                                                                              aria-valuemin="0"
+                                                                              aria-valuemax="100"
+                                                                          >
+                                                                              {uploadProgressSFiles}%
+                                                                          </div>
+                                                                      </div>
+                                                                  )}
+                                                                  {uploadProgressSFiles == 100 && (
+                                                                      <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                  )}
+                                                              </div>
+
 
                                                                     
 
@@ -3900,7 +3927,7 @@ const Curriculum = ({ code }) => {
                                                                       {uploading && (
                                                                           <div className="progress my-2">
                                                                               <div
-                                                                                  className="progress-bar"
+                                                                                  className="progress-bar bg-danger"
                                                                                   role="progressbar"
                                                                                   style={{ width: `${uploadProgressDFiles}%` }}
                                                                                   aria-valuenow={uploadProgressDFiles}
@@ -3915,6 +3942,28 @@ const Curriculum = ({ code }) => {
                                                                           <div className="alert alert-success mt-2">Upload Complete!</div>
                                                                       )}
                                                                   </div>
+
+                                                                    {/* Progress */}
+                                                                    <div className="m-2">
+                                                                  {isUploadSourceFiles && (
+                                                                      <div className="progress my-2">
+                                                                          <div
+                                                                              className="progress-bar bg-danger"
+                                                                              role="progressbar"
+                                                                              style={{ width: `${uploadProgressSFiles}%` }}
+                                                                              aria-valuenow={uploadProgressSFiles}
+                                                                              aria-valuemin="0"
+                                                                              aria-valuemax="100"
+                                                                          >
+                                                                              {uploadProgressSFiles}%
+                                                                          </div>
+                                                                      </div>
+                                                                  )}
+                                                                  {uploadProgressSFiles == 100 && (
+                                                                      <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                  )}
+                                                              </div>
+
 
                                                                     {/* Tabs */}
                                                                     <Tabs
@@ -4626,6 +4675,28 @@ const Curriculum = ({ code }) => {
                                                                           <div className="alert alert-success mt-2">Upload Complete!</div>
                                                                       )}
                                                                   </div>
+
+                                                                    {/* Progress */}
+                                                                    <div className="m-2">
+                                                                  {isUploadSourceFiles && (
+                                                                      <div className="progress my-2">
+                                                                          <div
+                                                                              className="progress-bar bg-danger"
+                                                                              role="progressbar"
+                                                                              style={{ width: `${uploadProgressSFiles}%` }}
+                                                                              aria-valuenow={uploadProgressSFiles}
+                                                                              aria-valuemin="0"
+                                                                              aria-valuemax="100"
+                                                                          >
+                                                                              {uploadProgressSFiles}%
+                                                                          </div>
+                                                                      </div>
+                                                                  )}
+                                                                  {uploadProgressSFiles == 100 && (
+                                                                      <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                  )}
+                                                              </div>
+
 
                                                                   {/* Tabs */}
                                                                   <Tabs
