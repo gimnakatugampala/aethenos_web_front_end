@@ -329,6 +329,12 @@ const Curriculum = ({ code }) => {
     },
   ]);
 
+
+  // ====== Progress ======
+  const [uploadProgressDFiles, setUploadProgressDFiles] = useState(0);
+
+// =====================
+
   // Add Section
   const handleSubmitSection = () => {
     setbtn_section_loading(true);
@@ -1218,7 +1224,8 @@ const Curriculum = ({ code }) => {
       setshowResources,
       setsectionData,
       updateProgressBarFiles,
-      setUploading
+      setUploading,
+      setUploadProgressDFiles
     );
 
     // if(uploadingVideoProgress == 100){
@@ -2796,6 +2803,29 @@ const Curriculum = ({ code }) => {
                                                                   <div>
                                                                     {/* <Button onClick={() => setshowResources(null)}  className="m-2" variant="contained"><CloseIcon /> Cancel</Button> */}
 
+                                                                    {/* Progress */}
+                                                                    <div className="m-2">
+                                                                      {uploading && (
+                                                                          <div className="progress my-2">
+                                                                              <div
+                                                                                  className="progress-bar"
+                                                                                  role="progressbar"
+                                                                                  style={{ width: `${uploadProgressDFiles}%` }}
+                                                                                  aria-valuenow={uploadProgressDFiles}
+                                                                                  aria-valuemin="0"
+                                                                                  aria-valuemax="100"
+                                                                              >
+                                                                                  {uploadProgressDFiles}%
+                                                                              </div>
+                                                                          </div>
+                                                                      )}
+                                                                      {uploadProgressDFiles == 100 && (
+                                                                          <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                      )}
+                                                                  </div>
+
+                                                                    
+
                                                                     {/* Tabs */}
                                                                     <Tabs
                                                                       defaultActiveKey="d-file"
@@ -3559,21 +3589,7 @@ const Curriculum = ({ code }) => {
                                                                               fontSize: 11,
                                                                             }}
                                                                           >
-                                                                            {/* <b>Note:</b> A
-                                  resource is for
-                                  any type of
-                                  document that
-                                  can be used to
-                                  help students in
-                                  the lesson. This
-                                  file is going to
-                                  be seen as a
-                                  lesson extra.
-                                  Make sure
-                                  everything is
-                                  legible and the
-                                  file size is
-                                  less than 1 GiB. */}
+                                                                          
                                                                           </Form.Label>
                                                                         </Form.Group>
                                                                       </Tab>
@@ -3878,6 +3894,27 @@ const Curriculum = ({ code }) => {
                                                                     >
                                                                       <CloseIcon />{" "}
                                                                     </Button>
+
+                                                                       {/* Progress */}
+                                                                      <div className="m-2">
+                                                                      {uploading && (
+                                                                          <div className="progress my-2">
+                                                                              <div
+                                                                                  className="progress-bar"
+                                                                                  role="progressbar"
+                                                                                  style={{ width: `${uploadProgressDFiles}%` }}
+                                                                                  aria-valuenow={uploadProgressDFiles}
+                                                                                  aria-valuemin="0"
+                                                                                  aria-valuemax="100"
+                                                                              >
+                                                                                  {uploadProgressDFiles}%
+                                                                              </div>
+                                                                          </div>
+                                                                      )}
+                                                                      {uploadProgressDFiles == 100 && (
+                                                                          <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                      )}
+                                                                  </div>
 
                                                                     {/* Tabs */}
                                                                     <Tabs
@@ -4567,6 +4604,28 @@ const Curriculum = ({ code }) => {
                                                                   >
                                                                     <CloseIcon />{" "}
                                                                   </Button>
+
+                                                                     {/* Progress */}
+                                                                     <div className="m-2"> 
+                                                                      {uploading && (
+                                                                          <div className="progress my-2">
+                                                                             <div
+                                                                        className="progress-bar bg-danger"
+                                                                        role="progressbar"
+                                                                        style={{ width: `${uploadProgressDFiles}%` }}
+                                                                        aria-valuenow={uploadProgressDFiles}
+                                                                        aria-valuemin="0"
+                                                                        aria-valuemax="100"
+                                                                    >
+                                                                        {uploadProgressDFiles}%
+                                                                    </div>
+
+                                                                          </div>
+                                                                      )}
+                                                                      {uploadProgressDFiles == 100 && (
+                                                                          <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                      )}
+                                                                  </div>
 
                                                                   {/* Tabs */}
                                                                   <Tabs

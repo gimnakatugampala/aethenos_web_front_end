@@ -14,7 +14,8 @@ export const uploadFileInChunksDownloadableResources = async (
   setshowResources,
   setsectionData,
   updateProgressBarFiles,
-  setUploading
+  setUploading,
+  setUploadProgressDFiles
 ) => {
   if (!file) {
     ErrorAlert("Error", "No file selected.");
@@ -59,6 +60,7 @@ export const uploadFileInChunksDownloadableResources = async (
       uploadedChunks++;
       const progress = Math.floor((uploadedChunks / totalChunks) * 100);
       updateProgressBarFiles && updateProgressBarFiles(progress); // Update progress
+      setUploadProgressDFiles(progress)
       console.log(progress);
 
       start = end; // Move to the next chunk
