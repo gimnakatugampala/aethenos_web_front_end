@@ -337,6 +337,10 @@ const Curriculum = ({ code }) => {
   const [uploadProgressSFiles, setUploadProgressSFiles] = useState(0);
   const [isUploadSourceFiles, setisUploadSourceFiles] = useState(false)
 
+  // Progress Pratice Test
+  const [uploadProgressPraticeTest, setUploadProgressPraticeTest] = useState(0);
+  const [isUploadPraticeTest, setisUploadPraticeTest] = useState(false)
+
 // =====================
 
   // Add Section
