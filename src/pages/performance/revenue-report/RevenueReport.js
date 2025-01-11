@@ -81,6 +81,7 @@ function RevenueReport() {
 
   const headerCellStyle = {
     fontWeight: "bold",
+    
   };
 
   return (
@@ -174,6 +175,7 @@ function RevenueReport() {
                 title: "Your revenue ($)",
                 field: "yourRevenue",
                 headerStyle: headerCellStyle,
+                
               },
               {
                 title: "Expected Payment Date",

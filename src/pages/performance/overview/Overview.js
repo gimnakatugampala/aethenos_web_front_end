@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { GetChartOverviewData, GetRevenueOverview } from "../../../api";
 import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
+import formatNumber from "../../../commonFunctions/NumberFormat";
 
 // Helper function to format the day data
 const formatDays = (days) => days.map((day) => day);
@@ -76,13 +77,13 @@ function RevenueReport() {
                 <div className="tab-title">
                   <div>Total Revenue</div>
                   <div className="font-bold fs-5">
-                    ${Number.parseFloat(overViewStatus.totalRevenue).toFixed(2)}
+                    ${formatNumber(Number.parseFloat(overViewStatus.totalRevenue).toFixed(2))}
                   </div>
                   <div>
                     $
-                    {Number.parseFloat(overViewStatus.thisMonthRevenue).toFixed(
+                    {formatNumber(Number.parseFloat(overViewStatus.thisMonthRevenue).toFixed(
                       2
-                    )}{" "}
+                    ))}{" "}
                     this month
                   </div>
                 </div>
