@@ -5499,9 +5499,14 @@ export const GetRevenueReportByID = async (
 
       Unauthorized(result.status, "performance/revenue-report");
 
+      const formattedPurchases = result.purchases.map((purchase) => ({
+        ...purchase,
+        date: moment(purchase.date, "DD-MM-YYYY").format("DD-MM-YYYY"),
+      }));
+
       setrefundNo(result.totalRefunds);
       setpurchasesNo(result.totalPurchases);
-      setpurchasedData(result.purchases);
+      setpurchasedData(formattedPurchases);
       settimePeriod(result.timePeriod);
       setrefundData(result.refunds);
     })
