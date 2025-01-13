@@ -10354,6 +10354,8 @@ const Curriculum = ({ code }) => {
                     </Draggable>
                   ))
                 ) : (
+                  sectionData == null ? 
+                  <div className="d-flex justify-content-center"><h2>No Syallabus Found</h2> </div> : 
                   <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
                 )}
                 {provided.placeholder}
