@@ -189,7 +189,7 @@ const closeModal = () => {
                   <td>{coupon.createdDate == "" ? "N/A" : moment(coupon.createdDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.startDate).format('DD/MM/YYYY')}</td>
                   <td>{moment(coupon.endDate).format('DD/MM/YYYY')}</td>
-                  <td>{coupon.couponType.id == 1 ? '0/1000' : '0/Unlimited' }</td>
+                  <td>{coupon.redemptions}</td>
                   <td><FormControlLabel control={coupon.isActive == 1 ? <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} defaultChecked /> : <Switch onChange={(e) => handleCouponStatus(e,coupon.couponCode)} />} label={coupon.isActive == 1 ? "Active" : "Inactive"} /></td>
                   <td><Button onClick={() => copyLinkToClipboard(coupon.couponCode)} variant="outlined"><i className="fas fa-clipboard"></i></Button></td>
                   <td> 
