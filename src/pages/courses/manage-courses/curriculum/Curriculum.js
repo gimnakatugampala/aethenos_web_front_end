@@ -7608,14 +7608,42 @@ const Curriculum = ({ code }) => {
                                                       )}
                                                     </span>
                                                   </div>
+
+                                               
                                                   {showMain ==
                                                     index + i + item.id && (
                                                     <div className="p-3">
+
+                                                      {btnLoadingPracticeTest &&
+                                                      
+                                                      
+                                              <div className="m-2" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
+                                                    <div
+                                                      ref={progressBarRef}
+                                                      style={{
+                                                        width: "0%",
+                                                        height: "20px",
+                                                        backgroundColor: "#4caf50",
+                                                        textAlign: "center",
+                                                        color: "white",
+                                                        lineHeight: "20px",
+                                                        borderRadius: "5px",
+                                                        transition: "width 0.2s ease",
+                                                      }}
+                                                    >
+                                                      0%
+                                                    </div>
+                                                  </div>
+                                                      }
+
                                                       <Tabs
                                                         defaultActiveKey="practice"
                                                         id="uncontrolled-tab-example"
                                                         className="mb-3"
                                                       >
+
+
+
                                                         <Tab
                                                           eventKey="practice"
                                                           title="Practice Test information and Instructions"
@@ -9319,6 +9347,8 @@ const Curriculum = ({ code }) => {
 
                             {/* Syllabus Item > Quiz */}
 
+                            
+
                             {/* Syllabus Item > Practice Test */}
                             {showPracticeTestInput == index && (
                               <Tabs
@@ -9326,6 +9356,25 @@ const Curriculum = ({ code }) => {
                                 id="uncontrolled-tab-example"
                                 className="mb-3"
                               >
+                                 {/* Progress Bar
+                              <div style={{ marginTop: "20px", width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
+                                <div
+                                  ref={progressBarRef}
+                                  style={{
+                                    width: "0%",
+                                    height: "20px",
+                                    backgroundColor: "#4caf50",
+                                    textAlign: "center",
+                                    color: "white",
+                                    lineHeight: "20px",
+                                    borderRadius: "5px",
+                                    transition: "width 0.2s ease",
+                                  }}
+                                >
+                                  0%
+                                </div>
+                              </div> */}
+
                                 <Tab
                                   eventKey="practice"
                                   title="Practice Test information and instructions"
@@ -9521,6 +9570,7 @@ const Curriculum = ({ code }) => {
                                     </Form.Group>
                                   </Form>
                                 </Tab>
+
                                 <Tab eventKey="solutions" title="Solutions">
                                   <Form>
                                     <Form.Group
