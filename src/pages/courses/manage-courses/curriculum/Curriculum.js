@@ -899,7 +899,7 @@ const Curriculum = ({ code }) => {
           AssignmentVideo,
           null,
           setsectionData,
-          null, // Optional progress bar update function
+          updateProgressBarFiles, // Optional progress bar update function
           setbtnLoadingAssignment,
           (uploadedUUID) => {
             console.log("Video uploaded with UUID:", uploadedUUID);
@@ -917,7 +917,7 @@ const Curriculum = ({ code }) => {
           AssignmentDResourses,
           null,
           setsectionData,
-          null,
+          updateProgressBarFiles,
           setbtnLoadingAssignment,
           (uploadedUUID) => {
             console.log("Resource uploaded with UUID:", uploadedUUID);
@@ -935,7 +935,7 @@ const Curriculum = ({ code }) => {
           AssignmentQuestionFile,
           null,
           setsectionData,
-          null,
+          updateProgressBarFiles,
           setbtnLoadingAssignment,
           (uploadedUUID) => {
             console.log("Question file uploaded with UUID:", uploadedUUID);
@@ -953,7 +953,7 @@ const Curriculum = ({ code }) => {
           AssignmentSolutionsFile,
           null,
           setsectionData,
-          null,
+          updateProgressBarFiles,
           setbtnLoadingAssignment,
           (uploadedUUID) => {
             console.log("Solution file uploaded with UUID:", uploadedUUID);
@@ -971,7 +971,7 @@ const Curriculum = ({ code }) => {
           AssignmentSolutionsVideo,
           null,
           setsectionData,
-          null,
+          updateProgressBarFiles,
           setbtnLoadingAssignment,
           (uploadedUUID) => {
             console.log("Solution video uploaded with UUID:", uploadedUUID);
@@ -6609,6 +6609,31 @@ const Curriculum = ({ code }) => {
                                                   {showMain ==
                                                     index + i + item.id && (
                                                     <div className="p-3">
+
+                                                      {btnLoadingAssignment && (
+
+                              <div className="m-2" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
+                                                        <div
+                                                          ref={progressBarRef}
+                                                          style={{
+                                                            width: "0%",
+                                                            height: "20px",
+                                                            backgroundColor: "#4caf50",
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                            lineHeight: "20px",
+                                                            borderRadius: "5px",
+                                                            transition: "width 0.2s ease",
+                                                          }}
+                                                        >
+                                                          0%
+                                                        </div>
+                                                      </div>
+
+                                                      )}
+
+                                          
+
                                                       <Tabs
                                                         defaultActiveKey="assignment"
                                                         id="uncontrolled-tab-example"
