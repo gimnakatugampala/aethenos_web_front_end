@@ -6612,13 +6612,14 @@ const Curriculum = ({ code }) => {
 
                                                       {btnLoadingAssignment && (
 
-                              <div className="m-2" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
+                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
                                                         <div
+                                                        className="progress-bar bg-danger"
                                                           ref={progressBarRef}
                                                           style={{
                                                             width: "0%",
                                                             height: "20px",
-                                                            backgroundColor: "#4caf50",
+                                                            // backgroundColor: "#4caf50",
                                                             textAlign: "center",
                                                             color: "white",
                                                             lineHeight: "20px",
@@ -8370,13 +8371,14 @@ const Curriculum = ({ code }) => {
                                                     <div className="p-3">
 
                                                       {btnLoadingCodingExcercise && (
-                                              <div className="m-2" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
+                                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
                                                       <div
+                                                      className="progress-bar bg-danger"
                                                         ref={progressBarRef}
                                                         style={{
                                                           width: "0%",
                                                           height: "20px",
-                                                          backgroundColor: "#4caf50",
+                                                          // backgroundColor: "#4caf50",
                                                           textAlign: "center",
                                                           color: "white",
                                                           lineHeight: "20px",
@@ -9700,6 +9702,29 @@ const Curriculum = ({ code }) => {
 
                             {/* Syllabus Item > Coding Excersise */}
                             {showCodingExecInput == index && (
+                              <>
+                              
+                              {btnLoadingCodingExcercise && (
+                                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
+                                                      <div
+                                                      className="progress-bar bg-danger"
+                                                        ref={progressBarRef}
+                                                        style={{
+                                                          width: "0%",
+                                                          height: "20px",
+                                                          // backgroundColor: "#4caf50",
+                                                          textAlign: "center",
+                                                          color: "white",
+                                                          lineHeight: "20px",
+                                                          borderRadius: "5px",
+                                                          transition: "width 0.2s ease",
+                                                        }}
+                                                      >
+                                                        0%
+                                                      </div>
+                                                    </div>
+
+                                                      )}
                               <Tabs
                                 defaultActiveKey="coding"
                                 id="uncontrolled-tab-example"
@@ -10055,6 +10080,7 @@ const Curriculum = ({ code }) => {
                                   </Form>
                                 </Tab>
                               </Tabs>
+                              </>
                             )}
                             {/* Syllabus Item > Coding Excersise */}
 
