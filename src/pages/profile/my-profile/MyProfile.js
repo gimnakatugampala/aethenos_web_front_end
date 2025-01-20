@@ -377,6 +377,8 @@ const MyProfile = () => {
   const [checkOnwership, setcheckOnwership] = useState(false);
   const [show, setShow] = useState(false);
   const [btnLoadingSubmitForReview, setbtnLoadingSubmitForReview] = useState(false)
+    const [btn_accept_loading, setbtn_accept_loading] = useState(false)
+  
 
 
   // Verification
@@ -483,7 +485,7 @@ const MyProfile = () => {
       checkInstructorVerification,
       options,
       embeddedClientRef,
-      // setbtn_accept_loading
+      setbtn_accept_loading
     );
   };
     
