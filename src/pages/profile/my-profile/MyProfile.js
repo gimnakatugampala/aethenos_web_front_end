@@ -724,7 +724,7 @@ const MyProfile = () => {
                           className="text-white"
                           href={`/courses/manage/${code}/`}
                         >
-                          Go back to course
+                          Submit for Review
                         </a>
                       </Button>
                     </div>
@@ -976,7 +976,7 @@ const MyProfile = () => {
                           className="text-white"
                           href={`/courses/manage/${code}/`}
                         >
-                          Go back to course
+                          Submit for Review
                         </a>
                       </Button>
                     </div>
