@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Tab from "react-bootstrap/Tab";
+import Persona from "persona";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "@mui/material/Button";
 import {
   GetCheckPricingStatus,
   GetInstructorProfileDetails,
+  OwnThisContent,
+  RequestSubmitReview,
   SubmitInstructorTerms,
   UpdateProfileDetails,
 } from "../../../api";
@@ -24,6 +27,9 @@ import {
   AddWalletDetails,
   GetPaypalProfileDetails,
   GetWalletDetails,
+  CheckOwnershipOfContent,
+  CheckInstructorVerify,
+  ChangeInstructorVerify
 } from "../../../api";
 import Form from "react-bootstrap/Form";
 import Checkbox from "@mui/material/Checkbox";
@@ -360,21 +366,126 @@ const MyProfile = () => {
 
 
   // Copyrights
+  const embeddedClientRef = useRef(null);
+   // -------- PERSONA ---------------
+    const [options, setOptions] = useState({
+      templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk",
+    });
+  
+  
   const [courseOwnership, setcourseOwnership] = useState(0);
   const [checkOnwership, setcheckOnwership] = useState(false);
-    const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false);
+  const [btnLoadingSubmitForReview, setbtnLoadingSubmitForReview] = useState(false)
+
+
+  // Verification
+    const [checkInstructorVerification, setcheckInstructorVerification] = useState(null);
+
+    useEffect(() => {
+      CheckInstructorVerify(code, setcheckInstructorVerification);
+      CheckOwnershipOfContent(code, setcourseOwnership);
+      console.log(checkInstructorVerification)
+      console.log(courseOwnership)
+      
+  
+      // GetCheckPricingAllStatus(code, setcheckPricingStatus, setisPaid);
+    }, [code]);
 
   const handleClose = () => setShow(false);
 
   
-
-      const handleShow = () => {
-      setShow(true);
+  // Show Content Ownership
+  const handleShow = () => {
+      // setShow(true);
 
 
       // Content Ownership
+          // ========= Content Ownership ======
+    // Get Content Ownership
+    if (courseOwnership == 0) {
+      setShow(true);
+      setbtnLoadingSubmitForReview(false);
+      return;
+    }
+    // ========= Content Ownership ======
+
       // Persona Verification
+      if (checkInstructorVerification == 0) {
+        // PERSONA
+        const client = new Persona.Client({
+          templateId: "itmpl_Sk2RjhY2ZzsfQd7Q3UMCCFfk", // Make sure this is the production templateId
+          environmentId: 'env_Rv1WdUFq23Lj2DFy9yKMt77L',
+          onReady: () => client.open(),
+          onLoad: (error) => {
+            if (error) {
+              setbtnLoadingSubmitForReview(false);
+              console.error(
+                `Failed with code: ${error.code} and message ${error.message}`
+              );
+            }
+  
+            client.open();
+          },
+          onStart: (inquiryId) => {
+            console.log(`Started inquiry ${inquiryId}`);
+          },
+          onComplete: (inquiryId) => {
+            console.log(`Sending finished inquiry ${inquiryId} to backend`);
+            setbtnLoadingSubmitForReview(false);
+  
+            // Verify Instructor
+            ChangeInstructorVerify(code);
+  
+  
+            // Send to Request
+            RequestSubmitReview(code, setbtnLoadingSubmitForReview);
+  
+            fetch(`/server-handler?inquiry-id=${inquiryId}`);
+          },
+          onEvent: (name, meta) => {
+            switch (name) {
+              case "start":
+                console.log(`Received event: start`);
+                break;
+              default:
+                console.log(
+                  `Received event: ${name} with meta: ${JSON.stringify(meta)}`
+                );
+                setbtnLoadingSubmitForReview(false);
+            }
+          },
+        });
+        embeddedClientRef.current = client;
+  
+        window.exit = (force) =>
+          client ? client.exit(force) : alert("Initialize client first");
+        return;
       }
+
+
+      }
+
+
+      // Content Ownership - Accept
+  const handleShowVerification = () => {
+    if (checkOnwership == 0 || checkOnwership == false) {
+      ErrorAlert("Unchecked Ownership", "Please Accept the Content Ownership");
+      return;
+    }
+
+    // Send Ownersship
+    OwnThisContent(
+      code,
+      setbtnLoadingSubmitForReview,
+      setcheckOnwership,
+      setShow,
+      checkInstructorVerification,
+      options,
+      embeddedClientRef,
+      // setbtn_accept_loading
+    );
+  };
     
 
   return (
@@ -1044,8 +1155,8 @@ const MyProfile = () => {
           </div>
         
 
-          {/* <div className="d-flex justify-content-end">
-            {btn_accept_loading ? (
+          <div className="d-flex justify-content-end">
+            {btnLoadingSubmitForReview ? (
                <Button
                className="my-4"
                variant="contained"
@@ -1061,7 +1172,7 @@ const MyProfile = () => {
                 Accept
               </Button>
             )}
-          </div> */}
+          </div>
         </Modal.Body>
       </Modal>
 
