@@ -18,6 +18,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Modal from "react-bootstrap/Modal";
+
 import {
   AddWalletDetails,
   GetPaypalProfileDetails,
@@ -355,6 +357,25 @@ const MyProfile = () => {
       );
     }
   };
+
+
+  // Copyrights
+  const [courseOwnership, setcourseOwnership] = useState(0);
+  const [checkOnwership, setcheckOnwership] = useState(false);
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+
+  
+
+      const handleShow = () => {
+      setShow(true);
+
+
+      // Content Ownership
+      // Persona Verification
+      }
+    
 
   return (
     <div className="all-courses-container mb-5">
@@ -722,7 +743,8 @@ const MyProfile = () => {
                       <Button className="mx-auto " variant="contained">
                         <a
                           className="text-white"
-                          href={`/courses/manage/${code}/`}
+                          onClick={handleShow}
+                          // href={`/courses/manage/${code}/`}
                         >
                           Submit for Review
                         </a>
@@ -974,7 +996,8 @@ const MyProfile = () => {
                       <Button className="mx-auto " variant="contained">
                         <a
                           className="text-white"
-                          href={`/courses/manage/${code}/`}
+                          onClick={handleShow}
+                          // href={`/courses/manage/${code}/`}
                         >
                           Submit for Review
                         </a>
@@ -988,6 +1011,62 @@ const MyProfile = () => {
             )}
 
         </Tabs>
+
+
+
+         {/* Content Copyrights */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Content Ownership</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h6 className="my-4">
+            <b>Confirm your ownership rights to the course content.</b>
+          </h6>
+
+          <div className="form-check my-3">
+            <Checkbox
+              checked={checkOnwership}
+              onChange={(e) => setcheckOnwership(e.target.checked)}
+              className="form-check-input"
+              defaultChecked
+              size="small"
+            />
+            <label className="form-check-label mx-1">
+              <p>
+                <b>
+                  I created most or all of the content of this course, and I
+                  have properly secured all of the rights necessary to publish
+                  all of the content of this course on Aethenos.
+                </b>
+              </p>
+            </label>
+          </div>
+        
+
+          {/* <div className="d-flex justify-content-end">
+            {btn_accept_loading ? (
+               <Button
+               className="my-4"
+               variant="contained"
+             >
+               Loading ...
+             </Button>
+            ) : (
+              <Button
+                onClick={handleShowVerification}
+                className="my-4"
+                variant="contained"
+              >
+                Accept
+              </Button>
+            )}
+          </div> */}
+        </Modal.Body>
+      </Modal>
+
+
+
       </Card>
     </div>
   );
