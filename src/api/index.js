@@ -3188,6 +3188,38 @@ export const UnpublishCourse = async (code) => {
       if (result.variable == "200") {
         SuccessAlert("Success", "Course successfully unpublished");
         return;
+      }else{
+        ErrorAlert("Error",result.message)
+        return
+      }
+    })
+    .catch((error) => console.log("error", error));
+};
+
+export const PublishCourse = async (code) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${CURRENT_USER}`);
+
+  var requestOptions = {
+    method: "PUT",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  fetch(
+    `${BACKEND_LINK}/managecourse/setPublishCourse/${code}`,
+    requestOptions
+  )
+    .then((response) => response.json())
+    .then((result) => {
+      Unauthorized(result.status, `courses/manage/${code}/#settings`);
+      console.log(result);
+      if (result.variable == "200") {
+        SuccessAlert("Success", "Course successfully Published");
+        return;
+      }else{
+        ErrorAlert("Error",result.message)
+        return
       }
     })
     .catch((error) => console.log("error", error));

@@ -50,6 +50,8 @@ import {
   CheckOwnershipOfContent,
   checkCourseCompletionStatus,
   GetCheckPricingAllStatus,
+  UnpublishCourse,
+  PublishCourse,
 } from "../../../api";
 import ErrorAlert from "../../../commonFunctions/Alerts/ErrorAlert";
 import Spinner from "react-bootstrap/Spinner";
@@ -518,11 +520,12 @@ const ManageCourses = () => {
       confirmButtonText: "Yes, Unpublish it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
-        });
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success"
+        // });
+        UnpublishCourse(code)
       }
     });
   };
@@ -539,11 +542,12 @@ const ManageCourses = () => {
       confirmButtonText: "Yes, publish it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
-        });
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success"
+        // });
+        PublishCourse(code)
       }
     });
   }

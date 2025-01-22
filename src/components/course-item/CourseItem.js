@@ -187,6 +187,21 @@ const CourseItem = ({ course, filledPercent }) => {
                 </Button>
               </div>
             )}
+
+
+          {course.course.approvalType.id != null &&
+            course.course.approvalType.id == 6 && (
+              <div className="d-flex justify-content-end mt-3">
+                <Button variant="outlined">
+                  <a
+                    style={{ color: "#ff4d4f" }}
+                    href={`/courses/manage/${course.course.code}/`}
+                  >
+                    Manage Course
+                  </a>
+                </Button>
+              </div>
+            )}
         </Card>
         {/* </Badge.Ribbon> */}
       </div>
