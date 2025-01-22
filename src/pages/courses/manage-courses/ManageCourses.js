@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Persona from "persona";
-import { Space, Typography } from "antd";
+import { Dropdown, Space, Typography } from "antd";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SettingsIcon from "@mui/icons-material/Settings";
 import "./ManageCourses.css";
@@ -58,6 +58,9 @@ import "sweetalert2/src/sweetalert2.scss";
 import { FormatVideoTimeLength } from "../../../commonFunctions/FormatVideoTimeLength";
 import ExternalRatings from "./external-ratings/ExternalRatings";
 import StarIcon from '@mui/icons-material/Star';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import UnpublishedIcon from '@mui/icons-material/Unpublished';
+
 
 const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
@@ -499,8 +502,21 @@ const ManageCourses = () => {
   }, [status_type])
   
 
-  const toggleDiv = () => {
-    setIsOpen(!isOpen);
+
+  const handleMenuClick = (e) => {
+    // message.info('Click on menu item.');
+    // console.log('click', e);
+  };
+  const items = [
+    {
+      label: 'Unpublish this Course',
+      key: '1',
+      icon: <UnpublishedIcon />,
+    }
+  ];
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
   };
 
   return (
@@ -514,6 +530,7 @@ const ManageCourses = () => {
         }}
       >
         <div className="d-flex justify-content-between ">
+
           <Space className="edit-course-header">
             <a className="link-back" href="/courses">
               <ArrowBackIosIcon fontSize="small" /> Back to Courses
@@ -534,6 +551,15 @@ const ManageCourses = () => {
               uploaded
             </span>
           </Space>
+
+
+        <Space size={10}>
+          <Dropdown.Button menu={menuProps}>
+            Settings
+          </Dropdown.Button>
+        </Space>
+
+
         </div>
       </Header>
 
