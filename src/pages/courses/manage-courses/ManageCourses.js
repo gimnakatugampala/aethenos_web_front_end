@@ -60,6 +60,7 @@ import ExternalRatings from "./external-ratings/ExternalRatings";
 import StarIcon from '@mui/icons-material/Star';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import UnpublishedIcon from '@mui/icons-material/Unpublished';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 
 
 const { SubMenu } = Menu;
@@ -503,21 +504,69 @@ const ManageCourses = () => {
   
 
 
-  const handleMenuClick = (e) => {
+  const handleMenuUnpublishClick = (e) => {
     // message.info('Click on menu item.');
     // console.log('click', e);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This course will be invisible from the marketplace!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Unpublish it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
   };
+
+
+  const handleMenupublishClick = () =>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This course will be invisible from the marketplace!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, publish it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+  }
+
   const items = [
-    {
-      label: 'Unpublish this Course',
-      key: '1',
-      icon: <UnpublishedIcon />,
-    }
+    status_type === "Approved"
+      ? {
+          label: 'Unpublish this Course',
+          key: '1',
+          icon: <UnpublishedIcon />,
+        }
+      : {
+          label: 'Publish this Course',
+          key: '1',
+          icon: <PublishedWithChangesIcon />,
+        },
   ];
+  
   const menuProps = {
     items,
-    onClick: handleMenuClick,
+    onClick: status_type === "Approved" ? handleMenuUnpublishClick : handleMenupublishClick,
   };
+  
 
   return (
     <Layout>
