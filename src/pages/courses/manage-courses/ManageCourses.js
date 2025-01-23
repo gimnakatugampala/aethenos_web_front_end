@@ -593,7 +593,7 @@ const ManageCourses = () => {
             ) : (
               <>
                 <span className="course-title">{course_title}</span>
-                <span className="course-title-status">{status_type}</span>
+                <span className="course-title-status">{status_type == "Unpublish" ? status_type+"ed" : status_type}</span>
               </>
             )}
           </Space>
