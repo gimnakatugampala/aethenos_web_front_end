@@ -230,6 +230,7 @@ const MyProfile = () => {
       setbankSortNoTwo,
       setbankSortNoThree,
       setbankAccountNumber,
+      setbankAccountName,
       setSelectedValue
     );
 
@@ -365,6 +366,7 @@ const MyProfile = () => {
         bankSortNoTwo,
         bankSortNoThree,
         bankAccountNumber,
+        bankAccountName,
         setbtn_loading_payment_details,
         selectedValue
       );

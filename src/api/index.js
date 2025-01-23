@@ -5225,6 +5225,7 @@ export const AddWalletDetails = async (
   bankSortNoTwo,
   bankSortNoThree,
   bankAccountNumber,
+  bankAccountName,
   setbtn_loading_payment_details,
   selectedValue
 ) => {
@@ -5247,6 +5248,7 @@ export const AddWalletDetails = async (
   formdata.append("sort1", `${bankSortNoOne}`);
   formdata.append("sort2", `${bankSortNoTwo}`);
   formdata.append("sort3", `${bankSortNoThree}`);
+  formdata.append("bankAccountName", `${bankAccountName}`);
 
   const requestOptions = {
     method: "POST",
@@ -5285,6 +5287,7 @@ export const GetWalletDetails = async (
   setbankSortNoTwo,
   setbankSortNoThree,
   setbankAccountNumber,
+  setbankAccountName,
   setSelectedValue
 ) => {
   const myHeaders = new Headers();
@@ -5314,6 +5317,7 @@ export const GetWalletDetails = async (
       setbankSortNoOne(result.sort1);
       setbankSortNoTwo(result.sort2);
       setbankSortNoThree(result.sort3);
+      setbankAccountName(result.bankAccountName)
       setbankAccountNumber(result.accountNumber);
 
       if (result.selected == "") {
