@@ -215,6 +215,7 @@ const MyProfile = () => {
   const [payoneerUsername, setpayoneerUsername] = useState("");
 
   const [bankAccountNumber, setbankAccountNumber] = useState("");
+  const [bankAccountName, setbankAccountName] = useState("")
   const [bankSortNoOne, setbankSortNoOne] = useState("");
   const [bankSortNoTwo, setbankSortNoTwo] = useState("");
   const [bankSortNoThree, setbankSortNoThree] = useState("");
@@ -346,6 +347,12 @@ const MyProfile = () => {
 
       if (bankAccountNumber.length != 8) {
         ErrorAlert("Error", "Enter 8 digits for account number.");
+        return;
+      }
+
+
+      if (bankAccountName == "") {
+        ErrorAlert("Empty Field", "Enter Bank Account Name");
         return;
       }
 
@@ -1057,7 +1064,7 @@ const MyProfile = () => {
                               </div>
                             </div>
 
-                            <div className="col-md-4">
+                            <div className="col-md-4 my-2">
                               <span>
                                 <b>Account number</b>
                               </span>
@@ -1079,6 +1086,30 @@ const MyProfile = () => {
                                 />
                               </Form.Group>
                             </Form>
+
+
+                            <div className="col-md-4 my-2">
+                              <span>
+                                <b>Bank account name</b>
+                              </span>
+                            </div>
+
+                            <Form>
+                              <Form.Group controlId="exampleForm.ControlInput1">
+                                <Form.Control
+                                  disabled={selectedValue != "uk"}
+                                  value={bankAccountName}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                      setbankAccountName(value);
+                                  }}
+                                  type="text"
+                                  placeholder="Bank Account Name"
+                                />
+                              </Form.Group>
+                            </Form>
+
+
                           </div>
                         </div>
                       </div>
