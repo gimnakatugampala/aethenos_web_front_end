@@ -534,7 +534,7 @@ const ManageCourses = () => {
   const handleMenupublishClick = () =>{
     Swal.fire({
       title: "Are you sure?",
-      text: "This course will be invisible from the marketplace!",
+      text: "This course will be visible from the marketplace!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
