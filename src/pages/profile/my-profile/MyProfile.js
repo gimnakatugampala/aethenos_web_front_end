@@ -859,7 +859,7 @@ const MyProfile = () => {
                           onClick={handleShow}
                           // href={`/courses/manage/${code}/`}
                         >
-                          Submit for Review
+                          Next
                         </a>
                       </Button>
                     </div>
@@ -1112,7 +1112,7 @@ const MyProfile = () => {
                           onClick={handleShow}
                           // href={`/courses/manage/${code}/`}
                         >
-                          Submit for Review
+                          Next
                         </a>
                       </Button>
                     </div>
