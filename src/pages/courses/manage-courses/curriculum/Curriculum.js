@@ -329,19 +329,18 @@ const Curriculum = ({ code }) => {
     },
   ]);
 
-
   // ====== Progress ======
   const [uploadProgressDFiles, setUploadProgressDFiles] = useState(0);
 
   // Progress SOurce Code
   const [uploadProgressSFiles, setUploadProgressSFiles] = useState(0);
-  const [isUploadSourceFiles, setisUploadSourceFiles] = useState(false)
+  const [isUploadSourceFiles, setisUploadSourceFiles] = useState(false);
 
   // Progress Pratice Test
   const [uploadProgressPraticeTest, setUploadProgressPraticeTest] = useState(0);
-  const [isUploadPraticeTest, setisUploadPraticeTest] = useState(false)
+  const [isUploadPraticeTest, setisUploadPraticeTest] = useState(false);
 
-// =====================
+  // =====================
 
   // Add Section
   const handleSubmitSection = () => {
@@ -589,19 +588,19 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Empty field", "Please fill the instructions");
       return;
     }
-  
+
     // // Validate file uploads (optional, only check if files exist)
     // if (!PracticeTestQuestionFile && !PracticeTestSolutionsFile) {
     //   ErrorAlert("Missing Files", "Please upload at least one file.");
     //   return;
     // }
-  
+
     try {
       setbtnLoadingPracticeTest(true);
-  
+
       const questionFileUUID = PracticeTestQuestionFile ? uuidv4() : null;
       const solutionsFileUUID = PracticeTestSolutionsFile ? uuidv4() : null;
-  
+
       // Upload Question File if exists
       if (PracticeTestQuestionFile) {
         await uploadFileInChunksPraticeTest(
@@ -616,7 +615,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingPracticeTest
         );
       }
-  
+
       // Upload Solutions File if exists
       if (PracticeTestSolutionsFile) {
         await uploadFileInChunksPraticeTest(
@@ -631,7 +630,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingPracticeTest
         );
       }
-  
+
       // Save Practice Test after files are uploaded (if any)
       await PracticeTestSave(
         code,
@@ -667,11 +666,6 @@ const Curriculum = ({ code }) => {
       setbtnLoadingPracticeTest(false);
     }
   };
-  
-  
-
-   
-  
 
   // ======= SUBMIT CODING EXEC =======
   const handleCodingExecSave = () => {
@@ -679,23 +673,23 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Empty field", "Please fill the title");
       return;
     }
-  
+
     if (CodingExerciseDesc == "") {
       ErrorAlert("Empty field", "Please fill the description");
       return;
     }
-  
+
     if (CodingExerciseInstructions == "") {
       ErrorAlert("Empty field", "Please fill the instructions");
       return;
     }
-  
+
     // Prepare for file uploads and save after they complete
     const codingExerciseFileUUID = uuidv4();
-  
+
     const uploadFiles = async () => {
       setbtnLoadingCodingExcercise(true);
-  
+
       // Upload Video (coding-video) if the file exists
       if (CodingExerciseVideo) {
         await uploadFileInChunksCodingExcercise(
@@ -710,7 +704,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingCodingExcercise
         );
       }
-  
+
       // Upload Resources (coding-resource) if the file exists
       if (CodingExerciseDResourses) {
         await uploadFileInChunksCodingExcercise(
@@ -725,7 +719,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingCodingExcercise
         );
       }
-  
+
       // Upload the Exercise Sheet (coding-exercise-sheet) if the file exists
       if (CodingExerciseUploadEx) {
         await uploadFileInChunksCodingExcercise(
@@ -740,7 +734,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingCodingExcercise
         );
       }
-  
+
       // Upload the Solution Sheet (coding-solution-sheet) if the file exists
       if (CodingExercisesSolutionsFile) {
         await uploadFileInChunksCodingExcercise(
@@ -755,7 +749,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingCodingExcercise
         );
       }
-  
+
       // Upload Question Video (coding-exercise-video) if the file exists
       if (CodingExerciseQVideo) {
         await uploadFileInChunksCodingExcercise(
@@ -770,7 +764,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingCodingExcercise
         );
       }
-  
+
       // Upload Solution Video (coding-solution-video) if the file exists
       if (CodingExercisesSolutionsVideo) {
         await uploadFileInChunksCodingExcercise(
@@ -785,7 +779,7 @@ const Curriculum = ({ code }) => {
           setbtnLoadingCodingExcercise
         );
       }
-  
+
       // Once all files are uploaded (or skipped), proceed with saving the coding exercise
       await CodingExerciseSave(
         codingExerciseFileUUID,
@@ -829,18 +823,13 @@ const Curriculum = ({ code }) => {
         setshowAssignmentInput
       );
     };
-  
+
     // Start file upload and then proceed with saving
     uploadFiles().catch((err) => {
       console.error("Error during file upload or save:", err);
       setbtnLoadingCodingExcercise(false);
     });
   };
-  
-  
-  
-  
-  
 
   // ======== SUBMIT ASSIGNMENT =======
   const handleAssignmentSave = async () => {
@@ -860,34 +849,34 @@ const Curriculum = ({ code }) => {
     console.log(AssignmentSolutionsVideo);
     console.log(AssignmentSolutionsFile);
     console.log(AssignmentSolutionsExLink);
-  
+
     if (AssignmentTitle === "") {
       ErrorAlert("Empty field", "Please fill title");
       return;
     }
-  
+
     if (AssignmentDesc === "") {
       ErrorAlert("Empty field", "Please fill description");
       return;
     }
-  
+
     if (AssignmentDuration === "") {
       ErrorAlert("Empty field", "Please fill duration");
       return;
     }
-  
+
     if (AssignmentInstructors === "") {
       ErrorAlert("Empty field", "Please fill instructions");
       return;
     }
-  
+
     // Generate UUIDs for files
     const questionFileUUID = uuidv4();
     const solutionFileUUID = uuidv4();
     const videoUUID = uuidv4();
     const resourceUUID = uuidv4();
     const solutionVideoUUID = uuidv4();
-  
+
     try {
       // Upload Assignment Video if provided
       if (AssignmentVideo) {
@@ -906,7 +895,7 @@ const Curriculum = ({ code }) => {
           }
         );
       }
-  
+
       // Upload Assignment Resource if provided
       if (AssignmentDResourses) {
         await uploadFileInChunksAssignment(
@@ -924,7 +913,7 @@ const Curriculum = ({ code }) => {
           }
         );
       }
-  
+
       // Upload Question File if provided
       if (AssignmentQuestionFile) {
         await uploadFileInChunksAssignment(
@@ -942,7 +931,7 @@ const Curriculum = ({ code }) => {
           }
         );
       }
-  
+
       // Upload Solution File if provided
       if (AssignmentSolutionsFile) {
         await uploadFileInChunksAssignment(
@@ -960,7 +949,7 @@ const Curriculum = ({ code }) => {
           }
         );
       }
-  
+
       // Upload Solution Video if provided
       if (AssignmentSolutionsVideo) {
         await uploadFileInChunksAssignment(
@@ -979,9 +968,6 @@ const Curriculum = ({ code }) => {
         );
       }
 
-
-
-  
       // Proceed with AssignmentSave after uploads
       AssignmentSave(
         mainSectionID,
@@ -1037,7 +1023,7 @@ const Curriculum = ({ code }) => {
       ErrorAlert("Error", "Failed to save assignment.");
     }
   };
-  
+
   // ============= DELETE ==============
 
   const handleSectionDelete = (section) => {
@@ -1285,11 +1271,11 @@ const Curriculum = ({ code }) => {
     console.log(ID);
     console.log(e.target.files[0]);
 
-     // File Upload
-     let fieUploadUUID = uuidv4();
-     let uploadType = "source-code";
+    // File Upload
+    let fieUploadUUID = uuidv4();
+    let uploadType = "source-code";
 
-     uploadFileInChunksSourcesCode(
+    uploadFileInChunksSourcesCode(
       code,
       ID,
       fieUploadUUID,
@@ -1299,7 +1285,7 @@ const Curriculum = ({ code }) => {
       updateProgressBarFiles,
       setisUploadSourceFiles,
       setUploadProgressSFiles
-     )
+    );
 
     // AddCurriculumSourceCode(code, ID, e.target.files[0], setsectionData);
   };
@@ -1807,8 +1793,8 @@ const Curriculum = ({ code }) => {
   };
 
   const [setUpCounters, setSetUpCounters] = useState(true);
-  const [hideSectionData, sethideSectionData] = useState(true);
-  const [contentHeight, setcontentHeight] = useState(false);
+  // const [hideSectionData, sethideSectionData] = useState(true);
+  // const [contentHeight, setcontentHeight] = useState(false);
 
   const [curriculumSections, setCurriculumSections] = useState(sectionData);
   const [draggingIndex, setDraggingIndex] = useState(null);
@@ -2032,12 +2018,6 @@ const Curriculum = ({ code }) => {
     handleQuestionsAnswerUpdateCancel();
   };
 
-  const startDrag = (result) => {
-    setSetUpCounters(false);
-    setcontentHeight(true);
-
-    sethideSectionData(false);
-  };
 
   const handleDragEnd = (result) => {
     const { source, destination } = result;
@@ -2057,9 +2037,9 @@ const Curriculum = ({ code }) => {
 
     HandleSectionMove(code, reorderedIds, setsectionData, setSectionLoading);
 
-    setSetUpCounters(true);
-    sethideSectionData(true);
-    setcontentHeight(false);
+    // setSetUpCounters(true);
+    // sethideSectionData(true);
+    // setcontentHeight(false);
 
     // setSectionLoading(false);
   };
@@ -2147,8 +2127,7 @@ const Curriculum = ({ code }) => {
 
         <DragDropContext
           onDragEnd={handleDragEnd}
-          type="PARENT"
-          onDragStart={startDrag}
+          type="PARENT"     
         >
           <Droppable droppableId="sections">
             {(provided) => (
@@ -2158,7 +2137,7 @@ const Curriculum = ({ code }) => {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  minHeight: "200px",
+                  // minHeight: "200px",
                   flexGrow: 1,
                 }}
               >
@@ -2179,7 +2158,7 @@ const Curriculum = ({ code }) => {
                         >
                           <CardContent
                             style={{
-                              minHeight: contentHeight ? "200px" : "",
+                              // minHeight: contentHeight ? "200px" : "",
                               pointerEvents: sectionLoading ? "none" : "auto",
                               opacity: sectionLoading ? 0.1 : 1,
                               transition:
@@ -2280,7 +2259,7 @@ const Curriculum = ({ code }) => {
 
                               {section.courseSection.sectionCurriculumItem
                                 .length > 0 &&
-                                hideSectionData &&
+                                // hideSectionData &&
                                 section.courseSection.sectionCurriculumItem.map(
                                   (item, i) => {
                                     if (setUpCounters) {
@@ -2314,8 +2293,9 @@ const Curriculum = ({ code }) => {
                                           onMouseEnter={() => setCanDrag(true)}
                                           onMouseLeave={() => setCanDrag(false)}
                                           // style={{
-                                          //   cursor: canDrag ? "grab" : "default",
+                                          //   cursor: canDrag ? "grab" : "",
                                           // }}
+                                          // style={{cursor: ""}}
                                           onDragStart={(e) => {
                                             dragItem.current = i;
                                             setDraggingIndex(i);
@@ -2815,47 +2795,66 @@ const Curriculum = ({ code }) => {
                                                                     {/* Progress */}
                                                                     <div className="m-2">
                                                                       {uploading && (
-                                                                          <div className="progress my-2">
-                                                                              <div
-                                                                                  className="progress-bar bg-danger"
-                                                                                  role="progressbar"
-                                                                                  style={{ width: `${uploadProgressDFiles}%` }}
-                                                                                  aria-valuenow={uploadProgressDFiles}
-                                                                                  aria-valuemin="0"
-                                                                                  aria-valuemax="100"
-                                                                              >
-                                                                                  {uploadProgressDFiles}%
-                                                                              </div>
-                                                                          </div>
-                                                                      )}
-                                                                      {uploadProgressDFiles == 100 && (
-                                                                          <div className="alert alert-success mt-2">Upload Complete!</div>
-                                                                      )}
-                                                                  </div>
-
-                                                                      {/* Progress */}
-                                                                  <div className="m-2">
-                                                                  {isUploadSourceFiles && (
-                                                                      <div className="progress my-2">
+                                                                        <div className="progress my-2">
                                                                           <div
-                                                                              className="progress-bar bg-danger"
-                                                                              role="progressbar"
-                                                                              style={{ width: `${uploadProgressSFiles}%` }}
-                                                                              aria-valuenow={uploadProgressSFiles}
-                                                                              aria-valuemin="0"
-                                                                              aria-valuemax="100"
+                                                                            className="progress-bar bg-danger"
+                                                                            role="progressbar"
+                                                                            style={{
+                                                                              width: `${uploadProgressDFiles}%`,
+                                                                            }}
+                                                                            aria-valuenow={
+                                                                              uploadProgressDFiles
+                                                                            }
+                                                                            aria-valuemin="0"
+                                                                            aria-valuemax="100"
                                                                           >
-                                                                              {uploadProgressSFiles}%
+                                                                            {
+                                                                              uploadProgressDFiles
+                                                                            }
+                                                                            %
                                                                           </div>
-                                                                      </div>
-                                                                  )}
-                                                                  {uploadProgressSFiles == 100 && (
-                                                                      <div className="alert alert-success mt-2">Upload Complete!</div>
-                                                                  )}
-                                                              </div>
+                                                                        </div>
+                                                                      )}
+                                                                      {uploadProgressDFiles ==
+                                                                        100 && (
+                                                                        <div className="alert alert-success mt-2">
+                                                                          Upload
+                                                                          Complete!
+                                                                        </div>
+                                                                      )}
+                                                                    </div>
 
-
-                                                                    
+                                                                    {/* Progress */}
+                                                                    <div className="m-2">
+                                                                      {isUploadSourceFiles && (
+                                                                        <div className="progress my-2">
+                                                                          <div
+                                                                            className="progress-bar bg-danger"
+                                                                            role="progressbar"
+                                                                            style={{
+                                                                              width: `${uploadProgressSFiles}%`,
+                                                                            }}
+                                                                            aria-valuenow={
+                                                                              uploadProgressSFiles
+                                                                            }
+                                                                            aria-valuemin="0"
+                                                                            aria-valuemax="100"
+                                                                          >
+                                                                            {
+                                                                              uploadProgressSFiles
+                                                                            }
+                                                                            %
+                                                                          </div>
+                                                                        </div>
+                                                                      )}
+                                                                      {uploadProgressSFiles ==
+                                                                        100 && (
+                                                                        <div className="alert alert-success mt-2">
+                                                                          Upload
+                                                                          Complete!
+                                                                        </div>
+                                                                      )}
+                                                                    </div>
 
                                                                     {/* Tabs */}
                                                                     <Tabs
@@ -3619,9 +3618,7 @@ const Curriculum = ({ code }) => {
                                                                             style={{
                                                                               fontSize: 11,
                                                                             }}
-                                                                          >
-                                                                          
-                                                                          </Form.Label>
+                                                                          ></Form.Label>
                                                                         </Form.Group>
                                                                       </Tab>
                                                                       <Tab
@@ -3926,48 +3923,69 @@ const Curriculum = ({ code }) => {
                                                                       <CloseIcon />{" "}
                                                                     </Button>
 
-                                                                       {/* Progress */}
-                                                                      <div className="m-2">
+                                                                    {/* Progress */}
+                                                                    <div className="m-2">
                                                                       {uploading && (
-                                                                          <div className="progress my-2">
-                                                                              <div
-                                                                                  className="progress-bar bg-danger"
-                                                                                  role="progressbar"
-                                                                                  style={{ width: `${uploadProgressDFiles}%` }}
-                                                                                  aria-valuenow={uploadProgressDFiles}
-                                                                                  aria-valuemin="0"
-                                                                                  aria-valuemax="100"
-                                                                              >
-                                                                                  {uploadProgressDFiles}%
-                                                                              </div>
+                                                                        <div className="progress my-2">
+                                                                          <div
+                                                                            className="progress-bar bg-danger"
+                                                                            role="progressbar"
+                                                                            style={{
+                                                                              width: `${uploadProgressDFiles}%`,
+                                                                            }}
+                                                                            aria-valuenow={
+                                                                              uploadProgressDFiles
+                                                                            }
+                                                                            aria-valuemin="0"
+                                                                            aria-valuemax="100"
+                                                                          >
+                                                                            {
+                                                                              uploadProgressDFiles
+                                                                            }
+                                                                            %
                                                                           </div>
+                                                                        </div>
                                                                       )}
-                                                                      {uploadProgressDFiles == 100 && (
-                                                                          <div className="alert alert-success mt-2">Upload Complete!</div>
+                                                                      {uploadProgressDFiles ==
+                                                                        100 && (
+                                                                        <div className="alert alert-success mt-2">
+                                                                          Upload
+                                                                          Complete!
+                                                                        </div>
                                                                       )}
-                                                                  </div>
+                                                                    </div>
 
                                                                     {/* Progress */}
                                                                     <div className="m-2">
-                                                                  {isUploadSourceFiles && (
-                                                                      <div className="progress my-2">
+                                                                      {isUploadSourceFiles && (
+                                                                        <div className="progress my-2">
                                                                           <div
-                                                                              className="progress-bar bg-danger"
-                                                                              role="progressbar"
-                                                                              style={{ width: `${uploadProgressSFiles}%` }}
-                                                                              aria-valuenow={uploadProgressSFiles}
-                                                                              aria-valuemin="0"
-                                                                              aria-valuemax="100"
+                                                                            className="progress-bar bg-danger"
+                                                                            role="progressbar"
+                                                                            style={{
+                                                                              width: `${uploadProgressSFiles}%`,
+                                                                            }}
+                                                                            aria-valuenow={
+                                                                              uploadProgressSFiles
+                                                                            }
+                                                                            aria-valuemin="0"
+                                                                            aria-valuemax="100"
                                                                           >
-                                                                              {uploadProgressSFiles}%
+                                                                            {
+                                                                              uploadProgressSFiles
+                                                                            }
+                                                                            %
                                                                           </div>
-                                                                      </div>
-                                                                  )}
-                                                                  {uploadProgressSFiles == 100 && (
-                                                                      <div className="alert alert-success mt-2">Upload Complete!</div>
-                                                                  )}
-                                                              </div>
-
+                                                                        </div>
+                                                                      )}
+                                                                      {uploadProgressSFiles ==
+                                                                        100 && (
+                                                                        <div className="alert alert-success mt-2">
+                                                                          Upload
+                                                                          Complete!
+                                                                        </div>
+                                                                      )}
+                                                                    </div>
 
                                                                     {/* Tabs */}
                                                                     <Tabs
@@ -4658,49 +4676,69 @@ const Curriculum = ({ code }) => {
                                                                     <CloseIcon />{" "}
                                                                   </Button>
 
-                                                                     {/* Progress */}
-                                                                     <div className="m-2"> 
-                                                                      {uploading && (
-                                                                          <div className="progress my-2">
-                                                                             <div
-                                                                        className="progress-bar bg-danger"
-                                                                        role="progressbar"
-                                                                        style={{ width: `${uploadProgressDFiles}%` }}
-                                                                        aria-valuenow={uploadProgressDFiles}
-                                                                        aria-valuemin="0"
-                                                                        aria-valuemax="100"
-                                                                    >
-                                                                        {uploadProgressDFiles}%
-                                                                    </div>
-
-                                                                          </div>
-                                                                      )}
-                                                                      {uploadProgressDFiles == 100 && (
-                                                                          <div className="alert alert-success mt-2">Upload Complete!</div>
-                                                                      )}
+                                                                  {/* Progress */}
+                                                                  <div className="m-2">
+                                                                    {uploading && (
+                                                                      <div className="progress my-2">
+                                                                        <div
+                                                                          className="progress-bar bg-danger"
+                                                                          role="progressbar"
+                                                                          style={{
+                                                                            width: `${uploadProgressDFiles}%`,
+                                                                          }}
+                                                                          aria-valuenow={
+                                                                            uploadProgressDFiles
+                                                                          }
+                                                                          aria-valuemin="0"
+                                                                          aria-valuemax="100"
+                                                                        >
+                                                                          {
+                                                                            uploadProgressDFiles
+                                                                          }
+                                                                          %
+                                                                        </div>
+                                                                      </div>
+                                                                    )}
+                                                                    {uploadProgressDFiles ==
+                                                                      100 && (
+                                                                      <div className="alert alert-success mt-2">
+                                                                        Upload
+                                                                        Complete!
+                                                                      </div>
+                                                                    )}
                                                                   </div>
 
-                                                                    {/* Progress */}
-                                                                    <div className="m-2">
-                                                                  {isUploadSourceFiles && (
+                                                                  {/* Progress */}
+                                                                  <div className="m-2">
+                                                                    {isUploadSourceFiles && (
                                                                       <div className="progress my-2">
-                                                                          <div
-                                                                              className="progress-bar bg-danger"
-                                                                              role="progressbar"
-                                                                              style={{ width: `${uploadProgressSFiles}%` }}
-                                                                              aria-valuenow={uploadProgressSFiles}
-                                                                              aria-valuemin="0"
-                                                                              aria-valuemax="100"
-                                                                          >
-                                                                              {uploadProgressSFiles}%
-                                                                          </div>
+                                                                        <div
+                                                                          className="progress-bar bg-danger"
+                                                                          role="progressbar"
+                                                                          style={{
+                                                                            width: `${uploadProgressSFiles}%`,
+                                                                          }}
+                                                                          aria-valuenow={
+                                                                            uploadProgressSFiles
+                                                                          }
+                                                                          aria-valuemin="0"
+                                                                          aria-valuemax="100"
+                                                                        >
+                                                                          {
+                                                                            uploadProgressSFiles
+                                                                          }
+                                                                          %
+                                                                        </div>
                                                                       </div>
-                                                                  )}
-                                                                  {uploadProgressSFiles == 100 && (
-                                                                      <div className="alert alert-success mt-2">Upload Complete!</div>
-                                                                  )}
-                                                              </div>
-
+                                                                    )}
+                                                                    {uploadProgressSFiles ==
+                                                                      100 && (
+                                                                      <div className="alert alert-success mt-2">
+                                                                        Upload
+                                                                        Complete!
+                                                                      </div>
+                                                                    )}
+                                                                  </div>
 
                                                                   {/* Tabs */}
                                                                   <Tabs
@@ -6609,31 +6647,38 @@ const Curriculum = ({ code }) => {
                                                   {showMain ==
                                                     index + i + item.id && (
                                                     <div className="p-3">
-
                                                       {btnLoadingAssignment && (
-
-                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
                                                         <div
-                                                        className="progress-bar bg-danger"
-                                                          ref={progressBarRef}
+                                                          className="m-2 progress"
                                                           style={{
-                                                            width: "0%",
-                                                            height: "20px",
-                                                            // backgroundColor: "#4caf50",
-                                                            textAlign: "center",
-                                                            color: "white",
-                                                            lineHeight: "20px",
+                                                            width: "100%",
+                                                            backgroundColor:
+                                                              "#f3f3f3",
                                                             borderRadius: "5px",
-                                                            transition: "width 0.2s ease",
                                                           }}
                                                         >
-                                                          0%
+                                                          <div
+                                                            className="progress-bar bg-danger"
+                                                            ref={progressBarRef}
+                                                            style={{
+                                                              width: "0%",
+                                                              height: "20px",
+                                                              // backgroundColor: "#4caf50",
+                                                              textAlign:
+                                                                "center",
+                                                              color: "white",
+                                                              lineHeight:
+                                                                "20px",
+                                                              borderRadius:
+                                                                "5px",
+                                                              transition:
+                                                                "width 0.2s ease",
+                                                            }}
+                                                          >
+                                                            0%
+                                                          </div>
                                                         </div>
-                                                      </div>
-
                                                       )}
-
-                                          
 
                                                       <Tabs
                                                         defaultActiveKey="assignment"
@@ -7635,42 +7680,47 @@ const Curriculum = ({ code }) => {
                                                     </span>
                                                   </div>
 
-                                               
                                                   {showMain ==
                                                     index + i + item.id && (
                                                     <div className="p-3">
-
-                                                      {btnLoadingPracticeTest &&
-                                                      
-                                                      
-                                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
-                                                    <div
-                                                    className="progress-bar bg-danger"
-                                                      ref={progressBarRef}
-                                                      style={{
-                                                        width: "0%",
-                                                        height: "20px",
-                                                        // backgroundColor: "#4caf50",
-                                                        textAlign: "center",
-                                                        color: "white",
-                                                        lineHeight: "20px",
-                                                        borderRadius: "5px",
-                                                        transition: "width 0.2s ease",
-                                                      }}
-                                                    >
-                                                      0%
-                                                    </div>
-                                                  </div>
-                                                      }
+                                                      {btnLoadingPracticeTest && (
+                                                        <div
+                                                          className="m-2 progress"
+                                                          style={{
+                                                            width: "100%",
+                                                            backgroundColor:
+                                                              "#f3f3f3",
+                                                            borderRadius: "5px",
+                                                          }}
+                                                        >
+                                                          <div
+                                                            className="progress-bar bg-danger"
+                                                            ref={progressBarRef}
+                                                            style={{
+                                                              width: "0%",
+                                                              height: "20px",
+                                                              // backgroundColor: "#4caf50",
+                                                              textAlign:
+                                                                "center",
+                                                              color: "white",
+                                                              lineHeight:
+                                                                "20px",
+                                                              borderRadius:
+                                                                "5px",
+                                                              transition:
+                                                                "width 0.2s ease",
+                                                            }}
+                                                          >
+                                                            0%
+                                                          </div>
+                                                        </div>
+                                                      )}
 
                                                       <Tabs
                                                         defaultActiveKey="practice"
                                                         id="uncontrolled-tab-example"
                                                         className="mb-3"
                                                       >
-
-
-
                                                         <Tab
                                                           eventKey="practice"
                                                           title="Practice Test information and Instructions"
@@ -8370,29 +8420,38 @@ const Curriculum = ({ code }) => {
                                                   {showMain ==
                                                     index + i + item.id && (
                                                     <div className="p-3">
-
                                                       {btnLoadingCodingExcercise && (
-                                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
-                                                      <div
-                                                      className="progress-bar bg-danger"
-                                                        ref={progressBarRef}
-                                                        style={{
-                                                          width: "0%",
-                                                          height: "20px",
-                                                          // backgroundColor: "#4caf50",
-                                                          textAlign: "center",
-                                                          color: "white",
-                                                          lineHeight: "20px",
-                                                          borderRadius: "5px",
-                                                          transition: "width 0.2s ease",
-                                                        }}
-                                                      >
-                                                        0%
-                                                      </div>
-                                                    </div>
-
+                                                        <div
+                                                          className="m-2 progress"
+                                                          style={{
+                                                            width: "100%",
+                                                            backgroundColor:
+                                                              "#f3f3f3",
+                                                            borderRadius: "5px",
+                                                          }}
+                                                        >
+                                                          <div
+                                                            className="progress-bar bg-danger"
+                                                            ref={progressBarRef}
+                                                            style={{
+                                                              width: "0%",
+                                                              height: "20px",
+                                                              // backgroundColor: "#4caf50",
+                                                              textAlign:
+                                                                "center",
+                                                              color: "white",
+                                                              lineHeight:
+                                                                "20px",
+                                                              borderRadius:
+                                                                "5px",
+                                                              transition:
+                                                                "width 0.2s ease",
+                                                            }}
+                                                          >
+                                                            0%
+                                                          </div>
+                                                        </div>
                                                       )}
-
 
                                                       <Tabs
                                                         defaultActiveKey="coding"
@@ -9114,6 +9173,11 @@ const Curriculum = ({ code }) => {
                                     }
                                   }
                                 )}
+
+                              {setUpCounters &&
+                                Object.keys(counters).forEach((key) => {
+                                  counters[key] = 0;
+                                })}
                             </div>
 
                             {/* Curriculum Item ACTION */}
@@ -9398,40 +9462,43 @@ const Curriculum = ({ code }) => {
 
                             {/* Syllabus Item > Quiz */}
 
-                            
-
                             {/* Syllabus Item > Practice Test */}
                             {showPracticeTestInput == index && (
                               <>
+                                {btnLoadingPracticeTest && (
+                                  <div
+                                    className="m-2 progress"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#f3f3f3",
+                                      borderRadius: "5px",
+                                    }}
+                                  >
+                                    <div
+                                      className="progress-bar bg-danger"
+                                      ref={progressBarRef}
+                                      style={{
+                                        width: "0%",
+                                        height: "20px",
+                                        // backgroundColor: "#4caf50",
+                                        textAlign: "center",
+                                        color: "white",
+                                        lineHeight: "20px",
+                                        borderRadius: "5px",
+                                        transition: "width 0.2s ease",
+                                      }}
+                                    >
+                                      0%
+                                    </div>
+                                  </div>
+                                )}
 
-{btnLoadingPracticeTest && (
-                                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
-                                                      <div
-                                                      className="progress-bar bg-danger"
-                                                        ref={progressBarRef}
-                                                        style={{
-                                                          width: "0%",
-                                                          height: "20px",
-                                                          // backgroundColor: "#4caf50",
-                                                          textAlign: "center",
-                                                          color: "white",
-                                                          lineHeight: "20px",
-                                                          borderRadius: "5px",
-                                                          transition: "width 0.2s ease",
-                                                        }}
-                                                      >
-                                                        0%
-                                                      </div>
-                                                    </div>
-
-                                                      )}
-
-                              <Tabs
-                                defaultActiveKey="practice"
-                                id="uncontrolled-tab-example"
-                                className="mb-3"
-                              >
-                                 {/* Progress Bar
+                                <Tabs
+                                  defaultActiveKey="practice"
+                                  id="uncontrolled-tab-example"
+                                  className="mb-3"
+                                >
+                                  {/* Progress Bar
                               <div style={{ marginTop: "20px", width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
                                 <div
                                   ref={progressBarRef}
@@ -9450,57 +9517,57 @@ const Curriculum = ({ code }) => {
                                 </div>
                               </div> */}
 
-                                <Tab
-                                  eventKey="practice"
-                                  title="Practice Test information and instructions"
-                                >
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Title{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={PracticeTestTitle}
-                                        onChange={(e) =>
-                                          setPracticeTestTitle(e.target.value)
-                                        }
-                                        type="text"
-                                        placeholder="Practice Test Title"
-                                      />
-                                    </Form.Group>
+                                  <Tab
+                                    eventKey="practice"
+                                    title="Practice Test information and instructions"
+                                  >
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Title{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={PracticeTestTitle}
+                                          onChange={(e) =>
+                                            setPracticeTestTitle(e.target.value)
+                                          }
+                                          type="text"
+                                          placeholder="Practice Test Title"
+                                        />
+                                      </Form.Group>
 
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Description
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={PracticeTestDesc}
-                                        onChange={(e) =>
-                                          setPracticeTestDesc(e.target.value)
-                                        }
-                                        as="textarea"
-                                        rows={2}
-                                      />
-                                    </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>
+                                          Description
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={PracticeTestDesc}
+                                          onChange={(e) =>
+                                            setPracticeTestDesc(e.target.value)
+                                          }
+                                          as="textarea"
+                                          rows={2}
+                                        />
+                                      </Form.Group>
 
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Duration (HH:MM)
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Duration (HH:MM)
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
 
-                                      {/* <Form.Control
+                                        {/* <Form.Control
                               value={PracticeTestDuration}
                               onChange={(e) =>
                                 setPracticeTestDuration(e.target.value)
@@ -9510,217 +9577,226 @@ const Curriculum = ({ code }) => {
                               placeholder="00:00"
                             /> */}
 
-                                      <Flatpickr
-                                        data-enable-time
-                                        options={{
-                                          noCalendar: true,
-                                          enableTime: true,
-                                          dateFormat: "H:i",
-                                          time_24hr: true,
-                                        }}
-                                        value={PracticeTestDuration}
-                                        onChange={([date]) => {
-                                          // Format the date to HH:MM
-                                          const formattedTime =
-                                            SyllabusFormatTime(date);
-                                          setPracticeTestDuration(
-                                            formattedTime
-                                          );
-                                          console.log(formattedTime);
-                                        }}
-                                        className="form-control"
-                                      />
-                                    </Form.Group>
+                                        <Flatpickr
+                                          data-enable-time
+                                          options={{
+                                            noCalendar: true,
+                                            enableTime: true,
+                                            dateFormat: "H:i",
+                                            time_24hr: true,
+                                          }}
+                                          value={PracticeTestDuration}
+                                          onChange={([date]) => {
+                                            // Format the date to HH:MM
+                                            const formattedTime =
+                                              SyllabusFormatTime(date);
+                                            setPracticeTestDuration(
+                                              formattedTime
+                                            );
+                                            console.log(formattedTime);
+                                          }}
+                                          className="form-control"
+                                        />
+                                      </Form.Group>
 
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Minimum pass mark (%)
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={PracticeTestMinPassMark}
-                                        onChange={(e) => {
-                                          const value = Number(e.target.value);
-                                          if (value >= 0 && value <= 100) {
-                                            setPracticeTestMinPassMark(value);
-                                          } else if (e.target.value === "") {
-                                            setPracticeTestMinPassMark("");
-                                          }
-                                        }}
-                                        type="text"
-                                        min="0"
-                                        max="100"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Instructions
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={PracticeTestInstructions}
-                                        onChange={(e) =>
-                                          setPracticeTestInstructions(
-                                            e.target.value
-                                          )
-                                        }
-                                        as="textarea"
-                                        rows={3}
-                                      />
-                                    </Form.Group>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={PracticeTestExLink}
-                                        onChange={(e) =>
-                                          setPracticeTestExLink(e.target.value)
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-                                  </Form>
-                                </Tab>
-
-                                <Tab eventKey="questions" title="Questions">
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Questions</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size <=
-                                              maxSizeInBytes
-                                            ) {
-                                              setPracticeTestQuestionFile(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={PracticeTestQuestionExLink}
-                                        onChange={(e) =>
-                                          setPracticeTestQuestionExLink(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-                                  </Form>
-                                </Tab>
-
-                                <Tab eventKey="solutions" title="Solutions">
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Solutions</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setPracticeTestSolutionsFile(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={PraticeTestSolutionsExLink}
-                                        onChange={(e) =>
-                                          setPraticeTestSolutionsExLink(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-
-                                    <Button
-                                      onClick={() =>
-                                        setshowPracticeTestInput(null)
-                                      }
-                                      className="mx-1"
-                                      variant="outlined"
-                                    >
-                                      Cancel Practice Test
-                                    </Button>
-                                    {btnLoadingPracticeTest ? (
-                                      <Button variant="contained">
-                                        Saving..
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        onClick={handlePracticetestSave}
-                                        variant="contained"
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
                                       >
-                                        Save Practice Test
+                                        <Form.Label>
+                                          Minimum pass mark (%)
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={PracticeTestMinPassMark}
+                                          onChange={(e) => {
+                                            const value = Number(
+                                              e.target.value
+                                            );
+                                            if (value >= 0 && value <= 100) {
+                                              setPracticeTestMinPassMark(value);
+                                            } else if (e.target.value === "") {
+                                              setPracticeTestMinPassMark("");
+                                            }
+                                          }}
+                                          type="text"
+                                          min="0"
+                                          max="100"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>
+                                          Instructions
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={PracticeTestInstructions}
+                                          onChange={(e) =>
+                                            setPracticeTestInstructions(
+                                              e.target.value
+                                            )
+                                          }
+                                          as="textarea"
+                                          rows={3}
+                                        />
+                                      </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={PracticeTestExLink}
+                                          onChange={(e) =>
+                                            setPracticeTestExLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+                                    </Form>
+                                  </Tab>
+
+                                  <Tab eventKey="questions" title="Questions">
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Upload Questions
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <=
+                                                maxSizeInBytes
+                                              ) {
+                                                setPracticeTestQuestionFile(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={PracticeTestQuestionExLink}
+                                          onChange={(e) =>
+                                            setPracticeTestQuestionExLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+                                    </Form>
+                                  </Tab>
+
+                                  <Tab eventKey="solutions" title="Solutions">
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Upload Solutions
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setPracticeTestSolutionsFile(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={PraticeTestSolutionsExLink}
+                                          onChange={(e) =>
+                                            setPraticeTestSolutionsExLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+
+                                      <Button
+                                        onClick={() =>
+                                          setshowPracticeTestInput(null)
+                                        }
+                                        className="mx-1"
+                                        variant="outlined"
+                                      >
+                                        Cancel Practice Test
                                       </Button>
-                                    )}
-                                  </Form>
-                                </Tab>
-                              </Tabs>
+                                      {btnLoadingPracticeTest ? (
+                                        <Button variant="contained">
+                                          Saving..
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          onClick={handlePracticetestSave}
+                                          variant="contained"
+                                        >
+                                          Save Practice Test
+                                        </Button>
+                                      )}
+                                    </Form>
+                                  </Tab>
+                                </Tabs>
                               </>
                             )}
 
@@ -9729,383 +9805,400 @@ const Curriculum = ({ code }) => {
                             {/* Syllabus Item > Coding Excersise */}
                             {showCodingExecInput == index && (
                               <>
-                              
-                              {btnLoadingCodingExcercise && (
-                                              <div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
-                                                      <div
-                                                      className="progress-bar bg-danger"
-                                                        ref={progressBarRef}
-                                                        style={{
-                                                          width: "0%",
-                                                          height: "20px",
-                                                          // backgroundColor: "#4caf50",
-                                                          textAlign: "center",
-                                                          color: "white",
-                                                          lineHeight: "20px",
-                                                          borderRadius: "5px",
-                                                          transition: "width 0.2s ease",
-                                                        }}
-                                                      >
-                                                        0%
-                                                      </div>
-                                                    </div>
-
-                                                      )}
-                              <Tabs
-                                defaultActiveKey="coding"
-                                id="uncontrolled-tab-example"
-                                className="mb-3"
-                              >
-                                <Tab
-                                  eventKey="coding"
-                                  title="Coding Exercise information and instructions"
+                                {btnLoadingCodingExcercise && (
+                                  <div
+                                    className="m-2 progress"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#f3f3f3",
+                                      borderRadius: "5px",
+                                    }}
+                                  >
+                                    <div
+                                      className="progress-bar bg-danger"
+                                      ref={progressBarRef}
+                                      style={{
+                                        width: "0%",
+                                        height: "20px",
+                                        // backgroundColor: "#4caf50",
+                                        textAlign: "center",
+                                        color: "white",
+                                        lineHeight: "20px",
+                                        borderRadius: "5px",
+                                        transition: "width 0.2s ease",
+                                      }}
+                                    >
+                                      0%
+                                    </div>
+                                  </div>
+                                )}
+                                <Tabs
+                                  defaultActiveKey="coding"
+                                  id="uncontrolled-tab-example"
+                                  className="mb-3"
                                 >
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Title{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={CodingExerciseTitle}
-                                        onChange={(e) =>
-                                          setCodingExerciseTitle(e.target.value)
-                                        }
-                                        type="text"
-                                        placeholder="Coding Excercise"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Description{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={CodingExerciseDesc}
-                                        onChange={(e) =>
-                                          setCodingExerciseDesc(e.target.value)
-                                        }
-                                        as="textarea"
-                                        rows={2}
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Instructions{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={CodingExerciseInstructions}
-                                        onChange={(e) =>
-                                          setCodingExerciseInstructions(
-                                            e.target.value
-                                          )
-                                        }
-                                        as="textarea"
-                                        rows={2}
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Video</Form.Label>
-                                      <Form.Control
-                                        accept="video/*"
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setCodingExerciseVideo(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Downloadable Resourses
-                                      </Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setCodingExerciseDResourses(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                        multiple
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={CodingExerciseExLink}
-                                        onChange={(e) =>
-                                          setCodingExerciseExLink(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-                                  </Form>
-                                </Tab>
-
-                                <Tab
-                                  eventKey="coding-exercises"
-                                  title="Coding exercises"
-                                >
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Upload coding Exercises
-                                      </Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setCodingExerciseUploadEx(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                        multiple
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={CodingExerciseExternalLink}
-                                        onChange={(e) =>
-                                          setCodingExerciseExternalLink(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Video</Form.Label>
-                                      <Form.Control
-                                        accept="video/*"
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setCodingExerciseQVideo(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-                                  </Form>
-                                </Tab>
-                                <Tab eventKey="solutions" title="Solutions">
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload solutions</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setCodingExercisesSolutionsFile(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                        multiple
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={CodingExercisesExLinkSolutions}
-                                        onChange={(e) =>
-                                          setCodingExercisesExLinkSolutions(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Video</Form.Label>
-                                      <Form.Control
-                                        accept="video/*"
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setCodingExercisesSolutionsVideo(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-                                    <Button
-                                      onClick={() =>
-                                        setshowCodingExecInput(null)
-                                      }
-                                      variant="outlined"
-                                    >
-                                      Cancel Coding Exercise
-                                    </Button>
-                                    {btnLoadingCodingExcercise ? (
-                                      <Button
-                                        className="mx-1"
-                                        variant="contained"
+                                  <Tab
+                                    eventKey="coding"
+                                    title="Coding Exercise information and instructions"
+                                  >
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
                                       >
-                                        Saving..
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        onClick={handleCodingExecSave}
-                                        className="mx-1"
-                                        variant="contained"
+                                        <Form.Label>
+                                          Title{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={CodingExerciseTitle}
+                                          onChange={(e) =>
+                                            setCodingExerciseTitle(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="Coding Excercise"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
                                       >
-                                        Save Coding Exercise
+                                        <Form.Label>
+                                          Description{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={CodingExerciseDesc}
+                                          onChange={(e) =>
+                                            setCodingExerciseDesc(
+                                              e.target.value
+                                            )
+                                          }
+                                          as="textarea"
+                                          rows={2}
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>
+                                          Instructions{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={CodingExerciseInstructions}
+                                          onChange={(e) =>
+                                            setCodingExerciseInstructions(
+                                              e.target.value
+                                            )
+                                          }
+                                          as="textarea"
+                                          rows={2}
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>Upload Video</Form.Label>
+                                        <Form.Control
+                                          accept="video/*"
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setCodingExerciseVideo(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>
+                                          Downloadable Resourses
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setCodingExerciseDResourses(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                          multiple
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={CodingExerciseExLink}
+                                          onChange={(e) =>
+                                            setCodingExerciseExLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+                                    </Form>
+                                  </Tab>
+
+                                  <Tab
+                                    eventKey="coding-exercises"
+                                    title="Coding exercises"
+                                  >
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Upload coding Exercises
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setCodingExerciseUploadEx(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                          multiple
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={CodingExerciseExternalLink}
+                                          onChange={(e) =>
+                                            setCodingExerciseExternalLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>Upload Video</Form.Label>
+                                        <Form.Control
+                                          accept="video/*"
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setCodingExerciseQVideo(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+                                    </Form>
+                                  </Tab>
+                                  <Tab eventKey="solutions" title="Solutions">
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Upload solutions
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setCodingExercisesSolutionsFile(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                          multiple
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={CodingExercisesExLinkSolutions}
+                                          onChange={(e) =>
+                                            setCodingExercisesExLinkSolutions(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>Upload Video</Form.Label>
+                                        <Form.Control
+                                          accept="video/*"
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setCodingExercisesSolutionsVideo(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+                                      <Button
+                                        onClick={() =>
+                                          setshowCodingExecInput(null)
+                                        }
+                                        variant="outlined"
+                                      >
+                                        Cancel Coding Exercise
                                       </Button>
-                                    )}
-                                  </Form>
-                                </Tab>
-                              </Tabs>
+                                      {btnLoadingCodingExcercise ? (
+                                        <Button
+                                          className="mx-1"
+                                          variant="contained"
+                                        >
+                                          Saving..
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          onClick={handleCodingExecSave}
+                                          className="mx-1"
+                                          variant="contained"
+                                        >
+                                          Save Coding Exercise
+                                        </Button>
+                                      )}
+                                    </Form>
+                                  </Tab>
+                                </Tabs>
                               </>
                             )}
                             {/* Syllabus Item > Coding Excersise */}
@@ -10113,85 +10206,89 @@ const Curriculum = ({ code }) => {
                             {/* Syllabus Item > Assignment */}
                             {showAssignmentInput == index && (
                               <>
-                              {btnLoadingAssignment && (
+                                {btnLoadingAssignment && (
+                                  <div
+                                    className="m-2 progress"
+                                    style={{
+                                      width: "100%",
+                                      backgroundColor: "#f3f3f3",
+                                      borderRadius: "5px",
+                                    }}
+                                  >
+                                    <div
+                                      className="progress-bar bg-danger"
+                                      ref={progressBarRef}
+                                      style={{
+                                        width: "0%",
+                                        height: "20px",
+                                        // backgroundColor: "#4caf50",
+                                        textAlign: "center",
+                                        color: "white",
+                                        lineHeight: "20px",
+                                        borderRadius: "5px",
+                                        transition: "width 0.2s ease",
+                                      }}
+                                    >
+                                      0%
+                                    </div>
+                                  </div>
+                                )}
 
-<div className="m-2 progress" style={{ width: "100%", backgroundColor: "#f3f3f3", borderRadius: "5px" }}>
-                          <div
-                          className="progress-bar bg-danger"
-                            ref={progressBarRef}
-                            style={{
-                              width: "0%",
-                              height: "20px",
-                              // backgroundColor: "#4caf50",
-                              textAlign: "center",
-                              color: "white",
-                              lineHeight: "20px",
-                              borderRadius: "5px",
-                              transition: "width 0.2s ease",
-                            }}
-                          >
-                            0%
-                          </div>
-                        </div>
-
-                        )}
-
-
-                              <Tabs
-                                defaultActiveKey="assignment"
-                                id="uncontrolled-tab-example"
-                                className="mb-3"
-                              >
-                                <Tab
-                                  eventKey="assignment"
-                                  title="Assignment information and instructions"
+                                <Tabs
+                                  defaultActiveKey="assignment"
+                                  id="uncontrolled-tab-example"
+                                  className="mb-3"
                                 >
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Title{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={AssignmentTitle}
-                                        onChange={(e) =>
-                                          setAssignmentTitle(e.target.value)
-                                        }
-                                        type="text"
-                                        placeholder="Assignment Title"
-                                      />
-                                    </Form.Group>
+                                  <Tab
+                                    eventKey="assignment"
+                                    title="Assignment information and instructions"
+                                  >
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Title{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={AssignmentTitle}
+                                          onChange={(e) =>
+                                            setAssignmentTitle(e.target.value)
+                                          }
+                                          type="text"
+                                          placeholder="Assignment Title"
+                                        />
+                                      </Form.Group>
 
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Description{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={AssignmentDesc}
-                                        onChange={(e) =>
-                                          setAssignmentDesc(e.target.value)
-                                        }
-                                        as="textarea"
-                                        rows={2}
-                                      />
-                                    </Form.Group>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>
+                                          Description{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={AssignmentDesc}
+                                          onChange={(e) =>
+                                            setAssignmentDesc(e.target.value)
+                                          }
+                                          as="textarea"
+                                          rows={2}
+                                        />
+                                      </Form.Group>
 
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>
-                                        Duration (HH:MM)
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      {/* <Form.Control
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Duration (HH:MM)
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        {/* <Form.Control
                               value={AssignmentDuration}
                               onChange={(e) =>
                                 setAssignmentDuration(e.target.value)
@@ -10201,325 +10298,339 @@ const Curriculum = ({ code }) => {
                               placeholder="00:00"
                             /> */}
 
-                                      <Flatpickr
-                                        data-enable-time
-                                        options={{
-                                          noCalendar: true,
-                                          enableTime: true,
-                                          dateFormat: "H:i",
-                                          time_24hr: true,
-                                        }}
-                                        value={AssignmentDuration}
-                                        onChange={([date]) => {
-                                          // Format the date to HH:MM
-                                          const formattedTime =
-                                            SyllabusFormatTime(date);
-                                          setAssignmentDuration(formattedTime);
-                                          console.log(formattedTime);
-                                        }}
-                                        className="form-control"
-                                      />
-                                    </Form.Group>
+                                        <Flatpickr
+                                          data-enable-time
+                                          options={{
+                                            noCalendar: true,
+                                            enableTime: true,
+                                            dateFormat: "H:i",
+                                            time_24hr: true,
+                                          }}
+                                          value={AssignmentDuration}
+                                          onChange={([date]) => {
+                                            // Format the date to HH:MM
+                                            const formattedTime =
+                                              SyllabusFormatTime(date);
+                                            setAssignmentDuration(
+                                              formattedTime
+                                            );
+                                            console.log(formattedTime);
+                                          }}
+                                          className="form-control"
+                                        />
+                                      </Form.Group>
 
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Instructions{" "}
-                                        <span className="text-danger">*</span>
-                                      </Form.Label>
-                                      <Form.Control
-                                        value={AssignmentInstructors}
-                                        onChange={(e) =>
-                                          setAssignmentInstructors(
-                                            e.target.value
-                                          )
-                                        }
-                                        as="textarea"
-                                        rows={3}
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Video</Form.Label>
-                                      <Form.Control
-                                        accept="video/*"
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setAssignmentVideo(selectedFile);
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>
-                                        Downloadable Resourses
-                                      </Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setAssignmentDResourses(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                        multiple
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={AssignmentExLink}
-                                        onChange={(e) =>
-                                          setAssignmentExLink(e.target.value)
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-                                  </Form>
-                                </Tab>
-
-                                <Tab eventKey="questions" title="Questions">
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>Questions</Form.Label>
-                                      <Form.Control
-                                        value={AssignmentQuestion}
-                                        onChange={(e) =>
-                                          setAssignmentQuestion(e.target.value)
-                                        }
-                                        as="textarea"
-                                        rows={2}
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Questions</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setAssignmentQuestionFile(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={AssignmentQuestionLink}
-                                        onChange={(e) =>
-                                          setAssignmentQuestionLink(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-                                  </Form>
-                                </Tab>
-                                <Tab eventKey="solutions" title="Solutions">
-                                  <Form>
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlTextarea1"
-                                    >
-                                      <Form.Label>Solutions</Form.Label>
-                                      <Form.Control
-                                        value={AssignmentSolutions}
-                                        onChange={(e) => {
-                                          setAssignmentSolutions(
-                                            e.target.value
-                                          );
-                                        }}
-                                        as="textarea"
-                                        rows={2}
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Video</Form.Label>
-                                      <Form.Control
-                                        accept="video/*"
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size < maxSizeInBytes
-                                            ) {
-                                              setAssignmentSolutionsVideo(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>Upload Solutions</Form.Label>
-                                      <Form.Control
-                                        onChange={(e) => {
-                                          const selectedFile =
-                                            e.target.files[0];
-
-                                          if (selectedFile) {
-                                            const maxSizeInBytes =
-                                              100 * 1024 * 1024; // 100MB in bytes
-
-                                            if (
-                                              selectedFile.size <=
-                                              maxSizeInBytes
-                                            ) {
-                                              setAssignmentSolutionsFile(
-                                                selectedFile
-                                              );
-                                            } else {
-                                              ErrorAlert(
-                                                "Error",
-                                                "The file size exceeds the 100MB limit. Please select a smaller file."
-                                              );
-                                            }
-                                          }
-                                        }}
-                                        type="file"
-                                      />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                      className="mb-3"
-                                      controlId="exampleForm.ControlInput1"
-                                    >
-                                      <Form.Label>External Link</Form.Label>
-                                      <Form.Control
-                                        value={AssignmentSolutionsExLink}
-                                        onChange={(e) =>
-                                          setAssignmentSolutionsExLink(
-                                            e.target.value
-                                          )
-                                        }
-                                        type="text"
-                                        placeholder="https://externallink.com"
-                                      />
-                                    </Form.Group>
-
-                                    <Button
-                                      onClick={() =>
-                                        setshowAssignmentInput(null)
-                                      }
-                                      variant="outlined"
-                                    >
-                                      Cancel Assignment
-                                    </Button>
-                                    {btnLoadingAssignment ? (
-                                      <Button
-                                        className="mx-1"
-                                        variant="contained"
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
                                       >
-                                        Saving..
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        onClick={handleAssignmentSave}
-                                        className="mx-1"
-                                        variant="contained"
+                                        <Form.Label>
+                                          Instructions{" "}
+                                          <span className="text-danger">*</span>
+                                        </Form.Label>
+                                        <Form.Control
+                                          value={AssignmentInstructors}
+                                          onChange={(e) =>
+                                            setAssignmentInstructors(
+                                              e.target.value
+                                            )
+                                          }
+                                          as="textarea"
+                                          rows={3}
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
                                       >
-                                        Save Assignment
+                                        <Form.Label>Upload Video</Form.Label>
+                                        <Form.Control
+                                          accept="video/*"
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setAssignmentVideo(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>
+                                          Downloadable Resourses
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setAssignmentDResourses(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                          multiple
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={AssignmentExLink}
+                                          onChange={(e) =>
+                                            setAssignmentExLink(e.target.value)
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+                                    </Form>
+                                  </Tab>
+
+                                  <Tab eventKey="questions" title="Questions">
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>Questions</Form.Label>
+                                        <Form.Control
+                                          value={AssignmentQuestion}
+                                          onChange={(e) =>
+                                            setAssignmentQuestion(
+                                              e.target.value
+                                            )
+                                          }
+                                          as="textarea"
+                                          rows={2}
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Upload Questions
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setAssignmentQuestionFile(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={AssignmentQuestionLink}
+                                          onChange={(e) =>
+                                            setAssignmentQuestionLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+                                    </Form>
+                                  </Tab>
+                                  <Tab eventKey="solutions" title="Solutions">
+                                    <Form>
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlTextarea1"
+                                      >
+                                        <Form.Label>Solutions</Form.Label>
+                                        <Form.Control
+                                          value={AssignmentSolutions}
+                                          onChange={(e) => {
+                                            setAssignmentSolutions(
+                                              e.target.value
+                                            );
+                                          }}
+                                          as="textarea"
+                                          rows={2}
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>Upload Video</Form.Label>
+                                        <Form.Control
+                                          accept="video/*"
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <
+                                                maxSizeInBytes
+                                              ) {
+                                                setAssignmentSolutionsVideo(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>
+                                          Upload Solutions
+                                        </Form.Label>
+                                        <Form.Control
+                                          onChange={(e) => {
+                                            const selectedFile =
+                                              e.target.files[0];
+
+                                            if (selectedFile) {
+                                              const maxSizeInBytes =
+                                                100 * 1024 * 1024; // 100MB in bytes
+
+                                              if (
+                                                selectedFile.size <=
+                                                maxSizeInBytes
+                                              ) {
+                                                setAssignmentSolutionsFile(
+                                                  selectedFile
+                                                );
+                                              } else {
+                                                ErrorAlert(
+                                                  "Error",
+                                                  "The file size exceeds the 100MB limit. Please select a smaller file."
+                                                );
+                                              }
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Form.Group>
+
+                                      <Form.Group
+                                        className="mb-3"
+                                        controlId="exampleForm.ControlInput1"
+                                      >
+                                        <Form.Label>External Link</Form.Label>
+                                        <Form.Control
+                                          value={AssignmentSolutionsExLink}
+                                          onChange={(e) =>
+                                            setAssignmentSolutionsExLink(
+                                              e.target.value
+                                            )
+                                          }
+                                          type="text"
+                                          placeholder="https://externallink.com"
+                                        />
+                                      </Form.Group>
+
+                                      <Button
+                                        onClick={() =>
+                                          setshowAssignmentInput(null)
+                                        }
+                                        variant="outlined"
+                                      >
+                                        Cancel Assignment
                                       </Button>
-                                    )}
-                                  </Form>
-                                </Tab>
-                              </Tabs>
+                                      {btnLoadingAssignment ? (
+                                        <Button
+                                          className="mx-1"
+                                          variant="contained"
+                                        >
+                                          Saving..
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          onClick={handleAssignmentSave}
+                                          className="mx-1"
+                                          variant="contained"
+                                        >
+                                          Save Assignment
+                                        </Button>
+                                      )}
+                                    </Form>
+                                  </Tab>
+                                </Tabs>
                               </>
                             )}
 
@@ -10529,9 +10640,11 @@ const Curriculum = ({ code }) => {
                       )}
                     </Draggable>
                   ))
+                ) : sectionData == null ? (
+                  <div className="d-flex justify-content-center">
+                    <h2 className="m-0 p-0">Start creating syllabus</h2>{" "}
+                  </div>
                 ) : (
-                  sectionData == null ? 
-                  <div className="d-flex justify-content-center"><h2 className="m-0 p-0">Start creating syllabus</h2> </div> : 
                   <LargeSpinner h={"50%"} w={"30%"} wpclass={"m-4"} />
                 )}
                 {provided.placeholder}
