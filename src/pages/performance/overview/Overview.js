@@ -8,6 +8,11 @@ import Typography from "@mui/material/Typography";
 import { GetChartOverviewData, GetRevenueOverview } from "../../../api";
 import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 import formatNumber from "../../../commonFunctions/NumberFormat";
+import moment from "moment";
+import { LineChart as LineChartNew, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+
+
+
 
 // Helper function to format the day data
 const formatDays = (days) => days.map((day) => day);
@@ -15,6 +20,9 @@ const formatDays = (days) => days.map((day) => day);
 function RevenueReport() {
   const [overViewStatus, setOverViewStatus] = useState(null);
   const [chartData, setChartData] = useState(null);
+  const currentMonth = moment().format("MMMM"); // e.g., "February"
+
+
 
   useEffect(() => {
     // Fetch the overview data
@@ -42,6 +50,55 @@ function RevenueReport() {
 
     return allLessThanFive ? 5 : null;
   };
+
+
+// Sample data (Replace with your real data)
+const data = days.map((day, index) => ({
+  day,
+  revenue: revenueData[index],
+  enrollments: enrollmentData[index],
+  rating: ratingData[index] || 0,
+}));
+
+// Custom Tooltip for Revenue Chart
+const RevenueTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{ background: "white", padding: "10px", border: "1px solid #ccc" }}>
+        <p>{`Day: ${payload[0].payload.day}`}</p>
+        <p>{`Revenue: $${payload[0].value.toFixed(2)}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+// Custom Tooltip for Enrollments Chart
+const EnrollmentsTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{ background: "white", padding: "10px", border: "1px solid #ccc" }}>
+        <p>{`Day: ${payload[0].payload.day}`}</p>
+        <p>{`Enrollments: ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+
+// Custom Tooltip for Ratings Chart
+const RatingsTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div style={{ background: "white", padding: "10px", border: "1px solid #ccc" }}>
+        <p>{`Day: ${payload[0].payload.day}`}</p>
+        <p>{`Rating: ${payload[0].value.toFixed(1)}/5`}</p>
+      </div>
+    );
+  }
+  return null;
+};
 
   return (
     <div className=" all-courses-container mb-5">
@@ -89,32 +146,24 @@ function RevenueReport() {
                 </div>
               }
             >
-              <Box sx={{ flexGrow: 1 }}>
-  <LineChart
-    xAxis={[
-      {
-        data: formatDays(days),
-        label: "Days", // Label for the x-axis
-      },
-    ]}
-    yAxis={[
-      {
-        min: 0,
-        max: getAdjustedData(revenueData),
-        interval: 1,
-        label: "Amount (USD)", // Label for the y-axis
-        tickFormatter: (value) => Math.round(value),
-      },
-    ]}
-    series={[
-      {
-        data: revenueData,
-        area: true,
-      },
-    ]}
-    height={400}
-  />
-</Box>
+
+
+
+
+<ResponsiveContainer width="100%" height={400}>
+    <LineChartNew data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 10 }} />
+      <YAxis 
+        label={{ value: "Revenue (USD)", angle: -90, position: "insideLeft" }} 
+        tickFormatter={(value) => `$${value.toFixed(2)}`}
+      />
+      <Tooltip content={<RevenueTooltip />} />
+      <Line type="monotone" dataKey="revenue" stroke="#4285F4" strokeWidth={2} dot={{ r: 5 }} />
+    </LineChartNew>
+  </ResponsiveContainer>
+
+
 
             </Tab>
 
@@ -131,31 +180,18 @@ function RevenueReport() {
                 </div>
               }
             >
-           <Box sx={{ flexGrow: 1 }}>
-  <LineChart
-    xAxis={[
-      {
-        data: formatDays(days),
-        label: "Days", // Label for the x-axis
-      },
-    ]}
-    yAxis={[
-      {
-        min: 0,
-        max: getAdjustedData(enrollmentData),
-        interval: 1,
-        label: "Count of Students", // Label for the y-axis
-        tickFormatter: (value) => Math.round(value),
-      },
-    ]}
-    series={[
-      {
-        data: enrollmentData,
-      },
-    ]}
-    height={400}
-  />
-</Box>
+          <ResponsiveContainer width="100%" height={400}>
+    <LineChartNew data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 10 }} />
+      <YAxis 
+        label={{ value: "Enrollments", angle: -90, position: "insideLeft" }} 
+        tickFormatter={(value) => value} 
+      />
+      <Tooltip content={<EnrollmentsTooltip />} />
+      <Line type="monotone" dataKey="enrollments" stroke="#34A853" strokeWidth={2} dot={{ r: 5 }} />
+    </LineChartNew>
+  </ResponsiveContainer>
 
             </Tab>
 
@@ -174,29 +210,32 @@ function RevenueReport() {
                 </div>
               }
             >
-             <Box sx={{ flexGrow: 1 }}>
-  <LineChart
-    xAxis={[
-      {
-        data: formatDays(days),
-        label: "Days", // Label for the x-axis
-      },
-    ]}
-    yAxis={[
-      {
-        min: 0, // You may want to set a max value if needed, based on ratings range.
-        label: "Ratings", // Label for the y-axis
-      },
-    ]}
-    series={[
-      {
-        data: ratingData,
-        area: true,
-      },
-    ]}
-    height={400}
-  />
-</Box>
+       
+       <ResponsiveContainer width="100%" height={400}>
+    <LineChartNew data={data}>
+      <CartesianGrid strokeDasharray="3 3" />
+      
+      {/* X-Axis for Days of the Month */}
+      <XAxis 
+        dataKey="day" 
+        label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 10 }} 
+      />
+      
+      {/* Y-Axis for Ratings */}
+      <YAxis
+        label={{ value: "Ratings (0-5)", angle: -90, position: "insideLeft" }}
+        domain={[0, 5]} // Set range from 0 to 5
+        tickFormatter={(value) => value.toFixed(1)}
+      />
+
+      {/* Tooltip */}
+      <Tooltip content={<RatingsTooltip />} />
+
+      {/* Line for Ratings */}
+      <Line type="monotone" dataKey="rating" stroke="#FFA500" strokeWidth={2} dot={{ r: 5 }} />
+    </LineChartNew>
+  </ResponsiveContainer>
+
 
             </Tab>
           </Tabs>
