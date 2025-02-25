@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Select } from "antd";
 import MaterialTable from "material-table";
-import { LineChart as LineChartNew, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart as LineChartNew, Line,AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import LoadingSpinner from "../../../commonFunctions/loaders/Spinner/LoadingSpinner";
 import formatNumber from "../../../commonFunctions/NumberFormat";
 import { GetRevenueReport, RevenueChart } from "../../../api";
@@ -131,22 +131,22 @@ function RevenueReport() {
         </Select>
       </div>
       <Card className="p-2">
-        <Card className="my-3">
-        <ResponsiveContainer width="100%" height={400}>
-  <LineChartNew data={filterData(formattedChartData, filter)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="name" />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    <Line type="monotone" dataKey="Aethenos" stroke="#4caf50" strokeWidth={2} />
-    <Line type="monotone" dataKey="Coupons" stroke="#fbc02d" strokeWidth={2} />
-    <Line type="monotone" dataKey="ReferralLinks" stroke="#2196f3" strokeWidth={2} />
-    <Line type="monotone" dataKey="Refunds" stroke="#f44336" strokeWidth={2} />
-  </LineChartNew>
-</ResponsiveContainer>
-
+      <Card className="my-3">
+          <ResponsiveContainer width="100%" height={400}>
+            <AreaChart data={filterData(formattedChartData, filter)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" label={{ value: "Date", position: "insideBottom", offset: -10 }} />
+              <YAxis label={{ value: "Amount (USD)", angle: -90, position: "insideLeft", offset: -10 }} />
+              <Tooltip />
+              <Legend />
+              <Area type="monotone" dataKey="Aethenos" stroke="#4caf50" fill="#4caf50" fillOpacity={0.3} />
+              <Area type="monotone" dataKey="Coupons" stroke="#fbc02d" fill="#fbc02d" fillOpacity={0.3} />
+              <Area type="monotone" dataKey="ReferralLinks" stroke="#2196f3" fill="#2196f3" fillOpacity={0.3} />
+              <Area type="monotone" dataKey="Refunds" stroke="#f44336" fill="#f44336" fillOpacity={0.3} />
+            </AreaChart>
+          </ResponsiveContainer>
         </Card>
+
         {revenueReportData ? (
           <MaterialTable
             title="Revenue Report"
