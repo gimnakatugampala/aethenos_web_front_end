@@ -64,21 +64,51 @@ function RevenueReport() {
 
   const filterData = (data, filter) => {
     if (!data.length) return [];
+  
+    const today = new Date();
+    const getDateOffset = (months) => {
+      const d = new Date();
+      d.setMonth(d.getMonth() - months);
+      return d;
+    };
+  
     switch (filter) {
+      case "Week":
+        return data.filter((item) => {
+          const itemDate = new Date(item.name);
+          return itemDate >= new Date(today.setDate(today.getDate() - 7));
+        });
+  
       case "Month":
-        return data.slice(-1);
+        return data.filter((item) => {
+          const itemDate = new Date(item.name);
+          return itemDate >= new Date(today.setDate(today.getDate() - 30));
+        });
+  
       case "6 Months":
-        return data.slice(-6);
-      case "YTD":
-        const currentYear = new Date().getFullYear();
-        return data.filter((item) => item.name.includes(currentYear));
-      case "5 Years":
-        return data.slice(-60);
+        return data.filter((item) => {
+          const itemDate = new Date(item.name);
+          return itemDate >= getDateOffset(6);
+        });
+  
+      case "1 Year":
+        return data.filter((item) => {
+          const itemDate = new Date(item.name);
+          return itemDate >= getDateOffset(12);
+        });
+  
+      case "6 Years":
+        return data.filter((item) => {
+          const itemDate = new Date(item.name);
+          return itemDate >= getDateOffset(72);
+        });
+  
       case "Max":
       default:
         return data;
     }
   };
+  
 
 
 
