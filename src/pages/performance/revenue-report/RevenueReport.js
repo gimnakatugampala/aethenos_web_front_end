@@ -50,7 +50,16 @@ function RevenueReport() {
       }
     });
   
-    return Object.values(monthlyTotals);
+    // Ensure every entry contains all categories, even with zero values
+    return Object.values(monthlyTotals).map((entry) => {
+      return {
+        name: entry.name,
+        Aethenos: entry.Aethenos || 0,
+        Coupons: entry.Coupons || 0,
+        ReferralLinks: entry.ReferralLinks || 0,
+        Refunds: entry.Refunds || 0,
+      };
+    });
   };
   
   const formattedChartData = formatChartData(chartData);
