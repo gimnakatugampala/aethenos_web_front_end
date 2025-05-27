@@ -153,7 +153,14 @@ const RatingsTooltip = ({ active, payload }) => {
 <ResponsiveContainer width="100%" height={400}>
     <LineChartNew data={data}>
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 10 }} />
+      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 3 }}
+      
+        interval="preserveStartEnd"
+          angle={-45}
+          textAnchor="end"
+          height={80}
+          tick={{ dy: 10 }}
+      />
       <YAxis 
         label={{ value: "Revenue (USD)", angle: -90, position: "insideLeft" }} 
         tickFormatter={(value) => `$${value.toFixed(2)}`}
@@ -183,7 +190,14 @@ const RatingsTooltip = ({ active, payload }) => {
           <ResponsiveContainer width="100%" height={400}>
     <LineChartNew data={data}>
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 10 }} />
+      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 3 }} 
+        interval="preserveStartEnd"
+          angle={-45}
+          textAnchor="end"
+          height={80}
+          tick={{ dy: 10 }}
+      
+      />
       <YAxis 
         label={{ value: "Enrollments", angle: -90, position: "insideLeft" }} 
         tickFormatter={(value) => value} 
@@ -212,29 +226,34 @@ const RatingsTooltip = ({ active, payload }) => {
             >
        
        <ResponsiveContainer width="100%" height={400}>
-    <LineChartNew data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      
-      {/* X-Axis for Days of the Month */}
-      <XAxis 
-        dataKey="day" 
-        label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 10 }} 
-      />
-      
-      {/* Y-Axis for Ratings */}
-      <YAxis
-        label={{ value: "Ratings (0-5)", angle: -90, position: "insideLeft" }}
-        domain={[0, 5]} // Set range from 0 to 5
-        tickFormatter={(value) => value.toFixed(1)}
-      />
+      <LineChartNew data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        
+        {/* X-Axis for Days of the Month */}
+        <XAxis 
+          dataKey="day" 
+          label={{ value: `Days of ${currentMonth}`, position: "insideBottom",dy: 3  }} 
+          interval="preserveStartEnd"
+          angle={-45}
+          textAnchor="end"
+          height={80}
+          tick={{ dy: 10 }}
+        />
+        
+        {/* Y-Axis for Ratings */}
+        <YAxis
+          label={{ value: "Ratings (0-5)", angle: -90, position: "insideLeft" }}
+          domain={[0, 5]} // Set range from 0 to 5
+          tickFormatter={(value) => value.toFixed(1)}
+        />
 
-      {/* Tooltip */}
-      <Tooltip content={<RatingsTooltip />} />
+        {/* Tooltip */}
+        <Tooltip content={<RatingsTooltip />} />
 
-      {/* Line for Ratings */}
-      <Line type="monotone" dataKey="rating" stroke="#FFA500" strokeWidth={2} dot={{ r: 5 }} />
-    </LineChartNew>
-  </ResponsiveContainer>
+        {/* Line for Ratings */}
+        <Line type="monotone" dataKey="rating" stroke="#FFA500" strokeWidth={2} dot={{ r: 5 }} />
+      </LineChartNew>
+    </ResponsiveContainer>
 
 
             </Tab>
