@@ -20,8 +20,8 @@ function RevenueReport() {
     GetRevenueReport(setRevenueReportData, setRevenueDate, setRevenueAmount);
     RevenueChart(setChartData);
   }, []);
-
-  const formatChartData = (chartData) => {
+  
+const formatChartData = (chartData) => {
   if (!chartData) return [];
 
   const datasets = {
@@ -31,70 +31,47 @@ function RevenueReport() {
     Refunds: "refundsDataSets",
   };
 
-  const monthlyTotals = {};
+  const dailyTotals = [];
 
   Object.entries(datasets).forEach(([key, datasetKey]) => {
     if (chartData[datasetKey] && Array.isArray(chartData[datasetKey])) {
       chartData[datasetKey].forEach((entry) => {
-        const date = new Date(entry.timestamp);
-        const formattedDate = date.toLocaleString("en-US", {
+        const dateObj = new Date(entry.timestamp);
+        const isoDate = dateObj.toISOString().split("T")[0]; // YYYY-MM-DD
+        const labelMonth = dateObj.toLocaleString("en-US", {
           month: "short",
           year: "numeric",
-        }).toUpperCase(); // e.g. "OCT 2024"
+        }).toUpperCase();
+
+        let existing = dailyTotals.find(d => d.date === isoDate);
         const amount = parseFloat(entry.amount) || 0;
 
-        if (!monthlyTotals[formattedDate]) {
-          monthlyTotals[formattedDate] = {
-            name: formattedDate,
+        if (!existing) {
+          existing = {
+            date: isoDate,     // actual date for tooltip
+            label: labelMonth, // month for X-axis grouping
             Aethenos: 0,
             Coupons: 0,
             ReferralLinks: 0,
             Refunds: 0,
           };
+          dailyTotals.push(existing);
         }
 
-        monthlyTotals[formattedDate][key] += amount;
-        monthlyTotals[formattedDate][key] = parseFloat(monthlyTotals[formattedDate][key].toFixed(2));
+        existing[key] += amount;
+        existing[key] = parseFloat(existing[key].toFixed(2));
       });
     }
   });
 
-  // Add padding for all months up to the current month
-  const currentDate = new Date();
-  const earliestDate = Object.keys(monthlyTotals)
-    .map((key) => new Date(key))
-    .sort((a, b) => a - b)[0] || new Date();
-
-  const months = {};
-  let cursor = new Date(earliestDate.getFullYear(), earliestDate.getMonth(), 1);
-  const end = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-
-  while (cursor <= end) {
-    const formatted = cursor.toLocaleString("en-US", {
-      month: "short",
-      year: "numeric",
-    }).toUpperCase();
-
-    if (!monthlyTotals[formatted]) {
-      monthlyTotals[formatted] = {
-        name: formatted,
-        Aethenos: 0,
-        Coupons: 0,
-        ReferralLinks: 0,
-        Refunds: 0,
-      };
-    }
-
-    cursor.setMonth(cursor.getMonth() + 1);
-  }
-
-  // Return sorted
-  return Object.values(monthlyTotals).sort((a, b) => {
-    const d1 = new Date(a.name);
-    const d2 = new Date(b.name);
-    return d1 - d2;
-  });
+  // Sort by date
+  return dailyTotals.sort((a, b) => new Date(a.date) - new Date(b.date));
 };
+
+
+
+
+
 
   
   const formattedChartData = formatChartData(chartData);
@@ -160,6 +137,30 @@ function RevenueReport() {
       return data;
   }
 };
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    const item = payload[0].payload;
+    return (
+      <div className="custom-tooltip bg-white p-2 border rounded shadow">
+        <p className="label font-bold">{`Date: ${item.date}`}</p>
+        <div className="mt-2">
+          {payload.map((entry) => (
+            <p
+              key={entry.dataKey}
+              style={{ color: entry.color, margin: 0 }}
+            >
+              {`${entry.dataKey}: $${entry.value.toFixed(2)}`}
+            </p>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
+
   
 
 
@@ -179,7 +180,7 @@ function RevenueReport() {
           <Option value="6 Months">6 Months</Option>
           <Option value="YTD">YTD</Option>
           <Option value="5 Years">5 Years</Option>
-          <Option value="Max">Max</Option>
+          <Option value="Max">Lifetime</Option>
         </Select>
       </div>
       <Card className="p-2">
@@ -187,17 +188,19 @@ function RevenueReport() {
           <ResponsiveContainer width="100%" height={400}>
             <AreaChart data={filterData(formattedChartData, filter)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-             <XAxis
-          dataKey="name"
-          interval="preserveStartEnd"
-          angle={-45}
-          textAnchor="end"
-          height={80}
-          tick={{ dy: 10 }}
-        />
+          <XAxis
+  dataKey="label"
+  interval="preserveStartEnd"
+  angle={-45}
+  textAnchor="end"
+  height={80}
+  tick={{ dy: 10 }}
+/>
+
 
               <YAxis label={{ value: "Amount (USD)", angle: -90, position: "insideLeft", offset: -10 }} />
-              <Tooltip />
+              <Tooltip content={<CustomTooltip />} />
+
               <Legend />
               <Area type="monotone" dataKey="Aethenos" stroke="#4caf50" fill="#4caf50" fillOpacity={0.3} />
               <Area type="monotone" dataKey="Coupons" stroke="#fbc02d" fill="#fbc02d" fillOpacity={0.3} />
