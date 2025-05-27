@@ -121,7 +121,7 @@ const formatChartData = (chartData) => {
   return new Date(year, month);
 };
 
- const filterData = (data, filter) => {
+const filterData = (data, filter) => {
   if (!data.length) return [];
 
   const today = new Date();
@@ -168,11 +168,21 @@ const formatChartData = (chartData) => {
         return itemDate >= getDateOffset(72);
       });
 
+    case "YTD": {
+      const currentYear = today.getFullYear();
+      const startOfYear = new Date(currentYear, 0); // Jan 1st
+      return data.filter((item) => {
+        const itemDate = parseMonthYear(item.name);
+        return itemDate >= startOfYear && itemDate <= today;
+      });
+    }
+
     case "Max":
     default:
       return data;
   }
 };
+
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
