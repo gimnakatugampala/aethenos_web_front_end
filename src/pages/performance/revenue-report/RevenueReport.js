@@ -22,101 +22,144 @@ function RevenueReport() {
   }, []);
 
   const formatChartData = (chartData) => {
-    if (!chartData) return [];
-  
-    const datasets = {
-      Aethenos: "aethenosDataSets",
-      Coupons: "couponsDataSets",
-      ReferralLinks: "referralLinksDataSets",
-      Refunds: "refundsDataSets",
-    };
-  
-    const monthlyTotals = {};
-  
-    Object.entries(datasets).forEach(([key, datasetKey]) => {
-      if (chartData[datasetKey] && Array.isArray(chartData[datasetKey])) {
-        chartData[datasetKey].forEach((entry) => {
-          const date = new Date(entry.timestamp);
-          const formattedDate = date.toLocaleString("en-US", { month: "short", year: "numeric" }).toUpperCase(); // E.g., "DEC 2024"
-          const amount = parseFloat(entry.amount) || 0; // Ensure numeric value
-  
-          if (!monthlyTotals[formattedDate]) {
-            monthlyTotals[formattedDate] = { name: formattedDate, Aethenos: 0, Coupons: 0, ReferralLinks: 0, Refunds: 0 };
-          }
-  
-          monthlyTotals[formattedDate][key] += amount; // Sum the amounts
-          monthlyTotals[formattedDate][key] = parseFloat(monthlyTotals[formattedDate][key].toFixed(2)); // Round to 2 decimal places
-        });
-      }
-    });
-  
-    // Ensure every entry contains all categories, even with zero values
-    return Object.values(monthlyTotals).map((entry) => {
-      return {
-        name: entry.name,
-        Aethenos: entry.Aethenos || 0,
-        Coupons: entry.Coupons || 0,
-        ReferralLinks: entry.ReferralLinks || 0,
-        Refunds: entry.Refunds || 0,
-      };
-    });
+  if (!chartData) return [];
+
+  const datasets = {
+    Aethenos: "aethenosDataSets",
+    Coupons: "couponsDataSets",
+    ReferralLinks: "referralLinksDataSets",
+    Refunds: "refundsDataSets",
   };
+
+  const monthlyTotals = {};
+
+  Object.entries(datasets).forEach(([key, datasetKey]) => {
+    if (chartData[datasetKey] && Array.isArray(chartData[datasetKey])) {
+      chartData[datasetKey].forEach((entry) => {
+        const date = new Date(entry.timestamp);
+        const formattedDate = date.toLocaleString("en-US", {
+          month: "short",
+          year: "numeric",
+        }).toUpperCase(); // e.g. "OCT 2024"
+        const amount = parseFloat(entry.amount) || 0;
+
+        if (!monthlyTotals[formattedDate]) {
+          monthlyTotals[formattedDate] = {
+            name: formattedDate,
+            Aethenos: 0,
+            Coupons: 0,
+            ReferralLinks: 0,
+            Refunds: 0,
+          };
+        }
+
+        monthlyTotals[formattedDate][key] += amount;
+        monthlyTotals[formattedDate][key] = parseFloat(monthlyTotals[formattedDate][key].toFixed(2));
+      });
+    }
+  });
+
+  // Add padding for all months up to the current month
+  const currentDate = new Date();
+  const earliestDate = Object.keys(monthlyTotals)
+    .map((key) => new Date(key))
+    .sort((a, b) => a - b)[0] || new Date();
+
+  const months = {};
+  let cursor = new Date(earliestDate.getFullYear(), earliestDate.getMonth(), 1);
+  const end = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+  while (cursor <= end) {
+    const formatted = cursor.toLocaleString("en-US", {
+      month: "short",
+      year: "numeric",
+    }).toUpperCase();
+
+    if (!monthlyTotals[formatted]) {
+      monthlyTotals[formatted] = {
+        name: formatted,
+        Aethenos: 0,
+        Coupons: 0,
+        ReferralLinks: 0,
+        Refunds: 0,
+      };
+    }
+
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+
+  // Return sorted
+  return Object.values(monthlyTotals).sort((a, b) => {
+    const d1 = new Date(a.name);
+    const d2 = new Date(b.name);
+    return d1 - d2;
+  });
+};
+
   
   const formattedChartData = formatChartData(chartData);
   
   
-  
-
-  
-
   if (!chartData) return <LoadingSpinner />;
 
-  const filterData = (data, filter) => {
-    if (!data.length) return [];
-  
-    const today = new Date();
-    const getDateOffset = (months) => {
-      const d = new Date();
-      d.setMonth(d.getMonth() - months);
-      return d;
-    };
-  
-    switch (filter) {
-      case "Week":
-        return data.filter((item) => {
-          const itemDate = new Date(item.name);
-          return itemDate >= new Date(today.setDate(today.getDate() - 7));
-        });
-  
-      case "Month":
-        return data.filter((item) => {
-          const itemDate = new Date(item.name);
-          return itemDate >= new Date(today.setDate(today.getDate() - 30));
-        });
-  
-      case "6 Months":
-        return data.filter((item) => {
-          const itemDate = new Date(item.name);
-          return itemDate >= getDateOffset(6);
-        });
-  
-      case "1 Year":
-        return data.filter((item) => {
-          const itemDate = new Date(item.name);
-          return itemDate >= getDateOffset(12);
-        });
-  
-      case "6 Years":
-        return data.filter((item) => {
-          const itemDate = new Date(item.name);
-          return itemDate >= getDateOffset(72);
-        });
-  
-      case "Max":
-      default:
-        return data;
-    }
+  const parseMonthYear = (monthYearStr) => {
+  const [monthStr, year] = monthYearStr.split(" ");
+  const month = new Date(`${monthStr} 1, ${year}`).getMonth();
+  return new Date(year, month);
+};
+
+ const filterData = (data, filter) => {
+  if (!data.length) return [];
+
+  const today = new Date();
+  const getDateOffset = (months) => {
+    const d = new Date();
+    d.setMonth(d.getMonth() - months);
+    return d;
   };
+
+  switch (filter) {
+    case "Week":
+      return data.filter((item) => {
+        const itemDate = parseMonthYear(item.name);
+        return itemDate >= new Date(today.setDate(today.getDate() - 7));
+      });
+
+    case "Month": {
+      const currentMonth = today.getMonth();
+      const currentYear = today.getFullYear();
+      return data.filter((item) => {
+        const itemDate = parseMonthYear(item.name);
+        return (
+          itemDate.getMonth() === currentMonth &&
+          itemDate.getFullYear() === currentYear
+        );
+      });
+    }
+
+    case "6 Months":
+      return data.filter((item) => {
+        const itemDate = parseMonthYear(item.name);
+        return itemDate >= getDateOffset(6);
+      });
+
+    case "1 Year":
+      return data.filter((item) => {
+        const itemDate = parseMonthYear(item.name);
+        return itemDate >= getDateOffset(12);
+      });
+
+    case "6 Years":
+      return data.filter((item) => {
+        const itemDate = parseMonthYear(item.name);
+        return itemDate >= getDateOffset(72);
+      });
+
+    case "Max":
+    default:
+      return data;
+  }
+};
   
 
 
