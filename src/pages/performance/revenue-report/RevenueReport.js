@@ -144,7 +144,15 @@ function RevenueReport() {
           <ResponsiveContainer width="100%" height={400}>
             <AreaChart data={filterData(formattedChartData, filter)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" label={{ value: "Date", position: "insideBottom", offset: -10 }} />
+             <XAxis
+          dataKey="name"
+          interval="preserveStartEnd"
+          angle={-45}
+          textAnchor="end"
+          height={80}
+          tick={{ dy: 10 }}
+        />
+
               <YAxis label={{ value: "Amount (USD)", angle: -90, position: "insideLeft", offset: -10 }} />
               <Tooltip />
               <Legend />
