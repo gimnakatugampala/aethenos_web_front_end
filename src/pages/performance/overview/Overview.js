@@ -150,25 +150,25 @@ const RatingsTooltip = ({ active, payload }) => {
 
 
 
-<ResponsiveContainer width="100%" height={400}>
-    <LineChartNew data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 3 }}
-      
-        interval="preserveStartEnd"
-          angle={-45}
-          textAnchor="end"
-          height={80}
-          tick={{ dy: 10 }}
-      />
-      <YAxis 
-        label={{ value: "Revenue (USD)", angle: -90, position: "insideLeft" }} 
-        tickFormatter={(value) => `$${value.toFixed(2)}`}
-      />
-      <Tooltip content={<RevenueTooltip />} />
-      <Line type="monotone" dataKey="revenue" stroke="#4285F4" strokeWidth={2} dot={{ r: 5 }} />
-    </LineChartNew>
-  </ResponsiveContainer>
+      <ResponsiveContainer width="100%" height={400}>
+          <LineChartNew data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" label={{ value: `Days of ${currentMonth}`, position: "insideBottom", dy: 3 }}
+            
+              interval="preserveStartEnd"
+                angle={-45}
+                textAnchor="end"
+                height={80}
+                tick={{ dy: 10 }}
+            />
+            <YAxis 
+              label={{ value: "Revenue (USD)", angle: -90, position: "insideLeft" }} 
+              tickFormatter={(value) => `$${value.toFixed(2)}`}
+            />
+            <Tooltip content={<RevenueTooltip />} />
+            <Line type="monotone" dataKey="revenue" stroke="#4285F4" strokeWidth={2} dot={{ r: 5 }} />
+          </LineChartNew>
+        </ResponsiveContainer>
 
 
 
