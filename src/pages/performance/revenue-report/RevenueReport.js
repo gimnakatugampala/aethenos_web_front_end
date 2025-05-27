@@ -31,43 +31,79 @@ const formatChartData = (chartData) => {
     Refunds: "refundsDataSets",
   };
 
-  const dailyTotals = [];
+  const monthlyTotals = {};
 
   Object.entries(datasets).forEach(([key, datasetKey]) => {
     if (chartData[datasetKey] && Array.isArray(chartData[datasetKey])) {
       chartData[datasetKey].forEach((entry) => {
         const dateObj = new Date(entry.timestamp);
-        const isoDate = dateObj.toISOString().split("T")[0]; // YYYY-MM-DD
-        const labelMonth = dateObj.toLocaleString("en-US", {
+        const formattedDate = dateObj.toLocaleString("en-US", {
           month: "short",
           year: "numeric",
-        }).toUpperCase();
-
-        let existing = dailyTotals.find(d => d.date === isoDate);
+        }).toUpperCase(); // e.g. "OCT 2024"
         const amount = parseFloat(entry.amount) || 0;
 
-        if (!existing) {
-          existing = {
-            date: isoDate,     // actual date for tooltip
-            label: labelMonth, // month for X-axis grouping
+        if (!monthlyTotals[formattedDate]) {
+          monthlyTotals[formattedDate] = {
+            name: formattedDate,
             Aethenos: 0,
             Coupons: 0,
             ReferralLinks: 0,
             Refunds: 0,
+            tooltipDate: dateObj.toISOString().split("T")[0],  // set tooltipDate here
           };
-          dailyTotals.push(existing);
         }
 
-        existing[key] += amount;
-        existing[key] = parseFloat(existing[key].toFixed(2));
+        monthlyTotals[formattedDate][key] += amount;
+        monthlyTotals[formattedDate][key] = parseFloat(monthlyTotals[formattedDate][key].toFixed(2));
+
+        // Optional: Update tooltipDate if the current date is later (if you want latest date)
+        if (dateObj.toISOString().split("T")[0] > monthlyTotals[formattedDate].tooltipDate) {
+          monthlyTotals[formattedDate].tooltipDate = dateObj.toISOString().split("T")[0];
+        }
       });
     }
   });
 
-  // Sort by date
-  return dailyTotals.sort((a, b) => new Date(a.date) - new Date(b.date));
-};
+  // Padding missing months
+  const currentDate = new Date();
+  const earliestDate = Object.keys(monthlyTotals)
+    .map((key) => {
+      // Parse month-year string to date with day=1
+      const [monthStr, year] = key.split(" ");
+      return new Date(`${monthStr} 1, ${year}`);
+    })
+    .sort((a, b) => a - b)[0] || new Date();
 
+  let cursor = new Date(earliestDate.getFullYear(), earliestDate.getMonth(), 1);
+  const end = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+  while (cursor <= end) {
+    const formatted = cursor.toLocaleString("en-US", {
+      month: "short",
+      year: "numeric",
+    }).toUpperCase();
+
+    if (!monthlyTotals[formatted]) {
+      monthlyTotals[formatted] = {
+        name: formatted,
+        Aethenos: 0,
+        Coupons: 0,
+        ReferralLinks: 0,
+        Refunds: 0,
+        tooltipDate: cursor.toISOString().split("T")[0],  // use cursor here
+      };
+    }
+
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+
+  return Object.values(monthlyTotals).sort((a, b) => {
+    const d1 = new Date(a.name);
+    const d2 = new Date(b.name);
+    return d1 - d2;
+  });
+};
 
 
 
@@ -143,7 +179,8 @@ const CustomTooltip = ({ active, payload, label }) => {
     const item = payload[0].payload;
     return (
       <div className="custom-tooltip bg-white p-2 border rounded shadow">
-        <p className="label font-bold">{`Date: ${item.date}`}</p>
+        <p className="label font-bold">{`Month: ${label}`}</p>
+        <p className="text-sm text-gray-500">{`Date: ${item.tooltipDate}`}</p>
         <div className="mt-2">
           {payload.map((entry) => (
             <p
@@ -160,6 +197,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
   return null;
 };
+
 
   
 
@@ -188,15 +226,14 @@ const CustomTooltip = ({ active, payload, label }) => {
           <ResponsiveContainer width="100%" height={400}>
             <AreaChart data={filterData(formattedChartData, filter)} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-  dataKey="label"
-  interval="preserveStartEnd"
-  angle={-45}
-  textAnchor="end"
-  height={80}
-  tick={{ dy: 10 }}
-/>
-
+             <XAxis
+          dataKey="name"
+          interval="preserveStartEnd"
+          angle={-45}
+          textAnchor="end"
+          height={80}
+          tick={{ dy: 10 }}
+        />
 
               <YAxis label={{ value: "Amount (USD)", angle: -90, position: "insideLeft", offset: -10 }} />
               <Tooltip content={<CustomTooltip />} />
