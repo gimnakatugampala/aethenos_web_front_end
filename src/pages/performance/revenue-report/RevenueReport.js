@@ -246,13 +246,22 @@ const CustomTooltip = ({ active, payload, label }) => {
         />
 
               <YAxis label={{ value: "Amount (USD)", angle: -90, position: "insideLeft", offset: -10 }} />
-              <Tooltip content={<CustomTooltip />} />
+             <Tooltip content={<CustomTooltip />} isAnimationActive={false} />
+
 
               <Legend />
-              <Area type="monotone" dataKey="Aethenos" stroke="#4caf50" fill="#4caf50" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="Coupons" stroke="#fbc02d" fill="#fbc02d" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="ReferralLinks" stroke="#2196f3" fill="#2196f3" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="Refunds" stroke="#f44336" fill="#f44336" fillOpacity={0.3} />
+              <Area type="monotone" dataKey="Aethenos" stroke="#4caf50" fill="#4caf50" fillOpacity={0.3} 
+  dot={{ r: 2 }}
+  activeDot={{ r: 4 }} />
+              <Area type="monotone" dataKey="Coupons" stroke="#fbc02d" fill="#fbc02d" fillOpacity={0.3} 
+  dot={{ r: 2 }}
+  activeDot={{ r: 4 }} />
+              <Area type="monotone" dataKey="ReferralLinks" stroke="#2196f3" fill="#2196f3" fillOpacity={0.3} 
+  dot={{ r: 2 }}
+  activeDot={{ r: 4 }} />
+              <Area type="monotone" dataKey="Refunds" stroke="#f44336" fill="#f44336" fillOpacity={0.3} 
+  dot={{ r: 2 }}
+  activeDot={{ r: 4 }} />
             </AreaChart>
           </ResponsiveContainer>
         </Card>
