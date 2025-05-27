@@ -5535,9 +5535,10 @@ export const GetRevenueReportByID = async (
 
       Unauthorized(result.status, "performance/revenue-report");
 
-      const formattedPurchases = result.purchases.map((purchase) => ({
+    const formattedPurchases = result.purchases.map((purchase) => ({
         ...purchase,
         date: moment(purchase.date, "DD-MM-YYYY").format("DD-MM-YYYY"),
+        channel: purchase.channel == "Free" ? "Aethenos" : purchase.channel,
       }));
 
       setrefundNo(result.totalRefunds);
